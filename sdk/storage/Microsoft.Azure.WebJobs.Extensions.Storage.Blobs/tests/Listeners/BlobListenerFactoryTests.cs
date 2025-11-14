@@ -19,9 +19,7 @@ using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,32 +31,45 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
         public async Task CreateAsync_RegisterWithSharedBlobListenerAsync_UsesTargetBlobClient()
         {
             // Arrange
+            // Storage account and container names
             string accountName1 = "fakeaccount1";
             string accountName2 = "fakeaccount2";
             string containerName1 = "fakecontainer1";
             string containerName2 = "fakecontainer2";
-            Mock<BlobContainerClient> containerClient1 = new Mock<BlobContainerClient>(new Uri($"https://{accountName1}.blob.core.windows.net/{containerName1}"), null);
-            Mock<BlobContainerClient> containerClient2 = new Mock<BlobContainerClient>(new Uri($"https://{accountName2}.blob.core.windows.net/{containerName2}"), null);
+
+            // Mock BlobContainerClients
+            var containerClient1 = new Mock<BlobContainerClient>(new Uri($"https://{accountName1}.blob.core.windows.net/{containerName1}"), null);
             containerClient1.Setup(x => x.Uri).Returns(new Uri($"https://{accountName1}.blob.core.windows.net/{containerName1}"));
             containerClient1.Setup(x => x.Name).Returns(containerName1);
             containerClient1.Setup(x => x.AccountName).Returns(accountName1);
-            containerClient2.Setup(x => x.Uri).Returns(new Uri($"https://{accountName2}.blob.core.windows.net/{containerName2}"));
+
+            var containerClient2 = new Mock<BlobContainerClient>(new Uri($"https://{accountName1}.blob.core.windows.net/{containerName2}"), null);
+            containerClient2.Setup(x => x.Uri).Returns(new Uri($"https://{accountName1}.blob.core.windows.net/{containerName2}"));
             containerClient2.Setup(x => x.Name).Returns(containerName2);
             containerClient2.Setup(x => x.AccountName).Returns(accountName2);
-            Mock<BlobServiceClient> primaryClient = new Mock<BlobServiceClient>(new Uri($"https://{accountName1}.blob.core.windows.net/"), null);
+
+            var hostNamesContainerClient = new Mock<BlobContainerClient>(new Uri($"https://{accountName1}.blob.core.windows.net/{HostContainerNames.Hosts}"), null);
+            hostNamesContainerClient.Setup(x => x.Uri).Returns(new Uri($"https://{accountName1}.blob.core.windows.net/{HostContainerNames.Hosts}"));
+            hostNamesContainerClient.Setup(x => x.Name).Returns(HostContainerNames.Hosts);
+            hostNamesContainerClient.Setup(x => x.AccountName).Returns(accountName1);
+
+            // Mock BlobServiceClients
+            var primaryClient = new Mock<BlobServiceClient>(new Uri($"https://{accountName1}.blob.core.windows.net/"), null);
             primaryClient.Setup(x => x.Uri).Returns(new Uri($"https://{accountName1}.blob.core.windows.net/"));
             primaryClient.Setup(x => x.AccountName).Returns(accountName1);
             primaryClient.Setup(x => x.GetBlobContainerClient(containerName1)).Returns(containerClient1.Object);
             primaryClient.Setup(x => x.GetBlobContainerClient(containerName2)).Returns(containerClient2.Object);
+            primaryClient.Setup(x => x.GetBlobContainerClient(HostContainerNames.Hosts)).Returns(hostNamesContainerClient.Object);
             primaryClient.Setup(x => x.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(new BlobServiceProperties(), null));
-            Mock<BlobServiceClient> targetClient = new Mock<BlobServiceClient>(new Uri($"https://{accountName2}.blob.core.windows.net/"), null);
+
+            var targetClient = new Mock<BlobServiceClient>(new Uri($"https://{accountName2}.blob.core.windows.net/"), null);
             targetClient.Setup(x => x.Uri).Returns(new Uri($"https://{accountName2}.blob.core.windows.net/"));
             targetClient.Setup(x => x.AccountName).Returns(accountName2);
             targetClient.Setup(x => x.GetBlobContainerClient(containerName1)).Returns(containerClient1.Object);
             targetClient.Setup(x => x.GetBlobContainerClient(containerName2)).Returns(containerClient2.Object);
             targetClient.Setup(x => x.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(new BlobServiceProperties(), null));
 
-            // Setup other required dependencies for BlobListenerFactory
+            // Other dependencies
             var loggerFactory = new LoggerFactory();
             var logger = loggerFactory.CreateLogger<BlobListener>();
             var hostIdProvider = new Mock<IHostIdProvider>();
@@ -69,27 +80,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             var dataQueueServiceClient = new QueueServiceClient(new Uri($"https://{accountName2}.queue.core.windows.net/"));
             var queueServiceClientProvider = new FakeQueueServiceClientProvider(hostQueueServiceClient);
             var sharedQueueWatcher = new SharedQueueWatcher();
-            IListener listener = new Mock<IListener>().Object;
-            var blobTriggerQueueWriterFactory = new BlobTriggerQueueWriterFactory(hostIdProvider.Object, queueServiceClientProvider, sharedQueueWatcher);
-            SharedBlobQueueListener _sharedBlobQueueListener = new SharedBlobQueueListener(listener);
-            var sharedContextProvider = new Mock<ISharedContextProvider>();
-            sharedContextProvider.Setup(s => s.GetOrCreateInstance<SharedBlobQueueListener>(It.IsAny<SharedBlobQueueListenerFactory>()))
-                .Returns(_sharedBlobQueueListener);
-            // Setup SharedContextProvider to return our sharedBlobListener
-            IBlobListenerStrategy strategy1 = new TestBlobListenerStrategy();
-            var sharedBlobListener = new SharedBlobListener(strategy1, exceptionHandler.Object);
-            sharedContextProvider.Setup(x => x.GetOrCreateInstance(It.IsAny<SharedBlobListenerFactory>()))
-                .Returns(sharedBlobListener);
-            var functionDescriptor = new FunctionDescriptor();
-            functionDescriptor.Id = "id";
-            functionDescriptor.ShortName = "shortname";
-            var input = new Mock<IBlobPathSource>();
+            var blobTriggerQueueWriterFactory = new BlobTriggerQueueWriterFactory(
+                hostIdProvider.Object,
+                queueServiceClientProvider,
+                sharedQueueWatcher);
             var executor = new Mock<ITriggeredFunctionExecutor>();
+            var input = new Mock<IBlobPathSource>();
             var singletonManager = new Mock<IHostSingletonManager>();
             var concurrencyManager = new Mock<ConcurrencyManager>();
             var drainModeManager = new Mock<IDrainModeManager>();
+            var functionDescriptor = new FunctionDescriptor { Id = "id", ShortName = "shortname" };
 
-            // BlobTriggerSource.LogsAndContainerScan is the most common
+            // Setup SharedContextProvider and Test Strategy
+            var sharedContextProvider = new Mock<ISharedContextProvider>();
+            var testStrategy = new TestBlobListenerStrategy();
+            var sharedBlobListener = new SharedBlobListener(testStrategy, exceptionHandler.Object);
+            sharedContextProvider.Setup(x => x.GetOrCreateInstance(It.IsAny<SharedBlobListenerFactory>()))
+                .Returns(sharedBlobListener);
+
+            // Setup SharedBlobQueueListener
+            var sharedBlobQueueListener = new SharedBlobQueueListener(
+                new Mock<IListener>().Object,
+                new BlobQueueTriggerExecutor(BlobTriggerSource.LogsAndContainerScan,
+                new Mock<IBlobWrittenWatcher>().Object, logger));
+            sharedContextProvider.Setup(s => s.GetOrCreateInstance<SharedBlobQueueListener>(It.IsAny<SharedBlobQueueListenerFactory>()))
+                .Returns(sharedBlobQueueListener);
+
+            // Create the factory
             var factory = new BlobListenerFactory(
                 hostIdProvider.Object,
                 blobsOptions,
@@ -112,34 +129,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
                 drainModeManager.Object
             );
 
-            // Setup a dummy BlobTriggerQueueWriter
-            var blobTriggerQueueWriter = new Mock<BlobTriggerQueueWriter>(null, null).Object;
-
             // Act
             await factory.CreateAsync(CancellationToken.None);
 
-            // Assert that sharedListener was updated with targetClient, not primaryClient
-            // and that the BlobTriggerExecutor was passed the BlobReceiptManager using the primaryClient
-            // 1. Get the private _strategy field from SharedBlobListener
-            var strategyField = typeof(SharedBlobListener).GetField("_strategy", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var strategy = strategyField.GetValue(sharedBlobListener);
+            // Assert
+            // 1. The strategy should have registered the target client and container
+            Assert.AreEqual(targetClient.Object, testStrategy.TargetServiceClient, "TargetServiceClient should be the target client.");
+            Assert.AreEqual(containerClient1.Object, testStrategy.ContainerClient, "ContainerClient should be the primary container.");
 
-            // 2. Get the _scanInfo field from ScanBlobScanLogHybridPollingStrategy (if that's the strategy type)
-            var scanInfoField = strategy.GetType().GetField("_scanInfo", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var scanInfo = scanInfoField.GetValue(strategy) as System.Collections.IDictionary;
+            // 2. The BlobTriggerExecutor should use a BlobReceiptManager with the primary client
+            var receiptManagerField = typeof(BlobTriggerExecutor).GetField("_receiptManager", BindingFlags.NonPublic | BindingFlags.Instance);
+            var receiptManager = receiptManagerField.GetValue(testStrategy.Executor);
+            var blobContainerClientField = typeof(BlobReceiptManager).GetField("_blobContainerClient", BindingFlags.NonPublic | BindingFlags.Instance);
+            var resultPrimaryClient = blobContainerClientField.GetValue(receiptManager);
 
-            // 3. Assert that the container is registered (the key should be your container mock/object)
-            Assert.IsTrue(scanInfo.Contains(containerClient1.Object));
-
-            // 4. Optionally, check the registrations or other details
-            var containerScanInfo = scanInfo[containerClient1.Object];
-            // You can further inspect containerScanInfo if needed
-
-            // 5. If you want to check which BlobServiceClient was used, you may need to check other fields or the state of the strategy
-            // For example, if the strategy stores the BlobServiceClient, you can reflect on that as well
-
-            // Example: If you want to check the type of the strategy to ensure it's using the correct client
-            Assert.AreEqual("ScanBlobScanLogHybridPollingStrategy", strategy.GetType().Name);
+            // The BlobReceiptManager should use the hostNamesContainerClient (from the primary client)
+            Assert.AreEqual(hostNamesContainerClient.Object, resultPrimaryClient, "BlobReceiptManager should use the primary container client.");
         }
     }
 }

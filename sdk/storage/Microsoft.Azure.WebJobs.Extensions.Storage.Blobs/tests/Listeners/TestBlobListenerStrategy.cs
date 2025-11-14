@@ -17,6 +17,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 {
     public class TestBlobListenerStrategy : IBlobListenerStrategy
     {
+        public BlobServiceClient TargetServiceClient;
+        public BlobContainerClient ContainerClient;
+        internal ITriggerExecutor<BlobTriggerExecutorContext> Executor;
         public void Cancel()
         {
         }
@@ -38,8 +41,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
         {
         }
 
-        Task IBlobNotificationStrategy.RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor, CancellationToken cancellationToken)
+        Task IBlobNotificationStrategy.RegisterAsync(
+            BlobServiceClient blobServiceClient,
+            BlobContainerClient container,
+            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+            CancellationToken cancellationToken)
         {
+            TargetServiceClient = blobServiceClient;
+            ContainerClient = container;
+            Executor = triggerExecutor;
             return Task.CompletedTask;
         }
     }
