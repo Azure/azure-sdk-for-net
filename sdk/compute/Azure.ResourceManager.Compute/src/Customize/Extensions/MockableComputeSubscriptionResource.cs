@@ -413,7 +413,6 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<CommunityGalleryResource> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
