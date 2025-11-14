@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Linq;
 using Microsoft.ClientModel.TestFramework;
@@ -165,5 +166,44 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
             """));
         Assert.That(options.StructuredInputs.Keys, Has.Count.EqualTo(2));
         Assert.That(options.StructuredInputs["direct_value_2"].ToString(), Is.EqualTo("42"));
+    }
+
+    [Test]
+    public void ResponsesEndpointsSetCorrectly()
+    {
+        Uri mockProjectEndpoint = new("https://microsoft.com/mock/endpoint");
+        Uri mockOpenAIEndpoint = new($"{mockProjectEndpoint.AbsoluteUri}/openai");
+        AuthenticationTokenProvider mockCredential = new MockCredential();
+        AuthenticationPolicy mockAuthPolicy = new BearerTokenPolicy(mockCredential, "https://ai.azure.com/.default");
+
+        ProjectOpenAIClientOptions GetOptions(Uri endpoint = null) => new() { Endpoint = endpoint };
+
+        // Not specifying options should use the constructed /openai endpoint from the project Uri
+        ProjectOpenAIClient client = new(mockProjectEndpoint, new MockCredential());
+        Assert.That(client.Endpoint?.AbsoluteUri, Is.EqualTo(mockOpenAIEndpoint));
+        client = new(new Uri(mockProjectEndpoint.AbsoluteUri + "/"), mockCredential);
+        Assert.That(client.Endpoint?.AbsoluteUri, Is.EqualTo(mockOpenAIEndpoint));
+
+        // Providing no endpoint anywhere should throw
+        Assert.Throws<ArgumentNullException>(() => client = new(mockAuthPolicy, GetOptions()));
+
+        // Supplying in options should use the literal value with no construction
+        client = new(mockAuthPolicy, GetOptions(mockProjectEndpoint));
+        Assert.That(client.Endpoint?.AbsoluteUri, Is.EqualTo(mockProjectEndpoint.AbsoluteUri));
+
+        // Supplying in both should be OK if they match correctly
+        client = new(mockProjectEndpoint, mockCredential, GetOptions(mockOpenAIEndpoint));
+        Assert.That(client.Endpoint?.AbsoluteUri, Is.EqualTo(mockOpenAIEndpoint));
+
+        // Supplying in both should throw if they don't match
+        Assert.Throws<InvalidOperationException>(() => client = new(mockProjectEndpoint, mockCredential, GetOptions(mockProjectEndpoint)));
+
+        // Clients retrieved from ProjectOpenAIClient should handle construction
+        ProjectOpenAIClient openAIClient = new(mockProjectEndpoint, mockCredential);
+        Assert.That(openAIClient.Responses.Endpoint, Is.EqualTo(mockOpenAIEndpoint));
+        Assert.That(openAIClient.GetOpenAIResponseClient("model").Endpoint, Is.EqualTo(mockOpenAIEndpoint));
+        Assert.That(openAIClient.GetProjectResponsesClient().Endpoint, Is.EqualTo(mockOpenAIEndpoint));
+        Assert.That(openAIClient.GetProjectResponsesClientForModel("model").Endpoint, Is.EqualTo(mockOpenAIEndpoint));
+        Assert.That(openAIClient.GetProjectResponsesClientForAgent(new AgentReference("agent")).Endpoint, Is.EqualTo(mockOpenAIEndpoint));
     }
 }
