@@ -1,14 +1,10 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.18.0-beta.1 (2025-11-14)
 
 ### Features Added
 
 - Added Kubernetes token proxy support (identity binding mode) to `WorkloadIdentityCredential`. When enabled via the `IsAzureKubernetesTokenProxyEnabled ` option, the credential redirects token requests to an AKS-provided proxy to work around Entra ID's limit on federated identity credentials per managed identity. This feature is opt-in and only available when using `WorkloadIdentityCredential` directly (not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`).
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
