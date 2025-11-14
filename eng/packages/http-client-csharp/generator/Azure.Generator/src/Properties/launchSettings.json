@@ -60,6 +60,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-client-generator-core-next-link-verb": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/next-link-verb -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-client-generator-core-override": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/override -g AzureStubGenerator",
       "commandName": "Executable",
