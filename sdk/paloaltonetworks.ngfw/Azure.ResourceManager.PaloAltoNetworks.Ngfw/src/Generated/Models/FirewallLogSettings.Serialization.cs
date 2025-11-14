@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeFirewallLogSettings(document.RootElement, options);
                     }
@@ -254,11 +254,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FirewallLogSettings"/> from. </param>
-        internal static FirewallLogSettings FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FirewallLogSettings"/> from. </param>
+        internal static FirewallLogSettings FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFirewallLogSettings(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
