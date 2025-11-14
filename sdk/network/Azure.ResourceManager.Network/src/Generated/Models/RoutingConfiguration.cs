@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>
         internal WritableSubResource AssociatedRouteTable { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("associatedRouteTable.id")]
         public ResourceIdentifier AssociatedRouteTableId
         {
             get => AssociatedRouteTable is null ? default : AssociatedRouteTable.Id;
@@ -84,12 +85,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of RouteTables to advertise the routes to. </summary>
+        [WirePath("propagatedRouteTables")]
         public PropagatedRouteTable PropagatedRouteTables { get; set; }
         /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
+        [WirePath("vnetRoutes")]
         public VnetRoute VnetRoutes { get; set; }
         /// <summary> The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes. </summary>
         internal WritableSubResource InboundRouteMap { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("inboundRouteMap.id")]
         public ResourceIdentifier InboundRouteMapId
         {
             get => InboundRouteMap is null ? default : InboundRouteMap.Id;
@@ -104,6 +108,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The resource id of theRouteMap associated with this RoutingConfiguration for outbound advertised routes. </summary>
         internal WritableSubResource OutboundRouteMap { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("outboundRouteMap.id")]
         public ResourceIdentifier OutboundRouteMapId
         {
             get => OutboundRouteMap is null ? default : OutboundRouteMap.Id;

@@ -83,14 +83,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Defines the rule set type to use. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
         /// <summary> Defines the version of the rule set to use. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
         /// <summary> Defines the rule set action. </summary>
+        [WirePath("ruleSetAction")]
         public ManagedRuleSetActionType? RuleSetAction { get; set; }
         /// <summary> Describes the exclusions that are applied to all rules in the set. </summary>
+        [WirePath("exclusions")]
         public IList<ManagedRuleExclusion> Exclusions { get; }
         /// <summary> Defines the rule group overrides to apply to the rule set. </summary>
+        [WirePath("ruleGroupOverrides")]
         public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; }
     }
 }

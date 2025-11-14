@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -158,7 +159,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
-        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
@@ -174,12 +175,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                    result = HttpPipelineHelper.IsSuccess(httpMessage);
+                    result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
 
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
                         _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin, _isAadEnabled);
+                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter);
+                        result = transmissionResult.ExportResult;
                     }
                     else
                     {
@@ -195,11 +197,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         result = _fileBlobProvider.SaveTelemetry(requestContent);
                     }
+
+                    if (result == ExportResult.Success)
+                    {
+                        CustomerSdkStatsHelper.TrackRetry(telemetrySchemaTypeCounter, (int)DropCode.BackOffEnabled, null);
+                    }
+                    else
+                    {
+                        CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, _fileBlobProvider != null);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
             }
 
             return result;

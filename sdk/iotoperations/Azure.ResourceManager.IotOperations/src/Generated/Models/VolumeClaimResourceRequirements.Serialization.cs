@@ -56,6 +56,16 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(Claims))
+            {
+                writer.WritePropertyName("claims"u8);
+                writer.WriteStartArray();
+                foreach (var item in Claims)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,6 +105,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             IDictionary<string, string> limits = default;
             IDictionary<string, string> requests = default;
+            IList<VolumeClaimResourceRequirementsClaims> claims = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,13 +138,27 @@ namespace Azure.ResourceManager.IotOperations.Models
                     requests = dictionary;
                     continue;
                 }
+                if (property.NameEquals("claims"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VolumeClaimResourceRequirementsClaims> array = new List<VolumeClaimResourceRequirementsClaims>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VolumeClaimResourceRequirementsClaims.DeserializeVolumeClaimResourceRequirementsClaims(item, options));
+                    }
+                    claims = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VolumeClaimResourceRequirements(limits ?? new ChangeTrackingDictionary<string, string>(), requests ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new VolumeClaimResourceRequirements(limits ?? new ChangeTrackingDictionary<string, string>(), requests ?? new ChangeTrackingDictionary<string, string>(), claims ?? new ChangeTrackingList<VolumeClaimResourceRequirementsClaims>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeClaimResourceRequirements>.Write(ModelReaderWriterOptions options)

@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Quota
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics;
-        private readonly GroupQuotaLimitsRequestRestOperations _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient;
+        private readonly ClientDiagnostics _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics;
+        private readonly SubmittedResourceRequestStatusesRestOperations _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient;
         private readonly GroupQuotaRequestStatusData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GroupQuotaRequestStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string groupQuotaRequestStatusGroupQuotaLimitsRequestApiVersion);
-            _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient = new GroupQuotaLimitsRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaRequestStatusGroupQuotaLimitsRequestApiVersion);
+            _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string groupQuotaRequestStatusSubmittedResourceRequestStatusesApiVersion);
+            _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaRequestStatusSubmittedResourceRequestStatusesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_Get</description>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_Get</description>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GroupQuotaRequestStatusResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusResource.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());

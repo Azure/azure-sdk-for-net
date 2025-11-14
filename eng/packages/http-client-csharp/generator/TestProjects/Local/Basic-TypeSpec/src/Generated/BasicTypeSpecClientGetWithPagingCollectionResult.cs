@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -34,11 +35,11 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            PageThingModel responseWithType = (PageThingModel)response;
+            PageThingModel result = (PageThingModel)response;
             List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in responseWithType.Items)
+            foreach (var item in result.Items)
             {
-                items.Add(BinaryData.FromObjectAsJson(item));
+                items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
             }
             yield return Page<BinaryData>.FromValues(items, null, response);
         }

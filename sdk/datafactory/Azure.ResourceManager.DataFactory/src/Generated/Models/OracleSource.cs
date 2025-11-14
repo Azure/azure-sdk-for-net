@@ -32,13 +32,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="partitionOption"> The partition mechanism that will be used for Oracle read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "DynamicRange". </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for Oracle source partitioning. </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal OracleSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> oracleReaderQuery, DataFactoryElement<string> queryTimeout, DataFactoryElement<string> partitionOption, OraclePartitionSettings partitionSettings, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        /// <param name="numberPrecision"> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </param>
+        /// <param name="numberScale"> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </param>
+        internal OracleSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> oracleReaderQuery, DataFactoryElement<string> queryTimeout, DataFactoryElement<string> partitionOption, OraclePartitionSettings partitionSettings, BinaryData additionalColumns, DataFactoryElement<int> numberPrecision, DataFactoryElement<int> numberScale) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;
             PartitionOption = partitionOption;
             PartitionSettings = partitionSettings;
             AdditionalColumns = additionalColumns;
+            NumberPrecision = numberPrecision;
+            NumberScale = numberScale;
             CopySourceType = copySourceType ?? "OracleSource";
         }
 
@@ -81,5 +85,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData AdditionalColumns { get; set; }
+        /// <summary> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
+        public DataFactoryElement<int> NumberPrecision { get; set; }
+        /// <summary> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
+        public DataFactoryElement<int> NumberScale { get; set; }
     }
 }

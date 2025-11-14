@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.Playwright
     {
         internal PlaywrightQuotaData() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.PlaywrightQuotaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.PlaywrightQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.PlaywrightQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.PlaywrightQuotaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.PlaywrightQuotaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.Playwright
     {
         public PlaywrightWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.PlaywrightWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.PlaywrightWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.PlaywrightWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.PlaywrightWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.PlaywrightWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -110,7 +116,10 @@ namespace Azure.ResourceManager.Playwright
     {
         internal PlaywrightWorkspaceQuotaData() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.PlaywrightWorkspaceQuotaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.PlaywrightWorkspaceQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.PlaywrightWorkspaceQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.PlaywrightWorkspaceQuotaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.PlaywrightWorkspaceQuotaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -199,7 +208,8 @@ namespace Azure.ResourceManager.Playwright.Models
         public static Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties PlaywrightQuotaProperties(Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties freeTrial = null, Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? provisioningState = default(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Playwright.PlaywrightWorkspaceData PlaywrightWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties PlaywrightWorkspaceFreeTrialProperties(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset expiryOn = default(System.DateTimeOffset), int allocatedValue = 0, float usedValue = 0f, float percentageUsed = 0f) { throw null; }
-        public static Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? provisioningState = default(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState?), System.Uri dataplaneUri = null, Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? regionalAffinity = default(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus?), Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? localAuth = default(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus?)) { throw null; }
+        public static Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch PlaywrightWorkspacePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? provisioningState = default(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState?), System.Uri dataplaneUri = null, Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? regionalAffinity = default(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus?), Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? localAuth = default(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus?), string workspaceId = null) { throw null; }
         public static Azure.ResourceManager.Playwright.PlaywrightWorkspaceQuotaData PlaywrightWorkspaceQuotaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties PlaywrightWorkspaceQuotaProperties(Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties freeTrial = null, Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? provisioningState = default(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState?)) { throw null; }
     }
@@ -218,6 +228,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus left, Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus left, Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -226,7 +237,10 @@ namespace Azure.ResourceManager.Playwright.Models
         internal PlaywrightFreeTrialProperties() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState State { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -249,6 +263,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState left, Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState left, Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -257,7 +272,10 @@ namespace Azure.ResourceManager.Playwright.Models
         public PlaywrightNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -270,7 +288,10 @@ namespace Azure.ResourceManager.Playwright.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -292,6 +313,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason left, Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason left, Azure.ResourceManager.Playwright.Models.PlaywrightNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -314,6 +336,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState left, Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState left, Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -331,6 +354,7 @@ namespace Azure.ResourceManager.Playwright.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName left, Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName left, Azure.ResourceManager.Playwright.Models.PlaywrightQuotaName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -339,7 +363,10 @@ namespace Azure.ResourceManager.Playwright.Models
         internal PlaywrightQuotaProperties() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightFreeTrialProperties FreeTrial { get { throw null; } }
         public Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightQuotaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -354,7 +381,10 @@ namespace Azure.ResourceManager.Playwright.Models
         public System.DateTimeOffset ExpiryOn { get { throw null; } }
         public float PercentageUsed { get { throw null; } }
         public float UsedValue { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -366,7 +396,10 @@ namespace Azure.ResourceManager.Playwright.Models
         public PlaywrightWorkspacePatch() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -380,7 +413,11 @@ namespace Azure.ResourceManager.Playwright.Models
         public Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? LocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? RegionalAffinity { get { throw null; } set { } }
+        public string WorkspaceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -392,7 +429,10 @@ namespace Azure.ResourceManager.Playwright.Models
         internal PlaywrightWorkspaceQuotaProperties() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceFreeTrialProperties FreeTrial { get { throw null; } }
         public Azure.ResourceManager.Playwright.Models.PlaywrightProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceQuotaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -404,7 +444,10 @@ namespace Azure.ResourceManager.Playwright.Models
         public PlaywrightWorkspaceUpdateProperties() { }
         public Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? LocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.Playwright.Models.PlaywrightEnablementStatus? RegionalAffinity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Playwright.Models.PlaywrightWorkspaceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

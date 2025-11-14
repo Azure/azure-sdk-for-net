@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
         /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
         /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
+        /// <param name="isL4ClientIPPreservationEnabled"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? isL4ClientIPPreservationEnabled, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Port = port;
@@ -45,20 +46,26 @@ namespace Azure.ResourceManager.Network.Models
             TrustedRootCertificates = trustedRootCertificates;
             HostName = hostName;
             PickHostNameFromBackendAddress = pickHostNameFromBackendAddress;
+            IsL4ClientIPPreservationEnabled = isL4ClientIPPreservationEnabled;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The destination port on the backend. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; set; }
         /// <summary> The protocol used to communicate with the backend. </summary>
+        [WirePath("properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("properties.timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary> Probe resource of an application gateway. </summary>
         internal WritableSubResource Probe { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.probe.id")]
         public ResourceIdentifier ProbeId
         {
             get => Probe is null ? default : Probe.Id;
@@ -71,12 +78,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
         public IList<WritableSubResource> TrustedRootCertificates { get; }
         /// <summary> Server name indication to be sent to the backend servers for Tls protocol. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; set; }
         /// <summary> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </summary>
+        [WirePath("properties.pickHostNameFromBackendAddress")]
         public bool? PickHostNameFromBackendAddress { get; set; }
+        /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
+        [WirePath("properties.enableL4ClientIpPreservation")]
+        public bool? IsL4ClientIPPreservationEnabled { get; set; }
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

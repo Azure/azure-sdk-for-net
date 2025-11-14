@@ -91,7 +91,9 @@ namespace Azure.ResourceManager
         protected ArmOperation() { }
         public static Azure.ResourceManager.ArmOperation Rehydrate(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RehydrateAsync(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<T>> RehydrateAsync<T>(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) where T : notnull { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection.")]
         public static Azure.ResourceManager.ArmOperation<T> Rehydrate<T>(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) where T : notnull { throw null; }
     }
     public abstract partial class ArmOperation<T> : Azure.Operation<T>
@@ -842,7 +844,7 @@ namespace Azure.ResourceManager.Models
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        protected TrackedResourceData() { }
+        protected internal TrackedResourceData() { }
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
         protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }

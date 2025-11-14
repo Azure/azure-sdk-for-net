@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaOperations_GetOperations()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GetOperations.json
+            // Generated from example definition: 2025-09-01/GetOperations.json
             // this example is just showing the usage of "QuotaOperation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

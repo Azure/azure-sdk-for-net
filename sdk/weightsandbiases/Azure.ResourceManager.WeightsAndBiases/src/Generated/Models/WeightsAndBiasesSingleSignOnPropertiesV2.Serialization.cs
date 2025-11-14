@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.WeightsAndBiases;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
-    public partial class WeightsAndBiasesSingleSignOnPropertiesV2 : IUtf8JsonSerializable, IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>
+    /// <summary> Properties specific to Single Sign On Resource. </summary>
+    public partial class WeightsAndBiasesSingleSignOnPropertiesV2 : IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesSingleSignOnPropertiesV2"/> for deserialization. </summary>
+        internal WeightsAndBiasesSingleSignOnPropertiesV2()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WeightsAndBiasesSingleSignOnPropertiesV2)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(State))
@@ -55,21 +60,26 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
-                foreach (var item in AadDomains)
+                foreach (string item in AadDomains)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,92 +88,105 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
         }
 
-        WeightsAndBiasesSingleSignOnPropertiesV2 IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WeightsAndBiasesSingleSignOnPropertiesV2 IJsonModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WeightsAndBiasesSingleSignOnPropertiesV2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WeightsAndBiasesSingleSignOnPropertiesV2)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(document.RootElement, options);
         }
 
-        internal static WeightsAndBiasesSingleSignOnPropertiesV2 DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WeightsAndBiasesSingleSignOnPropertiesV2 DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WeightsAndBiasesSingleSignOnType type = default;
+            WeightsAndBiasesSingleSignOnType @type = default;
             WeightsAndBiasesSingleSignOnState? state = default;
             string enterpriseAppId = default;
-            string url = default;
+            string uri = default;
             IList<string> aadDomains = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new WeightsAndBiasesSingleSignOnType(property.Value.GetString());
+                    @type = new WeightsAndBiasesSingleSignOnType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new WeightsAndBiasesSingleSignOnState(property.Value.GetString());
+                    state = new WeightsAndBiasesSingleSignOnState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enterpriseAppId"u8))
+                if (prop.NameEquals("enterpriseAppId"u8))
                 {
-                    enterpriseAppId = property.Value.GetString();
+                    enterpriseAppId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    uri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadDomains"u8))
+                if (prop.NameEquals("aadDomains"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     aadDomains = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new WeightsAndBiasesSingleSignOnPropertiesV2(
-                type,
+                @type,
                 state,
                 enterpriseAppId,
-                url,
+                uri,
                 aadDomains ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -173,15 +196,20 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
         }
 
-        WeightsAndBiasesSingleSignOnPropertiesV2 IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WeightsAndBiasesSingleSignOnPropertiesV2 IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WeightsAndBiasesSingleSignOnPropertiesV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(document.RootElement, options);
                     }
                 default:
@@ -189,6 +217,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WeightsAndBiasesSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

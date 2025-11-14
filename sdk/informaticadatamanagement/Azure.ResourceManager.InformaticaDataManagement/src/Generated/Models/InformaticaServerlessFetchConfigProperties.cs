@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> InfaServerlessFetchConfigProperties for the fetch all serverless API as received from informatica API response. </summary>
     public partial class InformaticaServerlessFetchConfigProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InformaticaServerlessFetchConfigProperties"/>. </summary>
         internal InformaticaServerlessFetchConfigProperties()
@@ -66,8 +37,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="subscriptionId"> subscription ID. </param>
         /// <param name="region"> region name for the runtime environment. </param>
         /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessFetchConfigProperties(string subnet, string applicationType, string resourceGroupName, string advancedCustomProperties, string supplementaryFileLocation, string platform, string tags, string vnet, string executionTimeout, string computeUnits, Guid? tenantId, string subscriptionId, string region, ResourceIdentifier serverlessArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InformaticaServerlessFetchConfigProperties(string subnet, string applicationType, string resourceGroupName, string advancedCustomProperties, string supplementaryFileLocation, string platform, string tags, string vnet, string executionTimeout, string computeUnits, Guid? tenantId, string subscriptionId, string region, ResourceIdentifier serverlessArmResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             ApplicationType = applicationType;
@@ -83,35 +54,48 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             SubscriptionId = subscriptionId;
             Region = region;
             ServerlessArmResourceId = serverlessArmResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> subnet name. </summary>
         public string Subnet { get; }
+
         /// <summary> applicationType name. </summary>
         public string ApplicationType { get; }
+
         /// <summary> Resource group name. </summary>
         public string ResourceGroupName { get; }
+
         /// <summary> Advanced custom properties. </summary>
         public string AdvancedCustomProperties { get; }
+
         /// <summary> Supplementary File location. </summary>
         public string SupplementaryFileLocation { get; }
+
         /// <summary> Serverless Account Platform. </summary>
         public string Platform { get; }
+
         /// <summary> Tags for the resource. </summary>
         public string Tags { get; }
+
         /// <summary> virtual network. </summary>
         public string Vnet { get; }
+
         /// <summary> Execution timeout. </summary>
         public string ExecutionTimeout { get; }
+
         /// <summary> Compute Units. </summary>
         public string ComputeUnits { get; }
+
         /// <summary> Tenant ID. </summary>
         public Guid? TenantId { get; }
+
         /// <summary> subscription ID. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> region name for the runtime environment. </summary>
         public string Region { get; }
+
         /// <summary> Serverless Arm Resource ID. </summary>
         public ResourceIdentifier ServerlessArmResourceId { get; }
     }

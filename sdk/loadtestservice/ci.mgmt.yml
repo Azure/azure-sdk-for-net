@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.LoadTesting
       safeName: AzureResourceManagerLoadTesting
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.LoadTesting
-      ExpectedWarningsFilepath: None

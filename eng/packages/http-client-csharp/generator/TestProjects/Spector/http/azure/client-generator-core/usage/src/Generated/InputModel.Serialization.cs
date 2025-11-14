@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
     public partial class InputModel : IJsonModel<InputModel>
     {

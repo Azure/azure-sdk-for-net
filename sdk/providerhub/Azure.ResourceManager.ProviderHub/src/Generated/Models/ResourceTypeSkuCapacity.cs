@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/>. </summary>
-        /// <param name="minimum"></param>
+        /// <param name="minimum"> The minimum. </param>
         public ResourceTypeSkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/>. </summary>
-        /// <param name="minimum"></param>
-        /// <param name="maximum"></param>
-        /// <param name="default"></param>
-        /// <param name="scaleType"></param>
+        /// <param name="minimum"> The minimum. </param>
+        /// <param name="maximum"> The maximum. </param>
+        /// <param name="default"> The default. </param>
+        /// <param name="scaleType"> The scale type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeSkuCapacity(int minimum, int? maximum, int? @default, ResourceTypeSkuScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the minimum. </summary>
+        /// <summary> The minimum. </summary>
         public int Minimum { get; set; }
-        /// <summary> Gets or sets the maximum. </summary>
+        /// <summary> The maximum. </summary>
         public int? Maximum { get; set; }
-        /// <summary> Gets or sets the default. </summary>
+        /// <summary> The default. </summary>
         public int? Default { get; set; }
-        /// <summary> Gets or sets the scale type. </summary>
+        /// <summary> The scale type. </summary>
         public ResourceTypeSkuScaleType? ScaleType { get; set; }
     }
 }

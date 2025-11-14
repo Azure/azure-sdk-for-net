@@ -42,6 +42,51 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsPoolVmImage"/>. </summary>
+        /// <param name="resourceId"> The resource id of the image. </param>
+        /// <param name="wellKnownImageName"> The image to use from a well-known set of images made available to customers. </param>
+        /// <param name="aliases"> List of aliases to reference the image by. </param>
+        /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
+        /// <param name="ephemeralType"> The ephemeral type of the image. </param>
+        /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = null, string wellKnownImageName = null, IEnumerable<string> aliases = null, string buffer = null, DevOpsEphemeralType? ephemeralType = null, bool? isEphemeral = null)
+        {
+            aliases ??= new List<string>();
+
+            return new DevOpsPoolVmImage(
+                resourceId,
+                wellKnownImageName,
+                aliases?.ToList(),
+                buffer,
+                ephemeralType,
+                isEphemeral,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsNetworkProfile"/>. </summary>
+        /// <param name="subnetId"> The subnet id on which to put all machines created in the pool. </param>
+        /// <param name="staticIPAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
+        /// <param name="ipAddresses"> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </param>
+        /// <returns> A new <see cref="Models.DevOpsNetworkProfile"/> instance for mocking. </returns>
+        public static DevOpsNetworkProfile DevOpsNetworkProfile(string subnetId = null, int? staticIPAddressCount = null, IEnumerable<string> ipAddresses = null)
+        {
+            ipAddresses ??= new List<string>();
+
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsCheckNameAvailabilityResult"/>. </summary>
+        /// <param name="available"> Availability status of the name. </param>
+        /// <param name="message"> A message explaining why the name is unavailable. Will be null if the name is available. </param>
+        /// <param name="name"> The name whose availability was checked. </param>
+        /// <param name="reason"> The reason code explaining why the name is unavailable. Will be null if the name is available. </param>
+        /// <returns> A new <see cref="Models.DevOpsCheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DevOpsCheckNameAvailabilityResult DevOpsCheckNameAvailabilityResult(DevOpsAvailabilityStatus available = default, string message = null, string name = null, CheckNameAvailabilityReason reason = default)
+        {
+            return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DevOpsResourceDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

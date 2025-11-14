@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    public partial class SeaGull : IJsonModel<SeaGull>
+    public partial class SeaGull : Bird, IJsonModel<SeaGull>
     {
         internal SeaGull() => throw null;
 

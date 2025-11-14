@@ -14,46 +14,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteCancel event. This is raised when a resource delete operation is canceled. </summary>
     public partial class ResourceDeleteCancelEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/>. </summary>
         /// <param name="authorizationJson"> The requested authorization for the operation. </param>
-        /// <param name="claimsJson"> The properties of the claims. </param>
         /// <param name="httpRequestJson"> The details of the operation. </param>
-        internal ResourceDeleteCancelEventData(JsonElement authorizationJson, JsonElement claimsJson, JsonElement httpRequestJson)
+        internal ResourceDeleteCancelEventData(JsonElement authorizationJson, JsonElement httpRequestJson)
         {
             AuthorizationJson = authorizationJson;
-            ClaimsJson = claimsJson;
             HttpRequestJson = httpRequestJson;
         }
 
@@ -69,8 +38,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="claimsJson"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequestJson"> The details of the operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDeleteCancelEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceDeleteCancelEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
@@ -83,28 +52,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ClaimsJson = claimsJson;
             CorrelationId = correlationId;
             HttpRequestJson = httpRequestJson;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/> for deserialization. </summary>
-        internal ResourceDeleteCancelEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The tenant ID of the resource. </summary>
         public string TenantId { get; }
+
         /// <summary> The subscription ID of the resource. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> The resource group of the resource. </summary>
         public string ResourceGroup { get; }
+
         /// <summary> The resource provider performing the operation. </summary>
         public string ResourceProvider { get; }
+
         /// <summary> The URI of the resource in the operation. </summary>
         public string ResourceUri { get; }
+
         /// <summary> The operation that was performed. </summary>
         public string OperationName { get; }
+
         /// <summary> The status of the operation. </summary>
         public string Status { get; }
+
         /// <summary> An operation ID used for troubleshooting. </summary>
         public string CorrelationId { get; }
     }

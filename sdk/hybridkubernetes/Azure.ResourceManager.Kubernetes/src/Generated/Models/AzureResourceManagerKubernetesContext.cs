@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,19 +14,31 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AadProfile))]
+    [ModelReaderWriterBuildable(typeof(AgentError))]
+    [ModelReaderWriterBuildable(typeof(ArcAgentProfile))]
+    [ModelReaderWriterBuildable(typeof(ArcAgentryConfigurations))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterData))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterList))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterResource))]
     [ModelReaderWriterBuildable(typeof(CredentialResult))]
     [ModelReaderWriterBuildable(typeof(CredentialResults))]
+    [ModelReaderWriterBuildable(typeof(Gateway))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
     [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OidcIssuerProfile))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(SecurityProfileWorkloadIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemComponent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext
     {
     }

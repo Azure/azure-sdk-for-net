@@ -45,27 +45,20 @@ namespace Azure.Data.AppConfiguration
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("content_type"u8);
                 writer.WriteStringValue(ContentType);
             }
-            writer.WritePropertyName("etag"u8);
-            SerializationEtag(writer, options);
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
             if (Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("last_modified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
-            }
-            if (Optional.IsDefined(IsReadOnly))
-            {
-                writer.WritePropertyName("locked"u8);
-                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -83,6 +76,13 @@ namespace Azure.Data.AppConfiguration
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(IsReadOnly))
+            {
+                writer.WritePropertyName("locked"u8);
+                writer.WriteBooleanValue(IsReadOnly.Value);
+            }
+            writer.WritePropertyName("etag"u8);
+            SerializationEtag(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,12 +127,12 @@ namespace Azure.Data.AppConfiguration
             }
             string key = default;
             string label = default;
-            string value = default;
             string contentType = default;
-            ETag eTag = default;
+            string value = default;
             DateTimeOffset? lastModified = default;
-            bool? isReadOnly = default;
             IDictionary<string, string> tags = default;
+            bool? isReadOnly = default;
+            ETag eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,19 +146,14 @@ namespace Azure.Data.AppConfiguration
                     label = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
-                {
-                    value = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("content_type"u8))
                 {
                     contentType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    DeserializeEtag(prop, ref eTag);
+                    value = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("last_modified"u8))
@@ -168,15 +163,6 @@ namespace Azure.Data.AppConfiguration
                         continue;
                     }
                     lastModified = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("locked"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -200,6 +186,20 @@ namespace Azure.Data.AppConfiguration
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("locked"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isReadOnly = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    DeserializeEtag(prop, ref eTag);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -208,12 +208,12 @@ namespace Azure.Data.AppConfiguration
             return new ConfigurationSetting(
                 key,
                 label,
-                value,
                 contentType,
-                eTag,
+                value,
                 lastModified,
-                isReadOnly,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                isReadOnly,
+                eTag,
                 additionalBinaryDataProperties);
         }
 
@@ -245,7 +245,7 @@ namespace Azure.Data.AppConfiguration
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeConfigurationSetting(document.RootElement, options);
                     }
@@ -269,11 +269,10 @@ namespace Azure.Data.AppConfiguration
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSetting"/> from. </param>
-        public static explicit operator ConfigurationSetting(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSetting"/> from. </param>
+        public static explicit operator ConfigurationSetting(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeConfigurationSetting(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -1,4 +1,4 @@
 directory: specification/ai/Azure.AI.Projects
-commit: 1043335faf56f4ec34ea7d3aa139d4f6f022337a
+commit: 8abd9b9b0bcc8bb093c4559b8b348ec51cf2392d
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

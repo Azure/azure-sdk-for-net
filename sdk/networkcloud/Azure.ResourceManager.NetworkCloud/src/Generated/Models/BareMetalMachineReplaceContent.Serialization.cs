@@ -54,10 +54,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
+            if (Optional.IsDefined(SafeguardMode))
+            {
+                writer.WritePropertyName("safeguardMode"u8);
+                writer.WriteStringValue(SafeguardMode.Value.ToString());
+            }
             if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
+            }
+            if (Optional.IsDefined(StoragePolicy))
+            {
+                writer.WritePropertyName("storagePolicy"u8);
+                writer.WriteStringValue(StoragePolicy.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +110,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string bmcMacAddress = default;
             string bootMacAddress = default;
             string machineName = default;
+            BareMetalMachineReplaceSafeguardMode? safeguardMode = default;
             string serialNumber = default;
+            BareMetalMachineReplaceStoragePolicy? storagePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,9 +141,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     machineName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("safeguardMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    safeguardMode = new BareMetalMachineReplaceSafeguardMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storagePolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storagePolicy = new BareMetalMachineReplaceStoragePolicy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +175,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 bmcMacAddress,
                 bootMacAddress,
                 machineName,
+                safeguardMode,
                 serialNumber,
+                storagePolicy,
                 serializedAdditionalRawData);
         }
 

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/88652738431f51137c31860eb70a17cbce12a6d4/specification/cognitiveservices/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/78c97002d557d9aca3f8220b4a4774ed5aae3a09/specification/cognitiveservices/resource-manager/readme.md
 #tag: package-2025-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
@@ -119,7 +120,8 @@ rename-mapping:
   ConnectionOAuth2: CognitiveServicesConnectionOAuth2
   ConnectionServicePrincipal: CognitiveServicesConnectionServicePrincipal
   ConnectionUsernamePassword: CognitiveServicesConnectionUsernamePassword
-  NetworkInjections: AIFoundryNetworkInjection
+  NetworkInjection: AIFoundryNetworkInjection
+  AccountProperties.networkInjections: AIFoundryNetworkInjections
   PATAuthTypeConnectionProperties: PatAuthTypeConnectionProperties
   ScenarioType: AIFoundryNetworkInjectionScenarioType
 

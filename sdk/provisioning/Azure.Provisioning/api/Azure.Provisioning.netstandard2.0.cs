@@ -5,7 +5,6 @@ namespace Azure.Provisioning
         public BicepDictionary() { }
         public BicepDictionary(System.Collections.Generic.IDictionary<string, Azure.Provisioning.BicepValue<T>>? values) { }
         public int Count { get { throw null; } }
-        public override bool IsEmpty { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public Azure.Provisioning.BicepValue<T> this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
@@ -41,7 +40,6 @@ namespace Azure.Provisioning
         public BicepList() { }
         public BicepList(System.Collections.Generic.IList<Azure.Provisioning.BicepValue<T>>? values) { }
         public int Count { get { throw null; } }
-        public override bool IsEmpty { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public Azure.Provisioning.BicepValue<T> this[int index] { get { throw null; } set { } }
         public void Add(Azure.Provisioning.BicepValue<T> item) { }
@@ -81,6 +79,7 @@ namespace Azure.Provisioning
     }
     public static partial class BicepValueExtensions
     {
+        public static Azure.Provisioning.Expressions.BicepExpression ToBicepExpression(this Azure.Provisioning.IBicepValue bicepValue) { throw null; }
         public static T Unwrap<T>(this Azure.Provisioning.BicepValue<T> value) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
     }
     public enum BicepValueKind
@@ -589,7 +588,9 @@ namespace Azure.Provisioning.Expressions
         public static Azure.Provisioning.BicepValue<string> Concat(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.BicepValue<string> CreateGuid(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.ArmDeployment GetDeployment() { throw null; }
+        public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetExtensionResourceId(Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> resourceId, Azure.Provisioning.BicepValue<string> resourceType, params Azure.Provisioning.BicepValue<string>[] resourceNames) { throw null; }
         public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup() { throw null; }
+        public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Subscription GetSubscription() { throw null; }
         public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetSubscriptionResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Tenant GetTenant() { throw null; }
@@ -608,6 +609,7 @@ namespace Azure.Provisioning.Expressions
         public BicepInterpolatedStringHandler(int literalLength, int formattedCount) { throw null; }
         public void AppendFormatted<T>(T t) { }
         public void AppendLiteral(string text) { }
+        public static implicit operator Azure.Provisioning.Expressions.BicepInterpolatedStringHandler (System.FormattableString formattable) { throw null; }
     }
     public partial class BicepProgram
     {
@@ -918,6 +920,7 @@ namespace Azure.Provisioning.Primitives
         protected Azure.Provisioning.BicepDictionary<T> DefineDictionaryProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false) { throw null; }
         protected Azure.Provisioning.BicepList<T> DefineListProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false) { throw null; }
         protected T DefineModelProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, string? format = null) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
+        protected T DefineModelProperty<T>(string propertyName, string[]? bicepPath, T value, bool isOutput = false, bool isRequired = false, bool isSecure = false, string? format = null) where T : Azure.Provisioning.Primitives.ProvisionableConstruct { throw null; }
         protected Azure.Provisioning.BicepValue<T> DefineProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, Azure.Provisioning.BicepValue<T>? defaultValue = null, string? format = null) { throw null; }
         protected virtual void DefineProvisionableProperties() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

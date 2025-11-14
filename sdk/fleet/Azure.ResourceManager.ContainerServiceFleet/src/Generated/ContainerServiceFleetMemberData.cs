@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
         public ContainerServiceFleetMemberData()
         {
+            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
@@ -65,14 +66,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
         /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="labels"> The labels for the fleet member. </param>
         /// <param name="status"> Status information of the last operation for fleet member. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, ContainerServiceFleetMemberStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, IDictionary<string, string> labels, ContainerServiceFleetMemberStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ClusterResourceId = clusterResourceId;
             Group = group;
             ProvisioningState = provisioningState;
+            Labels = labels;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -85,6 +88,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         public string Group { get; set; }
         /// <summary> The status of the last operation. </summary>
         public FleetMemberProvisioningState? ProvisioningState { get; }
+        /// <summary> The labels for the fleet member. </summary>
+        public IDictionary<string, string> Labels { get; }
         /// <summary> Status information of the last operation for fleet member. </summary>
         public ContainerServiceFleetMemberStatus Status { get; }
     }

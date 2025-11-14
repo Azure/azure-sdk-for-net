@@ -12,63 +12,35 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The DataConnection.
-    /// Please note <see cref="DataConnection"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureDataExplorerDataConnection"/> and <see cref="LogAnalyticsDataConnection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsDataConnection"/> and <see cref="AzureDataExplorerDataConnection"/>.
     /// </summary>
     public abstract partial class DataConnection
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataConnection"/>. </summary>
-        protected DataConnection()
+        /// <param name="kind"> Discriminator property for DataConnection. </param>
+        private protected DataConnection(string kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnection"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
-        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="createdDate"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="updatedDate"> The date the data connection was last updated. </param>
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Id = id;
@@ -82,31 +54,42 @@ namespace Azure.Analytics.Defender.Easm
             UserUpdatedAt = userUpdatedAt;
             Active = active;
             InactiveMessage = inactiveMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Discriminator property for DataConnection. </summary>
         internal string Kind { get; set; }
-        /// <summary> The system generated unique id for the resource. </summary>
+
+        /// <summary> This is typically the same as the name but might be different for different models. </summary>
         public string Id { get; }
+
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }
+
         /// <summary> The name that can be used for display purposes. </summary>
         public string DisplayName { get; }
+
         /// <summary> The type of data the data connection will transfer. </summary>
         public DataConnectionContent? Content { get; }
+
         /// <summary> The date the data connection was created. </summary>
         public DateTimeOffset? CreatedDate { get; }
+
         /// <summary> The rate at which the data connection will receive updates. </summary>
         public DataConnectionFrequency? Frequency { get; }
-        /// <summary> The day to update the data connection on. </summary>
+
+        /// <summary> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </summary>
         public int? FrequencyOffset { get; }
+
         /// <summary> The date the data connection was last updated. </summary>
         public DateTimeOffset? UpdatedDate { get; }
+
         /// <summary> The date the data connection was last updated by user. </summary>
         public DateTimeOffset? UserUpdatedAt { get; }
+
         /// <summary> An indicator of whether the data connection is active. </summary>
         public bool? Active { get; }
+
         /// <summary> A message that specifies details about data connection if inactive. </summary>
         public string InactiveMessage { get; }
     }

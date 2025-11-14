@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -200,6 +200,102 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns a ResourceGuard belonging to a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceGuardData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceGuardData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceGuardData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns a ResourceGuard belonging to a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceGuardData> Get(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceGuardData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ResourceGuardData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardData data)
         {
             var uri = new RawRequestUriBuilder();
@@ -297,186 +393,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns a ResourceGuard belonging to a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceGuardData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceGuardData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ResourceGuardData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a ResourceGuard belonging to a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceGuardData> Get(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceGuardData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceGuardData.DeserializeResourceGuardData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ResourceGuardData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes a ResourceGuard resource from the resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a ResourceGuard resource from the resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -582,7 +498,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -592,12 +508,96 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/disableSoftDeleteRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes a ResourceGuard resource from the resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a ResourceGuard resource from the resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/disableSoftDeleteRequests", false);
+            uri.AppendPath("/deleteProtectedItemRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -621,17 +621,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetDisableSoftDeleteRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public async Task<Response<DppBaseResourceList>> GetDeleteProtectedItemRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
-            using var message = CreateGetDisableSoftDeleteRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDeleteProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -650,17 +650,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetDisableSoftDeleteRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public Response<DppBaseResourceList> GetDeleteProtectedItemRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
-            using var message = CreateGetDisableSoftDeleteRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDeleteProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -669,6 +669,106 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         DppBaseResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetDefaultDeleteProtectedItemRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using var message = CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceGuardProtectedObjectData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using var message = CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceGuardProtectedObjectData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -715,7 +815,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -744,7 +844,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -770,7 +870,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateGetBackupSecurityPinRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal RequestUriBuilder CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -780,12 +880,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/getBackupSecurityPINRequests", false);
+            uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
+            uri.AppendPath(requestName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -798,7 +899,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/getBackupSecurityPINRequests", false);
+            uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
+            uri.AppendPath(requestName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -809,25 +911,27 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetBackupSecurityPinRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var message = CreateGetBackupSecurityPinRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DppBaseResourceList value = default;
+                        ResourceGuardProtectedObjectData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -838,25 +942,27 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetBackupSecurityPinRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var message = CreateGetBackupSecurityPinRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DppBaseResourceList value = default;
+                        ResourceGuardProtectedObjectData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -864,7 +970,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -874,12 +980,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/deleteProtectedItemRequests", false);
+            uri.AppendPath("/disableSoftDeleteRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -892,7 +998,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/deleteProtectedItemRequests", false);
+            uri.AppendPath("/disableSoftDeleteRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -903,17 +1009,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetDeleteProtectedItemRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public async Task<Response<DppBaseResourceList>> GetDisableSoftDeleteRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
-            using var message = CreateGetDeleteProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDisableSoftDeleteRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -932,205 +1038,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetDeleteProtectedItemRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public Response<DppBaseResourceList> GetDisableSoftDeleteRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
-            using var message = CreateGetDeleteProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/updateProtectionPolicyRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/updateProtectionPolicyRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetUpdateProtectionPolicyRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetUpdateProtectionPolicyRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetUpdateProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/updateProtectedItemRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/updateProtectedItemRequests", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetUpdateProtectedItemRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetUpdateProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetUpdateProtectedItemRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetUpdateProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDisableSoftDeleteRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1187,8 +1105,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1218,8 +1136,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1246,7 +1164,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        internal RequestUriBuilder CreateGetBackupSecurityPinRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1256,13 +1174,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
-            uri.AppendPath(requestName, true);
+            uri.AppendPath("/getBackupSecurityPINRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1275,8 +1192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
-            uri.AppendPath(requestName, true);
+            uri.AppendPath("/getBackupSecurityPINRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1287,27 +1203,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DppBaseResourceList>> GetBackupSecurityPinRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var message = CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            using var message = CreateGetBackupSecurityPinRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceGuardProtectedObjectData value = default;
+                        DppBaseResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1318,27 +1232,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DppBaseResourceList> GetBackupSecurityPinRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var message = CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            using var message = CreateGetBackupSecurityPinRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceGuardProtectedObjectData value = default;
+                        DppBaseResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1387,8 +1299,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1418,8 +1330,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1446,7 +1358,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateGetDefaultDeleteProtectedItemRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        internal RequestUriBuilder CreateGetUpdateProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1456,13 +1368,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/deleteProtectedItemRequests/", false);
-            uri.AppendPath(requestName, true);
+            uri.AppendPath("/updateProtectedItemRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1475,8 +1386,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
             uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/deleteProtectedItemRequests/", false);
-            uri.AppendPath(requestName, true);
+            uri.AppendPath("/updateProtectedItemRequests", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1487,27 +1397,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DppBaseResourceList>> GetUpdateProtectedItemRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var message = CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            using var message = CreateGetUpdateProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceGuardProtectedObjectData value = default;
+                        DppBaseResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1518,127 +1426,25 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DppBaseResourceList> GetUpdateProtectedItemRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var message = CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            using var message = CreateGetUpdateProtectedItemRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ResourceGuardProtectedObjectData value = default;
+                        DppBaseResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/updateProtectionPolicyRequests/", false);
-            uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
-            uri.AppendPath(resourceGuardsName, true);
-            uri.AppendPath("/updateProtectionPolicyRequests/", false);
-            uri.AppendPath(requestName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
-
-            using var message = CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceGuardProtectedObjectData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
-
-            using var message = CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourceGuardProtectedObjectData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1687,8 +1493,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1718,8 +1524,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="requestName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1731,6 +1537,200 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
             using var message = CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceGuardProtectedObjectData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DppBaseResourceList>> GetUpdateProtectionPolicyRequestsObjectsAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DppBaseResourceList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DppBaseResourceList> GetUpdateProtectionPolicyRequestsObjects(string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsRequest(subscriptionId, resourceGroupName, resourceGuardsName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DppBaseResourceList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using var message = CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ResourceGuardProtectedObjectData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceGuardsName"/> or <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using var message = CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(subscriptionId, resourceGroupName, resourceGuardsName, requestName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1902,7 +1902,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1910,7 +1910,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return uri;
         }
 
-        internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1928,18 +1928,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetDisableSoftDeleteRequestsObjectsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public async Task<Response<DppBaseResourceList>> GetDeleteProtectedItemRequestsObjectsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
-            using var message = CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1959,18 +1959,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetDisableSoftDeleteRequestsObjectsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        public Response<DppBaseResourceList> GetDeleteProtectedItemRequestsObjectsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
-            using var message = CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
+            using var message = CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2012,7 +2012,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2043,7 +2043,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2055,6 +2055,90 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
             using var message = CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DppBaseResourceList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DppBaseResourceList>> GetDisableSoftDeleteRequestsObjectsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DppBaseResourceList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DppBaseResourceList> GetDisableSoftDeleteRequestsObjectsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2096,7 +2180,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2127,7 +2211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2139,174 +2223,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
             using var message = CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetDeleteProtectedItemRequestsObjectsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetDeleteProtectedItemRequestsObjectsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DppBaseResourceList>> GetUpdateProtectionPolicyRequestsObjectsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DppBaseResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DppBaseResourceList> GetUpdateProtectionPolicyRequestsObjectsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-
-            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2348,7 +2264,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2379,7 +2295,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceGuardsName"> The <see cref="string"/> to use. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2391,6 +2307,90 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
 
             using var message = CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DppBaseResourceList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DppBaseResourceList>> GetUpdateProtectionPolicyRequestsObjectsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DppBaseResourceList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = DppBaseResourceList.DeserializeDppBaseResourceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DppBaseResourceList> GetUpdateProtectionPolicyRequestsObjectsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var message = CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceGuardsName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

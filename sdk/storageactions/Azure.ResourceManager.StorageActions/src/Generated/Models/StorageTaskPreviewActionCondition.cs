@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Represents the storage task conditions to be tested for a match with container and blob properties. </summary>
     public partial class StorageTaskPreviewActionCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionCondition"/>. </summary>
         /// <param name="if"> The condition to be tested for a match with container and blob properties. </param>
@@ -60,34 +32,35 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionCondition"/>. </summary>
         /// <param name="if"> The condition to be tested for a match with container and blob properties. </param>
         /// <param name="elseBlockExists"> Specify whether the else block is present in the condition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskPreviewActionCondition(StorageTaskPreviewActionIfCondition @if, bool elseBlockExists, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTaskPreviewActionCondition(StorageTaskPreviewActionIfCondition @if, bool elseBlockExists, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             If = @if;
             ElseBlockExists = elseBlockExists;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionCondition"/> for deserialization. </summary>
-        internal StorageTaskPreviewActionCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The condition to be tested for a match with container and blob properties. </summary>
         internal StorageTaskPreviewActionIfCondition If { get; set; }
-        /// <summary> Storage task condition to bes tested for a match. </summary>
-        public string IfCondition
-        {
-            get => If is null ? default : If.Condition;
-            set
-            {
-                if (If is null)
-                    If = new StorageTaskPreviewActionIfCondition();
-                If.Condition = value;
-            }
-        }
 
         /// <summary> Specify whether the else block is present in the condition. </summary>
         public bool ElseBlockExists { get; set; }
+
+        /// <summary> Storage task condition to bes tested for a match. </summary>
+        public string IfCondition
+        {
+            get
+            {
+                return If is null ? default : If.Condition;
+            }
+            set
+            {
+                if (If is null)
+                {
+                    If = new StorageTaskPreviewActionIfCondition();
+                }
+                If.Condition = value;
+            }
+        }
     }
 }

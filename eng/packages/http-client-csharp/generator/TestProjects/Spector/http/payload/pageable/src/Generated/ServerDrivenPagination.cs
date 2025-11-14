@@ -28,6 +28,22 @@ namespace Payload.Pageable._ServerDrivenPagination
 
         public virtual AsyncPageable<Pet> LinkAsync(CancellationToken cancellationToken = default) => throw null;
 
+        public virtual Pageable<BinaryData> LinkString(RequestContext context) => throw null;
+
+        public virtual AsyncPageable<BinaryData> LinkStringAsync(RequestContext context) => throw null;
+
+        public virtual Pageable<Pet> LinkString(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual AsyncPageable<Pet> LinkStringAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Pageable<BinaryData> NestedLink(RequestContext context) => throw null;
+
+        public virtual AsyncPageable<BinaryData> NestedLinkAsync(RequestContext context) => throw null;
+
+        public virtual Pageable<Pet> NestedLink(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual AsyncPageable<Pet> NestedLinkAsync(CancellationToken cancellationToken = default) => throw null;
+
         public virtual ServerDrivenPaginationContinuationToken GetServerDrivenPaginationContinuationTokenClient() => throw null;
     }
 }

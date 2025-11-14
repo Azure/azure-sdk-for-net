@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Administration
         public System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.KeyVaultSetting> Settings { get { throw null; } }
         protected virtual Azure.Security.KeyVault.Administration.GetSettingsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.KeyVault.Administration.GetSettingsResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Security.KeyVault.Administration.GetSettingsResult (Azure.Response response) { throw null; }
         protected virtual Azure.Security.KeyVault.Administration.GetSettingsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Security.KeyVault.Administration.GetSettingsResult System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2025_07_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -70,6 +70,7 @@ namespace Azure.Security.KeyVault.Administration
             V7_4 = 3,
             V7_5 = 4,
             V7_6 = 5,
+            V2025_07_01 = 6,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -229,7 +230,7 @@ namespace Azure.Security.KeyVault.Administration
         public string Type { get { throw null; } }
         protected virtual Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment (Azure.Response response) { throw null; }
         protected virtual Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -267,7 +268,7 @@ namespace Azure.Security.KeyVault.Administration
         public Azure.Security.KeyVault.Administration.KeyVaultRoleDefinitionType? Type { get { throw null; } }
         protected virtual Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition (Azure.Response response) { throw null; }
         protected virtual Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -363,7 +364,7 @@ namespace Azure.Security.KeyVault.Administration
         public Azure.Security.KeyVault.Administration.KeyVaultSettingValue Value { get { throw null; } }
         protected virtual Azure.Security.KeyVault.Administration.KeyVaultSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultSetting (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultSetting (Azure.Response response) { throw null; }
         protected virtual Azure.Security.KeyVault.Administration.KeyVaultSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Security.KeyVault.Administration.KeyVaultSetting System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

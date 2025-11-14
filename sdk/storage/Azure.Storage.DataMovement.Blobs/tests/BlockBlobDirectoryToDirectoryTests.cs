@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 GetSourceStorageResourceContainer(destinationContainer.Container, destinationPrefix),
                 transferOptions);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,

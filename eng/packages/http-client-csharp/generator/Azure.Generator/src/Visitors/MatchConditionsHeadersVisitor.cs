@@ -63,12 +63,11 @@ namespace Azure.Generator.Visitors
                 return base.VisitMethod(method);
             }
 
-            bool isCreateRequestMethod = IsCreateRequestMethod(method);
             // Update method parameters
             UpdateMethodParameters(method, headerFlags, matchConditionParams);
 
             // Update method body
-            if (isCreateRequestMethod)
+            if (method.Kind == ScmMethodKind.CreateRequest)
             {
                 UpdateCreateRequestMethodBody(method, headerFlags, matchConditionParams);
             }
@@ -177,7 +176,7 @@ namespace Azure.Generator.Visitors
             }
 
             // Update the method signature & xml docs with the new parameters
-            if (!IsCreateRequestMethod(method))
+            if (method.Kind != ScmMethodKind.CreateRequest)
             {
                 method.XmlDocs.Update(parameters: xmlParameterDocs);
             }
@@ -189,18 +188,21 @@ namespace Azure.Generator.Visitors
         {
             var flags = RequestConditionHeaders.None;
 
-            var allParameters = method.IsProtocolMethod || IsCreateRequestMethod(method)
+            var allParameters = method.Kind == ScmMethodKind.Protocol || method.Kind == ScmMethodKind.CreateRequest
                 ? method.ServiceMethod!.Operation.Parameters
                 : method.ServiceMethod!.Parameters;
 
             foreach (var parameter in allParameters)
             {
-                if (parameter.IsRequired || parameter.Location != InputRequestLocation.Header)
+                // skip optional or non-header parameters
+                if (parameter.IsRequired ||
+                    ((parameter is InputMethodParameter inputParameter && inputParameter.Location != InputRequestLocation.Header) ||
+                     (parameter is not InputMethodParameter && parameter is not InputHeaderParameter)))
                 {
                     continue;
                 }
 
-                var headerName = parameter.NameInRequest;
+                var headerName = parameter.SerializedName;
                 if (!_conditionalHeaders.Contains(headerName))
                 {
                     continue;
@@ -283,7 +285,7 @@ namespace Azure.Generator.Visitors
             var updatedStatements = new List<MethodBodyStatement>();
             var requestConditionsParameter = GetConditionsParameter(matchConditionParams[0], headerFlags);
 
-            if (method.IsProtocolMethod && HasModificationTimeHeaders(headerFlags))
+            if (method.Kind == ScmMethodKind.Protocol && HasModificationTimeHeaders(headerFlags))
             {
                 // Add validation statements for unsupported headers
                 var unsupportedHeaders = new[]
@@ -316,7 +318,7 @@ namespace Azure.Generator.Visitors
             foreach (var statement in method.BodyStatements)
             {
                 var updatedStatement = UpdateMethodInvocationStatement(
-                    method.IsProtocolMethod,
+                    method.Kind == ScmMethodKind.Protocol,
                     statement,
                     requestConditionsParameter);
                 updatedStatements.Add(updatedStatement);
@@ -490,15 +492,6 @@ namespace Azure.Generator.Visitors
             return false;
         }
 
-        private static bool IsCreateRequestMethod(ScmMethodProvider method)
-        {
-            return method.EnclosingType is RestClientProvider &&
-                method.ServiceMethod != null &&
-                !method.IsProtocolMethod &&
-                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                method.Signature.ReturnType?.Equals(typeof(HttpMessage)) == true;
-        }
-
         private static List<ParameterProvider> GetMatchConditionParameters(IReadOnlyList<ParameterProvider> parameters)
         {
             var matchConditionParams = new List<ParameterProvider>();
@@ -531,8 +524,9 @@ namespace Azure.Generator.Visitors
         {
             return inputServiceMethod.Parameters.Concat(inputServiceMethod.Operation.Parameters)
                 .Any(parameter => !parameter.IsRequired &&
-                    parameter.Location == InputRequestLocation.Header &&
-                    _conditionalHeaders.Contains(parameter.NameInRequest));
+                    ((parameter is InputMethodParameter inputMethodParameter && inputMethodParameter.Location == InputRequestLocation.Header) ||
+                     parameter is InputHeaderParameter) &&
+                    _conditionalHeaders.Contains(parameter.SerializedName));
         }
 
         [Flags]

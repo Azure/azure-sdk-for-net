@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.ManagedServices</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ManagedServices.</Description>
     <PackageTags>azure;management;arm;resource manager;managedservices</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

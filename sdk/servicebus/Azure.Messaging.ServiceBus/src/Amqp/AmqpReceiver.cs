@@ -1065,10 +1065,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
                     messages ??= messageList is IReadOnlyCollection<AmqpMap> readOnlyList
                         ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
-                        : new List<ServiceBusReceivedMessage>();
+                        : [];
 
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
-                    var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                    var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream([payload]), true);
                     message = _messageConverter.AmqpMessageToSBReceivedMessage(amqpMessage, true);
                     messages.Add(message);
                 }

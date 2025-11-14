@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(eventNotifier, nameof(eventNotifier));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryEvent"/>. </summary>
@@ -28,16 +30,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="eventNotifier"> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </param>
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
         /// <param name="topic"> Object that describes the topic information for the specific event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="observabilityMode"> An indication of how the event should be mapped to OpenTelemetry. </param>
-        internal DeviceRegistryEvent(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, IDictionary<string, BinaryData> serializedAdditionalRawData, EventObservabilityMode? observabilityMode) : base(name, eventNotifier, eventConfiguration, topic, serializedAdditionalRawData)
+        internal DeviceRegistryEvent(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventObservabilityMode? observabilityMode) : base(name, eventNotifier, eventConfiguration, topic, additionalBinaryDataProperties)
         {
             ObservabilityMode = observabilityMode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryEvent"/> for deserialization. </summary>
-        internal DeviceRegistryEvent()
-        {
         }
 
         /// <summary> An indication of how the event should be mapped to OpenTelemetry. </summary>

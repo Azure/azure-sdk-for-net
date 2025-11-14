@@ -16,18 +16,21 @@ namespace Azure.ResourceManager.Terraform.Models
     public static partial class ArmTerraformModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.ExportQueryTerraform"/>. </summary>
-        /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
-        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
-        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
-        /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
-        /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
-        /// <param name="table"> The ARG table name. </param>
+        /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
+        /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
+        /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
+        /// <param name="query"> The ARG where predicate. Multiple predicates can be combined using `and` operator. Example: `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. The default ARG table is `Resources`, use 'table' property to query a different table. </param>
+        /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
+        /// <param name="isRecursive"> Recursively includes child resources. Defaults to `false`. </param>
+        /// <param name="includeResourceGroup"> Includes the resource group in the exported Terraform resources. Defaults to `false`. </param>
+        /// <param name="table"> The ARG table name. Defaults to 'Resources'. </param>
         /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
         /// <returns> A new <see cref="Models.ExportQueryTerraform"/> instance for mocking. </returns>
-        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string query = null, string namePattern = null, bool? isRecursive = null, string table = null, TerraformAuthorizationScopeFilter? authorizationScopeFilter = null)
+        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, bool? includeRoleAssignment = null, bool? includeManagedResource = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string query = null, string namePattern = null, bool? isRecursive = null, bool? includeResourceGroup = null, string table = null, TerraformAuthorizationScopeFilter? authorizationScopeFilter = null)
         {
             azureResourcesToExclude ??= new List<string>();
             terraformResourcesToExclude ??= new List<string>();
@@ -37,26 +40,31 @@ namespace Azure.ResourceManager.Terraform.Models
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
+                includeRoleAssignment,
+                includeManagedResource,
                 azureResourcesToExclude?.ToList(),
                 terraformResourcesToExclude?.ToList(),
                 serializedAdditionalRawData: null,
                 query,
                 namePattern,
                 isRecursive,
+                includeResourceGroup,
                 table,
                 authorizationScopeFilter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportResourceGroupTerraform"/>. </summary>
-        /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
-        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
-        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
+        /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
+        /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
+        /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
-        /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
+        /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
         /// <returns> A new <see cref="Models.ExportResourceGroupTerraform"/> instance for mocking. </returns>
-        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string resourceGroupName = null, string namePattern = null)
+        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, bool? includeRoleAssignment = null, bool? includeManagedResource = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string resourceGroupName = null, string namePattern = null)
         {
             azureResourcesToExclude ??= new List<string>();
             terraformResourcesToExclude ??= new List<string>();
@@ -66,6 +74,8 @@ namespace Azure.ResourceManager.Terraform.Models
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
+                includeRoleAssignment,
+                includeManagedResource,
                 azureResourcesToExclude?.ToList(),
                 terraformResourcesToExclude?.ToList(),
                 serializedAdditionalRawData: null,
@@ -76,17 +86,19 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> Initializes a new instance of <see cref="Models.TerraformOperationStatus"/>. </summary>
         /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
         /// <param name="status"> The operation status. </param>
+        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
         /// <param name="startOn"> Operation start time. </param>
         /// <param name="endOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <returns> A new <see cref="Models.TerraformOperationStatus"/> instance for mocking. </returns>
-        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = null, TerraformResourceProvisioningState status = default, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, ResponseError error = null)
+        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = null, TerraformResourceProvisioningState status = default, string id = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, ResponseError error = null)
         {
             return new TerraformOperationStatus(
                 properties,
                 status,
+                id,
                 name,
                 startOn,
                 endOn,
@@ -96,10 +108,10 @@ namespace Azure.ResourceManager.Terraform.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TerraformExportResult"/>. </summary>
-        /// <param name="configuration"> The Terraform configuration content. </param>
-        /// <param name="import"> The Terraform import blocks for the current export, which users can use to run "terraform plan" with to import the resources. </param>
-        /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
-        /// <param name="errors"> A list of errors derived during exporting each resource. </param>
+        /// <param name="configuration"> The exported Terraform HCL configuration. </param>
+        /// <param name="import"> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </param>
+        /// <param name="skippedResourceIds"> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </param>
+        /// <param name="errors"> A list of errors encountered during export operation. </param>
         /// <returns> A new <see cref="Models.TerraformExportResult"/> instance for mocking. </returns>
         public static TerraformExportResult TerraformExportResult(string configuration = null, string import = null, IEnumerable<ResourceIdentifier> skippedResourceIds = null, IEnumerable<ResponseError> errors = null)
         {

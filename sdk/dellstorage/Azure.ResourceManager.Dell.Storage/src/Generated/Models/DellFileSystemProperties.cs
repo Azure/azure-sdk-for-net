@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> Properties specific to the Dell File System resource. </summary>
     public partial class DellFileSystemProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details. </param>
@@ -83,8 +55,8 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="oneFsUri"> OneFS url. </param>
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemProperties(DellFileSystemCapacity capacity, DellFileSystemMarketplaceDetails marketplace, DellFileSystemProvisioningState? provisioningState, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string fileSystemId, string smartConnectFqdn, Uri oneFsUri, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DellFileSystemProperties(DellFileSystemCapacity capacity, DellFileSystemMarketplaceDetails marketplace, DellFileSystemProvisioningState? provisioningState, ResourceIdentifier delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string fileSystemId, string smartConnectFqdn, Uri oneFsUri, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
             Marketplace = marketplace;
@@ -97,42 +69,53 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             OneFsUri = oneFsUri;
             DellReferenceNumber = dellReferenceNumber;
             Encryption = encryption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DellFileSystemProperties"/> for deserialization. </summary>
-        internal DellFileSystemProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Capacity for Dell Filesystem, Will be received as part of Job Status. </summary>
         public DellFileSystemCapacity Capacity { get; set; }
+
         /// <summary> Marketplace details. </summary>
         public DellFileSystemMarketplaceDetails Marketplace { get; set; }
+
         /// <summary> Provisioning State of the resource. </summary>
         public DellFileSystemProvisioningState? ProvisioningState { get; }
+
         /// <summary> Delegated subnet id for Vnet injection. </summary>
         public ResourceIdentifier DelegatedSubnetId { get; set; }
+
         /// <summary> Domain range for the delegated subnet. </summary>
         public string DelegatedSubnetCidr { get; set; }
+
         /// <summary> User Details. </summary>
         internal DellFileSystemUserDetails User { get; set; }
-        /// <summary> User Email. </summary>
-        public string UserEmail
-        {
-            get => User is null ? default : User.Email;
-            set => User = new DellFileSystemUserDetails(value);
-        }
 
         /// <summary> File system Id of the resource. </summary>
         public string FileSystemId { get; set; }
+
         /// <summary> Smart Connect FQDN of the resource. </summary>
         public string SmartConnectFqdn { get; set; }
+
         /// <summary> OneFS url. </summary>
         public Uri OneFsUri { get; set; }
+
         /// <summary> DellReferenceNumber of the resource. </summary>
         public string DellReferenceNumber { get; set; }
+
         /// <summary> EncryptionProperties of the resource. </summary>
         public DellFileSystemEncryptionProperties Encryption { get; set; }
+
+        /// <summary> User Email. </summary>
+        public string UserEmail
+        {
+            get
+            {
+                return User is null ? default : User.Email;
+            }
+            set
+            {
+                User = new DellFileSystemUserDetails(value);
+            }
+        }
     }
 }

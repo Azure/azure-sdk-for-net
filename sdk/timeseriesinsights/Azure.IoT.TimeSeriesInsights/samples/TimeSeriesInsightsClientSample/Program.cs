@@ -22,8 +22,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         public static async Task Main(string[] args)
         {
             // Parse and validate paramters
-            Options options = null;
-            ParserResult<Options> result = Parser.Default.ParseArguments<Options>(args)
+            SamplesOptions options = null;
+            ParserResult<SamplesOptions> result = Parser.Default.ParseArguments<SamplesOptions>(args)
                 .WithParsed(parsedOptions =>
                     {
                         options = parsedOptions;

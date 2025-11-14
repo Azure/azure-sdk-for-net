@@ -5,14 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
-    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
 
@@ -93,7 +92,9 @@ namespace Azure.Identity
                     {
                         ErrorMessage = BrowserCustomization.ErrorMessage,
                         SuccessMessage = BrowserCustomization.SuccessMessage,
+#pragma warning disable CS0618 // Type or member is obsolete
                         UseEmbeddedWebView = BrowserCustomization.UseEmbeddedWebView ?? false
+#pragma warning restore CS0618 // Type or member is obsolete
                     };
                 }
             }

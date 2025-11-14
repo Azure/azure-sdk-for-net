@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance
             InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
             Zones = new ChangeTrackingList<string>();
-            RegisteredRevisions = new ChangeTrackingList<long>();
+            RegisteredRevisions = new ChangeTrackingList<int>();
         }
     }
 }

@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("name"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     name = new OracleDatabaseDayOfWeekName(property.Value.GetString());
                     continue;
                 }

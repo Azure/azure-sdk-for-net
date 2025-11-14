@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,36 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.2 (2025-11-10)
+
+### Features Added
+
+- Added extension method `BicepValueExtensions.ToBicepExpression` which converts any `IBicepValue` into `BicepExpression` to build up complex expressions in bicep. For more details, please refer to the documents in `README`.
+- Added `BicepFunction.GetResourceId` corresponding to bicep built-in function `resourceId`.
+- Added `BicepFunction.GetExtensionResourceId` corresponding to bicep built-in function `extensionResourceId`.
+
+### Bugs Fixed
+
+- Enabled the ability to assign expressions into a property with type of a `ProvisionableConstruct` via low level APIs.
+- Fixed exception when output variable has a type of array or object.
+- Fixed bug when indexing output list or dictionary, a `KeyNotFoundException` was always thrown. ([#48491](https://github.com/Azure/azure-sdk-for-net/issues/48491))
+
+### Other Changes
+
+- Now collection types (`BicepList<T>` and `BicepDictionary<T>`) would be able to force to be empty. ([#53346](https://github.com/Azure/azure-sdk-for-net/issues/53346))
+
+## 1.4.0-beta.1 (2025-09-03)
+
+### Features Added
+
+- Added a new protected API in `ProvisionableConstruct` to support a `ProvisionableResource` as property of another `ProvisionableConstruct`.
+
+## 1.3.0 (2025-08-01)
+
+### Features Added
+
+- Supported `FormattableString` in `BicepFunction.Interpolate` method. ([#47360](https://github.com/Azure/azure-sdk-for-net/issues/47360))
 
 ## 1.2.1 (2025-07-09)
 

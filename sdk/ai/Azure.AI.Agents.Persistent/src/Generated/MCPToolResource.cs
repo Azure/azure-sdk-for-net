@@ -61,13 +61,13 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="MCPToolResource"/>. </summary>
         /// <param name="serverLabel"> The label for the MCP server. </param>
         /// <param name="headers"> The headers for the MCP server updates. </param>
-        /// <param name="requireApproval"> Does MCP server require approval. </param>
+        /// <param name="requireApprovalInternal"> Does MCP server require approval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MCPToolResource(string serverLabel, IDictionary<string, string> headers, MCPToolResourceRequireApproval? requireApproval, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MCPToolResource(string serverLabel, IDictionary<string, string> headers, BinaryData requireApprovalInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerLabel = serverLabel;
             Headers = headers;
-            RequireApproval = requireApproval;
+            RequireApprovalInternal = requireApprovalInternal;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,7 +80,5 @@ namespace Azure.AI.Agents.Persistent
         public string ServerLabel { get; set; }
         /// <summary> The headers for the MCP server updates. </summary>
         public IDictionary<string, string> Headers { get; }
-        /// <summary> Does MCP server require approval. </summary>
-        public MCPToolResourceRequireApproval? RequireApproval { get; set; }
     }
 }

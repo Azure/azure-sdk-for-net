@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.4.1 (2025-10-15)
+
+### Features Added
+
+- Added `WirePath` attribute for all models' properties.
+
 ## 1.4.0 (2025-05-10)
 
 ### Features Added

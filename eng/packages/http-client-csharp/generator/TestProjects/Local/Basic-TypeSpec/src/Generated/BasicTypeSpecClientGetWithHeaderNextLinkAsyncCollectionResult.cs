@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
@@ -35,29 +36,35 @@ namespace BasicTypeSpec
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithHeaderNextLinkResponse responseWithType = (ListWithHeaderNextLinkResponse)response;
+                ListWithHeaderNextLinkResponse result = (ListWithHeaderNextLinkResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Things)
+                foreach (var item in result.Things)
                 {
-                    items.Add(BinaryData.FromObjectAsJson(item));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
-                nextPage = response.Headers.TryGetValue("next", out string value) ? new Uri(value) : null;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                if (response.Headers.TryGetValue("next", out string value))
+                {
+                    nextPage = new Uri(value);
+                }
+                else
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetWithHeaderNextLinkRequest(nextLink, _context) : _client.CreateGetWithHeaderNextLinkRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLink");

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -46,25 +47,36 @@ namespace Azure.ResourceManager.Quota.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatusList"/>. </summary>
-        internal QuotaAllocationRequestStatusList()
+        /// <param name="value"> The QuotaAllocationRequestStatus items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal QuotaAllocationRequestStatusList(IEnumerable<QuotaAllocationRequestStatusData> value)
         {
-            Value = new ChangeTrackingList<QuotaAllocationRequestStatusData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatusList"/>. </summary>
-        /// <param name="value"> List of QuotaAllocation Request Status. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value"> The QuotaAllocationRequestStatus items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaAllocationRequestStatusList(IReadOnlyList<QuotaAllocationRequestStatusData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaAllocationRequestStatusList(IReadOnlyList<QuotaAllocationRequestStatusData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of QuotaAllocation Request Status. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatusList"/> for deserialization. </summary>
+        internal QuotaAllocationRequestStatusList()
+        {
+        }
+
+        /// <summary> The QuotaAllocationRequestStatus items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<QuotaAllocationRequestStatusData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Quota.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new GroupQuotaRequestBase(
                 limit,
-                region,
-                comments,
                 value,
                 localizedValue,
+                region,
+                comments,
                 serializedAdditionalRawData);
         }
 

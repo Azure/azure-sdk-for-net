@@ -37,11 +37,17 @@ extends:
       safeName: AzureMessagingWebPubSubClient
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
+      triggeringPaths:
+      - /sdk/webpubsub/Microsoft.Azure.WebPubSub.Common/
     - name: Microsoft.Azure.WebPubSub.AspNetCore
       safeName: MicrosoftAzureWebPubSubAspNetCore
+      triggeringPaths:
+      - /sdk/webpubsub/Microsoft.Azure.WebPubSub.Common/
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon
     - name: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
       safeName: MicrosoftAzureFunctionsWorkerExtensionsWebPubSub
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSubForSocketIO
+      triggeringPaths:
+      - /sdk/webpubsub/Microsoft.Azure.WebPubSub.Common/

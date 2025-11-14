@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         private const string WAFValue = "waf";
+        private const string IPAccessRulesValue = "ipAccessRules";
 
         /// <summary> Policy of Type WAF. </summary>
         public static ApplicationGatewayForContainersSecurityPolicyType WAF { get; } = new ApplicationGatewayForContainersSecurityPolicyType(WAFValue);
+        /// <summary> Policy of Type IpAccessRules. </summary>
+        public static ApplicationGatewayForContainersSecurityPolicyType IPAccessRules { get; } = new ApplicationGatewayForContainersSecurityPolicyType(IPAccessRulesValue);
         /// <summary> Determines if two <see cref="ApplicationGatewayForContainersSecurityPolicyType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayForContainersSecurityPolicyType left, ApplicationGatewayForContainersSecurityPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayForContainersSecurityPolicyType"/> values are not the same. </summary>

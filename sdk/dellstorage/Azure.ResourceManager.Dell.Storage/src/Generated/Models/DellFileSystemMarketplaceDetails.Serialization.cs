@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    public partial class DellFileSystemMarketplaceDetails : IUtf8JsonSerializable, IJsonModel<DellFileSystemMarketplaceDetails>
+    /// <summary> MarketplaceDetails of Dell FileSystem resource. </summary>
+    public partial class DellFileSystemMarketplaceDetails : IJsonModel<DellFileSystemMarketplaceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DellFileSystemMarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemMarketplaceDetails"/> for deserialization. </summary>
+        internal DellFileSystemMarketplaceDetails()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DellFileSystemMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DellFileSystemMarketplaceDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
@@ -70,15 +75,15 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 writer.WritePropertyName("termUnit"u8);
                 writer.WriteStringValue(TermUnit);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +92,27 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
-        DellFileSystemMarketplaceDetails IJsonModel<DellFileSystemMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DellFileSystemMarketplaceDetails IJsonModel<DellFileSystemMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DellFileSystemMarketplaceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DellFileSystemMarketplaceDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDellFileSystemMarketplaceDetails(document.RootElement, options);
         }
 
-        internal static DellFileSystemMarketplaceDetails DeserializeDellFileSystemMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DellFileSystemMarketplaceDetails DeserializeDellFileSystemMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,65 +126,63 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             DellFileSystemMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             string endDate = default;
             string termUnit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("marketplaceSubscriptionId"u8))
+                if (prop.NameEquals("marketplaceSubscriptionId"u8))
                 {
-                    marketplaceSubscriptionId = property.Value.GetString();
+                    marketplaceSubscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planId"u8))
+                if (prop.NameEquals("planId"u8))
                 {
-                    planId = property.Value.GetString();
+                    planId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerId"u8))
+                if (prop.NameEquals("offerId"u8))
                 {
-                    offerId = property.Value.GetString();
+                    offerId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisherId"u8))
+                if (prop.NameEquals("publisherId"u8))
                 {
-                    publisherId = property.Value.GetString();
+                    publisherId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateOfferId"u8))
+                if (prop.NameEquals("privateOfferId"u8))
                 {
-                    privateOfferId = property.Value.GetString();
+                    privateOfferId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planName"u8))
+                if (prop.NameEquals("planName"u8))
                 {
-                    planName = property.Value.GetString();
+                    planName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
+                if (prop.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = new DellFileSystemMarketplaceSubscriptionStatus(property.Value.GetString());
+                    marketplaceSubscriptionStatus = new DellFileSystemMarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endDate"u8))
+                if (prop.NameEquals("endDate"u8))
                 {
-                    endDate = property.Value.GetString();
+                    endDate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termUnit"u8))
+                if (prop.NameEquals("termUnit"u8))
                 {
-                    termUnit = property.Value.GetString();
+                    termUnit = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DellFileSystemMarketplaceDetails(
                 marketplaceSubscriptionId,
                 planId,
@@ -185,13 +193,16 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 marketplaceSubscriptionStatus,
                 endDate,
                 termUnit,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DellFileSystemMarketplaceDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DellFileSystemMarketplaceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -201,15 +212,20 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
-        DellFileSystemMarketplaceDetails IPersistableModel<DellFileSystemMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DellFileSystemMarketplaceDetails IPersistableModel<DellFileSystemMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DellFileSystemMarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DellFileSystemMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDellFileSystemMarketplaceDetails(document.RootElement, options);
                     }
                 default:
@@ -217,6 +233,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DellFileSystemMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

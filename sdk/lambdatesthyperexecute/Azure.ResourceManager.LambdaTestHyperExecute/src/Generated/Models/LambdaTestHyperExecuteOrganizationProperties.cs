@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.LambdaTestHyperExecute;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     /// <summary> Properties specific to Organization. </summary>
     public partial class LambdaTestHyperExecuteOrganizationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -67,41 +39,43 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace, LambdaTestHyperExecuteUserDetails user, LambdaTestHyperExecuteOfferProvisioningState? provisioningState, LambdaTestHyperExecuteOfferPartnerProperties partnerProperties, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace, LambdaTestHyperExecuteUserDetails user, LambdaTestHyperExecuteOfferProvisioningState? provisioningState, LambdaTestHyperExecuteOfferPartnerProperties partnerProperties, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
             ProvisioningState = provisioningState;
             PartnerProperties = partnerProperties;
             SingleSignOnProperties = singleSignOnProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/> for deserialization. </summary>
-        internal LambdaTestHyperExecuteOrganizationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace details of the resource. </summary>
         public LambdaTestHyperExecuteMarketplaceDetails Marketplace { get; set; }
+
         /// <summary> Details of the user. </summary>
         public LambdaTestHyperExecuteUserDetails User { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public LambdaTestHyperExecuteOfferProvisioningState? ProvisioningState { get; }
+
         /// <summary> partner properties. </summary>
         internal LambdaTestHyperExecuteOfferPartnerProperties PartnerProperties { get; set; }
-        /// <summary> The number of licenses subscribed. </summary>
-        public int? PartnerLicensesSubscribed
-        {
-            get => PartnerProperties is null ? default(int?) : PartnerProperties.LicensesSubscribed;
-            set
-            {
-                PartnerProperties = value.HasValue ? new LambdaTestHyperExecuteOfferPartnerProperties(value.Value) : null;
-            }
-        }
 
         /// <summary> Single sign-on properties. </summary>
         public LambdaTestHyperExecuteSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+
+        /// <summary> The number of licenses subscribed. </summary>
+        public int? PartnerLicensesSubscribed
+        {
+            get
+            {
+                return PartnerProperties is null ? default : PartnerProperties.LicensesSubscribed;
+            }
+            set
+            {
+                PartnerProperties = value.HasValue ? new LambdaTestHyperExecuteOfferPartnerProperties(value.Value) : default;
+            }
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         private const string RequiredValue = "Required";
         private const string RemovedValue = "Removed";
         private const string DenyValue = "Deny";
+        private const string AuditValue = "Audit";
 
         /// <summary> The field and/or values are required by policy. </summary>
         public static FieldRestrictionResult Required { get; } = new FieldRestrictionResult(RequiredValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static FieldRestrictionResult Removed { get; } = new FieldRestrictionResult(RemovedValue);
         /// <summary> The field and/or values will be denied by policy. </summary>
         public static FieldRestrictionResult Deny { get; } = new FieldRestrictionResult(DenyValue);
+        /// <summary> The field and/or values will be audited by policy. </summary>
+        public static FieldRestrictionResult Audit { get; } = new FieldRestrictionResult(AuditValue);
         /// <summary> Determines if two <see cref="FieldRestrictionResult"/> values are the same. </summary>
         public static bool operator ==(FieldRestrictionResult left, FieldRestrictionResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FieldRestrictionResult"/> values are not the same. </summary>

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Marketplace details. </summary>
     public partial class InformaticaMarketplaceDetailsUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InformaticaMarketplaceDetailsUpdate"/>. </summary>
         public InformaticaMarketplaceDetailsUpdate()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="InformaticaMarketplaceDetailsUpdate"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerDetails"> Marketplace offer details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaMarketplaceDetailsUpdate(string marketplaceSubscriptionId, InformaticaOfferDetailsUpdate offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InformaticaMarketplaceDetailsUpdate(string marketplaceSubscriptionId, InformaticaOfferDetailsUpdate offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             OfferDetails = offerDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace Subscription Id. </summary>
         public string MarketplaceSubscriptionId { get; set; }
+
         /// <summary> Marketplace offer details. </summary>
         public InformaticaOfferDetailsUpdate OfferDetails { get; set; }
     }

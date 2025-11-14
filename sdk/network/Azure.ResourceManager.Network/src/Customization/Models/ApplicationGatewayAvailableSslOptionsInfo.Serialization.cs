@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                                 {
                                     val = val.Replace("resourceGroups//", string.Empty);
                                 }
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(val));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(BinaryData.FromString(val), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
                             }
                             predefinedPolicies = array;
                             continue;

@@ -52,11 +52,13 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaEntityBase"/>. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
+        /// <param name="groupType"> Type of the group. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaEntityBase(string displayName, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotaEntityBase(string displayName, GroupType? groupType, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
+            GroupType = groupType;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -64,6 +66,9 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Display name of the GroupQuota entity. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
+        /// <summary> Type of the group. </summary>
+        [WirePath("groupType")]
+        public GroupType? GroupType { get; }
         /// <summary> Provisioning state of the operation. </summary>
         [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }

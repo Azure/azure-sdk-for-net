@@ -107,9 +107,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         public enum ServiceVersion
         {
             V2023_04_01 = 1,
-            V2023_04_15_Preview = 2,
-            V2024_11_15_Preview = 3,
-            V2025_05_15_Preview = 4,
+            V2024_11_15_Preview = 2,
+            V2025_05_15_Preview = 3,
         }
     }
     public static partial class ConversationAnalysisAuthoringModelFactory

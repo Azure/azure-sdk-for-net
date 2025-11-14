@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -17,13 +18,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="queryText"> Query text in PromQL syntax. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationRules"/> or <paramref name="queryText"/> is null. </exception>
-        public PrometheusMetricsSignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string queryText) : base(evaluationRules)
+        public PrometheusMetricsSignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string queryText) : base(EntitySignalKind.PrometheusMetricsQuery, evaluationRules)
         {
             Argument.AssertNotNull(evaluationRules, nameof(evaluationRules));
             Argument.AssertNotNull(queryText, nameof(queryText));
 
             QueryText = queryText;
-            SignalKind = EntitySignalKind.PrometheusMetricsQuery;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrometheusMetricsSignalDefinitionProperties"/>. </summary>
@@ -35,23 +35,18 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queryText"> Query text in PromQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
-        internal PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string queryText, string timeGrain) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
+        internal PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, additionalBinaryDataProperties)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;
-            SignalKind = signalKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrometheusMetricsSignalDefinitionProperties"/> for deserialization. </summary>
-        internal PrometheusMetricsSignalDefinitionProperties()
-        {
         }
 
         /// <summary> Query text in PromQL syntax. </summary>
         public string QueryText { get; set; }
+
         /// <summary> Time range of signal. ISO duration format like PT10M. </summary>
         public string TimeGrain { get; set; }
     }

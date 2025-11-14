@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -42,11 +43,11 @@ namespace Samples
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::Azure.Response response = this.GetNextResponse(pageSizeHint, null);
-            global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+            global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
             global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-            foreach (var item in responseWithType.Cats)
+            foreach (var item in result.Cats)
             {
-                items.Add(global::System.BinaryData.FromObjectAsJson(item));
+                items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
             }
             yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, null, response);
         }

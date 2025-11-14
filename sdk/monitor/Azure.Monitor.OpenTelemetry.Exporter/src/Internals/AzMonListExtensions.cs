@@ -12,10 +12,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         /// <summary>
         /// Recognized database systems.
-        /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#connection-level-attributes"/>.
+        /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.38.0/docs/database/database-spans.md#notes-and-well-known-identifiers-for-dbsystemname"/>.
         /// </summary>
-        // TODO: This single item HashSet is used to map "mssql" to "SQL". This could be replaced with a helper method.
-        internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql" };
+        // TODO: This could be replaced with a helper method.
+        internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql", "microsoft.sql_server" };
 
         ///<summary>
         /// Gets http request url from activity tag objects.
@@ -329,9 +329,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///<summary>
         /// Gets Database dependency target and name from activity tag objects.
         ///</summary>
-        internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
+        internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects, bool isNewSchemaVersion)
         {
-            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
+            string statementDbNameKey;
+            string statementDbSystemKey;
+            if (isNewSchemaVersion) {
+                statementDbNameKey = SemanticConventions.AttributeDbNamespace;
+                statementDbSystemKey = SemanticConventions.AttributeDbSystemName;
+            } else {
+                statementDbNameKey = SemanticConventions.AttributeDbName;
+                statementDbSystemKey = SemanticConventions.AttributeDbSystem;
+            }
+
+            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, statementDbSystemKey);
             string? target = peerServiceAndDbSystem[0]?.ToString();
             var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
 
@@ -340,7 +350,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
-            var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
+            var dbName = AzMonList.GetTagValue(ref tagObjects, statementDbNameKey)?.ToString();
             bool isTargetEmpty = string.IsNullOrWhiteSpace(target);
             bool isDbNameEmpty = string.IsNullOrWhiteSpace(dbName);
             if (!isTargetEmpty && !isDbNameEmpty)
@@ -353,7 +363,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             else if (isTargetEmpty && isDbNameEmpty)
             {
-                target = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
+                target = AzMonList.GetTagValue(ref tagObjects, statementDbSystemKey)?.ToString();
             }
 
             return (DbName: dbName, DbTarget: target);
@@ -369,7 +379,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Http:
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
-                    return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+                    return tagObjects.GetDbDependencyTargetAndName(type.HasFlag(OperationType.V2)).DbTarget;
                 case OperationType.Messaging:
                     return tagObjects.GetMessagingUrlAndSourceOrTarget(ActivityKind.Producer).SourceOrTarget;
                 default:

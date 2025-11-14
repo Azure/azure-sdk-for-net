@@ -6,12 +6,10 @@
 #nullable disable
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Qumulo.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -21,10 +19,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_FileSystemsCreateOrUpdateMaximumSetGen()
+        public async Task CreateOrUpdate_FileSystemsCreateOrUpdate()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "382E8C7A-AC80-4D70-8580-EFE99537B9B7";
             string resourceGroupName = "rgQumulo";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -42,35 +40,19 @@ namespace Azure.ResourceManager.Qumulo.Samples
             QumuloFileSystemResourceCollection collection = resourceGroupResource.GetQumuloFileSystemResources();
 
             // invoke the operation
-            string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
-            QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(
-                new AzureLocation("przdlsmlzsszphnixq"),
-                new MarketplaceDetails("x", "eiyhbmpwgezcmzrrfoiskuxlcvwojf", "wfmokfdjbwpjhz")
-                {
-                    MarketplaceSubscriptionId = "ujrcqvxfnhxxheoth",
-                },
-                StorageSku.Standard,
-                new QumuloUserDetails
-                {
-                    Email = "viptslwulnpaupfljvnjeq",
-                },
-                "neqctctqdmjezfgt",
-                "ekceujoecaashtjlsgcymnrdozk",
-                9)
+            string fileSystemName = "hfcmtgaes";
+            QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("pnb"))
             {
                 Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("key4522")] = new UserAssignedIdentity()
+[new ResourceIdentifier("key7679")] = new UserAssignedIdentity()
 },
                 },
-                ClusterLoginUri = new Uri("jjqhgevy"),
-                PrivateIPs = { IPAddress.Parse("kslguxrwbwkrj") },
-                AvailabilityZone = "maseyqhlnhoiwbabcqabtedbjpip",
                 Tags =
 {
-["key6565"] = "cgdhmupta"
+["key7090"] = "rurrdiaqp"
 },
             };
             ArmOperation<QumuloFileSystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileSystemName, data);
@@ -87,8 +69,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FileSystemsCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_CreateOrUpdate_MinimumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_CreateOrUpdate_MinimumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -107,20 +89,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // invoke the operation
             string fileSystemName = "aaaaaaaa";
-            QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(
-                new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaa"),
-                new MarketplaceDetails("aaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaa", "aa")
-                {
-                    MarketplaceSubscriptionId = "aaaaaaaaaaaaa",
-                },
-                StorageSku.Standard,
-                new QumuloUserDetails
-                {
-                    Email = "viptslwulnpaupfljvnjeq",
-                },
-                "aaaaaaaaaa",
-                "ekceujoecaashtjlsgcymnrdozk",
-                9);
+            QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaa"));
             ArmOperation<QumuloFileSystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileSystemName, data);
             QumuloFileSystemResource result = lro.Value;
 
@@ -133,10 +102,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_FileSystemsGetMaximumSetGen()
+        public async Task Get_FileSystemsGet()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -145,7 +114,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "382E8C7A-AC80-4D70-8580-EFE99537B9B7";
             string resourceGroupName = "rgQumulo";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -154,7 +123,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
             QumuloFileSystemResourceCollection collection = resourceGroupResource.GetQumuloFileSystemResources();
 
             // invoke the operation
-            string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
+            string fileSystemName = "sihbehcisdqtqqyfiewiiaphgh";
             QumuloFileSystemResource result = await collection.GetAsync(fileSystemName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -168,8 +137,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FileSystemsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -199,10 +168,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_FileSystemsListByResourceGroupMaximumSetGen()
+        public async Task GetAll_FileSystemsListByResourceGroup()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -211,7 +180,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "382E8C7A-AC80-4D70-8580-EFE99537B9B7";
             string resourceGroupName = "rgQumulo";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -236,8 +205,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FileSystemsListByResourceGroupMinimumSetGen()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_ListByResourceGroup_MinimumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_ListByResourceGroup_MinimumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -269,10 +238,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_FileSystemsGetMaximumSetGen()
+        public async Task Exists_FileSystemsGet()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -281,7 +250,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "382E8C7A-AC80-4D70-8580-EFE99537B9B7";
             string resourceGroupName = "rgQumulo";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -290,7 +259,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
             QumuloFileSystemResourceCollection collection = resourceGroupResource.GetQumuloFileSystemResources();
 
             // invoke the operation
-            string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
+            string fileSystemName = "sihbehcisdqtqqyfiewiiaphgh";
             bool result = await collection.ExistsAsync(fileSystemName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -300,8 +269,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_FileSystemsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -327,10 +296,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_FileSystemsGetMaximumSetGen()
+        public async Task GetIfExists_FileSystemsGet()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -339,7 +308,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "382E8C7A-AC80-4D70-8580-EFE99537B9B7";
             string resourceGroupName = "rgQumulo";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -348,7 +317,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
             QumuloFileSystemResourceCollection collection = resourceGroupResource.GetQumuloFileSystemResources();
 
             // invoke the operation
-            string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
+            string fileSystemName = "sihbehcisdqtqqyfiewiiaphgh";
             NullableResponse<QumuloFileSystemResource> response = await collection.GetIfExistsAsync(fileSystemName);
             QumuloFileSystemResource result = response.HasValue ? response.Value : null;
 
@@ -370,8 +339,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FileSystemsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

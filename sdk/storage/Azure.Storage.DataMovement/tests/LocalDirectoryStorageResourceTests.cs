@@ -17,16 +17,14 @@ namespace Azure.Storage.DataMovement.Tests
            : base(async, null /* TestMode.Record /* to re-record */)
         { }
 
-        private string[] fileNames => new[]
-        {
-            "C:\\Users\\user1\\Documents\\directory",
-            "C:\\Users\\user1\\Documents\\directory1\\",
-            "/user1/Documents/directory",
-        };
-
         [Test]
         public void Ctor_string()
         {
+            string[] fileNames =
+            {
+                "C:\\Users\\user1\\Documents\\directory",
+                "/user1/Documents/directory",
+            };
             foreach (string path in fileNames)
             {
                 // Arrange
@@ -43,12 +41,14 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase("C:\\test\\path=true@&#%", "C:/test/path%3Dtrue%40%26%23%25")]
         [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
         [TestCase("C:\\test\\folder with spaces", "C:/test/folder%20with%20spaces")]
+        [TestCase("X:\\testing\\test\\", "X:/testing/test")]
+        [TestCase("X:\\testing\\test\\\\", "X:/testing/test")]
         public void Ctor_String_Encoding_Windows(string path, string absolutePath)
         {
             LocalDirectoryStorageResourceContainer storageResource = new(path);
             Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
-            // LocalPath should equal original path
-            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+            // LocalPath should equal original path (trimmed)
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path.TrimEnd('\\')));
         }
 
         [Test]
@@ -56,12 +56,14 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
         [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
         [TestCase("/test/folder with spaces", "/test/folder%20with%20spaces")]
+        [TestCase("/testing/test/", "/testing/test")]
+        [TestCase("/testing/test//", "/testing/test")]
         public void Ctor_String_Encoding_Unix(string path, string absolutePath)
         {
             LocalDirectoryStorageResourceContainer storageResource = new(path);
             Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
-            // LocalPath should equal original path
-            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+            // LocalPath should equal original path (trimmed)
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path.TrimEnd('/')));
         }
 
         [Test]

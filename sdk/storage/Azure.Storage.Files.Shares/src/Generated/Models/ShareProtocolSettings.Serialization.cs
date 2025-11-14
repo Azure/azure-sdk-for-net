@@ -21,17 +21,26 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 writer.WriteObjectValue(Smb, "SMB");
             }
+            if (Common.Optional.IsDefined(Nfs))
+            {
+                writer.WriteObjectValue(Nfs, "NFS");
+            }
             writer.WriteEndElement();
         }
 
         internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
         {
             ShareSmbSettings smb = default;
+            ShareNfsSettings nfs = default;
             if (element.Element("SMB") is XElement smbElement)
             {
                 smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
             }
-            return new ShareProtocolSettings(smb);
+            if (element.Element("NFS") is XElement nfsElement)
+            {
+                nfs = ShareNfsSettings.DeserializeShareNfsSettings(nfsElement);
+            }
+            return new ShareProtocolSettings(smb, nfs);
         }
     }
 }

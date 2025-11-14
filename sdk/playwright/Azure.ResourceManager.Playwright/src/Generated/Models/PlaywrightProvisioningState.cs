@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Playwright.Models
     public readonly partial struct PlaywrightProvisioningState : IEquatable<PlaywrightProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Resource creation is in progress. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Resource deletion is in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Request has been accepted for processing. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlaywrightProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static PlaywrightProvisioningState Succeeded { get; } = new PlaywrightProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static PlaywrightProvisioningState Failed { get; } = new PlaywrightProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static PlaywrightProvisioningState Canceled { get; } = new PlaywrightProvisioningState(CanceledValue);
-        /// <summary> Creation in progress.. </summary>
+
+        /// <summary> Resource creation is in progress. </summary>
         public static PlaywrightProvisioningState Creating { get; } = new PlaywrightProvisioningState(CreatingValue);
-        /// <summary> Deletion in progress.. </summary>
+
+        /// <summary> Resource deletion is in progress. </summary>
         public static PlaywrightProvisioningState Deleting { get; } = new PlaywrightProvisioningState(DeletingValue);
-        /// <summary> Request accepted for processing.. </summary>
+
+        /// <summary> Request has been accepted for processing. </summary>
         public static PlaywrightProvisioningState Accepted { get; } = new PlaywrightProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="PlaywrightProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlaywrightProvisioningState left, PlaywrightProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlaywrightProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlaywrightProvisioningState left, PlaywrightProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlaywrightProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlaywrightProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlaywrightProvisioningState(string value) => new PlaywrightProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlaywrightProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlaywrightProvisioningState?(string value) => value == null ? null : new PlaywrightProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlaywrightProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlaywrightProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

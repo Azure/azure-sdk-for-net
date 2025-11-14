@@ -20,9 +20,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotasEntityProperties"/>. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
+        /// <param name="groupType"> Type of the group. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotasEntityProperties(string displayName, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(displayName, provisioningState, serializedAdditionalRawData)
+        internal GroupQuotasEntityProperties(string displayName, GroupType? groupType, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(displayName, groupType, provisioningState, serializedAdditionalRawData)
         {
         }
     }

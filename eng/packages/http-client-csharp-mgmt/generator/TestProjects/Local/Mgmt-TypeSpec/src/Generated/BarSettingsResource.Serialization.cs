@@ -9,31 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    public partial class BarSettingsResource : IJsonModel<BarSettingsData>
+    public partial class BarSettingsResource : IJsonModel<BarSettingsResourceData>
     {
-        private static IJsonModel<BarSettingsData> s_dataDeserializationInstance;
+        private static IJsonModel<BarSettingsResourceData> s_dataDeserializationInstance;
 
-        private static IJsonModel<BarSettingsData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BarSettingsData();
+        private static IJsonModel<BarSettingsResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BarSettingsResourceData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BarSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BarSettingsData>)Data).Write(writer, options);
+        void IJsonModel<BarSettingsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BarSettingsResourceData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarSettingsData IJsonModel<BarSettingsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        BarSettingsResourceData IJsonModel<BarSettingsResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BarSettingsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BarSettingsData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<BarSettingsResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BarSettingsResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BarSettingsData IPersistableModel<BarSettingsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BarSettingsData>(data, options, MgmtTypeSpecContext.Default);
+        BarSettingsResourceData IPersistableModel<BarSettingsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BarSettingsResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BarSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<BarSettingsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal TrafficControllerFrontendPatch ToTrafficControllerFrontendPatch()
         {
-            return new TrafficControllerFrontendPatch(Tags, _serializedAdditionalRawData);
+            return new TrafficControllerFrontendPatch(Tags, null, _serializedAdditionalRawData);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontendPatch"/>. </summary>

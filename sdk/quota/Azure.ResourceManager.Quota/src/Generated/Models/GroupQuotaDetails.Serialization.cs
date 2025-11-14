@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.Quota.Models
                 limit,
                 comment,
                 unit,
-                availableLimit,
-                allocatedToSubscriptions,
                 value,
                 localizedValue,
+                availableLimit,
+                allocatedToSubscriptions,
                 serializedAdditionalRawData);
         }
 

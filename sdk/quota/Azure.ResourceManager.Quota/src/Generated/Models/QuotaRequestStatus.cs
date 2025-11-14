@@ -26,23 +26,26 @@ namespace Azure.ResourceManager.Quota.Models
         private const string CreatedValue = "Created";
         private const string InvalidValue = "Invalid";
         private const string SucceededValue = "Succeeded";
+        private const string EscalatedValue = "Escalated";
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> The quota request has been accepted. </summary>
         public static QuotaRequestStatus Accepted { get; } = new QuotaRequestStatus(AcceptedValue);
-        /// <summary> Created. </summary>
+        /// <summary> The quota request has been created. </summary>
         public static QuotaRequestStatus Created { get; } = new QuotaRequestStatus(CreatedValue);
-        /// <summary> Invalid. </summary>
+        /// <summary> The quota request is invalid. </summary>
         public static QuotaRequestStatus Invalid { get; } = new QuotaRequestStatus(InvalidValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The quota request has succeeded. </summary>
         public static QuotaRequestStatus Succeeded { get; } = new QuotaRequestStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The quota request has been escalated for further review. Please file a support ticket. A support engineer will follow up. </summary>
+        public static QuotaRequestStatus Escalated { get; } = new QuotaRequestStatus(EscalatedValue);
+        /// <summary> The quota request has failed. </summary>
         public static QuotaRequestStatus Failed { get; } = new QuotaRequestStatus(FailedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> The quota request is currently being processed. </summary>
         public static QuotaRequestStatus InProgress { get; } = new QuotaRequestStatus(InProgressValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The quota request has been canceled. </summary>
         public static QuotaRequestStatus Canceled { get; } = new QuotaRequestStatus(CanceledValue);
         /// <summary> Determines if two <see cref="QuotaRequestStatus"/> values are the same. </summary>
         public static bool operator ==(QuotaRequestStatus left, QuotaRequestStatus right) => left.Equals(right);

@@ -236,6 +236,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("subnetOcid"u8);
                 writer.WriteStringValue(SubnetOcid);
             }
+            if (Optional.IsDefined(ShapeAttribute))
+            {
+                writer.WritePropertyName("shapeAttribute"u8);
+                writer.WriteStringValue(ShapeAttribute.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -316,6 +321,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ExadataIormConfig iormConfigCache = default;
             string backupSubnetOcid = default;
             string subnetOcid = default;
+            ExascaleStorageShapeAttribute? shapeAttribute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -623,6 +629,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     subnetOcid = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("shapeAttribute"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    shapeAttribute = new ExascaleStorageShapeAttribute(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -673,6 +688,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 iormConfigCache,
                 backupSubnetOcid,
                 subnetOcid,
+                shapeAttribute,
                 serializedAdditionalRawData);
         }
 

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,6 +157,75 @@ namespace Azure.ResourceManager.IotOperations
             return GetIotOperationsDataflows().Get(dataflowName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of IotOperationsDataflowGraphResources in the IotOperationsDataflowProfile. </summary>
+        /// <returns> An object representing collection of IotOperationsDataflowGraphResources and their operations over a IotOperationsDataflowGraphResource. </returns>
+        public virtual IotOperationsDataflowGraphCollection GetIotOperationsDataflowGraphs()
+        {
+            return GetCachedClient(client => new IotOperationsDataflowGraphCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a DataflowGraphResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}/dataflowGraphs/{dataflowGraphName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataflowGraphResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsDataflowGraphResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataflowGraphName"> Name of Instance dataflowEndpoint resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataflowGraphName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowGraphName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IotOperationsDataflowGraphResource>> GetIotOperationsDataflowGraphAsync(string dataflowGraphName, CancellationToken cancellationToken = default)
+        {
+            return await GetIotOperationsDataflowGraphs().GetAsync(dataflowGraphName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DataflowGraphResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/dataflowProfiles/{dataflowProfileName}/dataflowGraphs/{dataflowGraphName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataflowGraphResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsDataflowGraphResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataflowGraphName"> Name of Instance dataflowEndpoint resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataflowGraphName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataflowGraphName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IotOperationsDataflowGraphResource> GetIotOperationsDataflowGraph(string dataflowGraphName, CancellationToken cancellationToken = default)
+        {
+            return GetIotOperationsDataflowGraphs().Get(dataflowGraphName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a DataflowProfileResource
         /// <list type="bullet">
@@ -170,7 +239,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +279,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +319,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +361,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -334,7 +403,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -380,7 +449,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DurableTask
 {
+    /// <summary></summary>
     public partial class DurableTaskSchedulerResource : IJsonModel<DurableTaskSchedulerData>
     {
-        private static DurableTaskSchedulerData s_dataDeserializationInstance;
-        private static DurableTaskSchedulerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DurableTaskSchedulerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DurableTaskSchedulerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DurableTaskSchedulerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DurableTaskSchedulerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DurableTaskSchedulerData>)Data).Write(writer, options);
 
-        DurableTaskSchedulerData IJsonModel<DurableTaskSchedulerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DurableTaskSchedulerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DurableTaskSchedulerData IJsonModel<DurableTaskSchedulerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DurableTaskSchedulerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DurableTaskSchedulerData>(Data, options, AzureResourceManagerDurableTaskContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DurableTaskSchedulerData IPersistableModel<DurableTaskSchedulerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DurableTaskSchedulerData>(data, options, AzureResourceManagerDurableTaskContext.Default);
 
-        string IPersistableModel<DurableTaskSchedulerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DurableTaskSchedulerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DurableTaskSchedulerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

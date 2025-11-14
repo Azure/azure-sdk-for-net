@@ -567,7 +567,13 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Keep track of all the names we encounter
                 List<string> names = new List<string>();
-                await foreach (PathItem pathItem in filesystem.GetPathsAsync(recursive: true))
+
+                DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+                {
+                    Recursive = true,
+                };
+
+                await foreach (PathItem pathItem in filesystem.GetPathsAsync(options))
                 {
                     names.Add(pathItem.Name);
                 }

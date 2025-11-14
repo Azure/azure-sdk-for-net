@@ -29,13 +29,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="partitionOption"> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        internal AmazonRdsForOracleSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object oracleReaderQuery, object queryTimeout, object partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, object additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="numberPrecision"> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </param>
+        /// <param name="numberScale"> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </param>
+        internal AmazonRdsForOracleSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object oracleReaderQuery, object queryTimeout, object partitionOption, AmazonRdsForOraclePartitionSettings partitionSettings, object additionalColumns, object numberPrecision, object numberScale) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;
             PartitionOption = partitionOption;
             PartitionSettings = partitionSettings;
             AdditionalColumns = additionalColumns;
+            NumberPrecision = numberPrecision;
+            NumberScale = numberScale;
             Type = type ?? "AmazonRdsForOracleSource";
         }
 
@@ -49,5 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public AmazonRdsForOraclePartitionSettings PartitionSettings { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
         public object AdditionalColumns { get; set; }
+        /// <summary> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
+        public object NumberPrecision { get; set; }
+        /// <summary> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
+        public object NumberScale { get; set; }
     }
 }

@@ -71,7 +71,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Job Definition. </param>
+        /// <param name="description"> A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud. </param>
+        /// <param name="jobType"> The type of the Job. </param>
         /// <param name="copyMode"> Strategy to use for copy. </param>
         /// <param name="sourceName"> The name of the source Endpoint. </param>
         /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
@@ -84,11 +85,13 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
         /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="sourceTargetMap"> The list of cloud endpoints to migrate. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
+            JobType = jobType;
             CopyMode = copyMode;
             SourceName = sourceName;
             SourceResourceId = sourceResourceId;
@@ -101,6 +104,7 @@ namespace Azure.ResourceManager.StorageMover
             LatestJobRunStatus = latestJobRunStatus;
             AgentName = agentName;
             AgentResourceId = agentResourceId;
+            SourceTargetMap = sourceTargetMap;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -110,8 +114,10 @@ namespace Azure.ResourceManager.StorageMover
         {
         }
 
-        /// <summary> A description for the Job Definition. </summary>
+        /// <summary> A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud. </summary>
         public string Description { get; set; }
+        /// <summary> The type of the Job. </summary>
+        public JobType? JobType { get; set; }
         /// <summary> Strategy to use for copy. </summary>
         public StorageMoverCopyMode CopyMode { get; set; }
         /// <summary> The name of the source Endpoint. </summary>
@@ -136,6 +142,19 @@ namespace Azure.ResourceManager.StorageMover
         public string AgentName { get; set; }
         /// <summary> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </summary>
         public ResourceIdentifier AgentResourceId { get; }
+        /// <summary> The list of cloud endpoints to migrate. </summary>
+        internal JobDefinitionPropertiesSourceTargetMap SourceTargetMap { get; set; }
+        /// <summary> Gets the source target map value. </summary>
+        public IReadOnlyList<SourceTargetMap> SourceTargetMapValue
+        {
+            get
+            {
+                if (SourceTargetMap is null)
+                    SourceTargetMap = new JobDefinitionPropertiesSourceTargetMap();
+                return SourceTargetMap.Value;
+            }
+        }
+
         /// <summary> The provisioning state of this resource. </summary>
         public StorageMoverProvisioningState? ProvisioningState { get; }
     }

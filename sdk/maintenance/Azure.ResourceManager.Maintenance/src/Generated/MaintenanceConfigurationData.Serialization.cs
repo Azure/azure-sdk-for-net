@@ -66,11 +66,6 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (Optional.IsDefined(InstallPatches))
-            {
-                writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches, options);
-            }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.Maintenance
             IDictionary<string, string> extensionProperties = default;
             MaintenanceScope? maintenanceScope = default;
             MaintenanceConfigurationVisibility? visibility = default;
-            MaintenancePatchConfiguration installPatches = default;
             DateTimeOffset? startDateTime = default;
             DateTimeOffset? expirationDateTime = default;
             TimeSpan? duration = default;
@@ -231,15 +225,6 @@ namespace Azure.ResourceManager.Maintenance
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("installPatches"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("maintenanceWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -309,7 +294,6 @@ namespace Azure.ResourceManager.Maintenance
                 extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
                 maintenanceScope,
                 visibility,
-                installPatches,
                 startDateTime,
                 expirationDateTime,
                 duration,

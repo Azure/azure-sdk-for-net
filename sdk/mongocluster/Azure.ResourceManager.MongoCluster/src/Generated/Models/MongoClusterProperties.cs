@@ -67,12 +67,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="sharding"> The sharding properties of the mongo cluster. </param>
         /// <param name="compute"> The compute properties of the mongo cluster. </param>
         /// <param name="backup"> The backup properties of the mongo cluster. </param>
+        /// <param name="dataApi"> The Data API properties of the mongo cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
+        /// <param name="authConfig"> The authentication configuration for the cluster. </param>
+        /// <param name="encryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, MongoClusterStorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, AuthConfigProperties authConfig, EncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -88,10 +91,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
             Sharding = sharding;
             Compute = compute;
             Backup = backup;
+            DataApi = dataApi;
             PrivateEndpointConnections = privateEndpointConnections;
             PreviewFeatures = previewFeatures;
             Replica = replica;
             InfrastructureVersion = infrastructureVersion;
+            AuthConfig = authConfig;
+            Encryption = encryption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,19 +134,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The storage properties of the mongo cluster. </summary>
-        internal StorageProperties Storage { get; set; }
-        /// <summary> The size of the data disk assigned to each server. </summary>
-        public long? StorageSizeGb
-        {
-            get => Storage is null ? default : Storage.SizeGb;
-            set
-            {
-                if (Storage is null)
-                    Storage = new StorageProperties();
-                Storage.SizeGb = value;
-            }
-        }
-
+        public MongoClusterStorageProperties Storage { get; set; }
         /// <summary> The sharding properties of the mongo cluster. </summary>
         internal ShardingProperties Sharding { get; set; }
         /// <summary> Number of shards to provision on the cluster. </summary>
@@ -177,6 +171,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
             get => Backup is null ? default : Backup.EarliestRestoreTime;
         }
 
+        /// <summary> The Data API properties of the mongo cluster. </summary>
+        internal DataApiProperties DataApi { get; set; }
+        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
+        public MongoClusterDataApiMode? DataApiMode
+        {
+            get => DataApi is null ? default : DataApi.Mode;
+            set
+            {
+                if (DataApi is null)
+                    DataApi = new DataApiProperties();
+                DataApi.Mode = value;
+            }
+        }
+
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MongoClusterPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> List of private endpoint connections. </summary>
@@ -185,5 +193,31 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterReplicationProperties Replica { get; }
         /// <summary> The infrastructure version the cluster is provisioned on. </summary>
         public string InfrastructureVersion { get; }
+        /// <summary> The authentication configuration for the cluster. </summary>
+        internal AuthConfigProperties AuthConfig { get; set; }
+        /// <summary> Allowed authentication modes for data access on the cluster. </summary>
+        public IList<MongoClusterAuthenticationMode> AuthConfigAllowedModes
+        {
+            get
+            {
+                if (AuthConfig is null)
+                    AuthConfig = new AuthConfigProperties();
+                return AuthConfig.AllowedModes;
+            }
+        }
+
+        /// <summary> The encryption configuration for the cluster. Depends on identity being configured. </summary>
+        internal EncryptionProperties Encryption { get; set; }
+        /// <summary> Customer managed key encryption settings. </summary>
+        public MongoClusterCmkEncryptionProperties CustomerManagedKeyEncryption
+        {
+            get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new EncryptionProperties();
+                Encryption.CustomerManagedKeyEncryption = value;
+            }
+        }
     }
 }

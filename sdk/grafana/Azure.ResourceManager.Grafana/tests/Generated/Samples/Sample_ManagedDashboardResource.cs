@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DashboardGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Get.json
+            // Generated from example definition: 2025-08-01/Dashboard_Get.json
             // this example is just showing the usage of "ManagedDashboard_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DashboardDelete()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Delete.json
+            // Generated from example definition: 2025-08-01/Dashboard_Delete.json
             // this example is just showing the usage of "ManagedDashboard_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DashboardUpdate()
         {
-            // Generated from example definition: 2024-11-01-preview/Dashboard_Update.json
+            // Generated from example definition: 2025-08-01/Dashboard_Update.json
             // this example is just showing the usage of "ManagedDashboard_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

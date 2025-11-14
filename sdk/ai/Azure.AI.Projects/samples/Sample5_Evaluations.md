@@ -10,7 +10,7 @@ In this example, we will demonstrate creating, listing and retrieving evaluation
   - `DATASET_NAME`: The name of the dataset to use as input data.
 
 ## Synchronous sample:
-```C# Snippet:AI_Projects_EvaluationsExampleSync
+```C#
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -43,18 +43,18 @@ Evaluation evaluationResponse = projectClient.Evaluations.Create(evaluation: eva
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = projectClient.Evaluations.GetEvaluation(evaluationResponse.Name);
+Evaluation getEvaluationResponse = projectClient.Evaluations.Get(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
-foreach (var eval in projectClient.Evaluations.GetEvaluations())
+foreach (var eval in projectClient.Evaluations.GetAll())
 {
     Console.WriteLine(eval);
 }
 ```
 
 ## Asynchronous sample:
-```C# Snippet:AI_Projects_EvaluationsExampleAsync
+```C#
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -87,11 +87,11 @@ Evaluation evaluationResponse = await projectClient.Evaluations.CreateAsync(eval
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = await projectClient.Evaluations.GetEvaluationAsync(evaluationResponse.Name);
+Evaluation getEvaluationResponse = await projectClient.Evaluations.GetAsync(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
-await foreach (var eval in projectClient.Evaluations.GetEvaluationsAsync())
+await foreach (var eval in projectClient.Evaluations.GetAllAsync())
 {
     Console.WriteLine(eval);
 }

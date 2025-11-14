@@ -8,7 +8,15 @@
 
 ### Bugs Fixed
 
+- Fixed an issue in `ArmDeploymentOperationProperties` deserialization where `StatusCode` could be either a string or a number in JSON, causing `InvalidOperationException` when parsing an integer `StatusCode`.
+
 ### Other Changes
+
+## 1.11.1 (2025-08-20)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Resources` AOT-compatible
 
 ## 1.11.0 (2025-06-23)
 

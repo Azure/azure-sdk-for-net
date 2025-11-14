@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.1.4 (2025-09-17)
+
+### Features Added
+
+- Make `Azure.ResourceManager.SignalR` AOT-compatible.
+
 ## 1.1.3 (2024-10-23)
 
 ### Features Added

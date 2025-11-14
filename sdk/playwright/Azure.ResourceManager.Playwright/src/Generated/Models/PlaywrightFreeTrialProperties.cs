@@ -10,69 +10,32 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
-    /// <summary> Subscription-level location-based Playwright quota resource free-trial properties. </summary>
+    /// <summary> Subscription-level location-based Playwright quota free trial properties. </summary>
     public partial class PlaywrightFreeTrialProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/>. </summary>
-        /// <param name="workspaceId"> Playwright workspace-id that has free-trial in the subscription. </param>
-        /// <param name="state"> The free-trial state. </param>
-        internal PlaywrightFreeTrialProperties(string workspaceId, PlaywrightFreeTrialState state)
-        {
-            WorkspaceId = workspaceId;
-            State = state;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/>. </summary>
-        /// <param name="workspaceId"> Playwright workspace-id that has free-trial in the subscription. </param>
-        /// <param name="state"> The free-trial state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightFreeTrialProperties(string workspaceId, PlaywrightFreeTrialState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            WorkspaceId = workspaceId;
-            State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/> for deserialization. </summary>
         internal PlaywrightFreeTrialProperties()
         {
         }
 
-        /// <summary> Playwright workspace-id that has free-trial in the subscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/>. </summary>
+        /// <param name="workspaceId"> The workspace ID in GUID format that has free trial enabled in the subscription. </param>
+        /// <param name="state"> The free trial state. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PlaywrightFreeTrialProperties(string workspaceId, PlaywrightFreeTrialState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            WorkspaceId = workspaceId;
+            State = state;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The workspace ID in GUID format that has free trial enabled in the subscription. </summary>
         public string WorkspaceId { get; }
-        /// <summary> The free-trial state. </summary>
+
+        /// <summary> The free trial state. </summary>
         public PlaywrightFreeTrialState State { get; }
     }
 }

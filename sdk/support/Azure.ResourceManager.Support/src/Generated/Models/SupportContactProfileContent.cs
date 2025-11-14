@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="preferredContactMethod"> Preferred contact method. </param>
         /// <param name="primaryEmailAddress"> Primary email address. </param>
         /// <param name="additionalEmailAddresses"> Email addresses listed will be copied on any correspondence about the support ticket. </param>
-        /// <param name="phoneNumber"> Phone number. This is required if preferred contact method is phone. </param>
+        /// <param name="phoneNumber"> Phone number. This is required if preferred contact method is phone. It is also required when submitting 'critical' or 'highestcriticalimpact' severity cases. </param>
         /// <param name="preferredTimeZone"> Time zone of the user. This is the name of the time zone from [Microsoft Time Zone Index Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values). </param>
         /// <param name="country"> Country of the user. This is the ISO 3166-1 alpha-3 code. </param>
         /// <param name="preferredSupportLanguage"> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response/). Use the standard language-country code. Valid values are 'en-us' for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese and 'de-de' for German. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Support.Models
         public string PrimaryEmailAddress { get; set; }
         /// <summary> Email addresses listed will be copied on any correspondence about the support ticket. </summary>
         public IList<string> AdditionalEmailAddresses { get; }
-        /// <summary> Phone number. This is required if preferred contact method is phone. </summary>
+        /// <summary> Phone number. This is required if preferred contact method is phone. It is also required when submitting 'critical' or 'highestcriticalimpact' severity cases. </summary>
         public string PhoneNumber { get; set; }
         /// <summary> Time zone of the user. This is the name of the time zone from [Microsoft Time Zone Index Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values). </summary>
         public string PreferredTimeZone { get; set; }

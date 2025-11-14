@@ -16,37 +16,8 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class ClassifierCopyAuthorization
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ClassifierCopyAuthorization"/>. </summary>
         /// <param name="targetResourceId"> ID of the target Azure resource where the document classifier should be copied to. </param>
@@ -85,8 +56,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="targetClassifierLocation"> URL of the copied document classifier in the target account. </param>
         /// <param name="accessToken"> Token used to authorize the request. </param>
         /// <param name="expiresOn"> Date/time when the access token expires. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassifierCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetClassifierId, Uri targetClassifierLocation, string accessToken, DateTimeOffset expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClassifierCopyAuthorization(string targetResourceId, string targetResourceRegion, string targetClassifierId, Uri targetClassifierLocation, string accessToken, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;
@@ -94,27 +65,27 @@ namespace Azure.AI.DocumentIntelligence
             TargetClassifierLocation = targetClassifierLocation;
             AccessToken = accessToken;
             ExpiresOn = expiresOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClassifierCopyAuthorization"/> for deserialization. </summary>
-        internal ClassifierCopyAuthorization()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the target Azure resource where the document classifier should be copied to. </summary>
         public string TargetResourceId { get; set; }
+
         /// <summary>
         /// Location of the target Azure resource where the document classifier should be copied
         /// to.
         /// </summary>
         public string TargetResourceRegion { get; set; }
+
         /// <summary> Identifier of the target document classifier. </summary>
         public string TargetClassifierId { get; set; }
+
         /// <summary> URL of the copied document classifier in the target account. </summary>
         public Uri TargetClassifierLocation { get; set; }
+
         /// <summary> Token used to authorize the request. </summary>
         public string AccessToken { get; set; }
+
         /// <summary> Date/time when the access token expires. </summary>
         public DateTimeOffset ExpiresOn { get; set; }
     }

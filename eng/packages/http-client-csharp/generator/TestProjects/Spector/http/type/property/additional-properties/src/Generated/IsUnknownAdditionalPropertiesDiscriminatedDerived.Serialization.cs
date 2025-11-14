@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class IsUnknownAdditionalPropertiesDiscriminatedDerived : IJsonModel<IsUnknownAdditionalPropertiesDiscriminatedDerived>
+    public partial class IsUnknownAdditionalPropertiesDiscriminatedDerived : IsUnknownAdditionalPropertiesDiscriminated, IJsonModel<IsUnknownAdditionalPropertiesDiscriminatedDerived>
     {
         internal IsUnknownAdditionalPropertiesDiscriminatedDerived() => throw null;
 

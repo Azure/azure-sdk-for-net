@@ -15,8 +15,9 @@
       "parameters": [
         {
           "$id": "2",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "3",
@@ -24,14 +25,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "4",
@@ -41,9 +38,13 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.CollectionFormat",
       "apiVersions": [],
@@ -68,8 +69,9 @@
                 "parameters": [
                   {
                     "$id": "8",
+                    "kind": "query",
                     "name": "colors",
-                    "nameInRequest": "colors",
+                    "serializedName": "colors",
                     "doc": "Possible values for colors are [blue,red,green]",
                     "type": {
                       "$id": "9",
@@ -85,15 +87,13 @@
                       "crossLanguageDefinitionId": "TypeSpec.Array",
                       "decorators": []
                     },
-                    "location": "Query",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": true,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi.colors",
+                    "readOnly": false
                   }
                 ],
                 "responses": [
@@ -117,21 +117,21 @@
               "parameters": [
                 {
                   "$id": "11",
+                  "kind": "method",
                   "name": "colors",
-                  "nameInRequest": "colors",
+                  "serializedName": "colors",
                   "doc": "Possible values for colors are [blue,red,green]",
                   "type": {
                     "$ref": "9"
                   },
                   "location": "Query",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi.colors",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -154,22 +154,21 @@
                 "parameters": [
                   {
                     "$id": "14",
+                    "kind": "query",
                     "name": "colors",
-                    "nameInRequest": "colors",
+                    "serializedName": "colors",
                     "doc": "Possible values for colors are [blue,red,green]",
                     "type": {
                       "$ref": "9"
                     },
-                    "location": "Query",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
                     "arraySerializationDelimiter": " ",
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv.colors",
+                    "readOnly": false
                   }
                 ],
                 "responses": [
@@ -193,21 +192,21 @@
               "parameters": [
                 {
                   "$id": "15",
+                  "kind": "method",
                   "name": "colors",
-                  "nameInRequest": "colors",
+                  "serializedName": "colors",
                   "doc": "Possible values for colors are [blue,red,green]",
                   "type": {
                     "$ref": "9"
                   },
                   "location": "Query",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv.colors",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -230,22 +229,21 @@
                 "parameters": [
                   {
                     "$id": "18",
+                    "kind": "query",
                     "name": "colors",
-                    "nameInRequest": "colors",
+                    "serializedName": "colors",
                     "doc": "Possible values for colors are [blue,red,green]",
                     "type": {
                       "$ref": "9"
                     },
-                    "location": "Query",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
                     "arraySerializationDelimiter": "|",
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes.colors",
+                    "readOnly": false
                   }
                 ],
                 "responses": [
@@ -269,21 +267,21 @@
               "parameters": [
                 {
                   "$id": "19",
+                  "kind": "method",
                   "name": "colors",
-                  "nameInRequest": "colors",
+                  "serializedName": "colors",
                   "doc": "Possible values for colors are [blue,red,green]",
                   "type": {
                     "$ref": "9"
                   },
                   "location": "Query",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes.colors",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -306,22 +304,21 @@
                 "parameters": [
                   {
                     "$id": "22",
+                    "kind": "query",
                     "name": "colors",
-                    "nameInRequest": "colors",
+                    "serializedName": "colors",
                     "doc": "Possible values for colors are [blue,red,green]",
                     "type": {
                       "$ref": "9"
                     },
-                    "location": "Query",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
                     "arraySerializationDelimiter": ",",
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv.colors",
+                    "readOnly": false
                   }
                 ],
                 "responses": [
@@ -345,21 +342,21 @@
               "parameters": [
                 {
                   "$id": "23",
+                  "kind": "method",
                   "name": "colors",
-                  "nameInRequest": "colors",
+                  "serializedName": "colors",
                   "doc": "Possible values for colors are [blue,red,green]",
                   "type": {
                     "$ref": "9"
                   },
                   "location": "Query",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv.colors",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -372,8 +369,9 @@
           "parameters": [
             {
               "$id": "24",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "25",
@@ -381,14 +379,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "26",
@@ -398,9 +392,13 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query",
           "apiVersions": [],
@@ -428,22 +426,22 @@
                 "parameters": [
                   {
                     "$id": "30",
+                    "kind": "header",
                     "name": "colors",
-                    "nameInRequest": "colors",
+                    "serializedName": "colors",
                     "doc": "Possible values for colors are [blue,red,green]",
                     "type": {
                       "$ref": "9"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
+                    "collectionFormat": "csv",
                     "arraySerializationDelimiter": ",",
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Method",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors"
                   }
                 ],
                 "responses": [
@@ -467,21 +465,21 @@
               "parameters": [
                 {
                   "$id": "31",
+                  "kind": "method",
                   "name": "colors",
-                  "nameInRequest": "colors",
+                  "serializedName": "colors",
                   "doc": "Possible values for colors are [blue,red,green]",
                   "type": {
                     "$ref": "9"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -494,8 +492,9 @@
           "parameters": [
             {
               "$id": "32",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "33",
@@ -503,14 +502,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "34",
@@ -520,9 +515,13 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header",
           "apiVersions": [],

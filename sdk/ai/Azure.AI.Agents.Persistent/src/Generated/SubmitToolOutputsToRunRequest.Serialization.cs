@@ -103,7 +103,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            IReadOnlyList<ToolOutput> toolOutputs = default;
+            IReadOnlyList<StructuredToolOutput> toolOutputs = default;
             IReadOnlyList<ToolApproval> toolApprovals = default;
             bool? stream = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -116,10 +116,10 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    List<ToolOutput> array = new List<ToolOutput>();
+                    List<StructuredToolOutput> array = new List<StructuredToolOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolOutput.DeserializeToolOutput(item, options));
+                        array.Add(StructuredToolOutput.DeserializeStructuredToolOutput(item, options));
                     }
                     toolOutputs = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubmitToolOutputsToRunRequest(toolOutputs ?? new ChangeTrackingList<ToolOutput>(), toolApprovals ?? new ChangeTrackingList<ToolApproval>(), stream, serializedAdditionalRawData);
+            return new SubmitToolOutputsToRunRequest(toolOutputs ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals ?? new ChangeTrackingList<ToolApproval>(), stream, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubmitToolOutputsToRunRequest>.Write(ModelReaderWriterOptions options)

@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("artifactId"u8);
                 JsonSerializer.Serialize(writer, ArtifactId);
             }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -77,6 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalCredential);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -121,12 +131,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> workspaceId = default;
             DataFactoryElement<string> artifactId = default;
+            LakehouseAuthenticationType? authenticationType = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             string encryptedCredential = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
             DataFactorySecret servicePrincipalCredential = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,6 +229,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             artifactId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationType = new LakehouseAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("servicePrincipalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -267,6 +288,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -283,12 +313,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 workspaceId,
                 artifactId,
+                authenticationType,
                 servicePrincipalId,
                 servicePrincipalKey,
                 tenant,
                 encryptedCredential,
                 servicePrincipalCredentialType,
-                servicePrincipalCredential);
+                servicePrincipalCredential,
+                credential);
         }
 
         BinaryData IPersistableModel<LakeHouseLinkedService>.Write(ModelReaderWriterOptions options)

@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.Qumulo.Models
                 throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Email))
-            {
-                writer.WritePropertyName("email"u8);
-                writer.WriteStringValue(Email);
-            }
+            writer.WritePropertyName("email"u8);
+            writer.WriteStringValue(Email);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

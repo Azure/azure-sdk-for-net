@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="floatProperty"> The <see cref="FloatProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(FloatProperty floatProperty) => throw null;
 
-        public static explicit operator FloatProperty(Response result) => throw null;
+        public static explicit operator FloatProperty(Response response) => throw null;
     }
 }

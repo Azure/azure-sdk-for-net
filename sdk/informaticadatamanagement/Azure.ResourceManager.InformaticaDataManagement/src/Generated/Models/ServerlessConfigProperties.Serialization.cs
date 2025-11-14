@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
-    public partial class ServerlessConfigProperties : IUtf8JsonSerializable, IJsonModel<ServerlessConfigProperties>
+    /// <summary> Metadata Serverless Config Properties. </summary>
+    public partial class ServerlessConfigProperties : IJsonModel<ServerlessConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessConfigProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerlessConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerlessConfigProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 writer.WritePropertyName("applicationTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApplicationTypes)
+                foreach (InformaticaApplicationTypeMetadata item in ApplicationTypes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 writer.WritePropertyName("computeUnits"u8);
                 writer.WriteStartArray();
-                foreach (var item in ComputeUnits)
+                foreach (ComputeUnitsMetadata item in ComputeUnits)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Regions)
+                foreach (InformaticaRegionsMetadata item in Regions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,85 +91,89 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        ServerlessConfigProperties IJsonModel<ServerlessConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerlessConfigProperties IJsonModel<ServerlessConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerlessConfigProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerlessConfigProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServerlessConfigProperties(document.RootElement, options);
         }
 
-        internal static ServerlessConfigProperties DeserializeServerlessConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServerlessConfigProperties DeserializeServerlessConfigProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             InformaticaPlatformType? platform = default;
-            IReadOnlyList<InformaticaApplicationTypeMetadata> applicationTypes = default;
-            IReadOnlyList<ComputeUnitsMetadata> computeUnits = default;
+            IList<InformaticaApplicationTypeMetadata> applicationTypes = default;
+            IList<ComputeUnitsMetadata> computeUnits = default;
             string executionTimeout = default;
-            IReadOnlyList<InformaticaRegionsMetadata> regions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<InformaticaRegionsMetadata> regions = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("platform"u8))
+                if (prop.NameEquals("platform"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    platform = new InformaticaPlatformType(property.Value.GetString());
+                    platform = new InformaticaPlatformType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationTypes"u8))
+                if (prop.NameEquals("applicationTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InformaticaApplicationTypeMetadata> array = new List<InformaticaApplicationTypeMetadata>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InformaticaApplicationTypeMetadata.DeserializeInformaticaApplicationTypeMetadata(item, options));
                     }
                     applicationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("computeUnits"u8))
+                if (prop.NameEquals("computeUnits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ComputeUnitsMetadata> array = new List<ComputeUnitsMetadata>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ComputeUnitsMetadata.DeserializeComputeUnitsMetadata(item, options));
                     }
                     computeUnits = array;
                     continue;
                 }
-                if (property.NameEquals("executionTimeout"u8))
+                if (prop.NameEquals("executionTimeout"u8))
                 {
-                    executionTimeout = property.Value.GetString();
+                    executionTimeout = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regions"u8))
+                if (prop.NameEquals("regions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InformaticaRegionsMetadata> array = new List<InformaticaRegionsMetadata>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InformaticaRegionsMetadata.DeserializeInformaticaRegionsMetadata(item, options));
                     }
@@ -178,23 +182,25 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServerlessConfigProperties(
                 platform,
                 applicationTypes ?? new ChangeTrackingList<InformaticaApplicationTypeMetadata>(),
                 computeUnits ?? new ChangeTrackingList<ComputeUnitsMetadata>(),
                 executionTimeout,
                 regions ?? new ChangeTrackingList<InformaticaRegionsMetadata>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ServerlessConfigProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServerlessConfigProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -204,15 +210,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        ServerlessConfigProperties IPersistableModel<ServerlessConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerlessConfigProperties IPersistableModel<ServerlessConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerlessConfigProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerlessConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServerlessConfigProperties(document.RootElement, options);
                     }
                 default:
@@ -220,6 +231,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerlessConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

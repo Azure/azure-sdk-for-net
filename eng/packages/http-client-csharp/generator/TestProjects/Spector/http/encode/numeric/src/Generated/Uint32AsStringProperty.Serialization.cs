@@ -36,6 +36,6 @@ namespace Encode.Numeric._Property
         /// <param name="uint32AsStringProperty"> The <see cref="Uint32AsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Uint32AsStringProperty uint32AsStringProperty) => throw null;
 
-        public static explicit operator Uint32AsStringProperty(Response result) => throw null;
+        public static explicit operator Uint32AsStringProperty(Response response) => throw null;
     }
 }

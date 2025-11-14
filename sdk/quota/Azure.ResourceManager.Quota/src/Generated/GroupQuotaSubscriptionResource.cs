@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Quota
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _groupQuotaSubscriptionClientDiagnostics;
-        private readonly GroupQuotaSubscriptionsRestOperations _groupQuotaSubscriptionRestClient;
+        private readonly ClientDiagnostics _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics;
+        private readonly GroupQuotaSubscriptionIdsRestOperations _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient;
         private readonly GroupQuotaSubscriptionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GroupQuotaSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string groupQuotaSubscriptionApiVersion);
-            _groupQuotaSubscriptionRestClient = new GroupQuotaSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionApiVersion);
+            _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string groupQuotaSubscriptionGroupQuotaSubscriptionIdsApiVersion);
+            _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient = new GroupQuotaSubscriptionIdsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionGroupQuotaSubscriptionIdsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptions_Get</description>
+        /// <description>GroupQuotaSubscriptionId_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GroupQuotaSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaSubscriptionClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Get");
+            using var scope = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaSubscriptionRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptions_Get</description>
+        /// <description>GroupQuotaSubscriptionId_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GroupQuotaSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaSubscriptionClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Get");
+            using var scope = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaSubscriptionRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptions_Delete</description>
+        /// <description>GroupQuotaSubscriptionId_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaSubscriptionClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Delete");
+            using var scope = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _groupQuotaSubscriptionRestClient.DeleteAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation(_groupQuotaSubscriptionClientDiagnostics, Pipeline, _groupQuotaSubscriptionRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.DeleteAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation(_groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics, Pipeline, _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptions_Delete</description>
+        /// <description>GroupQuotaSubscriptionId_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaSubscriptionClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Delete");
+            using var scope = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = _groupQuotaSubscriptionRestClient.Delete(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new QuotaArmOperation(_groupQuotaSubscriptionClientDiagnostics, Pipeline, _groupQuotaSubscriptionRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.Delete(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new QuotaArmOperation(_groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics, Pipeline, _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptions_Update</description>
+        /// <description>GroupQuotaSubscriptionId_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<GroupQuotaSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaSubscriptionClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Update");
+            using var scope = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _groupQuotaSubscriptionRestClient.UpdateAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionOperationSource(Client), _groupQuotaSubscriptionClientDiagnostics, Pipeline, _groupQuotaSubscriptionRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.UpdateAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionOperationSource(Client), _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics, Pipeline, _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptions_Update</description>
+        /// <description>GroupQuotaSubscriptionId_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,12 +318,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<GroupQuotaSubscriptionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _groupQuotaSubscriptionClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Update");
+            using var scope = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics.CreateScope("GroupQuotaSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _groupQuotaSubscriptionRestClient.Update(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionOperationSource(Client), _groupQuotaSubscriptionClientDiagnostics, Pipeline, _groupQuotaSubscriptionRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.Update(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionOperationSource(Client), _groupQuotaSubscriptionGroupQuotaSubscriptionIdsClientDiagnostics, Pipeline, _groupQuotaSubscriptionGroupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

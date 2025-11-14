@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             OracleDatabaseProvisioningState? provisioningState = default;
             AutonomousDatabaseLifecycleState? lifecycleState = default;
-            ScheduledOperationsType scheduledOperations = default;
+            IList<ScheduledOperationsType> scheduledOperationsList = default;
             string privateEndpointIP = default;
             string privateEndpointLabel = default;
             Uri ociUrl = default;
@@ -395,13 +395,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     lifecycleState = new AutonomousDatabaseLifecycleState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduledOperations"u8))
+                if (property.NameEquals("scheduledOperationsList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsType.DeserializeScheduledOperationsType(property.Value, options);
+                    List<ScheduledOperationsType> array = new List<ScheduledOperationsType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ScheduledOperationsType.DeserializeScheduledOperationsType(item, options));
+                    }
+                    scheduledOperationsList = array;
                     continue;
                 }
                 if (property.NameEquals("privateEndpointIp"u8))
@@ -847,7 +852,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 provisioningState,
                 lifecycleState,
-                scheduledOperations,
+                scheduledOperationsList ?? new ChangeTrackingList<ScheduledOperationsType>(),
                 privateEndpointIP,
                 privateEndpointLabel,
                 ociUrl,

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of Nat Gateway SKU. </summary>
+        [WirePath("name")]
         public NatGatewaySkuName? Name { get; set; }
     }
 }

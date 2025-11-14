@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PineconeVectorDB;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePineconeVectorDBResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePineconeVectorDBResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePineconeVectorDBResourceGroupResource for mocking. </summary>
         protected MockablePineconeVectorDBResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePineconeVectorDBResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePineconeVectorDBResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePineconeVectorDBResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of PineconeVectorDBOrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PineconeVectorDBOrganizationResources and their operations over a PineconeVectorDBOrganizationResource. </returns>
+        /// <summary> Gets a collection of PineconeVectorDBOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PineconeVectorDBOrganizations and their operations over a PineconeVectorDBOrganizationResource. </returns>
         public virtual PineconeVectorDBOrganizationCollection GetPineconeVectorDBOrganizations()
         {
             return GetCachedClient(client => new PineconeVectorDBOrganizationCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-22-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PineconeVectorDBOrganizationResource>> GetPineconeVectorDBOrganizationAsync(string organizationname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
+
             return await GetPineconeVectorDBOrganizations().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Pinecone.VectorDb/organizations/{organizationname}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-22-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-22-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         [ForwardsClientCalls]
         public virtual Response<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganization(string organizationname, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
+
             return GetPineconeVectorDBOrganizations().Get(organizationname, cancellationToken);
         }
     }

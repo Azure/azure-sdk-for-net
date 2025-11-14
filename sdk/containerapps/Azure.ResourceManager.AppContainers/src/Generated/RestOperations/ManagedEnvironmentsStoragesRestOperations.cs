@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-01";
+            _apiVersion = apiVersion ?? "2025-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -298,6 +298,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ContainerAppManagedEnvironmentStorageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
@@ -331,6 +332,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ContainerAppManagedEnvironmentStorageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);

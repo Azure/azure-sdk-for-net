@@ -295,6 +295,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("computeModel"u8);
                 writer.WriteStringValue(ComputeModel.Value.ToString());
             }
+            if (Optional.IsDefined(ExascaleDBStorageVaultOcid))
+            {
+                writer.WritePropertyName("exascaleDbStorageVaultId"u8);
+                writer.WriteStringValue(ExascaleDBStorageVaultOcid);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageManagementType))
+            {
+                writer.WritePropertyName("storageManagementType"u8);
+                writer.WriteStringValue(StorageManagementType.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -382,6 +392,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string compartmentId = default;
             string subnetOcid = default;
             OracleDatabaseComputeModel? computeModel = default;
+            ResourceIdentifier exascaleDbStorageVaultId = default;
+            ExadataVmClusterStorageManagementType? storageManagementType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -783,6 +795,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("exascaleDbStorageVaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exascaleDbStorageVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageManagementType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageManagementType = new ExadataVmClusterStorageManagementType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -840,6 +870,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 compartmentId,
                 subnetOcid,
                 computeModel,
+                exascaleDbStorageVaultId,
+                storageManagementType,
                 serializedAdditionalRawData);
         }
 

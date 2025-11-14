@@ -17,12 +17,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startedBy"/>, <paramref name="serverCallId"/> or <paramref name="correlationId"/> is null. </exception>
         internal AcsCallEndedEventData(AcsCallParticipantProperties startedBy, string serverCallId, string correlationId) : base(startedBy, serverCallId, correlationId)
         {
-            Argument.AssertNotNull(startedBy, nameof(startedBy));
-            Argument.AssertNotNull(serverCallId, nameof(serverCallId));
-            Argument.AssertNotNull(correlationId, nameof(correlationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsCallEndedEventData"/>. </summary>
@@ -33,24 +29,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="isTwoParty"> Is two-party in calling event. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endedBy"> The communication identifier of the user who was disconnected. </param>
         /// <param name="reason"> The reason for ending the call. </param>
         /// <param name="callDuration"> Duration of the call in seconds. </param>
-        internal AcsCallEndedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> serializedAdditionalRawData, AcsCallEndedByProperties endedBy, AcsCallEndReasonProperties reason, TimeSpan? callDuration) : base(startedBy, serverCallId, group, room, isTwoParty, correlationId, isRoomsCall, serializedAdditionalRawData)
+        internal AcsCallEndedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> additionalBinaryDataProperties, AcsCallEndedByProperties endedBy, AcsCallEndReasonProperties reason, TimeSpan? callDuration) : base(startedBy, serverCallId, @group, room, isTwoParty, correlationId, isRoomsCall, additionalBinaryDataProperties)
         {
             EndedBy = endedBy;
             Reason = reason;
             CallDuration = callDuration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallEndedEventData"/> for deserialization. </summary>
-        internal AcsCallEndedEventData()
-        {
-        }
-
         /// <summary> The communication identifier of the user who was disconnected. </summary>
         public AcsCallEndedByProperties EndedBy { get; }
+
         /// <summary> The reason for ending the call. </summary>
         public AcsCallEndReasonProperties Reason { get; }
     }

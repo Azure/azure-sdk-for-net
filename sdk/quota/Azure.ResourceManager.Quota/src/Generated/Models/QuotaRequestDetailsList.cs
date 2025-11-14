@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -46,25 +47,36 @@ namespace Azure.ResourceManager.Quota.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsList"/>. </summary>
-        internal QuotaRequestDetailsList()
+        /// <param name="value"> The QuotaRequestDetails items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal QuotaRequestDetailsList(IEnumerable<QuotaRequestDetailData> value)
         {
-            Value = new ChangeTrackingList<QuotaRequestDetailData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsList"/>. </summary>
-        /// <param name="value"> Quota request details. </param>
-        /// <param name="nextLink"> The URI for fetching the next page of quota limits. When there are no more pages, this string is null. </param>
+        /// <param name="value"> The QuotaRequestDetails items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaRequestDetailsList(IReadOnlyList<QuotaRequestDetailData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaRequestDetailsList(IReadOnlyList<QuotaRequestDetailData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Quota request details. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailsList"/> for deserialization. </summary>
+        internal QuotaRequestDetailsList()
+        {
+        }
+
+        /// <summary> The QuotaRequestDetails items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<QuotaRequestDetailData> Value { get; }
-        /// <summary> The URI for fetching the next page of quota limits. When there are no more pages, this string is null. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

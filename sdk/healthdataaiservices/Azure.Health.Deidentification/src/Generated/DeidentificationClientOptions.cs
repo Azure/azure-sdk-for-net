@@ -13,7 +13,7 @@ namespace Azure.Health.Deidentification
     /// <summary> Client options for <see cref="DeidentificationClient"/>. </summary>
     public partial class DeidentificationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_15_Preview;
 
         /// <summary> Initializes a new instance of DeidentificationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -22,6 +22,7 @@ namespace Azure.Health.Deidentification
             Version = version switch
             {
                 ServiceVersion.V2024_11_15 => "2024-11-15",
+                ServiceVersion.V2025_07_15_Preview => "2025-07-15-preview",
                 _ => throw new NotSupportedException()
             };
         }
@@ -33,7 +34,9 @@ namespace Azure.Health.Deidentification
         public enum ServiceVersion
         {
             /// <summary> V2024_11_15. </summary>
-            V2024_11_15 = 1
+            V2024_11_15 = 1,
+            /// <summary> V2025_07_15_Preview. </summary>
+            V2025_07_15_Preview = 2
         }
     }
 }

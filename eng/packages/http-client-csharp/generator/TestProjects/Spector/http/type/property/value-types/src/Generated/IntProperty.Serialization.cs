@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="intProperty"> The <see cref="IntProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(IntProperty intProperty) => throw null;
 
-        public static explicit operator IntProperty(Response result) => throw null;
+        public static explicit operator IntProperty(Response response) => throw null;
     }
 }

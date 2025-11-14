@@ -41,7 +41,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipBlock"></param>
         /// <param name="asns"></param>
         /// <param name="bgpPrefixes"></param>
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="technicalPhones"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpBlockAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, string ipBlock, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ObservedString> bgpPrefixes, IReadOnlyList<ObservedString> netNames, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> netRanges, string startIp, string endIp, IReadOnlyList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(serializedAdditionalRawData)
+        internal IpBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIp, string endIp, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
         {
             IpBlock = ipBlock;
             Asns = asns;
@@ -108,67 +108,97 @@ namespace Azure.Analytics.Defender.Easm
             Ipv6 = ipv6;
         }
 
-        /// <summary> Gets the ip block. </summary>
+        /// <summary> Gets the IpBlock. </summary>
         public string IpBlock { get; }
-        /// <summary> Gets the asns. </summary>
-        public IReadOnlyList<ObservedLong> Asns { get; }
-        /// <summary> Gets the bgp prefixes. </summary>
-        public IReadOnlyList<ObservedString> BgpPrefixes { get; }
-        /// <summary> Gets the net names. </summary>
-        public IReadOnlyList<ObservedString> NetNames { get; }
-        /// <summary> Gets the registrant contacts. </summary>
-        public IReadOnlyList<ObservedString> RegistrantContacts { get; }
-        /// <summary> Gets the registrant orgs. </summary>
-        public IReadOnlyList<ObservedString> RegistrantOrgs { get; }
-        /// <summary> Gets the admin contacts. </summary>
-        public IReadOnlyList<ObservedString> AdminContacts { get; }
-        /// <summary> Gets the technical contacts. </summary>
-        public IReadOnlyList<ObservedString> TechnicalContacts { get; }
-        /// <summary> Gets the registrar created at. </summary>
-        public IReadOnlyList<ObservedLong> RegistrarCreatedAt { get; }
-        /// <summary> Gets the registrar updated at. </summary>
-        public IReadOnlyList<ObservedLong> RegistrarUpdatedAt { get; }
-        /// <summary> Gets the net ranges. </summary>
-        public IReadOnlyList<ObservedString> NetRanges { get; }
-        /// <summary> Gets the start ip. </summary>
+
+        /// <summary> Gets the Asns. </summary>
+        public IList<ObservedLong> Asns { get; }
+
+        /// <summary> Gets the BgpPrefixes. </summary>
+        public IList<ObservedString> BgpPrefixes { get; }
+
+        /// <summary> Gets the NetNames. </summary>
+        public IList<ObservedString> NetNames { get; }
+
+        /// <summary> Gets the RegistrantContacts. </summary>
+        public IList<ObservedString> RegistrantContacts { get; }
+
+        /// <summary> Gets the RegistrantOrgs. </summary>
+        public IList<ObservedString> RegistrantOrgs { get; }
+
+        /// <summary> Gets the AdminContacts. </summary>
+        public IList<ObservedString> AdminContacts { get; }
+
+        /// <summary> Gets the TechnicalContacts. </summary>
+        public IList<ObservedString> TechnicalContacts { get; }
+
+        /// <summary> Gets the RegistrarCreatedAt. </summary>
+        public IList<ObservedLong> RegistrarCreatedAt { get; }
+
+        /// <summary> Gets the RegistrarUpdatedAt. </summary>
+        public IList<ObservedLong> RegistrarUpdatedAt { get; }
+
+        /// <summary> Gets the NetRanges. </summary>
+        public IList<ObservedString> NetRanges { get; }
+
+        /// <summary> Gets the StartIp. </summary>
         public string StartIp { get; }
-        /// <summary> Gets the end ip. </summary>
+
+        /// <summary> Gets the EndIp. </summary>
         public string EndIp { get; }
-        /// <summary> Gets the reputations. </summary>
-        public IReadOnlyList<ReputationDetails> Reputations { get; }
-        /// <summary> Gets the detailed from whois at. </summary>
+
+        /// <summary> Gets the Reputations. </summary>
+        public IList<ReputationDetails> Reputations { get; }
+
+        /// <summary> Gets the DetailedFromWhoisAt. </summary>
         public DateTimeOffset? DetailedFromWhoisAt { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the location. </summary>
-        public IReadOnlyList<ObservedLocation> Location { get; }
-        /// <summary> Gets the registrar expires at. </summary>
-        public IReadOnlyList<ObservedLong> RegistrarExpiresAt { get; }
-        /// <summary> Gets the registrant names. </summary>
-        public IReadOnlyList<ObservedString> RegistrantNames { get; }
-        /// <summary> Gets the admin names. </summary>
-        public IReadOnlyList<ObservedString> AdminNames { get; }
-        /// <summary> Gets the technical names. </summary>
-        public IReadOnlyList<ObservedString> TechnicalNames { get; }
-        /// <summary> Gets the admin orgs. </summary>
-        public IReadOnlyList<ObservedString> AdminOrgs { get; }
-        /// <summary> Gets the technical orgs. </summary>
-        public IReadOnlyList<ObservedString> TechnicalOrgs { get; }
-        /// <summary> Gets the registrant phones. </summary>
-        public IReadOnlyList<ObservedString> RegistrantPhones { get; }
-        /// <summary> Gets the admin phones. </summary>
-        public IReadOnlyList<ObservedString> AdminPhones { get; }
-        /// <summary> Gets the technical phones. </summary>
-        public IReadOnlyList<ObservedString> TechnicalPhones { get; }
-        /// <summary> Gets the ipv 4. </summary>
+
+        /// <summary> Gets the Location. </summary>
+        public IList<ObservedLocation> Location { get; }
+
+        /// <summary> Gets the RegistrarExpiresAt. </summary>
+        public IList<ObservedLong> RegistrarExpiresAt { get; }
+
+        /// <summary> Gets the RegistrantNames. </summary>
+        public IList<ObservedString> RegistrantNames { get; }
+
+        /// <summary> Gets the AdminNames. </summary>
+        public IList<ObservedString> AdminNames { get; }
+
+        /// <summary> Gets the TechnicalNames. </summary>
+        public IList<ObservedString> TechnicalNames { get; }
+
+        /// <summary> Gets the AdminOrgs. </summary>
+        public IList<ObservedString> AdminOrgs { get; }
+
+        /// <summary> Gets the TechnicalOrgs. </summary>
+        public IList<ObservedString> TechnicalOrgs { get; }
+
+        /// <summary> Gets the RegistrantPhones. </summary>
+        public IList<ObservedString> RegistrantPhones { get; }
+
+        /// <summary> Gets the AdminPhones. </summary>
+        public IList<ObservedString> AdminPhones { get; }
+
+        /// <summary> Gets the TechnicalPhones. </summary>
+        public IList<ObservedString> TechnicalPhones { get; }
+
+        /// <summary> Gets the Ipv4. </summary>
         public bool? Ipv4 { get; }
-        /// <summary> Gets the ipv 6. </summary>
+
+        /// <summary> Gets the Ipv6. </summary>
         public bool? Ipv6 { get; }
     }
 }

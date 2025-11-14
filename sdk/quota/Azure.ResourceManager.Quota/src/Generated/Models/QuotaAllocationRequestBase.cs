@@ -52,30 +52,30 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestBase"/>. </summary>
         /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
-        /// <param name="region"> The location for which the subscription is allocated. </param>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
+        /// <param name="region"> The location for which the subscription is allocated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaAllocationRequestBase(long? limit, string region, string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaAllocationRequestBase(long? limit, string value, string localizedValue, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Limit = limit;
-            Region = region;
             Value = value;
             LocalizedValue = localizedValue;
+            Region = region;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </summary>
         [WirePath("properties.limit")]
         public long? Limit { get; set; }
-        /// <summary> The location for which the subscription is allocated. </summary>
-        [WirePath("properties.region")]
-        public string Region { get; set; }
         /// <summary> Resource name. </summary>
         [WirePath("properties.value")]
         public string Value { get; }
         /// <summary> Resource display name. </summary>
         [WirePath("properties.localizedValue")]
         public string LocalizedValue { get; }
+        /// <summary> The location for which the subscription is allocated. </summary>
+        [WirePath("properties.region")]
+        public string Region { get; set; }
     }
 }

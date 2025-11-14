@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="booleanProperty"> The <see cref="BooleanProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(BooleanProperty booleanProperty) => throw null;
 
-        public static explicit operator BooleanProperty(Response result) => throw null;
+        public static explicit operator BooleanProperty(Response response) => throw null;
     }
 }

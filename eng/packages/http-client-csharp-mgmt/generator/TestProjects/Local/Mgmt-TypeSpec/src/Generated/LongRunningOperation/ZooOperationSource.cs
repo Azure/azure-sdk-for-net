@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     internal partial class ZooOperationSource : IOperationSource<ZooResource>
@@ -33,7 +32,7 @@ namespace MgmtTypeSpec
         ZooResource IOperationSource<ZooResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ZooData data = ZooData.DeserializeZooData(document.RootElement, new ModelReaderWriterOptions("W"));
+            ZooData data = ZooData.DeserializeZooData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ZooResource(_client, data);
         }
 

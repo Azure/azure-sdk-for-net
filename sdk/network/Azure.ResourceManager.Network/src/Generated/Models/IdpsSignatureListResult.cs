@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Number of total records matching the query. </summary>
+        [WirePath("matchingRecordsCount")]
         public long? MatchingRecordsCount { get; }
         /// <summary> Array containing the results of the query. </summary>
+        [WirePath("signatures")]
         public IReadOnlyList<IdpsSignatureResult> Signatures { get; }
     }
 }
