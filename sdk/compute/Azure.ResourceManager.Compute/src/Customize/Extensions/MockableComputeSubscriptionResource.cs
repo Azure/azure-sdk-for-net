@@ -12,7 +12,6 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Mocking
 {
-    //[CodeGenSuppress("GetCommunityGalleryAsync", [typeof(AzureLocation), typeof(string), typeof(CancellationToken)])]
     public partial class MockableComputeSubscriptionResource : ArmResource
     {
         /// <summary>
