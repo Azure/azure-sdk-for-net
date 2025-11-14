@@ -49,7 +49,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         Argument.AssertNotNull(authenticationPolicy, nameof(authenticationPolicy));
         Argument.AssertNotNull(options, nameof(options));
-        Argument.AssertNotNull(options.Endpoint, nameof(options.Endpoint));
+        Argument.AssertNotNull(options.Endpoint, $"{nameof(options)}.{nameof(options.Endpoint)}");
 
         _options = options;
     }
@@ -157,6 +157,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
             throw new InvalidOperationException(
                 $"Cannot supply both a constructor '{nameof(projectEndpoint)}' and {nameof(options)}.{nameof(options.Endpoint)}.");
         }
+        options ??= new();
         options?.Endpoint ??= new Uri(rawTargetOpenAIEndpoint);
         return options;
     }

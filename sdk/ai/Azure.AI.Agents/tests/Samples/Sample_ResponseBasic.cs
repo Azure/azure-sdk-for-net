@@ -19,7 +19,7 @@ public class Sample_ResponseBasic : AgentsTestBase
     [AsyncOnly]
     public async Task AgentResponse()
     {
-        #region Snippet:Sample_CreateAgentClient_ResponseBasic
+        #region Snippet:Sample_CreateAgentClient_ResponseBasic_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -29,13 +29,13 @@ public class Sample_ResponseBasic : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
-        #region Snippet:Sample_CreateResponse_Async
+        #region Snippet:Sample_CreateResponse_Async2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
         #endregion
 
-        #region Snippet:Sample_WriteOutput_ResponseBasic_Async
+        #region Snippet:Sample_WriteOutput_ResponseBasic_Async2
         while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -58,13 +58,13 @@ public class Sample_ResponseBasic : AgentsTestBase
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        #region Snippet:Sample_CreateResponse_Sync
+        #region Snippet:Sample_CreateResponse_Sync_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
         #endregion
 
-        #region Snippet:Sample_WriteOutput_ResponseBasic_Sync
+        #region Snippet:Sample_WriteOutput_ResponseBasic_Sync_2
         while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));

@@ -19,7 +19,7 @@ namespace Azure.AI.Agents.Tests.Samples;
 #pragma warning disable OPENAICUA001
 public class Sample_ComputerUse : AgentsTestBase
 {
-    #region Snippet:Sample_ReadImageFile_ComputerUse
+    #region Snippet:Sample_ReadImageFile_ComputerUse_2
     private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth = "")
     {
         var dirName = Path.GetDirectoryName(pth) ?? "";
@@ -27,7 +27,7 @@ public class Sample_ComputerUse : AgentsTestBase
     }
     #endregion
 
-    #region Snippet:Sample_ProcessComputerUseCall_ComputerUse
+    #region Snippet:Sample_ProcessComputerUseCall_ComputerUse_2
     private static string ProcessComputerUseCall(ComputerCallResponseItem item, string oldScreenshot)
     {
         string currentScreenshot = "browser_search";
@@ -95,7 +95,7 @@ public class Sample_ComputerUse : AgentsTestBase
     public async Task ComputerUseAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClient_ComputerUse
+        #region Snippet:Sample_CreateAgentClient_ComputerUse_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
@@ -106,14 +106,14 @@ public class Sample_ComputerUse : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
-        #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
+        #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_2
         Dictionary<string, BinaryData> screenshots = new() {
             { "browser_search", ReadImageFile("Assets/cua_browser_search.png")},
             { "search_typed", ReadImageFile("Assets/cua_search_typed.png")},
             { "search_results", ReadImageFile("Assets/cua_search_results.png")},
         };
         #endregion
-        #region Snippet:Sample_CreateAgent_ComputerUse_Async
+        #region Snippet:Sample_CreateAgent_ComputerUse_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
@@ -131,7 +131,7 @@ public class Sample_ComputerUse : AgentsTestBase
             options: new(agentDefinition)
         );
         #endregion
-        #region Snippet:Sample_CreateResponse_ComputerUse_Async
+        #region Snippet:Sample_CreateResponse_ComputerUse_Async_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -171,12 +171,12 @@ public class Sample_ComputerUse : AgentsTestBase
         } while (computerUseCalled && limitIteration > 0);
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_ComputerUse_Async
+        #region Snippet:Sample_Cleanup_ComputerUse_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
-    #region Snippet:Sample_WaitForResponse_ComputerUse_Async
+    #region Snippet:Sample_WaitForResponse_ComputerUse_Async_2
     public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
     {
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -192,7 +192,7 @@ public class Sample_ComputerUse : AgentsTestBase
     }
     #endregion
 
-    #region Snippet:Sample_WaitForResponse_ComputerUse_Sync
+    #region Snippet:Sample_WaitForResponse_ComputerUse_Sync_2
     public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
     {
         OpenAIResponse response = responseClient.CreateResponse(
@@ -227,7 +227,7 @@ public class Sample_ComputerUse : AgentsTestBase
             {"search_typed", ReadImageFile("Assets/cua_search_typed.png")},
             {"search_results", ReadImageFile("Assets/cua_search_results.png")},
         };
-        #region Snippet:Sample_CreateAgent_ComputerUse_Sync
+        #region Snippet:Sample_CreateAgent_ComputerUse_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
@@ -245,7 +245,7 @@ public class Sample_ComputerUse : AgentsTestBase
             options: new(agentDefinition)
         );
         #endregion
-        #region Snippet:Sample_CreateResponse_ComputerUse_Sync
+        #region Snippet:Sample_CreateResponse_ComputerUse_Sync_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -284,7 +284,7 @@ public class Sample_ComputerUse : AgentsTestBase
         } while (computerUseCalled && limitIteration > 0);
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_ComputerUse_Sync
+        #region Snippet:Sample_Cleanup_ComputerUse_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

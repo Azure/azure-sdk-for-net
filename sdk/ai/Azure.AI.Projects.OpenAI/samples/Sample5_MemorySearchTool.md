@@ -164,7 +164,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync
 agentDefinition = new(model: modelDeploymentName)
 {
-    Instructions = "You are a prompt agent capable to access memorised conversation.",
+    Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
@@ -176,7 +176,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
 agentDefinition = new(model: modelDeploymentName)
 {
-    Instructions = "You are a prompt agent capable to access memorised conversation.",
+    Instructions = "You are a prompt agent capable to access memorized conversation.",
 };
 agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
 AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(

@@ -126,7 +126,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeZooUpdateProperties(document.RootElement, options);
                     }

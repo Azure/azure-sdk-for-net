@@ -1,9 +1,10 @@
 # Release History
 
-## 1.2.0 (Unreleased)
+## 1.2.0-beta.1 (2025-11-14)
 
 ### Features Added
-* Added many new operations (to be filled)
+
+This major update brings feature support for Microsoft Foundry Agents Service, integration with the new `Azure.AI.Projects.OpenAI` package, expanded evaluations capabilities, insights, red teaming, schedules, and more.
 
 ## 1.1.0 (2025-11-03)
 

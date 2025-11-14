@@ -4,7 +4,7 @@ In this example we will demonstrate how to get a response without an Agent in st
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 
-```C# Snippet:Sample_CreateAgentClient_ResponseStreaming
+```C# Snippet:Sample_CreateAgentClient_ResponseStreaming_2
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -13,7 +13,7 @@ AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new 
 2. Use the client to create a `Responses`, which will be used to create `AgentResponse` object.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateResponseStreaming
+```C# Snippet:Sample_CreateResponseStreaming_2
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 ```
@@ -21,7 +21,7 @@ OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(model
 3. Stream the results; raise the error if the request was not successful.
 
 Synchronous sample:
-```C# Snippet:Sample_WriteOutput_ResponseStreaming_Sync
+```C# Snippet:Sample_WriteOutput_ResponseStreaming_Sync_2
 foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreaming("What is the size of France in square miles?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
@@ -44,7 +44,7 @@ foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateRespons
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WriteOutput_ResponseStreaming_Async
+```C# Snippet:Sample_WriteOutput_ResponseStreaming_Async2
 await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)

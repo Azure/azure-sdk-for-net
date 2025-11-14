@@ -64,6 +64,7 @@
     "aadds",
     "aadkerb",
     "adls",
+    "agentic",
     "aoai",
     "apos",
     "azsdk",
@@ -219,8 +220,11 @@
         "azureai",
         "bleu",
         "gleu",
-        "ubinary",
-        "agentic"
+        "includable",
+        "inpaint",
+        "inpainting",
+        "logprobs",
+        "ubinary"
       ]
     },
     {

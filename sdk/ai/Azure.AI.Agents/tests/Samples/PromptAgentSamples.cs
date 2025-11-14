@@ -19,7 +19,7 @@ public class PromptAgentSamples : AgentsTestBase
     public async Task CreateAPromptAgent()
     {
         IgnoreSampleMayBe();
-        #region Snippet:CreateAPromptAgent
+        #region Snippet:CreateAPromptAgent2
 #if SNIPPET
         string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_PROJECT_ENDPOINT")
             ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_PROJECT_ENDPOINT'");
@@ -64,7 +64,7 @@ public class PromptAgentSamples : AgentsTestBase
         AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
         OpenAIClient openAIClient = agentClient.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
-        #region Snippet:CreateAgent_Basic_Async
+        #region Snippet:CreateAgent_Basic_Async2
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
@@ -74,23 +74,23 @@ public class PromptAgentSamples : AgentsTestBase
             options: new(agentDefinition)
         );
         #endregion
-        #region Snippet:CreateResponseBasic_Async
+        #region Snippet:CreateResponseBasic_Async2
         var agentReference = new AgentReference(name: agentVersion.Name);
         ResponseCreationOptions responseCreationOptions = new();
         responseCreationOptions.SetAgentReference(agentReference);
         OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
+            [ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")],
             responseCreationOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:FollowUp_Basic_Async
+        #region Snippet:FollowUp_Basic_Async2
         responseCreationOptions.PreviousResponseId = response.Id;
         response = await responseClient.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("What was the previous question?")],
             responseCreationOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:CleanUp_Basic_Async
+        #region Snippet:CleanUp_Basic_Async2
         await agentClient.DeleteAgentAsync(agentName: "myAgent");
         #endregion
     }
@@ -112,7 +112,7 @@ public class PromptAgentSamples : AgentsTestBase
         AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
         OpenAIClient openAIClient = agentClient.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
-        #region Snippet:CreateAgent_Basic_Sync
+        #region Snippet:CreateAgent_Basic_Sync_2
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
@@ -126,7 +126,7 @@ public class PromptAgentSamples : AgentsTestBase
         ResponseCreationOptions responseCreationOptions = new();
         responseCreationOptions.SetAgentReference(agentReference);
         OpenAIResponse response = responseClient.CreateResponse(
-            [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
+            [ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")],
             responseCreationOptions);
         Console.WriteLine(response.GetOutputText());
         responseCreationOptions.PreviousResponseId = response.Id;
@@ -156,7 +156,7 @@ public class PromptAgentSamples : AgentsTestBase
         AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
         OpenAIClient openAIClient = agentClient.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(MODEL_DEPLOYMENT);
-        #region Snippet:ConversationClient
+        #region Snippet:ConversationClient_2
         ResponseCreationOptions responseCreationOptions = new();
         responseCreationOptions.SetAgentReference(AGENT_NAME);
 
@@ -168,7 +168,7 @@ public class PromptAgentSamples : AgentsTestBase
         OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseCreationOptions);
 
         Console.WriteLine(response.GetOutputText());
-        #region Snippet:DeleteConversationClient
+        #region Snippet:DeleteConversationClient_2
         await agentClient.GetConversationClient().DeleteConversationAsync(conversation.Id);
         #endregion
     }
@@ -208,7 +208,7 @@ public class PromptAgentSamples : AgentsTestBase
         //
         // Create a conversation to maintain state between calls
         //
-        #region Snippet:ExistingConversations
+        #region Snippet:ExistingConversations_2
         AgentConversationCreationOptions conversationOptions = new()
         {
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
@@ -256,7 +256,7 @@ public class PromptAgentSamples : AgentsTestBase
         string AGENT_NAME = TestEnvironment.AGENT_NAME;
 #endif
         AgentClient agentClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
-        #region Snippet:ErrorHandling
+        #region Snippet:ErrorHandling_2
         try
         {
             AgentVersion agent = await agentClient.GetAgentVersionAsync(

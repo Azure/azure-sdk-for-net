@@ -4,7 +4,7 @@ In this example we will demonstrate how to use [Azure Container App](https://lea
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 
-```C# Snippet:Sample_Create_client_ContainerApp
+```C# Snippet:Sample_Create_client_ContainerApp_2
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var containerAppResourceId = System.Environment.GetEnvironmentVariable("CONTAINER_APP_RESOURCE_ID");
 var ingressSubdomainSuffix = System.Environment.GetEnvironmentVariable("INGRESS_SUBDOMAIN_SUFFIX");
@@ -15,7 +15,7 @@ AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new 
 2. Create the `ContainerAppAgentDefinition` object, holding information about the Azure Container App and use it to create the versioned agent object.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateContainerApp_ContainerApp_Sync
+```C# Snippet:Sample_CreateContainerApp_ContainerApp_Sync_2
 AgentVersion containerAgentVersion = client.CreateAgentVersion(
     agentName: "containerAgent",
     options: new(new ContainerAppAgentDefinition(
@@ -25,7 +25,7 @@ AgentVersion containerAgentVersion = client.CreateAgentVersion(
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
+```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async_2
 AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
     agentName: "containerAgent",
     options: new(new ContainerAppAgentDefinition(
@@ -37,7 +37,7 @@ AgentVersion containerAgentVersion = await client.CreateAgentVersionAsync(
 4. Create an `AgentConversation` conversation object, containing the first question.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateConversation_ContainerApp_Sync
+```C# Snippet:Sample_CreateConversation_ContainerApp_Sync_2
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 ConversationClient conversationClient = client.GetConversationClient();
@@ -49,7 +49,7 @@ AgentConversation conversation = conversationClient.CreateConversation(options: 
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateConversation_ContainerApp_Async
+```C# Snippet:Sample_CreateConversation_ContainerApp_Async_2
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 ConversationClient conversationClient = client.GetConversationClient();
@@ -63,7 +63,7 @@ AgentConversation conversation = await conversationClient.CreateConversationAsyn
 5. Create synchronous and asynchronous helper methods to wait for response completion. If the response status is not `Completed` we will thow the exception with the latest error.
 
 Synchronous sample:
-```C# Snippet:Sample_WaitForRun_ContainerApp_Sync
+```C# Snippet:Sample_WaitForRun_ContainerApp_Sync_2
 private static OpenAIResponse WaitResponse(OpenAIResponseClient responseClient, OpenAIResponse response)
 {
     while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
@@ -77,7 +77,7 @@ private static OpenAIResponse WaitResponse(OpenAIResponseClient responseClient, 
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WaitForRun_ContainerApp_Async
+```C# Snippet:Sample_WaitForRun_ContainerApp_Async_2
 private static async Task<OpenAIResponse> WaitResponseAsync(OpenAIResponseClient responseClient, OpenAIResponse response)
 {
     while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
@@ -93,7 +93,7 @@ private static async Task<OpenAIResponse> WaitResponseAsync(OpenAIResponseClient
 6. Create a response for the first question; add another question to conversation and wait again.
 
 Synchronous sample:
-```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
+```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync_2
 AgentReference agentReference = new(name: containerAgentVersion.Name)
 {
     Version = containerAgentVersion.Version,
@@ -118,7 +118,7 @@ Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
+```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async_2
 AgentReference agentReference = new(name: containerAgentVersion.Name)
 {
     Version = containerAgentVersion.Version,
@@ -145,13 +145,13 @@ Console.WriteLine(response.GetOutputText());
 7. Clean up resources by deleting conversations and agent.
 
 Synchronous sample:
-```C# Snippet:Sample_Cleanup_ContainerApp_Sync
+```C# Snippet:Sample_Cleanup_ContainerApp_Sync_2
 conversationClient.DeleteConversation(conversationId: conversation.Id);
 client.DeleteAgentVersion(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_Cleanup_ContainerApp_Async
+```C# Snippet:Sample_Cleanup_ContainerApp_Async_2
 await conversationClient.DeleteConversationAsync(conversationId:conversation.Id);
 await client.DeleteAgentVersionAsync(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
 ```

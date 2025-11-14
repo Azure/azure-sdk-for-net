@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Tests.Samples;
 
 public class Sample_FileSearch_Streaming : AgentsTestBase
 {
-    #region Snippet:Sample_ParseResponse_FileSearch_Streaming
+    #region Snippet:Sample_ParseResponse_FileSearch_Streaming_2
     private static void ParseResponse(StreamingResponseUpdate streamResponse)
     {
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
@@ -61,7 +61,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
     public async Task FileSearch_StreamingAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClient_FileSearch_Streaming
+        #region Snippet:Sample_CreateAgentClient_FileSearch_Streaming_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -72,7 +72,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
-        #region Snippet:Sample_UploadFile_FileSearch_Streaming_Async
+        #region Snippet:Sample_UploadFile_FileSearch_Streaming_Async_2
         string filePath = "sample_file_for_upload.txt";
         File.WriteAllText(
             path: filePath,
@@ -81,7 +81,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
-        #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Async
+        #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Async_2
         VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
         VectorStoreCreationOptions options = new()
         {
@@ -90,7 +90,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         };
         VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
         #endregion
-        #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Async
+        #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
@@ -101,7 +101,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
             options: new(agentDefinition)
         );
         #endregion
-        #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
+        #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         ConversationClient conversationClient = client.GetConversationClient();
@@ -112,13 +112,13 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
-        #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
+        #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async_2
         await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
         {
             ParseResponse(streamResponse);
         }
         #endregion
-        #region Snippet:Sample_FollowUp_FileSearch_Streaming_Async
+        #region Snippet:Sample_FollowUp_FileSearch_Streaming_Async_2
         Console.WriteLine("Demonstrating follow-up query with streaming...");
         request = ResponseItem.CreateUserMessageItem("What was my previous question about?");
         await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
@@ -127,7 +127,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         }
         #endregion
 
-        #region Snippet:Sample_Cleanup_FileSearch_Streaming_Async
+        #region Snippet:Sample_Cleanup_FileSearch_Streaming_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
         await fileClient.DeleteFileAsync(uploadedFile.Id);
@@ -148,7 +148,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
-        #region Snippet:Sample_UploadFile_FileSearch_Streaming_Sync
+        #region Snippet:Sample_UploadFile_FileSearch_Streaming_Sync_2
         string filePath = "sample_file_for_upload.txt";
         File.WriteAllText(
             path: filePath,
@@ -157,7 +157,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
-        #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Sync
+        #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Sync_2
         VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
         VectorStoreCreationOptions options = new()
         {
@@ -166,7 +166,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         };
         VectorStore vectorStore = vctStoreClient.CreateVectorStore(options);
         #endregion
-        #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Sync
+        #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
@@ -177,7 +177,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
             options: new(agentDefinition)
         );
         #endregion
-        #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
+        #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         ConversationClient conversationClient = client.GetConversationClient();
@@ -188,13 +188,13 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         ResponseItem request = ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
-        #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
+        #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync_2
         foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming([request], responseOptions))
         {
             ParseResponse(streamResponse);
         }
         #endregion
-        #region Snippet:Sample_FollowUp_FileSearch_Streaming_Sync
+        #region Snippet:Sample_FollowUp_FileSearch_Streaming_Sync_2
         Console.WriteLine("Demonstrating follow-up query with streaming...");
         request = ResponseItem.CreateUserMessageItem("What was my previous question about?");
         foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming([request], responseOptions))
@@ -203,7 +203,7 @@ public class Sample_FileSearch_Streaming : AgentsTestBase
         }
         #endregion
 
-        #region Snippet:Sample_Cleanup_FileSearch_Streaming_Sync
+        #region Snippet:Sample_Cleanup_FileSearch_Streaming_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
         fileClient.DeleteFile(uploadedFile.Id);

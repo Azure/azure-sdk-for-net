@@ -20,7 +20,7 @@ public class Sample_ResponseStreaming : AgentsTestBase
     public async Task AgentResponseSteaming()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClient_ResponseStreaming
+        #region Snippet:Sample_CreateAgentClient_ResponseStreaming_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -30,12 +30,12 @@ public class Sample_ResponseStreaming : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
-        #region Snippet:Sample_CreateResponseStreaming
+        #region Snippet:Sample_CreateResponseStreaming_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         #endregion
 
-        #region Snippet:Sample_WriteOutput_ResponseStreaming_Async
+        #region Snippet:Sample_WriteOutput_ResponseStreaming_Async2
         await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
@@ -74,7 +74,7 @@ public class Sample_ResponseStreaming : AgentsTestBase
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
-        #region Snippet:Sample_WriteOutput_ResponseStreaming_Sync
+        #region Snippet:Sample_WriteOutput_ResponseStreaming_Sync_2
         foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreaming("What is the size of France in square miles?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)

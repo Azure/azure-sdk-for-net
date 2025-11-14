@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Tests.Samples;
 
 public class Sample_Function : AgentsTestBase
 {
-    #region Snippet:Sample_Functions_Function
+    #region Snippet:Sample_Functions_Function_2
     /// Example of a function that defines no parameters
     /// returns user favorite city.
     private static string GetUserFavoriteCity() => "Seattle, WA";
@@ -46,7 +46,7 @@ public class Sample_Function : AgentsTestBase
         _ => throw new NotImplementedException()
     };
     #endregion
-    #region Snippet:Sample_FunctionTools_Function
+    #region Snippet:Sample_FunctionTools_Function_2
     public static readonly FunctionTool getUserFavoriteCityTool = ResponseTool.CreateFunctionTool(
         functionName: "getUserFavoriteCity",
         functionDescription: "Gets the user's favorite city.",
@@ -104,7 +104,7 @@ public class Sample_Function : AgentsTestBase
     );
     #endregion
 
-    # region Snippet:Sample_Resolver_Function
+    # region Snippet:Sample_Resolver_Function_2
     private static FunctionCallOutputResponseItem GetResolvedToolOutput(FunctionCallResponseItem item)
     {
         if (item.FunctionName == getUserFavoriteCityTool.FunctionName)
@@ -135,7 +135,7 @@ public class Sample_Function : AgentsTestBase
     public async Task FunctionAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClient_Function
+        #region Snippet:Sample_CreateAgentClient_Function_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -146,7 +146,7 @@ public class Sample_Function : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
-        #region Snippet:Sample_CreateAgent_Function_Async
+        #region Snippet:Sample_CreateAgent_Function_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
@@ -158,7 +158,7 @@ public class Sample_Function : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_Function_Async
+        #region Snippet:Sample_CreateResponse_Function_Async_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -188,12 +188,12 @@ public class Sample_Function : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
 
-        #region Snippet:Sample_Cleanup_Function_Async
+        #region Snippet:Sample_Cleanup_Function_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
-    #region Snippet:Sample_WaitForResponse_Function_Async
+    #region Snippet:Sample_WaitForResponse_Function_Async_2
     public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
     {
         OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -209,7 +209,7 @@ public class Sample_Function : AgentsTestBase
     }
     #endregion
 
-    #region Snippet:Sample_WaitForResponse_Function_Sync
+    #region Snippet:Sample_WaitForResponse_Function_Sync_2
     public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
     {
         OpenAIResponse response = responseClient.CreateResponse(
@@ -239,7 +239,7 @@ public class Sample_Function : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
-        #region Snippet:Sample_CreateAgent_Function_Sync
+        #region Snippet:Sample_CreateAgent_Function_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
@@ -251,7 +251,7 @@ public class Sample_Function : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_Function_Sync
+        #region Snippet:Sample_CreateResponse_Function_Sync_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -281,7 +281,7 @@ public class Sample_Function : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
 
-        #region Snippet:Sample_Cleanup_Function_Sync
+        #region Snippet:Sample_Cleanup_Function_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

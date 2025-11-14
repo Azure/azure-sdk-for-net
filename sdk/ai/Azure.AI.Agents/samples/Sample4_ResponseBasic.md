@@ -4,7 +4,7 @@ In this example we will demonstrate how to get a response without an Agent.
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 
-```C# Snippet:Sample_CreateAgentClient_ResponseBasic
+```C# Snippet:Sample_CreateAgentClient_ResponseBasic_2
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -13,14 +13,14 @@ AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new 
 2. Use the client to create a `Responses`, which will be used to create `AgentResponse` object.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateResponse_Sync
+```C# Snippet:Sample_CreateResponse_Sync_2
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 OpenAIResponse response = responsesClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateResponse_Async
+```C# Snippet:Sample_CreateResponse_Async2
 OpenAIClient openAIClient = client.GetOpenAIClient();
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
@@ -29,7 +29,7 @@ OpenAIResponse response = await responseClient.CreateResponseAsync("What is the 
 3. Wait for request to complete; raise the error if the request was not successful.
 
 Synchronous sample:
-```C# Snippet:Sample_WriteOutput_ResponseBasic_Sync
+```C# Snippet:Sample_WriteOutput_ResponseBasic_Sync_2
 while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -40,7 +40,7 @@ Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WriteOutput_ResponseBasic_Async
+```C# Snippet:Sample_WriteOutput_ResponseBasic_Async2
 while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));

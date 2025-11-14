@@ -8,8 +8,6 @@ using System.IO;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using Azure.Core;
-using OpenAI;
 using OpenAI.Files;
 
 namespace Azure.AI.Projects.OpenAI;
@@ -39,19 +37,20 @@ internal static partial class PipelinePolicyHelpers
             new GenericActionPipelinePolicy(
                 requestAction: request =>
                 {
-                    if (request?.Uri is Uri requestUri)
+                    if (request?.Uri is Uri requestUri
+                        && requestUri.Query?.ToLowerInvariant()?.Contains($"{key.ToLowerInvariant()}=") != true
+                        && requestUri.Query?.ToLowerInvariant()?.Contains($"{key.ToLowerInvariant()}[]=") != true
+                        && valueGenerator.Invoke() is string generatedValue
+                        && !string.IsNullOrEmpty(generatedValue))
                     {
-                        RawRequestUriBuilder builder = new();
+                        ClientUriBuilder builder = new();
                         builder.Reset(requestUri);
-                        if (!builder.Query.Contains(key))
-                        {
-                            string value = valueGenerator.Invoke();
-                            if (!string.IsNullOrEmpty(value))
-                            {
-                                builder.AppendQuery(key, value, escapeValue: true);
-                            }
-                        }
-                        request.Uri = builder.ToUri();
+                        builder.AppendQuery(key, generatedValue, escape: true);
+
+                        // ClientUriBuilder.Reset removes existing query; we need to restore it
+                        request.Uri = string.IsNullOrEmpty(requestUri.Query)
+                            ? builder.ToUri()
+                            : new Uri($"{builder.ToUri()}&{requestUri.Query.Substring(1)}");
                     }
                 }),
                 PipelinePosition.PerCall);
