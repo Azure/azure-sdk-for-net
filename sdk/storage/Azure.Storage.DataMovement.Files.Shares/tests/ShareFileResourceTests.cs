@@ -2535,6 +2535,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/53932")]
         public async Task CreateAsync_NfsPropertiesPermissionsPreserve()
         {
             // Arrange
@@ -2545,20 +2546,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(false, new MockResponse(200))));
-            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileCreateOptions>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    FilesModelFactory.StorageFileInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        isServerEncrypted: false,
-                        fileCreationTime: DateTimeOffset.UtcNow,
-                        fileLastWriteTime: DateTimeOffset.UtcNow,
-                        owner: DefaultSourceOwner,
-                        group: DefaultSourceGroup,
-                        nfsFileMode: DefaultSourceFileMode,
-                        fileId: "48903841",
-                        fileParentId: "93024923"),
-                    new MockResponse(200))));
+
+            // comment due to build error, tracked in https://github.com/Azure/azure-sdk-for-net/issues/53932
+            //mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileCreateOptions>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
+            //    .Returns(Task.FromResult(Response.FromValue(
+            //        FilesModelFactory.StorageFileInfo(
+            //            eTag: new ETag("eTag"),
+            //            lastModified: DateTimeOffset.UtcNow,
+            //            isServerEncrypted: false,
+            //            fileCreationTime: DateTimeOffset.UtcNow,
+            //            fileLastWriteTime: DateTimeOffset.UtcNow,
+            //            owner: DefaultSourceOwner,
+            //            group: DefaultSourceGroup,
+            //            nfsFileMode: DefaultSourceFileMode,
+            //            fileId: "48903841",
+            //            fileParentId: "93024923"),
+            //        new MockResponse(200))));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(
                 mockDestination.Object,
                 new()
