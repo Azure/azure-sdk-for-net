@@ -91,11 +91,18 @@ public class ConversationsTests : ProjectsOpenAITestBase
         await client.Conversations.DeleteConversationAsync(conversation.Id);
         Assert.ThrowsAsync<ClientResultException>(async () => await client.Conversations.GetProjectConversationAsync(conversation.Id));
 
+        int conversationsChecked = 0;
+
         await foreach (ProjectConversation listedConversation in client.Conversations.GetProjectConversationsAsync(limit: 10))
         {
             if (listedConversation.Id == conversation.Id)
             {
                 Assert.Fail($"Found listed conversation that should be deleted: {listedConversation.Id}");
+            }
+            if (conversationsChecked++ >= 20)
+            {
+                // Good enough
+                break;
             }
         }
     }

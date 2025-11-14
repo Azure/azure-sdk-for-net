@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenAI;
@@ -88,6 +89,9 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
         _defaultConversationId = defaultConversationId;
     }
 
+    protected ProjectResponsesClient()
+    { }
+
     public override ClientResult<OpenAIResponse> CreateResponse(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -144,8 +148,57 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
         return base.CreateResponseStreamingAsync(userInputText, options, cancellationToken);
     }
 
-    protected ProjectResponsesClient()
-    { }
+    public virtual CollectionResult<OpenAIResponse> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
+    {
+        Dictionary<string, string> extraQueryForProtocol = new()
+        {
+            ["agent_name"] = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null,
+            ["agent_id"] = string.IsNullOrEmpty(agent?.Version) ? null : $"{agent?.Name}:{agent?.Version}",
+            ["conversation_id"] = conversationId,
+        };
+
+        return new InternalOpenAICollectionResultOfT<OpenAIResponse>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetProjectResponsesRequest(
+                    localCollectionOptions.Limit,
+                    localCollectionOptions.Order,
+                    localCollectionOptions.AfterId,
+                    localCollectionOptions.BeforeId,
+                    agentName: localCollectionOptions.ExtraQueryMap["agent_name"],
+                    agentId: localCollectionOptions.ExtraQueryMap["agent_id"],
+                    conversationId: localCollectionOptions.ExtraQueryMap["conversation_id"],
+                    localRequestOptions),
+            dataItemDeserializer: DeserializeOpenAIResponse,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: extraQueryForProtocol),
+            cancellationToken.ToRequestOptions());
+    }
+
+    public virtual AsyncCollectionResult<OpenAIResponse> GetProjectResponsesAsync(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
+    {
+        Dictionary<string, string> extraQueryForProtocol = new()
+        {
+            ["agent_name"] = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null,
+            ["agent_id"] = string.IsNullOrEmpty(agent?.Version) ? null : $"{agent?.Name}:{agent?.Version}",
+            ["conversation_id"] = conversationId,
+        };
+
+        return new InternalOpenAIAsyncCollectionResultOfT<OpenAIResponse>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetProjectResponsesRequest(
+                    localCollectionOptions.Limit,
+                    localCollectionOptions.Order,
+                    localCollectionOptions.AfterId,
+                    localCollectionOptions.BeforeId,
+                    agentName: localCollectionOptions.ExtraQueryMap["agent_name"],
+                    agentId: localCollectionOptions.ExtraQueryMap["agent_id"],
+                    conversationId: localCollectionOptions.ExtraQueryMap["conversation_id"],
+                    localRequestOptions),
+            dataItemDeserializer: DeserializeOpenAIResponse,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: extraQueryForProtocol),
+            cancellationToken.ToRequestOptions());
+    }
 
     private void ApplyClientDefaults(ResponseCreationOptions options)
     {
@@ -158,5 +211,13 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
         {
             options.Model = _defaultModelName ?? null;
         }
+    }
+
+    private static OpenAIResponse DeserializeOpenAIResponse(JsonElement element, ModelReaderWriterOptions options)
+    {
+        return ModelReaderWriter.Read<OpenAIResponse>(
+            BinaryData.FromString(element.GetRawText()),
+            options,
+            OpenAIContext.Default);
     }
 }
