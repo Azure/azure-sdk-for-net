@@ -12,6 +12,7 @@ namespace Azure.Provisioning.Utilities
             IBicepValue? bicepValue = value;
             while (bicepValue is IBicepValue)
             {
+                // TODO -- should we override existing Self?
                 bicepValue.Self = self;
                 if (bicepValue is ProvisionableConstruct)
                 {
