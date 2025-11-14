@@ -172,7 +172,11 @@ public class BicepList<T> :
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
         {
-            SetSelfForItem(_values[i], i);
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
         }
     }
 
@@ -207,9 +211,14 @@ public class BicepList<T> :
         _values.RemoveAt(index);
         // maintain the self reference for the removed item and remaining items
         RemoveSelfForItem(removed);
+        // update the _self for all items after the removed item
         for (int i = index; i < _values.Count; i++)
         {
-            SetSelfForItem(_values[i], i);
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
         }
     }
 
