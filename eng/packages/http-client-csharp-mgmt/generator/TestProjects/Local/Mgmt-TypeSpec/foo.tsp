@@ -16,6 +16,9 @@ model Foo is TrackedResource<FooProperties, false> {
   ...ResourceNameParameter<Foo, SegmentName = "foos">;
 
   ...ExtendedLocationProperty;
+
+  #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Existing usage of legacy type"
+  ...Azure.ResourceManager.Legacy.ManagedServiceIdentityV4Property;
 }
 
 @useSystemTextJsonConverter("csharp")

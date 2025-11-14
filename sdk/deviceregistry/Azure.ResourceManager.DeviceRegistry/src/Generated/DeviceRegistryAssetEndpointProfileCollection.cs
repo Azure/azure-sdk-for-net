@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryAssetEndpointProfileResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistryAssetEndpointProfileCollection"/> instance call the GetDeviceRegistryAssetEndpointProfiles method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistryAssetEndpointProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DeviceRegistryAssetEndpointProfileCollection"/> instance call the GetDeviceRegistryAssetEndpointProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DeviceRegistryAssetEndpointProfileCollection : ArmCollection, IEnumerable<DeviceRegistryAssetEndpointProfileResource>, IAsyncEnumerable<DeviceRegistryAssetEndpointProfileResource>
     {

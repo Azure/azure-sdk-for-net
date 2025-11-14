@@ -14,47 +14,72 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct PolicyAction : IEquatable<PolicyAction>
     {
         private readonly string _value;
+        /// <summary> Add a resource label with a given name. </summary>
+        private const string AddResourceValue = "addResource";
+        /// <summary> Remove a resource label with a given name. </summary>
+        private const string RemoveResourceValue = "removeResource";
+        /// <summary> Set inventory state to a given supported state value. </summary>
+        private const string SetStateValue = "setState";
+        /// <summary> Set an external id. </summary>
+        private const string SetExternalIDValue = "setExternalID";
+        /// <summary> Remove from inventory. </summary>
+        private const string RemoveFromInventoryValue = "removeFromInventory";
 
         /// <summary> Initializes a new instance of <see cref="PolicyAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AddResourceValue = "addResource";
-        private const string RemoveResourceValue = "removeResource";
-        private const string SetStateValue = "setState";
-        private const string SetExternalIDValue = "setExternalID";
-        private const string RemoveFromInventoryValue = "removeFromInventory";
+            _value = value;
+        }
 
         /// <summary> Add a resource label with a given name. </summary>
         public static PolicyAction AddResource { get; } = new PolicyAction(AddResourceValue);
+
         /// <summary> Remove a resource label with a given name. </summary>
         public static PolicyAction RemoveResource { get; } = new PolicyAction(RemoveResourceValue);
+
         /// <summary> Set inventory state to a given supported state value. </summary>
         public static PolicyAction SetState { get; } = new PolicyAction(SetStateValue);
+
         /// <summary> Set an external id. </summary>
         public static PolicyAction SetExternalID { get; } = new PolicyAction(SetExternalIDValue);
+
         /// <summary> Remove from inventory. </summary>
         public static PolicyAction RemoveFromInventory { get; } = new PolicyAction(RemoveFromInventoryValue);
+
         /// <summary> Determines if two <see cref="PolicyAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyAction left, PolicyAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyAction left, PolicyAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyAction(string value) => new PolicyAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyAction?(string value) => value == null ? null : new PolicyAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

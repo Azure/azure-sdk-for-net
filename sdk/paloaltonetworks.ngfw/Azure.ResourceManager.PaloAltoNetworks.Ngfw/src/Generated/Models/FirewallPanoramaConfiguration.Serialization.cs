@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallPanoramaConfiguration : IUtf8JsonSerializable, IJsonModel<FirewallPanoramaConfiguration>
+    /// <summary> Panorama Config. </summary>
+    public partial class FirewallPanoramaConfiguration : IJsonModel<FirewallPanoramaConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPanoramaConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaConfiguration"/> for deserialization. </summary>
+        internal FirewallPanoramaConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallPanoramaConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallPanoramaConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("configString"u8);
             writer.WriteStringValue(ConfigString);
             if (options.Format != "W" && Optional.IsDefined(VmAuthKey))
@@ -71,15 +76,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +93,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallPanoramaConfiguration IJsonModel<FirewallPanoramaConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallPanoramaConfiguration IJsonModel<FirewallPanoramaConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallPanoramaConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallPanoramaConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFirewallPanoramaConfiguration(document.RootElement, options);
         }
 
-        internal static FirewallPanoramaConfiguration DeserializeFirewallPanoramaConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FirewallPanoramaConfiguration DeserializeFirewallPanoramaConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,56 +126,54 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             string tplName = default;
             string cgName = default;
             string hostName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("configString"u8))
+                if (prop.NameEquals("configString"u8))
                 {
-                    configString = property.Value.GetString();
+                    configString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmAuthKey"u8))
+                if (prop.NameEquals("vmAuthKey"u8))
                 {
-                    vmAuthKey = property.Value.GetString();
+                    vmAuthKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("panoramaServer"u8))
+                if (prop.NameEquals("panoramaServer"u8))
                 {
-                    panoramaServer = property.Value.GetString();
+                    panoramaServer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("panoramaServer2"u8))
+                if (prop.NameEquals("panoramaServer2"u8))
                 {
-                    panoramaServer2 = property.Value.GetString();
+                    panoramaServer2 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dgName"u8))
+                if (prop.NameEquals("dgName"u8))
                 {
-                    dgName = property.Value.GetString();
+                    dgName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tplName"u8))
+                if (prop.NameEquals("tplName"u8))
                 {
-                    tplName = property.Value.GetString();
+                    tplName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cgName"u8))
+                if (prop.NameEquals("cgName"u8))
                 {
-                    cgName = property.Value.GetString();
+                    cgName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostName"u8))
+                if (prop.NameEquals("hostName"u8))
                 {
-                    hostName = property.Value.GetString();
+                    hostName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPanoramaConfiguration(
                 configString,
                 vmAuthKey,
@@ -175,13 +183,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 tplName,
                 cgName,
                 hostName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FirewallPanoramaConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FirewallPanoramaConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -191,15 +202,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        FirewallPanoramaConfiguration IPersistableModel<FirewallPanoramaConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallPanoramaConfiguration IPersistableModel<FirewallPanoramaConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallPanoramaConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirewallPanoramaConfiguration(document.RootElement, options);
                     }
                 default:
@@ -207,6 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FirewallPanoramaConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
