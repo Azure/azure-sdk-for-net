@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-// using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace

@@ -63,5 +63,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
             UserPrincipal = userPrincipal;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-    }
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/> for scenarios that require a parameterless constructor (e.g. serialization). Prefer using the constructor that takes the userPrincipal when that value is known. </summary>
+        public DynatraceSsoDetailsContent()
+        {
+        }
+
+            /// <summary> user principal id of the user. </summary>
+            public string UserPrincipal { get; set; }
+        }
 }
