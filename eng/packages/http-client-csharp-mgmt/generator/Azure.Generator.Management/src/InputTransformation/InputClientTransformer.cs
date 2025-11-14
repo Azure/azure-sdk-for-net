@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Generator.Management.InputTransformation
 {
@@ -17,6 +18,23 @@ namespace Azure.Generator.Management.InputTransformation
             }
 
             return client;
+        }
+
+        private static void RemoveSubscriptionIdFromClient(InputClient client)
+        {
+            var updatedParameters = new List<InputParameter>();
+            foreach (var parameter in client.Parameters)
+            {
+                if (parameter is InputPathParameter pathParameter && pathParameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Remove subscriptionId from client parameter
+                }
+                else
+                {
+                    updatedParameters.Add(parameter);
+                }
+            }
+            client.Parameters(updatedParameters);
         }
 
         private static void SetSubscriptionIdToMethodParameter(InputOperation operation)
