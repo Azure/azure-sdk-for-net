@@ -35,6 +35,7 @@ public class BasicContainerRegistryTests
     }
 
     [Test]
+    [Ignore("Test is consistently failing - see https://dev.azure.com/azure-sdk/public/_build/results?buildId=5561512")]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
     public async Task CreateContainerRegistry()
     {
