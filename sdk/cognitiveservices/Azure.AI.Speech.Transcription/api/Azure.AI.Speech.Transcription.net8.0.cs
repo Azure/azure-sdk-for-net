@@ -2,6 +2,7 @@ namespace Azure.AI.Speech.Transcription
 {
     public static partial class AISpeechTranscriptionModelFactory
     {
+        public static Azure.AI.Speech.Transcription.ChannelCombinedPhrases ChannelCombinedPhrases(int? channel = default(int?), string text = null) { throw null; }
         public static Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedModeProperties(bool? enabled = default(bool?), string task = null, string targetLanguage = null, System.Collections.Generic.IEnumerable<string> prompt = null) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions TranscriptionDiarizationOptions(bool? enabled = default(bool?), int? maxSpeakers = default(int?)) { throw null; }
         public static Azure.AI.Speech.Transcription.TranscriptionOptions TranscriptionOptions(System.Uri audioUri = null, System.Collections.Generic.IEnumerable<string> locales = null, System.Collections.Generic.IDictionary<string, System.Uri> models = null, Azure.AI.Speech.Transcription.ProfanityFilterMode? profanityFilterMode = default(Azure.AI.Speech.Transcription.ProfanityFilterMode?), Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions diarizationOptions = null, System.Collections.Generic.IEnumerable<int> activeChannels = null, Azure.AI.Speech.Transcription.EnhancedModeProperties enhancedMode = null, Azure.AI.Speech.Transcription.PhraseListProperties phraseList = null) { throw null; }
@@ -12,6 +13,18 @@ namespace Azure.AI.Speech.Transcription
         internal AzureAISpeechTranscriptionContext() { }
         public static Azure.AI.Speech.Transcription.AzureAISpeechTranscriptionContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
+    public partial class ChannelCombinedPhrases : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>
+    {
+        internal ChannelCombinedPhrases() { }
+        public int? Channel { get { throw null; } }
+        public string Text { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Speech.Transcription.ChannelCombinedPhrases System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Speech.Transcription.ChannelCombinedPhrases System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.ChannelCombinedPhrases>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EnhancedModeProperties : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.EnhancedModeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.EnhancedModeProperties>
     {
@@ -148,6 +161,7 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionResult>
     {
         internal TranscriptionResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Speech.Transcription.ChannelCombinedPhrases> CombinedPhrases { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.AI.Speech.Transcription.TranscribedPhrases> PhrasesByChannel { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
