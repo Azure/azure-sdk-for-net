@@ -1,12 +1,14 @@
 # Release History
 
-## 1.1.3 (2025-11-13)
+## 1.2.0-beta.10 (Unreleased)
 
-This is a patch release for 1.1.2.
+## Features Added
 
-### Bugs Fixed
+## Breaking Changes
 
-- fix string format serialization of DateTimeOffset.
+## Bugs Fixed
+
+## Other Changes
 
 ## 1.2.0-beta.9 (2025-03-11)
 
@@ -79,6 +81,14 @@ This is a patch release for 1.1.2.
 
 - Upgraded dependent Azure.Core to 1.32.0.
 - Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.3 (2025-11-13)
+
+This is a patch release for 1.1.2.
+
+### Bugs Fixed
+
+- fix string format serialization of DateTimeOffset.
 
 ## 1.1.2 (2023-03-11)
 

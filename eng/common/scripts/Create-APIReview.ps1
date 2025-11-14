@@ -92,7 +92,12 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     }
     catch
     {
-        Write-Host "Exception details: $($_.Exception.Response)"
+        Write-Host "ERROR: API request failed" -ForegroundColor Red
+        Write-Host "Status Code: $($_.Exception.Response.StatusCode.Value__)" -ForegroundColor Yellow
+        Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Yellow
+        if ($_.ErrorDetails.Message) {
+            Write-Host "Details: $($_.ErrorDetails.Message)" -ForegroundColor Yellow
+        }
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
@@ -129,7 +134,12 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     }
     catch
     {
-        Write-Host "Exception details: $($_.Exception)"
+        Write-Host "ERROR: API request failed" -ForegroundColor Red
+        Write-Host "Status Code: $($_.Exception.Response.StatusCode.Value__)" -ForegroundColor Yellow
+        Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Yellow
+        if ($_.ErrorDetails.Message) {
+            Write-Host "Details: $($_.ErrorDetails.Message)" -ForegroundColor Yellow
+        }
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
