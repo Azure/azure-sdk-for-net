@@ -7,6 +7,15 @@
 * Enabled resource metrics export by default.
   ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
 
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorExporterOptions`
+  to enable filtering logs based on trace sampling decisions, reducing log
+  volume while maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
+* Update OpenTelemetry dependencies
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
+  - OpenTelemetry 1.14.0
+
 ### Breaking Changes
 
 ### Bugs Fixed

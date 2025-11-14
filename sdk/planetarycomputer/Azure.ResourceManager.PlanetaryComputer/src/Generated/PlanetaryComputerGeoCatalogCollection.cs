@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlanetaryComputerGeoCatalogResource"/> and their operations.
-    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of the parent resource.
+    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PlanetaryComputerGeoCatalogCollection : ArmCollection, IEnumerable<PlanetaryComputerGeoCatalogResource>, IAsyncEnumerable<PlanetaryComputerGeoCatalogResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> List GeoCatalog resources by resource group. </summary>
+        /// <summary>
+        /// List GeoCatalog resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlanetaryComputerGeoCatalogResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupAsyncCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
-        /// <summary> List GeoCatalog resources by resource group. </summary>
+        /// <summary>
+        /// List GeoCatalog resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlanetaryComputerGeoCatalogResource> GetAll(CancellationToken cancellationToken = default)

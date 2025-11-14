@@ -157,22 +157,12 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   Write-Host "Calculating dependencies for $($pkgProp.Name)"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
-  $buildOutputPath = Join-Path $RepoRoot "_dependencylistoutput.txt"
 
-  try {
-    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+  $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-    " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+    " /p:OutputProjectFilePath=`"$outputFilePath`""
 
-    Invoke-LoggedCommand $command | Out-Null
-  }
-  catch {
-      Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
-      Write-Host "Dumping erroring build output."
-      Write-Host (Get-Content -Raw $buildOutputPath)
-
-      return @()
-  }
+  Invoke-LoggedMsbuildCommand $command
 
   if (Test-Path $outputFilePath) {
     $dependentProjects = Get-Content $outputFilePath

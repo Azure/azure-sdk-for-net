@@ -100,7 +100,23 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
         }
 
-        /// <summary> List PlaywrightWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List PlaywrightWorkspace resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceResource> GetPlaywrightWorkspacesAsync(CancellationToken cancellationToken = default)
@@ -112,7 +128,23 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionAsyncCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary> List PlaywrightWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List PlaywrightWorkspace resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceResource> GetPlaywrightWorkspaces(CancellationToken cancellationToken = default)
