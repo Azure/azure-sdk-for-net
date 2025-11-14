@@ -12,10 +12,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary>
-    /// A class representing the CommunityGallery data model.
-    /// Specifies information about the Community Gallery that you want to create or update.
-    /// </summary>
+    /// <summary> Specifies information about the Community Gallery that you want to create or update. </summary>
     public partial class CommunityGalleryData : PirCommunityGalleryResourceData
     {
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
@@ -46,7 +43,5 @@ namespace Azure.ResourceManager.Compute
         public IReadOnlyDictionary<string, string> ArtifactTags { get; }
         /// <summary> The metadata of community gallery. </summary>
         public CommunityGalleryMetadata CommunityMetadata { get; }
-        /// <summary> The resource identifier. </summary>
-        public ResourceIdentifier Id { get; internal set; }
     }
 }
