@@ -281,10 +281,10 @@
 # ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @jiarguo @scgree
+/sdk/translation/                                                  @jrjrguo @SG-MS
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @kdoss @jiarguo @scgree
+# ServiceOwners:                                                   @krishna-doss-mohan @jrjrguo @SG-MS
 
 # ServiceLabel: %Commerce
 # ServiceOwners:                                                   @ms-premp @qiaozha
