@@ -16,12 +16,6 @@
   - OpenTelemetry.Instrumentation.AspNetCore 1.14.0
   - OpenTelemetry.Instrumentation.Http 1.14.0
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.4.0-beta.1 (2025-10-21)
 
 ### Features Added
