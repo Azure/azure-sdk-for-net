@@ -15,6 +15,7 @@
     "@azure-tools/typespec-azure-core": "0.62.0",
     "@azure-tools/typespec-azure-rulesets": "0.62.0",
     "@azure-tools/typespec-azure-resource-manager": "0.62.0",
-    "@azure-tools/typespec-autorest": "0.62.0"
+    "@azure-tools/typespec-autorest": "0.62.0",
+    "azure-ai-decorators": "https://github.com/glecaros/pkg/raw/refs/heads/main/azure-ai-decorators-v0.1.2.tgz"
   }
 }

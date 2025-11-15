@@ -13,7 +13,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -74,7 +73,6 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    // [Ignore("Does not work on service side: see ADO work item 4740406.")]
     public async Task TestListAgentsAfterAndBefore()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -497,14 +495,13 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The working V2 endpoint does not have the embeddings model yet.")]
     public async Task TestMemoryStoreCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         // Create
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
-        //Read
-        MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Id);
+        // Read
+        MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(store.Id, Is.EqualTo(result.Id));
         Assert.That(store.Description, Is.EqualTo(result.Description));
         Assert.That(store.Name, Is.EqualTo(result.Name));
@@ -517,16 +514,13 @@ public class AgentsTests : AgentsTestBase
         );
         // Update
         string newDescription = "Some other description.";
-        string newName = "New name";
         result = await projectClient.MemoryStores.UpdateMemoryStoreAsync(
-            name: newName,
+            name: store.Name,
             description: newDescription
         );
         Assert.That(newDescription, Is.EqualTo(result.Description));
-        Assert.That(newName, Is.EqualTo(result.Name));
-        result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Id);
+        result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(newDescription, Is.EqualTo(result.Description));
-        Assert.That(newName, Is.EqualTo(result.Name));
         // Delete
         DeleteMemoryStoreResponse delResult = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: store.Name);
         Assert.That(delResult.Deleted, Is.True);
@@ -540,16 +534,20 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The working V2 endpoint does not have the embeddings model yet.")]
+    [Ignore("The service is not ready.")]
     [TestCase(true)]
     [TestCase(false)]
     public async Task TestMemorySearch(bool useConversation)
     {
         AIProjectClient projectClient = GetTestProjectClient();
+        //try
+        //{
+        //    var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        //}
+        //catch { }
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
         // Create an empty scope and make sure we cannot find anything.
         string scope = "Test scope";
-        await projectClient.MemoryStores.UpdateMemoriesAsync("test-memory-store", new MemoryUpdateOptions(scope));
         MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
@@ -562,7 +560,7 @@ public class AgentsTests : AgentsTestBase
             memoryStoreName: store.Name,
             options: opts
         );
-        Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {resp.Memories[0].MemoryItem.Content}");
+        Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
         // Populate the scope and make sure, we can get the result.
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
         ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
@@ -573,6 +571,14 @@ public class AgentsTests : AgentsTestBase
             {
                 Items = { userItem, agentItem }
             });
+
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+        {
+            if (Mode != RecordedTestMode.Playback)
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(store.Name, updateResult.UpdateId);
+        }
+        Assert.That(updateResult.Status == MemoryStoreUpdateStatus.Completed, $"Unexpected status {updateResult.Status}");
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
             options: new MemorySearchOptions(scope)
