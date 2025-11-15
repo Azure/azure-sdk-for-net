@@ -6,7 +6,7 @@
 
 - Addressed an issue that caused paginated responses like conversation items to never terminate when large numbers of items are fetched
 
-## 1.0.0-beta.3 (2025-11-14)
+## 1.0.0-beta.2 (2025-11-14)
 
 ### Features Added
 
@@ -15,8 +15,6 @@
 ### Breaking Changes (beta)
 
 - `ProjectConversationsClient.GetProjectConversations()` has an updated signature that accepts an `AgentReference` instead of distinct `agentName` and `agentId` parameters, aligned with the new "list responses" operation.
-
-## 1.0.0-beta.2 (2025-11-14)
 
 ### Bugs Fixed
 
