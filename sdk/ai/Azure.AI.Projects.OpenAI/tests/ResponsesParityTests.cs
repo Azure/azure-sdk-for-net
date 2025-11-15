@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using Azure.AI.Projects.OpenAI;
-using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
@@ -231,7 +231,6 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    // [AsyncOnly]
     public async Task StreamingResponsesWork()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
@@ -305,23 +304,34 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    [Ignore("Bug 4755034")]
-    public async Task GetResponseStreamingWorks()
+    [TestCase(OpenAIClientMode.UseFDPOpenAI, Ignore = "Issue 4823408")]
+    [TestCase(OpenAIClientMode.UseExternalOpenAI)]
+    public async Task GetResponseStreamingWorks(OpenAIClientMode clientMode)
     {
-        ProjectOpenAIClient client = GetTestProjectOpenAIClient();
+        OpenAIResponseClient client = GetTestResponsesClient(clientMode);
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Hello, model!")],
-            new ResponseCreationOptions()
+        OpenAIResponse startedResponse = null;
+        await foreach (StreamingResponseUpdate update
+            in client.CreateResponseStreamingAsync(
+                "Hello, model!",
+                new ResponseCreationOptions()
+                {
+                    Model = TestEnvironment.MODELDEPLOYMENTNAME,
+                    BackgroundModeEnabled = true,
+                }))
+        {
+            if (update is StreamingResponseCreatedUpdate createdUpdate)
             {
-                Model = TestEnvironment.MODELDEPLOYMENTNAME,
-                BackgroundModeEnabled = true,
-            });
-        Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
-        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Queued).Or.EqualTo(ResponseStatus.InProgress));
+                startedResponse = createdUpdate.Response;
+                break;
+            }
+        }
+
+        Assert.That(startedResponse?.Id, Is.Not.Null.And.Not.Empty);
+        Assert.That(startedResponse.Status, Is.EqualTo(ResponseStatus.Queued).Or.EqualTo(ResponseStatus.InProgress));
 
         List<StreamingResponseUpdate> streamedUpdates = [];
-        await foreach (StreamingResponseUpdate responseUpdate in client.Responses.GetResponseStreamingAsync(response.Id))
+        await foreach (StreamingResponseUpdate responseUpdate in client.GetResponseStreamingAsync(startedResponse.Id))
         {
             streamedUpdates.Add(responseUpdate);
         }
@@ -486,5 +496,25 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             });
         Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(response?.OutputItems, Has.Count.GreaterThan(0));
+    }
+
+    [RecordedTest]
+    [TestCase(OpenAIClientMode.UseExternalOpenAI)]
+    [TestCase(OpenAIClientMode.UseFDPOpenAI, Ignore = "'none' not yet supported on FDP")]
+    public async Task ExtensibleReasoningEffortWorks(OpenAIClientMode clientMode)
+    {
+        OpenAIResponseClient responseClient = GetTestResponsesClient(clientMode, "gpt-5.1");
+
+        OpenAIResponse response = await responseClient.CreateResponseAsync(
+            "Hello, gpt-5.1!",
+            new ResponseCreationOptions()
+            {
+                ReasoningOptions = new()
+                {
+                    ReasoningEffortLevel = "none",
+                },
+            });
+
+        Assert.That(response.ReasoningOptions?.ReasoningEffortLevel?.ToString(), Is.EqualTo("none"));
     }
 }

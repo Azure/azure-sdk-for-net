@@ -24,7 +24,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
     - [Agents](#agents)
     - [Responses](#responses)
-    - [Coversations](#coversations)
+    - [Conversations](#Conversations)
   - [Container App](#container-app)
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)

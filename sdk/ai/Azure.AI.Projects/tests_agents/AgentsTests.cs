@@ -113,7 +113,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestResonses()
+    public async Task TestResponses()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
@@ -123,7 +123,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestResonsesStreaming()
+    public async Task TestResponsesStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
@@ -223,7 +223,6 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The continuation token is not set and the pagination does not stops.")]
     public async Task TestConversationItemsOrderingWithMultipleMessages()
     {
         AIProjectClient projectClient = GetTestProjectClient();

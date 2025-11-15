@@ -57,8 +57,8 @@ internal partial class InternalOpenAICollectionResultOptions
             ParentResourceId = ParentResourceId,
             Limit = Limit,
             Order = Order,
-            AfterId = AfterId,
-            BeforeId = BeforeId,
+            AfterId = page.LastId,
+            BeforeId = page.FirstId,
         };
         clonedOptions.Filters.AddRange(Filters);
         clonedOptions.Includes.AddRange(Includes);

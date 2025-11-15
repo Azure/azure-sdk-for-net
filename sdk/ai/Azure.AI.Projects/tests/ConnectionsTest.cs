@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        [Ignore("Pending 2.* investigation")]
+        [Ignore("Pending Microsoft.ClientModel.TestFramework migration")]
         public async Task ConnectionsBasicTest()
         {
             var connectionName = TestEnvironment.STORAGECONNECTIONNAME;

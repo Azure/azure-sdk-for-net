@@ -1,5 +1,10 @@
 # Azure AI Agents client library for .NET
 
+> [!WARNING]
+> This feature branch folder is outdated and pending removal.
+>
+> Please refer to the `Azure.AI.Projects` and `Azure.AI.Projects.OpenAI` folders for the up-to-date code and information about Agents.
+
 Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers.
 
 **Note:** While this package can be used independently, we recommend using the Azure AI Projects client library (Azure.AI.Projects) for enhanced experience. The Projects library provides simplified access to advanced functionality, such as creating and managing Agents, enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance, and enabling OpenTelemetry tracing.
@@ -24,7 +29,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
     - [Agents](#agents)
     - [Responses](#responses)
-    - [Coversations](#coversations)
+    - [Conversations](#Conversations)
   - [Container App](#container-app)
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)
@@ -250,7 +255,7 @@ Finally, we need to remove the `AgentVersion` object.
 await agentClient.DeleteAgentAsync(agentName: "myAgent");
 ```
 
-#### Coversations
+#### Conversations
 
 Conversations may be used to store the previous conversation with the agent. To add the responses to a conversation,
 set the conversation ID to the `ResponseCreationOptions`.
