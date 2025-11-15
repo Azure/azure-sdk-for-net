@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
+    /// <summary>
+    /// Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'
+    /// Serialized Name: EncryptionKeySource
+    /// </summary>
     public readonly partial struct NetAppEncryptionKeySource : IEquatable<NetAppEncryptionKeySource>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MicrosoftNetAppValue = "Microsoft.NetApp";
         private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
 
-        /// <summary> Microsoft-managed key encryption. </summary>
+        /// <summary>
+        /// Microsoft-managed key encryption
+        /// Serialized Name: EncryptionKeySource.Microsoft.NetApp
+        /// </summary>
         public static NetAppEncryptionKeySource MicrosoftNetApp { get; } = new NetAppEncryptionKeySource(MicrosoftNetAppValue);
-        /// <summary> Customer-managed key encryption. </summary>
+        /// <summary>
+        /// Customer-managed key encryption
+        /// Serialized Name: EncryptionKeySource.Microsoft.KeyVault
+        /// </summary>
         public static NetAppEncryptionKeySource MicrosoftKeyVault { get; } = new NetAppEncryptionKeySource(MicrosoftKeyVaultValue);
         /// <summary> Determines if two <see cref="NetAppEncryptionKeySource"/> values are the same. </summary>
         public static bool operator ==(NetAppEncryptionKeySource left, NetAppEncryptionKeySource right) => left.Equals(right);

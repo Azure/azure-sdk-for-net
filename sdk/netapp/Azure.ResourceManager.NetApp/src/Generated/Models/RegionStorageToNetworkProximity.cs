@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Provides storage to network proximity information in the region. </summary>
+    /// <summary>
+    /// Provides storage to network proximity information in the region.
+    /// Serialized Name: RegionStorageToNetworkProximity
+    /// </summary>
     public readonly partial struct RegionStorageToNetworkProximity : IEquatable<RegionStorageToNetworkProximity>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string T2AndAcrossT2Value = "T2AndAcrossT2";
         private const string T1AndT2AndAcrossT2Value = "T1AndT2AndAcrossT2";
 
-        /// <summary> Basic network connectivity. </summary>
+        /// <summary>
+        /// Basic network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.Default
+        /// </summary>
         public static RegionStorageToNetworkProximity Default { get; } = new RegionStorageToNetworkProximity(DefaultValue);
-        /// <summary> Standard T1 network connectivity. </summary>
+        /// <summary>
+        /// Standard T1 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.T1
+        /// </summary>
         public static RegionStorageToNetworkProximity T1 { get; } = new RegionStorageToNetworkProximity(T1Value);
-        /// <summary> Standard T2 network connectivity. </summary>
+        /// <summary>
+        /// Standard T2 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.T2
+        /// </summary>
         public static RegionStorageToNetworkProximity T2 { get; } = new RegionStorageToNetworkProximity(T2Value);
-        /// <summary> Standard AcrossT2 network connectivity. </summary>
+        /// <summary>
+        /// Standard AcrossT2 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.AcrossT2
+        /// </summary>
         public static RegionStorageToNetworkProximity AcrossT2 { get; } = new RegionStorageToNetworkProximity(AcrossT2Value);
-        /// <summary> Standard T1 and T2 network connectivity. </summary>
+        /// <summary>
+        /// Standard T1 and T2 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.T1AndT2
+        /// </summary>
         public static RegionStorageToNetworkProximity T1AndT2 { get; } = new RegionStorageToNetworkProximity(T1AndT2Value);
-        /// <summary> Standard T1 and AcrossT2 network connectivity. </summary>
+        /// <summary>
+        /// Standard T1 and AcrossT2 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.T1AndAcrossT2
+        /// </summary>
         public static RegionStorageToNetworkProximity T1AndAcrossT2 { get; } = new RegionStorageToNetworkProximity(T1AndAcrossT2Value);
-        /// <summary> Standard T2 and AcrossT2 network connectivity. </summary>
+        /// <summary>
+        /// Standard T2 and AcrossT2 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.T2AndAcrossT2
+        /// </summary>
         public static RegionStorageToNetworkProximity T2AndAcrossT2 { get; } = new RegionStorageToNetworkProximity(T2AndAcrossT2Value);
-        /// <summary> Standard T1, T2 and AcrossT2 network connectivity. </summary>
+        /// <summary>
+        /// Standard T1, T2 and AcrossT2 network connectivity.
+        /// Serialized Name: RegionStorageToNetworkProximity.T1AndT2AndAcrossT2
+        /// </summary>
         public static RegionStorageToNetworkProximity T1AndT2AndAcrossT2 { get; } = new RegionStorageToNetworkProximity(T1AndT2AndAcrossT2Value);
         /// <summary> Determines if two <see cref="RegionStorageToNetworkProximity"/> values are the same. </summary>
         public static bool operator ==(RegionStorageToNetworkProximity left, RegionStorageToNetworkProximity right) => left.Equals(right);

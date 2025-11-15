@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Replication properties. </summary>
+    /// <summary>
+    /// Replication properties
+    /// Serialized Name: Replication
+    /// </summary>
     public partial class NetAppVolumeReplication
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
+        /// <param name="remoteVolumeResourceId">
+        /// The resource ID of the remote volume.
+        /// Serialized Name: Replication.remoteVolumeResourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
         {
@@ -57,19 +63,49 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
-        /// <param name="replicationId"> UUID v4 used to identify the replication. </param>
-        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
-        /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
-        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
+        /// <param name="replicationId">
+        /// UUID v4 used to identify the replication.
+        /// Serialized Name: Replication.replicationId
+        /// </param>
+        /// <param name="endpointType">
+        /// Indicates whether the local volume is the source or destination for the Volume Replication
+        /// Serialized Name: Replication.endpointType
+        /// </param>
+        /// <param name="replicationSchedule">
+        /// Schedule
+        /// Serialized Name: Replication.replicationSchedule
+        /// </param>
+        /// <param name="remoteVolumeResourceId">
+        /// The resource ID of the remote volume.
+        /// Serialized Name: Replication.remoteVolumeResourceId
+        /// </param>
+        /// <param name="remoteVolumeRegion">
+        /// The remote region for the other end of the Volume Replication.
+        /// Serialized Name: Replication.remoteVolumeRegion
+        /// </param>
+        /// <param name="mirrorState">
+        /// The status of the replication
+        /// Serialized Name: Replication.mirrorState
+        /// </param>
+        /// <param name="replicationCreationOn">
+        /// Replication creation time
+        /// Serialized Name: Replication.replicationCreationTime
+        /// </param>
+        /// <param name="replicationDeletionOn">
+        /// Replication deletion time
+        /// Serialized Name: Replication.replicationDeletionTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, ReplicationMirrorState? mirrorState, DateTimeOffset? replicationCreationOn, DateTimeOffset? replicationDeletionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
             ReplicationSchedule = replicationSchedule;
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemoteVolumeRegion = remoteVolumeRegion;
+            MirrorState = mirrorState;
+            ReplicationCreationOn = replicationCreationOn;
+            ReplicationDeletionOn = replicationDeletionOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,15 +114,45 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> UUID v4 used to identify the replication. </summary>
+        /// <summary>
+        /// UUID v4 used to identify the replication.
+        /// Serialized Name: Replication.replicationId
+        /// </summary>
         public string ReplicationId { get; }
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
+        /// <summary>
+        /// Indicates whether the local volume is the source or destination for the Volume Replication
+        /// Serialized Name: Replication.endpointType
+        /// </summary>
         public NetAppEndpointType? EndpointType { get; }
-        /// <summary> Schedule. </summary>
+        /// <summary>
+        /// Schedule
+        /// Serialized Name: Replication.replicationSchedule
+        /// </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; }
-        /// <summary> The resource ID of the remote volume. </summary>
+        /// <summary>
+        /// The resource ID of the remote volume.
+        /// Serialized Name: Replication.remoteVolumeResourceId
+        /// </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; }
-        /// <summary> The remote region for the other end of the Volume Replication. </summary>
+        /// <summary>
+        /// The remote region for the other end of the Volume Replication.
+        /// Serialized Name: Replication.remoteVolumeRegion
+        /// </summary>
         public string RemoteVolumeRegion { get; }
+        /// <summary>
+        /// The status of the replication
+        /// Serialized Name: Replication.mirrorState
+        /// </summary>
+        public ReplicationMirrorState? MirrorState { get; }
+        /// <summary>
+        /// Replication creation time
+        /// Serialized Name: Replication.replicationCreationTime
+        /// </summary>
+        public DateTimeOffset? ReplicationCreationOn { get; }
+        /// <summary>
+        /// Replication deletion time
+        /// Serialized Name: Replication.replicationDeletionTime
+        /// </summary>
+        public DateTimeOffset? ReplicationDeletionOn { get; }
     }
 }

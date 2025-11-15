@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The name of the usage. </summary>
+    /// <summary>
+    /// The name of the usage.
+    /// Serialized Name: UsageName
+    /// </summary>
     public partial class NetAppUsageName
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppUsageName"/>. </summary>
-        /// <param name="value"> The name of the usage. </param>
-        /// <param name="localizedValue"> The localized name of the usage. </param>
+        /// <param name="value">
+        /// The name of the usage.
+        /// Serialized Name: UsageName.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// The localized name of the usage.
+        /// Serialized Name: UsageName.localizedValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppUsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the usage. </summary>
+        /// <summary>
+        /// The name of the usage.
+        /// Serialized Name: UsageName.value
+        /// </summary>
         public string Value { get; }
-        /// <summary> The localized name of the usage. </summary>
+        /// <summary>
+        /// The localized name of the usage.
+        /// Serialized Name: UsageName.localizedValue
+        /// </summary>
         public string LocalizedValue { get; }
     }
 }

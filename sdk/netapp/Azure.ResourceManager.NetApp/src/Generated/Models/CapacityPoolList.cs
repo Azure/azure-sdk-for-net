@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of capacity pool resources. </summary>
+    /// <summary>
+    /// List of capacity pool resources
+    /// Serialized Name: CapacityPoolList
+    /// </summary>
     internal partial class CapacityPoolList
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolList"/>. </summary>
-        internal CapacityPoolList()
+        /// <param name="value">
+        /// The CapacityPool items on this page
+        /// Serialized Name: CapacityPoolList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CapacityPoolList(IEnumerable<CapacityPoolData> value)
         {
-            Value = new ChangeTrackingList<CapacityPoolData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolList"/>. </summary>
-        /// <param name="value"> List of Capacity pools. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The CapacityPool items on this page
+        /// Serialized Name: CapacityPoolList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: CapacityPoolList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityPoolList(IReadOnlyList<CapacityPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapacityPoolList(IReadOnlyList<CapacityPoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Capacity pools. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolList"/> for deserialization. </summary>
+        internal CapacityPoolList()
+        {
+        }
+
+        /// <summary>
+        /// The CapacityPool items on this page
+        /// Serialized Name: CapacityPoolList.value
+        /// </summary>
         public IReadOnlyList<CapacityPoolData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: CapacityPoolList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

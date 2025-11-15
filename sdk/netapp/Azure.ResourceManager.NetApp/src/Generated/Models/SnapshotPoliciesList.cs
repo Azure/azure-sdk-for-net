@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Snapshot Policies. </summary>
+    /// <summary>
+    /// List of Snapshot Policies
+    /// Serialized Name: SnapshotPoliciesList
+    /// </summary>
     internal partial class SnapshotPoliciesList
     {
         /// <summary>
@@ -46,21 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPoliciesList"/>. </summary>
-        internal SnapshotPoliciesList()
+        /// <param name="value">
+        /// The SnapshotPolicy items on this page
+        /// Serialized Name: SnapshotPoliciesList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SnapshotPoliciesList(IEnumerable<SnapshotPolicyData> value)
         {
-            Value = new ChangeTrackingList<SnapshotPolicyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPoliciesList"/>. </summary>
-        /// <param name="value"> A list of snapshot policies. </param>
+        /// <param name="value">
+        /// The SnapshotPolicy items on this page
+        /// Serialized Name: SnapshotPoliciesList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: SnapshotPoliciesList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotPoliciesList(IReadOnlyList<SnapshotPolicyData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotPoliciesList(IReadOnlyList<SnapshotPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of snapshot policies. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPoliciesList"/> for deserialization. </summary>
+        internal SnapshotPoliciesList()
+        {
+        }
+
+        /// <summary>
+        /// The SnapshotPolicy items on this page
+        /// Serialized Name: SnapshotPoliciesList.value
+        /// </summary>
         public IReadOnlyList<SnapshotPolicyData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: SnapshotPoliciesList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Get group Id list for LDAP User request. </summary>
+    /// <summary>
+    /// Get group Id list for LDAP User request
+    /// Serialized Name: GetGroupIdListForLdapUserRequest
+    /// </summary>
     public partial class GetGroupIdListForLdapUserContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserContent"/>. </summary>
-        /// <param name="username"> username is required to fetch the group to which user is part of. </param>
+        /// <param name="username">
+        /// username is required to fetch the group to which user is part of
+        /// Serialized Name: GetGroupIdListForLdapUserRequest.username
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public GetGroupIdListForLdapUserContent(string username)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserContent"/>. </summary>
-        /// <param name="username"> username is required to fetch the group to which user is part of. </param>
+        /// <param name="username">
+        /// username is required to fetch the group to which user is part of
+        /// Serialized Name: GetGroupIdListForLdapUserRequest.username
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GetGroupIdListForLdapUserContent(string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> username is required to fetch the group to which user is part of. </summary>
+        /// <summary>
+        /// username is required to fetch the group to which user is part of
+        /// Serialized Name: GetGroupIdListForLdapUserRequest.username
+        /// </summary>
         public string Username { get; }
     }
 }

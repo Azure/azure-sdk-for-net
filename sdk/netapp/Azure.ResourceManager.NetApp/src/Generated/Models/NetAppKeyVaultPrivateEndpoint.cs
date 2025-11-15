@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
+    /// <summary>
+    /// Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint.
+    /// Serialized Name: KeyVaultPrivateEndpoint
+    /// </summary>
     public partial class NetAppKeyVaultPrivateEndpoint
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultPrivateEndpoint"/>. </summary>
-        /// <param name="virtualNetworkId"> Identifier for the virtual network id. </param>
-        /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
+        /// <param name="virtualNetworkId">
+        /// Identifier for the virtual network id
+        /// Serialized Name: KeyVaultPrivateEndpoint.virtualNetworkId
+        /// </param>
+        /// <param name="privateEndpointId">
+        /// Identifier of the private endpoint to reach the Azure Key Vault
+        /// Serialized Name: KeyVaultPrivateEndpoint.privateEndpointId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppKeyVaultPrivateEndpoint(ResourceIdentifier virtualNetworkId, ResourceIdentifier privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identifier for the virtual network id. </summary>
+        /// <summary>
+        /// Identifier for the virtual network id
+        /// Serialized Name: KeyVaultPrivateEndpoint.virtualNetworkId
+        /// </summary>
         public ResourceIdentifier VirtualNetworkId { get; set; }
-        /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
+        /// <summary>
+        /// Identifier of the private endpoint to reach the Azure Key Vault
+        /// Serialized Name: KeyVaultPrivateEndpoint.privateEndpointId
+        /// </summary>
         public ResourceIdentifier PrivateEndpointId { get; set; }
     }
 }

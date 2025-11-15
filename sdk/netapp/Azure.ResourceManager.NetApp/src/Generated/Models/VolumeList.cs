@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of volume resources. </summary>
+    /// <summary>
+    /// List of volume resources
+    /// Serialized Name: VolumeList
+    /// </summary>
     internal partial class VolumeList
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
-        internal VolumeList()
+        /// <param name="value">
+        /// The Volume items on this page
+        /// Serialized Name: VolumeList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VolumeList(IEnumerable<NetAppVolumeData> value)
         {
-            Value = new ChangeTrackingList<NetAppVolumeData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
-        /// <param name="value"> List of volumes. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The Volume items on this page
+        /// Serialized Name: VolumeList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: VolumeList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeList(IReadOnlyList<NetAppVolumeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeList(IReadOnlyList<NetAppVolumeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volumes. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeList"/> for deserialization. </summary>
+        internal VolumeList()
+        {
+        }
+
+        /// <summary>
+        /// The Volume items on this page
+        /// Serialized Name: VolumeList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: VolumeList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Backup Policies. </summary>
+    /// <summary>
+    /// List of Backup Policies
+    /// Serialized Name: BackupPoliciesList
+    /// </summary>
     internal partial class BackupPoliciesList
     {
         /// <summary>
@@ -46,21 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
-        internal BackupPoliciesList()
+        /// <param name="value">
+        /// The BackupPolicy items on this page
+        /// Serialized Name: BackupPoliciesList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal BackupPoliciesList(IEnumerable<NetAppBackupPolicyData> value)
         {
-            Value = new ChangeTrackingList<NetAppBackupPolicyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
-        /// <param name="value"> A list of backup policies. </param>
+        /// <param name="value">
+        /// The BackupPolicy items on this page
+        /// Serialized Name: BackupPoliciesList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: BackupPoliciesList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of backup policies. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/> for deserialization. </summary>
+        internal BackupPoliciesList()
+        {
+        }
+
+        /// <summary>
+        /// The BackupPolicy items on this page
+        /// Serialized Name: BackupPoliciesList.value
+        /// </summary>
         public IReadOnlyList<NetAppBackupPolicyData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: BackupPoliciesList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Volume Quota Rules. </summary>
+    /// <summary>
+    /// List of Volume Quota Rules
+    /// Serialized Name: VolumeQuotaRulesList
+    /// </summary>
     internal partial class VolumeQuotaRulesList
     {
         /// <summary>
@@ -46,21 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/>. </summary>
-        internal VolumeQuotaRulesList()
+        /// <param name="value">
+        /// The VolumeQuotaRule items on this page
+        /// Serialized Name: VolumeQuotaRulesList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VolumeQuotaRulesList(IEnumerable<NetAppVolumeQuotaRuleData> value)
         {
-            Value = new ChangeTrackingList<NetAppVolumeQuotaRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/>. </summary>
-        /// <param name="value"> A list of Volume Quota Rules. </param>
+        /// <param name="value">
+        /// The VolumeQuotaRule items on this page
+        /// Serialized Name: VolumeQuotaRulesList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: VolumeQuotaRulesList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeQuotaRulesList(IReadOnlyList<NetAppVolumeQuotaRuleData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeQuotaRulesList(IReadOnlyList<NetAppVolumeQuotaRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of Volume Quota Rules. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/> for deserialization. </summary>
+        internal VolumeQuotaRulesList()
+        {
+        }
+
+        /// <summary>
+        /// The VolumeQuotaRule items on this page
+        /// Serialized Name: VolumeQuotaRulesList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeQuotaRuleData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: VolumeQuotaRulesList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of regionInfo resources. </summary>
+    /// <summary>
+    /// List of regionInfo resources
+    /// Serialized Name: RegionInfosList
+    /// </summary>
     internal partial class RegionInfosList
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RegionInfosList"/>. </summary>
-        internal RegionInfosList()
+        /// <param name="value">
+        /// The RegionInfoResource items on this page
+        /// Serialized Name: RegionInfosList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RegionInfosList(IEnumerable<RegionInfoResourceData> value)
         {
-            Value = new ChangeTrackingList<RegionInfoResourceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RegionInfosList"/>. </summary>
-        /// <param name="value"> A list of regionInfo resources. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The RegionInfoResource items on this page
+        /// Serialized Name: RegionInfosList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: RegionInfosList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegionInfosList(IReadOnlyList<RegionInfoResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegionInfosList(IReadOnlyList<RegionInfoResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of regionInfo resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionInfosList"/> for deserialization. </summary>
+        internal RegionInfosList()
+        {
+        }
+
+        /// <summary>
+        /// The RegionInfoResource items on this page
+        /// Serialized Name: RegionInfosList.value
+        /// </summary>
         public IReadOnlyList<RegionInfoResourceData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: RegionInfosList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

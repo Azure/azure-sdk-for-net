@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of volume group resources. </summary>
+    /// <summary>
+    /// List of volume group resources
+    /// Serialized Name: VolumeGroupList
+    /// </summary>
     internal partial class VolumeGroupList
     {
         /// <summary>
@@ -46,21 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
-        internal VolumeGroupList()
+        /// <param name="value">
+        /// The VolumeGroup items on this page
+        /// Serialized Name: VolumeGroupList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VolumeGroupList(IEnumerable<NetAppVolumeGroupResult> value)
         {
-            Value = new ChangeTrackingList<NetAppVolumeGroupResult>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
-        /// <param name="value"> List of volume Groups. </param>
+        /// <param name="value">
+        /// The VolumeGroup items on this page
+        /// Serialized Name: VolumeGroupList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: VolumeGroupList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume Groups. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/> for deserialization. </summary>
+        internal VolumeGroupList()
+        {
+        }
+
+        /// <summary>
+        /// The VolumeGroup items on this page
+        /// Serialized Name: VolumeGroupList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeGroupResult> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: VolumeGroupList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

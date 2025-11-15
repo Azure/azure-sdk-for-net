@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+    /// <summary>
+    /// Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume
+    /// Serialized Name: SmbAccessBasedEnumeration
+    /// </summary>
     public readonly partial struct SmbAccessBasedEnumeration : IEquatable<SmbAccessBasedEnumeration>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> smbAccessBasedEnumeration share setting is disabled. </summary>
+        /// <summary>
+        /// smbAccessBasedEnumeration share setting is disabled
+        /// Serialized Name: SmbAccessBasedEnumeration.Disabled
+        /// </summary>
         public static SmbAccessBasedEnumeration Disabled { get; } = new SmbAccessBasedEnumeration(DisabledValue);
-        /// <summary> smbAccessBasedEnumeration share setting is enabled. </summary>
+        /// <summary>
+        /// smbAccessBasedEnumeration share setting is enabled
+        /// Serialized Name: SmbAccessBasedEnumeration.Enabled
+        /// </summary>
         public static SmbAccessBasedEnumeration Enabled { get; } = new SmbAccessBasedEnumeration(EnabledValue);
         /// <summary> Determines if two <see cref="SmbAccessBasedEnumeration"/> values are the same. </summary>
         public static bool operator ==(SmbAccessBasedEnumeration left, SmbAccessBasedEnumeration right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Status of the KeyVault connection. </summary>
+    /// <summary>
+    /// Status of the KeyVault connection.
+    /// Serialized Name: KeyVaultStatus
+    /// </summary>
     public readonly partial struct NetAppKeyVaultStatus : IEquatable<NetAppKeyVaultStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ErrorValue = "Error";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> KeyVault connection created but not in use. </summary>
+        /// <summary>
+        /// KeyVault connection created but not in use
+        /// Serialized Name: KeyVaultStatus.Created
+        /// </summary>
         public static NetAppKeyVaultStatus Created { get; } = new NetAppKeyVaultStatus(CreatedValue);
-        /// <summary> KeyVault connection in use by SMB Volume. </summary>
+        /// <summary>
+        /// KeyVault connection in use by SMB Volume
+        /// Serialized Name: KeyVaultStatus.InUse
+        /// </summary>
         public static NetAppKeyVaultStatus InUse { get; } = new NetAppKeyVaultStatus(InUseValue);
-        /// <summary> KeyVault connection Deleted. </summary>
+        /// <summary>
+        /// KeyVault connection Deleted
+        /// Serialized Name: KeyVaultStatus.Deleted
+        /// </summary>
         public static NetAppKeyVaultStatus Deleted { get; } = new NetAppKeyVaultStatus(DeletedValue);
-        /// <summary> Error with the KeyVault connection. </summary>
+        /// <summary>
+        /// Error with the KeyVault connection
+        /// Serialized Name: KeyVaultStatus.Error
+        /// </summary>
         public static NetAppKeyVaultStatus Error { get; } = new NetAppKeyVaultStatus(ErrorValue);
-        /// <summary> KeyVault connection Updating. </summary>
+        /// <summary>
+        /// KeyVault connection Updating
+        /// Serialized Name: KeyVaultStatus.Updating
+        /// </summary>
         public static NetAppKeyVaultStatus Updating { get; } = new NetAppKeyVaultStatus(UpdatingValue);
         /// <summary> Determines if two <see cref="NetAppKeyVaultStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppKeyVaultStatus left, NetAppKeyVaultStatus right) => left.Equals(right);

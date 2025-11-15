@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volumes associated with snapshot policy. </summary>
+    /// <summary>
+    /// Volumes associated with snapshot policy
+    /// Serialized Name: SnapshotPolicyVolumeList
+    /// </summary>
     internal partial class SnapshotPolicyVolumeList
     {
         /// <summary>
@@ -46,21 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
-        internal SnapshotPolicyVolumeList()
+        /// <param name="value">
+        /// The Volume items on this page
+        /// Serialized Name: SnapshotPolicyVolumeList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SnapshotPolicyVolumeList(IEnumerable<NetAppVolumeData> value)
         {
-            Value = new ChangeTrackingList<NetAppVolumeData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
-        /// <param name="value"> List of volumes. </param>
+        /// <param name="value">
+        /// The Volume items on this page
+        /// Serialized Name: SnapshotPolicyVolumeList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: SnapshotPolicyVolumeList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volumes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/> for deserialization. </summary>
+        internal SnapshotPolicyVolumeList()
+        {
+        }
+
+        /// <summary>
+        /// The Volume items on this page
+        /// Serialized Name: SnapshotPolicyVolumeList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: SnapshotPolicyVolumeList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of NetApp account resources. </summary>
+    /// <summary>
+    /// List of NetApp account resources
+    /// Serialized Name: NetAppAccountList
+    /// </summary>
     internal partial class NetAppAccountList
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountList"/>. </summary>
-        internal NetAppAccountList()
+        /// <param name="value">
+        /// The NetAppAccount items on this page
+        /// Serialized Name: NetAppAccountList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetAppAccountList(IEnumerable<NetAppAccountData> value)
         {
-            Value = new ChangeTrackingList<NetAppAccountData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountList"/>. </summary>
-        /// <param name="value"> Multiple NetApp accounts. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The NetAppAccount items on this page
+        /// Serialized Name: NetAppAccountList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: NetAppAccountList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountList(IReadOnlyList<NetAppAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppAccountList(IReadOnlyList<NetAppAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Multiple NetApp accounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountList"/> for deserialization. </summary>
+        internal NetAppAccountList()
+        {
+        }
+
+        /// <summary>
+        /// The NetAppAccount items on this page
+        /// Serialized Name: NetAppAccountList.value
+        /// </summary>
         public IReadOnlyList<NetAppAccountData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: NetAppAccountList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

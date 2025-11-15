@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The AvailabilityZoneMapping. </summary>
+    /// <summary>
+    /// The AvailabilityZoneMapping.
+    /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem
+    /// </summary>
     public partial class AvailabilityZoneMapping
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        /// <param name="availabilityZone"> Logical availability zone. </param>
-        /// <param name="isAvailable"> Available availability zone. </param>
+        /// <param name="availabilityZone">
+        /// Logical availability zone.
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.availabilityZone
+        /// </param>
+        /// <param name="isAvailable">
+        /// Available availability zone
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.isAvailable
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Logical availability zone. </summary>
+        /// <summary>
+        /// Logical availability zone.
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.availabilityZone
+        /// </summary>
         public string AvailabilityZone { get; set; }
-        /// <summary> Available availability zone. </summary>
+        /// <summary>
+        /// Available availability zone
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.isAvailable
+        /// </summary>
         public bool? IsAvailable { get; set; }
     }
 }

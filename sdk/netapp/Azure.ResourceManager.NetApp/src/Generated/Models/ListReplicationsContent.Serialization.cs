@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    internal partial class CifsUser : IUtf8JsonSerializable, IJsonModel<CifsUser>
+    public partial class ListReplicationsContent : IUtf8JsonSerializable, IJsonModel<ListReplicationsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CifsUser>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListReplicationsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CifsUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListReplicationsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CifsUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CifsUser)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Username))
+            if (Optional.IsDefined(Exclude))
             {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
+                writer.WritePropertyName("exclude"u8);
+                writer.WriteStringValue(Exclude.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        CifsUser IJsonModel<CifsUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ListReplicationsContent IJsonModel<ListReplicationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CifsUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CifsUser)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCifsUser(document.RootElement, options);
+            return DeserializeListReplicationsContent(document.RootElement, options);
         }
 
-        internal static CifsUser DeserializeCifsUser(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ListReplicationsContent DeserializeListReplicationsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,14 +76,18 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string username = default;
+            Exclude? exclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"u8))
+                if (property.NameEquals("exclude"u8))
                 {
-                    username = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exclude = new Exclude(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,38 +96,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CifsUser(username, serializedAdditionalRawData);
+            return new ListReplicationsContent(exclude, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CifsUser>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ListReplicationsContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CifsUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CifsUser)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CifsUser IPersistableModel<CifsUser>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ListReplicationsContent IPersistableModel<ListReplicationsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CifsUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCifsUser(document.RootElement, options);
+                        return DeserializeListReplicationsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CifsUser)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CifsUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListReplicationsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
