@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The UpdateMemoryStoreRequest. </summary>
     internal partial class UpdateMemoryStoreRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,17 +16,6 @@ namespace Azure.AI.Projects
         internal UpdateMemoryStoreRequest()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UpdateMemoryStoreRequest"/>. </summary>
-        /// <param name="description"> A human-readable description of the memory store. </param>
-        /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateMemoryStoreRequest(string description, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Description = description;
-            Metadata = metadata;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A human-readable description of the memory store. </summary>

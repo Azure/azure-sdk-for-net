@@ -58,12 +58,12 @@ OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Sync
 string scope = "Joke from conversation";
-List<ResponseItem> updateItems = [request];
+MemoryUpdateOptions memoryOptions = new(scope);
+memoryOptions.Items.Add(request);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-
 foreach (ResponseItem item in response.OutputItems)
 {
-    updateItems.Add(item);
+    memoryOptions.Items.Add(item);
 }
 Console.WriteLine(response.GetOutputText());
 ```
@@ -71,7 +71,8 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Async
 string scope = "Joke from conversation";
-List<ResponseItem> updateItems = [request];
+MemoryUpdateOptions memoryOptions = new(scope);
+memoryOptions.Items.Add(request);
 while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
     await Task.Delay(TimeSpan.FromMilliseconds(500));
     response = await responseClient.GetResponseAsync(responseId:  response.Id);
@@ -80,7 +81,7 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 
 foreach (ResponseItem item in response.OutputItems)
 {
-    updateItems.Add(item);
+    memoryOptions.Items.Add(item);
 }
 Console.WriteLine(response.GetOutputText());
 ```
@@ -98,12 +99,12 @@ MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
 );
-MemoryUpdateOptions updateOptions = new(scope);
-foreach (ResponseItem updateItem in updateItems)
+MemoryUpdateResult updateResult = projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: memoryOptions);
+while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
 {
-    updateOptions.Items.Add(updateItem);
+    Thread.Sleep(TimeSpan.FromMilliseconds(500));
+    updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
 }
-projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: updateOptions);
 ```
 
 Asynchronous sample:
@@ -117,7 +118,12 @@ MemoryStore memoryStore = await projectClient.MemoryStores.CreateMemoryStoreAsyn
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
 );
-projectClient.MemoryStores.UpdateMemories(memoryStore.Name, new MemoryUpdateOptions(scope));
+MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(memoryStoreName: memoryStore.Name, options: memoryOptions);
+while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
+}
 ```
 
 7. Check that the memory store contain the relevant memories.

@@ -125,6 +125,37 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                 options));
     }
 
+    protected OpenAIResponseClient GetTestBaseResponsesClient(Uri overrideEndpoint = null, string overrideModel = null)
+    {
+        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+
+        return CreateProxyFromClient(
+            new OpenAIResponseClient(
+                overrideModel ?? TestEnvironment.MODELDEPLOYMENTNAME,
+                new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
+                options));
+    }
+
+    protected OpenAIClient GetTestOpenAIClient(OpenAIClientMode clientMode)
+    {
+        return clientMode switch
+        {
+            OpenAIClientMode.UseFDPOpenAI => GetTestProjectOpenAIClient(),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseOpenAIClient(),
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    protected OpenAIResponseClient GetTestResponsesClient(OpenAIClientMode clientMode, string overrideModel = null)
+    {
+        return clientMode switch
+        {
+            OpenAIClientMode.UseFDPOpenAI => GetTestProjectResponsesClient(defaultModelName: overrideModel),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseResponsesClient(overrideModel: overrideModel),
+            _ => throw new NotImplementedException(),
+        };
+    }
+
     private AuthenticationTokenProvider GetTestAuthenticationProvider()
     {
         // For local testing if you are using non default account

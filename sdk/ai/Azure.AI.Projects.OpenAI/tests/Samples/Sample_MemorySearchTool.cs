@@ -43,9 +43,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-
         #region Snippet:Sample_CreateConversation_MemoryTool_Async
-
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
@@ -54,7 +52,8 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
         #region Snippet:Sample_WriteOutput_MemoryTool_Async
         string scope = "Joke from conversation";
-        List<ResponseItem> updateItems = [request];
+        MemoryUpdateOptions memoryOptions = new(scope);
+        memoryOptions.Items.Add(request);
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
             await Task.Delay(TimeSpan.FromMilliseconds(500));
             response = await responseClient.GetResponseAsync(responseId:  response.Id);
@@ -63,7 +62,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
         foreach (ResponseItem item in response.OutputItems)
         {
-            updateItems.Add(item);
+            memoryOptions.Items.Add(item);
         }
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -77,7 +76,12 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
         );
-        projectClient.MemoryStores.UpdateMemories(memoryStore.Name, new MemoryUpdateOptions(scope));
+        MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(memoryStoreName: memoryStore.Name, options: memoryOptions);
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
+        }
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Async
         MemorySearchOptions opts = new(scope)
@@ -123,7 +127,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
     [Test]
     [SyncOnly]
-    public void MemorySearchTool()
+    public async Task MemorySearchTool()
     {
         IgnoreSampleMayBe();
 #if SNIPPET
@@ -156,12 +160,12 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
         #region Snippet:Sample_WriteOutput_MemoryTool_Sync
         string scope = "Joke from conversation";
-        List<ResponseItem> updateItems = [request];
+        MemoryUpdateOptions memoryOptions = new(scope);
+        memoryOptions.Items.Add(request);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-
         foreach (ResponseItem item in response.OutputItems)
         {
-            updateItems.Add(item);
+            memoryOptions.Items.Add(item);
         }
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -175,12 +179,12 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
         );
-        MemoryUpdateOptions updateOptions = new(scope);
-        foreach (ResponseItem updateItem in updateItems)
+        MemoryUpdateResult updateResult = projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: memoryOptions);
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
         {
-            updateOptions.Items.Add(updateItem);
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
         }
-        projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: updateOptions);
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Sync
         MemorySearchOptions searchOptions = new(scope)

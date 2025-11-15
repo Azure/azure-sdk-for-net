@@ -1,6 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2025-11-15)
+
+### Bugs Fixed
+
+- Addressed an issue that caused paginated responses like conversation items to never terminate when large numbers of items are fetched
+
+## 1.0.0-beta.3 (2025-11-14)
 
 ### Features Added
 
@@ -12,7 +18,7 @@
 
 ## 1.0.0-beta.2 (2025-11-14)
 
-### Bugs fixed
+### Bugs Fixed
 
 - Addressed a problem where not supplying an options instance to the `ProjectResponsesClient` constructor resulted in fallback to the `https://api.openai.com/v1` endpoint
 

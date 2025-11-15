@@ -21,8 +21,8 @@ namespace Azure.AI.Projects.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
+        [Ignore("Pending Microsoft.ClientModel.TestFramework migration")]
         public async Task SearchIndexesTest()
         {
             string indexName = TestEnvironment.INDEXNAME;

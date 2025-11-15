@@ -57,17 +57,17 @@ await foreach (AgentVersion oneAgentVersion in agentVersions)
 4. To communicate with the agent, we will need to create a conversation.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateCoversation_Sync_2
-ConversationClient coversations = client.GetConversationClient();
-AgentConversation conversation = coversations.CreateConversation();
+```C# Snippet:Sample_CreateConversation_Sync_2
+ConversationClient Conversations = client.GetConversationClient();
+AgentConversation conversation = Conversations.CreateConversation();
 ModelReaderWriterOptions options = new("W");
 BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateCoversation_Async_2
-ConversationClient coversations = client.GetConversationClient();
-AgentConversation conversation = await coversations.CreateConversationAsync();
+```C# Snippet:Sample_CreateConversation_Async_2
+ConversationClient Conversations = client.GetConversationClient();
+AgentConversation conversation = await Conversations.CreateConversationAsync();
 ModelReaderWriterOptions options = new("W");
 BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
 ```
@@ -129,12 +129,12 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Sync_2
-coversations.DeleteConversation(conversationId: conversation.Id);
+Conversations.DeleteConversation(conversationId: conversation.Id);
 client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_Async_2
-await coversations.DeleteConversationAsync(conversationId: conversation.Id);
+await Conversations.DeleteConversationAsync(conversationId: conversation.Id);
 await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

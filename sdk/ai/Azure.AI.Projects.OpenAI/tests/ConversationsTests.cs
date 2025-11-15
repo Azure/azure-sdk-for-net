@@ -4,12 +4,13 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
@@ -105,5 +106,83 @@ public class ConversationsTests : ProjectsOpenAITestBase
                 break;
             }
         }
+    }
+
+    [RecordedTest]
+    public async Task ConversationItemPaginationWorks()
+    {
+        ProjectOpenAIClient client = GetTestProjectOpenAIClient();
+
+        // Create a conversation
+        ProjectConversation conversation = await client.Conversations.CreateProjectConversationAsync();
+        Assert.That(conversation?.Id, Does.StartWith("conv_"));
+
+        // Create 40 messages for the conversation
+        List<ResponseItem> messagesToAdd = new();
+        for (int i = 1; i <= 40; i++)
+        {
+            messagesToAdd.Add(ResponseItem.CreateUserMessageItem($"Message {i}"));
+        }
+
+        // Trying to add all 40 at once should fail
+        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await client.Conversations.CreateProjectConversationItemsAsync(conversation.Id, messagesToAdd));
+        Assert.That(exceptionFromOperation.GetRawResponse().Content.ToString(), Does.Contain("20 items"));
+
+        List<ResponseItem> firstHalfMessages = [];
+        for (int i = 0; i < 20; i++)
+        {
+            firstHalfMessages.Add(messagesToAdd[i]);
+        }
+        List<ResponseItem> secondHalfMessages = [];
+        for (int i = 20; i < messagesToAdd.Count; i++)
+        {
+            secondHalfMessages.Add(messagesToAdd[i]);
+        }
+
+        ReadOnlyCollection<ResponseItem> createdItems = await client.Conversations.CreateProjectConversationItemsAsync(
+            conversation.Id,
+            firstHalfMessages);
+        Assert.That(createdItems, Has.Count.EqualTo(20));
+        createdItems = await client.Conversations.CreateProjectConversationItemsAsync(conversation.Id, secondHalfMessages);
+        Assert.That(createdItems, Has.Count.EqualTo(20));
+
+        // Test ascending order traversal
+        List<AgentResponseItem> ascendingItems = [];
+        await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(
+            conversation.Id,
+            limit: 5,
+            order: "asc"))
+        {
+            ascendingItems.Add(item);
+        }
+        Assert.That(ascendingItems, Has.Count.EqualTo(40));
+
+        // Test descending order traversal
+        List<AgentResponseItem> descendingItems = [];
+        await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(
+            conversation.Id,
+            limit: 5,
+            order: "desc"))
+        {
+            descendingItems.Add(item);
+        }
+        Assert.That(descendingItems, Has.Count.EqualTo(40));
+
+        // Verify that ascending and descending lists contain the same items but in reverse order
+        descendingItems.Reverse();
+        Assert.That(ascendingItems.Count, Is.EqualTo(descendingItems.Count));
+        for (int i = 0; i < ascendingItems.Count; i++)
+        {
+            Assert.That(ascendingItems[i].Id, Is.EqualTo(descendingItems[i].Id),
+                $"Item at position {i} should be the same in both orderings");
+        }
+
+        // Verify that we can collect all items consistently
+        List<AgentResponseItem> allItems = [];
+        await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(conversation.Id))
+        {
+            allItems.Add(item);
+        }
+        Assert.That(allItems, Has.Count.EqualTo(40));
     }
 }

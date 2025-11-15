@@ -23,12 +23,7 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
     [TestCase(OpenAIClientMode.UseFDPOpenAI, "fine-tune")]
     public async Task FileUploadWorks(OpenAIClientMode clientMode, string rawPurpose)
     {
-        OpenAIClient openAIClient = clientMode switch
-        {
-            OpenAIClientMode.UseExternalOpenAI => GetTestBaseOpenAIClient(),
-            OpenAIClientMode.UseFDPOpenAI => GetTestProjectOpenAIClient(),
-            _ => throw new NotImplementedException()
-        };
+        OpenAIClient openAIClient = GetTestOpenAIClient(clientMode);
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
 
         (string filename, string rawFileData) = rawPurpose switch

@@ -48,9 +48,9 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Async_2
-        ConversationClient coversations = client.GetConversationClient();
-        AgentConversation conversation = await coversations.CreateConversationAsync();
+        #region Snippet:Sample_CreateConversation_Async_2
+        ConversationClient Conversations = client.GetConversationClient();
+        AgentConversation conversation = await Conversations.CreateConversationAsync();
         ModelReaderWriterOptions options = new("W");
         BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
         #endregion
@@ -77,7 +77,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async_2
-        await coversations.DeleteConversationAsync(conversationId: conversation.Id);
+        await Conversations.DeleteConversationAsync(conversationId: conversation.Id);
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -112,9 +112,9 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Sync_2
-        ConversationClient coversations = client.GetConversationClient();
-        AgentConversation conversation = coversations.CreateConversation();
+        #region Snippet:Sample_CreateConversation_Sync_2
+        ConversationClient Conversations = client.GetConversationClient();
+        AgentConversation conversation = Conversations.CreateConversation();
         ModelReaderWriterOptions options = new("W");
         BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
         #endregion
@@ -142,7 +142,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync_2
-        coversations.DeleteConversation(conversationId: conversation.Id);
+        Conversations.DeleteConversation(conversationId: conversation.Id);
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
