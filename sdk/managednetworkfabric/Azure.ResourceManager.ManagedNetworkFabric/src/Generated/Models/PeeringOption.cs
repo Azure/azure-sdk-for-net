@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string OptionAValue = "OptionA";
         private const string OptionBValue = "OptionB";
 
-        /// <summary> OptionA. </summary>
+        /// <summary> PeeringOption-OptionA. </summary>
         public static PeeringOption OptionA { get; } = new PeeringOption(OptionAValue);
-        /// <summary> OptionB. </summary>
+        /// <summary> PeeringOption-OptionB. </summary>
         public static PeeringOption OptionB { get; } = new PeeringOption(OptionBValue);
         /// <summary> Determines if two <see cref="PeeringOption"/> values are the same. </summary>
         public static bool operator ==(PeeringOption left, PeeringOption right) => left.Equals(right);

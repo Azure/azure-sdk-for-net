@@ -7,27 +7,63 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Update administrative state on list of resources. </summary>
-    public partial class UpdateAdministrativeStateContent : UpdateAdministrativeStateOnResources
+    public partial class UpdateAdministrativeStateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateContent"/>. </summary>
         public UpdateAdministrativeStateContent()
         {
+            ResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateContent"/>. </summary>
         /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="state"> Administrative state. </param>
-        internal UpdateAdministrativeStateContent(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData, AdministrativeEnableState? state) : base(resourceIds, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateAdministrativeStateContent(IList<string> resourceIds, AdministrativeEnableState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ResourceIds = resourceIds;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Network Fabrics or Network Rack resource Id. </summary>
+        public IList<string> ResourceIds { get; }
         /// <summary> Administrative state. </summary>
         public AdministrativeEnableState? State { get; set; }
     }

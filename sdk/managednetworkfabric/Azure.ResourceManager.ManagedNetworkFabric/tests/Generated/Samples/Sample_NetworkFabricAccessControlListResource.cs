@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AccessControlListsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/AccessControlLists_Get.json
             // this example is just showing the usage of "AccessControlLists_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
             // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string accessControlListName = "example-acl";
             ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AccessControlListsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/AccessControlLists_Delete.json
             // this example is just showing the usage of "AccessControlLists_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
             // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string accessControlListName = "example-acl";
             ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AccessControlListsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/AccessControlLists_Update.json
             // this example is just showing the usage of "AccessControlLists_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
             // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string accessControlListName = "example-acl";
             ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
@@ -95,73 +95,96 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricAccessControlListPatch patch = new NetworkFabricAccessControlListPatch
             {
-                ConfigurationType = NetworkFabricConfigurationType.File,
-                AclsUri = new Uri("https://microsoft.com/a"),
-                DefaultAction = CommunityActionType.Permit,
-                MatchConfigurations = {new AccessControlListMatchConfiguration
+                Tags =
+{
+["KeyId"] = "KeyValue"
+},
+                Properties = new AccessControlListPatchProperties
+                {
+                    ConfigurationType = NetworkFabricConfigurationType.File,
+                    AclsUri = new Uri("https://microsoft.com/a"),
+                    DefaultAction = CommunityActionType.Permit,
+                    MatchConfigurations = {new AccessControlListMatchConfigurationPatch
 {
 MatchConfigurationName = "example-match",
 SequenceNumber = 123L,
 IPAddressType = NetworkFabricIPAddressType.IPv4,
-MatchConditions = {new AccessControlListMatchCondition
+MatchConditions = {new AccessControlListMatchConditionPatch
 {
-EtherTypes = {"0x1"},
-Fragments = {"0xff00-0xffff"},
-IPLengths = {"4094-9214"},
-TtlValues = {"23"},
-DscpMarkings = {"32"},
-PortCondition = new AccessControlListPortCondition(Layer4Protocol.Tcp)
-{
-Flags = {"established"},
-PortType = NetworkFabricPortType.SourcePort,
-Ports = {"1-20"},
-PortGroupNames = {"example-portGroup"},
-},
 ProtocolTypes = {"TCP"},
-VlanMatchCondition = new VlanMatchCondition
+VlanMatchCondition = new VlanMatchConditionPatch
 {
 Vlans = {"20-30"},
 InnerVlans = {"30"},
 VlanGroupNames = {"example-vlanGroup"},
 },
-IPCondition = new IPMatchCondition
+IPCondition = new IPMatchConditionPatch
 {
 SourceDestinationType = SourceDestinationType.SourceIP,
 PrefixType = IPMatchConditionPrefixType.Prefix,
 IPPrefixValues = {"10.20.20.20/12"},
 IPGroupNames = {"example-ipGroup"},
 },
+EtherTypes = {"0x1"},
+Fragments = {"0xff00-0xffff"},
+IPLengths = {"4094-9214"},
+TtlValues = {"23"},
+DscpMarkings = {"32"},
+PortCondition = new AccessControlListPortConditionPatch
+{
+PortType = NetworkFabricPortType.SourcePort,
+Layer4Protocol = Layer4Protocol.Tcp,
+Ports = {"1-20"},
+PortGroupNames = {"example-portGroup"},
+Flags = {"established"},
+},
+ProtocolNeighbors = {"example-neighbor"},
+IcmpTypes = {"echo"},
 }},
-Actions = {new AccessControlListAction
+Actions = {new AccessControlListActionPatch
 {
 AclActionType = AclActionType.Count,
 CounterName = "example-counter",
-}},
-}},
-                DynamicMatchConfigurations = {new CommonDynamicMatchConfiguration
+RemarkComment = "example-remark",
+PoliceRateConfiguration = new PoliceRateConfigurationProperties
 {
-IPGroups = {new MatchConfigurationIPGroupProperties
+BitRate = new BitRate
+{
+Rate = 15L,
+Unit = BitRateUnit.Bps,
+},
+BurstSize = new BurstSize
+{
+Size = 2L,
+Unit = BurstSizeUnit.Bytes,
+},
+},
+}},
+}},
+                    DynamicMatchConfigurations = {new CommonDynamicMatchConfigurationPatch
+{
+IPGroups = {new IPGroupPatchProperties
 {
 Name = "example-ipGroup",
 IPAddressType = NetworkFabricIPAddressType.IPv4,
 IPPrefixes = {"10.20.3.1/20"},
 }},
-VlanGroups = {new VlanGroupProperties
+VlanGroups = {new VlanGroupPatchProperties
 {
 Name = "example-vlanGroup",
 Vlans = {"20-30"},
 }},
-PortGroups = {new PortGroupProperties
+PortGroups = {new PortGroupPatchProperties
 {
 Name = "example-portGroup",
 Ports = {"100-200"},
 }},
 }},
-                Annotation = "annotation",
-                Tags =
-{
-["keyID"] = "KeyValue"
-},
+                    AclType = AclType.Cp,
+                    DeviceRole = DeviceRole.CE,
+                    GlobalAccessControlListActionsEnableCount = NetworkFabricBooleanValue.True,
+                    Annotation = "annotation",
+                },
             };
             ArmOperation<NetworkFabricAccessControlListResource> lro = await networkFabricAccessControlList.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricAccessControlListResource result = lro.Value;
@@ -175,41 +198,9 @@ Ports = {"100-200"},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task UpdateAdministrativeState_AccessControlListsUpdateAdministrativeStateMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_UpdateAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "AccessControlLists_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
-            // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string accessControlListName = "example-acl";
-            ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
-            NetworkFabricAccessControlListResource networkFabricAccessControlList = client.GetNetworkFabricAccessControlListResource(networkFabricAccessControlListResourceId);
-
-            // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
-            {
-                State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
-            };
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricAccessControlList.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
-            StateUpdateCommonPostActionResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Resync_AccessControlListsResyncMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_Resync_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/AccessControlLists_Resync.json
             // this example is just showing the usage of "AccessControlLists_Resync" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +210,7 @@ Ports = {"100-200"},
 
             // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
             // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string accessControlListName = "example-acl";
             ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
@@ -234,9 +225,41 @@ Ports = {"100-200"},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task UpdateAdministrativeState_AccessControlListsUpdateAdministrativeStateMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/AccessControlLists_UpdateAdministrativeState.json
+            // this example is just showing the usage of "AccessControlLists_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
+            // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string accessControlListName = "example-acl";
+            ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);
+            NetworkFabricAccessControlListResource networkFabricAccessControlList = client.GetNetworkFabricAccessControlListResource(networkFabricAccessControlListResourceId);
+
+            // invoke the operation
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
+            {
+                ResourceIds = { "" },
+                State = AdministrativeEnableState.Enable,
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricAccessControlList.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateConfiguration_AccessControlListsValidateConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_ValidateConfiguration_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/AccessControlLists_ValidateConfiguration.json
             // this example is just showing the usage of "AccessControlLists_ValidateConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -246,7 +269,7 @@ Ports = {"100-200"},
 
             // this example assumes you already have this NetworkFabricAccessControlListResource created on azure
             // for more information of creating NetworkFabricAccessControlListResource, please refer to the document of NetworkFabricAccessControlListResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string accessControlListName = "example-acl";
             ResourceIdentifier networkFabricAccessControlListResourceId = NetworkFabricAccessControlListResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accessControlListName);

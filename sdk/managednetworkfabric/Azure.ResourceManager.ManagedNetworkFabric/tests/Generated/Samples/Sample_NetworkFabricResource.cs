@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkFabricsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Get.json
             // this example is just showing the usage of "NetworkFabrics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkFabricsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Delete.json
             // this example is just showing the usage of "NetworkFabrics_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkFabricsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Update.json
             // this example is just showing the usage of "NetworkFabrics_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -95,93 +96,121 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricPatch patch = new NetworkFabricPatch
             {
-                Annotation = "annotation1",
-                RackCount = 6,
-                ServerCountPerRack = 10,
-                IPv4Prefix = "10.18.0.0/17",
-                IPv6Prefix = "3FFE:FFFF:0:CD40::/60",
-                FabricAsn = 12345L,
-                TerminalServerConfiguration = new NetworkFabricPatchablePropertiesTerminalServerConfiguration
-                {
-                    PrimaryIPv4Prefix = "10.0.0.12/30",
-                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIPv4Prefix = "40.0.0.14/30",
-                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
-                    Username = "username1",
-                    Password = "xxxxxxxx",
-                    SerialNumber = "1234567",
-                },
-                ManagementNetworkConfiguration = new ManagementNetworkConfigurationPatchableProperties
-                {
-                    InfrastructureVpnConfiguration = new VpnConfigurationPatchableProperties
-                    {
-                        NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
-                        PeeringOption = PeeringOption.OptionB,
-                        OptionBProperties = new OptionBProperties
-                        {
-                            ImportRouteTargets = { "65046:10050" },
-                            ExportRouteTargets = { "65046:10050" },
-                            RouteTargets = new RouteTargetInformation
-                            {
-                                ImportIPv4RouteTargets = { "65046:10050" },
-                                ImportIPv6RouteTargets = { "65046:10050" },
-                                ExportIPv4RouteTargets = { "65046:10050" },
-                                ExportIPv6RouteTargets = { "65046:10050" },
-                            },
-                        },
-                        OptionAProperties = new VpnConfigurationPatchableOptionAProperties
-                        {
-                            PrimaryIPv4Prefix = "10.0.0.12/30",
-                            PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                            SecondaryIPv4Prefix = "20.0.0.13/30",
-                            SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
-                            Mtu = 1501,
-                            VlanId = 3001,
-                            PeerAsn = 1235L,
-                            BfdConfiguration = new BfdConfiguration
-                            {
-                                IntervalInMilliSeconds = 300,
-                                Multiplier = 10,
-                            },
-                        },
-                    },
-                    WorkloadVpnConfiguration = new VpnConfigurationPatchableProperties
-                    {
-                        NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
-                        PeeringOption = PeeringOption.OptionA,
-                        OptionBProperties = new OptionBProperties
-                        {
-                            ImportRouteTargets = { "65046:10050" },
-                            ExportRouteTargets = { "65046:10050" },
-                            RouteTargets = new RouteTargetInformation
-                            {
-                                ImportIPv4RouteTargets = { "65046:10050" },
-                                ImportIPv6RouteTargets = { "65046:10050" },
-                                ExportIPv4RouteTargets = { "65046:10050" },
-                                ExportIPv6RouteTargets = { "65046:10050" },
-                            },
-                        },
-                        OptionAProperties = new VpnConfigurationPatchableOptionAProperties
-                        {
-                            PrimaryIPv4Prefix = "10.0.0.14/30",
-                            PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
-                            SecondaryIPv4Prefix = "10.0.0.15/30",
-                            SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
-                            Mtu = 1500,
-                            VlanId = 3000,
-                            PeerAsn = 61234L,
-                            BfdConfiguration = new BfdConfiguration
-                            {
-                                IntervalInMilliSeconds = 300,
-                                Multiplier = 5,
-                            },
-                        },
-                    },
-                },
                 Tags =
 {
-["keyID"] = "KeyValue"
+["keyId"] = "keyValue"
 },
+                Properties = new NetworkFabricPatchProperties
+                {
+                    Annotation = "annotation1",
+                    RackCount = 6,
+                    ServerCountPerRack = 10,
+                    IPv4Prefix = "10.18.0.0/17",
+                    IPv6Prefix = "3FFE:FFFF:0:CD40::/60",
+                    FabricAsn = 12345L,
+                    StorageAccountConfiguration = new StorageAccountPatchConfiguration
+                    {
+                        StorageAccountId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Storage/storageAccounts/nfStorage"),
+                        StorageAccountIdentity = new IdentitySelectorPatch
+                        {
+                            IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
+                            UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789abc/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/my-id"),
+                        },
+                    },
+                    TerminalServerConfiguration = new TerminalServerPatchConfiguration
+                    {
+                        Username = "username1",
+                        Password = "xxxxxxxx",
+                        SerialNumber = "1234567",
+                        PrimaryIPv4Prefix = "10.0.0.12/30",
+                        PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                        SecondaryIPv4Prefix = "40.0.0.14/30",
+                        SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                    },
+                    ManagementNetworkConfiguration = new ManagementNetworkPatchConfiguration
+                    {
+                        InfrastructureVpnConfiguration = new VpnConfigurationPatchableProperties
+                        {
+                            NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
+                            PeeringOption = PeeringOption.OptionA,
+                            OptionBProperties = new VpnOptionBPatchProperties
+                            {
+                                ImportRouteTargets = { "65046:10050" },
+                                ExportRouteTargets = { "65046:10050" },
+                                RouteTargets = new RouteTargetPatchInformation
+                                {
+                                    ImportIPv4RouteTargets = { "65046:10050" },
+                                    ImportIPv6RouteTargets = { "65046:10050" },
+                                    ExportIPv4RouteTargets = { "65046:10050" },
+                                    ExportIPv6RouteTargets = { "65046:10050" },
+                                },
+                            },
+                            OptionAProperties = new VpnOptionAPatchProperties
+                            {
+                                Mtu = 1501,
+                                VlanId = 3001,
+                                PeerAsn = 1235L,
+                                BfdConfiguration = new BfdPatchConfiguration
+                                {
+                                    IntervalInMilliSeconds = 300,
+                                    Multiplier = 10,
+                                },
+                                PrimaryIPv4Prefix = "10.0.0.12/30",
+                                PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                                SecondaryIPv4Prefix = "20.0.0.13/30",
+                                SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                            },
+                        },
+                        WorkloadVpnConfiguration = new VpnConfigurationPatchableProperties
+                        {
+                            NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
+                            PeeringOption = PeeringOption.OptionA,
+                            OptionBProperties = new VpnOptionBPatchProperties
+                            {
+                                ImportRouteTargets = { "65046:10050" },
+                                ExportRouteTargets = { "65046:10050" },
+                                RouteTargets = new RouteTargetPatchInformation
+                                {
+                                    ImportIPv4RouteTargets = { "65046:10050" },
+                                    ImportIPv6RouteTargets = { "65046:10050" },
+                                    ExportIPv4RouteTargets = { "65046:10050" },
+                                    ExportIPv6RouteTargets = { "65046:10050" },
+                                },
+                            },
+                            OptionAProperties = new VpnOptionAPatchProperties
+                            {
+                                Mtu = 1500,
+                                VlanId = 3000,
+                                PeerAsn = 61234L,
+                                BfdConfiguration = new BfdPatchConfiguration
+                                {
+                                    IntervalInMilliSeconds = 300,
+                                    Multiplier = 10,
+                                },
+                                PrimaryIPv4Prefix = "10.0.0.14/30",
+                                PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
+                                SecondaryIPv4Prefix = "10.0.0.15/30",
+                                SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
+                            },
+                        },
+                    },
+                    HardwareAlertThreshold = 43,
+                    ControlPlaneAcls = { new ResourceIdentifier("/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl") },
+                    TrustedIPPrefixes = { new ResourceIdentifier("/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-prefix") },
+                    UniqueRdConfiguration = new UniqueRouteDistinguisherPatchProperties
+                    {
+                        UniqueRdConfigurationState = UniqueRouteDistinguisherConfigurationState.Enabled,
+                        NniDerivedUniqueRdConfigurationState = NNIDerivedUniqueRouteDistinguisherConfigurationState.Enabled,
+                    },
+                },
+                Identity = new ManagedServiceIdentityPatch
+                {
+                    IdentityType = Models.ManagedServiceIdentityType.None,
+                    UserAssignedIdentities =
+{
+["key872"] = new UserAssignedIdentity()
+},
+                },
             };
             ArmOperation<NetworkFabricResource> lro = await networkFabric.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricResource result = lro.Value;
@@ -195,10 +224,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Provision_NetworkFabricsProvisionMaximumSetGen()
+        public async Task ArmConfigurationDiff_NetworkFabricsArmConfigurationDiffMaximumSet()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_provision_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_Provision" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_ArmConfigurationDiff.json
+            // this example is just showing the usage of "NetworkFabrics_ArmConfigurationDiff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -207,15 +236,73 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkFabric.ProvisionAsync(WaitUntil.Completed);
-            DeviceUpdateCommonPostActionResult result = lro.Value;
+            ArmOperation<ArmConfigurationDiffResult> lro = await networkFabric.ArmConfigurationDiffAsync(WaitUntil.Completed);
+            ArmConfigurationDiffResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CommitBatchStatus_NetworkFabricsCommitBatchStatusMaximumSet()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_CommitBatchStatus.json
+            // this example is just showing the usage of "NetworkFabrics_CommitBatchStatus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-fabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            CommitBatchStatusContent content = new CommitBatchStatusContent
+            {
+                CommitBatchId = "batch-id",
+            };
+            ArmOperation<CommitBatchStatusResult> lro = await networkFabric.CommitBatchStatusAsync(WaitUntil.Completed, content);
+            CommitBatchStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CommitConfiguration_NetworkFabricsCommitConfigurationMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_CommitConfiguration.json
+            // this example is just showing the usage of "NetworkFabrics_CommitConfiguration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-networkFabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.CommitConfigurationAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -224,7 +311,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Deprovision_NetworkFabricsDeprovisionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_deprovision_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Deprovision.json
             // this example is just showing the usage of "NetworkFabrics_Deprovision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -249,10 +336,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Upgrade_NetworkFabricsUpgradeMaximumSetGen()
+        public async Task DiscardCommitBatch_NetworkFabricsDiscardCommitBatch()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_upgrade_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_Upgrade" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_DiscardCommitBatch.json
+            // this example is just showing the usage of "NetworkFabrics_DiscardCommitBatch" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -261,19 +348,105 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            NetworkFabricUpdateVersionContent content = new NetworkFabricUpdateVersionContent
+            DiscardCommitBatchContent content = new DiscardCommitBatchContent
             {
-                Version = "version1",
+                CommitBatchId = "batchId1",
             };
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpgradeAsync(WaitUntil.Completed, content);
+            ArmOperation<DiscardCommitBatchResult> lro = await networkFabric.DiscardCommitBatchAsync(WaitUntil.Completed, content);
+            DiscardCommitBatchResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetTopology_NetworkFabricsGetTopologyMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_GetTopology.json
+            // this example is just showing the usage of "NetworkFabrics_GetTopology" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-fabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            ArmOperation<ValidateConfigurationResult> lro = await networkFabric.GetTopologyAsync(WaitUntil.Completed);
+            ValidateConfigurationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task LockFabric_NetworkFabricsLockFabricMaximumSet()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_LockFabric.json
+            // this example is just showing the usage of "NetworkFabrics_LockFabric" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-networkFabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            NetworkFabricLockContent content = new NetworkFabricLockContent
+            {
+                LockType = NetworkFabricLockType.Administrative,
+                Action = NetworkFabricLockAction.Lock,
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.LockFabricAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Provision_NetworkFabricsProvisionMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Provision.json
+            // this example is just showing the usage of "NetworkFabrics_Provision" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-fabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkFabric.ProvisionAsync(WaitUntil.Completed);
+            DeviceUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -282,7 +455,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RefreshConfiguration_NetworkFabricsRefreshConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_refreshConfiguration_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_RefreshConfiguration.json
             // this example is just showing the usage of "NetworkFabrics_RefreshConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -292,7 +465,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -307,41 +480,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task UpdateWorkloadManagementBfdConfiguration_NetworkFabricsUpdateWorkloadManagementBfdConfigurationMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_UpdateWorkloadManagementBfdConfiguration_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_UpdateWorkloadManagementBfdConfiguration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricResource created on azure
-            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
-            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
-            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
-
-            // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
-            {
-                State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
-            };
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpdateWorkloadManagementBfdConfigurationAsync(WaitUntil.Completed, content);
-            StateUpdateCommonPostActionResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task UpdateInfraManagementBfdConfiguration_NetworkFabricsUpdateInfraManagementBfdConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_UpdateInfraManagementBfdConfiguration_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_UpdateInfraManagementBfdConfiguration.json
             // this example is just showing the usage of "NetworkFabrics_UpdateInfraManagementBfdConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -351,7 +492,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -360,8 +501,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
+                ResourceIds = { "" },
                 State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpdateInfraManagementBfdConfigurationAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;
@@ -371,9 +512,73 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task UpdateWorkloadManagementBfdConfiguration_NetworkFabricsUpdateWorkloadManagementBfdConfigurationMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_UpdateWorkloadManagementBfdConfiguration.json
+            // this example is just showing the usage of "NetworkFabrics_UpdateWorkloadManagementBfdConfiguration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-fabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
+            {
+                ResourceIds = { "" },
+                State = AdministrativeEnableState.Enable,
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpdateWorkloadManagementBfdConfigurationAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Upgrade_NetworkFabricsUpgradeMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Upgrade.json
+            // this example is just showing the usage of "NetworkFabrics_Upgrade" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricResource created on azure
+            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricName = "example-fabric";
+            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
+            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
+
+            // invoke the operation
+            UpgradeNetworkFabricProperties body = new UpgradeNetworkFabricProperties
+            {
+                Version = "3.x.x",
+                Action = NetworkFabricUpgradeAction.Start,
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpgradeAsync(WaitUntil.Completed, body);
+            StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateConfiguration_NetworkFabricsValidateConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_ValidateConfiguration_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_ValidateConfiguration.json
             // this example is just showing the usage of "NetworkFabrics_ValidateConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -383,7 +588,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -402,10 +607,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetTopology_NetworkFabricsGetTopologyMaximumSetGen()
+        public async Task ViewDeviceConfiguration_NetworkFabricsViewDeviceConfigurationMaximumSet()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_GetTopology_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_GetTopology" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_ViewDeviceConfiguration.json
+            // this example is just showing the usage of "NetworkFabrics_ViewDeviceConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -414,42 +619,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<ValidateConfigurationResult> lro = await networkFabric.GetTopologyAsync(WaitUntil.Completed);
-            ValidateConfigurationResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CommitConfiguration_NetworkFabricsCommitConfigurationMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_CommitConfiguration_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_CommitConfiguration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricResource created on azure
-            // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
-            ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
-            NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
-
-            // invoke the operation
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.CommitConfigurationAsync(WaitUntil.Completed);
-            StateUpdateCommonPostActionResult result = lro.Value;
+            ArmOperation<ViewDeviceConfigurationResult> lro = await networkFabric.ViewDeviceConfigurationAsync(WaitUntil.Completed);
+            ViewDeviceConfigurationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

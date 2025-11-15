@@ -14,36 +14,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Polling interval in seconds. </summary>
     public readonly partial struct PollingIntervalInSecond : IEquatable<PollingIntervalInSecond>
     {
-        private readonly int _value;
+        private readonly float _value;
 
         /// <summary> Initializes a new instance of <see cref="PollingIntervalInSecond"/>. </summary>
-        public PollingIntervalInSecond(int value)
+        public PollingIntervalInSecond(float value)
         {
             _value = value;
         }
 
-        private const int ThirtyValue = 30;
-        private const int SixtyValue = 60;
-        private const int NinetyValue = 90;
-        private const int OneHundredTwentyValue = 120;
+        private const float ThirtyValue = 30F;
+        private const float SixtyValue = 60F;
+        private const float NinetyValue = 90F;
+        private const float OneTwentyValue = 120F;
 
-        /// <summary> 30. </summary>
+        /// <summary> 30 PollingIntervalInSeconds. </summary>
         public static PollingIntervalInSecond Thirty { get; } = new PollingIntervalInSecond(ThirtyValue);
-        /// <summary> 60. </summary>
+        /// <summary> 60 PollingIntervalInSeconds. </summary>
         public static PollingIntervalInSecond Sixty { get; } = new PollingIntervalInSecond(SixtyValue);
-        /// <summary> 90. </summary>
+        /// <summary> 90 PollingIntervalInSeconds. </summary>
         public static PollingIntervalInSecond Ninety { get; } = new PollingIntervalInSecond(NinetyValue);
-        /// <summary> 120. </summary>
-        public static PollingIntervalInSecond OneHundredTwenty { get; } = new PollingIntervalInSecond(OneHundredTwentyValue);
+        /// <summary> 120 PollingIntervalInSeconds. </summary>
+        public static PollingIntervalInSecond OneTwenty { get; } = new PollingIntervalInSecond(OneTwentyValue);
 
-        internal int ToSerialInt32() => _value;
+        internal float ToSerialSingle() => _value;
 
         /// <summary> Determines if two <see cref="PollingIntervalInSecond"/> values are the same. </summary>
         public static bool operator ==(PollingIntervalInSecond left, PollingIntervalInSecond right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PollingIntervalInSecond"/> values are not the same. </summary>
         public static bool operator !=(PollingIntervalInSecond left, PollingIntervalInSecond right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="int"/> to a <see cref="PollingIntervalInSecond"/>. </summary>
-        public static implicit operator PollingIntervalInSecond(int value) => new PollingIntervalInSecond(value);
+        /// <summary> Converts a <see cref="float"/> to a <see cref="PollingIntervalInSecond"/>. </summary>
+        public static implicit operator PollingIntervalInSecond(float value) => new PollingIntervalInSecond(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

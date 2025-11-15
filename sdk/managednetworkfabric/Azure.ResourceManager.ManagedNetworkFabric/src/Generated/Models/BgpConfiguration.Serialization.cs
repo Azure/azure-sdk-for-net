@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,7 +34,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(BgpConfiguration)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
@@ -105,6 +109,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
+            if (Optional.IsDefined(V4OverV6BgpSession))
+            {
+                writer.WritePropertyName("v4OverV6BgpSession"u8);
+                writer.WriteStringValue(V4OverV6BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(V6OverV4BgpSession))
+            {
+                writer.WritePropertyName("v6OverV4BgpSession"u8);
+                writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         BgpConfiguration IJsonModel<BgpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,6 +161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            string annotation = default;
             BfdConfiguration bfdConfiguration = default;
             NetworkFabricBooleanValue? defaultRouteOriginate = default;
             int? allowAS = default;
@@ -137,11 +172,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<string> ipv6ListenRangePrefixes = default;
             IList<NeighborAddress> ipv4NeighborAddress = default;
             IList<NeighborAddress> ipv6NeighborAddress = default;
-            string annotation = default;
+            InternalNetworkBmpProperties bmpConfiguration = default;
+            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("annotation"u8))
+                {
+                    annotation = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("bfdConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -252,9 +294,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6NeighborAddress = array;
                     continue;
                 }
-                if (property.NameEquals("annotation"u8))
+                if (property.NameEquals("bmpConfiguration"u8))
                 {
-                    annotation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = InternalNetworkBmpProperties.DeserializeInternalNetworkBmpProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("v4OverV6BgpSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v4OverV6BgpSession = new V4OverV6BgpSessionState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("v6OverV4BgpSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v6OverV4BgpSession = new V6OverV4BgpSessionState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -265,7 +329,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new BgpConfiguration(
                 annotation,
-                serializedAdditionalRawData,
                 bfdConfiguration,
                 defaultRouteOriginate,
                 allowAS,
@@ -275,7 +338,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
-                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                bmpConfiguration,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)

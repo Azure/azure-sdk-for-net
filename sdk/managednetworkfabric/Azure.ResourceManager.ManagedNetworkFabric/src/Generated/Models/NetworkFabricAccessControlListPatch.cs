@@ -11,45 +11,60 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Access Control Lists patch resource definition. </summary>
-    public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch
+    public partial class NetworkFabricAccessControlListPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         public NetworkFabricAccessControlListPatch()
         {
-            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Access Control Lists patch properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="configurationType"> Input method to configure Access Control List. </param>
-        /// <param name="aclsUri"> Access Control List file URL. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string annotation) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, AccessControlListPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConfigurationType = configurationType;
-            AclsUri = aclsUri;
-            DefaultAction = defaultAction;
-            MatchConfigurations = matchConfigurations;
-            DynamicMatchConfigurations = dynamicMatchConfigurations;
-            Annotation = annotation;
+            Tags = tags;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Input method to configure Access Control List. </summary>
-        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
-        /// <summary> Access Control List file URL. </summary>
-        public Uri AclsUri { get; set; }
-        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
-        public CommunityActionType? DefaultAction { get; set; }
-        /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
-        /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> Access Control Lists patch properties. </summary>
+        public AccessControlListPatchProperties Properties { get; set; }
     }
 }

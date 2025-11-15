@@ -11,8 +11,40 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The response of the action validate configuration. </summary>
-    public partial class ValidateConfigurationResult : NetworkFabricErrorResult
+    public partial class ValidateConfigurationResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ValidateConfigurationResult"/>. </summary>
         internal ValidateConfigurationResult()
         {
@@ -20,15 +52,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ValidateConfigurationResult"/>. </summary>
         /// <param name="error"> The error object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="uri"> URL for the details of the response. </param>
-        internal ValidateConfigurationResult(ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationState? configurationState, Uri uri) : base(error, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateConfigurationResult(ResponseError error, NetworkFabricConfigurationState? configurationState, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Error = error;
             ConfigurationState = configurationState;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The error object. </summary>
+        public ResponseError Error { get; }
         /// <summary> Gets the configuration state. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> URL for the details of the response. </summary>

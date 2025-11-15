@@ -53,14 +53,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerId"/> is null. </exception>
-        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
+        public NetworkFabricInternetGatewayData(AzureLocation location, ResourceIdentifier networkFabricControllerId) : base(location)
         {
             Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
 
-            TypePropertiesType = typePropertiesType;
             NetworkFabricControllerId = networkFabricControllerId;
         }
 
@@ -76,17 +74,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
         /// <param name="port"> Port number of Internet Gateway. </param>
         /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
+        /// <param name="internetGatewayType"> Gateway Type of the resource. </param>
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType? typePropertiesType, InternetGatewayType? internetGatewayType, ResourceIdentifier networkFabricControllerId, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             InternetGatewayRuleId = internetGatewayRuleId;
             IPV4Address = ipV4Address;
             Port = port;
             TypePropertiesType = typePropertiesType;
+            InternetGatewayType = internetGatewayType;
             NetworkFabricControllerId = networkFabricControllerId;
+            LastOperation = lastOperation;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -105,9 +107,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Port number of Internet Gateway. </summary>
         public int? Port { get; }
         /// <summary> Gateway Type of the resource. </summary>
-        public InternetGatewayType TypePropertiesType { get; set; }
+        public InternetGatewayType? TypePropertiesType { get; set; }
+        /// <summary> Gateway Type of the resource. </summary>
+        public InternetGatewayType? InternetGatewayType { get; set; }
         /// <summary> ARM Resource ID of the Network Fabric Controller. </summary>
         public ResourceIdentifier NetworkFabricControllerId { get; set; }
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Provisioning state of resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
     }

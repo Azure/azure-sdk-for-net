@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string ConfigurationValue = "Configuration";
         private const string ConnectivityValue = "Connectivity";
 
-        /// <summary> Cabling. </summary>
+        /// <summary> ValidateAction-Cabling. </summary>
         public static NetworkFabricValidateAction Cabling { get; } = new NetworkFabricValidateAction(CablingValue);
-        /// <summary> Configuration. </summary>
+        /// <summary> ValidateAction-Configuration. </summary>
         public static NetworkFabricValidateAction Configuration { get; } = new NetworkFabricValidateAction(ConfigurationValue);
-        /// <summary> Connectivity. </summary>
+        /// <summary> ValidateAction-Connectivity. </summary>
         public static NetworkFabricValidateAction Connectivity { get; } = new NetworkFabricValidateAction(ConnectivityValue);
         /// <summary> Determines if two <see cref="NetworkFabricValidateAction"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => left.Equals(right);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkInterfacesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkInterfaces_Get.json
             // this example is just showing the usage of "NetworkInterfaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkDeviceName = "example-device";
             string networkInterfaceName = "example-interface";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkInterfacesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkInterfaces_Delete.json
             // this example is just showing the usage of "NetworkInterfaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "94D0FD57-C08B-4CA3-A926-6B76D8B7B956";
-            string resourceGroupName = "rgNetworkDevices";
-            string networkDeviceName = "sjzd";
-            string networkInterfaceName = "emrgu";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
+            string networkInterfaceName = "example-interface";
             ResourceIdentifier networkDeviceInterfaceResourceId = NetworkDeviceInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName);
             NetworkDeviceInterfaceResource networkDeviceInterface = client.GetNetworkDeviceInterfaceResource(networkDeviceInterfaceResourceId);
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkInterfacesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkInterfaces_Update.json
             // this example is just showing the usage of "NetworkInterfaces_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkDeviceName = "example-device";
             string networkInterfaceName = "example-interface";
@@ -98,7 +98,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkDeviceInterfacePatch patch = new NetworkDeviceInterfacePatch
             {
-                Annotation = "annotation",
+                Properties = new NetworkInterfacePatchProperties
+                {
+                    Annotation = "annotation",
+                    Description = "device 1",
+                    AdditionalDescription = "device 1",
+                },
             };
             ArmOperation<NetworkDeviceInterfaceResource> lro = await networkDeviceInterface.UpdateAsync(WaitUntil.Completed, patch);
             NetworkDeviceInterfaceResource result = lro.Value;
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_NetworkInterfacesUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkInterfaces_UpdateAdministrativeState_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkInterfaces_UpdateAdministrativeState.json
             // this example is just showing the usage of "NetworkInterfaces_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkDeviceName = "example-device";
             string networkInterfaceName = "example-interface";
@@ -134,8 +139,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
+                ResourceIds = { "" },
                 State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDeviceInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;

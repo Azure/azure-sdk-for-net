@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
 
-        /// <summary> Enable. </summary>
+        /// <summary> AllowASOverride-Enable. </summary>
         public static AllowASOverride Enable { get; } = new AllowASOverride(EnableValue);
-        /// <summary> Disable. </summary>
+        /// <summary> AllowASOverride-Disable. </summary>
         public static AllowASOverride Disable { get; } = new AllowASOverride(DisableValue);
         /// <summary> Determines if two <see cref="AllowASOverride"/> values are the same. </summary>
         public static bool operator ==(AllowASOverride left, AllowASOverride right) => left.Equals(right);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -54,13 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
-        public NetworkFabricIPExtendedCommunityData(AzureLocation location, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules) : base(location)
+        /// <param name="properties"> The IpExtendedCommunity properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkFabricIPExtendedCommunityData(AzureLocation location, IPExtendedCommunityProperties properties) : base(location)
         {
-            Argument.AssertNotNull(ipExtendedCommunityRules, nameof(ipExtendedCommunityRules));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/>. </summary>
@@ -70,19 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="properties"> The IpExtendedCommunity properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IPExtendedCommunityProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            IPExtendedCommunityRules = ipExtendedCommunityRules;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,15 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> List of IP Extended Community Rules. </summary>
-        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; }
-        /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        /// <summary> The IpExtendedCommunity properties. </summary>
+        public IPExtendedCommunityProperties Properties { get; set; }
     }
 }

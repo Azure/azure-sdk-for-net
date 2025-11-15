@@ -70,16 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImportRoutePolicyId))
-            {
-                writer.WritePropertyName("importRoutePolicyId"u8);
-                writer.WriteStringValue(ImportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
-            }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
@@ -121,6 +111,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
                 writer.WriteObjectValue(StaticRouteConfiguration, options);
+            }
+            if (Optional.IsDefined(NativeIPv4PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
+            }
+            if (Optional.IsDefined(NativeIPv6PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -168,8 +173,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             int? mtu = default;
             IList<ConnectedSubnet> connectedIPv4Subnets = default;
             IList<ConnectedSubnet> connectedIPv6Subnets = default;
-            ResourceIdentifier importRoutePolicyId = default;
-            ResourceIdentifier exportRoutePolicyId = default;
             ImportRoutePolicy importRoutePolicy = default;
             ExportRoutePolicy exportRoutePolicy = default;
             ResourceIdentifier ingressAclId = default;
@@ -177,8 +180,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IsMonitoringEnabled? isMonitoringEnabled = default;
             StaticRouteConfigurationExtension? extension = default;
             int vlanId = default;
-            InternalNetworkBgpConfiguration bgpConfiguration = default;
-            InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default;
+            BgpConfiguration bgpConfiguration = default;
+            StaticRouteConfiguration staticRouteConfiguration = default;
+            NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -261,24 +267,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             connectedIPv6Subnets = array;
                             continue;
                         }
-                        if (property0.NameEquals("importRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("exportRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("importRoutePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -344,7 +332,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value, options);
+                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -353,7 +341,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value, options);
+                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("nativeIpv4PrefixLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nativeIPv4PrefixLimit = NativeIPv4PrefixLimitProperties.DeserializeNativeIPv4PrefixLimitProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("nativeIpv6PrefixLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nativeIPv6PrefixLimit = NativeIPv6PrefixLimitProperties.DeserializeNativeIPv6PrefixLimitProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -401,8 +416,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 mtu,
                 connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
                 connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
-                importRoutePolicyId,
-                exportRoutePolicyId,
                 importRoutePolicy,
                 exportRoutePolicy,
                 ingressAclId,
@@ -412,6 +425,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 vlanId,
                 bgpConfiguration,
                 staticRouteConfiguration,
+                nativeIPv4PrefixLimit,
+                nativeIPv6PrefixLimit,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

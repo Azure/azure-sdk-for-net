@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
-    public partial class NetworkToNetworkInterconnectPatch : ResourceData
+    public partial class NetworkToNetworkInterconnectPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,43 +53,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
-        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
-        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy information. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
+        /// <param name="networkToNetworkInterconnectPatchType"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string networkToNetworkInterconnectPatchType, SystemData systemData, NetworkToNetworkInterconnectPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Layer2Configuration = layer2Configuration;
-            OptionBLayer3Configuration = optionBLayer3Configuration;
-            NpbStaticRouteConfiguration = npbStaticRouteConfiguration;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            EgressAclId = egressAclId;
-            IngressAclId = ingressAclId;
+            Id = id;
+            NetworkToNetworkInterconnectPatchType = networkToNetworkInterconnectPatchType;
+            SystemData = systemData;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2Configuration Layer2Configuration { get; set; }
-        /// <summary> Common properties for Layer3Configuration. </summary>
-        public OptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
-        /// <summary> NPB Static Route Configuration properties. </summary>
-        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get; set; }
-        /// <summary> Import Route Policy information. </summary>
-        public ImportRoutePolicyInformation ImportRoutePolicy { get; set; }
-        /// <summary> Export Route Policy information. </summary>
-        public ExportRoutePolicyInformation ExportRoutePolicy { get; set; }
-        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier EgressAclId { get; set; }
-        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier IngressAclId { get; set; }
+        /// <summary> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </summary>
+        public string NetworkToNetworkInterconnectPatchType { get; }
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        public SystemData SystemData { get; }
+        /// <summary> Resource properties. </summary>
+        public NetworkToNetworkInterconnectPatchProperties Properties { get; set; }
     }
 }

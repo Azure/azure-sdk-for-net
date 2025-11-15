@@ -51,11 +51,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
+            writer.WritePropertyName("serialNumber"u8);
+            writer.WriteStringValue(SerialNumber);
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -85,6 +82,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("managementIpv6Address"u8);
                 writer.WriteStringValue(ManagementIPv6Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RwDeviceConfig))
+            {
+                writer.WritePropertyName("rwDeviceConfig"u8);
+                writer.WriteStringValue(RwDeviceConfig);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -139,6 +146,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier networkRackId = default;
             IPAddress managementIPv4Address = default;
             string managementIPv6Address = default;
+            string rwDeviceConfig = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -255,6 +264,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             managementIPv6Address = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("rwDeviceConfig"u8))
+                        {
+                            rwDeviceConfig = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -307,6 +330,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 networkRackId,
                 managementIPv4Address,
                 managementIPv6Address,
+                rwDeviceConfig,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

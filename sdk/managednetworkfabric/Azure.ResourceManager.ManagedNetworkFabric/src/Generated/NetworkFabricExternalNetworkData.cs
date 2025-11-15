@@ -64,29 +64,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
         /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="networkToNetworkInterconnectId"> Gets the networkToNetworkInterconnectId of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties object. </param>
         /// <param name="optionAProperties"> option A properties object. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, ExternalNetworkStaticRouteConfiguration staticRouteConfiguration, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
+            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             ImportRoutePolicy = importRoutePolicy;
             ExportRoutePolicy = exportRoutePolicy;
-            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             PeeringOption = peeringOption;
             OptionBProperties = optionBProperties;
             OptionAProperties = optionAProperties;
+            StaticRouteConfiguration = staticRouteConfiguration;
+            LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -100,22 +100,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ImportRoutePolicyId { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ExportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </summary>
+        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         public ImportRoutePolicy ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
         public ExportRoutePolicy ExportRoutePolicy { get; set; }
-        /// <summary> Gets the networkToNetworkInterconnectId of the resource. </summary>
-        public ResourceIdentifier NetworkToNetworkInterconnectId { get; }
         /// <summary> Peering option list. </summary>
         public PeeringOption PeeringOption { get; set; }
         /// <summary> option B properties object. </summary>
         public L3OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties object. </summary>
         public ExternalNetworkOptionAProperties OptionAProperties { get; set; }
+        /// <summary> Static Route Configuration. </summary>
+        public ExternalNetworkStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>

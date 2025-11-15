@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,50 +34,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RackCount))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("rackCount"u8);
-                writer.WriteNumberValue(RackCount.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ServerCountPerRack))
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("serverCountPerRack"u8);
-                writer.WriteNumberValue(ServerCountPerRack.Value);
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
-            if (Optional.IsDefined(IPv4Prefix))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("ipv4Prefix"u8);
-                writer.WriteStringValue(IPv4Prefix);
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            if (Optional.IsDefined(IPv6Prefix))
-            {
-                writer.WritePropertyName("ipv6Prefix"u8);
-                writer.WriteStringValue(IPv6Prefix);
-            }
-            if (Optional.IsDefined(FabricAsn))
-            {
-                writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricAsn.Value);
-            }
-            if (Optional.IsDefined(TerminalServerConfiguration))
-            {
-                writer.WritePropertyName("terminalServerConfiguration"u8);
-                writer.WriteObjectValue(TerminalServerConfiguration, options);
-            }
-            if (Optional.IsDefined(ManagementNetworkConfiguration))
-            {
-                writer.WritePropertyName("managementNetworkConfiguration"u8);
-                writer.WriteObjectValue(ManagementNetworkConfiguration, options);
-            }
-            writer.WriteEndObject();
         }
 
         NetworkFabricPatch IJsonModel<NetworkFabricPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,14 +93,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            int? rackCount = default;
-            int? serverCountPerRack = default;
-            string ipv4Prefix = default;
-            string ipv6Prefix = default;
-            long? fabricAsn = default;
-            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
-            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
+            NetworkFabricPatchProperties properties = default;
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,72 +117,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    properties = NetworkFabricPatchProperties.DeserializeNetworkFabricPatchProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("rackCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rackCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("serverCountPerRack"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serverCountPerRack = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv4Prefix"u8))
-                        {
-                            ipv4Prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6Prefix"u8))
-                        {
-                            ipv6Prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricASN"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            fabricAsn = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("terminalServerConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managementNetworkConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,17 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                annotation,
-                rackCount,
-                serverCountPerRack,
-                ipv4Prefix,
-                ipv6Prefix,
-                fabricAsn,
-                terminalServerConfiguration,
-                managementNetworkConfiguration);
+            return new NetworkFabricPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)

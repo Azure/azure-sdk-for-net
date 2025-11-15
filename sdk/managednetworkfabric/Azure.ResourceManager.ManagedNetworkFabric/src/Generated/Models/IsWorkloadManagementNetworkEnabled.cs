@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary> IsWorkloadManagementNetworkEnabled-True. </summary>
         public static IsWorkloadManagementNetworkEnabled True { get; } = new IsWorkloadManagementNetworkEnabled(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary> IsWorkloadManagementNetworkEnabled-False. </summary>
         public static IsWorkloadManagementNetworkEnabled False { get; } = new IsWorkloadManagementNetworkEnabled(FalseValue);
         /// <summary> Determines if two <see cref="IsWorkloadManagementNetworkEnabled"/> values are the same. </summary>
         public static bool operator ==(IsWorkloadManagementNetworkEnabled left, IsWorkloadManagementNetworkEnabled right) => left.Equals(right);

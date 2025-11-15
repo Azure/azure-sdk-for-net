@@ -52,9 +52,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
-        public NetworkFabricSkuData()
+        /// <param name="properties"> The Network Fabric Sku properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkFabricSkuData(NetworkFabricSkuProperties properties)
         {
-            SupportedVersions = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
@@ -62,35 +66,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="typePropertiesType"> Type of Network Fabric SKU. </param>
-        /// <param name="maxComputeRacks"> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </param>
-        /// <param name="maximumServerCount"> Maximum number of servers available for this Network Fabric SKU. </param>
-        /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
-        /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="properties"> The Network Fabric Sku properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            TypePropertiesType = typePropertiesType;
-            MaxComputeRacks = maxComputeRacks;
-            MaximumServerCount = maximumServerCount;
-            SupportedVersions = supportedVersions;
-            Details = details;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of Network Fabric SKU. </summary>
-        public NetworkFabricSkuType? TypePropertiesType { get; }
-        /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
-        public int? MaxComputeRacks { get; set; }
-        /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
-        public int? MaximumServerCount { get; set; }
-        /// <summary> List of supported Network Fabric SKU versions. </summary>
-        public IReadOnlyList<string> SupportedVersions { get; }
-        /// <summary> URL providing detailed configuration of the fabric SKU. </summary>
-        public string Details { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/> for deserialization. </summary>
+        internal NetworkFabricSkuData()
+        {
+        }
+
+        /// <summary> The Network Fabric Sku properties. </summary>
+        public NetworkFabricSkuProperties Properties { get; set; }
     }
 }

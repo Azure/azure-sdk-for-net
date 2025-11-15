@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,31 +34,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
+            writer.WritePropertyName("username"u8);
+            writer.WriteStringValue(Username);
+            writer.WritePropertyName("password"u8);
+            writer.WriteStringValue(Password);
+            if (Optional.IsDefined(SerialNumber))
             {
-                writer.WritePropertyName("networkDeviceId"u8);
-                writer.WriteStringValue(NetworkDeviceId);
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
             }
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
-            {
-                writer.WritePropertyName("primaryIpv4Prefix"u8);
-                writer.WriteStringValue(PrimaryIPv4Prefix);
-            }
+            writer.WritePropertyName("primaryIpv4Prefix"u8);
+            writer.WriteStringValue(PrimaryIPv4Prefix);
             if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv4Prefix"u8);
-                writer.WriteStringValue(SecondaryIPv4Prefix);
-            }
+            writer.WritePropertyName("secondaryIpv4Prefix"u8);
+            writer.WriteStringValue(SecondaryIPv4Prefix);
             if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
+            {
+                writer.WritePropertyName("networkDeviceId"u8);
+                writer.WriteStringValue(NetworkDeviceId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -82,25 +99,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            ResourceIdentifier networkDeviceId = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
-            string username = default;
-            string password = default;
-            string serialNumber = default;
+            ResourceIdentifier networkDeviceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkDeviceId"u8))
+                if (property.NameEquals("username"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
+                    username = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("password"u8))
+                {
+                    password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
+                {
+                    serialNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -123,19 +146,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"u8))
+                if (property.NameEquals("networkDeviceId"u8))
                 {
-                    username = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"u8))
-                {
-                    password = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serialNumber"u8))
-                {
-                    serialNumber = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,12 +165,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 username,
                 password,
                 serialNumber,
-                serializedAdditionalRawData,
-                networkDeviceId,
                 primaryIPv4Prefix,
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
-                secondaryIPv6Prefix);
+                secondaryIPv6Prefix,
+                networkDeviceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

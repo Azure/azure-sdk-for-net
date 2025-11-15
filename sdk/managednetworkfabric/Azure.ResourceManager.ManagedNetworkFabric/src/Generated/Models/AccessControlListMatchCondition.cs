@@ -11,39 +11,87 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
-    public partial class AccessControlListMatchCondition : CommonMatchConditions
+    public partial class AccessControlListMatchCondition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
         public AccessControlListMatchCondition()
         {
+            ProtocolTypes = new ChangeTrackingList<string>();
             EtherTypes = new ChangeTrackingList<string>();
             Fragments = new ChangeTrackingList<string>();
             IPLengths = new ChangeTrackingList<string>();
             TtlValues = new ChangeTrackingList<string>();
             DscpMarkings = new ChangeTrackingList<string>();
+            ProtocolNeighbors = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etherTypes"> List of ether type values that need to be matched. </param>
         /// <param name="fragments"> List of IP fragment packets that need to be matched. </param>
         /// <param name="ipLengths"> List of IP Lengths that need to be matched. </param>
         /// <param name="ttlValues"> List of TTL [Time To Live] values that need to be matched. </param>
         /// <param name="dscpMarkings"> List of DSCP Markings that need to be matched. </param>
+        /// <param name="protocolNeighbors"> Protocol neighbors that need to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
+        /// <param name="icmpConfiguration"> Internet Control Message Protocol (ICMP) configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, IList<string> protocolNeighbors, AccessControlListPortCondition portCondition, IcmpConfigurationProperties icmpConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ProtocolTypes = protocolTypes;
+            VlanMatchCondition = vlanMatchCondition;
+            IPCondition = ipCondition;
             EtherTypes = etherTypes;
             Fragments = fragments;
             IPLengths = ipLengths;
             TtlValues = ttlValues;
             DscpMarkings = dscpMarkings;
+            ProtocolNeighbors = protocolNeighbors;
             PortCondition = portCondition;
+            IcmpConfiguration = icmpConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> List of the protocols that need to be matched. </summary>
+        public IList<string> ProtocolTypes { get; }
+        /// <summary> Vlan match condition that needs to be matched. </summary>
+        public VlanMatchCondition VlanMatchCondition { get; set; }
+        /// <summary> IP condition that needs to be matched. </summary>
+        public IPMatchCondition IPCondition { get; set; }
         /// <summary> List of ether type values that need to be matched. </summary>
         public IList<string> EtherTypes { get; }
         /// <summary> List of IP fragment packets that need to be matched. </summary>
@@ -54,7 +102,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<string> TtlValues { get; }
         /// <summary> List of DSCP Markings that need to be matched. </summary>
         public IList<string> DscpMarkings { get; }
+        /// <summary> Protocol neighbors that need to be matched. </summary>
+        public IList<string> ProtocolNeighbors { get; }
         /// <summary> Defines the port condition that needs to be matched. </summary>
         public AccessControlListPortCondition PortCondition { get; set; }
+        /// <summary> Internet Control Message Protocol (ICMP) configuration. </summary>
+        internal IcmpConfigurationProperties IcmpConfiguration { get; set; }
+        /// <summary> Internet Control Message Protocol (ICMP) types. </summary>
+        public IList<string> IcmpTypes
+        {
+            get
+            {
+                if (IcmpConfiguration is null)
+                    IcmpConfiguration = new IcmpConfigurationProperties();
+                return IcmpConfiguration.IcmpTypes;
+            }
+        }
     }
 }

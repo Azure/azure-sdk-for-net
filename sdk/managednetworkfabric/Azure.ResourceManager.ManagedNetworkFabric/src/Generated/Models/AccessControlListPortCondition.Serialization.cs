@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListPortCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,7 +34,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(AccessControlListPortCondition)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PortType))
+            {
+                writer.WritePropertyName("portType"u8);
+                writer.WriteStringValue(PortType.Value.ToString());
+            }
+            writer.WritePropertyName("layer4Protocol"u8);
+            writer.WriteStringValue(Layer4Protocol.ToString());
+            if (Optional.IsCollectionDefined(Ports))
+            {
+                writer.WritePropertyName("ports"u8);
+                writer.WriteStartArray();
+                foreach (var item in Ports)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PortGroupNames))
+            {
+                writer.WritePropertyName("portGroupNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in PortGroupNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
@@ -44,6 +70,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -67,29 +108,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> flags = default;
             NetworkFabricPortType? portType = default;
             Layer4Protocol layer4Protocol = default;
             IList<string> ports = default;
             IList<string> portGroupNames = default;
+            IList<string> flags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("flags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    flags = array;
-                    continue;
-                }
                 if (property.NameEquals("portType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -132,6 +159,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     portGroupNames = array;
                     continue;
                 }
+                if (property.NameEquals("flags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    flags = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -143,8 +184,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 layer4Protocol,
                 ports ?? new ChangeTrackingList<string>(),
                 portGroupNames ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData,
-                flags ?? new ChangeTrackingList<string>());
+                flags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListPortCondition>.Write(ModelReaderWriterOptions options)

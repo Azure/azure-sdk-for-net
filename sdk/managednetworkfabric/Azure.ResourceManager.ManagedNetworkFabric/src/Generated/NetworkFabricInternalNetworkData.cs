@@ -69,8 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
         /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
         /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
         /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
@@ -80,18 +78,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         /// <param name="bgpConfiguration"> BGP configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
+        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             Mtu = mtu;
             ConnectedIPv4Subnets = connectedIPv4Subnets;
             ConnectedIPv6Subnets = connectedIPv6Subnets;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
             ImportRoutePolicy = importRoutePolicy;
             ExportRoutePolicy = exportRoutePolicy;
             IngressAclId = ingressAclId;
@@ -101,6 +100,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             VlanId = vlanId;
             BgpConfiguration = bgpConfiguration;
             StaticRouteConfiguration = staticRouteConfiguration;
+            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
+            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
+            LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -120,10 +122,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
         /// <summary> List of connected IPv6 Subnets. </summary>
         public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ImportRoutePolicyId { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ExportRoutePolicyId { get; set; }
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         public ImportRoutePolicy ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
@@ -139,9 +137,43 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Vlan identifier. Example: 1001. </summary>
         public int VlanId { get; set; }
         /// <summary> BGP configuration properties. </summary>
-        public InternalNetworkBgpConfiguration BgpConfiguration { get; set; }
+        public BgpConfiguration BgpConfiguration { get; set; }
         /// <summary> Static Route Configuration properties. </summary>
-        public InternalNetworkStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
+        internal NativeIPv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitProperties> NativeIPv4PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv4PrefixLimit is null)
+                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitProperties();
+                return NativeIPv4PrefixLimit.PrefixLimits;
+            }
+        }
+
+        /// <summary> Native IPv6 Prefix Limit Configuration properties. </summary>
+        internal NativeIPv6PrefixLimitProperties NativeIPv6PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitProperties> NativeIPv6PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv6PrefixLimit is null)
+                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitProperties();
+                return NativeIPv6PrefixLimit.PrefixLimits;
+            }
+        }
+
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>

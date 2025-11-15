@@ -11,24 +11,70 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Community patch resource definition. </summary>
-    public partial class NetworkFabricIPCommunityPatch : NetworkRackPatch
+    public partial class NetworkFabricIPCommunityPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         public NetworkFabricIPCommunityPatch()
         {
-            IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> IP Community patchable properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IPCommunityRule> ipCommunityRules) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IPCommunityPatchableProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IPCommunityRules = ipCommunityRules;
+            Tags = tags;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> IP Community patchable properties. </summary>
+        internal IPCommunityPatchableProperties Properties { get; set; }
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IPCommunityRules { get; }
+        public IList<IPCommunityRule> IPCommunityRules
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new IPCommunityPatchableProperties();
+                return Properties.IPCommunityRules;
+            }
+        }
     }
 }

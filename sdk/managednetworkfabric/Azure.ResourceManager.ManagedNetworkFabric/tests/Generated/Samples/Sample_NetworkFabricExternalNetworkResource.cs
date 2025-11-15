@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Get.json
             // this example is just showing the usage of "ExternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "42EEDB3B-8E17-46E3-B0B4-B1CD9842D90D";
-            string resourceGroupName = "rgL3IsolationDomains";
-            string l3IsolationDomainName = "yhtr";
-            string externalNetworkName = "fltpszzikbalrzaqq";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l3IsolationDomainName = "example-externalnetwork";
+            string externalNetworkName = "example-ext";
             ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExternalNetworksDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Delete.json
             // this example is just showing the usage of "ExternalNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string externalNetworkName = "example-externalnetwork";
+            string l3IsolationDomainName = "example-externalnetwork";
+            string externalNetworkName = "example-ext";
             ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExternalNetworksUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Update.json
             // this example is just showing the usage of "ExternalNetworks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,58 +88,85 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string externalNetworkName = "example-externalnetwork";
+            string l3IsolationDomainName = "example-externalnetwork";
+            string externalNetworkName = "example-ext";
             ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
             // invoke the operation
             NetworkFabricExternalNetworkPatch patch = new NetworkFabricExternalNetworkPatch
             {
-                Annotation = "annotation1",
-                ImportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                ExportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                ImportRoutePolicy = new ImportRoutePolicy
+                Properties = new ExternalNetworkPatchProperties
                 {
-                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                    ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                },
-                ExportRoutePolicy = new ExportRoutePolicy
-                {
-                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                },
-                PeeringOption = PeeringOption.OptionA,
-                OptionBProperties = new L3OptionBProperties
-                {
-                    ImportRouteTargets = { "65046:10039" },
-                    ExportRouteTargets = { "65046:10039" },
-                    RouteTargets = new RouteTargetInformation
+                    Annotation = "annotation1",
+                    NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
+                    ImportRoutePolicy = new ImportRoutePolicyPatch
                     {
-                        ImportIPv4RouteTargets = { "65046:10039" },
-                        ImportIPv6RouteTargets = { "65046:10039" },
-                        ExportIPv4RouteTargets = { "65046:10039" },
-                        ExportIPv6RouteTargets = { "65046:10039" },
+                        ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                        ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                     },
-                },
-                OptionAProperties = new ExternalNetworkPatchOptionAProperties
-                {
-                    Mtu = 1500,
-                    VlanId = 1001,
-                    PeerAsn = 65047L,
-                    BfdConfiguration = new BfdConfiguration
+                    ExportRoutePolicy = new ExportRoutePolicyPatch
                     {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 15,
+                        ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                        ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                     },
-                    IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                    EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                    PrimaryIPv4Prefix = "10.1.1.0/30",
-                    PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
-                    SecondaryIPv4Prefix = "10.1.1.4/30",
-                    SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/126",
+                    PeeringOption = PeeringOption.OptionA,
+                    OptionBProperties = new L3OptionBPatchProperties
+                    {
+                        ImportRouteTargets = { "65046:10039" },
+                        ExportRouteTargets = { "65046:10039" },
+                        RouteTargets = new RouteTargetPatchInformation
+                        {
+                            ImportIPv4RouteTargets = { "65046:10050" },
+                            ImportIPv6RouteTargets = { "65046:10050" },
+                            ExportIPv4RouteTargets = { "65046:10050" },
+                            ExportIPv6RouteTargets = { "65046:10050" },
+                        },
+                    },
+                    OptionAProperties = new ExternalNetworkPatchOptionAProperties
+                    {
+                        PrimaryIPv4Prefix = "10.1.1.0/30",
+                        PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
+                        SecondaryIPv4Prefix = "10.1.1.4/30",
+                        SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/126",
+                        Mtu = 1500,
+                        VlanId = 1001,
+                        PeerAsn = 65047L,
+                        BfdConfiguration = new BfdPatchConfiguration
+                        {
+                            IntervalInMilliSeconds = 300,
+                            Multiplier = 10,
+                        },
+                        IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                        EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                        BmpConfigurationState = BmpConfigurationState.Enabled,
+                        V4OverV6BgpSession = V4OverV6BgpSessionState.Enabled,
+                        V6OverV4BgpSession = V6OverV4BgpSessionState.Enabled,
+                        NativeIPv4PrefixLimits = {new PrefixLimitPatchProperties
+{
+MaximumRoutes = 13,
+Threshold = 24,
+IdleTimeExpiry = 8,
+}},
+                        NativeIPv6PrefixLimits = {new PrefixLimitPatchProperties
+{
+MaximumRoutes = 13,
+Threshold = 24,
+IdleTimeExpiry = 8,
+}},
+                    },
+                    StaticRouteConfiguration = new ExternalNetworkStaticRoutePatchConfiguration
+                    {
+                        BfdConfiguration = new BfdPatchConfiguration
+                        {
+                            IntervalInMilliSeconds = 300,
+                            Multiplier = 10,
+                        },
+                        IPv4Routes = { new StaticRoutePatchProperties("10.0.0.1/14", new string[] { "10.0.0.1" }) },
+                        IPv6Routes = { new StaticRoutePatchProperties("2fff::/64", new string[] { "3ffe::1" }) },
+                    },
                 },
             };
             ArmOperation<NetworkFabricExternalNetworkResource> lro = await networkFabricExternalNetwork.UpdateAsync(WaitUntil.Completed, patch);
@@ -156,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_ExternalNetworksUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_UpdateAdministrativeState_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_UpdateAdministrativeState.json
             // this example is just showing the usage of "ExternalNetworks_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,18 +193,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string externalNetworkName = "example-externalnetwork";
+            string l3IsolationDomainName = "example-externalnetwork";
+            string externalNetworkName = "example-ext";
             ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
             // invoke the operation
             UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
+                ResourceIds = { "" },
                 State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricExternalNetwork.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;
@@ -187,10 +214,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task UpdateStaticRouteBfdAdministrativeState_ExternalNetworksUpdateStaticRouteBfdAdministrativeStateMaximumSetGen()
+        public async Task UpdateBfdAdministrativeState_ExternalNetworksUpdateBfdAdministrativeState()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_UpdateStaticRouteBfdAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "ExternalNetworks_UpdateStaticRouteBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_UpdateBfdAdministrativeState.json
+            // this example is just showing the usage of "ExternalNetworks_UpdateBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -199,21 +226,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string externalNetworkName = "example-externalnetwork";
+            string l3IsolationDomainName = "example-externalnetwork";
+            string externalNetworkName = "example-ext";
             ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
             // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
+            ExternalNetworkBfdAdministrativeStateContent content = new ExternalNetworkBfdAdministrativeStateContent
             {
-                State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
+                RouteType = ExternalNetworkRouteType.Static,
+                AdministrativeState = new BfdAdministrativeState("Enable"),
             };
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricExternalNetwork.UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil.Completed, content);
-            StateUpdateCommonPostActionResult result = lro.Value;
+            ArmOperation<ExternalNetworkBfdAdministrativeStateResult> lro = await networkFabricExternalNetwork.UpdateBfdAdministrativeStateAsync(WaitUntil.Completed, content);
+            ExternalNetworkBfdAdministrativeStateResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

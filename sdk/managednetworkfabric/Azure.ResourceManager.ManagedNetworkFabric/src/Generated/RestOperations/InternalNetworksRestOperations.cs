@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-15";
+            _apiVersion = apiVersion ?? "2024-06-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data)
+        internal RequestUriBuilder CreateListByL3IsolationDomainRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,17 +46,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
-            uri.AppendPath("/internalNetworks/", false);
-            uri.AppendPath(internalNetworkName, true);
+            uri.AppendPath("/internalNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data)
+        internal HttpMessage CreateListByL3IsolationDomainRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -65,72 +64,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
             uri.AppendPath(l3IsolationDomainName, true);
-            uri.AppendPath("/internalNetworks/", false);
-            uri.AppendPath(internalNetworkName, true);
+            uri.AppendPath("/internalNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates InternalNetwork PUT method. </summary>
+        /// <summary> Displays InternalNetworks list by resource group GET method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
-        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<InternalNetworkListResult>> ListByL3IsolationDomainAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, data);
+            using var message = CreateListByL3IsolationDomainRequest(subscriptionId, resourceGroupName, l3IsolationDomainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
-                    return message.Response;
+                    {
+                        InternalNetworkListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = InternalNetworkListResult.DeserializeInternalNetworkListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Creates InternalNetwork PUT method. </summary>
+        /// <summary> Displays InternalNetworks list by resource group GET method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
-        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<InternalNetworkListResult> ListByL3IsolationDomain(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, data);
+            using var message = CreateListByL3IsolationDomainRequest(subscriptionId, resourceGroupName, l3IsolationDomainName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
-                    return message.Response;
+                    {
+                        InternalNetworkListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = InternalNetworkListResult.DeserializeInternalNetworkListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,6 +229,106 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                 case 404:
                     return Response.FromValue((NetworkFabricInternalNetworkData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/internalNetworks/", false);
+            uri.AppendPath(internalNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/internalNetworks/", false);
+            uri.AppendPath(internalNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates InternalNetwork PUT method. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="data"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates InternalNetwork PUT method. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="internalNetworkName"> Name of the Internal Network. </param>
+        /// <param name="data"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, NetworkFabricInternalNetworkData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
+            Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -432,100 +526,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateListByL3IsolationDomainRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
-            uri.AppendPath(l3IsolationDomainName, true);
-            uri.AppendPath("/internalNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByL3IsolationDomainRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
-            uri.AppendPath(l3IsolationDomainName, true);
-            uri.AppendPath("/internalNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Displays InternalNetworks list by resource group GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InternalNetworksList>> ListByL3IsolationDomainAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-
-            using var message = CreateListByL3IsolationDomainRequest(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        InternalNetworksList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = InternalNetworksList.DeserializeInternalNetworksList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Displays InternalNetworks list by resource group GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InternalNetworksList> ListByL3IsolationDomain(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
-
-            using var message = CreateListByL3IsolationDomainRequest(subscriptionId, resourceGroupName, l3IsolationDomainName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        InternalNetworksList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = InternalNetworksList.DeserializeInternalNetworksList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateUpdateAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateBgpAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateUpdateBfdAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBfdAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -640,12 +640,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/internalNetworks/", false);
             uri.AppendPath(internalNetworkName, true);
-            uri.AppendPath("/updateBgpAdministrativeState", false);
+            uri.AppendPath("/updateBfdAdministrativeState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateBgpAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateUpdateBfdAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBfdAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/internalNetworks/", false);
             uri.AppendPath(internalNetworkName, true);
-            uri.AppendPath("/updateBgpAdministrativeState", false);
+            uri.AppendPath("/updateBfdAdministrativeState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Update BGP state for internalNetwork. Allowed only on edge devices. </summary>
+        /// <summary> BFD administrative state for either static or bgp for internalNetwork. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateBgpAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateBfdAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBfdAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateBgpAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
+            using var message = CreateUpdateBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Update BGP state for internalNetwork. Allowed only on edge devices. </summary>
+        /// <summary> BFD administrative state for either static or bgp for internalNetwork. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateBgpAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response UpdateBfdAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBfdAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateBgpAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
+            using var message = CreateUpdateBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateStaticRouteBfdAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateUpdateBgpAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBgpAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -742,12 +742,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/internalNetworks/", false);
             uri.AppendPath(internalNetworkName, true);
-            uri.AppendPath("/updateStaticRouteBfdAdministrativeState", false);
+            uri.AppendPath("/updateBgpAdministrativeState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateStaticRouteBfdAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateUpdateBgpAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBgpAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(l3IsolationDomainName, true);
             uri.AppendPath("/internalNetworks/", false);
             uri.AppendPath(internalNetworkName, true);
-            uri.AppendPath("/updateStaticRouteBfdAdministrativeState", false);
+            uri.AppendPath("/updateBgpAdministrativeState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        /// <summary> Update Static Route BFD administrative state for internalNetwork. </summary>
+        /// <summary> Update BGP state for internalNetwork. Allowed only on edge devices. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateStaticRouteBfdAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateBgpAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBgpAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
+            using var message = CreateUpdateBgpAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Update Static Route BFD administrative state for internalNetwork. </summary>
+        /// <summary> Update BGP state for internalNetwork. Allowed only on edge devices. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="internalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateStaticRouteBfdAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response UpdateBgpAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string internalNetworkName, InternalNetworkBgpAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(internalNetworkName, nameof(internalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
+            using var message = CreateUpdateBgpAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InternalNetworksList>> ListByL3IsolationDomainNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        public async Task<Response<InternalNetworkListResult>> ListByL3IsolationDomainNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -875,9 +875,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        InternalNetworksList value = default;
+                        InternalNetworkListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = InternalNetworksList.DeserializeInternalNetworksList(document.RootElement);
+                        value = InternalNetworkListResult.DeserializeInternalNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InternalNetworksList> ListByL3IsolationDomainNextPage(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        public Response<InternalNetworkListResult> ListByL3IsolationDomainNextPage(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -906,9 +906,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        InternalNetworksList value = default;
+                        InternalNetworkListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = InternalNetworksList.DeserializeInternalNetworksList(document.RootElement);
+                        value = InternalNetworkListResult.DeserializeInternalNetworkListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

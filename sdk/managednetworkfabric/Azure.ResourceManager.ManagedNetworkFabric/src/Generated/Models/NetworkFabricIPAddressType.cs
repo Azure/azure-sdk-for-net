@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string IPv4Value = "IPv4";
         private const string IPv6Value = "IPv6";
 
-        /// <summary> IPv4. </summary>
+        /// <summary> IPv4 IP address. </summary>
         public static NetworkFabricIPAddressType IPv4 { get; } = new NetworkFabricIPAddressType(IPv4Value);
-        /// <summary> IPv6. </summary>
+        /// <summary> IPv6 IP address. </summary>
         public static NetworkFabricIPAddressType IPv6 { get; } = new NetworkFabricIPAddressType(IPv6Value);
         /// <summary> Determines if two <see cref="NetworkFabricIPAddressType"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricIPAddressType left, NetworkFabricIPAddressType right) => left.Equals(right);

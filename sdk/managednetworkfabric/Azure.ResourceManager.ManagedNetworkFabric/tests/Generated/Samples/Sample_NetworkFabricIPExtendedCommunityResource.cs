@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IpExtendedCommunitiesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/IpExtendedCommunities_Get.json
             // this example is just showing the usage of "IpExtendedCommunities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPExtendedCommunityResource created on azure
             // for more information of creating NetworkFabricIPExtendedCommunityResource, please refer to the document of NetworkFabricIPExtendedCommunityResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string ipExtendedCommunityName = "example-ipExtendedCommunity";
             ResourceIdentifier networkFabricIPExtendedCommunityResourceId = NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipExtendedCommunityName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_IpExtendedCommunitiesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/IpExtendedCommunities_Delete.json
             // this example is just showing the usage of "IpExtendedCommunities_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPExtendedCommunityResource created on azure
             // for more information of creating NetworkFabricIPExtendedCommunityResource, please refer to the document of NetworkFabricIPExtendedCommunityResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string ipExtendedCommunityName = "example-ipExtendedCommunity";
             ResourceIdentifier networkFabricIPExtendedCommunityResourceId = NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipExtendedCommunityName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_IpExtendedCommunitiesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/IpExtendedCommunities_Update.json
             // this example is just showing the usage of "IpExtendedCommunities_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPExtendedCommunityResource created on azure
             // for more information of creating NetworkFabricIPExtendedCommunityResource, please refer to the document of NetworkFabricIPExtendedCommunityResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string ipExtendedCommunityName = "example-ipExtendedCommunity";
             ResourceIdentifier networkFabricIPExtendedCommunityResourceId = NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipExtendedCommunityName);
@@ -95,11 +95,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricIPExtendedCommunityPatch patch = new NetworkFabricIPExtendedCommunityPatch
             {
-                IPExtendedCommunityRules = { new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341L, new string[] { "1234:2345" }) },
                 Tags =
 {
-["keyID"] = "KeyValue"
+["KeyId"] = "KeyValue"
 },
+                Properties = new IPExtendedCommunityPatchProperties
+                {
+                    Annotation = "annotation",
+                    IPExtendedCommunityRules = { new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341L, new string[] { "1234:2345" }) },
+                },
             };
             ArmOperation<NetworkFabricIPExtendedCommunityResource> lro = await networkFabricIPExtendedCommunity.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricIPExtendedCommunityResource result = lro.Value;

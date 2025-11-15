@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,7 +34,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                writer.WritePropertyName("primaryIpv4Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                writer.WritePropertyName("primaryIpv6Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv6Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv4Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv6Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv6Prefix);
+            }
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
@@ -70,6 +89,46 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
+            if (Optional.IsDefined(V4OverV6BgpSession))
+            {
+                writer.WritePropertyName("v4OverV6BgpSession"u8);
+                writer.WriteStringValue(V4OverV6BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(V6OverV4BgpSession))
+            {
+                writer.WritePropertyName("v6OverV4BgpSession"u8);
+                writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(NativeIPv4PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
+            }
+            if (Optional.IsDefined(NativeIPv6PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         ExternalNetworkPatchOptionAProperties IJsonModel<ExternalNetworkPatchOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,21 +151,46 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            int? mtu = default;
-            int? vlanId = default;
-            long? fabricAsn = default;
-            long? peerAsn = default;
-            BfdConfiguration bfdConfiguration = default;
-            ResourceIdentifier ingressAclId = default;
-            ResourceIdentifier egressAclId = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
+            int? mtu = default;
+            int? vlanId = default;
+            long? fabricAsn = default;
+            long? peerAsn = default;
+            BfdPatchConfiguration bfdConfiguration = default;
+            ResourceIdentifier ingressAclId = default;
+            ResourceIdentifier egressAclId = default;
+            ExternalNetworkBmpPatchProperties bmpConfiguration = default;
+            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("primaryIpv4Prefix"u8))
+                {
+                    primaryIPv4Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("primaryIpv6Prefix"u8))
+                {
+                    primaryIPv6Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secondaryIpv4Prefix"u8))
+                {
+                    secondaryIPv4Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secondaryIpv6Prefix"u8))
+                {
+                    secondaryIPv6Prefix = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("mtu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -149,7 +233,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
+                    bfdConfiguration = BfdPatchConfiguration.DeserializeBfdPatchConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ingressAclId"u8))
@@ -170,24 +254,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     egressAclId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryIpv4Prefix"u8))
+                if (property.NameEquals("bmpConfiguration"u8))
                 {
-                    primaryIPv4Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = ExternalNetworkBmpPatchProperties.DeserializeExternalNetworkBmpPatchProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("primaryIpv6Prefix"u8))
+                if (property.NameEquals("v4OverV6BgpSession"u8))
                 {
-                    primaryIPv6Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v4OverV6BgpSession = new V4OverV6BgpSessionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secondaryIpv4Prefix"u8))
+                if (property.NameEquals("v6OverV4BgpSession"u8))
                 {
-                    secondaryIPv4Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v6OverV4BgpSession = new V6OverV4BgpSessionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secondaryIpv6Prefix"u8))
+                if (property.NameEquals("nativeIpv4PrefixLimit"u8))
                 {
-                    secondaryIPv6Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitPatchProperties.DeserializeNativeIPv4PrefixLimitPatchProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("nativeIpv6PrefixLimit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitPatchProperties.DeserializeNativeIPv6PrefixLimitPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,14 +310,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
-                serializedAdditionalRawData,
                 mtu,
                 vlanId,
                 fabricAsn,
                 peerAsn,
                 bfdConfiguration,
                 ingressAclId,
-                egressAclId);
+                egressAclId,
+                bmpConfiguration,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession,
+                nativeIPv4PrefixLimit,
+                nativeIPv6PrefixLimit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExternalNetworkPatchOptionAProperties>.Write(ModelReaderWriterOptions options)

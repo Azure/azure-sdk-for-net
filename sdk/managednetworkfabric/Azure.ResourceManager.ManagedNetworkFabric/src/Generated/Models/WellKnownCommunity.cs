@@ -12,11 +12,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary>
     /// `Internet` - Advertise routes to internet community.
-    ///  `LocalAS` - Advertise routes to only localAS peers.
-    ///  `NoAdvertise` - Don't advertise routes to any peer.
+    /// `LocalAS` - Advertise routes to only localAS peers.
+    /// `NoAdvertise` - Don't advertise routes to any peer.
     /// `NoExport` - Don't export to next AS.
     /// `GShut` - Graceful Shutdown (GSHUT) withdraw routes before terminating BGP connection.
-    ///
     /// </summary>
     public readonly partial struct WellKnownCommunity : IEquatable<WellKnownCommunity>
     {
@@ -35,15 +34,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string NoExportValue = "NoExport";
         private const string GShutValue = "GShut";
 
-        /// <summary> Internet. </summary>
+        /// <summary> WellKnownCommunities-Internet. </summary>
         public static WellKnownCommunity Internet { get; } = new WellKnownCommunity(InternetValue);
-        /// <summary> LocalAS. </summary>
+        /// <summary> WellKnownCommunities-LocalAS. </summary>
         public static WellKnownCommunity LocalAS { get; } = new WellKnownCommunity(LocalASValue);
-        /// <summary> NoAdvertise. </summary>
+        /// <summary> WellKnownCommunities-NoAdvertise. </summary>
         public static WellKnownCommunity NoAdvertise { get; } = new WellKnownCommunity(NoAdvertiseValue);
-        /// <summary> NoExport. </summary>
+        /// <summary> WellKnownCommunities-NoExport. </summary>
         public static WellKnownCommunity NoExport { get; } = new WellKnownCommunity(NoExportValue);
-        /// <summary> GShut. </summary>
+        /// <summary> WellKnownCommunities-GShut. </summary>
         public static WellKnownCommunity GShut { get; } = new WellKnownCommunity(GShutValue);
         /// <summary> Determines if two <see cref="WellKnownCommunity"/> values are the same. </summary>
         public static bool operator ==(WellKnownCommunity left, WellKnownCommunity right) => left.Equals(right);

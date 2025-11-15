@@ -73,11 +73,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="matchConfigurations"> List of match configurations. </param>
         /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
         /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="aclType"> Access Control List (ACL) Type. </param>
+        /// <param name="deviceRole"> Device Role. </param>
+        /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             MatchConfigurations = matchConfigurations;
             DynamicMatchConfigurations = dynamicMatchConfigurations;
             LastSyncedOn = lastSyncedOn;
+            AclType = aclType;
+            DeviceRole = deviceRole;
+            GlobalAccessControlListActions = globalAccessControlListActions;
+            LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -111,6 +119,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
         /// <summary> The last synced timestamp. </summary>
         public DateTimeOffset? LastSyncedOn { get; }
+        /// <summary> Access Control List (ACL) Type. </summary>
+        public AclType? AclType { get; set; }
+        /// <summary> Device Role. </summary>
+        public DeviceRole? DeviceRole { get; set; }
+        /// <summary> Global Access Control List (ACL) actions. </summary>
+        internal GlobalAccessControlListActionProperties GlobalAccessControlListActions { get; set; }
+        /// <summary> Configuration to enable or disable ACL action count. </summary>
+        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        {
+            get => GlobalAccessControlListActions is null ? default : GlobalAccessControlListActions.EnableCount;
+            set
+            {
+                if (GlobalAccessControlListActions is null)
+                    GlobalAccessControlListActions = new GlobalAccessControlListActionProperties();
+                GlobalAccessControlListActions.EnableCount = value;
+            }
+        }
+
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>

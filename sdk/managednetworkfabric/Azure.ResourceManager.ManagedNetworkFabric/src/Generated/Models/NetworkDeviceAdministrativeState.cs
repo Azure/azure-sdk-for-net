@@ -23,18 +23,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         private const string RmaValue = "RMA";
+        private const string UngracefulRmaValue = "UngracefulRMA";
         private const string ResyncValue = "Resync";
         private const string GracefulQuarantineValue = "GracefulQuarantine";
+        private const string UngracefulQuarantineValue = "UngracefulQuarantine";
         private const string QuarantineValue = "Quarantine";
+        private const string UnderMaintenanceValue = "UnderMaintenance";
+        private const string EnableValue = "Enable";
+        private const string DisableValue = "Disable";
 
-        /// <summary> RMA. </summary>
+        /// <summary> Device AdministrativeState-RMA. </summary>
         public static NetworkDeviceAdministrativeState Rma { get; } = new NetworkDeviceAdministrativeState(RmaValue);
-        /// <summary> Resync. </summary>
+        /// <summary> Device AdministrativeState-RMA(Return Material Authorization) Ungraceful. </summary>
+        public static NetworkDeviceAdministrativeState UngracefulRma { get; } = new NetworkDeviceAdministrativeState(UngracefulRmaValue);
+        /// <summary> Device AdministrativeState-Resync. </summary>
         public static NetworkDeviceAdministrativeState Resync { get; } = new NetworkDeviceAdministrativeState(ResyncValue);
-        /// <summary> GracefulQuarantine. </summary>
+        /// <summary> Device AdministrativeState-GracefulQuarantine. </summary>
         public static NetworkDeviceAdministrativeState GracefulQuarantine { get; } = new NetworkDeviceAdministrativeState(GracefulQuarantineValue);
-        /// <summary> Quarantine. </summary>
+        /// <summary> Device AdministrativeState-UngracefulQuarantine. </summary>
+        public static NetworkDeviceAdministrativeState UngracefulQuarantine { get; } = new NetworkDeviceAdministrativeState(UngracefulQuarantineValue);
+        /// <summary> Device AdministrativeState-Quarantine. </summary>
         public static NetworkDeviceAdministrativeState Quarantine { get; } = new NetworkDeviceAdministrativeState(QuarantineValue);
+        /// <summary> Device AdministrativeState-UnderMaintenance. </summary>
+        public static NetworkDeviceAdministrativeState UnderMaintenance { get; } = new NetworkDeviceAdministrativeState(UnderMaintenanceValue);
+        /// <summary> Device AdministrativeState-Enable. </summary>
+        public static NetworkDeviceAdministrativeState Enable { get; } = new NetworkDeviceAdministrativeState(EnableValue);
+        /// <summary> Device AdministrativeState-Disable. </summary>
+        public static NetworkDeviceAdministrativeState Disable { get; } = new NetworkDeviceAdministrativeState(DisableValue);
         /// <summary> Determines if two <see cref="NetworkDeviceAdministrativeState"/> values are the same. </summary>
         public static bool operator ==(NetworkDeviceAdministrativeState left, NetworkDeviceAdministrativeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkDeviceAdministrativeState"/> values are not the same. </summary>
