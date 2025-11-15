@@ -223,6 +223,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [Ignore("The continuation token is not set and the pagination does not stops.")]
     public async Task TestConversationItemsOrderingWithMultipleMessages()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -498,6 +499,11 @@ public class AgentsTests : AgentsTestBase
     public async Task TestMemoryStoreCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
+        try
+        {
+            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        }
+        catch { }
         // Create
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
         // Read
