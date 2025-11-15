@@ -18,7 +18,7 @@ public partial class ProjectConversationsClient : ConversationClient
     private static PipelineMessageClassifier _pipelineMessageClassifier200;
     private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-    internal PipelineMessage CreateGetProjectConversationsRequest(int? limit, string order, string after, string before, string agentName, string agentId, RequestOptions options)
+    internal virtual PipelineMessage CreateGetProjectConversationsRequest(int? limit, string order, string after, string before, string agentName, string agentId, RequestOptions options)
     {
         ClientUriBuilder uri = new ClientUriBuilder();
         uri.Reset(_endpoint);

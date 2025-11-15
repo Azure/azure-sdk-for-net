@@ -45,6 +45,9 @@ public partial class ProjectConversationsClient : ConversationClient
     }
 
     /// <summary> Returns the list of all conversations. </summary>
+    /// <param name="agent">
+    /// If provided, only conversations associated with the referenced agent will be retrieved.
+    /// </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -63,12 +66,13 @@ public partial class ProjectConversationsClient : ConversationClient
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="agentName"> Filter by agent name. If provided, only items associated with the specified agent will be returned. </param>
-    /// <param name="agentId"> Filter by agent ID in the format `name:version`. If provided, only items associated with the specified agent ID will be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ProjectConversation> GetProjectConversations(int? limit = default, string order = null, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectConversation> GetProjectConversations(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
+        string agentNameToUse = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null;
+        string agentIdToUse = string.IsNullOrEmpty(agent?.Version) ? null : $"{agent?.Name}:{agent?.Version}";
+
         return new InternalOpenAICollectionResultOfT<ProjectConversation>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -81,11 +85,14 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     localRequestOptions),
             dataItemDeserializer: ProjectConversation.DeserializeProjectConversation,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, agentId]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentNameToUse, agentIdToUse]),
             cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns the list of all conversations. </summary>
+    /// <param name="agent">
+    /// If provided, only conversations associated with the referenced agent will be retrieved.
+    /// </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -104,12 +111,13 @@ public partial class ProjectConversationsClient : ConversationClient
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="agentName"> Filter by agent name. If provided, only items associated with the specified agent will be returned. </param>
-    /// <param name="agentId"> Filter by agent ID in the format `name:version`. If provided, only items associated with the specified agent ID will be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ProjectConversation> GetProjectConversationsAsync(int? limit = default, string order = null, string after = default, string before = default, string agentName = default, string agentId = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectConversation> GetProjectConversationsAsync(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
+        string agentNameToUse = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null;
+        string agentIdToUse = string.IsNullOrEmpty(agent?.Version) ? null : $"{agent?.Name}:{agent?.Version}";
+
         return new InternalOpenAIAsyncCollectionResultOfT<ProjectConversation>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -122,7 +130,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     localRequestOptions),
             dataItemDeserializer: ProjectConversation.DeserializeProjectConversation,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName, agentId]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentNameToUse, agentIdToUse]),
             cancellationToken.ToRequestOptions());
     }
 

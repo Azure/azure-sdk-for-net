@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -62,6 +63,32 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         #endregion
     }
 
+    [Test]
+    [AsyncOnly]
+    public async Task ListResponses()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var agentName = System.Environment.GetEnvironmentVariable("AGENT_NAME");
+        var conversationId = System.Environment.GetEnvironmentVariable("KNOWN_CONVERSATION_ID");
+#else
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var agentName = TestEnvironment.AGENT_NAME;
+        string conversationId = TestEnvironment.KNOWN_CONVERSATION_ID;
+#endif
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+
+        #region Snippet:Sample_ListResponses_Async
+        await foreach (OpenAIResponse response
+            in projectClient.OpenAI.Responses.GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
+        {
+            Console.WriteLine($"Matching response: {response.Id}");
+        }
+        #endregion
+    }
     public Sample_ResponseBasic(bool isAsync) : base(isAsync)
     { }
 }

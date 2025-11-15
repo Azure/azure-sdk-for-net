@@ -230,7 +230,17 @@ Finally, we can delete Agent.
 await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
 ```
 
-#### Coversations
+Previously created responses can also be listed, typically to find all responses associated with a particular agent or conversation.
+
+```C# Snippet:Sample_ListResponses_Async
+await foreach (OpenAIResponse response
+    in projectClient.OpenAI.Responses.GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
+{
+    Console.WriteLine($"Matching response: {response.Id}");
+}
+```
+
+#### Conversations
 
 Conversations may be used to store the history of interaction with the agent. To add the responses to a conversation,
 set the conversation parameter while calling `GetProjectResponsesClientForAgent`.

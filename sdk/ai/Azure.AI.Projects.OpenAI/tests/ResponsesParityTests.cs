@@ -332,6 +332,44 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
+    public async Task ListingResponsesWorks()
+    {
+        ProjectOpenAIClient client = GetTestProjectOpenAIClient();
+
+        Dictionary<string, OpenAIResponse> firstResponsesById = [];
+
+        await foreach (OpenAIResponse response in client.Responses.GetProjectResponsesAsync())
+        {
+            Assert.That(response.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(firstResponsesById.ContainsKey(response.Id), Is.False);
+            firstResponsesById[response.Id] = response;
+
+            if (firstResponsesById.Count >= 20)
+            {
+                break;
+            }
+        }
+
+        ProjectConversation newConversation = await client.Conversations.CreateProjectConversationAsync();
+        ProjectResponsesClient responsesForNewConversation = client.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME, newConversation.Id);
+        OpenAIResponse newResponse = await responsesForNewConversation.CreateResponseAsync("Hello, new conversation!");
+
+        List<OpenAIResponse> matchingResponses = [];
+
+        await foreach (OpenAIResponse response in client.Responses.GetProjectResponsesAsync(conversationId: newConversation.Id))
+        {
+            matchingResponses.Add(response);
+        }
+
+        Assert.That(matchingResponses, Has.Count.EqualTo(1));
+        Assert.That(matchingResponses[0].Id, Is.EqualTo(newResponse.Id));
+
+        // TODO: add validation for agent reference
+
+        Assert.That(firstResponsesById, Is.Not.Empty);
+    }
+
+    [RecordedTest]
     public async Task ResponseDeletionWorks()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();

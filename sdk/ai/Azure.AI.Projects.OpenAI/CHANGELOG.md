@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+- `ProjectResponsesClient.GetProjectResponses()` is added, supporting the ability to list previous responses with optional agent and conversation filters.
+
+### Breaking Changes (beta)
+
+- `ProjectConversationsClient.GetProjectConversations()` has an updated signature that accepts an `AgentReference` instead of distinct `agentName` and `agentId` parameters, aligned with the new "list responses" operation.
+
 ## 1.0.0-beta.2 (2025-11-14)
 
 ### Bugs fixed
