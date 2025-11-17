@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TimeSpan WindowSize { get => GetWindowSizeOrDefault(); set => WindowSize = value; }
+        public TimeSpan WindowSize { get => GetWindowSizeOrDefault(); set => MonitorWindowSize = value; }
 
         private TimeSpan GetWindowSizeOrDefault(TimeSpan defaultValue = default)
         {
