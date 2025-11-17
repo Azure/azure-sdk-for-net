@@ -22,15 +22,6 @@
 
 .EXAMPLE
     .\Add-Debug-Profile.ps1 -SdkDirectory "C:\path\to\azure-sdk-for-net\sdk\storage\Azure.Storage.Blobs"
-
-.EXAMPLE
-    .\Add-Debug-Profile.ps1 -SdkDirectory ".\local-sdk-dir"
-
-.EXAMPLE
-    .\Add-Debug-Profile.ps1 -SdkDirectory ".\local-sdk-dir"
-
-.EXAMPLE
-    .\Add-Debug-Profile.ps1 -SdkDirectory "C:\path\to\azure-sdk-for-net\sdk\storage\Azure.Storage.Blobs"
 #>
 
 param(
@@ -57,6 +48,8 @@ function Invoke-Command-Safe {
         if ($LASTEXITCODE -ne 0) {
             throw "Command failed with exit code $LASTEXITCODE : $result"
         }
+        # Write output to console
+        $result | ForEach-Object { Write-Host $_ }
         return $result
     }
     catch {
@@ -128,7 +121,7 @@ function Invoke-TspClientCommands {
     try {
         Write-Host "Running tsp-client sync..." -ForegroundColor Yellow
         try {
-            Invoke-Command-Safe "npm exec --prefix `"$tspClientDir`" --no -- tsp-client sync" -WorkingDirectory $SdkPath
+            Invoke-Command-Safe "npx --prefix `"$tspClientDir`" --no -- tsp-client sync --no-prompt" -WorkingDirectory $SdkPath
         }
         catch {
             Write-Warning "tsp-client sync failed. This might be expected if the directory is not a proper TypeSpec SDK directory."
@@ -136,7 +129,7 @@ function Invoke-TspClientCommands {
         }
         
         Write-Host "Running tsp-client generate --save-inputs..." -ForegroundColor Yellow
-        Invoke-Command-Safe "npm exec --prefix `"$tspClientDir`" --no -- tsp-client generate --save-inputs" -WorkingDirectory $SdkPath
+        Invoke-Command-Safe "npx --prefix `"$tspClientDir`" --no -- tsp-client generate --save-inputs --no-prompt" -WorkingDirectory $SdkPath
         
         Write-Host "tsp-client commands completed." -ForegroundColor Green
     }
