@@ -48,7 +48,7 @@ dotnet add package Azure.Identity
 
 You will also need to [register a new Microsoft Entra ID application and grant access][register_aad_app] to your GeoCatalog by assigning the appropriate role to your service principal.
 
-```C# Snippet:CreateClient
+```csharp
 string endpoint = "https://your-endpoint.geocatalog.spatio.azure.com";
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
@@ -123,7 +123,7 @@ The following section provides several code snippets covering common GeoCatalog 
 
 List all available STAC collections:
 
-```C# Snippet:ListCollections
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -143,7 +143,7 @@ foreach (StacCollectionResource collection in response.Value.Collections)
 
 Search for geospatial data items with spatial filters:
 
-```C# Snippet:SearchItems
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -182,7 +182,7 @@ Console.WriteLine($"Found {searchResponse.Value.Features.Count} items");
 
 Retrieve detailed information about a specific STAC item:
 
-```C# Snippet:GetItem
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -202,7 +202,7 @@ Console.WriteLine($"Assets: {string.Join(", ", item.Assets.Keys)}");
 
 Create a new STAC collection for organizing geospatial data:
 
-```C# Snippet:CreateCollection
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -239,7 +239,7 @@ Console.WriteLine($"Started creating collection: {collection.Id}");
 
 Generate map tiles from geospatial data:
 
-```C# Snippet:GetTile
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -263,7 +263,7 @@ await response.ContentStream.CopyToAsync(fileStream);
 
 Manage data ingestion operations:
 
-```C# Snippet:CreateIngestion
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -294,7 +294,7 @@ Console.WriteLine($"Created ingestion source: {sourceResponse.Value.Id}");
 
 Generate Shared Access Signatures for secure data access:
 
-```C# Snippet:GenerateSasToken
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -318,7 +318,7 @@ When you interact with Azure Planetary Computer using the .NET SDK, errors retur
 
 For example, if you try to retrieve a collection that doesn't exist, a `404` error is returned, indicating `Resource Not Found`.
 
-```C# Snippet:HandleException
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
