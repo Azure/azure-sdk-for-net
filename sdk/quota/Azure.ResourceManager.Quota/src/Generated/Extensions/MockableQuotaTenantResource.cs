@@ -57,7 +57,23 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Get a list of current usage for all resources for the scope specified. </summary>
+        /// <summary>
+        /// Get a list of current usage for all resources for the scope specified.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentUsagesBases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -74,7 +90,23 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(CurrentUsagesBasesRestClient, scope, context), data => new CurrentUsagesBaseResource(Client, data));
         }
 
-        /// <summary> Get a list of current usage for all resources for the scope specified. </summary>
+        /// <summary>
+        /// Get a list of current usage for all resources for the scope specified.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentUsagesBases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -91,7 +123,23 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(CurrentUsagesBasesRestClient, scope, context), data => new CurrentUsagesBaseResource(Client, data));
         }
 
-        /// <summary> Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota. </summary>
+        /// <summary>
+        /// Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -108,7 +156,23 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(CurrentQuotaLimitBasesRestClient, scope, context), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
-        /// <summary> Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota. </summary>
+        /// <summary>
+        /// Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -125,7 +189,23 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(CurrentQuotaLimitBasesRestClient, scope, context), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
-        /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
+        /// <summary>
+        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotaRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaRequestStatus_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter">
         /// | Field                    | Supported operators
@@ -158,7 +238,23 @@ namespace Azure.ResourceManager.Quota.Mocking
                 context), data => new QuotaRequestDetailResource(Client, data));
         }
 
-        /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
+        /// <summary>
+        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotaRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaRequestStatus_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter">
         /// | Field                    | Supported operators
@@ -191,7 +287,23 @@ namespace Azure.ResourceManager.Quota.Mocking
                 context), data => new QuotaRequestDetailResource(Client, data));
         }
 
-        /// <summary> List the operations for the provider. </summary>
+        /// <summary>
+        /// List the operations for the provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Quota/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaOperation_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaOperationResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaOperationResult> GetAllAsync(CancellationToken cancellationToken = default)
@@ -203,7 +315,23 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new QuotaOperationGetAllAsyncCollectionResultOfT(QuotaOperationRestClient, context);
         }
 
-        /// <summary> List the operations for the provider. </summary>
+        /// <summary>
+        /// List the operations for the provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Quota/operations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaOperation_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaOperationResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaOperationResult> GetAll(CancellationToken cancellationToken = default)

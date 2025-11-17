@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +17,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="CurrentQuotaLimitBaseResource"/> and their operations.
-    /// Each <see cref="CurrentQuotaLimitBaseResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="CurrentQuotaLimitBaseCollection"/> instance call the GetCurrentQuotaLimitBases method from an instance of the parent resource.
+    /// Each <see cref="CurrentQuotaLimitBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CurrentQuotaLimitBaseCollection"/> instance call the GetCurrentQuotaLimitBases method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CurrentQuotaLimitBaseCollection : ArmCollection
     {
@@ -39,17 +38,6 @@ namespace Azure.ResourceManager.Quota
             TryGetApiVersion(CurrentQuotaLimitBaseResource.ResourceType, out string currentQuotaLimitBaseApiVersion);
             _currentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentQuotaLimitBaseResource.ResourceType.Namespace, Diagnostics);
             _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != CurrentQuotaLimitBaseResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CurrentQuotaLimitBaseResource.ResourceType), id);
-            }
         }
 
         /// <summary>

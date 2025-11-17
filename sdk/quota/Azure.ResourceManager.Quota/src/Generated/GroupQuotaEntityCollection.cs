@@ -15,13 +15,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaEntityResource"/> and their operations.
-    /// Each <see cref="GroupQuotaEntityResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GroupQuotaEntityCollection"/> instance call the GetGroupQuotaEntities method from an instance of the parent resource.
+    /// Each <see cref="GroupQuotaEntityResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="GroupQuotaEntityCollection"/> instance call the GetGroupQuotaEntities method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class GroupQuotaEntityCollection : ArmCollection, IEnumerable<GroupQuotaEntityResource>, IAsyncEnumerable<GroupQuotaEntityResource>
     {
@@ -48,9 +49,9 @@ namespace Azure.ResourceManager.Quota
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
+            if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
             }
         }
 
@@ -266,7 +267,23 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Lists GroupQuotas for the scope passed. It will return the GroupQuotas QuotaEntity properties only.The details on group quota can be access from the group quota APIs. </summary>
+        /// <summary>
+        /// Lists GroupQuotas for the scope passed. It will return the GroupQuotas QuotaEntity properties only.The details on group quota can be access from the group quota APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GroupQuotaEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GroupQuotaEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -278,7 +295,23 @@ namespace Azure.ResourceManager.Quota
             return new AsyncPageableWrapper<GroupQuotaEntityData, GroupQuotaEntityResource>(new GroupQuotasEntitiesGetAllAsyncCollectionResultOfT(_groupQuotasEntitiesRestClient, Id.Name, context), data => new GroupQuotaEntityResource(Client, data));
         }
 
-        /// <summary> Lists GroupQuotas for the scope passed. It will return the GroupQuotas QuotaEntity properties only.The details on group quota can be access from the group quota APIs. </summary>
+        /// <summary>
+        /// Lists GroupQuotas for the scope passed. It will return the GroupQuotas QuotaEntity properties only.The details on group quota can be access from the group quota APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GroupQuotaEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GroupQuotaEntityResource> GetAll(CancellationToken cancellationToken = default)

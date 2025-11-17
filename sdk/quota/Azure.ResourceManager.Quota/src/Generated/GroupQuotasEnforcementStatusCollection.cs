@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotasEnforcementStatusResource"/> and their operations.
-    /// Each <see cref="GroupQuotasEnforcementStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GroupQuotasEnforcementStatusCollection"/> instance call the GetGroupQuotasEnforcementStatuses method from an instance of the parent resource.
+    /// Each <see cref="GroupQuotasEnforcementStatusResource"/> in the collection will belong to the same instance of <see cref="GroupQuotaEntityResource"/>.
+    /// To get a <see cref="GroupQuotasEnforcementStatusCollection"/> instance call the GetGroupQuotasEnforcementStatuses method from an instance of <see cref="GroupQuotaEntityResource"/>.
     /// </summary>
     public partial class GroupQuotasEnforcementStatusCollection : ArmCollection
     {

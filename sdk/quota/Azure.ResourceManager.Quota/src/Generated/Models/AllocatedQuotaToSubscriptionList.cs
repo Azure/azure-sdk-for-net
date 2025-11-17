@@ -12,7 +12,7 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Quota allocated to subscriptions. </summary>
-    internal partial class AllocatedQuotaToSubscriptionList
+    public partial class AllocatedQuotaToSubscriptionList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -26,14 +26,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of <see cref="AllocatedQuotaToSubscriptionList"/>. </summary>
         /// <param name="value"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllocatedQuotaToSubscriptionList(IList<SubscriptionAllocatedQuota> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AllocatedQuotaToSubscriptionList(IReadOnlyList<SubscriptionAllocatedQuota> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
-        [WirePath("value")]
-        public IList<SubscriptionAllocatedQuota> Value { get; }
     }
 }

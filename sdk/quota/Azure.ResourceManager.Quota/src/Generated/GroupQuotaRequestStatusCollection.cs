@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaRequestStatusResource"/> and their operations.
-    /// Each <see cref="GroupQuotaRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GroupQuotaRequestStatusCollection"/> instance call the GetGroupQuotaRequestStatuses method from an instance of the parent resource.
+    /// Each <see cref="GroupQuotaRequestStatusResource"/> in the collection will belong to the same instance of <see cref="GroupQuotaEntityResource"/>.
+    /// To get a <see cref="GroupQuotaRequestStatusCollection"/> instance call the GetGroupQuotaRequestStatuses method from an instance of <see cref="GroupQuotaEntityResource"/>.
     /// </summary>
     public partial class GroupQuotaRequestStatusCollection : ArmCollection
     {

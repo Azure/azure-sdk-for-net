@@ -399,7 +399,27 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_GroupQuotaLimitsRequestList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GroupQuotaEntityResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="filter"> | Field | Supported operators  \r\n|---------------------|------------------------\n\r\n location eq {location} and resource eq {resourceName}\n Example: $filter=location eq eastus and resourceName eq cores. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,7 +444,27 @@ namespace Azure.ResourceManager.Quota
                 context), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
-        /// <summary> Get API to check the status of a GroupQuota request by requestId. </summary>
+        /// <summary>
+        /// Get API to check the status of a GroupQuota request by requestId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_GroupQuotaLimitsRequestList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GroupQuotaEntityResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="filter"> | Field | Supported operators  \r\n|---------------------|------------------------\n\r\n location eq {location} and resource eq {resourceName}\n Example: $filter=location eq eastus and resourceName eq cores. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -449,7 +489,27 @@ namespace Azure.ResourceManager.Quota
                 context), data => new GroupQuotaRequestStatusResource(Client, data));
         }
 
-        /// <summary> Gets the GroupQuotas usages and limits(quota). Location is required paramter. </summary>
+        /// <summary>
+        /// Gets the GroupQuotas usages and limits(quota). Location is required paramter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationUsages/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_GroupQuotaUsagesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GroupQuotaEntityResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -473,7 +533,27 @@ namespace Azure.ResourceManager.Quota
                 context);
         }
 
-        /// <summary> Gets the GroupQuotas usages and limits(quota). Location is required paramter. </summary>
+        /// <summary>
+        /// Gets the GroupQuotas usages and limits(quota). Location is required paramter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationUsages/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotasEntities_GroupQuotaUsagesList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GroupQuotaEntityResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

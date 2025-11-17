@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaSubscriptionResource"/> and their operations.
-    /// Each <see cref="GroupQuotaSubscriptionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GroupQuotaSubscriptionCollection"/> instance call the GetGroupQuotaSubscriptions method from an instance of the parent resource.
+    /// Each <see cref="GroupQuotaSubscriptionResource"/> in the collection will belong to the same instance of <see cref="GroupQuotaEntityResource"/>.
+    /// To get a <see cref="GroupQuotaSubscriptionCollection"/> instance call the GetGroupQuotaSubscriptions method from an instance of <see cref="GroupQuotaEntityResource"/>.
     /// </summary>
     public partial class GroupQuotaSubscriptionCollection : ArmCollection, IEnumerable<GroupQuotaSubscriptionResource>, IAsyncEnumerable<GroupQuotaSubscriptionResource>
     {
@@ -256,7 +256,23 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Returns a list of the subscriptionIds associated with the GroupQuotas. </summary>
+        /// <summary>
+        /// Returns a list of the subscriptionIds associated with the GroupQuotas.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotaSubscriptionIds_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GroupQuotaSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GroupQuotaSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -268,7 +284,23 @@ namespace Azure.ResourceManager.Quota
             return new AsyncPageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionIdsGetAllAsyncCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context), data => new GroupQuotaSubscriptionResource(Client, data));
         }
 
-        /// <summary> Returns a list of the subscriptionIds associated with the GroupQuotas. </summary>
+        /// <summary>
+        /// Returns a list of the subscriptionIds associated with the GroupQuotas.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/subscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GroupQuotaSubscriptionIds_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GroupQuotaSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GroupQuotaSubscriptionResource> GetAll(CancellationToken cancellationToken = default)

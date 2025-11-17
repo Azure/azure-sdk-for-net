@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +17,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="QuotaRequestDetailResource"/> and their operations.
-    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of the parent resource.
+    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class QuotaRequestDetailCollection : ArmCollection
     {
@@ -39,17 +38,6 @@ namespace Azure.ResourceManager.Quota
             TryGetApiVersion(QuotaRequestDetailResource.ResourceType, out string quotaRequestDetailApiVersion);
             _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaRequestDetailResource.ResourceType.Namespace, Diagnostics);
             _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != QuotaRequestDetailResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QuotaRequestDetailResource.ResourceType), id);
-            }
         }
 
         /// <summary>

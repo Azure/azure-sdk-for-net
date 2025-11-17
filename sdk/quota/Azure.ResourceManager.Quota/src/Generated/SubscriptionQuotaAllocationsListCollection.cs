@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> and their operations.
-    /// Each <see cref="SubscriptionQuotaAllocationsListResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="SubscriptionQuotaAllocationsListCollection"/> instance call the GetSubscriptionQuotaAllocationsLists method from an instance of the parent resource.
+    /// Each <see cref="SubscriptionQuotaAllocationsListResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="SubscriptionQuotaAllocationsListCollection"/> instance call the GetSubscriptionQuotaAllocationsLists method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class SubscriptionQuotaAllocationsListCollection : ArmCollection
     {
@@ -46,9 +47,9 @@ namespace Azure.ResourceManager.Quota
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SubscriptionQuotaAllocationsListResource.ResourceType)
+            if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionQuotaAllocationsListResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
             }
         }
 

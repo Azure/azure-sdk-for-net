@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="QuotaAllocationRequestStatusResource"/> and their operations.
-    /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of the parent resource.
+    /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class QuotaAllocationRequestStatusCollection : ArmCollection
     {
@@ -58,9 +59,9 @@ namespace Azure.ResourceManager.Quota
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != QuotaAllocationRequestStatusResource.ResourceType)
+            if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QuotaAllocationRequestStatusResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
             }
         }
 
@@ -162,7 +163,23 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required. </summary>
+        /// <summary>
+        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaAllocationRequestStatuses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="filter">
         /// | Field | Supported operators
         /// |---------------------|------------------------
@@ -192,7 +209,23 @@ namespace Azure.ResourceManager.Quota
                 context), data => new QuotaAllocationRequestStatusResource(Client, data));
         }
 
-        /// <summary> Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required. </summary>
+        /// <summary>
+        /// Get all the quotaAllocationRequests for a resourceProvider/location. The filter paramter for location is required.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/quotaAllocationRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaAllocationRequestStatuses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="filter">
         /// | Field | Supported operators
         /// |---------------------|------------------------

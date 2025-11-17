@@ -13,7 +13,6 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Quota allocated to subscriptions. </summary>
     internal partial class AllocatedQuotaToSubscriptionList : IJsonModel<AllocatedQuotaToSubscriptionList>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            IList<SubscriptionAllocatedQuota> value = default;
+            IReadOnlyList<SubscriptionAllocatedQuota> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
