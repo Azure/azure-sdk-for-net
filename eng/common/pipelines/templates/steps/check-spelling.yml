@@ -4,6 +4,13 @@
 #                     false: Pipeline fails on spelling error
 # CspellConfigPath  - Path to cspell.json config location
 #
+# ScriptToValidateUpgrade - Optional script to validate cspell upgrade. This
+#                           is invoked only if package-lock.json for cspell is 
+#                           changed. This script should exit with a nonzero exit
+#                           code if the upgrade is invalid. Upgrade check should
+#                           check for errors which would prevent release (i.e. 
+#                           public API surface).
+#
 # This check recognizes the setting of variable "Skip.SpellCheck"
 # if set to 'true', spellchecking will not be invoked.
 
