@@ -94,7 +94,8 @@ namespace Azure.Core
         /// Gets or sets the binding certificate for the access token.
         /// This is used when authenticating via Proof of Possession (PoP).
         /// </summary>
-        public X509Certificate2? BindingCertificate { get; set; }
+        /// <seealso href="https://learn.microsoft.com/entra/msal/dotnet/advanced/proof-of-possession-tokens"/>
+        public X509Certificate2? BindingCertificate { get; }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)

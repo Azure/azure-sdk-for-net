@@ -1220,7 +1220,7 @@ namespace Azure.Core.Tests
 
                 var transport = GetTransport(true, options);
 
-                // Initially no client certificate
+                // Initially the first client certificate
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
 

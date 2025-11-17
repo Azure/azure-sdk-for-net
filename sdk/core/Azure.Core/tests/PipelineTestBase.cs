@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
 
         protected X509Certificate2 GetCertificate(string pfx)
         {
-            byte[] cer = Convert.FromBase64String(Pfx);
+            byte[] cer = Convert.FromBase64String(pfx);
 
 #if NET9_0_OR_GREATER
             return X509CertificateLoader.LoadPkcs12(cer, null);

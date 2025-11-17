@@ -401,7 +401,7 @@ namespace Azure.Core.Tests
         private static ResponseClassifier _responseClassifier200204304;
         private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 304 });
 
-        public class TransportUpdatingPolicy : HttpPipelinePolicy, ISupportsTransportCertificateUpdate
+        public class TransportUpdatingPolicy : HttpPipelinePolicy, ISupportsTransportUpdate
         {
             public event Action<HttpPipelineTransportOptions> TransportOptionsChanged;
 
@@ -427,7 +427,6 @@ namespace Azure.Core.Tests
 
         private X509Certificate2 GetTestCertificate()
         {
-            // byte[] cer = Convert.FromBase64String(Pfx);
             byte[] cer = Convert.FromBase64String(Pfx);
 
 #if NET9_0_OR_GREATER

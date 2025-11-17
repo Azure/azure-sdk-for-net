@@ -5,7 +5,10 @@ using System;
 
 namespace Azure.Core.Pipeline;
 
-internal interface ISupportsTransportCertificateUpdate
+/// <summary>
+/// Indicates that the transport supports updating its transport options.
+/// </summary>
+internal interface ISupportsTransportUpdate
 {
     /// <summary>
     /// Event that is triggered when the transport needs to be updated.

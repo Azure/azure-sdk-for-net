@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline
         {
             if (this == Shared)
             {
-                throw new InvalidOperationException("Cannot update the shared HttpClientTransport instance.");
+                throw new InvalidOperationException("Cannot update the shared HttpWebRequestTransport instance.");
             }
 
             Action<HttpWebRequest> newConfigureRequest = req => ApplyOptionsToRequest(req, options);
