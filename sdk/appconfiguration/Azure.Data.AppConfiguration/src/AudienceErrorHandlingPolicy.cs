@@ -15,8 +15,8 @@ namespace Azure.Data.AppConfiguration
     {
         private readonly bool _isAudienceConfigured;
         private const string AadAudienceErrorCode = "AADSTS500011";
-        private const string NoAudienceErrorMessage = "Unable to authenticate to Azure App Configuration. No authentication token audience was provided. Please set ConfigurationClientOptions.Audience to the appropriate audience for the target cloud. For details on how to configure the authentication token audience visit https://aka.ms/appconfig/client-token-audience.";
-        private const string WrongAudienceErrorMessage = "Unable to authenticate to Azure App Configuration. An incorrect token audience was provided. Please set ConfigurationClientOptions.Audience to the appropriate audience for the target cloud. For details on how to configure the authentication token audience visit https://aka.ms/appconfig/client-token-audience.";
+        private const string NoAudienceErrorMessage = $"Unable to authenticate to Azure App Configuration. No authentication token audience was provided. Please set {nameof(ConfigurationClientOptions)}.{nameof(ConfigurationClientOptions.Audience)} to the appropriate audience for the target cloud. For details on how to configure the authentication token audience visit https://aka.ms/appconfig/client-token-audience.";
+        private const string WrongAudienceErrorMessage = $"Unable to authenticate to Azure App Configuration. An incorrect token audience was provided. Please set {nameof(ConfigurationClientOptions)}.{nameof(ConfigurationClientOptions.Audience)} to the appropriate audience for the target cloud. For details on how to configure the authentication token audience visit https://aka.ms/appconfig/client-token-audience.";
 
         public AudienceErrorHandlingPolicy(bool isAudienceConfigured)
         {
@@ -29,15 +29,10 @@ namespace Azure.Data.AppConfiguration
             {
                 ProcessNext(message, pipeline);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex.Message.Contains(AadAudienceErrorCode))
             {
-                if (ex.Message.Contains(AadAudienceErrorCode))
-                {
-                    string errorMessage = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
-                    throw new RequestFailedException(errorMessage, ex);
-                }
-
-                throw;
+                string errorMessage = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
+                throw new RequestFailedException(errorMessage, ex);
             }
         }
 
@@ -47,15 +42,10 @@ namespace Azure.Data.AppConfiguration
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex.Message.Contains(AadAudienceErrorCode))
             {
-                if (ex.Message.Contains(AadAudienceErrorCode))
-                {
-                    string errorMessage = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
-                    throw new RequestFailedException(errorMessage, ex);
-                }
-
-                throw;
+                string errorMessage = _isAudienceConfigured ? WrongAudienceErrorMessage : NoAudienceErrorMessage;
+                throw new RequestFailedException(errorMessage, ex);
             }
         }
     }
