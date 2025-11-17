@@ -11,6 +11,7 @@ namespace Azure.AI.Translation.Text
 {
     internal static partial class ProfanityMarkerExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProfanityMarker value) => value switch
         {
             ProfanityMarker.Asterisk => "Asterisk",
@@ -18,10 +19,17 @@ namespace Azure.AI.Translation.Text
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityMarker value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ProfanityMarker ToProfanityMarker(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Asterisk")) return ProfanityMarker.Asterisk;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tag")) return ProfanityMarker.Tag;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Asterisk"))
+            {
+                return ProfanityMarker.Asterisk;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tag"))
+            {
+                return ProfanityMarker.Tag;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityMarker value.");
         }
     }

@@ -11,6 +11,7 @@ namespace Azure.AI.Translation.Text
 {
     internal static partial class ProfanityActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProfanityAction value) => value switch
         {
             ProfanityAction.NoAction => "NoAction",
@@ -19,11 +20,21 @@ namespace Azure.AI.Translation.Text
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ProfanityAction ToProfanityAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoAction")) return ProfanityAction.NoAction;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Marked")) return ProfanityAction.Marked;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return ProfanityAction.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoAction"))
+            {
+                return ProfanityAction.NoAction;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Marked"))
+            {
+                return ProfanityAction.Marked;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted"))
+            {
+                return ProfanityAction.Deleted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProfanityAction value.");
         }
     }
