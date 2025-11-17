@@ -44,7 +44,7 @@ import {
   subscriptionResource,
   tenantResource
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget, StringValue } from "@typespec/compiler";
+import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 
 export async function updateClients(
@@ -156,9 +156,9 @@ export async function updateClients(
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
     // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
     if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
-      resourceModelToMetadataMap.get(metadata.parentResourceModelId)?.methods.push(
-        ...metadata.methods
-      );
+      resourceModelToMetadataMap
+        .get(metadata.parentResourceModelId)
+        ?.methods.push(...metadata.methods);
       resourceModelToMetadataMap.delete(modelId);
     }
   }
@@ -230,32 +230,56 @@ function parseResourceOperation(
           case "read":
             return [
               ResourceOperationKind.Get,
-              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
             ];
           case "createOrUpdate":
             return [
               ResourceOperationKind.Create,
-                getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
             ];
           case "update":
             return [
               ResourceOperationKind.Update,
-              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
             ];
           case "delete":
             return [
               ResourceOperationKind.Delete,
-              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
             ];
           case "list":
             return [
               ResourceOperationKind.List,
-              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
             ];
           case "action":
             return [
               ResourceOperationKind.Action,
-              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
             ];
         }
         return undefined;
@@ -292,10 +316,7 @@ function getResourceModelIdCore(
   decoratorModel: Model,
   decoratorName?: string
 ): string | undefined {
-  const model = getClientType(
-    sdkContext,
-    decoratorModel
-  ) as SdkModelType;
+  const model = getClientType(sdkContext, decoratorModel) as SdkModelType;
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
@@ -417,7 +438,11 @@ function getOperationScope(path: string): ResourceScope {
     return ResourceScope.ResourceGroup;
   } else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
     return ResourceScope.Subscription;
-  } else if (path.startsWith("/providers/Microsoft.Management/managementGroups/{managementGroupId}/")) {
+  } else if (
+    path.startsWith(
+      "/providers/Microsoft.Management/managementGroups/{managementGroupId}/"
+    )
+  ) {
     return ResourceScope.ManagementGroup;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
