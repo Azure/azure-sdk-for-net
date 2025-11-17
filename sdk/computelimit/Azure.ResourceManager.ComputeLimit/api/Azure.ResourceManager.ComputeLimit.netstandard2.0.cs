@@ -38,7 +38,10 @@ namespace Azure.ResourceManager.ComputeLimit
     {
         public ComputeLimitGuestSubscriptionData() { }
         public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? GuestSubscriptionProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.ComputeLimit
     {
         public ComputeLimitSharedLimitData() { }
         public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -145,7 +151,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         internal ComputeLimitLimitName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,6 +177,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState left, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState left, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -178,7 +188,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName ResourceName { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

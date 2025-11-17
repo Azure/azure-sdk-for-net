@@ -8,71 +8,71 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
     /// A class representing a collection of <see cref="ComputeLimitSharedLimitResource"/> and their operations.
-    /// Each <see cref="ComputeLimitSharedLimitResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ComputeLimitSharedLimitCollection"/> instance call the GetComputeLimitSharedLimits method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="ComputeLimitSharedLimitResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="ComputeLimitSharedLimitCollection"/> instance call the GetComputeLimitSharedLimits method from an instance of the parent resource.
     /// </summary>
     public partial class ComputeLimitSharedLimitCollection : ArmCollection, IEnumerable<ComputeLimitSharedLimitResource>, IAsyncEnumerable<ComputeLimitSharedLimitResource>
     {
-        private readonly ClientDiagnostics _computeLimitSharedLimitSharedLimitsClientDiagnostics;
-        private readonly SharedLimitsRestOperations _computeLimitSharedLimitSharedLimitsRestClient;
+        private readonly ClientDiagnostics _sharedLimitsClientDiagnostics;
+        private readonly SharedLimits _sharedLimitsRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeLimitSharedLimitCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ComputeLimitSharedLimitCollection for mocking. </summary>
         protected ComputeLimitSharedLimitCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeLimitSharedLimitCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal ComputeLimitSharedLimitCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(ComputeLimitSharedLimitResource.ResourceType, out string computeLimitSharedLimitApiVersion);
             _location = location;
-            _computeLimitSharedLimitSharedLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ComputeLimitSharedLimitResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ComputeLimitSharedLimitResource.ResourceType, out string computeLimitSharedLimitSharedLimitsApiVersion);
-            _computeLimitSharedLimitSharedLimitsRestClient = new SharedLimitsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitSharedLimitSharedLimitsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _sharedLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ComputeLimitSharedLimitResource.ResourceType.Namespace, Diagnostics);
+            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Endpoint, computeLimitSharedLimitApiVersion ?? "2025-08-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Enables sharing of a compute limit by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,23 +80,31 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ComputeLimitSharedLimitResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _computeLimitSharedLimitSharedLimitsRestClient.CreateAsync(Id.SubscriptionId, new AzureLocation(_location), name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _computeLimitSharedLimitSharedLimitsRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(_location), name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ComputeLimitArmOperation<ComputeLimitSharedLimitResource> operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -110,20 +118,16 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Enables sharing of a compute limit by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,23 +135,31 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ComputeLimitSharedLimitResource> CreateOrUpdate(WaitUntil waitUntil, string name, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _computeLimitSharedLimitSharedLimitsRestClient.Create(Id.SubscriptionId, new AzureLocation(_location), name, data, cancellationToken);
-                var uri = _computeLimitSharedLimitSharedLimitsRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(_location), name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ComputeLimitArmOperation<ComputeLimitSharedLimitResource> operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -161,38 +173,42 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ComputeLimitSharedLimitResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Get");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Get");
             scope.Start();
             try
             {
-                var response = await _computeLimitSharedLimitSharedLimitsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -206,38 +222,42 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ComputeLimitSharedLimitResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Get");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Get");
             scope.Start();
             try
             {
-                var response = _computeLimitSharedLimitSharedLimitsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,100 +267,78 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        /// <summary>
-        /// Lists all compute limits shared by the host subscription with its guest subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_ListBySubscriptionLocationResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all compute limits shared by the host subscription with its guest subscriptions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeLimitSharedLimitResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputeLimitSharedLimitResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeLimitSharedLimitResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeLimitSharedLimitSharedLimitsRestClient.CreateListBySubscriptionLocationResourceRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeLimitSharedLimitSharedLimitsRestClient.CreateListBySubscriptionLocationResourceNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputeLimitSharedLimitResource(Client, ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(e)), _computeLimitSharedLimitSharedLimitsClientDiagnostics, Pipeline, "ComputeLimitSharedLimitCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitSharedLimitResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all compute limits shared by the host subscription with its guest subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_ListBySubscriptionLocationResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all compute limits shared by the host subscription with its guest subscriptions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeLimitSharedLimitResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeLimitSharedLimitResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeLimitSharedLimitSharedLimitsRestClient.CreateListBySubscriptionLocationResourceRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeLimitSharedLimitSharedLimitsRestClient.CreateListBySubscriptionLocationResourceNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputeLimitSharedLimitResource(Client, ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(e)), _computeLimitSharedLimitSharedLimitsClientDiagnostics, Pipeline, "ComputeLimitSharedLimitCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitSharedLimitResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Exists");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _computeLimitSharedLimitSharedLimitsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ComputeLimitSharedLimitData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ComputeLimitSharedLimitData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,39 +349,53 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Exists");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.Exists");
             scope.Start();
             try
             {
-                var response = _computeLimitSharedLimitSharedLimitsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ComputeLimitSharedLimitData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ComputeLimitSharedLimitData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,41 +406,57 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ComputeLimitSharedLimitResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.GetIfExists");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _computeLimitSharedLimitSharedLimitsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ComputeLimitSharedLimitData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ComputeLimitSharedLimitData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ComputeLimitSharedLimitResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,41 +467,57 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the SharedLimit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ComputeLimitSharedLimitResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _computeLimitSharedLimitSharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.GetIfExists");
+            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _computeLimitSharedLimitSharedLimitsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ComputeLimitSharedLimitData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ComputeLimitSharedLimitData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ComputeLimitSharedLimitResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +537,7 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ComputeLimitSharedLimitResource> IAsyncEnumerable<ComputeLimitSharedLimitResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

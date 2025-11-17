@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
+    /// <summary></summary>
     public partial class ComputeLimitSharedLimitResource : IJsonModel<ComputeLimitSharedLimitData>
     {
-        private static ComputeLimitSharedLimitData s_dataDeserializationInstance;
-        private static ComputeLimitSharedLimitData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ComputeLimitSharedLimitData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ComputeLimitSharedLimitData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputeLimitSharedLimitData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeLimitSharedLimitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeLimitSharedLimitData>)Data).Write(writer, options);
 
-        ComputeLimitSharedLimitData IJsonModel<ComputeLimitSharedLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeLimitSharedLimitData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeLimitSharedLimitData IJsonModel<ComputeLimitSharedLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ComputeLimitSharedLimitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeLimitSharedLimitData>(Data, options, AzureResourceManagerComputeLimitContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ComputeLimitSharedLimitData IPersistableModel<ComputeLimitSharedLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeLimitSharedLimitData>(data, options, AzureResourceManagerComputeLimitContext.Default);
 
-        string IPersistableModel<ComputeLimitSharedLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeLimitSharedLimitData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeLimitSharedLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

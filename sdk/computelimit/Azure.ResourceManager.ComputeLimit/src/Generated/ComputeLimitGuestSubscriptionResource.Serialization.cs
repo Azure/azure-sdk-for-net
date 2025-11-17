@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
+    /// <summary></summary>
     public partial class ComputeLimitGuestSubscriptionResource : IJsonModel<ComputeLimitGuestSubscriptionData>
     {
-        private static ComputeLimitGuestSubscriptionData s_dataDeserializationInstance;
-        private static ComputeLimitGuestSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ComputeLimitGuestSubscriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ComputeLimitGuestSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputeLimitGuestSubscriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeLimitGuestSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeLimitGuestSubscriptionData>)Data).Write(writer, options);
 
-        ComputeLimitGuestSubscriptionData IJsonModel<ComputeLimitGuestSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeLimitGuestSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeLimitGuestSubscriptionData IJsonModel<ComputeLimitGuestSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ComputeLimitGuestSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeLimitGuestSubscriptionData>(Data, options, AzureResourceManagerComputeLimitContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ComputeLimitGuestSubscriptionData IPersistableModel<ComputeLimitGuestSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeLimitGuestSubscriptionData>(data, options, AzureResourceManagerComputeLimitContext.Default);
 
-        string IPersistableModel<ComputeLimitGuestSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeLimitGuestSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeLimitGuestSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

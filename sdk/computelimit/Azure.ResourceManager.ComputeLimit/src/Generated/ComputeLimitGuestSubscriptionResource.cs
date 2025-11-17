@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A Class representing a ComputeLimitGuestSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeLimitGuestSubscriptionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetComputeLimitGuestSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeLimitGuestSubscription method.
+    /// A class representing a ComputeLimitGuestSubscription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeLimitGuestSubscriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeLimitGuestSubscriptions method.
     /// </summary>
     public partial class ComputeLimitGuestSubscriptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ComputeLimitGuestSubscriptionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="guestSubscriptionId"> The guestSubscriptionId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string guestSubscriptionId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics;
-        private readonly GuestSubscriptionsRestOperations _computeLimitGuestSubscriptionGuestSubscriptionsRestClient;
+        private readonly ClientDiagnostics _guestSubscriptionsClientDiagnostics;
+        private readonly GuestSubscriptions _guestSubscriptionsRestClient;
         private readonly ComputeLimitGuestSubscriptionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/guestSubscriptions";
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeLimitGuestSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ComputeLimitGuestSubscriptionResource for mocking. </summary>
         protected ComputeLimitGuestSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeLimitGuestSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitGuestSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ComputeLimitGuestSubscriptionResource(ArmClient client, ComputeLimitGuestSubscriptionData data) : this(client, data.Id)
@@ -54,71 +44,92 @@ namespace Azure.ResourceManager.ComputeLimit
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeLimitGuestSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitGuestSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ComputeLimitGuestSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string computeLimitGuestSubscriptionGuestSubscriptionsApiVersion);
-            _computeLimitGuestSubscriptionGuestSubscriptionsRestClient = new GuestSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitGuestSubscriptionGuestSubscriptionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string computeLimitGuestSubscriptionApiVersion);
+            _guestSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
+            _guestSubscriptionsRestClient = new GuestSubscriptions(_guestSubscriptionsClientDiagnostics, Pipeline, Endpoint, computeLimitGuestSubscriptionApiVersion ?? "2025-08-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ComputeLimitGuestSubscriptionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="guestSubscriptionId"> The guestSubscriptionId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string guestSubscriptionId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the properties of a guest subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeLimitGuestSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ComputeLimitGuestSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Get");
+            using DiagnosticScope scope = _guestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Gets the properties of a guest subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeLimitGuestSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ComputeLimitGuestSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Get");
+            using DiagnosticScope scope = _guestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Deletes a subscription as a guest to stop consuming the compute limits shared by the host subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestSubscription_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeLimitGuestSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +212,23 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Delete");
+            using DiagnosticScope scope = _guestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ComputeLimitArmOperation operation = new ComputeLimitArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +242,20 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Deletes a subscription as a guest to stop consuming the compute limits shared by the host subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestSubscription_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeLimitGuestSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,16 +263,23 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Delete");
+            using DiagnosticScope scope = _guestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Delete(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var uri = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ComputeLimitArmOperation operation = new ComputeLimitArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -260,20 +293,20 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Adds a subscription as a guest to consume the compute limits shared by the host subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestSubscription_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeLimitGuestSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,16 +318,24 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Update");
+            using DiagnosticScope scope = _guestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource>(Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitGuestSubscriptionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource> operation = new ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource>(Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -308,20 +349,20 @@ namespace Azure.ResourceManager.ComputeLimit
         /// Adds a subscription as a guest to consume the compute limits shared by the host subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions/{guestSubscriptionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestSubscription_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeLimitGuestSubscriptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,16 +374,24 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Update");
+            using DiagnosticScope scope = _guestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Create(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var uri = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource>(Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitGuestSubscriptionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource> operation = new ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource>(Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
