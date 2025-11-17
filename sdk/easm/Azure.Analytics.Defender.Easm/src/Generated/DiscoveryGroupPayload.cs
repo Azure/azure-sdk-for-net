@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A request body used to create a discovery group. </summary>
     public partial class DiscoveryGroupPayload
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryGroupPayload"/>. </summary>
         public DiscoveryGroupPayload()
@@ -62,8 +33,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="names"> The list of names used for the disco group runs. </param>
         /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryGroupPayload(string name, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, string templateId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveryGroupPayload(string name, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, string templateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -73,23 +44,30 @@ namespace Azure.Analytics.Defender.Easm
             Names = names;
             Excludes = excludes;
             TemplateId = templateId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name for a disco group. </summary>
         public string Name { get; set; }
+
         /// <summary> The description for a disco group. </summary>
         public string Description { get; set; }
+
         /// <summary> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </summary>
         public string Tier { get; set; }
+
         /// <summary> The frequency at which the disco group is supposed to be rerun in milliseconds. </summary>
         public long? FrequencyMilliseconds { get; set; }
+
         /// <summary> The list of seeds used for the disco group runs. </summary>
         public IList<DiscoverySource> Seeds { get; }
+
         /// <summary> The list of names used for the disco group runs. </summary>
         public IList<string> Names { get; }
+
         /// <summary> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </summary>
         public IList<DiscoverySource> Excludes { get; }
+
         /// <summary> The unique identifier for the disco template used for the disco group creation. </summary>
         public string TemplateId { get; set; }
     }
