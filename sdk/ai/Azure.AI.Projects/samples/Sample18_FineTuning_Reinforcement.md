@@ -3,17 +3,13 @@
 This sample demonstrates how to create and manage Reinforcement Fine-Tuning (RFT) jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. Reinforcement fine-tuning uses a reward model to optimize model behavior based on quality scores.
 
 ## Supported Models
-
-Reinforcement fine-tuning is supported for the following models:
-- o3-mini
-- o4-mini
+Supported OpenAI models: o4-mini
 
 Note: Reinforcement fine-tuning also requires a grader model (typically o3-mini) to evaluate response quality.
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
-- Install the Azure.AI.Agents package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
@@ -22,8 +18,7 @@ Note: Reinforcement fine-tuning also requires a grader model (typically o3-mini)
 ```C# Snippet:AI_Projects_FineTuning_ReinforcementAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
@@ -152,8 +147,7 @@ Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {vali
 ```C# Snippet:AI_Projects_FineTuning_Reinforcement
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
@@ -276,26 +270,3 @@ Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDelete
 ClientResult<FileDeletionResult> validationDeleteResult = fileClient.DeleteFile(validationFile.Id);
 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
 ```
-
-## Training Data Format
-
-The training file for RFT should be in JSONL format with standard conversation messages:
-
-```json
-{"messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"Explain quantum computing in simple terms."},{"role":"assistant","content":"Quantum computing uses quantum bits (qubits) that can exist in multiple states simultaneously, unlike classical bits that are either 0 or 1. This allows quantum computers to process certain types of calculations much faster than traditional computers."}]}
-{"messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"What is machine learning?"},{"role":"assistant","content":"Machine learning is a subset of artificial intelligence where computers learn from data and improve their performance over time without being explicitly programmed for every task."}]}
-```
-
-## Key Features
-
-- **Grader Configuration**: Uses a score model (e.g., o3-mini) to evaluate response quality
-- **Score Range**: Defines the scoring range (e.g., 0.0 to 10.0) for evaluating responses
-- **Hyperparameters**:
-  - `n_epochs`: Number of training epochs
-  - `batch_size`: Training batch size
-  - `learning_rate_multiplier`: Learning rate multiplier
-  - `eval_interval`: Evaluation frequency during training
-  - `eval_samples`: Number of samples for evaluation
-  - `reasoning_effort`: Controls model reasoning depth (low, medium, high)
-
-The reinforcement method learns to optimize responses based on the grader's quality scores.

@@ -1,11 +1,10 @@
 # Sample using Files in Azure.AI.Projects
 
-This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK. The file operations are accessed via the AgentsClient's GetOpenAIClient() method.
+This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK.
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
-- Install the Azure.AI.Agents package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
@@ -13,8 +12,9 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 
 ```C# Snippet:AI_Projects_FileOperationsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIFileClient fileClient = projectClient.OpenAI.Files;
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 
 // Upload file
 var dataDirectory = GetDataDirectory();

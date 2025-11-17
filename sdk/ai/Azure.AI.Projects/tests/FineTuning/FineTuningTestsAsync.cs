@@ -13,8 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Agents;
-using Azure.AI.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -26,11 +24,11 @@ using OpenAI.FineTuning;
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Asynchronous live tests for fine-tuning operations.
+/// Recorded asynchronous tests for fine-tuning operations using test-proxy.
 /// </summary>
 public class FineTuningTestsAsync : FineTuningTestsBase
 {
-    public FineTuningTestsAsync(bool isAsync) : base(isAsync)
+    public FineTuningTestsAsync() : base(true)
     {
     }
 
@@ -60,8 +58,9 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         Assert.IsNotNull(validationFile.Id);
         Console.WriteLine($"Uploaded validation file: {validationFile.Id}");
 
-        Console.WriteLine("Waiting 10 seconds for files to complete processing...");
-        await Task.Delay(10000);
+        Console.WriteLine("Waiting for files to complete processing...");
+        await WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        await WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         return (trainFile, validationFile);
     }
@@ -141,66 +140,14 @@ public class FineTuningTestsAsync : FineTuningTestsBase
             });
     }
 
-    private async Task RunFineTuningLifecycleTestAsync(
-        FineTuningClient fineTuningClient,
-        FineTuningJob fineTuningJob,
-        string testName)
-    {
-        Console.WriteLine($"[{testName}] Created job: {fineTuningJob.JobId}");
-        ValidateFineTuningJob(fineTuningJob);
-
-        // Retrieve job
-        FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-        Console.WriteLine($"[{testName}] Retrieved job: {retrievedJob.JobId}");
-        ValidateFineTuningJob(retrievedJob, expectedJobId: fineTuningJob.JobId);
-
-        // List jobs and verify our job is in the list
-        var jobsList = new List<FineTuningJob>();
-        await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync())
-        {
-            jobsList.Add(job);
-        }
-        Console.WriteLine($"[{testName}] Listed {jobsList.Count} jobs");
-        Assert.That(jobsList.Select(j => j.JobId), Does.Contain(fineTuningJob.JobId));
-
-        // Pause job
-        // Console.WriteLine($"[{testName}] Pausing job: {retrievedJob.JobId}");
-        // await fineTuningClient.PauseFineTuningJobAsync(retrievedJob.JobId, options: null);
-        // FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(retrievedJob.JobId);
-        // Console.WriteLine($"[{testName}] Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
-
-        // // Resume job
-        // Console.WriteLine($"[{testName}] Resuming job: {pausedJob.JobId}");
-        // await fineTuningClient.ResumeFineTuningJobAsync(pausedJob.JobId, options: null);
-        // FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(pausedJob.JobId);
-        // Console.WriteLine($"[{testName}] Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
-
-        // List events
-        var eventsList = new List<FineTuningEvent>();
-        await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions()))
-        {
-            eventsList.Add(evt);
-        }
-        Console.WriteLine($"[{testName}] Listed {eventsList.Count} events");
-        Assert.That(eventsList.Count, Is.GreaterThan(0));
-
-        // Cancel job
-        await retrievedJob.CancelAndUpdateAsync();
-        Console.WriteLine($"[{testName}] Cancelled job: {retrievedJob.JobId}");
-        Assert.AreEqual("cancelled", retrievedJob.Status.ToString().ToLowerInvariant());
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task SftFineTuning_FullLifecycle()
+    [RecordedTest]
+    public async Task Test_Sft_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
-            // Create job
             FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
@@ -210,8 +157,8 @@ public class FineTuningTestsAsync : FineTuningTestsBase
                 batchSize: 4,
                 learningRate: 0.0001);
 
-            // Run lifecycle test
-            await RunFineTuningLifecycleTestAsync(fineTuningClient, fineTuningJob, "sft_lifecycle");
+            Console.WriteLine($"Created SFT job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
         }
         finally
         {
@@ -219,17 +166,14 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         }
     }
 
-    [Test]
-    [AsyncOnly]
-    public async Task SftOssFineTuning_FullLifecycle()
+    [RecordedTest]
+    public async Task Test_Sft_FineTuning_Create_Job_Oss_Model()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
-            // Create job with OSS model
             FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "Ministral-3B",
@@ -239,8 +183,8 @@ public class FineTuningTestsAsync : FineTuningTestsBase
                 batchSize: 4,
                 learningRate: 0.0001);
 
-            // Run lifecycle test
-            await RunFineTuningLifecycleTestAsync(fineTuningClient, fineTuningJob, "sft_oss_lifecycle");
+            Console.WriteLine($"Created SFT OSS job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
         }
         finally
         {
@@ -248,17 +192,14 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         }
     }
 
-    [Test]
-    [AsyncOnly]
-    public async Task DpoFineTuning_FullLifecycle()
+    [RecordedTest]
+    public async Task Test_Dpo_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "dpo");
 
         try
         {
-            // Create job
             FineTuningJob fineTuningJob = await CreateDpoFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4o-mini",
@@ -268,8 +209,8 @@ public class FineTuningTestsAsync : FineTuningTestsBase
                 batchSize: 4,
                 learningRate: 0.0001);
 
-            // Run lifecycle test
-            await RunFineTuningLifecycleTestAsync(fineTuningClient, fineTuningJob, "dpo_lifecycle");
+            Console.WriteLine($"Created DPO job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
         }
         finally
         {
@@ -277,12 +218,10 @@ public class FineTuningTestsAsync : FineTuningTestsBase
         }
     }
 
-    [Test]
-    [AsyncOnly]
-    public async Task RftFineTuning_FullLifecycle()
+    [RecordedTest]
+    public async Task Test_Rft_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "rft");
 
         // Build the JSON request manually since RL APIs are internal
@@ -326,13 +265,136 @@ public class FineTuningTestsAsync : FineTuningTestsBase
 
         try
         {
-            // Create job
             string jsonString = JsonSerializer.Serialize(requestJson);
             BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
             FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
 
-            // Run lifecycle test
-            await RunFineTuningLifecycleTestAsync(fineTuningClient, fineTuningJob, "rft_lifecycle");
+            Console.WriteLine($"Created RFT job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_Retrieve_Job()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        try
+        {
+            // Create a job first
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            // Retrieve the job
+            FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(createdJob.JobId);
+            Console.WriteLine($"Retrieved job: {retrievedJob.JobId}");
+            ValidateFineTuningJob(retrievedJob, expectedJobId: createdJob.JobId);
+
+            // Cancel the job
+            await retrievedJob.CancelAndUpdateAsync();
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_List_Jobs()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        try
+        {
+            // Create a job first
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            // List jobs and verify our job is in the list
+            var jobsList = new List<FineTuningJob>();
+            await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync())
+            {
+                jobsList.Add(job);
+            }
+            Console.WriteLine($"Listed {jobsList.Count} jobs");
+            Assert.That(jobsList.Count, Is.GreaterThan(0));
+            Assert.That(jobsList.Select(j => j.JobId), Does.Contain(createdJob.JobId));
+
+            // Cancel the job
+            await createdJob.CancelAndUpdateAsync();
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_Cancel_Job()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        try
+        {
+            // Create a job
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            Console.WriteLine($"Created job: {createdJob.JobId}");
+
+            // Cancel the job
+            await createdJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {createdJob.JobId}, Status: {createdJob.Status}");
+            Assert.AreEqual("cancelled", createdJob.Status.ToString().ToLowerInvariant());
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_List_Events()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        try
+        {
+            // Create a job
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            // List events
+            var eventsList = new List<FineTuningEvent>();
+            await foreach (FineTuningEvent evt in createdJob.GetEventsAsync(new GetEventsOptions()))
+            {
+                eventsList.Add(evt);
+            }
+            Console.WriteLine($"Listed {eventsList.Count} events for job {createdJob.JobId}");
+            Assert.That(eventsList.Count, Is.GreaterThan(0));
+
+            // Cancel the job
+            await createdJob.CancelAndUpdateAsync();
         }
         finally
         {

@@ -3,17 +3,11 @@
 This sample demonstrates how to create and manage supervised fine-tuning jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. Supervised fine-tuning allows you to customize models for specific tasks using labeled training data.
 
 ## Supported Models
-
-Supervised fine-tuning is supported for the following models:
-- gpt-4.1
-- gpt-4.1-mini
-- gpt-4o-mini-2024-07-18
-- gpt-4o-2024-08-06
+Supported OpenAI models: GPT 4o, 4o-mini, 4.1, 4.1-mini
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
-- Install the Azure.AI.Agents package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
@@ -22,8 +16,7 @@ Supervised fine-tuning is supported for the following models:
 ```C# Snippet:AI_Projects_FineTuning_SupervisedAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
@@ -119,8 +112,7 @@ Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {vali
 ```C# Snippet:AI_Projects_FineTuning_Supervised
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
@@ -210,14 +202,3 @@ Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDelete
 ClientResult<FileDeletionResult> validationDeleteResult = fileClient.DeleteFile(validationFile.Id);
 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
 ```
-
-## Training Data Format
-
-The training file should be in JSONL format with the following structure:
-
-```json
-{"messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"What's the capital of France?"},{"role":"assistant","content":"The capital of France is Paris."}]}
-{"messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"What is 2+2?"},{"role":"assistant","content":"2+2 equals 4."}]}
-```
-
-Each line is a complete conversation with system, user, and assistant messages.

@@ -3,15 +3,12 @@
 This sample demonstrates how to create and manage Direct Preference Optimization (DPO) fine-tuning jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. DPO is a technique that directly optimizes model preferences by learning from paired examples of preferred and non-preferred outputs.
 
 ## Supported Models
+Supported OpenAI models: GPT-4o, GPT-4.1, GPT-4.1-mini, GPT-4.1-nano, and GPT-4o-mini.
 
-Direct Preference Optimization (DPO) fine-tuning is supported for the following models:
-- gpt-4o-mini-2024-07-18
-- gpt-4o-2024-08-06
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
-- Install the Azure.AI.Agents package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
@@ -20,8 +17,7 @@ Direct Preference Optimization (DPO) fine-tuning is supported for the following 
 ```C# Snippet:AI_Projects_FineTuning_DPOAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
@@ -117,8 +113,7 @@ Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {vali
 ```C# Snippet:AI_Projects_FineTuning_DPO
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AgentsClient agentClient = projectClient.GetAgentsClient();
-OpenAIClient oaiClient = agentClient.GetOpenAIClient();
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
@@ -208,19 +203,3 @@ Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDelete
 ClientResult<FileDeletionResult> validationDeleteResult = fileClient.DeleteFile(validationFile.Id);
 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
 ```
-
-## Training Data Format
-
-The training file for DPO should be in JSONL format with input, preferred_output, and non_preferred_output fields:
-
-```json
-{"input":{"messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"What's the capital of France?"}]},"preferred_output":[{"role":"assistant","content":"The capital of France is Paris."}],"non_preferred_output":[{"role":"assistant","content":"I think it's London."}]}
-{"input":{"messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"What is 2+2?"}]},"preferred_output":[{"role":"assistant","content":"2+2 equals 4."}],"non_preferred_output":[{"role":"assistant","content":"2+2 equals 5."}]}
-```
-
-Each line contains:
-- `input`: The conversation context with system and user messages
-- `preferred_output`: The desired assistant response
-- `non_preferred_output`: The less desirable assistant response
-
-The model learns to prefer the preferred_output over the non_preferred_output.

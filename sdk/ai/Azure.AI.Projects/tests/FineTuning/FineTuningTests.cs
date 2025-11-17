@@ -13,8 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Agents;
-using Azure.AI.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -25,7 +23,7 @@ using OpenAI.FineTuning;
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Synchronous live tests for fine-tuning operations.
+/// Recorded tests for fine-tuning operations using test-proxy.
 /// </summary>
 public class FineTuningTests : FineTuningTestsBase
 {
@@ -59,8 +57,9 @@ public class FineTuningTests : FineTuningTestsBase
         Assert.IsNotNull(validationFile.Id);
         Console.WriteLine($"Uploaded validation file: {validationFile.Id}");
 
-        Console.WriteLine("Waiting 10 seconds for files to complete processing...");
-        System.Threading.Thread.Sleep(10000);
+        Console.WriteLine("Waiting for files to complete processing...");
+        WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         return (trainFile, validationFile);
     }
@@ -140,66 +139,17 @@ public class FineTuningTests : FineTuningTestsBase
             });
     }
 
-    private void RunFineTuningLifecycleTest(
-        FineTuningClient fineTuningClient,
-        FineTuningJob fineTuningJob,
-        string testName)
-    {
-        Console.WriteLine($"[{testName}] Created job: {fineTuningJob.JobId}");
-        ValidateFineTuningJob(fineTuningJob);
-
-        // Retrieve job
-        FineTuningJob retrievedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
-        Console.WriteLine($"[{testName}] Retrieved job: {retrievedJob.JobId}");
-        ValidateFineTuningJob(retrievedJob, expectedJobId: fineTuningJob.JobId);
-
-        // List jobs and verify our job is in the list
-        var jobsList = new List<FineTuningJob>();
-        foreach (FineTuningJob job in fineTuningClient.GetJobs())
-        {
-            jobsList.Add(job);
-        }
-        Console.WriteLine($"[{testName}] Listed {jobsList.Count} jobs");
-        Assert.That(jobsList.Select(j => j.JobId), Does.Contain(fineTuningJob.JobId));
-
-        // Pause job
-        // Console.WriteLine($"[{testName}] Pausing job: {retrievedJob.JobId}");
-        // fineTuningClient.PauseFineTuningJob(retrievedJob.JobId, options: null);
-        // FineTuningJob pausedJob = fineTuningClient.GetJob(retrievedJob.JobId);
-        // Console.WriteLine($"[{testName}] Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
-
-        // // Resume job
-        // Console.WriteLine($"[{testName}] Resuming job: {pausedJob.JobId}");
-        // fineTuningClient.ResumeFineTuningJob(pausedJob.JobId, options: null);
-        // FineTuningJob resumedJob = fineTuningClient.GetJob(pausedJob.JobId);
-        // Console.WriteLine($"[{testName}] Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
-
-        // List events
-        var eventsList = new List<FineTuningEvent>();
-        foreach (FineTuningEvent evt in retrievedJob.GetEvents(new GetEventsOptions()))
-        {
-            eventsList.Add(evt);
-        }
-        Console.WriteLine($"[{testName}] Listed {eventsList.Count} events");
-        Assert.That(eventsList.Count, Is.GreaterThan(0));
-
-        // Cancel job
-        retrievedJob.CancelAndUpdate();
-        Console.WriteLine($"[{testName}] Cancelled job: {retrievedJob.JobId}");
-        Assert.AreEqual("cancelled", retrievedJob.Status.ToString().ToLowerInvariant());
-    }
-
-    [Test]
-    [SyncOnly]
-    public void SftFineTuning_FullLifecycleSync()
+    [RecordedTest]
+    public void Test_Sft_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
+        Console.WriteLine($"DEBUG: FineTuningClient type in test: {fineTuningClient.GetType().FullName}");
+        Console.WriteLine($"DEBUG: FineTuningClient base type: {fineTuningClient.GetType().BaseType?.FullName}");
 
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+        var (trainFile, validationFile) = UploadTestFiles(fileClient);
 
         try
         {
-            // Create job
             FineTuningJob fineTuningJob = CreateSupervisedFineTuningJob(
                 fineTuningClient,
                 "gpt-4.1",
@@ -209,8 +159,12 @@ public class FineTuningTests : FineTuningTestsBase
                 batchSize: 4,
                 learningRate: 0.0001);
 
-            // Run lifecycle test
-            RunFineTuningLifecycleTest(fineTuningClient, fineTuningJob, "sft_lifecycle_sync");
+            Console.WriteLine($"Created SFT job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            fineTuningJob.CancelAndUpdate();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -218,17 +172,14 @@ public class FineTuningTests : FineTuningTestsBase
         }
     }
 
-    [Test]
-    [SyncOnly]
-    public void SftOssFineTuning_FullLifecycleSync()
+    [RecordedTest]
+    public void Test_Sft_FineTuning_Create_Job_Oss_Model()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
 
         try
         {
-            // Create job with OSS model
             FineTuningJob fineTuningJob = CreateSupervisedFineTuningJob(
                 fineTuningClient,
                 "Ministral-3B",
@@ -238,8 +189,12 @@ public class FineTuningTests : FineTuningTestsBase
                 batchSize: 4,
                 learningRate: 0.0001);
 
-            // Run lifecycle test
-            RunFineTuningLifecycleTest(fineTuningClient, fineTuningJob, "sft_oss_lifecycle_sync");
+            Console.WriteLine($"Created SFT OSS job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            fineTuningJob.CancelAndUpdate();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -247,17 +202,14 @@ public class FineTuningTests : FineTuningTestsBase
         }
     }
 
-    [Test]
-    [SyncOnly]
-    public void DpoFineTuning_FullLifecycleSync()
+    [RecordedTest]
+    public void Test_Dpo_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = UploadTestFiles(fileClient, "dpo");
 
         try
         {
-            // Create job
             FineTuningJob fineTuningJob = CreateDpoFineTuningJob(
                 fineTuningClient,
                 "gpt-4o-mini",
@@ -267,8 +219,12 @@ public class FineTuningTests : FineTuningTestsBase
                 batchSize: 4,
                 learningRate: 0.0001);
 
-            // Run lifecycle test
-            RunFineTuningLifecycleTest(fineTuningClient, fineTuningJob, "dpo_lifecycle_sync");
+            Console.WriteLine($"Created DPO job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            fineTuningJob.CancelAndUpdate();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -276,12 +232,10 @@ public class FineTuningTests : FineTuningTestsBase
         }
     }
 
-    [Test]
-    [SyncOnly]
-    public void RftFineTuning_FullLifecycleSync()
+    [RecordedTest]
+    public void Test_Rft_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-
         var (trainFile, validationFile) = UploadTestFiles(fileClient, "rft");
 
         // Build the JSON request manually since RL APIs are internal
@@ -325,13 +279,140 @@ public class FineTuningTests : FineTuningTestsBase
 
         try
         {
-            // Create job
             string jsonString = JsonSerializer.Serialize(requestJson);
             BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
             FineTuningJob fineTuningJob = fineTuningClient.FineTune(content, waitUntilCompleted: false, options: null);
 
-            // Run lifecycle test
-            RunFineTuningLifecycleTest(fineTuningClient, fineTuningJob, "rft_lifecycle_sync");
+            Console.WriteLine($"Created RFT job: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            fineTuningJob.CancelAndUpdate();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
+        }
+        finally
+        {
+            CleanupTestFiles(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public void Test_FineTuning_Retrieve_Job()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+
+        try
+        {
+            // Create a job first
+            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            // Retrieve the job
+            FineTuningJob retrievedJob = fineTuningClient.GetJob(createdJob.JobId);
+            Console.WriteLine($"Retrieved job: {retrievedJob.JobId}");
+            ValidateFineTuningJob(retrievedJob, expectedJobId: createdJob.JobId);
+
+            // Cancel the job
+            retrievedJob.CancelAndUpdate();
+        }
+        finally
+        {
+            CleanupTestFiles(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public void Test_FineTuning_List_Jobs()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+
+        try
+        {
+            // Create a job first
+            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            // List jobs and verify our job is in the list
+            var jobsList = new List<FineTuningJob>();
+            foreach (FineTuningJob job in fineTuningClient.GetJobs())
+            {
+                jobsList.Add(job);
+            }
+            Console.WriteLine($"Listed {jobsList.Count} jobs");
+            Assert.That(jobsList.Count, Is.GreaterThan(0));
+            Assert.That(jobsList.Select(j => j.JobId), Does.Contain(createdJob.JobId));
+
+            // Cancel the job
+            createdJob.CancelAndUpdate();
+        }
+        finally
+        {
+            CleanupTestFiles(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public void Test_FineTuning_Cancel_Job()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+
+        try
+        {
+            // Create a job
+            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            Console.WriteLine($"Created job: {createdJob.JobId}");
+
+            // Cancel the job
+            createdJob.CancelAndUpdate();
+            Console.WriteLine($"Cancelled job: {createdJob.JobId}, Status: {createdJob.Status}");
+            Assert.AreEqual("cancelled", createdJob.Status.ToString().ToLowerInvariant());
+        }
+        finally
+        {
+            CleanupTestFiles(fileClient, trainFile, validationFile);
+        }
+    }
+
+    [RecordedTest]
+    public void Test_FineTuning_List_Events()
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+
+        try
+        {
+            // Create a job
+            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id);
+
+            // List events
+            var eventsList = new List<FineTuningEvent>();
+            foreach (FineTuningEvent evt in createdJob.GetEvents(new GetEventsOptions()))
+            {
+                eventsList.Add(evt);
+            }
+            Console.WriteLine($"Listed {eventsList.Count} events for job {createdJob.JobId}");
+            Assert.That(eventsList.Count, Is.GreaterThan(0));
+
+            // Cancel the job
+            createdJob.CancelAndUpdate();
         }
         finally
         {
