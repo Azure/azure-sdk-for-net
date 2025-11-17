@@ -8,9 +8,8 @@
     <PackageTags>Azure LoadTestService</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);AZC0034;AZC0007;AZC0012;AZC0015;IL2026;IL3050</NoWarn>
-    <LangVersion>latest</LangVersion>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -21,11 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
   </ItemGroup>
 
 </Project>
