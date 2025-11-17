@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
-    /// A class representing the MonitoredSubscriptionProperty data model.
+    /// A class representing the ElasticMonitoredSubscription data model.
     /// The request to update subscriptions needed to be monitored by the Elastic monitor resource.
     /// </summary>
-    public partial class MonitoredSubscriptionPropertyData : ResourceData
+    public partial class ElasticMonitoredSubscriptionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.Elastic
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
-        public MonitoredSubscriptionPropertyData()
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitoredSubscriptionData"/>. </summary>
+        public ElasticMonitoredSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitoredSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitoredSubscriptionList properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ElasticMonitoredSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticMonitoredSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
-        public MonitoredSubscriptionList Properties { get; set; }
+        public ElasticMonitoredSubscriptionProperties Properties { get; set; }
     }
 }

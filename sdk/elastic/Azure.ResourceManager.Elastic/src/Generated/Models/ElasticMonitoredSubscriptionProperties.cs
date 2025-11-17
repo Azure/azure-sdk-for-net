@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
-    public partial class MonitoredSubscriptionList
+    public partial class ElasticMonitoredSubscriptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Elastic.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionList"/>. </summary>
-        public MonitoredSubscriptionList()
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitoredSubscriptionProperties"/>. </summary>
+        public ElasticMonitoredSubscriptionProperties()
         {
-            MonitoredSubscriptionListValue = new ChangeTrackingList<MonitoredSubscription>();
+            MonitoredSubscriptionList = new ChangeTrackingList<MonitoredSubscription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitoredSubscriptionProperties"/>. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
-        /// <param name="monitoredSubscriptionListValue"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionList(ResourcePatchOperation? operation, IList<MonitoredSubscription> monitoredSubscriptionListValue, ElasticProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticMonitoredSubscriptionProperties(ResourcePatchOperation? operation, IList<MonitoredSubscription> monitoredSubscriptionList, ElasticProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operation = operation;
-            MonitoredSubscriptionListValue = monitoredSubscriptionListValue;
+            MonitoredSubscriptionList = monitoredSubscriptionList;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> The operation for the patch on the resource. </summary>
         public ResourcePatchOperation? Operation { get; set; }
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
-        public IList<MonitoredSubscription> MonitoredSubscriptionListValue { get; }
+        public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
         /// <summary> Provisioning State of the resource. </summary>
         public ElasticProvisioningState? ProvisioningState { get; }
     }

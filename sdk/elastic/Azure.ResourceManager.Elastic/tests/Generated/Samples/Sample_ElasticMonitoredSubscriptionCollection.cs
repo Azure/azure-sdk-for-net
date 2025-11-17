@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Elastic.Samples
 {
-    public partial class Sample_MonitoredSubscriptionPropertyCollection
+    public partial class Sample_ElasticMonitoredSubscriptionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.Elastic.Samples
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = elasticMonitor.GetMonitoredSubscriptionProperties();
+            // get the collection of this ElasticMonitoredSubscriptionResource
+            ElasticMonitoredSubscriptionCollection collection = elasticMonitor.GetElasticMonitoredSubscriptions();
 
             // invoke the operation
             string configurationName = "default";
-            MonitoredSubscriptionPropertyData data = new MonitoredSubscriptionPropertyData();
-            ArmOperation<MonitoredSubscriptionPropertyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
-            MonitoredSubscriptionPropertyResource result = lro.Value;
+            ElasticMonitoredSubscriptionData data = new ElasticMonitoredSubscriptionData();
+            ArmOperation<ElasticMonitoredSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            ElasticMonitoredSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MonitoredSubscriptionPropertyData resourceData = result.Data;
+            ElasticMonitoredSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.Elastic.Samples
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = elasticMonitor.GetMonitoredSubscriptionProperties();
+            // get the collection of this ElasticMonitoredSubscriptionResource
+            ElasticMonitoredSubscriptionCollection collection = elasticMonitor.GetElasticMonitoredSubscriptions();
 
             // invoke the operation
             string configurationName = "default";
-            MonitoredSubscriptionPropertyResource result = await collection.GetAsync(configurationName);
+            ElasticMonitoredSubscriptionResource result = await collection.GetAsync(configurationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MonitoredSubscriptionPropertyData resourceData = result.Data;
+            ElasticMonitoredSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.Elastic.Samples
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = elasticMonitor.GetMonitoredSubscriptionProperties();
+            // get the collection of this ElasticMonitoredSubscriptionResource
+            ElasticMonitoredSubscriptionCollection collection = elasticMonitor.GetElasticMonitoredSubscriptions();
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredSubscriptionPropertyResource item in collection.GetAllAsync())
+            await foreach (ElasticMonitoredSubscriptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MonitoredSubscriptionPropertyData resourceData = item.Data;
+                ElasticMonitoredSubscriptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = elasticMonitor.GetMonitoredSubscriptionProperties();
+            // get the collection of this ElasticMonitoredSubscriptionResource
+            ElasticMonitoredSubscriptionCollection collection = elasticMonitor.GetElasticMonitoredSubscriptions();
 
             // invoke the operation
             string configurationName = "default";
@@ -171,13 +171,13 @@ namespace Azure.ResourceManager.Elastic.Samples
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = elasticMonitor.GetMonitoredSubscriptionProperties();
+            // get the collection of this ElasticMonitoredSubscriptionResource
+            ElasticMonitoredSubscriptionCollection collection = elasticMonitor.GetElasticMonitoredSubscriptions();
 
             // invoke the operation
             string configurationName = "default";
-            NullableResponse<MonitoredSubscriptionPropertyResource> response = await collection.GetIfExistsAsync(configurationName);
-            MonitoredSubscriptionPropertyResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ElasticMonitoredSubscriptionResource> response = await collection.GetIfExistsAsync(configurationName);
+            ElasticMonitoredSubscriptionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Elastic.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MonitoredSubscriptionPropertyData resourceData = result.Data;
+                ElasticMonitoredSubscriptionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
-    /// A Class representing a MonitoredSubscriptionProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitoredSubscriptionPropertyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMonitoredSubscriptionPropertyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticMonitorResource"/> using the GetMonitoredSubscriptionProperty method.
+    /// A Class representing an ElasticMonitoredSubscription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticMonitoredSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticMonitoredSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticMonitorResource"/> using the GetElasticMonitoredSubscription method.
     /// </summary>
-    public partial class MonitoredSubscriptionPropertyResource : ArmResource
+    public partial class ElasticMonitoredSubscriptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MonitoredSubscriptionPropertyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ElasticMonitoredSubscriptionResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="monitorName"> The monitorName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.Elastic
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics;
-        private readonly MonitoredSubscriptionsRestOperations _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient;
-        private readonly MonitoredSubscriptionPropertyData _data;
+        private readonly ClientDiagnostics _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics;
+        private readonly MonitoredSubscriptionsRestOperations _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient;
+        private readonly ElasticMonitoredSubscriptionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors/monitoredSubscriptions";
 
-        /// <summary> Initializes a new instance of the <see cref="MonitoredSubscriptionPropertyResource"/> class for mocking. </summary>
-        protected MonitoredSubscriptionPropertyResource()
+        /// <summary> Initializes a new instance of the <see cref="ElasticMonitoredSubscriptionResource"/> class for mocking. </summary>
+        protected ElasticMonitoredSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MonitoredSubscriptionPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticMonitoredSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MonitoredSubscriptionPropertyResource(ArmClient client, MonitoredSubscriptionPropertyData data) : this(client, data.Id)
+        internal ElasticMonitoredSubscriptionResource(ArmClient client, ElasticMonitoredSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MonitoredSubscriptionPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticMonitoredSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MonitoredSubscriptionPropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ElasticMonitoredSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string monitoredSubscriptionPropertyMonitoredSubscriptionsApiVersion);
-            _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient = new MonitoredSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitoredSubscriptionPropertyMonitoredSubscriptionsApiVersion);
+            _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string elasticMonitoredSubscriptionMonitoredSubscriptionsApiVersion);
+            _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient = new MonitoredSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitoredSubscriptionMonitoredSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Elastic
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MonitoredSubscriptionPropertyData Data
+        public virtual ElasticMonitoredSubscriptionData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MonitoredSubscriptionPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticMonitoredSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyResource.Get");
+            using var scope = _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitoredSubscriptionPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ElasticMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MonitoredSubscriptionPropertyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ElasticMonitoredSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyResource.Get");
+            using var scope = _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitoredSubscriptionPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ElasticMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyResource.Delete");
+            using var scope = _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation(_elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyResource.Delete");
+            using var scope = _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticArmOperation(_monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ElasticArmOperation(_elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -269,24 +269,24 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="MonitoredSubscriptionPropertyData"/> to use. </param>
+        /// <param name="data"> The <see cref="ElasticMonitoredSubscriptionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MonitoredSubscriptionPropertyResource>> UpdateAsync(WaitUntil waitUntil, MonitoredSubscriptionPropertyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticMonitoredSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyResource.Update");
+            using var scope = _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<MonitoredSubscriptionPropertyResource>(new MonitoredSubscriptionPropertyOperationSource(Client), _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation<ElasticMonitoredSubscriptionResource>(new ElasticMonitoredSubscriptionOperationSource(Client), _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,24 +315,24 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="MonitoredSubscriptionPropertyData"/> to use. </param>
+        /// <param name="data"> The <see cref="ElasticMonitoredSubscriptionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MonitoredSubscriptionPropertyResource> Update(WaitUntil waitUntil, MonitoredSubscriptionPropertyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticMonitoredSubscriptionResource> Update(WaitUntil waitUntil, ElasticMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyResource.Update");
+            using var scope = _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ElasticArmOperation<MonitoredSubscriptionPropertyResource>(new MonitoredSubscriptionPropertyOperationSource(Client), _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ElasticArmOperation<ElasticMonitoredSubscriptionResource>(new ElasticMonitoredSubscriptionOperationSource(Client), _elasticMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _elasticMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

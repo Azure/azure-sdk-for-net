@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            IReadOnlyList<MonitoredSubscriptionPropertyData> value = default;
+            IReadOnlyList<ElasticMonitoredSubscriptionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MonitoredSubscriptionPropertyData> array = new List<MonitoredSubscriptionPropertyData>();
+                    List<ElasticMonitoredSubscriptionData> array = new List<ElasticMonitoredSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoredSubscriptionPropertyData.DeserializeMonitoredSubscriptionPropertyData(item, options));
+                        array.Add(ElasticMonitoredSubscriptionData.DeserializeElasticMonitoredSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

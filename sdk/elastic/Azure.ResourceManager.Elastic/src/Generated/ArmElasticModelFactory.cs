@@ -316,16 +316,16 @@ namespace Azure.ResourceManager.Elastic.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Elastic.MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Elastic.ElasticMonitoredSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </param>
-        /// <returns> A new <see cref="Elastic.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoredSubscriptionList properties = null)
+        /// <returns> A new <see cref="Elastic.ElasticMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static ElasticMonitoredSubscriptionData ElasticMonitoredSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ElasticMonitoredSubscriptionProperties properties = null)
         {
-            return new MonitoredSubscriptionPropertyData(
+            return new ElasticMonitoredSubscriptionData(
                 id,
                 name,
                 resourceType,
@@ -334,16 +334,16 @@ namespace Azure.ResourceManager.Elastic.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonitoredSubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticMonitoredSubscriptionProperties"/>. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
-        /// <param name="monitoredSubscriptionListValue"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <returns> A new <see cref="Models.MonitoredSubscriptionList"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionList MonitoredSubscriptionList(ResourcePatchOperation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionListValue = null, ElasticProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.ElasticMonitoredSubscriptionProperties"/> instance for mocking. </returns>
+        public static ElasticMonitoredSubscriptionProperties ElasticMonitoredSubscriptionProperties(ResourcePatchOperation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, ElasticProvisioningState? provisioningState = null)
         {
-            monitoredSubscriptionListValue ??= new List<MonitoredSubscription>();
+            monitoredSubscriptionList ??= new List<MonitoredSubscription>();
 
-            return new MonitoredSubscriptionList(operation, monitoredSubscriptionListValue?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ElasticMonitoredSubscriptionProperties(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticTagRuleProperties"/>. </summary>

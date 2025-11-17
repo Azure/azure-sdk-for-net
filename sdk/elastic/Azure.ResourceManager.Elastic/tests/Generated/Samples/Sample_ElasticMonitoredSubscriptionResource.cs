@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Elastic.Samples
 {
-    public partial class Sample_MonitoredSubscriptionPropertyResource
+    public partial class Sample_ElasticMonitoredSubscriptionResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.Elastic.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MonitoredSubscriptionPropertyResource created on azure
-            // for more information of creating MonitoredSubscriptionPropertyResource, please refer to the document of MonitoredSubscriptionPropertyResource
+            // this example assumes you already have this ElasticMonitoredSubscriptionResource created on azure
+            // for more information of creating ElasticMonitoredSubscriptionResource, please refer to the document of ElasticMonitoredSubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             string configurationName = "default";
-            ResourceIdentifier monitoredSubscriptionPropertyResourceId = MonitoredSubscriptionPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
-            MonitoredSubscriptionPropertyResource monitoredSubscriptionProperty = client.GetMonitoredSubscriptionPropertyResource(monitoredSubscriptionPropertyResourceId);
+            ResourceIdentifier elasticMonitoredSubscriptionResourceId = ElasticMonitoredSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
+            ElasticMonitoredSubscriptionResource elasticMonitoredSubscription = client.GetElasticMonitoredSubscriptionResource(elasticMonitoredSubscriptionResourceId);
 
             // invoke the operation
-            MonitoredSubscriptionPropertyResource result = await monitoredSubscriptionProperty.GetAsync();
+            ElasticMonitoredSubscriptionResource result = await elasticMonitoredSubscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MonitoredSubscriptionPropertyData resourceData = result.Data;
+            ElasticMonitoredSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Elastic.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MonitoredSubscriptionPropertyResource created on azure
-            // for more information of creating MonitoredSubscriptionPropertyResource, please refer to the document of MonitoredSubscriptionPropertyResource
+            // this example assumes you already have this ElasticMonitoredSubscriptionResource created on azure
+            // for more information of creating ElasticMonitoredSubscriptionResource, please refer to the document of ElasticMonitoredSubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             string configurationName = "default";
-            ResourceIdentifier monitoredSubscriptionPropertyResourceId = MonitoredSubscriptionPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
-            MonitoredSubscriptionPropertyResource monitoredSubscriptionProperty = client.GetMonitoredSubscriptionPropertyResource(monitoredSubscriptionPropertyResourceId);
+            ResourceIdentifier elasticMonitoredSubscriptionResourceId = ElasticMonitoredSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
+            ElasticMonitoredSubscriptionResource elasticMonitoredSubscription = client.GetElasticMonitoredSubscriptionResource(elasticMonitoredSubscriptionResourceId);
 
             // invoke the operation
-            await monitoredSubscriptionProperty.DeleteAsync(WaitUntil.Completed);
+            await elasticMonitoredSubscription.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,23 +85,23 @@ namespace Azure.ResourceManager.Elastic.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MonitoredSubscriptionPropertyResource created on azure
-            // for more information of creating MonitoredSubscriptionPropertyResource, please refer to the document of MonitoredSubscriptionPropertyResource
+            // this example assumes you already have this ElasticMonitoredSubscriptionResource created on azure
+            // for more information of creating ElasticMonitoredSubscriptionResource, please refer to the document of ElasticMonitoredSubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             string configurationName = "default";
-            ResourceIdentifier monitoredSubscriptionPropertyResourceId = MonitoredSubscriptionPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
-            MonitoredSubscriptionPropertyResource monitoredSubscriptionProperty = client.GetMonitoredSubscriptionPropertyResource(monitoredSubscriptionPropertyResourceId);
+            ResourceIdentifier elasticMonitoredSubscriptionResourceId = ElasticMonitoredSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
+            ElasticMonitoredSubscriptionResource elasticMonitoredSubscription = client.GetElasticMonitoredSubscriptionResource(elasticMonitoredSubscriptionResourceId);
 
             // invoke the operation
-            MonitoredSubscriptionPropertyData data = new MonitoredSubscriptionPropertyData();
-            ArmOperation<MonitoredSubscriptionPropertyResource> lro = await monitoredSubscriptionProperty.UpdateAsync(WaitUntil.Completed, data);
-            MonitoredSubscriptionPropertyResource result = lro.Value;
+            ElasticMonitoredSubscriptionData data = new ElasticMonitoredSubscriptionData();
+            ArmOperation<ElasticMonitoredSubscriptionResource> lro = await elasticMonitoredSubscription.UpdateAsync(WaitUntil.Completed, data);
+            ElasticMonitoredSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MonitoredSubscriptionPropertyData resourceData = result.Data;
+            ElasticMonitoredSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

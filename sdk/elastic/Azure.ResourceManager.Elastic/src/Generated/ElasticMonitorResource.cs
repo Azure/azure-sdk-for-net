@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Elastic
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MonitoredSubscriptionPropertyResources in the ElasticMonitor. </summary>
-        /// <returns> An object representing collection of MonitoredSubscriptionPropertyResources and their operations over a MonitoredSubscriptionPropertyResource. </returns>
-        public virtual MonitoredSubscriptionPropertyCollection GetMonitoredSubscriptionProperties()
+        /// <summary> Gets a collection of ElasticMonitoredSubscriptionResources in the ElasticMonitor. </summary>
+        /// <returns> An object representing collection of ElasticMonitoredSubscriptionResources and their operations over a ElasticMonitoredSubscriptionResource. </returns>
+        public virtual ElasticMonitoredSubscriptionCollection GetElasticMonitoredSubscriptions()
         {
-            return GetCachedClient(client => new MonitoredSubscriptionPropertyCollection(client, Id));
+            return GetCachedClient(client => new ElasticMonitoredSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MonitoredSubscriptionPropertyResource>> GetMonitoredSubscriptionPropertyAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticMonitoredSubscriptionResource>> GetElasticMonitoredSubscriptionAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitoredSubscriptionProperties().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+            return await GetElasticMonitoredSubscriptions().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="ElasticMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MonitoredSubscriptionPropertyResource> GetMonitoredSubscriptionProperty(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticMonitoredSubscriptionResource> GetElasticMonitoredSubscription(string configurationName, CancellationToken cancellationToken = default)
         {
-            return GetMonitoredSubscriptionProperties().Get(configurationName, cancellationToken);
+            return GetElasticMonitoredSubscriptions().Get(configurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ElasticOpenAIIntegrationResources in the ElasticMonitor. </summary>

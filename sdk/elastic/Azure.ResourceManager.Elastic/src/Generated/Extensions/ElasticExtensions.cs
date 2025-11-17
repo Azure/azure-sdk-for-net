@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ElasticMonitoredSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitoredSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableElasticArmClient.GetMonitoredSubscriptionPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableElasticArmClient.GetElasticMonitoredSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
-        public static MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticMonitoredSubscriptionResource"/> object. </returns>
+        public static ElasticMonitoredSubscriptionResource GetElasticMonitoredSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableElasticArmClient(client).GetMonitoredSubscriptionPropertyResource(id);
+            return GetMockableElasticArmClient(client).GetElasticMonitoredSubscriptionResource(id);
         }
 
         /// <summary>
