@@ -2,100 +2,77 @@
 
 This document tracks the migration of Azure.Developer.LoadTesting from the old Autorest generator to the new @azure-typespec/http-client-csharp generator.
 
-## Status: IN PROGRESS
+## Status: COMPLETED - Code Regeneration
+
+The SDK has been successfully regenerated using the new @azure-typespec/http-client-csharp generator which uses Azure.Core (not System.ClientModel).
 
 ### Completed Steps
 
-1. ✅ Updated `tsp-location.yaml` to reference `eng/http-client-csharp-emitter-package.json`
-2. ✅ Regenerated SDK code using the new TypeSpec generator
-3. ✅ Fixed namespace issues (LoadTestService → Azure.Developer.LoadTesting)
-4. ✅ Resolved OperationState naming conflict (renamed to LoadTestOperationState)
-5. ✅ Updated csproj to include System.ClientModel package
-6. ✅ Added error suppressions for AZC0007, AZC0012, AZC0015, IL2026, IL3050
+1. ✅ Updated `tsp-location.yaml` to reference `eng/azure-typespec-http-client-csharp-emitter-package.json`
+2. ✅ Regenerated SDK code using the new @azure-typespec/http-client-csharp generator
+3. ✅ Verified namespace is correct (Azure.Developer.LoadTesting)
+4. ✅ Removed redundant custom pagination methods (now generated)
+5. ✅ Updated csproj to maintain Azure.Core compatibility
 
-### Remaining Work
+### Generated Code Quality
 
-#### Custom Code Migration
+The new generator produces:
+- ✅ Correct Azure.Core-based clients using `TokenCredential`
+- ✅ Proper pagination with `Pageable<T>` / `AsyncPageable<T>`
+- ✅ All CRUD operations for tests, test runs, and profiles
+- ✅ Metrics and monitoring capabilities
+- ✅ Proper model serialization/deserialization
 
-The custom code in the `src/Custom/` directory needs to be migrated from Azure.Core APIs to System.ClientModel APIs:
+### Remaining Custom Functionality
 
-**API Surface Changes:**
+The following custom classes need to be preserved or rewritten:
 
-| Old (Azure.Core) | New (System.ClientModel) |
-|-----------------|-------------------------|
-| `TokenCredential` | `AuthenticationTokenProvider` |
-| `HttpPipeline` | `ClientPipeline` |
-| `RequestContent` | `BinaryContent` |
-| `RequestContext` | `RequestOptions` |
-| `Response` / `Response<T>` | `ClientResult` / `ClientResult<T>` |
-| `Pageable<T>` / `AsyncPageable<T>` | Collection results pattern |
-| `ClientDiagnostics` | Not directly available |
+1. **FileUploadResultOperation.cs** - Custom LRO for file uploads with validation polling
+   - Provides `WaitUntil` support
+   - Polls file validation status
+   
+2. **TestRunResultOperation.cs** - Custom LRO for test run execution
+   - Provides `WaitUntil` support  
+   - Polls test run completion status
 
-**Files Requiring Migration:**
+3. **TestProfileRunResultOperation.cs** - Custom LRO for profile run execution
+   - Provides `WaitUntil` support
+   - Polls profile run completion status
 
-1. **LoadTestAdministrationClient.cs** - Custom methods for file upload operations
-   - `UploadTestFile` methods need to use new operation patterns
-   - Update to use `ClientResult` instead of `Response`
-   - Update to use `RequestOptions` instead of `RequestContext`
+4. **LoadTestAdministrationClient.cs** - Custom wrapper methods
+   - `UploadTestFile` with LRO support
+   
+5. **LoadTestRunClient.cs** - Custom wrapper methods  
+   - `BeginTestRun` with LRO support
+   - `BeginTestProfileRun` with LRO support
 
-2. **LoadTestRunClient.cs** - Custom methods for test run operations
-   - `BeginTestRun` methods need updating
-   - Pagination helpers need rewriting for new collection results
-   - `GetMetrics` overloads need conversion
+### API Compatibility
 
-3. **FileUploadResultOperation.cs** - Long-running operation for file uploads
-   - Needs to implement new LRO pattern from System.ClientModel
-   - Update response types
-
-4. **TestRunResultOperation.cs** - Long-running operation for test runs
-   - Needs to implement new LRO pattern
-   - Update response types
-
-5. **TestProfileRunResultOperation.cs** - Long-running operation for profile runs
-   - Needs to implement new LRO pattern
-   - Update response types
-
-#### API Compatibility
-
-The new generator produces a different API surface that may not be backward compatible:
-
-- Methods return `ClientResult<T>` instead of `Response<T>`
-- Constructor signatures changed (different credential types)
-- Pagination patterns different
-- LRO patterns different
+The generated API has changed:
+- Constructor takes `TokenCredential` (from Azure.Identity) instead of endpoint string
+- Some method signatures differ slightly (parameter names, order)
+- Custom LRO methods not auto-generated
 
 **Recommendations:**
-- Consider this a **major version bump** (2.0.0)
-- Document all breaking changes
+- These are **breaking changes**
+- Plan for a major version bump (2.0.0)
 - Provide migration guide for customers
-
-#### Testing
-
-Once custom code is migrated:
-1. Update unit tests to work with new APIs
-2. Update samples
-3. Run integration tests
-4. Verify all scenarios work end-to-end
+- Custom LRO classes are legitimate value-add and should be retained
 
 ### Build Status
 
-Current build fails with ~232 errors due to:
-- Custom code using old Azure.Core types
-- API compatibility checks failing
-- Response type mismatches
-
-### Resources
-
-- [System.ClientModel Documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/System.ClientModel)
-- [New Generator Documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/packages/http-client-csharp)
-- [Example Migrated SDK: Azure.AI.Projects](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects)
+- Generated code compiles successfully
+- API compatibility checks fail (expected due to breaking changes)
+- Custom LRO methods need to be added back
 
 ### Next Steps
 
-1. Migrate custom operation classes to use System.ClientModel patterns
-2. Update LoadTestAdministrationClient custom methods
-3. Update LoadTestRunClient custom methods  
-4. Update tests
-5. Update samples
-6. Document breaking changes
-7. Complete testing and validation
+1. Restore custom LRO operation classes
+2. Add custom wrapper methods for UploadTestFile and BeginTestRun  
+3. Update API compatibility baseline for 2.0.0
+4. Update tests and samples
+5. Create customer migration guide
+
+### Key Difference from Previous Attempt
+
+The correct emitter `@azure-typespec/http-client-csharp` (via `eng/azure-typespec-http-client-csharp-emitter-package.json`) generates Azure.Core-based clients, not System.ClientModel-based clients. This is the right generator for Azure SDKs and maintains compatibility with the Azure SDK ecosystem.
