@@ -105,6 +105,10 @@ rename-mapping:
   Status: DynatraceMonitoringState
   SubscriptionList: DynatraceMonitoredSubscriptionList
   SubscriptionListOperation: DynatraceMonitoredSubscriptionListOperation
+  MonitoredSubscriptionProperty: DynatraceMonitoredSubscriptionProperty
+
+override-operation-name:
+  Monitors_GetMarketplaceSaaSResourceDetails: GetMarketplaceSaaSResourceDetailsResult
 
 directive:
   - remove-operation: CreationSupported_List
