@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
         }
 
+        // Added this as this is no longer settleable.
         /// <summary> user principal id of the user. </summary>
         public string UserPrincipal { get; set; }
     }
