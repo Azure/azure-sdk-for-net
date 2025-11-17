@@ -1,18 +1,12 @@
 # Release History
 
-## 12.27.0-beta.1 (Unreleased)
+## 12.27.0-beta.1 (2025-11-17)
 
 ### Features Added
 - Added support for service version 2026-02-06.
 - Added support for the StartFrom parameter on BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync().
 - Added support for Principal-Bound Identity User Delegation SAS
 - Added support for conditional headers on BlobBaseClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 12.26.0 (2025-10-13)
 
