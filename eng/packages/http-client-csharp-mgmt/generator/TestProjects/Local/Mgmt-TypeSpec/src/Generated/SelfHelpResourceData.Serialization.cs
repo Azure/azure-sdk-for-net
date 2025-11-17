@@ -12,17 +12,17 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete extension resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class SelfHelpResource : ResourceData, IJsonModel<SelfHelpResource>
+    public partial class SelfHelpResourceData : ResourceData, IJsonModel<SelfHelpResourceData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SelfHelpResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SelfHelpResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelfHelpResource IJsonModel<SelfHelpResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SelfHelpResource)JsonModelCreateCore(ref reader, options);
+        SelfHelpResourceData IJsonModel<SelfHelpResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SelfHelpResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSelfHelpResource(document.RootElement, options);
+            return DeserializeSelfHelpResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SelfHelpResource DeserializeSelfHelpResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static SelfHelpResourceData DeserializeSelfHelpResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SelfHelpResource(
+            return new SelfHelpResourceData(
                 id,
                 name,
                 resourceType,
@@ -135,50 +135,50 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SelfHelpResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SelfHelpResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelfHelpResource IPersistableModel<SelfHelpResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SelfHelpResource)PersistableModelCreateCore(data, options);
+        SelfHelpResourceData IPersistableModel<SelfHelpResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SelfHelpResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHelpResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSelfHelpResource(document.RootElement, options);
+                        return DeserializeSelfHelpResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SelfHelpResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SelfHelpResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHelpResource"/> from. </param>
-        internal static SelfHelpResource FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHelpResourceData"/> from. </param>
+        internal static SelfHelpResourceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSelfHelpResource(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSelfHelpResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

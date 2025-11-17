@@ -23,8 +23,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
-        private ClientDiagnostics _solutionResourcesClientDiagnostics;
-        private SolutionResources _solutionResourcesRestClient;
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
         private NetworkProviderActions _networkProviderActionsRestClient;
 
@@ -43,10 +41,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
-
-        private ClientDiagnostics SolutionResourcesClientDiagnostics => _solutionResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SolutionResources SolutionResourcesRestClient => _solutionResourcesRestClient ??= new SolutionResources(SolutionResourcesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -118,108 +112,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             catch (Exception e)
             {
                 scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a SelfHelpResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="selfHelpName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="selfHelpName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SelfHelpResource>> GetAsync(string scope, string selfHelpName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(selfHelpName, nameof(selfHelpName));
-
-            using DiagnosticScope scope0 = SolutionResourcesClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Get");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SolutionResourcesRestClient.CreateGetRequest(scope, selfHelpName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SelfHelpResource> response = Response.FromValue(SelfHelpResource.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a SelfHelpResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
-        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="selfHelpName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="selfHelpName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SelfHelpResource> Get(string scope, string selfHelpName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(selfHelpName, nameof(selfHelpName));
-
-            using DiagnosticScope scope0 = SolutionResourcesClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Get");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SolutionResourcesRestClient.CreateGetRequest(scope, selfHelpName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SelfHelpResource> response = Response.FromValue(SelfHelpResource.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
                 throw;
             }
         }

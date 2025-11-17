@@ -402,10 +402,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="selfHelpId"> Gets the SelfHelpId. </param>
-        /// <returns> A new <see cref="Models.SelfHelpResource"/> instance for mocking. </returns>
-        public static SelfHelpResource SelfHelpResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string selfHelpId = default)
+        /// <returns> A new <see cref="Tests.SelfHelpResourceData"/> instance for mocking. </returns>
+        public static SelfHelpResourceData SelfHelpResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string selfHelpId = default)
         {
-            return new SelfHelpResource(
+            return new SelfHelpResourceData(
                 id,
                 name,
                 resourceType,
@@ -497,10 +497,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaSubscriptionRequestStatus"/> instance for mocking. </returns>
-        public static GroupQuotaSubscriptionRequestStatus GroupQuotaSubscriptionRequestStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitProperties properties = default)
+        /// <returns> A new <see cref="Tests.GroupQuotaSubscriptionRequestStatusData"/> instance for mocking. </returns>
+        public static GroupQuotaSubscriptionRequestStatusData GroupQuotaSubscriptionRequestStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitProperties properties = default)
         {
-            return new GroupQuotaSubscriptionRequestStatus(
+            return new GroupQuotaSubscriptionRequestStatusData(
                 id,
                 name,
                 resourceType,

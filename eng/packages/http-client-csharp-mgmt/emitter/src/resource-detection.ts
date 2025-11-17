@@ -35,6 +35,7 @@ import {
   armResourceListName,
   armResourceReadName,
   armResourceUpdateName,
+  extensionResourceOperationName,
   nonResourceMethodMetadata,
   parentResourceName,
   resourceGroupResource,
@@ -43,7 +44,7 @@ import {
   subscriptionResource,
   tenantResource
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
+import { DecoratorApplication, Model, NoTarget, StringValue } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 
 export async function updateClients(
@@ -193,36 +194,71 @@ function parseResourceOperation(
 ): [ResourceOperationKind, string | undefined] | undefined {
   const decorators = serviceMethod?.__raw?.decorators;
   for (const decorator of decorators ?? []) {
-    if (decorator.definition?.name === armResourceReadName) {
-      return [
-        ResourceOperationKind.Get,
-        getResourceModelId(sdkContext, decorator)
-      ];
-    } else if (decorator.definition?.name == armResourceCreateOrUpdateName) {
-      return [
-        ResourceOperationKind.Create,
-        getResourceModelId(sdkContext, decorator)
-      ];
-    } else if (decorator.definition?.name == armResourceUpdateName) {
-      return [
-        ResourceOperationKind.Update,
-        getResourceModelId(sdkContext, decorator)
-      ];
-    } else if (decorator.definition?.name == armResourceDeleteName) {
-      return [
-        ResourceOperationKind.Delete,
-        getResourceModelId(sdkContext, decorator)
-      ];
-    } else if (decorator.definition?.name == armResourceListName) {
-      return [
-        ResourceOperationKind.List,
-        getResourceModelId(sdkContext, decorator)
-      ];
-    } else if (decorator.definition?.name == armResourceActionName) {
-      return [
-        ResourceOperationKind.Action,
-        getResourceModelId(sdkContext, decorator)
-      ];
+    switch (decorator.definition?.name) {
+      case armResourceReadName:
+        return [
+          ResourceOperationKind.Get,
+          getResourceModelId(sdkContext, decorator)
+        ];
+      case armResourceCreateOrUpdateName:
+        return [
+          ResourceOperationKind.Create,
+          getResourceModelId(sdkContext, decorator)
+        ];
+      case armResourceUpdateName:
+        return [
+          ResourceOperationKind.Update,
+          getResourceModelId(sdkContext, decorator)
+        ];
+      case armResourceDeleteName:
+        return [
+          ResourceOperationKind.Delete,
+          getResourceModelId(sdkContext, decorator)
+        ];
+      case armResourceListName:
+        return [
+          ResourceOperationKind.List,
+          getResourceModelId(sdkContext, decorator)
+        ];
+      case armResourceActionName:
+        return [
+          ResourceOperationKind.Action,
+          getResourceModelId(sdkContext, decorator)
+        ];
+      case extensionResourceOperationName:
+        switch (decorator.args[2].jsValue) {
+          case "read":
+            return [
+              ResourceOperationKind.Get,
+              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+            ];
+          case "createOrUpdate":
+            return [
+              ResourceOperationKind.Create,
+                getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+            ];
+          case "update":
+            return [
+              ResourceOperationKind.Update,
+              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+            ];
+          case "delete":
+            return [
+              ResourceOperationKind.Delete,
+              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+            ];
+          case "list":
+            return [
+              ResourceOperationKind.List,
+              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+            ];
+          case "action":
+            return [
+              ResourceOperationKind.Action,
+              getResourceModelIdCore(sdkContext, decorator.args[1].value as Model, decorator.definition?.name)
+            ];
+        }
+        return undefined;
     }
   }
   return undefined;
@@ -244,9 +280,21 @@ function getResourceModelId(
   decorator?: DecoratorApplication
 ): string | undefined {
   if (!decorator) return undefined;
+  return getResourceModelIdCore(
+    sdkContext,
+    decorator.args[0].value as Model,
+    decorator.definition?.name
+  );
+}
+
+function getResourceModelIdCore(
+  sdkContext: CSharpEmitterContext,
+  decoratorModel: Model,
+  decoratorName?: string
+): string | undefined {
   const model = getClientType(
     sdkContext,
-    decorator.args[0].value as Model
+    decoratorModel
   ) as SdkModelType;
   if (model) {
     return model.crossLanguageDefinitionId;
@@ -255,7 +303,7 @@ function getResourceModelId(
       code: "general-error",
       messageId: "default",
       format: {
-        message: `Resource model not found for decorator ${decorator.decorator.name}`
+        message: `Resource model not found for decorator ${decoratorName}`
       },
       target: NoTarget
     });
