@@ -110,6 +110,8 @@ rename-mapping:
 override-operation-name:
   Monitors_GetMarketplaceSaaSResourceDetails: GetMarketplaceSaaSResourceDetailsResult
 
+# Removing below operations as these are not currently supported in the backend
+
 directive:
   - remove-operation: CreationSupported_List
   - remove-operation: CreationSupported_Get
