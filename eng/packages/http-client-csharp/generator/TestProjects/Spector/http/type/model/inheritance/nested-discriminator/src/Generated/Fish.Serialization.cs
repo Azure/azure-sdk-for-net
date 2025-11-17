@@ -39,6 +39,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
         /// <param name="fish"> The <see cref="Fish"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Fish fish) => throw null;
 
-        public static explicit operator Fish(Response result) => throw null;
+        public static explicit operator Fish(Response response) => throw null;
     }
 }

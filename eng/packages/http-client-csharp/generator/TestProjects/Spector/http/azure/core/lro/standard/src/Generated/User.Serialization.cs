@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Lro.Standard
+namespace Specs.Azure.Core.Lro.Standard
 {
     public partial class User : IJsonModel<User>
     {
@@ -38,6 +38,6 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(User user) => throw null;
 
-        public static explicit operator User(Response result) => throw null;
+        public static explicit operator User(Response response) => throw null;
     }
 }

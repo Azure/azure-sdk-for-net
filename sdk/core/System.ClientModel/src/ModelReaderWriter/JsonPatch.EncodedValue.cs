@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Buffers.Text;
 using System.Buffers;
-using System.Text;
+using System.Buffers.Text;
 using System.Diagnostics;
+using System.Text;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -338,7 +339,7 @@ public partial struct JsonPatch
 
         internal bool TryDecodeValue(out DateTime value, StandardFormat format = default)
         {
-            if (Utf8Parser.TryParse(Value.Span, out DateTime result, out _, format.Symbol))
+            if (Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out DateTime result, out _, format.Symbol))
             {
                 value = result;
                 return true;
@@ -350,7 +351,7 @@ public partial struct JsonPatch
 
         internal bool TryDecodeValue(out DateTimeOffset value, StandardFormat format = default)
         {
-            if (Utf8Parser.TryParse(Value.Span, out DateTimeOffset result, out _, format.Symbol))
+            if (Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out DateTimeOffset result, out _, format.Symbol))
             {
                 value = result;
                 return true;
@@ -398,7 +399,7 @@ public partial struct JsonPatch
 
         internal bool TryDecodeValue(out Guid value)
         {
-            if (Utf8Parser.TryParse(Value.Span, out Guid result, out _))
+            if (Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out Guid result, out _))
             {
                 value = result;
                 return true;
@@ -458,7 +459,7 @@ public partial struct JsonPatch
 
         internal bool TryDecodeValue(out TimeSpan value, StandardFormat format = default)
         {
-            if (Utf8Parser.TryParse(Value.Span, out TimeSpan result, out _, format.Symbol))
+            if (Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out TimeSpan result, out _, format.Symbol))
             {
                 value = result;
                 return true;
@@ -511,6 +512,18 @@ public partial struct JsonPatch
             if (s_null.Span.SequenceEqual(span))
             {
                 value = null;
+                return true;
+            }
+
+            if (Kind == ValueKind.Json)
+            {
+                Utf8JsonReader jsonReader = new Utf8JsonReader(Value.Span);
+                if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.String)
+                {
+                    value = null;
+                    return false;
+                }
+                value = jsonReader.GetString();
                 return true;
             }
 
@@ -616,31 +629,40 @@ public partial struct JsonPatch
             }
             if (target == typeof(DateTime))
             {
-                parsed = Utf8Parser.TryParse(Value.Span, out DateTime dateTimeValue, out _);
+                parsed = Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out DateTime dateTimeValue, out _);
                 value = parsed ? (T?)(object)dateTimeValue : null;
                 return parsed;
             }
             if (target == typeof(DateTimeOffset))
             {
-                parsed = Utf8Parser.TryParse(Value.Span, out DateTimeOffset dateTimeOffsetValue, out _);
+                parsed = Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out DateTimeOffset dateTimeOffsetValue, out _);
                 value = parsed ? (T?)(object)dateTimeOffsetValue : null;
                 return parsed;
             }
             if (target == typeof(Guid))
             {
-                parsed = Utf8Parser.TryParse(Value.Span, out Guid guidValue, out _);
+                parsed = Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out Guid guidValue, out _);
                 value = parsed ? (T?)(object)guidValue : null;
                 return parsed;
             }
             if (target == typeof(TimeSpan))
             {
-                parsed = Utf8Parser.TryParse(Value.Span, out TimeSpan timeSpanValue, out _);
+                parsed = Utf8Parser.TryParse(UnWrapQuotes(Value.Span), out TimeSpan timeSpanValue, out _);
                 value = parsed ? (T?)(object)timeSpanValue : null;
                 return parsed;
             }
 
             supportedType = false;
             return false;
+        }
+
+        private static ReadOnlySpan<byte> UnWrapQuotes(ReadOnlySpan<byte> span)
+        {
+            if (span.Length >= 2 && span[0] == (byte)'"' && span[span.Length - 1] == (byte)'"')
+            {
+                span = span.Slice(1, span.Length - 2);
+            }
+            return span;
         }
     }
 }

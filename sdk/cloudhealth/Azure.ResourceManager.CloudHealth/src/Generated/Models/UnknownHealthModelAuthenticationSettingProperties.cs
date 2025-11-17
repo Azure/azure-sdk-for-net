@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    /// <summary> Unknown version of HealthModelAuthenticationSettingProperties. </summary>
     internal partial class UnknownHealthModelAuthenticationSettingProperties : HealthModelAuthenticationSettingProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownHealthModelAuthenticationSettingProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownHealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, displayName, authenticationKind, serializedAdditionalRawData)
-        {
-            AuthenticationKind = authenticationKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownHealthModelAuthenticationSettingProperties"/> for deserialization. </summary>
-        internal UnknownHealthModelAuthenticationSettingProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownHealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, displayName, authenticationKind != default ? authenticationKind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

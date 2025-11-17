@@ -97,7 +97,7 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : ProvisionableReso
     /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnectionGateway.</param>
     public SiteSlotVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -107,6 +107,7 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : ProvisionableReso
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _vnetName = DefineProperty<string>("VnetName", ["properties", "vnetName"]);
@@ -121,6 +122,11 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : ProvisionableReso
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

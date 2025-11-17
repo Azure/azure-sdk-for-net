@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
     /// <summary> Model representing Cache Node for ConnectedCache resource. </summary>
     public partial class MccCacheNodeEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeEntity"/>. </summary>
         public MccCacheNodeEntity()
@@ -105,8 +77,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateRequestedWeek"> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </param>
         /// <param name="autoUpdateRequestedDay"> Customer requested day of week for mcc install of auto update cycle. 0 is default no selection. 1-7 are days of week, 1 is Sunday, 2 is Monday, etc. </param>
         /// <param name="autoUpdateRequestedTime"> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId, string customerId, string customerName, string ipAddress, string customerIndex, string cacheNodeId, string cacheNodeName, int? customerAsn, bool? isEnabled, int? maxAllowableEgressInMbps, float? maxAllowableProbability, string xCid, bool? isEnterpriseManaged, string createAsyncOperationId, string deleteAsyncOperationId, string clientTenantId, string category, int? releaseVersion, DateTimeOffset? lastSyncedWithAzureOn, DateTimeOffset? lastUpdatedOn, int? synchWithAzureAttemptsCount, string containerConfigurations, IList<string> cidrCsv, DateTimeOffset? cidrCsvLastUpdatedOn, DateTimeOffset? bgpCidrCsvLastUpdatedOn, DateTimeOffset? bgpLastReportedOn, string bgpReviewStateText, MccCacheNodeBgpReviewState? bgpReviewState, string bgpReviewFeedback, int? bgpNumberOfTimesUpdated, int? bgpNumberOfRecords, int? bgpCidrBlocksCount, int? bgpAddressSpace, bool? shouldMigrate, int? bgpFileBytesTruncated, int? cidrSelectionType, bool? isFrozen, int? reviewState, string reviewStateText, string reviewFeedback, MccCacheNodeConfigurationState? configurationState, string configurationStateText, int? addressSpace, int? workerConnections, DateTimeOffset? workerConnectionsLastUpdatedOn, int? containerResyncTrigger, Uri imageUri, string fullyQualifiedDomainName, AutoUpdateRingType? autoUpdateRingType, int? autoUpdateRequestedWeek, int? autoUpdateRequestedDay, string autoUpdateRequestedTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId, string customerId, string customerName, string ipAddress, string customerIndex, string cacheNodeId, string cacheNodeName, int? customerAsn, bool? isEnabled, int? maxAllowableEgressInMbps, float? maxAllowableProbability, string xCid, bool? isEnterpriseManaged, string createAsyncOperationId, string deleteAsyncOperationId, string clientTenantId, string category, int? releaseVersion, DateTimeOffset? lastSyncedWithAzureOn, DateTimeOffset? lastUpdatedOn, int? synchWithAzureAttemptsCount, string containerConfigurations, IList<string> cidrCsv, DateTimeOffset? cidrCsvLastUpdatedOn, DateTimeOffset? bgpCidrCsvLastUpdatedOn, DateTimeOffset? bgpLastReportedOn, string bgpReviewStateText, MccCacheNodeBgpReviewState? bgpReviewState, string bgpReviewFeedback, int? bgpNumberOfTimesUpdated, int? bgpNumberOfRecords, int? bgpCidrBlocksCount, int? bgpAddressSpace, bool? shouldMigrate, int? bgpFileBytesTruncated, int? cidrSelectionType, bool? isFrozen, int? reviewState, string reviewStateText, string reviewFeedback, MccCacheNodeConfigurationState? configurationState, string configurationStateText, int? addressSpace, int? workerConnections, DateTimeOffset? workerConnectionsLastUpdatedOn, int? containerResyncTrigger, Uri imageUri, string fullyQualifiedDomainName, AutoUpdateRingType? autoUpdateRingType, int? autoUpdateRequestedWeek, int? autoUpdateRequestedDay, string autoUpdateRequestedTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FullyQualifiedResourceId = fullyQualifiedResourceId;
             CustomerId = customerId;
@@ -160,111 +132,162 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             AutoUpdateRequestedWeek = autoUpdateRequestedWeek;
             AutoUpdateRequestedDay = autoUpdateRequestedDay;
             AutoUpdateRequestedTime = autoUpdateRequestedTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Cache node resource Azure fully qualified resource Id. </summary>
         public ResourceIdentifier FullyQualifiedResourceId { get; set; }
+
         /// <summary> Cache node resource customer resource GUID Id. </summary>
         public string CustomerId { get; }
+
         /// <summary> Cache node resource customer resource name. </summary>
         public string CustomerName { get; set; }
+
         /// <summary> Cache node resource Ip address. </summary>
         public string IPAddress { get; set; }
+
         /// <summary> Cache node resource customer index as string. </summary>
         public string CustomerIndex { get; set; }
+
         /// <summary> Cache node resource identifier of the cache node. </summary>
         public string CacheNodeId { get; set; }
+
         /// <summary> Cache node resource name. </summary>
         public string CacheNodeName { get; set; }
+
         /// <summary> Cache node resource customer resource Asn (autonomous system number). </summary>
         public int? CustomerAsn { get; set; }
+
         /// <summary> Cache node resource flag for indicating if cache node is enabled. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> Cache node resource maximum allowed egress in Mbps. </summary>
         public int? MaxAllowableEgressInMbps { get; set; }
+
         /// <summary> Cache node resource maximum allowed probability of egress. </summary>
         public float? MaxAllowableProbability { get; }
+
         /// <summary> Cache node resource Azure XCid. </summary>
         public string XCid { get; }
+
         /// <summary> Cache node resource flag for determining if managed by enterprise as boolean. </summary>
         public bool? IsEnterpriseManaged { get; set; }
+
         /// <summary> Cache node resource create async operation Id. </summary>
         public string CreateAsyncOperationId { get; }
+
         /// <summary> Cache node resource deletion async operation Id. </summary>
         public string DeleteAsyncOperationId { get; }
+
         /// <summary> Cache node resource customer resource client tenant Id of subscription. </summary>
         public string ClientTenantId { get; }
+
         /// <summary> Cache node resource category. </summary>
         public string Category { get; }
+
         /// <summary> Cache node resource release version. </summary>
         public int? ReleaseVersion { get; }
+
         /// <summary> Cache node resource last sync timestamp. </summary>
         public DateTimeOffset? LastSyncedWithAzureOn { get; }
+
         /// <summary> Cache node resource last backend updated timestamp. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
         /// <summary> Cache node resource attempts to sync with Azure. </summary>
         public int? SynchWithAzureAttemptsCount { get; }
+
         /// <summary> Cache node resource container configuration details. </summary>
         public string ContainerConfigurations { get; }
+
         /// <summary> Cache node resource comma separated values of Cidrs. </summary>
         public IList<string> CidrCsv { get; }
+
         /// <summary> Cache node resource last Cidr Csv update timestamp. </summary>
         public DateTimeOffset? CidrCsvLastUpdatedOn { get; }
+
         /// <summary> Cache node resource last Bgp Cidr Csv update timestamp. </summary>
         public DateTimeOffset? BgpCidrCsvLastUpdatedOn { get; }
+
         /// <summary> Cache node resource last Bgp report timestamp. </summary>
         public DateTimeOffset? BgpLastReportedOn { get; }
+
         /// <summary> Cache node resource Bgp review state string text in detail. </summary>
         public string BgpReviewStateText { get; }
+
         /// <summary> Cache node resource Bgp review state string text. </summary>
         public MccCacheNodeBgpReviewState? BgpReviewState { get; }
+
         /// <summary> Cache node resource Bgp review feedback text. </summary>
         public string BgpReviewFeedback { get; }
+
         /// <summary> Cache node resource Bgp update count. </summary>
         public int? BgpNumberOfTimesUpdated { get; }
+
         /// <summary> Cache node resource Bgp record count. </summary>
         public int? BgpNumberOfRecords { get; }
+
         /// <summary> Cache node resource Bgp block count. </summary>
         public int? BgpCidrBlocksCount { get; }
+
         /// <summary> Cache node resource total addressable space defined by Bgp and Cidr Csv blocks. </summary>
         public int? BgpAddressSpace { get; }
+
         /// <summary> Cache node resource flag for determining if customer will be migrated. </summary>
         public bool? ShouldMigrate { get; set; }
+
         /// <summary> Cache node resource bytes truncated from Bgp output file. </summary>
         public int? BgpFileBytesTruncated { get; }
+
         /// <summary> Cache node resource current Cidr range precedence selection type. </summary>
         public int? CidrSelectionType { get; set; }
+
         /// <summary> Cache node resource flag for indicating the cache node resource is frozen (not selectable, not editable in UI). </summary>
         public bool? IsFrozen { get; }
+
         /// <summary> Cache node resource review process state as integer. </summary>
         public int? ReviewState { get; }
+
         /// <summary> Cache node resource review state text. </summary>
         public string ReviewStateText { get; }
+
         /// <summary> Cache node resource review feedback text. </summary>
         public string ReviewFeedback { get; }
+
         /// <summary> Cache node resource configuration state. </summary>
         public MccCacheNodeConfigurationState? ConfigurationState { get; }
+
         /// <summary> Cache node resource configuration state text. </summary>
         public string ConfigurationStateText { get; }
+
         /// <summary> Cache node resource total addressable space defined by the Cidr Csv block. </summary>
         public int? AddressSpace { get; }
+
         /// <summary> Cache node resource Mcc container deployment worker connection count. </summary>
         public int? WorkerConnections { get; }
+
         /// <summary> Cache node resource last updated Mcc container deployment worker connection count timestamp. </summary>
         public DateTimeOffset? WorkerConnectionsLastUpdatedOn { get; }
+
         /// <summary> Cache node resource Mcc container configuration details re-sync trigger. </summary>
         public int? ContainerResyncTrigger { get; }
+
         /// <summary> Cache node resource Mcc Container Id Uri. </summary>
         public Uri ImageUri { get; }
+
         /// <summary> FQDN(fully qualified domain name) value of the mcc cache node. </summary>
         public string FullyQualifiedDomainName { get; set; }
+
         /// <summary> Auto Update Ring Type which is slow or fast etc. </summary>
         public AutoUpdateRingType? AutoUpdateRingType { get; set; }
+
         /// <summary> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </summary>
         public int? AutoUpdateRequestedWeek { get; set; }
+
         /// <summary> Customer requested day of week for mcc install of auto update cycle. 0 is default no selection. 1-7 are days of week, 1 is Sunday, 2 is Monday, etc. </summary>
         public int? AutoUpdateRequestedDay { get; set; }
+
         /// <summary> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </summary>
         public string AutoUpdateRequestedTime { get; set; }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Models;
 
@@ -137,6 +138,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(NamespaceStream))]
     [ModelReaderWriterBuildable(typeof(NamespaceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpoints))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchemaListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryUpdateProperties))]

@@ -71,7 +71,13 @@ function Invoke-AzBoardsCmd($subCmd, $parameters, $output = $true)
   if ($output) {
     Write-Host $azCmdStr
   }
-  return Invoke-Expression "$azCmdStr" | ConvertFrom-Json -AsHashTable
+  $response =  Invoke-Expression "$azCmdStr" | ConvertFrom-Json -AsHashtable
+
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR command failed: $azCmdStr"
+  }
+
+  return $response
 }
 
 function Invoke-Query($fields, $wiql, $output = $true)
@@ -359,6 +365,18 @@ function CreateWorkItemParent($id, $parentId, $oldParentId, $outputCommand = $tr
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
 
+function CheckUser($user)
+{
+  $azCmdStr = "az devops user show --user ${user} $($ReleaseDevOpsCommonParameters -join ' ')"
+  Invoke-Expression "$azCmdStr" | Out-Null
+
+  if ($LASTEXITCODE -ne 0) {
+    return $false
+  }
+
+  return $true
+}
+
 function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, $parentId, $relatedId = $null, $outputCommand = $true, $tag = $null)
 {
   $parameters = $ReleaseDevOpsCommonParametersWithProject
@@ -366,7 +384,7 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   $parameters += "--type", "`"${type}`""
   $parameters += "--iteration", "`"${iteration}`""
   $parameters += "--area", "`"${area}`""
-  if ($assignedTo) {
+  if ($assignedTo -and (CheckUser $assignedTo)) {
     $parameters += "--assigned-to", "`"${assignedTo}`""
   }
   if ($tag)
@@ -388,7 +406,6 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
 
   Write-Host "Creating work item"
   $workItem = Invoke-AzBoardsCmd "work-item create" $parameters $outputCommand
-  Write-Host $workItem
   $workItemId = $workItem.id
   Write-Host "Created work item [$workItemId]."
   if ($parentId)
@@ -424,7 +441,7 @@ function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputComman
   if ($state) {
     $parameters += "--state", "`"${state}`""
   }
-  if ($assignedTo) {
+  if ($assignedTo -and (CheckUser $assignedTo)) {
     $parameters += "--assigned-to", "`"${assignedTo}`""
   }
   if ($fields) {
@@ -1209,7 +1226,11 @@ function Get-TriagesForCPEXAttestation()
 
 function Update-AttestationStatusInWorkItem($workItemId, $fieldName, $status)
 {
-  $fields = "`"${fieldName}=${status}`""
+  $dateFieldName = $fieldName -replace 'Status$', 'Date'
+
+  $fields = @()
+  $fields += "`"${fieldName}=${status}`""
+  $fields += "`"${dateFieldName}=$(Get-Date)`""
 
   Write-Host "Updating Work Item [$workItemId] with status [$status] for field [$fieldName]."
   $workItem = UpdateWorkItem -id $workItemId -fields $fields

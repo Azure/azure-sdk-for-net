@@ -32,6 +32,7 @@ This table shows the relationship between SDK versions and supported API version
 |-------------|-----------------------------------------------------|
 |1.0.0-beta.1 | 3.0
 |1.0.0 | 3.0
+|2.0.0-beta.1 | 2025-10-01-preview
 
 ### Prerequisites
 
@@ -156,64 +157,8 @@ try
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-A convenience overload of Translate is provided using a TextTranslationTranslateOptions parameter.  This sample demonstrates rendering a single source-language to multiple target languages with a single request using the options overload.
-
-```C# Snippet:GetTextTranslationMatrixOptions
-try
-{
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-        targetLanguages: new[] { "cs", "es", "de" },
-        content: new[] { "This is a test." }
-    );
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-
-    foreach (TranslatedTextItem translation in translations)
-    {
-        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-
-        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    }
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-This sample demonstrates Translation and Transliteration in a single call using the TextTranslationTranslateOptions parameter.  Required parameters are passed to the constructor, optional parameters are set using an object initializer.
-
-```C# Snippet:GetTranslationTextTransliteratedOptions
-try
-{
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-        targetLanguage: "zh-Hans",
-        content: "hudha akhtabar.")
-    {
-        FromScript = "Latn",
-        SourceLanguage = "ar",
-        ToScript = "Latn"
-    };
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
-
-    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
-    Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -252,123 +197,9 @@ catch (RequestFailedException exception)
 }
 ```
 
-A convenience overload of Transliterate is provided using a single TextTranslationTransliterateOptions parameter.  A modified version of the preceding sample is provided here demonstrating its use.
-
-```C# Snippet:GetTransliteratedTextOptions
-try
-{
-    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
-        language: "zh-Hans",
-        fromScript: "Hans",
-        toScript: "Latn",
-        content: "这是个测试。"
-    );
-
-    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(options);
-    IReadOnlyList<TransliteratedText> transliterations = response.Value;
-    TransliteratedText transliteration = transliterations.FirstOrDefault();
-
-    Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
 For samples on using the `transliterate` endpoint refer to more samples [here][transliterate_sample].
 
 Please refer to the service documentation for a conceptual discussion of [transliterate][transliterate_doc].
-
-### Break Sentence
-
-Identifies the positioning of sentence boundaries in a piece of text.
-
-```C# Snippet:FindTextSentenceBoundaries
-try
-{
-    string inputText = "How are you? I am fine. What did you do today?";
-
-    Response<IReadOnlyList<BreakSentenceItem>> response = client.FindSentenceBoundaries(inputText);
-    IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
-    BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
-
-    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentencesLengths)}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-For samples on using the `break sentece` endpoint refer to more samples [here][breaksentence_sample].
-
-Please refer to the service documentation for a conceptual discussion of [break sentence][breaksentence_doc].
-
-### Dictionary Lookup
-
-Returns equivalent words for the source term in the target language.
-
-```C# Snippet:LookupDictionaryEntries
-try
-{
-    string sourceLanguage = "en";
-    string targetLanguage = "es";
-    string inputText = "fly";
-
-    Response<IReadOnlyList<DictionaryLookupItem>> response = client.LookupDictionaryEntries(sourceLanguage, targetLanguage, inputText);
-    IReadOnlyList<DictionaryLookupItem> dictionaryEntries = response.Value;
-    DictionaryLookupItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
-
-    Console.WriteLine($"For the given input {dictionaryEntry?.Translations?.Count} entries were found in the dictionary.");
-    Console.WriteLine($"First entry: '{dictionaryEntry?.Translations?.FirstOrDefault()?.DisplayTarget}', confidence: {dictionaryEntry?.Translations?.FirstOrDefault()?.Confidence}.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-For samples on using the `dictionary lookup` endpoint refer to more samples [here][dictionarylookup_sample].
-
-Please refer to the service documentation for a conceptual discussion of [dictionary lookup][dictionarylookup_doc].
-
-### Dictionary Examples
-
-Returns grammatical structure and context examples for the source term and target term pair.
-
-```C# Snippet:GetGrammaticalStructure
-try
-{
-    string sourceLanguage = "en";
-    string targetLanguage = "es";
-    IEnumerable<InputTextWithTranslation> inputTextElements = new[]
-    {
-        new InputTextWithTranslation("fly", "volar")
-    };
-
-    Response<IReadOnlyList<DictionaryExampleItem>> response = client.LookupDictionaryExamples(sourceLanguage, targetLanguage, inputTextElements);
-    IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
-    DictionaryExampleItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
-
-    Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");
-    DictionaryExample firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
-    Console.WriteLine($"Example: '{string.Concat(firstExample.TargetPrefix, firstExample.TargetTerm, firstExample.TargetSuffix)}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-For samples on using the `dictionary examples` endpoint refer to more samples [here][dictionaryexamples_sample].
-
-Please refer to the service documentation for a conceptual discussion of [dictionary examples][dictionaryexamples_doc].
 
 ## Troubleshooting
 
@@ -379,7 +210,7 @@ For example, if you submit a translation request without a target translate lang
 ```C# Snippet:HandleBadRequest
 try
 {
-    var translation = client.Translate(Array.Empty<string>(), new[] { "This is a Test" });
+    var translation = client.Translate("", "This is a Test");
 }
 catch (RequestFailedException e)
 {
@@ -428,9 +259,6 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Languages][languages_sample]
 * [Translate][translate_sample]
 * [Transliterate][transliterate_sample]
-* [Break Sentence][breaksentence_sample]
-* [Dictionary Lookup][dictionarylookup_sample]
-* [Dictionary Examples][dictionaryexamples_sample]
 
 ## Contributing
 
@@ -457,17 +285,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [languages_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-languages
 [translate_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-translate
 [transliterate_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-transliterate
-[breaksentence_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-break-sentence
-[dictionarylookup_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup
-[dictionaryexamples_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-examples
 
 [client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
 [languages_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
 [translate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample2_Translate.md
 [transliterate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md
-[breaksentence_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample4_BreakSentence.md
-[dictionarylookup_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample5_DictionaryLookup.md
-[dictionaryexamples_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

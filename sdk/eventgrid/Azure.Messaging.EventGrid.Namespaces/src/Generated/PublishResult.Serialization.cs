@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePublishResult(document.RootElement, options);
                     }
@@ -126,11 +126,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PublishResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PublishResult"/> from. </param>
-        public static explicit operator PublishResult(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PublishResult"/> from. </param>
+        public static explicit operator PublishResult(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePublishResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

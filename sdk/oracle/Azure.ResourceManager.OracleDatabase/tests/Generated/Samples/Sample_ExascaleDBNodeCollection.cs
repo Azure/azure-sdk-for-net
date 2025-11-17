@@ -17,6 +17,74 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ExascaleDbNodesGetMaximumSet()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbNodes_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbNode_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExadbVmClusterResource created on azure
+            // for more information of creating ExadbVmClusterResource, please refer to the document of ExadbVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string exadbVmClusterName = "exadbvmcluster1";
+            ResourceIdentifier exadbVmClusterResourceId = ExadbVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, exadbVmClusterName);
+            ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
+
+            // get the collection of this ExascaleDBNodeResource
+            ExascaleDBNodeCollection collection = exadbVmCluster.GetExascaleDBNodes();
+
+            // invoke the operation
+            string exascaleDbNodeName = "exascaledbnode1";
+            ExascaleDBNodeResource result = await collection.GetAsync(exascaleDbNodeName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ExascaleDBNodeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ExascaleDbNodesGetMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbNodes_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbNode_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExadbVmClusterResource created on azure
+            // for more information of creating ExadbVmClusterResource, please refer to the document of ExadbVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string exadbVmClusterName = "vmcluster";
+            ResourceIdentifier exadbVmClusterResourceId = ExadbVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, exadbVmClusterName);
+            ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
+
+            // get the collection of this ExascaleDBNodeResource
+            ExascaleDBNodeCollection collection = exadbVmCluster.GetExascaleDBNodes();
+
+            // invoke the operation
+            string exascaleDbNodeName = "exascaledbnode1";
+            ExascaleDBNodeResource result = await collection.GetAsync(exascaleDbNodeName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ExascaleDBNodeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExascaleDbNodesListByParentMaximumSet()
         {
             // Generated from example definition: 2025-09-01/ExascaleDbNodes_ListByParent_MaximumSet_Gen.json
@@ -85,6 +153,150 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ExascaleDbNodesGetMaximumSet()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbNodes_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbNode_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExadbVmClusterResource created on azure
+            // for more information of creating ExadbVmClusterResource, please refer to the document of ExadbVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string exadbVmClusterName = "exadbvmcluster1";
+            ResourceIdentifier exadbVmClusterResourceId = ExadbVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, exadbVmClusterName);
+            ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
+
+            // get the collection of this ExascaleDBNodeResource
+            ExascaleDBNodeCollection collection = exadbVmCluster.GetExascaleDBNodes();
+
+            // invoke the operation
+            string exascaleDbNodeName = "exascaledbnode1";
+            bool result = await collection.ExistsAsync(exascaleDbNodeName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ExascaleDbNodesGetMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbNodes_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbNode_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExadbVmClusterResource created on azure
+            // for more information of creating ExadbVmClusterResource, please refer to the document of ExadbVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string exadbVmClusterName = "vmcluster";
+            ResourceIdentifier exadbVmClusterResourceId = ExadbVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, exadbVmClusterName);
+            ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
+
+            // get the collection of this ExascaleDBNodeResource
+            ExascaleDBNodeCollection collection = exadbVmCluster.GetExascaleDBNodes();
+
+            // invoke the operation
+            string exascaleDbNodeName = "exascaledbnode1";
+            bool result = await collection.ExistsAsync(exascaleDbNodeName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ExascaleDbNodesGetMaximumSet()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbNodes_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbNode_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExadbVmClusterResource created on azure
+            // for more information of creating ExadbVmClusterResource, please refer to the document of ExadbVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string exadbVmClusterName = "exadbvmcluster1";
+            ResourceIdentifier exadbVmClusterResourceId = ExadbVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, exadbVmClusterName);
+            ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
+
+            // get the collection of this ExascaleDBNodeResource
+            ExascaleDBNodeCollection collection = exadbVmCluster.GetExascaleDBNodes();
+
+            // invoke the operation
+            string exascaleDbNodeName = "exascaledbnode1";
+            NullableResponse<ExascaleDBNodeResource> response = await collection.GetIfExistsAsync(exascaleDbNodeName);
+            ExascaleDBNodeResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ExascaleDBNodeData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ExascaleDbNodesGetMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbNodes_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbNode_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExadbVmClusterResource created on azure
+            // for more information of creating ExadbVmClusterResource, please refer to the document of ExadbVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string exadbVmClusterName = "vmcluster";
+            ResourceIdentifier exadbVmClusterResourceId = ExadbVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, exadbVmClusterName);
+            ExadbVmClusterResource exadbVmCluster = client.GetExadbVmClusterResource(exadbVmClusterResourceId);
+
+            // get the collection of this ExascaleDBNodeResource
+            ExascaleDBNodeCollection collection = exadbVmCluster.GetExascaleDBNodes();
+
+            // invoke the operation
+            string exascaleDbNodeName = "exascaledbnode1";
+            NullableResponse<ExascaleDBNodeResource> response = await collection.GetIfExistsAsync(exascaleDbNodeName);
+            ExascaleDBNodeResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ExascaleDBNodeData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

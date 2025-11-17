@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
     public partial class InputModel
     {

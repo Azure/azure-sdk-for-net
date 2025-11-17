@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </summary>
+    /// <summary> The resource type for Container Registry. </summary>
     public readonly partial struct ContainerRegistryResourceType : IEquatable<ContainerRegistryResourceType>
     {
         private readonly string _value;

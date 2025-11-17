@@ -14,14 +14,6 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct AssetUpdateState : IEquatable<AssetUpdateState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AssetUpdateState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AssetUpdateState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CandidateValue = "candidate";
         private const string ConfirmedValue = "confirmed";
         private const string DismissedValue = "dismissed";
@@ -29,35 +21,64 @@ namespace Azure.Analytics.Defender.Easm
         private const string AssociatedPartnerValue = "associatedPartner";
         private const string AssociatedThirdpartyValue = "associatedThirdparty";
 
-        /// <summary> candidate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AssetUpdateState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Candidate. </summary>
         public static AssetUpdateState Candidate { get; } = new AssetUpdateState(CandidateValue);
-        /// <summary> confirmed. </summary>
+
+        /// <summary> Gets the Confirmed. </summary>
         public static AssetUpdateState Confirmed { get; } = new AssetUpdateState(ConfirmedValue);
-        /// <summary> dismissed. </summary>
+
+        /// <summary> Gets the Dismissed. </summary>
         public static AssetUpdateState Dismissed { get; } = new AssetUpdateState(DismissedValue);
-        /// <summary> candidateInvestigate. </summary>
+
+        /// <summary> Gets the CandidateInvestigate. </summary>
         public static AssetUpdateState CandidateInvestigate { get; } = new AssetUpdateState(CandidateInvestigateValue);
-        /// <summary> associatedPartner. </summary>
+
+        /// <summary> Gets the AssociatedPartner. </summary>
         public static AssetUpdateState AssociatedPartner { get; } = new AssetUpdateState(AssociatedPartnerValue);
-        /// <summary> associatedThirdparty. </summary>
+
+        /// <summary> Gets the AssociatedThirdparty. </summary>
         public static AssetUpdateState AssociatedThirdparty { get; } = new AssetUpdateState(AssociatedThirdpartyValue);
+
         /// <summary> Determines if two <see cref="AssetUpdateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AssetUpdateState left, AssetUpdateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AssetUpdateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AssetUpdateState left, AssetUpdateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AssetUpdateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AssetUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AssetUpdateState(string value) => new AssetUpdateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AssetUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AssetUpdateState?(string value) => value == null ? null : new AssetUpdateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssetUpdateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AssetUpdateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

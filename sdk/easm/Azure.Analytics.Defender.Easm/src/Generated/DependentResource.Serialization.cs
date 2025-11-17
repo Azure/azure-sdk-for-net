@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DependentResource : IUtf8JsonSerializable, IJsonModel<DependentResource>
+    /// <summary> The DependentResource. </summary>
+    public partial class DependentResource : IJsonModel<DependentResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DependentResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependentResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DependentResource)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Md5))
             {
                 writer.WritePropertyName("md5"u8);
@@ -93,7 +92,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("responseBodyMinhash"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResponseBodyMinhash)
+                foreach (int item in ResponseBodyMinhash)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -133,7 +132,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("sriChecks"u8);
                 writer.WriteStartArray();
-                foreach (var item in SriChecks)
+                foreach (SubResourceIntegrityCheck item in SriChecks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,15 +163,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("lastObservedExpectedSriHash"u8);
                 writer.WriteStringValue(LastObservedExpectedSriHash);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -181,22 +180,27 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DependentResource IJsonModel<DependentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependentResource IJsonModel<DependentResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependentResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDependentResource(document.RootElement, options);
         }
 
-        internal static DependentResource DeserializeDependentResource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DependentResource DeserializeDependentResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -212,199 +216,197 @@ namespace Azure.Analytics.Defender.Easm
             string lastSeenCrawlGuid = default;
             string lastSeenPageGuid = default;
             string lastSeenResourceGuid = default;
-            IReadOnlyList<int> responseBodyMinhash = default;
+            IList<int> responseBodyMinhash = default;
             string contentType = default;
             string sha256 = default;
             string sha384 = default;
             string sha512 = default;
             Uri url = default;
             bool? cached = default;
-            IReadOnlyList<SubResourceIntegrityCheck> sriChecks = default;
+            IList<SubResourceIntegrityCheck> sriChecks = default;
             string host = default;
             DateTimeOffset? lastObservedViolation = default;
             DateTimeOffset? lastObservedValidation = default;
             string lastObservedActualSriHash = default;
             string lastObservedExpectedSriHash = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("md5"u8))
+                if (prop.NameEquals("md5"u8))
                 {
-                    md5 = property.Value.GetString();
+                    md5 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responseBodySize"u8))
+                if (prop.NameEquals("responseBodySize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    responseBodySize = property.Value.GetInt64();
+                    responseBodySize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("firstSeen"u8))
+                if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firstSeen = property.Value.GetDateTimeOffset("O");
+                    firstSeen = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSeen"u8))
+                if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSeen = property.Value.GetDateTimeOffset("O");
+                    lastSeen = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt64();
+                    count = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("firstSeenCrawlGuid"u8))
+                if (prop.NameEquals("firstSeenCrawlGuid"u8))
                 {
-                    firstSeenCrawlGuid = property.Value.GetString();
+                    firstSeenCrawlGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstSeenPageGuid"u8))
+                if (prop.NameEquals("firstSeenPageGuid"u8))
                 {
-                    firstSeenPageGuid = property.Value.GetString();
+                    firstSeenPageGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstSeenResourceGuid"u8))
+                if (prop.NameEquals("firstSeenResourceGuid"u8))
                 {
-                    firstSeenResourceGuid = property.Value.GetString();
+                    firstSeenResourceGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastSeenCrawlGuid"u8))
+                if (prop.NameEquals("lastSeenCrawlGuid"u8))
                 {
-                    lastSeenCrawlGuid = property.Value.GetString();
+                    lastSeenCrawlGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastSeenPageGuid"u8))
+                if (prop.NameEquals("lastSeenPageGuid"u8))
                 {
-                    lastSeenPageGuid = property.Value.GetString();
+                    lastSeenPageGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastSeenResourceGuid"u8))
+                if (prop.NameEquals("lastSeenResourceGuid"u8))
                 {
-                    lastSeenResourceGuid = property.Value.GetString();
+                    lastSeenResourceGuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responseBodyMinhash"u8))
+                if (prop.NameEquals("responseBodyMinhash"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32());
                     }
                     responseBodyMinhash = array;
                     continue;
                 }
-                if (property.NameEquals("contentType"u8))
+                if (prop.NameEquals("contentType"u8))
                 {
-                    contentType = property.Value.GetString();
+                    contentType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sha256"u8))
+                if (prop.NameEquals("sha256"u8))
                 {
-                    sha256 = property.Value.GetString();
+                    sha256 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sha384"u8))
+                if (prop.NameEquals("sha384"u8))
                 {
-                    sha384 = property.Value.GetString();
+                    sha384 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sha512"u8))
+                if (prop.NameEquals("sha512"u8))
                 {
-                    sha512 = property.Value.GetString();
+                    sha512 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    url = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cached"u8))
+                if (prop.NameEquals("cached"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cached = property.Value.GetBoolean();
+                    cached = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sriChecks"u8))
+                if (prop.NameEquals("sriChecks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SubResourceIntegrityCheck> array = new List<SubResourceIntegrityCheck>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SubResourceIntegrityCheck.DeserializeSubResourceIntegrityCheck(item, options));
                     }
                     sriChecks = array;
                     continue;
                 }
-                if (property.NameEquals("host"u8))
+                if (prop.NameEquals("host"u8))
                 {
-                    host = property.Value.GetString();
+                    host = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastObservedViolation"u8))
+                if (prop.NameEquals("lastObservedViolation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastObservedViolation = property.Value.GetDateTimeOffset("O");
+                    lastObservedViolation = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastObservedValidation"u8))
+                if (prop.NameEquals("lastObservedValidation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastObservedValidation = property.Value.GetDateTimeOffset("O");
+                    lastObservedValidation = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastObservedActualSriHash"u8))
+                if (prop.NameEquals("lastObservedActualSriHash"u8))
                 {
-                    lastObservedActualSriHash = property.Value.GetString();
+                    lastObservedActualSriHash = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastObservedExpectedSriHash"u8))
+                if (prop.NameEquals("lastObservedExpectedSriHash"u8))
                 {
-                    lastObservedExpectedSriHash = property.Value.GetString();
+                    lastObservedExpectedSriHash = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DependentResource(
                 md5,
                 responseBodySize,
@@ -430,13 +432,16 @@ namespace Azure.Analytics.Defender.Easm
                 lastObservedValidation,
                 lastObservedActualSriHash,
                 lastObservedExpectedSriHash,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DependentResource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DependentResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -446,15 +451,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DependentResource IPersistableModel<DependentResource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependentResource IPersistableModel<DependentResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependentResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDependentResource(document.RootElement, options);
                     }
                 default:
@@ -462,22 +472,7 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DependentResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DependentResource FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDependentResource(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

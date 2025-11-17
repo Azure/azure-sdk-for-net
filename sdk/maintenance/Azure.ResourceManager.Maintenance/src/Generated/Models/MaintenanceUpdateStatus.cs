@@ -27,9 +27,6 @@ namespace Azure.ResourceManager.Maintenance.Models
         private const string CompletedValue = "Completed";
         private const string RetryNowValue = "RetryNow";
         private const string RetryLaterValue = "RetryLater";
-        private const string NoUpdatesPendingValue = "NoUpdatesPending";
-        private const string CancelValue = "Cancel";
-        private const string CancelledValue = "Cancelled";
 
         /// <summary> There are pending updates to be installed. </summary>
         public static MaintenanceUpdateStatus Pending { get; } = new MaintenanceUpdateStatus(PendingValue);
@@ -41,12 +38,6 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static MaintenanceUpdateStatus RetryNow { get; } = new MaintenanceUpdateStatus(RetryNowValue);
         /// <summary> Updates installation failed and should be retried later. </summary>
         public static MaintenanceUpdateStatus RetryLater { get; } = new MaintenanceUpdateStatus(RetryLaterValue);
-        /// <summary> No updates are pending. </summary>
-        public static MaintenanceUpdateStatus NoUpdatesPending { get; } = new MaintenanceUpdateStatus(NoUpdatesPendingValue);
-        /// <summary> Cancel the schedule and stop creating PMR for resources part of it. Applicable to Maintenance Configuration resource type only. </summary>
-        public static MaintenanceUpdateStatus Cancel { get; } = new MaintenanceUpdateStatus(CancelValue);
-        /// <summary> Send the Cancelled response to the user if request came to cancel the schedule. Applicable to Maintenance Configuration resource type only. </summary>
-        public static MaintenanceUpdateStatus Cancelled { get; } = new MaintenanceUpdateStatus(CancelledValue);
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are not the same. </summary>

@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlanetaryComputerGeoCatalogPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="PlanetaryComputerGeoCatalogPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PlanetaryComputerGeoCatalogPatch patch)
+        /// <param name="planetaryComputerGeoCatalogPatch"> The <see cref="PlanetaryComputerGeoCatalogPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PlanetaryComputerGeoCatalogPatch planetaryComputerGeoCatalogPatch)
         {
-            if (patch == null)
+            if (planetaryComputerGeoCatalogPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(planetaryComputerGeoCatalogPatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
