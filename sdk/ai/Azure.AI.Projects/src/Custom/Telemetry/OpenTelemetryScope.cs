@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -174,6 +175,9 @@ namespace Azure.AI.Projects.Telemetry
             // Convert BinaryContent back to AgentVersionCreationOptions
             using var memoryStream = new MemoryStream();
             content.WriteTo(memoryStream, CancellationToken.None);
+            //debug
+            string json = Encoding.UTF8.GetString(memoryStream.ToArray());
+            //debug
             memoryStream.Position = 0;
             BinaryData binaryData = BinaryData.FromStream(memoryStream);
             AgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<AgentVersionCreationOptions>(

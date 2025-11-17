@@ -20,6 +20,7 @@ public class AgentsSmokeTests : AgentsTestBase
     }
 
     [Test]
+    [LiveOnly]
     public void CanGetClients()
     {
         AIProjectClient projectClient = GetTestProjectClient();

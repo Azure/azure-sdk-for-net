@@ -21,14 +21,12 @@ using OpenTelemetry.Trace;
 
 namespace Azure.AI.Projects.Tests;
 
-[Ignore("Temporarily disabled pending post-packaging investigation of regressions")]
 public partial class AgentsTelemetryTests : AgentsTestBase
 {
     public const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
     public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
-    private GenAiTraceVerifier _traceVerifier;
     private bool _contentRecordingEnabledInitialValue = false;
     private bool _tracesEnabledInitialValue = false;
 
@@ -40,7 +38,6 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     public void Setup()
     {
         _exporter = new MemoryTraceExporter();
-        _traceVerifier = new GenAiTraceVerifier();
 
         _tracesEnabledInitialValue = string.Equals(
             Environment.GetEnvironmentVariable(TraceContentsEnvironmentVariable),
@@ -374,7 +371,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             { "gen_ai.agent.name", agentName },
             { "gen_ai.agent.id", "*" }
         };
-        Assert.That(_traceVerifier.CheckSpanAttributes(createAgentSpan, expectedCreateAgentAttributes), Is.True);
+        GenAiTraceVerifier.ValidateSpanAttributes(createAgentSpan, expectedCreateAgentAttributes);
         var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
         {
             ("gen_ai.system.message", new Dictionary<string, object>
@@ -383,7 +380,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
                 { "gen_ai.event.content", content }
             })
         };
-        Assert.That(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents), Is.True);
+        GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
     }
 
     private void CheckCreateAgentVersionTrace(Activity createAgentSpan, string modelName, string agentName, string content)
@@ -400,7 +397,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             { "gen_ai.agent.version", "1" },
             { "gen_ai.agent.id", "*" }
         };
-        Assert.That(_traceVerifier.CheckSpanAttributes(createAgentSpan, expectedCreateAgentAttributes), Is.True);
+        GenAiTraceVerifier.ValidateSpanAttributes(createAgentSpan, expectedCreateAgentAttributes);
         var expectedCreateAgentEvents = new List<(string, Dictionary<string, object>)>
         {
             ("gen_ai.system.message", new Dictionary<string, object>
@@ -409,7 +406,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
                 { "gen_ai.event.content", content }
             })
         };
-        Assert.That(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents), Is.True);
+        GenAiTraceVerifier.ValidateSpanEvents(createAgentSpan, expectedCreateAgentEvents);
     }
 
     private async Task WaitMayBe(int timeout = 1000)
