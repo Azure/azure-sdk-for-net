@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeExportDependenciesOperationResult(document.RootElement, options);
                     }
@@ -232,11 +232,10 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExportDependenciesOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ExportDependenciesOperationResult"/> from. </param>
-        internal static ExportDependenciesOperationResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExportDependenciesOperationResult"/> from. </param>
+        internal static ExportDependenciesOperationResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeExportDependenciesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
