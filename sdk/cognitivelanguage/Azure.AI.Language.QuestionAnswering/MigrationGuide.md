@@ -7,7 +7,7 @@
 
 This guide helps migrate from the old client library [`Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`](https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker) to the modern authoring client library `Azure.AI.Language.QuestionAnswering.Authoring`. It focuses on side‑by‑side comparisons for authoring operations (creating/updating/exporting/deleting).
 
-For general usage and more samples, refer to the [Authoring README](./README.md) and [Authoring samples](./samples).
+For general usage and more samples, refer to the [Authoring README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) and [Authoring samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples).
 
 ## Table of contents
 

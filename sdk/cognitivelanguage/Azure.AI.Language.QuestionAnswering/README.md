@@ -209,5 +209,5 @@ See the root repository contributing guide for how to build, test, and submit ch
 [authoring_package]: https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering
 [authoring_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering.Authoring
 [authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/
-[questionanswering_docs]: https://learn.microsoft.com/en-us/azure/ai-services/language-service/question-answering/overview
+[questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [authoring_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering-authoring/operation-groups?view=rest-language-question-answering-authoring-2025-05-15-preview
