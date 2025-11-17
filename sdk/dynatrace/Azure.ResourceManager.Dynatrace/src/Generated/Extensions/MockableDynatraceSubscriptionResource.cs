@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <param name="content"> Tenant Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MarketplaceSaaSResourceDetailsResult>> GetMarketplaceSaaSResourceDetailsMonitorAsync(MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceSaaSResourceDetailsResult>> GetMarketplaceSaaSResourceDetailsAsync(MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsMonitor");
+            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetails");
             scope.Start();
             try
             {
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <param name="content"> Tenant Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MarketplaceSaaSResourceDetailsResult> GetMarketplaceSaaSResourceDetailsMonitor(MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceSaaSResourceDetailsResult> GetMarketplaceSaaSResourceDetails(MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsMonitor");
+            using var scope = DynatraceMonitorMonitorsClientDiagnostics.CreateScope("MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetails");
             scope.Start();
             try
             {

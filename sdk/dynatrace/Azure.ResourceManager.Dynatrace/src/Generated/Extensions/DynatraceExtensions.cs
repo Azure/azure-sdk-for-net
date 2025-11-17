@@ -296,18 +296,18 @@ namespace Azure.ResourceManager.Dynatrace
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsMonitor(MarketplaceSaaSResourceDetailsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetails(MarketplaceSaaSResourceDetailsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Tenant Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<MarketplaceSaaSResourceDetailsResult>> GetMarketplaceSaaSResourceDetailsMonitorAsync(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MarketplaceSaaSResourceDetailsResult>> GetMarketplaceSaaSResourceDetailsAsync(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDynatraceSubscriptionResource(subscriptionResource).GetMarketplaceSaaSResourceDetailsMonitorAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDynatraceSubscriptionResource(subscriptionResource).GetMarketplaceSaaSResourceDetailsAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -332,18 +332,18 @@ namespace Azure.ResourceManager.Dynatrace
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsMonitor(MarketplaceSaaSResourceDetailsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetails(MarketplaceSaaSResourceDetailsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Tenant Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<MarketplaceSaaSResourceDetailsResult> GetMarketplaceSaaSResourceDetailsMonitor(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
+        public static Response<MarketplaceSaaSResourceDetailsResult> GetMarketplaceSaaSResourceDetails(this SubscriptionResource subscriptionResource, MarketplaceSaaSResourceDetailsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDynatraceSubscriptionResource(subscriptionResource).GetMarketplaceSaaSResourceDetailsMonitor(content, cancellationToken);
+            return GetMockableDynatraceSubscriptionResource(subscriptionResource).GetMarketplaceSaaSResourceDetails(content, cancellationToken);
         }
     }
 }
