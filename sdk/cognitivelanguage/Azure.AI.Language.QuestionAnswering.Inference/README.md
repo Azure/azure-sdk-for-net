@@ -155,7 +155,7 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 * Explore [samples][questionanswering_samples].
 * Use Authoring SDK or Language Studio to evolve your knowledge base.
-* Review the [migration guide][migration_guide] (may not yet reflect the inference package split).
+* Review the migration guide
 
 ## Contributing
 
@@ -165,7 +165,6 @@ See [CONTRIBUTING.md][contributing]. This project follows the Microsoft Open Sou
 [questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
 [questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
-[migration_guide]: ./MigrationGuide.md
 [questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [questionanswering_docs_chat]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/chit-chatview=rest-language-question-answering-2025-05-15-preview
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/

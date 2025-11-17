@@ -10,19 +10,26 @@ The Question Answering Authoring client library lets you manage Question Answeri
 
 ## Getting started
 
-Service API version targeted: `2025-05-15-preview`.
+Service API versions:
+- Stable (no --prerelease): `2022-10-13`
+- Preview (--prerelease): `2025-05-15-preview`
 
 ### Install the package
 
-Authoring (includes inference through type forwarding/dependency):
+Stable (GA) – installs latest released (non-preview) version:
 ```dotnetcli
-dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+dotnet add package Azure.AI.Language.QuestionAnswering
 ```
 
-Inference only (slimmer surface if you do not perform authoring operations):
+Preview (opt into new features and `2025-05-15-preview` service version):
 ```dotnetcli
+dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
 dotnet add package Azure.AI.Language.QuestionAnswering.Inference --prerelease
 ```
+
+> Install without `--prerelease` for stable; add `--prerelease` to opt into preview features and newer service version.
+
+for
 
 ### Prerequisites
 
@@ -169,14 +176,14 @@ Console.WriteLine($"Sources: {sources}");
 
 ## Type forwarding & migration
 
-As of the 2.0.0 preview split:
+As of the 2.0.0 preview split (use `--prerelease` to opt in):
 - The main package (`Azure.AI.Language.QuestionAnswering`) focuses on authoring but continues to expose inference types via type forwarding.
 - The runtime implementation is provided by `Azure.AI.Language.QuestionAnswering.Inference`.
 - Existing source code using inference or authoring APIs should compile without change after upgrading, because public inference types remain in the reference surface (source + binary compatibility).
 - If you only need runtime querying, you can depend solely on the inference package for a reduced dependency surface.
 - Future previews may de-emphasize inference APIs in the main package—follow the CHANGELOG for updates.
 
-No code changes are required for upgrading typical projects; standard `dotnet add package ... --prerelease` is sufficient.
+No code changes are required for upgrading typical projects. Use `dotnet add package <package>` for stable; add `--prerelease` only if you need preview features or the newer service version.
 
 ## Troubleshooting
 
