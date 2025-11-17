@@ -65,7 +65,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -137,7 +137,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -488,7 +488,7 @@ ActionGroupId = new ResourceIdentifier("/subscriptions/14ddf0c5-77c5-4b53-84f6-e
                 new WebtestLocationAvailabilityCriteria(new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/webtests/component-example"), new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789101/resourcegroups/rg-example/providers/microsoft.insights/components/webtest-name-example"), 2))
             {
                 Description = "Automatically created alert rule for availability test \"component-example\" a",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 Actions = { },
                 Tags =
 {
@@ -546,7 +546,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -610,7 +610,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {
@@ -673,7 +673,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -738,7 +738,7 @@ Dimensions = {},
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 TargetResourceType = new ResourceType("Microsoft.Compute/virtualMachines"),
                 TargetResourceRegion = new AzureLocation("southcentralus"),
                 IsAutoMitigateEnabled = true,
@@ -803,7 +803,7 @@ Dimensions = {new MetricDimension("ActivityName", "Include", new string[]{"*"}),
                 })
             {
                 Description = "This is the description of the rule1",
-                WindowSize = XmlConvert.ToTimeSpan("P1D"),
+                MonitorWindowSize = XmlConvert.ToTimeSpan("P1D"),
                 IsAutoMitigateEnabled = true,
                 Actions = {new MetricAlertAction
 {

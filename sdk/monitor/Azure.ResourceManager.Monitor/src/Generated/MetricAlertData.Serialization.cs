@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndArray();
             writer.WritePropertyName("evaluationFrequency"u8);
             writer.WriteStringValue(EvaluationFrequency, "P");
-            if (Optional.IsDefined(WindowSize))
+            if (Optional.IsDefined(MonitorWindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
-                writer.WriteStringValue(WindowSize.Value, "P");
+                writer.WriteStringValue(MonitorWindowSize.Value, "P");
             }
             if (Optional.IsDefined(TargetResourceType))
             {

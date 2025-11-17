@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
         /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
         /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="monitorWindowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
         /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
         /// <param name="criteria">
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan? monitorWindowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Severity = severity;
             IsEnabled = isEnabled;
             Scopes = scopes;
             EvaluationFrequency = evaluationFrequency;
-            WindowSize = windowSize;
+            MonitorWindowSize = monitorWindowSize;
             TargetResourceType = targetResourceType;
             TargetResourceRegion = targetResourceRegion;
             Criteria = criteria;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> How often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
         public TimeSpan EvaluationFrequency { get; set; }
         /// <summary> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
-        public TimeSpan? WindowSize { get; set; }
+        public TimeSpan? MonitorWindowSize { get; set; }
         /// <summary> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
         public ResourceType? TargetResourceType { get; set; }
         /// <summary> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>

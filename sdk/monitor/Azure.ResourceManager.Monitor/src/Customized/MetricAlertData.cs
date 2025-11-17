@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Monitor.Models;
 
@@ -24,15 +25,20 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="criteria"> Defines the specific alert criteria information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria)
             : this(location, severity, isEnabled, scopes, evaluationFrequency, criteria)
         {
             WindowSize = GetWindowSizeOrDefault(windowSize);
         }
 
+        /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public TimeSpan WindowSize { get => GetWindowSizeOrDefault(); set => WindowSize = value; }
+
         private TimeSpan GetWindowSizeOrDefault(TimeSpan defaultValue = default)
         {
-            return WindowSize ?? defaultValue;
+            return MonitorWindowSize ?? defaultValue;
         }
     }
 }
