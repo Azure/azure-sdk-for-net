@@ -3,19 +3,22 @@
 
 #nullable disable
 
+using Azure.Core;
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
+    [CodeGenSerialization(nameof(UserInfo), "userInfo")]
+    [CodeGenSerialization(nameof(MonitoringStatus), "monitoringStatus")]
+    [CodeGenSerialization(nameof(MarketplaceSubscriptionStatus), "marketplaceSubscriptionStatus")]
+    [CodeGenSerialization(nameof(DynatraceEnvironmentProperties), "dynatraceEnvironmentProperties")]
     public partial class DynatraceMonitorPatch
     {
         /// <summary> User info. </summary>
         public DynatraceMonitorUserInfo UserInfo { get; set; }
         /// <summary> Billing plan information. </summary>
-        public DynatraceBillingPlanInfo PlanData { get; set; }
-        /// <summary> Status of the monitor. </summary>
         public DynatraceMonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Marketplace subscription status. </summary>
         public DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; set; }

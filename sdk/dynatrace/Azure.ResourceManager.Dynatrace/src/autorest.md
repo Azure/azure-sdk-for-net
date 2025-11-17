@@ -117,4 +117,7 @@ directive:
   - remove-operation: CreationSupported_Get
   - remove-operation: Monitors_GetAllConnectedResourcesCount
   - remove-operation: MonitoredSubscriptions_Update
+  - from: swagger-document
+    where: $.definitions.MonitorResourceUpdate
+    transform: $.properties.properties["x-ms-client-flatten"] = true;
 ```

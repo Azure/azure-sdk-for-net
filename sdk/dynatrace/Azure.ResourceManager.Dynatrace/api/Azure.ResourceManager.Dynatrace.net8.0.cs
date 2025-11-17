@@ -588,7 +588,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus? MonitoringStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo MonitorUpdatePlanData { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get { throw null; } set { } }

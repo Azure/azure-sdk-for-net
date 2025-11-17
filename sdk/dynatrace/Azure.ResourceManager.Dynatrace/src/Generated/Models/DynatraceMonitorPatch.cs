@@ -54,34 +54,30 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitorPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The set of properties that can be updated in a PATCH request to a monitor resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="planData"> The new Billing plan information. </param>
+        /// <param name="userInfo"></param>
+        /// <param name="monitoringStatus"></param>
+        /// <param name="marketplaceSubscriptionStatus"></param>
+        /// <param name="dynatraceEnvironmentProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceMonitorPatch(IDictionary<string, string> tags, MonitorUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMonitorPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DynatraceBillingPlanInfo planData, DynatraceMonitorUserInfo userInfo, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            Properties = properties;
             Identity = identity;
+            PlanData = planData;
+            UserInfo = userInfo;
+            MonitoringStatus = monitoringStatus;
+            MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            DynatraceEnvironmentProperties = dynatraceEnvironmentProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The set of properties that can be updated in a PATCH request to a monitor resource. </summary>
-        internal MonitorUpdateProperties Properties { get; set; }
-        /// <summary> The new Billing plan information. </summary>
-        public DynatraceBillingPlanInfo MonitorUpdatePlanData
-        {
-            get => Properties is null ? default : Properties.PlanData;
-            set
-            {
-                if (Properties is null)
-                    Properties = new MonitorUpdateProperties();
-                Properties.PlanData = value;
-            }
-        }
-
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The new Billing plan information. </summary>
+        public DynatraceBillingPlanInfo PlanData { get; set; }
     }
 }

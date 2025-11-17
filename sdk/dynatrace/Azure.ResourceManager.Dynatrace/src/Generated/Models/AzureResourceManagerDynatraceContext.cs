@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyResource))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesProperties))]
     [ModelReaderWriterBuildable(typeof(MonitorResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
