@@ -1868,8 +1868,40 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint"
+        },
+        {
+          "$id": "136",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "137",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "138",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2022-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page",
       "apiVersions": [
@@ -1877,13 +1909,13 @@
       ],
       "children": [
         {
-          "$id": "136",
+          "$id": "139",
           "kind": "client",
           "name": "TwoModelsAsPageItem",
           "namespace": "_Specs_.Azure.Core.Page",
           "methods": [
             {
-              "$id": "137",
+              "$id": "140",
               "kind": "paging",
               "name": "listFirstItem",
               "accessibility": "public",
@@ -1892,20 +1924,20 @@
               ],
               "doc": "Two operations with two different page item types should be successfully generated. Should generate model for FirstItem.",
               "operation": {
-                "$id": "138",
+                "$id": "141",
                 "name": "listFirstItem",
                 "resourceName": "TwoModelsAsPageItem",
                 "doc": "Two operations with two different page item types should be successfully generated. Should generate model for FirstItem.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "139",
+                    "$id": "142",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "140",
+                      "$id": "143",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1915,7 +1947,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "141",
+                        "$id": "144",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1929,7 +1961,7 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "142",
+                    "$id": "145",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1971,7 +2003,7 @@
               },
               "parameters": [
                 {
-                  "$id": "143",
+                  "$id": "146",
                   "kind": "method",
                   "name": "accept",
                   "serializedName": "Accept",
@@ -2013,7 +2045,7 @@
               }
             },
             {
-              "$id": "144",
+              "$id": "147",
               "kind": "paging",
               "name": "listSecondItem",
               "accessibility": "public",
@@ -2022,20 +2054,20 @@
               ],
               "doc": "Two operations with two different page item types should be successfully generated. Should generate model for SecondItem.",
               "operation": {
-                "$id": "145",
+                "$id": "148",
                 "name": "listSecondItem",
                 "resourceName": "TwoModelsAsPageItem",
                 "doc": "Two operations with two different page item types should be successfully generated. Should generate model for SecondItem.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "146",
+                    "$id": "149",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "147",
+                      "$id": "150",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2045,7 +2077,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "148",
+                        "$id": "151",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2059,7 +2091,7 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "149",
+                    "$id": "152",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -2101,7 +2133,7 @@
               },
               "parameters": [
                 {
-                  "$id": "150",
+                  "$id": "153",
                   "kind": "method",
                   "name": "accept",
                   "serializedName": "Accept",
@@ -2145,13 +2177,13 @@
           ],
           "parameters": [
             {
-              "$id": "151",
+              "$id": "154",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "152",
+                "$id": "155",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2162,7 +2194,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "153",
+                  "$id": "156",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2173,8 +2205,12 @@
               "skipUrlEncoding": false,
               "readOnly": false,
               "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint"
+            },
+            {
+              "$ref": "136"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem",
           "apiVersions": [

@@ -11,6 +11,7 @@ namespace Azure.AI.Translation.Text
 {
     internal static partial class LanguageDirectionalityExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LanguageDirectionality value) => value switch
         {
             LanguageDirectionality.LeftToRight => "ltr",
@@ -18,10 +19,17 @@ namespace Azure.AI.Translation.Text
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LanguageDirectionality value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static LanguageDirectionality ToLanguageDirectionality(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ltr")) return LanguageDirectionality.LeftToRight;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rtl")) return LanguageDirectionality.RightToLeft;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ltr"))
+            {
+                return LanguageDirectionality.LeftToRight;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rtl"))
+            {
+                return LanguageDirectionality.RightToLeft;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LanguageDirectionality value.");
         }
     }

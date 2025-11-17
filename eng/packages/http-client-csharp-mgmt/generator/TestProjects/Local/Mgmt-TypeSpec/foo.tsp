@@ -12,10 +12,13 @@ using LiftrBase;
 namespace MgmtTypeSpec;
 
 @resource("foos")
-model Foo is TrackedResource<FooProperties> {
+model Foo is TrackedResource<FooProperties, false> {
   ...ResourceNameParameter<Foo, SegmentName = "foos">;
 
   ...ExtendedLocationProperty;
+
+  #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Existing usage of legacy type"
+  ...Azure.ResourceManager.Legacy.ManagedServiceIdentityV4Property;
 }
 
 @useSystemTextJsonConverter("csharp")
@@ -40,12 +43,18 @@ model FooProperties {
 
   nestedProperty: NestedFooModel;
 
+  optionalProperty?: SafeFlattenModel;
+
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
 }
 
 model NestedFooModel {
   properties: FooProperties;
+}
+
+model SafeFlattenModel {
+  flattenedProperty: string;
 }
 
 @armResourceOperations
@@ -77,6 +86,7 @@ model FooActionRequest {
 
 model FooActionResult {
   msg: string;
+  error?: Azure.ResourceManager.Foundations.ErrorDetail;
 }
 
 @singleton

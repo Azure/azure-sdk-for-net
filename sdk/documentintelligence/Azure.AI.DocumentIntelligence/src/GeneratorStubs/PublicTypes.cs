@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Azure.AI.DocumentIntelligence;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence
 
 namespace Microsoft.Extensions.Azure
 {
-    [CodeGenModel("AIDocumentIntelligenceClientBuilderExtensions")]
+    [CodeGenType("AIDocumentIntelligenceClientBuilderExtensions")]
     public partial class DocumentIntelligenceClientBuilderExtensions { }
 }
 

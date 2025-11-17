@@ -5,23 +5,23 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Client options for Azure.AI.DocumentIntelligence library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class DocumentIntelligenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_30;
 
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-11-30". </summary>
-            V2024_11_30 = 1,
+            /// <summary> The 2024-11-30 GA version of the DocumentIntelligence service. </summary>
+            V2024_11_30 = 1
         }
-
-        internal string Version { get; }
     }
 }

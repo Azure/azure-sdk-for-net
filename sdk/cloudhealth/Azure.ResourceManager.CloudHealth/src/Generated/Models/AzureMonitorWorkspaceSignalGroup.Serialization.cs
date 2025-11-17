@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    public partial class AzureMonitorWorkspaceSignalGroup : IUtf8JsonSerializable, IJsonModel<AzureMonitorWorkspaceSignalGroup>
+    /// <summary> A grouping of signal assignments for a Azure Monitor Workspace. </summary>
+    public partial class AzureMonitorWorkspaceSignalGroup : IJsonModel<AzureMonitorWorkspaceSignalGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMonitorWorkspaceSignalGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorWorkspaceSignalGroup"/> for deserialization. </summary>
+        internal AzureMonitorWorkspaceSignalGroup()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureMonitorWorkspaceSignalGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +35,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureMonitorWorkspaceSignalGroup)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(SignalAssignments))
             {
                 writer.WritePropertyName("signalAssignments"u8);
                 writer.WriteStartArray();
-                foreach (var item in SignalAssignments)
+                foreach (EntitySignalAssignment item in SignalAssignments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,15 +54,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(AuthenticationSetting);
             writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
             writer.WriteStringValue(AzureMonitorWorkspaceResourceId);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,22 +71,27 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        AzureMonitorWorkspaceSignalGroup IJsonModel<AzureMonitorWorkspaceSignalGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureMonitorWorkspaceSignalGroup IJsonModel<AzureMonitorWorkspaceSignalGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureMonitorWorkspaceSignalGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureMonitorWorkspaceSignalGroup)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureMonitorWorkspaceSignalGroup(document.RootElement, options);
         }
 
-        internal static AzureMonitorWorkspaceSignalGroup DeserializeAzureMonitorWorkspaceSignalGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureMonitorWorkspaceSignalGroup DeserializeAzureMonitorWorkspaceSignalGroup(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,47 +99,48 @@ namespace Azure.ResourceManager.CloudHealth.Models
             IList<EntitySignalAssignment> signalAssignments = default;
             string authenticationSetting = default;
             ResourceIdentifier azureMonitorWorkspaceResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("signalAssignments"u8))
+                if (prop.NameEquals("signalAssignments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EntitySignalAssignment> array = new List<EntitySignalAssignment>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EntitySignalAssignment.DeserializeEntitySignalAssignment(item, options));
                     }
                     signalAssignments = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationSetting"u8))
+                if (prop.NameEquals("authenticationSetting"u8))
                 {
-                    authenticationSetting = property.Value.GetString();
+                    authenticationSetting = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureMonitorWorkspaceResourceId"u8))
+                if (prop.NameEquals("azureMonitorWorkspaceResourceId"u8))
                 {
-                    azureMonitorWorkspaceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    azureMonitorWorkspaceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AzureMonitorWorkspaceSignalGroup(signalAssignments ?? new ChangeTrackingList<EntitySignalAssignment>(), authenticationSetting, azureMonitorWorkspaceResourceId, serializedAdditionalRawData);
+            return new AzureMonitorWorkspaceSignalGroup(signalAssignments ?? new ChangeTrackingList<EntitySignalAssignment>(), authenticationSetting, azureMonitorWorkspaceResourceId, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AzureMonitorWorkspaceSignalGroup>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureMonitorWorkspaceSignalGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -138,15 +150,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        AzureMonitorWorkspaceSignalGroup IPersistableModel<AzureMonitorWorkspaceSignalGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureMonitorWorkspaceSignalGroup IPersistableModel<AzureMonitorWorkspaceSignalGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureMonitorWorkspaceSignalGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureMonitorWorkspaceSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureMonitorWorkspaceSignalGroup(document.RootElement, options);
                     }
                 default:
@@ -154,6 +171,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureMonitorWorkspaceSignalGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

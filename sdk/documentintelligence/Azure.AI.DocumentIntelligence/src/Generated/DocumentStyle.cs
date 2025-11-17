@@ -14,46 +14,14 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing observed text styles. </summary>
     public partial class DocumentStyle
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DocumentStyle"/>. </summary>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentStyle(IEnumerable<DocumentSpan> spans, float confidence)
         {
-            Argument.AssertNotNull(spans, nameof(spans));
-
             Spans = spans.ToList();
             Confidence = confidence;
         }
@@ -70,8 +38,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, DocumentFontStyle? fontStyle, DocumentFontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsHandwritten = isHandwritten;
             SimilarFontFamily = similarFontFamily;
@@ -81,31 +49,33 @@ namespace Azure.AI.DocumentIntelligence
             BackgroundColor = backgroundColor;
             Spans = spans;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentStyle"/> for deserialization. </summary>
-        internal DocumentStyle()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Is content handwritten?. </summary>
         public bool? IsHandwritten { get; }
+
         /// <summary>
         /// Visually most similar font from among the set of supported font families, with
         /// fallback fonts following CSS convention (ex. 'Arial, sans-serif').
         /// </summary>
         public string SimilarFontFamily { get; }
+
         /// <summary> Font style. </summary>
         public DocumentFontStyle? FontStyle { get; }
+
         /// <summary> Font weight. </summary>
         public DocumentFontWeight? FontWeight { get; }
+
         /// <summary> Foreground color in #rrggbb hexadecimal format. </summary>
         public string Color { get; }
+
         /// <summary> Background color in #rrggbb hexadecimal format.. </summary>
         public string BackgroundColor { get; }
+
         /// <summary> Location of the text elements in the concatenated content the style applies to. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
+
         /// <summary> Confidence of correctly identifying the style. </summary>
         public float Confidence { get; }
     }

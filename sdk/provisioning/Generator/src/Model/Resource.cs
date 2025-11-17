@@ -201,10 +201,20 @@ public class Resource(Specification spec, Type armType)
                             if (property.Format is not null) { writer.Write($", format: \"{property.Format}\""); }
                             writer.WriteLine($");");
                         }
+                        if (GeneratePartialPropertyDefinition)
+                        {
+                            writer.WriteLine("DefineAdditionalProperties();");
+                        }
                         if (ParentResource is not null)
                         {
                             writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
                         }
+                    }
+
+                    if (GeneratePartialPropertyDefinition)
+                    {
+                        writer.WriteLine();
+                        writer.WriteLine("private partial void DefineAdditionalProperties();");
                     }
 
                     // Add the well known versions

@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
     public partial class RoundTripModel : IJsonModel<RoundTripModel>
     {

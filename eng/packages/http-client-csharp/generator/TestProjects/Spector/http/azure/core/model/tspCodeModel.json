@@ -190,6 +190,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model",
       "apiVersions": [
@@ -602,6 +603,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Model.AzureCoreEmbeddingVector",
           "apiVersions": [

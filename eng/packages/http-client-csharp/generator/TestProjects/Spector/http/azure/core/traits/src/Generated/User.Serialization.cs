@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.Core.Traits
+namespace Specs.Azure.Core.Traits
 {
     public partial class User : IJsonModel<User>
     {
