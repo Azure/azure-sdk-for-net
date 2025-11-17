@@ -12,17 +12,17 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The new quota limit request status. </summary>
-    public partial class GroupQuotaSubscriptionRequestStatusData : ResourceData, IJsonModel<GroupQuotaSubscriptionRequestStatusData>
+    public partial class GroupQuotaSubscriptionRequestStatus : ResourceData, IJsonModel<GroupQuotaSubscriptionRequestStatus>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GroupQuotaSubscriptionRequestStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GroupQuotaSubscriptionRequestStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatusData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatus)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaSubscriptionRequestStatusData IJsonModel<GroupQuotaSubscriptionRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotaSubscriptionRequestStatusData)JsonModelCreateCore(ref reader, options);
+        GroupQuotaSubscriptionRequestStatus IJsonModel<GroupQuotaSubscriptionRequestStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotaSubscriptionRequestStatus)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatusData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGroupQuotaSubscriptionRequestStatusData(document.RootElement, options);
+            return DeserializeGroupQuotaSubscriptionRequestStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GroupQuotaSubscriptionRequestStatusData DeserializeGroupQuotaSubscriptionRequestStatusData(JsonElement element, ModelReaderWriterOptions options)
+        internal static GroupQuotaSubscriptionRequestStatus DeserializeGroupQuotaSubscriptionRequestStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GroupQuotaSubscriptionRequestStatusData(
+            return new GroupQuotaSubscriptionRequestStatus(
                 id,
                 name,
                 resourceType,
@@ -135,50 +135,50 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GroupQuotaSubscriptionRequestStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatusData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaSubscriptionRequestStatusData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaSubscriptionRequestStatusData)PersistableModelCreateCore(data, options);
+        GroupQuotaSubscriptionRequestStatus IPersistableModel<GroupQuotaSubscriptionRequestStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaSubscriptionRequestStatus)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaSubscriptionRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGroupQuotaSubscriptionRequestStatusData(document.RootElement, options);
+                        return DeserializeGroupQuotaSubscriptionRequestStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatusData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GroupQuotaSubscriptionRequestStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaSubscriptionRequestStatusData"/> from. </param>
-        internal static GroupQuotaSubscriptionRequestStatusData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaSubscriptionRequestStatus"/> from. </param>
+        internal static GroupQuotaSubscriptionRequestStatus FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGroupQuotaSubscriptionRequestStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGroupQuotaSubscriptionRequestStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

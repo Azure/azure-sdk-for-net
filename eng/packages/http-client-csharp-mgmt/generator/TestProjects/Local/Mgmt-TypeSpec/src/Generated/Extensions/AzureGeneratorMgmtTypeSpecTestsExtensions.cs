@@ -187,58 +187,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="SelfHelpResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SelfHelpResource"/> object. </returns>
-        public static SelfHelpResource GetSelfHelpResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(id);
-        }
-
-        /// <summary> Gets a collection of <see cref="SelfHelpResourceCollection"/> objects within the specified scope. </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="SelfHelpResource"/> objects. </returns>
-        public static SelfHelpResourceCollection GetSelfHelpResources(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResources(scope);
-        }
-
-        /// <summary> Get a SelfHelpResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SelfHelpResource> GetSelfHelpResource(this ArmClient client, ResourceIdentifier scope, string selfHelpName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
-        }
-
-        /// <summary> Get a SelfHelpResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SelfHelpResource>> GetSelfHelpResourceAsync(this ArmClient client, ResourceIdentifier scope, string selfHelpName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -285,18 +233,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetHciVmInstance(scope);
-        }
-
-        /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> object. </returns>
-        public static GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetGroupQuotaSubscriptionRequestStatusResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -669,6 +605,32 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
         }
 
+        /// <summary> Get a SelfHelpResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<SelfHelpResource>> GetAsync(this TenantResource tenantResource, string scope, string selfHelpName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a SelfHelpResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<SelfHelpResource> Get(this TenantResource tenantResource, string scope, string selfHelpName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).Get(scope, selfHelpName, cancellationToken);
+        }
+
         /// <summary>
         /// Query network sibling set - a provider-level async action.
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
@@ -701,15 +663,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).QueryNetworkSiblingSet(waitUntil, content, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of GroupQuotaSubscriptionRequestStatuses and their operations over a GroupQuotaSubscriptionRequestStatusResource. </returns>
-        public static GroupQuotaSubscriptionRequestStatusCollection GetGroupQuotaSubscriptionRequestStatuses(this ManagementGroupResource managementGroupResource)
+        public static async Task<Response<GroupQuotaSubscriptionRequestStatus>> GetAsync(this ManagementGroupResource managementGroupResource, string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatuses();
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetAsync(requestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
@@ -717,25 +680,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<GroupQuotaSubscriptionRequestStatusResource>> GetGroupQuotaSubscriptionRequestStatusAsync(this ManagementGroupResource managementGroupResource, string requestId, CancellationToken cancellationToken = default)
+        public static Response<GroupQuotaSubscriptionRequestStatus> Get(this ManagementGroupResource managementGroupResource, string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatusAsync(requestId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
-        /// <param name="requestId"> The name of the GroupQuotaSubscriptionRequestStatus. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<GroupQuotaSubscriptionRequestStatusResource> GetGroupQuotaSubscriptionRequestStatus(this ManagementGroupResource managementGroupResource, string requestId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).GetGroupQuotaSubscriptionRequestStatus(requestId, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsManagementGroupResource(managementGroupResource).Get(requestId, cancellationToken);
         }
     }
 }
