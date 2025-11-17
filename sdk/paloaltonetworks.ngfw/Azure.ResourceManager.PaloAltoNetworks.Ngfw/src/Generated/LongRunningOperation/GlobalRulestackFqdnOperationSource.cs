@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class GlobalRulestackFqdnOperationSource : IOperationSource<GlobalRulestackFqdnResource>
+    /// <summary></summary>
+    internal partial class GlobalRulestackFqdnOperationSource : IOperationSource<GlobalRulestackFqdnResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal GlobalRulestackFqdnOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         GlobalRulestackFqdnResource IOperationSource<GlobalRulestackFqdnResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalRulestackFqdnData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            GlobalRulestackFqdnData data = GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new GlobalRulestackFqdnResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<GlobalRulestackFqdnResource> IOperationSource<GlobalRulestackFqdnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalRulestackFqdnData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-            return await Task.FromResult(new GlobalRulestackFqdnResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            GlobalRulestackFqdnData data = GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GlobalRulestackFqdnResource(_client, data);
         }
     }
 }

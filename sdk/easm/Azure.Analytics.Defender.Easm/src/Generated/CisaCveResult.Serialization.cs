@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class CisaCveResult : IUtf8JsonSerializable, IJsonModel<CisaCveResult>
+    /// <summary> cisa cve in a given workspace. </summary>
+    public partial class CisaCveResult : IJsonModel<CisaCveResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CisaCveResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CisaCveResult"/> for deserialization. </summary>
+        internal CisaCveResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CisaCveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CisaCveResult)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("cveId"u8);
@@ -59,15 +64,15 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteStringValue(UpdatedAt, "O");
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +81,27 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        CisaCveResult IJsonModel<CisaCveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CisaCveResult IJsonModel<CisaCveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CisaCveResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CisaCveResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCisaCveResult(document.RootElement, options);
         }
 
-        internal static CisaCveResult DeserializeCisaCveResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CisaCveResult DeserializeCisaCveResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,71 +117,69 @@ namespace Azure.Analytics.Defender.Easm
             DateTimeOffset dueDate = default;
             DateTimeOffset updatedAt = default;
             long count = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cveId"u8))
+                if (prop.NameEquals("cveId"u8))
                 {
-                    cveId = property.Value.GetString();
+                    cveId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vendorProject"u8))
+                if (prop.NameEquals("vendorProject"u8))
                 {
-                    vendorProject = property.Value.GetString();
+                    vendorProject = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("product"u8))
+                if (prop.NameEquals("product"u8))
                 {
-                    product = property.Value.GetString();
+                    product = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vulnerabilityName"u8))
+                if (prop.NameEquals("vulnerabilityName"u8))
                 {
-                    vulnerabilityName = property.Value.GetString();
+                    vulnerabilityName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shortDescription"u8))
+                if (prop.NameEquals("shortDescription"u8))
                 {
-                    shortDescription = property.Value.GetString();
+                    shortDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredAction"u8))
+                if (prop.NameEquals("requiredAction"u8))
                 {
-                    requiredAction = property.Value.GetString();
+                    requiredAction = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("notes"u8))
+                if (prop.NameEquals("notes"u8))
                 {
-                    notes = property.Value.GetString();
+                    notes = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dateAdded"u8))
+                if (prop.NameEquals("dateAdded"u8))
                 {
-                    dateAdded = property.Value.GetDateTimeOffset("O");
+                    dateAdded = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dueDate"u8))
+                if (prop.NameEquals("dueDate"u8))
                 {
-                    dueDate = property.Value.GetDateTimeOffset("O");
+                    dueDate = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updatedAt"u8))
+                if (prop.NameEquals("updatedAt"u8))
                 {
-                    updatedAt = property.Value.GetDateTimeOffset("O");
+                    updatedAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    count = property.Value.GetInt64();
+                    count = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CisaCveResult(
                 cveId,
                 vendorProject,
@@ -184,13 +192,16 @@ namespace Azure.Analytics.Defender.Easm
                 dueDate,
                 updatedAt,
                 count,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CisaCveResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CisaCveResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -200,15 +211,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        CisaCveResult IPersistableModel<CisaCveResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CisaCveResult IPersistableModel<CisaCveResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CisaCveResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CisaCveResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCisaCveResult(document.RootElement, options);
                     }
                 default:
@@ -216,22 +232,14 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CisaCveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CisaCveResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CisaCveResult"/> from. </param>
+        public static explicit operator CisaCveResult(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCisaCveResult(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCisaCveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

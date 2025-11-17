@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    public partial class DynamicDetectionRule : IUtf8JsonSerializable, IJsonModel<DynamicDetectionRule>
+    /// <summary> ML-based evaluation rule for a signal definition. </summary>
+    public partial class DynamicDetectionRule : IJsonModel<DynamicDetectionRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicDetectionRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DynamicDetectionRule"/> for deserialization. </summary>
+        internal DynamicDetectionRule()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynamicDetectionRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DynamicDetectionRule)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("dynamicThresholdModel"u8);
             writer.WriteStringValue(DynamicThresholdModel.ToString());
             writer.WritePropertyName("modelSensitivity"u8);
@@ -45,15 +50,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("trainingStartTime"u8);
                 writer.WriteStringValue(TrainingStartOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,22 +67,27 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        DynamicDetectionRule IJsonModel<DynamicDetectionRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynamicDetectionRule IJsonModel<DynamicDetectionRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DynamicDetectionRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DynamicDetectionRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDynamicDetectionRule(document.RootElement, options);
         }
 
-        internal static DynamicDetectionRule DeserializeDynamicDetectionRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DynamicDetectionRule DeserializeDynamicDetectionRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,48 +95,49 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DynamicThresholdModel dynamicThresholdModel = default;
             float modelSensitivity = default;
             DynamicThresholdDirection dynamicThresholdDirection = default;
-            DateTimeOffset? trainingStartTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? trainingStartOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dynamicThresholdModel"u8))
+                if (prop.NameEquals("dynamicThresholdModel"u8))
                 {
-                    dynamicThresholdModel = new DynamicThresholdModel(property.Value.GetString());
+                    dynamicThresholdModel = new DynamicThresholdModel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelSensitivity"u8))
+                if (prop.NameEquals("modelSensitivity"u8))
                 {
-                    modelSensitivity = property.Value.GetSingle();
+                    modelSensitivity = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("dynamicThresholdDirection"u8))
+                if (prop.NameEquals("dynamicThresholdDirection"u8))
                 {
-                    dynamicThresholdDirection = new DynamicThresholdDirection(property.Value.GetString());
+                    dynamicThresholdDirection = new DynamicThresholdDirection(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trainingStartTime"u8))
+                if (prop.NameEquals("trainingStartTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trainingStartTime = property.Value.GetDateTimeOffset("O");
+                    trainingStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DynamicDetectionRule(dynamicThresholdModel, modelSensitivity, dynamicThresholdDirection, trainingStartTime, serializedAdditionalRawData);
+            return new DynamicDetectionRule(dynamicThresholdModel, modelSensitivity, dynamicThresholdDirection, trainingStartOn, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DynamicDetectionRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DynamicDetectionRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -136,15 +147,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        DynamicDetectionRule IPersistableModel<DynamicDetectionRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynamicDetectionRule IPersistableModel<DynamicDetectionRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DynamicDetectionRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynamicDetectionRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDynamicDetectionRule(document.RootElement, options);
                     }
                 default:
@@ -152,6 +168,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DynamicDetectionRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

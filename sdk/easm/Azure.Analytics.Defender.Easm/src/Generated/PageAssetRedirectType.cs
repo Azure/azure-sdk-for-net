@@ -14,44 +14,63 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct PageAssetRedirectType : IEquatable<PageAssetRedirectType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PageAssetRedirectType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PageAssetRedirectType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HttpHeaderValue = "httpHeader";
         private const string MetaRefreshValue = "metaRefresh";
         private const string JavascriptValue = "javascript";
         private const string FinalValue = "final";
 
-        /// <summary> httpHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="PageAssetRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PageAssetRedirectType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the HttpHeader. </summary>
         public static PageAssetRedirectType HttpHeader { get; } = new PageAssetRedirectType(HttpHeaderValue);
-        /// <summary> metaRefresh. </summary>
+
+        /// <summary> Gets the MetaRefresh. </summary>
         public static PageAssetRedirectType MetaRefresh { get; } = new PageAssetRedirectType(MetaRefreshValue);
-        /// <summary> javascript. </summary>
+
+        /// <summary> Gets the Javascript. </summary>
         public static PageAssetRedirectType Javascript { get; } = new PageAssetRedirectType(JavascriptValue);
-        /// <summary> final. </summary>
+
+        /// <summary> Gets the Final. </summary>
         public static PageAssetRedirectType Final { get; } = new PageAssetRedirectType(FinalValue);
+
         /// <summary> Determines if two <see cref="PageAssetRedirectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PageAssetRedirectType left, PageAssetRedirectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PageAssetRedirectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PageAssetRedirectType left, PageAssetRedirectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PageAssetRedirectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PageAssetRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PageAssetRedirectType(string value) => new PageAssetRedirectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PageAssetRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PageAssetRedirectType?(string value) => value == null ? null : new PageAssetRedirectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PageAssetRedirectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PageAssetRedirectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -319,5 +319,70 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
             return GetJobResources().Get(jobName, expand, cancellationToken);
         }
+
+        /// <summary> Gets a collection of Joos in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Joos and their operations over a JooResource. </returns>
+        public virtual JooCollection GetJoos()
+        {
+            return GetCachedClient(client => new JooCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Joo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Joos_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jooName"> The name of the Joo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JooResource>> GetJooAsync(string jooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jooName, nameof(jooName));
+
+            return await GetJoos().GetAsync(jooName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Joo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Joos_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jooName"> The name of the Joo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JooResource> GetJoo(string jooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jooName, nameof(jooName));
+
+            return GetJoos().Get(jooName, cancellationToken);
+        }
     }
 }

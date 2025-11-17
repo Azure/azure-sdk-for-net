@@ -19,8 +19,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarQuotaResource"/> and their operations.
-    /// Each <see cref="BarQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BarQuotaResourceCollection"/> instance call the GetBarQuotaResources method from an instance of the parent resource.
+    /// Each <see cref="BarQuotaResource"/> in the collection will belong to the same instance of <see cref="BarResource"/>.
+    /// To get a <see cref="BarQuotaResourceCollection"/> instance call the GetBarQuotaResources method from an instance of <see cref="BarResource"/>.
     /// </summary>
     public partial class BarQuotaResourceCollection : ArmCollection
     {

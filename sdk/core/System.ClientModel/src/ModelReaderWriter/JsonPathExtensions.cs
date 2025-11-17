@@ -830,12 +830,6 @@ internal static class JsonPathExtensions
         long start = jsonReader.TokenStartIndex;
         jsonReader.Skip();
         long end = jsonReader.BytesConsumed;
-        // drop wrapping quotes for strings
-        if (json.Span[(int)start] == (byte)'"' && json.Span[(int)(end - 1)] == (byte)'"')
-        {
-            start++;
-            end--;
-        }
         target = json.Slice((int)start, (int)(end - start));
         return true;
     }

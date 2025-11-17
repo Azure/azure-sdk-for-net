@@ -13,82 +13,58 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation result. </summary>
     public partial class TranslationText
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
-        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
+        /// <param name="language"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="text"/> is null. </exception>
-        internal TranslationText(string targetLanguage, string text)
+        internal TranslationText(string language, string text)
         {
-            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(text, nameof(text));
-
-            TargetLanguage = targetLanguage;
+            Language = language;
             Text = text;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
-        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
+        /// <param name="language"> A string representing the language code of the target language. </param>
+        /// <param name="sourceCharacters"> An interger indicating the number of characters in the source text string. </param>
+        /// <param name="instructionTokens"> An interger indicating the number of tokens used in generating the translated text. </param>
+        /// <param name="sourceTokens"> An interger indicating the number of tokens used in the source sentence. </param>
+        /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
+        /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
-        /// <param name="alignment"> Alignment information. </param>
-        /// <param name="sentenceBoundaries"> Sentence boundaries in the input and output texts. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationText(string targetLanguage, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceBoundaries sentenceBoundaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationText(string language, int? sourceCharacters, int? instructionTokens, int? sourceTokens, int? responseTokens, int? targetTokens, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TargetLanguage = targetLanguage;
+            Language = language;
+            SourceCharacters = sourceCharacters;
+            InstructionTokens = instructionTokens;
+            SourceTokens = sourceTokens;
+            ResponseTokens = responseTokens;
+            TargetTokens = targetTokens;
             Text = text;
-            Transliteration = transliteration;
-            Alignment = alignment;
-            SentenceBoundaries = sentenceBoundaries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TranslationText"/> for deserialization. </summary>
-        internal TranslationText()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A string representing the language code of the target language. </summary>
-        public string TargetLanguage { get; }
+        public string Language { get; }
+
+        /// <summary> An interger indicating the number of characters in the source text string. </summary>
+        public int? SourceCharacters { get; }
+
+        /// <summary> An interger indicating the number of tokens used in generating the translated text. </summary>
+        public int? InstructionTokens { get; }
+
+        /// <summary> An interger indicating the number of tokens used in the source sentence. </summary>
+        public int? SourceTokens { get; }
+
+        /// <summary> An interger indicating the number of tokens used in the translation response. </summary>
+        public int? ResponseTokens { get; }
+
+        /// <summary> An interger indicating the number of tokens used in the target sentence. </summary>
+        public int? TargetTokens { get; }
+
         /// <summary> A string giving the translated text. </summary>
         public string Text { get; }
-        /// <summary> An object giving the translated text in the script specified by the toScript parameter. </summary>
-        public TransliteratedText Transliteration { get; }
-        /// <summary> Alignment information. </summary>
-        public TranslatedTextAlignment Alignment { get; }
-        /// <summary> Sentence boundaries in the input and output texts. </summary>
-        public SentenceBoundaries SentenceBoundaries { get; }
     }
 }
