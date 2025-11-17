@@ -45,22 +45,31 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The metrics. </summary>
+        [WirePath("metrics")]
         public IList<LogMetric> Metrics { get; }
         /// <summary> The dateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset DateTimeBegin { get; }
         /// <summary> The dateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The granularity. </summary>
+        [WirePath("granularity")]
         public LogMetricsGranularity Granularity { get; }
         /// <summary> The customDomains. </summary>
+        [WirePath("customDomains")]
         public IList<string> CustomDomains { get; }
         /// <summary> The protocols. </summary>
+        [WirePath("protocols")]
         public IList<string> Protocols { get; }
         /// <summary> The groupBy. </summary>
+        [WirePath("groupBy")]
         public IList<LogMetricsGroupBy> GroupBy { get; }
         /// <summary> The continents. </summary>
+        [WirePath("continents")]
         public IList<string> Continents { get; }
         /// <summary> The countryOrRegions. </summary>
+        [WirePath("countryOrRegions")]
         public IList<string> CountryOrRegions { get; }
     }
 }
