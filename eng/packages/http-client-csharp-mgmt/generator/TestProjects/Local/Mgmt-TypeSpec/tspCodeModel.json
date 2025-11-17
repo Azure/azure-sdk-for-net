@@ -21800,12 +21800,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.SolutionResources.get",
-                "decorators": [
-                  {
-                    "name": "Azure.ResourceManager.@armResourceRead",
-                    "arguments": {}
-                  }
-                ]
+                "decorators": []
               },
               "parameters": [
                 {
@@ -23879,12 +23874,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatuses.get",
-                "decorators": [
-                  {
-                    "name": "Azure.ResourceManager.@armResourceRead",
-                    "arguments": {}
-                  }
-                ]
+                "decorators": []
               },
               "parameters": [
                 {
