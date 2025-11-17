@@ -411,8 +411,6 @@ function Add-DebugProfile {
     Write-Host "  - Generator: $generatorName" -ForegroundColor White
     Write-Host "  - Package: $packageName" -ForegroundColor White
     Write-Host "  - Emitter: $emitterPackage (from tsp-location.yaml)" -ForegroundColor White
-
-    
     return $profileName
 }
 
