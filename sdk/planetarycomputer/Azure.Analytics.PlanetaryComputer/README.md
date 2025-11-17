@@ -14,8 +14,8 @@ Use the client library for Azure Planetary Computer to:
 - Generate secure access tokens for collections and assets
 
 [Source code][source_code]
-| [Package (NuGet)][pc_nuget]
-| [API reference documentation][pc_ref_docs]
+<!-- | [Package (NuGet)][pc_nuget] -->
+<!-- | [API reference documentation][pc_ref_docs] -->
 | [Product documentation][pc_product_docs]
 
 ## Getting started
@@ -367,9 +367,9 @@ PlanetaryComputerProClient client = new PlanetaryComputerProClient(
 
 ## Next steps
 
-- View [samples][pc_samples] demonstrating common patterns for working with GeoCatalog resources
-- Review the [API reference documentation][pc_ref_docs] for detailed information about the client library
-- Read the [product documentation][pc_product_docs] on Microsoft Learn
+<!-- View [samples][pc_samples] demonstrating common patterns for working with GeoCatalog resources -->
+- Review the [product documentation][pc_product_docs] on Microsoft Learn
+<!-- - Review the [API reference documentation][pc_ref_docs] for detailed information about the client library -->
 
 ## Contributing
 
@@ -381,10 +381,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/src
-[pc_nuget]: https://www.nuget.org/packages/Azure.Analytics.PlanetaryComputer
-[pc_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.analytics.planetarycomputer
+<!-- [pc_nuget]: https://www.nuget.org/packages/Azure.Analytics.PlanetaryComputer -->
+<!-- [pc_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.analytics.planetarycomputer -->
 [pc_product_docs]: https://learn.microsoft.com/azure/planetary-computer/
-[pc_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/samples
+<!-- [pc_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/samples -->
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme
