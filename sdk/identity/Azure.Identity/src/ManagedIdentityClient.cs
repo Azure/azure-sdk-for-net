@@ -63,7 +63,29 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
-            MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            // Convert Azure.Identity.ManagedIdentityId to Microsoft.Identity.Client.AppConfig.ManagedIdentityId
+            Microsoft.Identity.Client.AppConfig.ManagedIdentityId msalManagedIdentityId = ManagedIdentityId._idType switch
+            {
+                ManagedIdentityIdType.SystemAssigned => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.SystemAssigned,
+                ManagedIdentityIdType.ClientId => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedClientId(ManagedIdentityId._userAssignedId),
+                ManagedIdentityIdType.ResourceId => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedResourceId(ManagedIdentityId._userAssignedId),
+                ManagedIdentityIdType.ObjectId => Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedObjectId(ManagedIdentityId._userAssignedId),
+                _ => throw new InvalidOperationException("Invalid ManagedIdentityIdType")
+            };
+
+            ManagedIdentityApplication mi = ManagedIdentityApplicationBuilder.Create(msalManagedIdentityId).Build() as ManagedIdentityApplication;
+
+            MSAL.ManagedIdentitySource availableSource;
+            if (async)
+            {
+                availableSource = await mi.GetManagedIdentitySourceAsync().ConfigureAwait(false);
+            }
+            else
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
