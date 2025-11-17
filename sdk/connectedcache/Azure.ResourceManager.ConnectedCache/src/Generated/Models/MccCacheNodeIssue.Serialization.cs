@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
-    public partial class MccCacheNodeIssue : IUtf8JsonSerializable, IJsonModel<MccCacheNodeIssue>
+    /// <summary> Mcc cache node resource issue properties. </summary>
+    public partial class MccCacheNodeIssue : IJsonModel<MccCacheNodeIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MccCacheNodeIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MccCacheNodeIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeIssue)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(MccIssueType))
             {
                 writer.WritePropertyName("mccIssueType"u8);
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("issueEndDate"u8);
                 writer.WriteStringValue(IssueEndOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +81,27 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        MccCacheNodeIssue IJsonModel<MccCacheNodeIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MccCacheNodeIssue IJsonModel<MccCacheNodeIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MccCacheNodeIssue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeIssue)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMccCacheNodeIssue(document.RootElement, options);
         }
 
-        internal static MccCacheNodeIssue DeserializeMccCacheNodeIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MccCacheNodeIssue DeserializeMccCacheNodeIssue(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,70 +110,71 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string toastString = default;
             string detailString = default;
             string helpLink = default;
-            DateTimeOffset? issueStartDate = default;
-            DateTimeOffset? issueEndDate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? issueStartOn = default;
+            DateTimeOffset? issueEndOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mccIssueType"u8))
+                if (prop.NameEquals("mccIssueType"u8))
                 {
-                    mccIssueType = property.Value.GetString();
+                    mccIssueType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toastString"u8))
+                if (prop.NameEquals("toastString"u8))
                 {
-                    toastString = property.Value.GetString();
+                    toastString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detailString"u8))
+                if (prop.NameEquals("detailString"u8))
                 {
-                    detailString = property.Value.GetString();
+                    detailString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("helpLink"u8))
+                if (prop.NameEquals("helpLink"u8))
                 {
-                    helpLink = property.Value.GetString();
+                    helpLink = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issueStartDate"u8))
+                if (prop.NameEquals("issueStartDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    issueStartDate = property.Value.GetDateTimeOffset("O");
+                    issueStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("issueEndDate"u8))
+                if (prop.NameEquals("issueEndDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    issueEndDate = property.Value.GetDateTimeOffset("O");
+                    issueEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MccCacheNodeIssue(
                 mccIssueType,
                 toastString,
                 detailString,
                 helpLink,
-                issueStartDate,
-                issueEndDate,
-                serializedAdditionalRawData);
+                issueStartOn,
+                issueEndOn,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MccCacheNodeIssue>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MccCacheNodeIssue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -178,15 +184,20 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        MccCacheNodeIssue IPersistableModel<MccCacheNodeIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MccCacheNodeIssue IPersistableModel<MccCacheNodeIssue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MccCacheNodeIssue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeIssue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMccCacheNodeIssue(document.RootElement, options);
                     }
                 default:
@@ -194,6 +205,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MccCacheNodeIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
