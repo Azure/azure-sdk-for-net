@@ -54,66 +54,47 @@ await foreach (AgentVersion oneAgentVersion in agentVersions)
 }
 ```
 
-4. To communicate with the agent, we will need to create a conversation.
+4. To automatically store history, we can optionally create a conversation to use with the agent:
 
 Synchronous sample:
-```C# Snippet:Sample_CreateCoversation_Sync
-AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
-ModelReaderWriterOptions options = new("W");
-BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+```C# Snippet:Sample_CreateConversation_Sync
+ProjectConversation conversation
+    = projectClient.OpenAI.Conversations.CreateProjectConversation();
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateCoversation_Async
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-ModelReaderWriterOptions options = new("W");
-BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+```C# Snippet:Sample_CreateConversation_Async
+ProjectConversation conversation
+    = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 ```
 
 5. Ask question for an agent.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResponse_Sync
-OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
+```C# Snippet:Sample_CreateSimpleResponse_Sync
+OpenAIResponseClient responseClient
+    = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("myAgent", conversation.Id);
-
-OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
+OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResponse_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-ResponseCreationOptions responseOptions = new()
-{
-    Agent = agentVersion,
-    AgentConversationId = conversation,
-};
+```C# Snippet:Sample_CreateSimpleResponse_Async
+OpenAIResponseClient responseClient
+    = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
 OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```
 
-6. Wait for the agent to respond and print out the output; raise the error if the request was not successful.
+6. Print the output; raise the error if the request was not successful.
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_Sync
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    response = responsesClient.GetResponse(responseId: response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_WriteOutput_Async
-while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId:  response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```
 

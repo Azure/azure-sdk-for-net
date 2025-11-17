@@ -14,13 +14,13 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task MemorySearchToolAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_MemoryTool
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -43,23 +43,17 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-
         #region Snippet:Sample_CreateConversation_MemoryTool_Async
-
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.Agent = agentVersion;
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            [request],
-            responseOptions);
+        OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
         #endregion
 
         #region Snippet:Sample_WriteOutput_MemoryTool_Async
         string scope = "Joke from conversation";
-        List<ResponseItem> updateItems = [request];
+        MemoryUpdateOptions memoryOptions = new(scope);
+        memoryOptions.Items.Add(request);
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
             await Task.Delay(TimeSpan.FromMilliseconds(500));
             response = await responseClient.GetResponseAsync(responseId:  response.Id);
@@ -68,7 +62,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
         foreach (ResponseItem item in response.OutputItems)
         {
-            updateItems.Add(item);
+            memoryOptions.Items.Add(item);
         }
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -82,7 +76,12 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
         );
-        projectClient.MemoryStores.UpdateMemories(memoryStore.Name, new MemoryUpdateOptions(scope));
+        MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(memoryStoreName: memoryStore.Name, options: memoryOptions);
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(500));
+            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
+        }
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Async
         MemorySearchOptions opts = new(scope)
@@ -103,7 +102,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
         agentDefinition = new(model: modelDeploymentName)
         {
-            Instructions = "You are a prompt agent capable to access memorised conversation.",
+            Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
@@ -112,17 +111,10 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Async
-        responseOptions = new();
-        responseOptions.Agent = agentVersion2;
+        responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
 
         response = await responseClient.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
-            responseOptions);
-        while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
+            "Please explain me the meaning of the joke from the previous conversation.");
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -135,8 +127,9 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
     [Test]
     [SyncOnly]
-    public void MemorySearchTool()
+    public async Task MemorySearchTool()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -159,30 +152,20 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_MemoryTool_Sync
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.Agent = agentVersion;
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-        OpenAIResponse response = responseClient.CreateResponse(
-            [request],
-            responseOptions);
+        OpenAIResponse response = responseClient.CreateResponse([request]);
         #endregion
 
         #region Snippet:Sample_WriteOutput_MemoryTool_Sync
         string scope = "Joke from conversation";
-        List<ResponseItem> updateItems = [request];
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
+        MemoryUpdateOptions memoryOptions = new(scope);
+        memoryOptions.Items.Add(request);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-
         foreach (ResponseItem item in response.OutputItems)
         {
-            updateItems.Add(item);
+            memoryOptions.Items.Add(item);
         }
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -196,12 +179,12 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
         );
-        MemoryUpdateOptions updateOptions = new(scope);
-        foreach (ResponseItem updateItem in updateItems)
+        MemoryUpdateResult updateResult = projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: memoryOptions);
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
         {
-            updateOptions.Items.Add(updateItem);
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
         }
-        projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: updateOptions);
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Sync
         MemorySearchOptions searchOptions = new(scope)
@@ -222,7 +205,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync
         agentDefinition = new(model: modelDeploymentName)
         {
-            Instructions = "You are a prompt agent capable to access memorised conversation.",
+            Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchTool(memoryStoreName: memoryStore.Name, scope: scope));
         AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
@@ -231,17 +214,10 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_AnotherConversation_MemoryTool_Sync
-        responseOptions = new();
-        responseOptions.Agent = agentVersion2;
+        responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion2.Name);
 
         response = responseClient.CreateResponse(
-            [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")],
-            responseOptions);
-        while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
+            [ResponseItem.CreateUserMessageItem("Please explain me the meaning of the joke from the previous conversation.")]);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion

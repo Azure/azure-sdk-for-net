@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.OpenAI;
 
 public static partial class OpenAIResponseExtension
 {
-    public static ClientResult<OpenAIResponse> CreateResponse(this OpenAIResponseClient responseClient, AgentConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    public static ClientResult<OpenAIResponse> CreateResponse(this OpenAIResponseClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
         ClientResult protocolResult = responseClient.CreateResponse(
@@ -28,7 +28,7 @@ public static partial class OpenAIResponseExtension
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
-    public static async Task<ClientResult<OpenAIResponse>> CreateResponseAsync(this OpenAIResponseClient responseClient, AgentConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    public static async Task<ClientResult<OpenAIResponse>> CreateResponseAsync(this OpenAIResponseClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
         ClientResult protocolResult = await responseClient.CreateResponseAsync(
@@ -39,7 +39,7 @@ public static partial class OpenAIResponseExtension
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
-    private static BinaryContent RemoveItems(AgentConversation conversation, AgentReference agentRef)
+    private static BinaryContent RemoveItems(ProjectConversation conversation, AgentReference agentRef)
     {
         ResponseCreationOptions responseOptions = new()
         {

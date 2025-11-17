@@ -16,8 +16,9 @@ internal partial class InternalOpenAICollectionResultOptions
     public string BeforeId { get; set; }
     public List<string> Filters { get; } = [];
     public List<string> Includes { get; } = [];
+    public Dictionary<string, string> ExtraQueryMap { get; } = [];
 
-    public InternalOpenAICollectionResultOptions(int? limit = null, string order = null, string after = null, string before = null, IEnumerable<string> filters = null, IEnumerable<string> includes = null)
+    public InternalOpenAICollectionResultOptions(int? limit = null, string order = null, string after = null, string before = null, IEnumerable<string> filters = null, IEnumerable<string> includes = null, IReadOnlyDictionary<string, string> extraQueryMap = null)
     {
         Limit = limit;
         Order = order;
@@ -39,16 +40,32 @@ internal partial class InternalOpenAICollectionResultOptions
                 Includes.Add(maybeInclude);
             }
         }
+        ExtraQueryMap ??= [];
+        if (extraQueryMap is not null)
+        {
+            foreach (KeyValuePair<string, string> pair in extraQueryMap)
+            {
+                ExtraQueryMap.Add(pair.Key, pair.Value);
+            }
+        }
     }
 
     public InternalOpenAICollectionResultOptions GetCloneForPage<T>(InternalOpenAIPaginatedListResultOfT<T> page)
     {
-        InternalOpenAICollectionResultOptions clonedOptions = (InternalOpenAICollectionResultOptions)MemberwiseClone();
+        InternalOpenAICollectionResultOptions clonedOptions = new()
+        {
+            ParentResourceId = ParentResourceId,
+            Limit = Limit,
+            Order = Order,
+            AfterId = page.LastId,
+            BeforeId = page.FirstId,
+        };
         clonedOptions.Filters.AddRange(Filters);
         clonedOptions.Includes.AddRange(Includes);
-
-        clonedOptions.AfterId = page.LastId;
-        clonedOptions.BeforeId = page.FirstId;
+        foreach (KeyValuePair<string, string> pair in ExtraQueryMap)
+        {
+            clonedOptions.ExtraQueryMap.Add(pair.Key, pair.Value);
+        }
 
         return clonedOptions;
     }

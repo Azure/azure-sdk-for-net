@@ -54,7 +54,7 @@ ThreadRun run = await agentsClient.Runs.CreateRunAsync(
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 ```
 
-6 . Whait while run complete.
+6. Wait for the run to complete.
 
 ```C# Snippet:AI_Projects_ExtensionsAgentsOverviewWaitForRun
 do

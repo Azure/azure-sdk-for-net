@@ -22,7 +22,7 @@ public class DeploymentTest : ProjectsClientTestBase
     }
 
     [RecordedTest]
-    [Ignore("Pending 2.* investigation")]
+    [Ignore("Pending Microsoft.ClientModel.TestFramework migration")]
     public async Task AIDeploymentTest()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;

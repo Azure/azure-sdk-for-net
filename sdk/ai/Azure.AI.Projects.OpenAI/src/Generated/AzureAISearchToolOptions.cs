@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.OpenAI
         /// resource attached to the agent.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
-        public AzureAISearchToolOptions(IEnumerable<AzureAISearchIndex> indexes)
+        public AzureAISearchToolOptions(IEnumerable<AzureAISearchToolIndex> indexes)
         {
             Argument.AssertNotNull(indexes, nameof(indexes));
 
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.OpenAI
         /// resource attached to the agent.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchToolOptions(IList<AzureAISearchIndex> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureAISearchToolOptions(IList<AzureAISearchToolIndex> indexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Indexes = indexes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

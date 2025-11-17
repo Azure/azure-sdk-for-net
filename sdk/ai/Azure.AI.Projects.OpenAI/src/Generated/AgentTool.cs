@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     /// <summary>
     /// The AgentTool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingAgentTool"/>, <see cref="MicrosoftFabricAgentTool"/>, <see cref="SharepointAgentTool"/>, <see cref="AzureAISearchAgentTool"/>, <see cref="OpenAPIAgentTool"/>, <see cref="BingCustomSearchAgentTool"/>, <see cref="BrowserAutomationAgentTool"/>, <see cref="AzureFunctionAgentTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2ATool"/>, and <see cref="MemorySearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalShellAgentTool"/>, <see cref="BingGroundingAgentTool"/>, <see cref="MicrosoftFabricAgentTool"/>, <see cref="SharepointAgentTool"/>, <see cref="AzureAISearchAgentTool"/>, <see cref="OpenAPIAgentTool"/>, <see cref="BingCustomSearchAgentTool"/>, <see cref="BrowserAutomationAgentTool"/>, <see cref="AzureFunctionAgentTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2ATool"/>, and <see cref="MemorySearchTool"/>.
     /// </summary>
     public abstract partial class AgentTool
     {

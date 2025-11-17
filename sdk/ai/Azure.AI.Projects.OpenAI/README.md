@@ -15,8 +15,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Install the package](#install-the-package)
-- [Key concepts](#key-concepts)
   - [Authenticate the client](#authenticate-the-client)
+- [Key concepts](#key-concepts)
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
@@ -24,7 +24,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
     - [Agents](#agents)
     - [Responses](#responses)
-    - [Coversations](#coversations)
+    - [Conversations](#conversations)
   - [Container App](#container-app)
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)
@@ -48,12 +48,10 @@ To use Azure AI Agents capabilities, you must have an [Azure subscription](https
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Orojects.OpenAI --prerelease
+dotnet add package Azure.AI.Projects.OpenAI --prerelease
 ```
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
-
-## Key concepts
 
 ### Authenticate the client
 
@@ -78,10 +76,12 @@ ProjectOpenAIClient agentClient = projectClient.OpenAI;
 For operations based on OpenAI APIs like `/responses`, `/files`, and `/vector_stores`, you can retrieve `OpenAIResponseClient`, `OpenAIFileClient` and `VectorStoreClient` through the appropriate helper methods:
 
 ```C# Snippet:GetOpenAIClientsFromProjects
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("AGENT_NAME");
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("AGENT_NAME");
 OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
 ```
+
+## Key concepts
 
 ### Service API versions
 
@@ -106,18 +106,18 @@ The Azure.AI.Projects.OpenAI framework organized in a way that for each call, re
 
 Synchronous call:
 ```C# Snippet:Sample_CreateResponse_Sync
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous call:
 
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
-In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Orojects.OpenAI/samples) for both synchronous and asynchronous code.
+In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples) for both synchronous and asynchronous code.
 
 ## Examples
 
@@ -156,19 +156,13 @@ The code above will result in creation of `AgentVersion` object, which is the da
 OpenAI API allows you to get the response without creating an agent by using the response API. In this scenario we first create the response object.
 
 ```C# Snippet:Sample_CreateResponse_Async
-OpenAIResponseClient responseClient = client.GetProjectOpenAIResponseClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
 After the response was created we need to wait for it to complete.
 
 ```C# Snippet:Sample_WriteOutput_ResponseBasic_Async
-while (response.Status != ResponseStatus.Incomplete || response.Status != ResponseStatus.Failed || response.Status != ResponseStatus.Completed)
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    response = await responseClient.GetResponseAsync(responseId: response.Id);
-}
-
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -208,14 +202,14 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 );
 ```
 
-To associate the Response with the Agent the agent reference needs to be created. It is done by calling `GetProjectOpenAIResponseClientForAgent` method.
+To associate the Response with the Agent the agent reference needs to be created. It is done by calling `GetProjectResponsesClientForAgent` method.
 
 ```C# Snippet:CreateResponseBasic_Async
 var agentReference = new AgentReference(name: agentVersion.Name);
-ProjectOpenAIResponseClient responseClient = openaiClient.GetProjectOpenAIResponseClientForAgent(agentReference);
+ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
 ResponseCreationOptions responseCreationOptions = new();
 OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("Write Maxwell's eqution in LaTeX format.")],
+    [ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")],
     responseCreationOptions);
 Console.WriteLine(response.GetOutputText());
 ```
@@ -236,16 +230,26 @@ Finally, we can delete Agent.
 await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
 ```
 
-#### Coversations
+Previously created responses can also be listed, typically to find all responses associated with a particular agent or conversation.
+
+```C# Snippet:Sample_ListResponses_Async
+await foreach (OpenAIResponse response
+    in projectClient.OpenAI.Responses.GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
+{
+    Console.WriteLine($"Matching response: {response.Id}");
+}
+```
+
+#### Conversations
 
 Conversations may be used to store the history of interaction with the agent. To add the responses to a conversation,
-set the conversation parameter while calling `GetProjectOpenAIResponseClientForAgent`.
+set the conversation parameter while calling `GetProjectResponsesClientForAgent`.
 
 ```C# Snippet:ConversationClient
 ResponseCreationOptions responseCreationOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME, conversation);
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
 ```
 
 Conversations may be deleted to clean up the resources.
@@ -262,20 +266,20 @@ ProjectConversationCreationOptions conversationOptions = new()
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state
 //
 string EXISTING_CONVERSATION_ID = conversation.Id;
 
-_ = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+_ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
     EXISTING_CONVERSATION_ID,
     [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
 //
 // Use the agent and conversation in a response
 //
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
 ResponseCreationOptions responseCreationOptions = new()
 {
     AgentConversationId = EXISTING_CONVERSATION_ID,
@@ -287,7 +291,7 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(items, respon
 
 ### Container App
 
-[Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Orojects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
+[Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Projects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
 
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
 AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -363,17 +367,13 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Now we can ask the agent a question, which requires running python code in the container.
 
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("I need to solve the equation sin(x) + x^2 = 42");
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [request],
-    responseOptions);
+OpenAIResponse response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
-### Computer tool
+### Computer use
 
 `ComputerTool` allows Agents to assist customer in computer related tasks. Its constructor is provided with description of an operation system and screen resolution.
 
@@ -399,7 +399,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Users can create a message to the Agent, which contains text and screenshots.
 
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseCreationOptions responseOptions = new();
 responseOptions.TruncationMode = ResponseTruncationMode.Auto;
 ResponseItem request = ResponseItem.CreateUserMessageItem(
@@ -415,7 +415,7 @@ int limitIteration = 10;
 OpenAIResponse response;
 do
 {
-    response = await CreateAndWaitForResponseAsync(
+    response = await CreateResponseAsync(
         responseClient,
         inputItems,
         responseOptions
@@ -643,30 +643,22 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-To supply functions outputs, we will need to wait for response multiple times. We will define method `CreateAndWaitForResponseAsync` for brevity.
+To supply functions outputs, we will need to obtain responses multiple times. We will define method `CreateAndWaitForResponseAsync` for brevity.
 
-```C# Snippet:Sample_WaitForResponse_Function_Async
-public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+```C# Snippet:Sample_CheckResponse_Function_Async
+public static async Task<OpenAIResponse> CreateAndCheckReponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
 {
     OpenAIResponse response = await responseClient.CreateResponseAsync(
-        inputItems: items,
-        options: options);
-    while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-    {
-        await Task.Delay(TimeSpan.FromMilliseconds(500));
-        response = await responseClient.GetResponseAsync(responseId: response.Id);
-    }
+        inputItems: items);
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
 ```
 
-Wait for the response; if the local function call is required, the response item will be of `FunctionCallResponseItem` type and will contain the function name needed by the Agent. In this case we will use our helper method `GetResolvedToolOutput` to get the `FunctionCallOutputResponseItem` with function call result. To provide the right answer, we need to supply all the response items to `CreateResponse` or `CreateResponseAsync` call. At the end we will print out the function response.
+If the local function call is required, the response item will be of `FunctionCallResponseItem` type and will contain the function name needed by the Agent. In this case we will use our helper method `GetResolvedToolOutput` to get the `FunctionCallOutputResponseItem` with function call result. To provide the right answer, we need to supply all the response items to `CreateResponse` or `CreateResponseAsync` call. At the end we will print out the function response.
 
 ```C# Snippet:Sample_CreateResponse_Function_Async
-OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-ResponseCreationOptions responseOptions = new();
-responseOptions.Agent = agentVersion;
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
 List<ResponseItem> inputItems = [request];
@@ -674,10 +666,9 @@ bool funcionCalled = false;
 OpenAIResponse response;
 do
 {
-    response = await CreateAndWaitForResponseAsync(
+    response = await CreateAndCheckReponseAsync(
         responseClient,
-        inputItems,
-        responseOptions);
+        inputItems);
     funcionCalled = false;
     foreach (ResponseItem responseItem in response.OutputItems)
     {
@@ -771,7 +762,7 @@ To further diagnose and troubleshoot issues, you can enable logging following th
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Orojects.OpenAI/samples)
+Beyond the introductory scenarios discussed, the AI Agents client library offers support for additional scenarios to help take advantage of the full feature set of the AI services.  To help explore some of these scenarios, the AI Agents client library offers a set of samples to serve as an illustration for common scenarios.  Please see the [Samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples)
 
 ## Contributing
 
@@ -781,17 +772,18 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Orojects.OpenAI/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Projects.OpenAI/README.png)
 
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Orojects.OpenAI/samples
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples
 <!-- remove "Persistent" -->
 [api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
-[nuget]: https://www.nuget.org/packages/Azure.AI.Orojects.OpenAI.Persistent/
+<!-- replace with https://www.nuget.org/packages/Azure.AI.Projects.OpenAI/ -->
+[nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
-[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Orojects.OpenAI
+[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI
 [product_doc]: https://learn.microsoft.com/azure/ai-studio/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet

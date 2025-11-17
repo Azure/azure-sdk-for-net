@@ -415,6 +415,7 @@
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="5.0.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
+    <PackageReference Update="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.2.2" />
@@ -493,7 +494,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251107.3</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20251022.3</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251113.2</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20251113.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

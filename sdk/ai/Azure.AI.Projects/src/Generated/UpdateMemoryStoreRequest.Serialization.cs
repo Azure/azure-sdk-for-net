@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The UpdateMemoryStoreRequest. </summary>
     internal partial class UpdateMemoryStoreRequest : IJsonModel<UpdateMemoryStoreRequest>
     {
         /// <param name="writer"> The JSON writer. </param>

@@ -3,23 +3,20 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
-using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_Container_App : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task SampleContainerAppAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_Create_client_ContainerApp
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -47,7 +44,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(conversationOptions);
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
         ResponseCreationOptions responseOptions = new()
@@ -56,14 +53,14 @@ public class Sample_Container_App : ProjectsOpenAITestBase
             AgentConversationId = conversation.Id,
         };
         OpenAIResponse response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
-        response = await WaitResponseAsync(projectClient.OpenAI.Responses, response);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
 
-        await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
             conversationId: conversation.Id,
             items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
         response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
-        response = await WaitResponseAsync(projectClient.OpenAI.Responses, response);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ContainerApp_Async
@@ -76,6 +73,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
     [SyncOnly]
     public void SampleContainerAppSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var containerAppResourceId = System.Environment.GetEnvironmentVariable("CONTAINER_APP_RESOURCE_ID");
@@ -101,19 +99,19 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation(options: conversationOptions);
+        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options: conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(containerAgentVersion, conversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
         OpenAIResponse response = responseClient.CreateResponse([]);
-        response = WaitResponse(projectClient.OpenAI.Responses, response);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
 
-        projectClient.OpenAI.Conversations.CreateAgentConversationItems(
+        projectClient.OpenAI.Conversations.CreateProjectConversationItems(
             conversationId: conversation.Id,
             items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
         response = projectClient.OpenAI.Responses.CreateResponse([]);
-        response = WaitResponse(projectClient.OpenAI.Responses, response);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ContainerApp_Sync
@@ -121,32 +119,6 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         projectClient.Agents.DeleteAgentVersion(agentName: containerAgentVersion.Name, agentVersion: containerAgentVersion.Version);
         #endregion
     }
-
-    #region Snippet:Sample_WaitForRun_ContainerApp_Sync
-    private static OpenAIResponse WaitResponse(OpenAIResponseClient responseClient, OpenAIResponse response)
-    {
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
-        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        return response;
-    }
-    #endregion
-
-    #region Snippet:Sample_WaitForRun_ContainerApp_Async
-    private static async Task<OpenAIResponse> WaitResponseAsync(OpenAIResponseClient responseClient, OpenAIResponse response)
-    {
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
-        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        return response;
-    }
-    #endregion
 
     public Sample_Container_App(bool isAsync) : base(isAsync)
     { }

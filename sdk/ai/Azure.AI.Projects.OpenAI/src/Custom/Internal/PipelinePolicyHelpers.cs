@@ -8,8 +8,6 @@ using System.IO;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using Azure.Core;
-using OpenAI;
 using OpenAI.Files;
 
 namespace Azure.AI.Projects.OpenAI;
@@ -39,34 +37,38 @@ internal static partial class PipelinePolicyHelpers
             new GenericActionPipelinePolicy(
                 requestAction: request =>
                 {
-                    if (request?.Uri is Uri requestUri)
+                    if (request?.Uri is Uri requestUri
+                        && requestUri.Query?.ToLowerInvariant()?.Contains($"{key.ToLowerInvariant()}=") != true
+                        && requestUri.Query?.ToLowerInvariant()?.Contains($"{key.ToLowerInvariant()}[]=") != true
+                        && valueGenerator.Invoke() is string generatedValue
+                        && !string.IsNullOrEmpty(generatedValue))
                     {
-                        RawRequestUriBuilder builder = new();
+                        ClientUriBuilder builder = new();
                         builder.Reset(requestUri);
-                        if (!builder.Query.Contains(key))
-                        {
-                            string value = valueGenerator.Invoke();
-                            if (!string.IsNullOrEmpty(value))
-                            {
-                                builder.AppendQuery(key, value, escapeValue: true);
-                            }
-                        }
-                        request.Uri = builder.ToUri();
+                        builder.AppendQuery(key, generatedValue, escape: true);
+
+                        // ClientUriBuilder.Reset removes existing query; we need to restore it
+                        request.Uri = string.IsNullOrEmpty(requestUri.Query)
+                            ? builder.ToUri()
+                            : new Uri($"{builder.ToUri()}&{requestUri.Query.Substring(1)}");
                     }
                 }),
                 PipelinePosition.PerCall);
     }
 
-    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, string value)
+    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, string value, bool replaceExisting = false)
         => AddRequestHeaderPolicy(options, key, () => value);
 
-    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator)
+    public static void AddRequestHeaderPolicy(ClientPipelineOptions options, string key, Func<string> valueGenerator, bool replaceExisting = false)
     {
         options.AddPolicy(
             new GenericActionPipelinePolicy(
                 requestAction: request =>
                 {
-                    request.Headers.Set(key, valueGenerator.Invoke());
+                    if (replaceExisting || !request.Headers.TryGetValue(key, out string _))
+                    {
+                        request.Headers.Set(key, valueGenerator.Invoke());
+                    }
                 }),
             PipelinePosition.PerCall);
     }

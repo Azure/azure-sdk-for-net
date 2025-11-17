@@ -81,15 +81,9 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         #region Snippet:Sample_GetResponse_ImageGeneration_Async
         ProjectOpenAIClientOptions options = new();
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
-        ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
-        #endregion
-        #region Snippet:Sample_WaitForRun_ImageGeneration_Async
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId:  response.Id);
-        }
         #endregion
         #region Snippet:Sample_SaveImage_ImageGeneration
         foreach (ResponseItem item in response.OutputItems)
@@ -148,16 +142,9 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         #region Snippet:Sample_GetResponse_ImageGeneration_Sync
         ProjectOpenAIClientOptions options = new();
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
-        ProjectOpenAIResponseClient responseClient = openAIClient.GetProjectOpenAIResponseClientForAgent(new AgentReference(name: agentVersion.Name));
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
         OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");
-        #endregion
-        #region Snippet:Sample_WaitForRun_ImageGeneration_Sync
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
         #endregion
         foreach (ResponseItem item in response.OutputItems)
         {

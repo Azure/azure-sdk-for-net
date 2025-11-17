@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -15,6 +15,7 @@ using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
@@ -22,17 +23,42 @@ namespace Azure.AI.Projects.OpenAI.Tests;
 [LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
+    public enum OpenAIClientMode
+    {
+        UseExternalOpenAI,
+        UseFDPOpenAI
+    }
+
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
+    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync, testMode: GetRecordedTestMode()) { }
+
+    public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
+    {
+    }
+
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
         => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
 
-    protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
-        => GetConfiguredOptions(
-            new ProjectOpenAIClientOptions()
-            {
-                Endpoint = endpoint,
-                ApiVersion = apiVersion,
-            },
-            instrument);
+    protected T CreateTestOpenAIClientOptions<T>(Uri endpoint = null, bool instrument = true)
+        where T : OpenAIClientOptions
+    {
+        T options = typeof(T).Name switch
+        {
+            nameof(OpenAIClientOptions) => (T)new OpenAIClientOptions(),
+            nameof(ProjectOpenAIClientOptions) => (T)(object)new ProjectOpenAIClientOptions(),
+            nameof(ProjectResponsesClientOptions) => (T)(object)new ProjectResponsesClientOptions(),
+            _ => throw new NotImplementedException()
+        };
+        options.Endpoint = endpoint;
+        return GetConfiguredOptions(options, instrument);
+    }
 
     private T GetConfiguredOptions<T>(T options, bool instrument)
         where T : ClientPipelineOptions
@@ -52,23 +78,6 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return instrument ? InstrumentClientOptions(options) : options;
     }
 
-    private readonly List<string> _conversationIDs = [];
-    private ProjectOpenAIConversationClient _conversations = null;
-
-    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
-    {
-        "Playback" => RecordedTestMode.Playback,
-        "Live" => RecordedTestMode.Live,
-        "Record" => RecordedTestMode.Record,
-        _ => null
-    };
-
-    public ProjectsOpenAITestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
-
-    public ProjectsOpenAITestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
-    {
-    }
-
     protected AIProjectClient GetTestProjectClient()
     {
         AIProjectClientOptions options = CreateTestProjectClientOptions();
@@ -76,19 +85,75 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return CreateProxyFromClient(baseClient);
     }
 
-    protected ProjectOpenAIClient GetTestClient()
+    protected ProjectOpenAIClient GetTestProjectOpenAIClient(bool endpointInConstructor = true, bool endpointInOptions = false)
     {
-        ProjectOpenAIClientOptions clientOptions = CreateTestProjectOpenAIClientOptions(endpoint: new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai"), apiVersion: "2025-11-15-preview");
-        return CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
+        ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+
+        return CreateProxyFromClient(endpointInConstructor
+            ? new ProjectOpenAIClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), clientOptions)
+            : new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
     }
 
-    protected ProjectOpenAIResponseClient GetTestResponseClient(Uri constructorEndpoint = null, ProjectOpenAIClientOptions options = null)
+    protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
-        options ??= CreateTestProjectOpenAIClientOptions(endpoint: null, apiVersion: "2025-11-15-preview");
-        ProjectOpenAIResponseClient baseClient = constructorEndpoint is null
-            ? new ProjectOpenAIResponseClient(GetTestAuthenticationProvider(), options)
-            : new ProjectOpenAIResponseClient(constructorEndpoint, GetTestAuthenticationProvider(), options);
-        return CreateProxyFromClient(baseClient);
+        ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai") : null);
+
+        AgentReference defaultAgent = null;
+        if (defaultAgentName is not null)
+        {
+            defaultAgent = new(defaultAgentName);
+        }
+        else if (defaultModelName is not null)
+        {
+            defaultAgent = new($"model:{defaultModelName}");
+        }
+
+        return CreateProxyFromClient(endpointInConstructor
+                ? new ProjectResponsesClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), defaultAgent, defaultConversationId, clientOptions)
+                : new ProjectResponsesClient(GetTestAuthenticationProvider(), clientOptions));
+    }
+
+    protected OpenAIClient GetTestBaseOpenAIClient(Uri overrideEndpoint = null)
+    {
+        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+
+        return CreateProxyFromClient(
+            new OpenAIClient(
+                new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
+                options));
+    }
+
+    protected OpenAIResponseClient GetTestBaseResponsesClient(Uri overrideEndpoint = null, string overrideModel = null)
+    {
+        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+
+        return CreateProxyFromClient(
+            new OpenAIResponseClient(
+                overrideModel ?? TestEnvironment.MODELDEPLOYMENTNAME,
+                new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
+                options));
+    }
+
+    protected OpenAIClient GetTestOpenAIClient(OpenAIClientMode clientMode)
+    {
+        return clientMode switch
+        {
+            OpenAIClientMode.UseFDPOpenAI => GetTestProjectOpenAIClient(),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseOpenAIClient(),
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    protected OpenAIResponseClient GetTestResponsesClient(OpenAIClientMode clientMode, string overrideModel = null)
+    {
+        return clientMode switch
+        {
+            OpenAIClientMode.UseFDPOpenAI => GetTestProjectResponsesClient(defaultModelName: overrideModel),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseResponsesClient(overrideModel: overrideModel),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     private AuthenticationTokenProvider GetTestAuthenticationProvider()
@@ -117,33 +182,6 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return response;
     }
 
-    public static void AssertListEqual(string[] expected, List<string> observed)
-    {
-        // Assert.AreEqual(expected.Length, observed.Count, $"The length of arrays are different. Expected: {expected}, Observed: {observed.ToArray()}");
-        HashSet<string> expectedHash = [..expected];
-        HashSet<string> observedHash = [..observed];
-        if (!expectedHash.SetEquals(observedHash))
-        {
-            Assert.Fail($"The members of arrays differ. Expected: {ToPritableString(expected)}, Observed: {ToPritableString(observed)}");
-        }
-    }
-
-    private static string ToPritableString(IEnumerable<string> data)
-    {
-        StringBuilder sb = new();
-        foreach (string val in data)
-        {
-            sb.Append(val);
-            sb.Append(',');
-            sb.Append(' ');
-        }
-        if (sb.Length > 2)
-        {
-            sb.Remove(sb.Length - 2, 2);
-        }
-        return sb.ToString();
-    }
-
     protected void IgnoreSampleMayBe()
     {
         if (Mode != RecordedTestMode.Live)
@@ -162,38 +200,13 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     #endregion
     #region Cleanup
+
     [TearDown]
     public virtual void Cleanup()
     {
-        if (Mode == RecordedTestMode.Playback)
-            return;
-        ProjectOpenAIClient openAIClient = GetTestClient();
-        // Remove conversations.
-        if (_conversations is not null)
-        {
-            foreach (string id in _conversationIDs)
-            {
-                try
-                {
-                    openAIClient.Conversations.DeleteConversation(conversationId: id);
-                }
-                catch (RequestFailedException ex)
-                {
-                    // Throw only if it is the error other then "Not found."
-                    if (ex.Status != 404)
-                        throw;
-                }
-            }
-        }
-        //// Remove Vector stores
-        //OpenAIClient oaiClient = client.GetOpenAIClient();
-        //VectorStoreClient oaiVctStoreClient = oaiClient.GetVectorStoreClient();
-        //foreach (VectorStore vct in oaiVctStoreClient.GetVectorStores().Where(x => (x.Name ?? "").Equals(VECTOR_STORE)))
-        //{
-        //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
-        //}
     }
     #endregion
+
     #region Debug Method
     internal static PipelinePolicy GetDumpPolicy()
     {
@@ -237,6 +250,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                 Console.WriteLine($"Response headers: {headers}");
                 if (message.BufferResponse)
                 {
+                    message.Response.BufferContent();
                     Console.WriteLine("--- Begin response content ---");
                     Console.WriteLine(message.Response.Content?.ToString());
                     Console.WriteLine("--- End of response content ---");

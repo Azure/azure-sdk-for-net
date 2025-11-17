@@ -33,3 +33,8 @@ extends:
     Artifacts:
     - name: Azure.AI.Projects
       safeName: AzureAIProjects
+    - name: Azure.AI.Projects.OpenAI
+      safeName: AzureAIProjectsOpenAI
+    # Skip project reference tests
+    MatrixFilters:
+      - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)

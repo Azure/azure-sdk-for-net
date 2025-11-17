@@ -160,9 +160,7 @@ public class Sample_Function : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Function_Async
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.Agent = agentVersion;
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
         List<ResponseItem> inputItems = [request];
@@ -170,10 +168,9 @@ public class Sample_Function : ProjectsOpenAITestBase
         OpenAIResponse response;
         do
         {
-            response = await CreateAndWaitForResponseAsync(
+            response = await CreateAndCheckReponseAsync(
                 responseClient,
-                inputItems,
-                responseOptions);
+                inputItems);
             funcionCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
             {
@@ -194,33 +191,21 @@ public class Sample_Function : ProjectsOpenAITestBase
         #endregion
     }
 
-    #region Snippet:Sample_WaitForResponse_Function_Async
-    public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+    #region Snippet:Sample_CheckResponse_Function_Async
+    public static async Task<OpenAIResponse> CreateAndCheckReponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
     {
         OpenAIResponse response = await responseClient.CreateResponseAsync(
-            inputItems: items,
-            options: options);
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId: response.Id);
-        }
+            inputItems: items);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
     }
     #endregion
 
-    #region Snippet:Sample_WaitForResponse_Function_Sync
-    public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+    #region Snippet:Sample_CheckResponse_Function_Sync
+    public static OpenAIResponse CreateAndCheckReponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
     {
         OpenAIResponse response = responseClient.CreateResponse(
-            inputItems: items,
-            options: options);
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responseClient.GetResponse(responseId: response.Id);
-        }
+            inputItems: items);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
     }
@@ -253,9 +238,7 @@ public class Sample_Function : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Function_Sync
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.Agent = agentVersion;
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
         List<ResponseItem> inputItems = [request];
@@ -263,10 +246,9 @@ public class Sample_Function : ProjectsOpenAITestBase
         OpenAIResponse response;
         do
         {
-            response = CreateAndWaitForResponse(
+            response = CreateAndCheckReponse(
                 responseClient,
-                inputItems,
-                responseOptions);
+                inputItems);
             funcionCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
             {

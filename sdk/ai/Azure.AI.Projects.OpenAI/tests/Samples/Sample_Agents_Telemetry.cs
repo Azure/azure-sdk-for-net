@@ -17,13 +17,13 @@ using Azure.AI.Projects.OpenAI.Tests;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public partial class Sample_Agents_Telemetry : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task TracingToConsoleExample()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -58,6 +58,7 @@ public partial class Sample_Agents_Telemetry : ProjectsOpenAITestBase
     [SyncOnly]
     public void TracingToConsoleExampleSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -100,6 +101,7 @@ public partial class Sample_Agents_Telemetry : ProjectsOpenAITestBase
     [AsyncOnly]
     public async Task TracingToAzureMonitorExample()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -133,6 +135,7 @@ public partial class Sample_Agents_Telemetry : ProjectsOpenAITestBase
     [SyncOnly]
     public void TracingToAzureMonitorExampleSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

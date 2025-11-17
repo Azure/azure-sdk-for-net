@@ -10,13 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_conversation_CRUD : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task ConversationCRUDAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient_ConversationCRUD
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -27,20 +27,20 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Async
-        AgentConversation conversation1 = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation conversation1 = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-        AgentConversation conversation2 = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation conversation2 = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
         #region Snippet:Sample_GetConversation_ConversationCRUD_Async
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.GetAgentConversationAsync(conversationId: conversation1.Id);
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.GetProjectConversationAsync(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Async
-        await foreach (AgentConversation res in projectClient.OpenAI.Conversations.GetAgentConversationsAsync()){
+        await foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversationsAsync()){
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
@@ -50,10 +50,10 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         {
             Metadata = { ["key"] = "value" },
         };
-        await projectClient.OpenAI.Conversations.UpdateAgentConversationAsync(conversation.Id, updateOptions);
+        await projectClient.OpenAI.Conversations.UpdateProjectConversationAsync(conversation.Id, updateOptions);
 
         // Get the updated conversation.
-        conversation = await projectClient.OpenAI.Conversations.GetAgentConversationAsync(conversation1.Id);
+        conversation = await projectClient.OpenAI.Conversations.GetProjectConversationAsync(conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
@@ -67,6 +67,7 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
     [SyncOnly]
     public void ConversationCRUDSync()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
@@ -75,20 +76,20 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Sync
-        AgentConversation conversation1 = projectClient.OpenAI.Conversations.CreateAgentConversation();
+        ProjectConversation conversation1 = projectClient.OpenAI.Conversations.CreateProjectConversation();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-        AgentConversation conversation2 = projectClient.OpenAI.Conversations.CreateAgentConversation();
+        ProjectConversation conversation2 = projectClient.OpenAI.Conversations.CreateProjectConversation();
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
         #region Snippet:Sample_GetConversation_ConversationCRUD_Sync
-        AgentConversation conversation = projectClient.OpenAI.Conversations.GetAgentConversation(conversationId: conversation1.Id);
+        ProjectConversation conversation = projectClient.OpenAI.Conversations.GetProjectConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Sync
-        foreach (AgentConversation res in projectClient.OpenAI.Conversations.GetAgentConversations())
+        foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversations())
         {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
@@ -99,10 +100,10 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         {
             Metadata = { ["key"] = "value" },
         };
-        projectClient.OpenAI.Conversations.UpdateAgentConversation(conversation1.Id, updateOptions);
+        projectClient.OpenAI.Conversations.UpdateProjectConversation(conversation1.Id, updateOptions);
 
         // Get the updated conversation.
-        conversation = projectClient.OpenAI.Conversations.GetAgentConversation(conversationId: conversation1.Id);
+        conversation = projectClient.OpenAI.Conversations.GetProjectConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 

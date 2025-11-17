@@ -82,14 +82,9 @@ namespace OpenAI;
 [CodeGenType("ItemContentOutputText")] internal partial class InternalItemContentOutputText { }
 [CodeGenType("ItemContentRefusal")] internal partial class InternalItemContentRefusal { }
 [CodeGenType("ItemReferenceItemParam")] internal partial class InternalItemReferenceItemParam { }
-[CodeGenType("LocalShellExecAction")] internal partial class InternalLocalShellExecAction { }
-[CodeGenType("LocalShellTool")] internal partial class InternalLocalShellTool { }
 [CodeGenType("LocalShellToolCallItemParam")] internal partial class InternalLocalShellToolCallItemParam { }
-[CodeGenType("LocalShellToolCallItemResource")] internal partial class InternalLocalShellToolCallItemResource { }
-[CodeGenType("LocalShellToolCallItemResourceStatus")] internal readonly partial struct LocalShellToolCallItemResourceStatus { }
 [CodeGenType("LocalShellToolCallOutputItemParam")] internal partial class InternalLocalShellToolCallOutputItemParam { }
-[CodeGenType("LocalShellToolCallOutputItemResource")] internal partial class InternalLocalShellToolCallOutputItemResource { }
-[CodeGenType("LocalShellToolCallOutputItemResourceStatus")] internal readonly partial struct LocalShellToolCallOutputItemResourceStatus { }
+[CodeGenType("LocalShellToolCallOutputItemResourceStatus")] internal readonly partial struct InternalLocalShellToolCallOutputItemResourceStatus { }
 [CodeGenType("Location")] internal partial class InternalLocation { }
 [CodeGenType("LogProb")] internal partial class InternalLogProb { }
 [CodeGenType("MCPApprovalRequestItemParam")] internal partial class InternalMCPApprovalRequestItemParam { }

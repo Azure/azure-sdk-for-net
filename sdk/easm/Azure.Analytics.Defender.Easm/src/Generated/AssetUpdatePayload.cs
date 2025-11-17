@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> A request body used to update an asset. </summary>
     public partial class AssetUpdatePayload
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AssetUpdatePayload"/>. </summary>
         public AssetUpdatePayload()
@@ -58,25 +29,29 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="labels"> Any Labels to update the asset with. </param>
         /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
         /// <param name="remediations"> A list of observation remediations to apply to the asset. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IList<ObservationRemediationItem> remediations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IList<ObservationRemediationItem> remediations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ExternalId = externalId;
             Labels = labels;
             Transfers = transfers;
             Remediations = remediations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The state to update the asset to. </summary>
         public AssetUpdateState? State { get; set; }
+
         /// <summary> A string which can be used to identify the asset in external systems. </summary>
         public string ExternalId { get; set; }
+
         /// <summary> Any Labels to update the asset with. </summary>
         public IDictionary<string, bool> Labels { get; }
+
         /// <summary> A list of asset types to cascade the updates to. </summary>
         public AssetUpdateTransfers? Transfers { get; set; }
+
         /// <summary> A list of observation remediations to apply to the asset. </summary>
         public IList<ObservationRemediationItem> Remediations { get; }
     }

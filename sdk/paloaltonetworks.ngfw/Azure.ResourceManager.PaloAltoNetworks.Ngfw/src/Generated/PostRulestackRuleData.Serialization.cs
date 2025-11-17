@@ -10,16 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class PostRulestackRuleData : IUtf8JsonSerializable, IJsonModel<PostRulestackRuleData>
+    /// <summary> PostRulestack rule list. </summary>
+    public partial class PostRulestackRuleData : ResourceData, IJsonModel<PostRulestackRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostRulestackRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PostRulestackRuleData"/> for deserialization. </summary>
+        internal PostRulestackRuleData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PostRulestackRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,427 +38,107 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            writer.WritePropertyName("ruleName"u8);
-            writer.WriteStringValue(RuleName);
-            if (options.Format != "W" && Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteNumberValue(Priority.Value);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(RuleState))
-            {
-                writer.WritePropertyName("ruleState"u8);
-                writer.WriteStringValue(RuleState.Value.ToString());
-            }
-            if (Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
-            }
-            if (Optional.IsDefined(NegateSource))
-            {
-                writer.WritePropertyName("negateSource"u8);
-                writer.WriteStringValue(NegateSource.Value.ToString());
-            }
-            if (Optional.IsDefined(Destination))
-            {
-                writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
-            }
-            if (Optional.IsDefined(NegateDestination))
-            {
-                writer.WritePropertyName("negateDestination"u8);
-                writer.WriteStringValue(NegateDestination.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Applications))
-            {
-                writer.WritePropertyName("applications"u8);
-                writer.WriteStartArray();
-                foreach (var item in Applications)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Category))
-            {
-                writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category, options);
-            }
-            if (Optional.IsDefined(Protocol))
-            {
-                writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol);
-            }
-            if (Optional.IsCollectionDefined(ProtocolPortList))
-            {
-                writer.WritePropertyName("protocolPortList"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProtocolPortList)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(InboundInspectionCertificate))
-            {
-                writer.WritePropertyName("inboundInspectionCertificate"u8);
-                writer.WriteStringValue(InboundInspectionCertificate);
-            }
-            if (Optional.IsDefined(AuditComment))
-            {
-                writer.WritePropertyName("auditComment"u8);
-                writer.WriteStringValue(AuditComment);
-            }
-            if (Optional.IsDefined(ActionType))
-            {
-                writer.WritePropertyName("actionType"u8);
-                writer.WriteStringValue(ActionType.Value.ToString());
-            }
-            if (Optional.IsDefined(EnableLogging))
-            {
-                writer.WritePropertyName("enableLogging"u8);
-                writer.WriteStringValue(EnableLogging.Value.ToString());
-            }
-            if (Optional.IsDefined(DecryptionRuleType))
-            {
-                writer.WritePropertyName("decryptionRuleType"u8);
-                writer.WriteStringValue(DecryptionRuleType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tags)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
-        PostRulestackRuleData IJsonModel<PostRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PostRulestackRuleData IJsonModel<PostRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PostRulestackRuleData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePostRulestackRuleData(document.RootElement, options);
         }
 
-        internal static PostRulestackRuleData DeserializePostRulestackRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PostRulestackRuleData DeserializePostRulestackRuleData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ETag? etag = default;
-            string ruleName = default;
-            int? priority = default;
-            string description = default;
-            RulestackStateType? ruleState = default;
-            SourceAddressInfo source = default;
-            FirewallBooleanType? negateSource = default;
-            DestinationAddressInfo destination = default;
-            FirewallBooleanType? negateDestination = default;
-            IList<string> applications = default;
-            EdlMatchCategory category = default;
-            string protocol = default;
-            IList<string> protocolPortList = default;
-            string inboundInspectionCertificate = default;
-            string auditComment = default;
-            RulestackActionType? actionType = default;
-            RulestackStateType? enableLogging = default;
-            DecryptionRuleType? decryptionRuleType = default;
-            IList<RulestackTagInfo> tags = default;
-            FirewallProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            RuleEntry properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("etag"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            etag = new ETag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ruleName"u8))
-                        {
-                            ruleName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            priority = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ruleState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ruleState = new RulestackStateType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = SourceAddressInfo.DeserializeSourceAddressInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("negateSource"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            negateSource = new FirewallBooleanType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("destination"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            destination = DestinationAddressInfo.DeserializeDestinationAddressInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("negateDestination"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            negateDestination = new FirewallBooleanType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("applications"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            applications = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("category"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            category = EdlMatchCategory.DeserializeEdlMatchCategory(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("protocol"u8))
-                        {
-                            protocol = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("protocolPortList"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            protocolPortList = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("inboundInspectionCertificate"u8))
-                        {
-                            inboundInspectionCertificate = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("auditComment"u8))
-                        {
-                            auditComment = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("actionType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            actionType = new RulestackActionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enableLogging"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableLogging = new RulestackStateType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("decryptionRuleType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            decryptionRuleType = new DecryptionRuleType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<RulestackTagInfo> array = new List<RulestackTagInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item, options));
-                            }
-                            tags = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new FirewallProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = RuleEntry.DeserializeRuleEntry(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PostRulestackRuleData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                etag,
-                ruleName,
-                priority,
-                description,
-                ruleState,
-                source,
-                negateSource,
-                destination,
-                negateDestination,
-                applications ?? new ChangeTrackingList<string>(),
-                category,
-                protocol,
-                protocolPortList ?? new ChangeTrackingList<string>(),
-                inboundInspectionCertificate,
-                auditComment,
-                actionType,
-                enableLogging,
-                decryptionRuleType,
-                tags ?? new ChangeTrackingList<RulestackTagInfo>(),
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -461,15 +148,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
-        PostRulestackRuleData IPersistableModel<PostRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PostRulestackRuleData IPersistableModel<PostRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PostRulestackRuleData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostRulestackRuleData(document.RootElement, options);
                     }
                 default:
@@ -477,6 +169,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PostRulestackRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="postRulestackRuleData"> The <see cref="PostRulestackRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PostRulestackRuleData postRulestackRuleData)
+        {
+            if (postRulestackRuleData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(postRulestackRuleData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PostRulestackRuleData"/> from. </param>
+        internal static PostRulestackRuleData FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializePostRulestackRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

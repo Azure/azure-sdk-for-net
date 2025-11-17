@@ -23,7 +23,7 @@ public class Sample_FileSearch : AgentsTestBase
     public async Task FileSearchAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateAgentClient_FileSearch
+        #region Snippet:Sample_CreateAgentClient_FileSearch_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -34,7 +34,7 @@ public class Sample_FileSearch : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
         #endregion
-        #region Snippet:Sample_UploadFile_FileSearch_Async
+        #region Snippet:Sample_UploadFile_FileSearch_Async_2
         string filePath = "sample_file_for_upload.txt";
         File.WriteAllText(
             path: filePath,
@@ -43,7 +43,7 @@ public class Sample_FileSearch : AgentsTestBase
         OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
-        #region Snippet:Sample_CreateVectorStore_FileSearch_Async
+        #region Snippet:Sample_CreateVectorStore_FileSearch_Async_2
         VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
         VectorStoreCreationOptions options = new()
         {
@@ -52,7 +52,7 @@ public class Sample_FileSearch : AgentsTestBase
         };
         VectorStore vectorStore = await vctStoreClient.CreateVectorStoreAsync(options);
         #endregion
-        #region Snippet:Sample_CreateAgent_FileSearch_Async
+        #region Snippet:Sample_CreateAgent_FileSearch_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
@@ -62,7 +62,7 @@ public class Sample_FileSearch : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_FileSearch_Async
+        #region Snippet:Sample_CreateResponse_FileSearch_Async_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -73,7 +73,7 @@ public class Sample_FileSearch : AgentsTestBase
             responseOptions);
         #endregion
 
-        #region Snippet:Sample_WaitForResponse_FileSearch_Async
+        #region Snippet:Sample_WaitForResponse_FileSearch_Async_2
         List<ResponseItem> updateItems = [request];
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
@@ -84,7 +84,7 @@ public class Sample_FileSearch : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
 
-        #region Snippet:Sample_Cleanup_FileSearch_Async
+        #region Snippet:Sample_Cleanup_FileSearch_Async_2
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
         await fileClient.DeleteFileAsync(uploadedFile.Id);
@@ -106,7 +106,7 @@ public class Sample_FileSearch : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         OpenAIClient openAIClient = client.GetOpenAIClient();
 
-        #region Snippet:Sample_UploadFile_FileSearch_Sync
+        #region Snippet:Sample_UploadFile_FileSearch_Sync_2
         string filePath = "sample_file_for_upload.txt";
         File.WriteAllText(
             path: filePath,
@@ -115,7 +115,7 @@ public class Sample_FileSearch : AgentsTestBase
         OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
-        #region Snippet:Sample_CreateVectorStore_FileSearch_Sync
+        #region Snippet:Sample_CreateVectorStore_FileSearch_Sync_2
         VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
         VectorStoreCreationOptions options = new()
         {
@@ -124,7 +124,7 @@ public class Sample_FileSearch : AgentsTestBase
         };
         VectorStore vectorStore = vctStoreClient.CreateVectorStore(options: options);
         #endregion
-        #region Snippet:Sample_CreateAgent_FileSearch_Sync
+        #region Snippet:Sample_CreateAgent_FileSearch_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
@@ -134,7 +134,7 @@ public class Sample_FileSearch : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_FileSearch_Sync
+        #region Snippet:Sample_CreateResponse_FileSearch_Sync_2
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
         ResponseCreationOptions responseOptions = new();
         responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -145,7 +145,7 @@ public class Sample_FileSearch : AgentsTestBase
             responseOptions);
         #endregion
 
-        #region Snippet:Sample_WaitForResponse_FileSearch_Sync
+        #region Snippet:Sample_WaitForResponse_FileSearch_Sync_2
         List<ResponseItem> updateItems = [request];
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
@@ -156,7 +156,7 @@ public class Sample_FileSearch : AgentsTestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
 
-        #region Snippet:Sample_Cleanup_FileSearch_Sync
+        #region Snippet:Sample_Cleanup_FileSearch_Sync_2
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
         fileClient.DeleteFile(uploadedFile.Id);

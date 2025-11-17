@@ -9,45 +9,45 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOIN
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Use the client to create a `ConversationClient`, which will be used to create two `AgentConversation` objects.
+2. Use the client to create a `ConversationClient`, which will be used to create two `ProjectConversation` objects.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversations_ConversationCRUD_Sync
-AgentConversation conversation1 = projectClient.OpenAI.Conversations.CreateAgentConversation();
+ProjectConversation conversation1 = projectClient.OpenAI.Conversations.CreateProjectConversation();
 Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-AgentConversation conversation2 = projectClient.OpenAI.Conversations.CreateAgentConversation();
+ProjectConversation conversation2 = projectClient.OpenAI.Conversations.CreateProjectConversation();
 Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversations_ConversationCRUD_Async
-AgentConversation conversation1 = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+ProjectConversation conversation1 = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-AgentConversation conversation2 = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+ProjectConversation conversation2 = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 ```
 
-3. Retrieve the `AgentConversation` object.
+3. Retrieve the `ProjectConversation` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetConversation_ConversationCRUD_Sync
-AgentConversation conversation = projectClient.OpenAI.Conversations.GetAgentConversation(conversationId: conversation1.Id);
+ProjectConversation conversation = projectClient.OpenAI.Conversations.GetProjectConversation(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetConversation_ConversationCRUD_Async
-AgentConversation conversation = await projectClient.OpenAI.Conversations.GetAgentConversationAsync(conversationId: conversation1.Id);
+ProjectConversation conversation = await projectClient.OpenAI.Conversations.GetProjectConversationAsync(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
-4. List all `AgentConversation` objects.
+4. List all `ProjectConversation` objects.
 
 Synchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Sync
-foreach (AgentConversation res in projectClient.OpenAI.Conversations.GetAgentConversations())
+foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversations())
 {
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
@@ -55,12 +55,12 @@ foreach (AgentConversation res in projectClient.OpenAI.Conversations.GetAgentCon
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Async
-await foreach (AgentConversation res in projectClient.OpenAI.Conversations.GetAgentConversationsAsync()){
+await foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversationsAsync()){
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
 ```
 
-5. Update the `AgentConversation` object metadata and retrieve it again.
+5. Update the `ProjectConversation` object metadata and retrieve it again.
 
 Synchronous sample:
 ```C# Snippet:Sample_UpdateConversations_ConversationCRUD_Sync
@@ -68,10 +68,10 @@ ProjectConversationUpdateOptions updateOptions = new()
 {
     Metadata = { ["key"] = "value" },
 };
-projectClient.OpenAI.Conversations.UpdateAgentConversation(conversation1.Id, updateOptions);
+projectClient.OpenAI.Conversations.UpdateProjectConversation(conversation1.Id, updateOptions);
 
 // Get the updated conversation.
-conversation = projectClient.OpenAI.Conversations.GetAgentConversation(conversationId: conversation1.Id);
+conversation = projectClient.OpenAI.Conversations.GetProjectConversation(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
@@ -81,14 +81,14 @@ ProjectConversationUpdateOptions updateOptions = new()
 {
     Metadata = { ["key"] = "value" },
 };
-await projectClient.OpenAI.Conversations.UpdateAgentConversationAsync(conversation.Id, updateOptions);
+await projectClient.OpenAI.Conversations.UpdateProjectConversationAsync(conversation.Id, updateOptions);
 
 // Get the updated conversation.
-conversation = await projectClient.OpenAI.Conversations.GetAgentConversationAsync(conversation1.Id);
+conversation = await projectClient.OpenAI.Conversations.GetProjectConversationAsync(conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
-6. Finally, remove `AgentConversation` objects we have created.
+6. Finally, remove `ProjectConversation` objects we have created.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteConversations_ConversationCRUD_Sync

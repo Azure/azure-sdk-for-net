@@ -4,14 +4,17 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Azure.AI.Projects.Tests.Utils;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -20,8 +23,65 @@ namespace Azure.AI.Projects.Tests
     /// This class now uses a hybrid approach - it extends the standard Azure.Core RecordedTestBase
     /// but provides manual transport configuration for System.ClientModel compatibility.
     /// </summary>
+    [Ignore("Pending migration to Microsoft.ClientModel.TestFramework after SCM product migration")]
     public class ProjectsClientTestBase : RecordedTestBase<AIProjectsTestEnvironment>
     {
+        #region Debug Method
+        internal static PipelinePolicy GetDumpPolicy()
+        {
+            return new TestPipelinePolicy((message) =>
+            {
+                if (message.Request is not null && message.Response is null)
+                {
+                    Console.WriteLine($"--- New request ---");
+                    IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                    string headers = string.Join(",", headerPairs);
+                    Console.WriteLine($"Headers: {headers}");
+                    Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
+                    if (message.Request?.Content != null)
+                    {
+                        string contentType = "Unknown Content Type";
+                        if (message.Request.Headers?.TryGetValue("Content-Type", out contentType) == true
+                            && contentType == "application/json")
+                        {
+                            using MemoryStream stream = new();
+                            message.Request.Content.WriteTo(stream, default);
+                            stream.Position = 0;
+                            using StreamReader reader = new(stream);
+                            string requestDump = reader.ReadToEnd();
+                            stream.Position = 0;
+                            requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
+                            Console.WriteLine(requestDump);
+                        }
+                        else
+                        {
+                            string length = message.Request.Content.TryComputeLength(out long numberLength)
+                                ? $"{numberLength} bytes"
+                                : "unknown length";
+                            Console.WriteLine($"<< Non-JSON content: {contentType} >> {length}");
+                        }
+                    }
+                }
+                if (message.Response != null)
+                {
+                    IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
+                    string headers = string.Join(",", headerPairs);
+                    Console.WriteLine($"Response headers: {headers}");
+                    if (message.BufferResponse)
+                    {
+                        Console.WriteLine("--- Begin response content ---");
+                        Console.WriteLine(message.Response.Content?.ToString());
+                        Console.WriteLine("--- End of response content ---");
+                    }
+                    else
+                    {
+                        Console.WriteLine("--- Response (unbuffered, content not rendered) ---");
+                    }
+                }
+            });
+        }
+        #endregion
+
         public ProjectsClientTestBase(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
@@ -50,7 +110,7 @@ namespace Azure.AI.Projects.Tests
                     options.RetryPolicy = new TestClientRetryPolicy(TimeSpan.FromMilliseconds(10));
                 }
             }
-
+            options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var credential = TestEnvironment.Credential;
 

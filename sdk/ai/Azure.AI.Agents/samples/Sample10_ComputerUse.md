@@ -3,7 +3,7 @@
 To enable your Agent to Computer Use tool, you need to use `ComputerTool` while creating `PromptAgentDefinition`.
 1. First, we need to create an Agent client and read the environment variables, which will be used in the next steps.
 
-```C# Snippet:Sample_CreateAgentClient_ComputerUse
+```C# Snippet:Sample_CreateAgentClient_ComputerUse_2
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -13,7 +13,7 @@ OpenAIClient openAIClient = client.GetOpenAIClient();
 2. To use the tool, we need to read image files using `ReadImageFile` method.
 
 Synchronous sample:
-```C# Snippet:Sample_ReadImageFile_ComputerUse
+```C# Snippet:Sample_ReadImageFile_ComputerUse_2
 private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth = "")
 {
     var dirName = Path.GetDirectoryName(pth) ?? "";
@@ -23,7 +23,7 @@ private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth
 
 3. In this example we will read in three toy schreenshots and place them into dictionary.
 
-```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
+```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_2
 Dictionary<string, BinaryData> screenshots = new() {
     { "browser_search", ReadImageFile("Assets/cua_browser_search.png")},
     { "search_typed", ReadImageFile("Assets/cua_search_typed.png")},
@@ -34,7 +34,7 @@ Dictionary<string, BinaryData> screenshots = new() {
 4. Create a `PromptAgentDefinition` with `ComputerTool`.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateAgent_ComputerUse_Sync
+```C# Snippet:Sample_CreateAgent_ComputerUse_Sync_2
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
@@ -54,7 +54,7 @@ AgentVersion agentVersion = client.CreateAgentVersion(
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateAgent_ComputerUse_Async
+```C# Snippet:Sample_CreateAgent_ComputerUse_Async_2
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
@@ -75,7 +75,7 @@ AgentVersion agentVersion = await client.CreateAgentVersionAsync(
 
 4. Create a helper method to parse the ComputerTool outputs and to respond to Agents queries with new screenshots. Please note that throughout this sample we set the media type for image. Agents support `image/jpeg`, `image/png`, `image/gif` and `image/webp` media types.
 
-```C# Snippet:Sample_ProcessComputerUseCall_ComputerUse
+```C# Snippet:Sample_ProcessComputerUseCall_ComputerUse_2
 private static string ProcessComputerUseCall(ComputerCallResponseItem item, string oldScreenshot)
 {
     string currentScreenshot = "browser_search";
@@ -141,7 +141,7 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
 5. For brevity create the methods to wait for response to be returned.
 
 Synchronous sample:
-```C# Snippet:Sample_WaitForResponse_ComputerUse_Sync
+```C# Snippet:Sample_WaitForResponse_ComputerUse_Sync_2
 public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
 {
     OpenAIResponse response = responseClient.CreateResponse(
@@ -158,7 +158,7 @@ public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient respo
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WaitForResponse_ComputerUse_Async
+```C# Snippet:Sample_WaitForResponse_ComputerUse_Async_2
 public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
 {
     OpenAIResponse response = await responseClient.CreateResponseAsync(
@@ -177,7 +177,7 @@ public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIRes
 6. Create an `OpenAIResponse` using `ResponseItem`, containing two `ResponseContentPart`: one with the image and another with the text. In the loop we will request Agent while it is continuing to browse web. Finally, print the tool output message.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateResponse_ComputerUse_Sync
+```C# Snippet:Sample_CreateResponse_ComputerUse_Sync_2
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
 responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -218,7 +218,7 @@ Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateResponse_ComputerUse_Async
+```C# Snippet:Sample_CreateResponse_ComputerUse_Async_2
 OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 ResponseCreationOptions responseOptions = new();
 responseOptions.SetAgentReference(new AgentReference(name: agentVersion.Name));
@@ -262,11 +262,11 @@ Console.WriteLine(response.GetOutputText());
 7. Clean up resources by deleting Agent and uploaded files.
 
 Synchronous sample:
-```C# Snippet:Sample_Cleanup_ComputerUse_Sync
+```C# Snippet:Sample_Cleanup_ComputerUse_Sync_2
 client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_Cleanup_ComputerUse_Async
+```C# Snippet:Sample_Cleanup_ComputerUse_Async_2
 await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

@@ -13,13 +13,13 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
-[Ignore("Samples represented as tests only for validation of compilation.")]
 public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 {
     [Test]
     [AsyncOnly]
     public async Task CreateAgentVersionAsync()
     {
+        IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -48,31 +48,20 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Async
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-        ModelReaderWriterOptions options = new("W");
-        BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+        #region Snippet:Sample_CreateConversation_Async
+        ProjectConversation conversation
+            = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         #endregion
 
-        #region Snippet:Sample_GetResponse_Async
+        #region Snippet:Sample_CreateSimpleResponse_Async
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
-
-        ResponseCreationOptions responseOptions = new()
-        {
-            Agent = agentVersion,
-            AgentConversationId = conversation,
-        };
+        OpenAIResponseClient responseClient
+            = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Async
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId:  response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Async
@@ -85,6 +74,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
     [SyncOnly]
     public void CreateAgentVersion()
     {
+        IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -111,28 +101,20 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Sync
-        AgentConversation conversation = projectClient.OpenAI.Conversations.CreateAgentConversation();
-        ModelReaderWriterOptions options = new("W");
-        BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
+        #region Snippet:Sample_CreateConversation_Sync
+        ProjectConversation conversation
+            = projectClient.OpenAI.Conversations.CreateProjectConversation();
         #endregion
 
-        #region Snippet:Sample_GetResponse_Sync
+        #region Snippet:Sample_CreateSimpleResponse_Sync
 
-        OpenAIResponseClient responsesClient = projectClient.OpenAI.GetOpenAIResponseClient(modelDeploymentName);
+        OpenAIResponseClient responseClient
+            = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent("myAgent", conversation.Id);
-
-        OpenAIResponse response = responsesClient.CreateResponse("Hello, tell me a joke.");
+        OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-        {
-            Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            response = responsesClient.GetResponse(responseId: response.Id);
-        }
-
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_Sync

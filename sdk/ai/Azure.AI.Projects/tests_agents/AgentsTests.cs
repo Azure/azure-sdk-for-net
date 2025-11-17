@@ -13,7 +13,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -74,7 +73,6 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    // [Ignore("Does not work on service side: see ADO work item 4740406.")]
     public async Task TestListAgentsAfterAndBefore()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -115,12 +113,48 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestResponses()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        OpenAIResponse response = await client.CreateResponseAsync("What is steam reactor?");
+        response = await WaitForRun(client, response);
+        Assert.That(response.GetOutputText(), Is.Not.Null.Or.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestResponsesStreaming()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        bool isCreated = false;
+        bool textReceived = false;
+        await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
+        {
+            if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+            {
+                isCreated = true;
+            }
+            else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
+            {
+                textReceived |= !string.IsNullOrEmpty(textDoneUpdate.Text);
+            }
+            else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
+            {
+                Assert.Fail($"The stream has failed with the error: {errorUpdate.Message}");
+            }
+        }
+        Assert.That(isCreated, Is.True, "The run was not created.");
+        Assert.That(textReceived, Is.True, "The text response was not received.");
+    }
+
+    [RecordedTest]
     public async Task TestConversationCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AgentConversation firstConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
-        AgentConversation secondConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(
+        ProjectConversation firstConversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+        ProjectConversation secondConversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
             new ProjectConversationCreationOptions()
             {
                 Items =
@@ -148,31 +182,31 @@ public class AgentsTests : AgentsTestBase
         Assert.That(secondConversationFooMetadataValue, Is.EqualTo("yes"));
 
         List<ResponseItem> responseItems = [];
-        await foreach (ResponseItem item in projectClient.OpenAI.Conversations.GetAgentConversationItemsAsync(firstConversation.Id))
+        await foreach (ResponseItem item in projectClient.OpenAI.Conversations.GetProjectConversationItemsAsync(firstConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Is.Empty);
-        await foreach (ResponseItem item in projectClient.OpenAI.Conversations.GetAgentConversationItemsAsync(secondConversation.Id))
+        await foreach (ResponseItem item in projectClient.OpenAI.Conversations.GetProjectConversationItemsAsync(secondConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
                 firstConversation.Id,
                 [ResponseItem.CreateUserMessageItem("Hi there, world!")]);
         Assert.That(createdItems, Has.Count.EqualTo(1));
         responseItems.Clear();
-        await foreach (ResponseItem item in projectClient.OpenAI.Conversations.GetAgentConversationItemsAsync(firstConversation.Id))
+        await foreach (ResponseItem item in projectClient.OpenAI.Conversations.GetProjectConversationItemsAsync(firstConversation.Id))
         {
             responseItems.Add(item);
         }
         Assert.That(responseItems, Has.Count.EqualTo(1));
         Assert.That(responseItems[0], Is.InstanceOf<MessageResponseItem>());
 
-        AgentConversation updatedConversation = await projectClient.OpenAI.Conversations.UpdateAgentConversationAsync(
+        ProjectConversation updatedConversation = await projectClient.OpenAI.Conversations.UpdateProjectConversationAsync(
             firstConversation.Id,
             new ProjectConversationUpdateOptions()
             {
@@ -183,7 +217,7 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(updatedConversation.Metadata, Has.Count.EqualTo(1));
 
-        AgentConversation retrievedConversation = await projectClient.OpenAI.Conversations.GetAgentConversationAsync(firstConversation.Id);
+        ProjectConversation retrievedConversation = await projectClient.OpenAI.Conversations.GetProjectConversationAsync(firstConversation.Id);
         Assert.That(retrievedConversation?.Id, Is.EqualTo(firstConversation.Id));
         Assert.That(retrievedConversation.Metadata, Has.Count.EqualTo(1));
     }
@@ -194,7 +228,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
 
         // Create a conversation
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         Assert.That(conversation?.Id, Does.StartWith("conv_"));
 
         // Create 40 messages for the conversation
@@ -205,7 +239,7 @@ public class AgentsTests : AgentsTestBase
         }
 
         // Trying to add all 40 at once should fail
-        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(conversation.Id, messagesToAdd));
+        ClientResultException exceptionFromOperation = Assert.ThrowsAsync<ClientResultException>(async () => _ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(conversation.Id, messagesToAdd));
         Assert.That(exceptionFromOperation.GetRawResponse().Content.ToString(), Does.Contain("20 items"));
 
         List<ResponseItem> firstHalfMessages = [];
@@ -219,16 +253,16 @@ public class AgentsTests : AgentsTestBase
             secondHalfMessages.Add(messagesToAdd[i]);
         }
 
-        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(
+        ReadOnlyCollection<ResponseItem> createdItems = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
             conversation.Id,
             firstHalfMessages);
         Assert.That(createdItems, Has.Count.EqualTo(20));
-        createdItems = await projectClient.OpenAI.Conversations.CreateAgentConversationItemsAsync(conversation.Id, secondHalfMessages);
+        createdItems = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(conversation.Id, secondHalfMessages);
         Assert.That(createdItems, Has.Count.EqualTo(20));
 
         // Test ascending order traversal
         List<AgentResponseItem> ascendingItems = [];
-        await foreach (AgentResponseItem item in projectClient.OpenAI.Conversations.GetAgentConversationItemsAsync(
+        await foreach (AgentResponseItem item in projectClient.OpenAI.Conversations.GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "asc"))
@@ -239,7 +273,7 @@ public class AgentsTests : AgentsTestBase
 
         // Test descending order traversal
         List<AgentResponseItem> descendingItems = [];
-        await foreach (AgentResponseItem item in projectClient.OpenAI.Conversations.GetAgentConversationItemsAsync(
+        await foreach (AgentResponseItem item in projectClient.OpenAI.Conversations.GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "desc"))
@@ -259,7 +293,7 @@ public class AgentsTests : AgentsTestBase
 
         // Verify that we can collect all items consistently
         List<AgentResponseItem> allItems = [];
-        await foreach (AgentResponseItem item in projectClient.OpenAI.Conversations.GetAgentConversationItemsAsync(conversation.Id))
+        await foreach (AgentResponseItem item in projectClient.OpenAI.Conversations.GetProjectConversationItemsAsync(conversation.Id))
         {
             allItems.Add(item);
         }
@@ -279,13 +313,13 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "TestPromptAgentFromDotnet",
             options: new(agentDefinition));
-        AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(
+        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(
             new ProjectConversationCreationOptions()
             {
                 Items = { ResponseItem.CreateSystemMessageItem("It's currently warm and sunny outside.") },
             });
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion, conversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
 
@@ -306,7 +340,7 @@ public class AgentsTests : AgentsTestBase
             agentName: "TestPromptAgentFromDotnet",
             options: new(agentDefinition));
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
         Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -403,9 +437,9 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["freely_deleteable"] = "true" },
             });
 
-        AgentConversation newConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation newConversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion, newConversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
         OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, agent!");
 
@@ -437,9 +471,9 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["freely_deleteable"] = "true" },
             });
 
-        AgentConversation newConversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync();
+        ProjectConversation newConversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion, newConversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
         AgentWorkflowActionResponseItem streamedWorkflowActionItem = null;
 
@@ -461,14 +495,18 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The working V2 endpoint does not have the embeddings model yet.")]
     public async Task TestMemoryStoreCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
+        try
+        {
+            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        }
+        catch { }
         // Create
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
-        //Read
-        MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Id);
+        // Read
+        MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(store.Id, Is.EqualTo(result.Id));
         Assert.That(store.Description, Is.EqualTo(result.Description));
         Assert.That(store.Name, Is.EqualTo(result.Name));
@@ -481,16 +519,13 @@ public class AgentsTests : AgentsTestBase
         );
         // Update
         string newDescription = "Some other description.";
-        string newName = "New name";
         result = await projectClient.MemoryStores.UpdateMemoryStoreAsync(
-            name: newName,
+            name: store.Name,
             description: newDescription
         );
         Assert.That(newDescription, Is.EqualTo(result.Description));
-        Assert.That(newName, Is.EqualTo(result.Name));
-        result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Id);
+        result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(newDescription, Is.EqualTo(result.Description));
-        Assert.That(newName, Is.EqualTo(result.Name));
         // Delete
         DeleteMemoryStoreResponse delResult = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: store.Name);
         Assert.That(delResult.Deleted, Is.True);
@@ -504,16 +539,20 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The working V2 endpoint does not have the embeddings model yet.")]
+    [Ignore("The service is not ready.")]
     [TestCase(true)]
     [TestCase(false)]
     public async Task TestMemorySearch(bool useConversation)
     {
         AIProjectClient projectClient = GetTestProjectClient();
+        //try
+        //{
+        //    var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        //}
+        //catch { }
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
         // Create an empty scope and make sure we cannot find anything.
         string scope = "Test scope";
-        await projectClient.MemoryStores.UpdateMemoriesAsync("test-memory-store", new MemoryUpdateOptions(scope));
         MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
@@ -526,7 +565,7 @@ public class AgentsTests : AgentsTestBase
             memoryStoreName: store.Name,
             options: opts
         );
-        Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {resp.Memories[0].MemoryItem.Content}");
+        Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
         // Populate the scope and make sure, we can get the result.
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
         ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
@@ -537,6 +576,14 @@ public class AgentsTests : AgentsTestBase
             {
                 Items = { userItem, agentItem }
             });
+
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+        {
+            if (Mode != RecordedTestMode.Playback)
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(store.Name, updateResult.UpdateId);
+        }
+        Assert.That(updateResult.Status == MemoryStoreUpdateStatus.Completed, $"Unexpected status {updateResult.Status}");
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
             options: new MemorySearchOptions(scope)
@@ -561,7 +608,7 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
-        ProjectOpenAIResponseClient responseClient = oaiClient.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
         response = await WaitForRun(responseClient, response);
@@ -597,8 +644,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(
-            agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         bool isStarted = false;
         bool isFinished = false;
@@ -661,6 +707,33 @@ public class AgentsTests : AgentsTestBase
         Assert.That(isStatusGood, Is.True, "No StreamingResponseCompletedUpdate were met.");
     }
 
+[RecordedTest]
+public async Task TestToolChoiceWorks()
+{
+    AIProjectClient projectClient = GetTestProjectClient();
+    AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        agentName: AGENT_NAME,
+        new AgentVersionCreationOptions(
+            new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+            {
+                Instructions = "Always greet the user by name when possible.",
+                Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
+            }));
+
+    OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+
+    OpenAIResponse response = await responseClient.CreateResponseAsync("Hello!");
+    Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.True);
+
+    response = await responseClient.CreateResponseAsync(
+        "Hello!",
+        new ResponseCreationOptions()
+        {
+            ToolChoice = ResponseToolChoice.CreateNoneChoice(),
+        });
+    Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.False);
+}
+
     [RecordedTest]
     public async Task TestFunctions()
     {
@@ -669,7 +742,7 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient.OpenAI))
         );
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new()
         {
             Agent = agentVersion,
@@ -759,7 +832,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    // [TestCase(true)] File upload mecahnism is blocked by the Bug 4806071 (ADO)
+    // [TestCase(true)] File upload mechanism is blocked by the Bug 4806071 (ADO)
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {
@@ -776,7 +849,7 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient.OpenAI, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
             agentVersion.Name);
         ResponseCreationOptions responseOptions = new();
         responseOptions.TruncationMode = ResponseTruncationMode.Auto;
@@ -827,13 +900,13 @@ public class AgentsTests : AgentsTestBase
                 containerProtocolVersions: [new ProtocolVersionRecord(protocol: AgentCommunicationMethod.Responses, version: "1")],
                 containerAppResourceId: TestEnvironment.CONTAINER_APP_RESOURCE_ID,
                 ingressSubdomainSuffix: TestEnvironment.INGRESS_SUBDOMAIN_SUFFIX)));
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(AGENT_NAME);
-        ProjectOpenAIConversationClient conversationClient = projectClient.OpenAI.GetProjectOpenAIConversationClient();
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
+        ProjectConversationsClient conversationClient = projectClient.OpenAI.GetProjectConversationsClient();
         ProjectConversationCreationOptions conversationOptions = new();
         conversationOptions.Items.Add(
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
-        AgentConversation conversation = await conversationClient.CreateAgentConversationAsync(conversationOptions);
+        ProjectConversation conversation = await conversationClient.CreateProjectConversationAsync(conversationOptions);
         ResponseCreationOptions responseOptions = new()
         {
             Agent = containerAgentVersion,
@@ -940,7 +1013,7 @@ public class AgentsTests : AgentsTestBase
             },
             cts.Token);
 
-        ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(newAgentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion);
 
         ResponseCreationOptions responseCreationOptions = new();
 
@@ -950,7 +1023,7 @@ public class AgentsTests : AgentsTestBase
         // Using a conversation: here, a new conversation is created for this interaction.
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
-            AgentConversation conversation = await projectClient.OpenAI.Conversations.CreateAgentConversationAsync(options: null, cts.Token);
+            ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(options: null, cts.Token);
             responseCreationOptions.AgentConversationId = conversation;
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
@@ -990,6 +1063,37 @@ public class AgentsTests : AgentsTestBase
         response = await responseClient.CreateResponseAsync(inputItems, responseCreationOptions, cts.Token);
 
         Assert.That(response.GetOutputText().ToLower(), Does.Contain(replyToFunctionCall.ToLower()));
+    }
+
+    [RecordedTest]
+    public async Task CanOverrideUserAgentViaProtocolResponses()
+    {
+        AIProjectClientOptions options = CreateTestProjectClientOptions();
+
+        string userAgentValue = null;
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
+                if (message.Request.Headers.TryGetValue("User-Agent", out userAgentValue))
+                { }
+            }),
+            PipelinePosition.BeforeTransport);
+        AIProjectClient client = CreateProxyFromClient(new AIProjectClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), TestEnvironment.Credential, options));
+
+        RequestOptions protocolRequestOptions = new();
+        protocolRequestOptions.AddHeader("User-Agent", "DotnetTestMyProtocolUserAgent");
+
+        ClientResult protocolResult = await client.OpenAI.Responses.CreateResponseAsync(
+            BinaryContent.Create(
+                BinaryData.FromString($$"""
+                    {
+                      "model": "{{TestEnvironment.MODELDEPLOYMENTNAME}}",
+                      "input": [{"type":"message","role":"user","content":"hello, model!"}]
+                    }
+                    """)),
+            protocolRequestOptions);
+
+        Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
     }
 
     private static readonly string s_HelloWorkflowYaml = """

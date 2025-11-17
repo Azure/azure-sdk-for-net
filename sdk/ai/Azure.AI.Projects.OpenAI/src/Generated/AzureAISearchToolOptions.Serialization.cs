@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             writer.WritePropertyName("indexes"u8);
             writer.WriteStartArray();
-            foreach (AzureAISearchIndex item in Indexes)
+            foreach (AzureAISearchToolIndex item in Indexes)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -84,16 +84,16 @@ namespace Azure.AI.Projects.OpenAI
             {
                 return null;
             }
-            IList<AzureAISearchIndex> indexes = default;
+            IList<AzureAISearchToolIndex> indexes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("indexes"u8))
                 {
-                    List<AzureAISearchIndex> array = new List<AzureAISearchIndex>();
+                    List<AzureAISearchToolIndex> array = new List<AzureAISearchToolIndex>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AzureAISearchIndex.DeserializeAzureAISearchIndex(item, options));
+                        array.Add(AzureAISearchToolIndex.DeserializeAzureAISearchToolIndex(item, options));
                     }
                     indexes = array;
                     continue;

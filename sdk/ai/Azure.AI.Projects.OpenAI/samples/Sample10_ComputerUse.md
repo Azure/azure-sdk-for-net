@@ -20,7 +20,7 @@ private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth
 }
 ```
 
-3. In this example we will read in three toy schreenshots and place them into dictionary.
+3. In this example we will read in three example screenshots and place them into a dictionary.
 
 ```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
 Dictionary<string, BinaryData> screenshots = new() {
@@ -137,37 +137,27 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
 }
 ```
 
-5. For brevity create the methods to wait for response to be returned.
+5. For brevity create the methods to get the response.
 
 Synchronous sample:
-```C# Snippet:Sample_WaitForResponse_ComputerUse_Sync
-public static OpenAIResponse CreateAndWaitForResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+```C# Snippet:Sample_CreateNextResponse_ComputerUse_Sync
+public static OpenAIResponse CreateResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
 {
     OpenAIResponse response = responseClient.CreateResponse(
         inputItems: items,
         options: options);
-    while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-    {
-        Thread.Sleep(TimeSpan.FromMilliseconds(500));
-        response = responseClient.GetResponse(responseId: response.Id);
-    }
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WaitForResponse_ComputerUse_Async
-public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+```C# Snippet:Sample_CreateNextResponse_ComputerUse_Async
+public static async Task<OpenAIResponse> CreateResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
 {
     OpenAIResponse response = await responseClient.CreateResponseAsync(
         inputItems: items,
         options: options);
-    while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
-    {
-        await Task.Delay(TimeSpan.FromMilliseconds(500));
-        response = await responseClient.GetResponseAsync(responseId: response.Id);
-    }
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
@@ -177,7 +167,7 @@ public static async Task<OpenAIResponse> CreateAndWaitForResponseAsync(OpenAIRes
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Sync
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseCreationOptions responseOptions = new();
 responseOptions.TruncationMode = ResponseTruncationMode.Auto;
 string currentScreenshot = "browser_search";
@@ -193,7 +183,7 @@ int limitIteration = 10;
 OpenAIResponse response;
 do
 {
-    response = CreateAndWaitForResponse(
+    response = CreateResponse(
         responseClient,
         inputItems,
         responseOptions);
@@ -217,7 +207,7 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
-ProjectOpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectOpenAIResponseClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseCreationOptions responseOptions = new();
 responseOptions.TruncationMode = ResponseTruncationMode.Auto;
 ResponseItem request = ResponseItem.CreateUserMessageItem(
@@ -233,7 +223,7 @@ int limitIteration = 10;
 OpenAIResponse response;
 do
 {
-    response = await CreateAndWaitForResponseAsync(
+    response = await CreateResponseAsync(
         responseClient,
         inputItems,
         responseOptions

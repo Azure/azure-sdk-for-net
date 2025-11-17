@@ -16,12 +16,6 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
     {
     }
 
-    public enum OpenAIClientMode
-    {
-        UseExternalOpenAI,
-        UseFDPOpenAI
-    }
-
     [RecordedTest]
     [TestCase(OpenAIClientMode.UseExternalOpenAI, "assistants")]
     [TestCase(OpenAIClientMode.UseExternalOpenAI, "fine-tune")]
@@ -29,12 +23,7 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
     [TestCase(OpenAIClientMode.UseFDPOpenAI, "fine-tune")]
     public async Task FileUploadWorks(OpenAIClientMode clientMode, string rawPurpose)
     {
-        OpenAIClient openAIClient = clientMode switch
-        {
-            OpenAIClientMode.UseExternalOpenAI => new OpenAIClient(new ApiKeyCredential(TestEnvironment.ParseEnvironmentFile()["OPEN-API-KEY"]), CreateTestProjectOpenAIClientOptions()),
-            OpenAIClientMode.UseFDPOpenAI => GetTestClient(),
-            _ => throw new NotImplementedException()
-        };
+        OpenAIClient openAIClient = GetTestOpenAIClient(clientMode);
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
 
         (string filename, string rawFileData) = rawPurpose switch

@@ -14,12 +14,11 @@
         "reportgenerator"
       ]
     },
-    "azure.sdk.tools.testproxy": {
-      "version": "1.0.0-dev.20250922.2",
+    "Azure.Sdk.Tools.TestProxy": {
+      "version": "1.0.0-dev.20251022.1",
       "commands": [
         "test-proxy"
-      ],
-      "rollForward": false
+      ]
     }
   }
 }

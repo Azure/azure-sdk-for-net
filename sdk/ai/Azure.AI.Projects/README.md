@@ -454,7 +454,7 @@ The code below shows some Files operations, which allow you to manage files thro
 ```C# Snippet:AI_Projects_FileOperationsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIFileClient fileClient = projectClient.OpenAI.Files;
+ProjectFilesClient fileClient = projectClient.OpenAI.Files;
 
 // Upload file
 var dataDirectory = GetDataDirectory();

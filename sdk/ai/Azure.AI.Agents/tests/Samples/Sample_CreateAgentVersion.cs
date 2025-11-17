@@ -20,7 +20,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
     [AsyncOnly]
     public async Task CreateAgentVersionAsync()
     {
-        #region Snippet:Sample_CreateAgentClient
+        #region Snippet:Sample_CreateAgentClient_2
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -31,7 +31,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:Sample_CreateAgentVersion_Async
+        #region Snippet:Sample_CreateAgentVersion_Async_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
@@ -40,7 +40,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_ListAgentVersions_Async
+        #region Snippet:Sample_ListAgentVersions_Async_2
         var agentVersions = client.GetAgentVersionsAsync(agentName: "myAgent");
         await foreach (AgentVersion oneAgentVersion in agentVersions)
         {
@@ -48,14 +48,14 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Async
-        ConversationClient coversations = client.GetConversationClient();
-        AgentConversation conversation = await coversations.CreateConversationAsync();
+        #region Snippet:Sample_CreateConversation_Async_2
+        ConversationClient Conversations = client.GetConversationClient();
+        AgentConversation conversation = await Conversations.CreateConversationAsync();
         ModelReaderWriterOptions options = new("W");
         BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
         #endregion
 
-        #region Snippet:Sample_GetResponse_Async
+        #region Snippet:Sample_GetResponse_Async_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
@@ -68,7 +68,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
             responseOptions);
 
         #endregion
-        #region Snippet:Sample_WriteOutput_Async
+        #region Snippet:Sample_WriteOutput_Async_2
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
             await Task.Delay(TimeSpan.FromMilliseconds(500));
             response = await responseClient.GetResponseAsync(responseId:  response.Id);
@@ -76,8 +76,8 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_Async
-        await coversations.DeleteConversationAsync(conversationId: conversation.Id);
+        #region Snippet:Sample_Cleanup_Async_2
+        await Conversations.DeleteConversationAsync(conversationId: conversation.Id);
         await client.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -95,7 +95,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 #endif
         AgentClient client = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        #region Snippet:Sample_CreateAgentVersion_Sync
+        #region Snippet:Sample_CreateAgentVersion_Sync_2
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
@@ -104,7 +104,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_ListAgentVersions_Sync
+        #region Snippet:Sample_ListAgentVersions_Sync_2
         var agentVersions = client.GetAgentVersions(agentName: "myAgent");
         foreach (AgentVersion oneAgentVersion in agentVersions)
         {
@@ -112,14 +112,14 @@ public class Sample_CreateAgentVersion : AgentsTestBase
         }
         #endregion
 
-        #region Snippet:Sample_CreateCoversation_Sync
-        ConversationClient coversations = client.GetConversationClient();
-        AgentConversation conversation = coversations.CreateConversation();
+        #region Snippet:Sample_CreateConversation_Sync_2
+        ConversationClient Conversations = client.GetConversationClient();
+        AgentConversation conversation = Conversations.CreateConversation();
         ModelReaderWriterOptions options = new("W");
         BinaryData conversationBin = ((IPersistableModel<AgentConversation>)conversation).Write(options);
         #endregion
 
-        #region Snippet:Sample_GetResponse_Sync
+        #region Snippet:Sample_GetResponse_Sync_2
         OpenAIClient openAIClient = client.GetOpenAIClient();
         OpenAIResponseClient responsesClient = openAIClient.GetOpenAIResponseClient(modelDeploymentName);
 
@@ -132,7 +132,7 @@ public class Sample_CreateAgentVersion : AgentsTestBase
             responseOptions);
 
         #endregion
-        #region Snippet:Sample_WriteOutput_Sync
+        #region Snippet:Sample_WriteOutput_Sync_2
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -141,8 +141,8 @@ public class Sample_CreateAgentVersion : AgentsTestBase
 
         Console.WriteLine(response.GetOutputText());
         #endregion
-        #region Snippet:Sample_Cleanup_Sync
-        coversations.DeleteConversation(conversationId: conversation.Id);
+        #region Snippet:Sample_Cleanup_Sync_2
+        Conversations.DeleteConversation(conversationId: conversation.Id);
         client.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

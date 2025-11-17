@@ -1,4 +1,4 @@
-# Sample for Create, Read, Update and Delete (CRUD) agent in Azure.AI.Agents.V2.
+# Sample for Agent Administration (creation, retrieval, update, deletion) in Azure.AI.Projects
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 

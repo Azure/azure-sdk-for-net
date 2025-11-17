@@ -4,7 +4,9 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.OpenAI;
+
+namespace Azure.AI.Projects;
 
 public static partial class ClientConnectionProviderExtensions
 {

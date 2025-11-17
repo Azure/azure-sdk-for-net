@@ -70,7 +70,7 @@ namespace OpenAI
             AgentResponseItemKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            InternalLocalShellExecAction action = default;
+            LocalShellAgentToolExecutionAction action = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -85,7 +85,7 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = InternalLocalShellExecAction.DeserializeInternalLocalShellExecAction(prop.Value, options);
+                    action = LocalShellAgentToolExecutionAction.DeserializeLocalShellAgentToolExecutionAction(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

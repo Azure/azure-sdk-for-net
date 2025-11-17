@@ -19,7 +19,7 @@ public class ClientCreationAndAuthenticationSamples : AgentsTestBase
     [RecordedTest]
     public void CreateAgentClientDirectlyFromProjectEndpoint()
     {
-        #region Snippet:CreateAgentClientDirectlyFromProjectEndpoint
+        #region Snippet:CreateAgentClientDirectlyFromProjectEndpoint2
         AgentClient agentClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
@@ -29,7 +29,7 @@ public class ClientCreationAndAuthenticationSamples : AgentsTestBase
     [Test]
     public void CreateAgentClientFromProjectsClient()
     {
-        #region Snippet:CreateAgentClientFromProjectsClient
+        #region Snippet:CreateAgentClientFromProjectsClient2
         AIProjectClient projectClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
@@ -44,7 +44,7 @@ public class ClientCreationAndAuthenticationSamples : AgentsTestBase
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
 
-        #region Snippet:GetOpenAIClientsFromAgents
+        #region Snippet:GetOpenAIClientsFromAgents_2
         OpenAIClient openAIClient = agentClient.GetOpenAIClient();
 
         OpenAIResponseClient responseClient = openAIClient.GetOpenAIResponseClient("MODEL_DEPLOYMENT");

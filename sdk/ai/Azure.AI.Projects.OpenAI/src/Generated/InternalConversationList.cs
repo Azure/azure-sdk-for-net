@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
         /// <param name="firstId"> ID of the first item in the returned page. </param>
         /// <param name="lastId"> ID of the last item in the returned page. </param>
         /// <param name="hasMore"> Whether more items are available after this page. </param>
-        internal InternalConversationList(IEnumerable<AgentConversation> data, string firstId, string lastId, bool hasMore)
+        internal InternalConversationList(IEnumerable<ProjectConversation> data, string firstId, string lastId, bool hasMore)
         {
             Data = data.ToList();
             FirstId = firstId;
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <param name="lastId"> ID of the last item in the returned page. </param>
         /// <param name="hasMore"> Whether more items are available after this page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalConversationList(IList<AgentConversation> data, string @object, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalConversationList(IList<ProjectConversation> data, string @object, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             Object = @object;
@@ -45,7 +45,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> A list of items used to generate this response. </summary>
-        public IList<AgentConversation> Data { get; }
+        public IList<ProjectConversation> Data { get; }
 
         /// <summary> The object type. Always 'list'. </summary>
         public string Object { get; } = "list";
