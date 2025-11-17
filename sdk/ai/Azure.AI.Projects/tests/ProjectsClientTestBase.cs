@@ -82,7 +82,17 @@ namespace Azure.AI.Projects.Tests
         }
         #endregion
 
-        public ProjectsClientTestBase(bool isAsync) : base(isAsync)
+        private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+        {
+            "Playback" => RecordedTestMode.Playback,
+            "Live" => RecordedTestMode.Live,
+            "Record" => RecordedTestMode.Record,
+            _ => null
+        };
+
+        public ProjectsClientTestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
+
+        public ProjectsClientTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
         {
             TestDiagnostics = false;
             // Apply sanitizers to protect sensitive information in recordings
@@ -142,8 +152,8 @@ namespace Azure.AI.Projects.Tests
         /// </summary>
         protected static void ValidateNotNullOrEmpty(string value, string propertyName)
         {
-            Assert.IsNotNull(value, $"{propertyName} should not be null");
-            Assert.IsNotEmpty(value, $"{propertyName} should not be empty");
+            Assert.That(value, Is.Not.Null, $"{propertyName} should not be null");
+            Assert.That(value, Is.Not.Empty, $"{propertyName} should not be empty");
         }
 
         /// <summary>
@@ -151,7 +161,7 @@ namespace Azure.AI.Projects.Tests
         /// </summary>
         protected static void ValidateResponse<T>(T response, string responseName = null) where T : class
         {
-            Assert.IsNotNull(response, $"{responseName ?? typeof(T).Name} response should not be null");
+            Assert.That(response, Is.Not.Null, $"{responseName ?? typeof(T).Name} response should not be null");
         }
 
         // Regular expression describing the pattern of an Application Insights connection string

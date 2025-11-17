@@ -9,10 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using Azure.AI.Projects.OpenAI;
-using Azure.AI.Projects.Tests.Utils;
-using Azure.Core.TestFramework;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
@@ -21,9 +20,19 @@ namespace Azure.AI.Projects.Tests;
 /// <summary>
 /// Base class for fine-tuning tests containing common functionality.
 /// </summary>
-public abstract class FineTuningTestsBase : ProjectsClientTestBase
+public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvironment>
 {
-    protected FineTuningTestsBase(bool isAsync) : base(isAsync)
+    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+    {
+        "Playback" => RecordedTestMode.Playback,
+        "Live" => RecordedTestMode.Live,
+        "Record" => RecordedTestMode.Record,
+        _ => null
+    };
+
+    public FineTuningTestsBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
+
+    public FineTuningTestsBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
     }
 
@@ -35,6 +44,55 @@ public abstract class FineTuningTestsBase : ProjectsClientTestBase
             testDirectory = Path.GetDirectoryName(testDirectory);
         }
         return Path.Combine(testDirectory!, "sdk", "ai", "Azure.AI.Projects", "tests", "FineTuning", "data");
+    }
+
+    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
+
+    protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
+    => GetConfiguredOptions(
+        new ProjectOpenAIClientOptions()
+        {
+            Endpoint = endpoint,
+            ApiVersion = apiVersion,
+        },
+        instrument);
+
+    private T GetConfiguredOptions<T>(T options, bool instrument)
+        where T : ClientPipelineOptions
+    {
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    // TODO: ...why!?
+                    message.Request.Headers.Set("Authorization", "Sanitized");
+                }
+            }),
+            PipelinePosition.PerCall);
+
+        return instrument ? InstrumentClientOptions(options) : options;
+    }
+
+    private AuthenticationTokenProvider GetTestTokenProvider()
+    {
+        // For local testing if you are using non default account
+        // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
+        // also provide the PATH variable.
+        // This path should allow launching az command.
+        if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
+        {
+            return new AzureCliCredential();
+        }
+        return TestEnvironment.Credential;
+    }
+
+    protected AIProjectClient GetTestClient()
+    {
+        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions();
+        AuthenticationTokenProvider provider = TestEnvironment.Credential;
+        return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECTENDPOINT), GetTestTokenProvider(), projectClientOptions));
     }
 
     /// <summary>
@@ -52,18 +110,18 @@ public abstract class FineTuningTestsBase : ProjectsClientTestBase
 
     protected void ValidateFineTuningJob(FineTuningJob job, string expectedJobId = null, string expectedStatus = null)
     {
-        Assert.IsNotNull(job);
-        Assert.IsNotNull(job.JobId);
-        Assert.IsNotNull(job.Status);
+        Assert.That(job, Is.Not.Null);
+        Assert.That(job.JobId, Is.Not.Null);
+        Assert.That(job.Status, Is.Not.Null);
 
         if (expectedJobId != null)
         {
-            Assert.AreEqual(expectedJobId, job.JobId);
+            Assert.That(expectedJobId, Is.EqualTo(job.JobId));
         }
 
         if (expectedStatus != null)
         {
-            Assert.AreEqual(expectedStatus, job.Status.ToString().ToLowerInvariant());
+            Assert.That(job.Status.ToString().ToLowerInvariant(), Is.EqualTo(expectedStatus));
         }
     }
 

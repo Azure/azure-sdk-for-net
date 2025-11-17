@@ -38,10 +38,10 @@ public class AIAgentsTest : ProjectsClientTestBase
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
-        Assert.NotNull(agent.Id);
-        Assert.AreEqual(agent.Model, modelDeploymentName);
-        Assert.AreEqual(agent.Name, "Math Tutor");
-        Assert.AreEqual(agent.Instructions, "You are a personal math tutor. Write and run code to answer math questions.");
+        Assert.That(agent.Id, Is.Not.Null);
+        Assert.That(agent.Model, Is.EqualTo(modelDeploymentName));
+        Assert.That(agent.Name, Is.EqualTo("Math Tutor"));
+        Assert.That(agent.Instructions, Is.EqualTo("You are a personal math tutor. Write and run code to answer math questions."));
 
         await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
     }
