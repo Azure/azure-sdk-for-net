@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
+    /// <summary></summary>
     public partial class EnterpriseMccCustomerResource : IJsonModel<EnterpriseMccCustomerData>
     {
-        private static EnterpriseMccCustomerData s_dataDeserializationInstance;
-        private static EnterpriseMccCustomerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EnterpriseMccCustomerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EnterpriseMccCustomerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EnterpriseMccCustomerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnterpriseMccCustomerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EnterpriseMccCustomerData>)Data).Write(writer, options);
 
-        EnterpriseMccCustomerData IJsonModel<EnterpriseMccCustomerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnterpriseMccCustomerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnterpriseMccCustomerData IJsonModel<EnterpriseMccCustomerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EnterpriseMccCustomerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EnterpriseMccCustomerData>(Data, options, AzureResourceManagerConnectedCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EnterpriseMccCustomerData IPersistableModel<EnterpriseMccCustomerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnterpriseMccCustomerData>(data, options, AzureResourceManagerConnectedCacheContext.Default);
 
-        string IPersistableModel<EnterpriseMccCustomerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnterpriseMccCustomerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnterpriseMccCustomerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
