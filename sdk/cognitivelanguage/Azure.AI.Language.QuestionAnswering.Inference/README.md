@@ -2,7 +2,7 @@
 
 The Question Answering service lets you build a conversational question–answering layer over your data. It can extract questions and answers from semi‑structured content (FAQs, manuals, documents) and improve relevance over time.
 
-[Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference][questionanswering_refdocs] | [Samples][questionanswering_samples] | [Migration guide][migration_guide] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs]
+[Source code][questionanswering_client_src] | [Samples][questionanswering_samples] | [Migration guide][migration_guide] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs]
 
 > This package provides **runtime inference (querying)** only.  
 > To create/update/deploy projects (authoring operations), use the Authoring package `Azure.AI.Language.QuestionAnswering` (namespace: `Azure.AI.Language.QuestionAnswering.Authoring`).
@@ -163,13 +163,12 @@ See [CONTRIBUTING.md][contributing]. This project follows the Microsoft Open Sou
 
 <!-- LINKS -->
 [questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering.Inference/
 [questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
-[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
+[migration_guide]: ./MigrationGuide.md
 [questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [questionanswering_docs_chat]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/chit-chat
-[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering
+[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering/operation-groups?view=rest-language-question-answering-2025-05-15-preview
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain

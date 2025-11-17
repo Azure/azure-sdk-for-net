@@ -5,9 +5,9 @@
 > For **runtime querying (inference)** migration, see the separate runtime migration guide and the inference package `Azure.AI.Language.QuestionAnswering.Inference`.
 > Service API version referenced by current previews: `2025-05-15-preview`.
 
-This guide helps migrate from the old client library [`Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`](https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker) to the modern authoring client library [`Azure.AI.Language.QuestionAnswering`](https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering). It focuses on side‑by‑side comparisons for authoring operations (creating/updating/exporting/deleting) between the two.
+This guide helps migrate from the old client library [`Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`](https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker) to the modern authoring client library `Azure.AI.Language.QuestionAnswering.Authoring`. It focuses on side‑by‑side comparisons for authoring operations (creating/updating/exporting/deleting).
 
-For general usage and more samples, refer to the [`Azure.AI.Language.QuestionAnswering` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/README.md) and [authoring samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/samples).
+For general usage and more samples, refer to the [Authoring README](./README.md) and [Authoring samples](./samples).
 
 ## Table of contents
 
