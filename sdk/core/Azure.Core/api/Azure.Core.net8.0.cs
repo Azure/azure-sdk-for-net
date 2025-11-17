@@ -316,7 +316,7 @@ namespace Azure.Core
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn) { throw null; }
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn, string tokenType) { throw null; }
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn, string tokenType, System.Security.Cryptography.X509Certificates.X509Certificate2 bindingCertificate) { throw null; }
-        public System.Security.Cryptography.X509Certificates.X509Certificate2? BindingCertificate { get { throw null; } set { } }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2? BindingCertificate { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string Token { get { throw null; } }
@@ -1065,7 +1065,7 @@ namespace Azure.Core.Pipeline
         public void Dispose() { }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
-        public override void UpdateTransport(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
+        public override void Update(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
     }
     public partial class HttpPipeline
     {
@@ -1122,7 +1122,7 @@ namespace Azure.Core.Pipeline
         public abstract Azure.Core.Request CreateRequest();
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
-        public virtual void UpdateTransport(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
+        public virtual void Update(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
     }
     public partial class HttpPipelineTransportOptions
     {

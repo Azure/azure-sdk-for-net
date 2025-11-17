@@ -22,6 +22,8 @@ namespace Azure.Core.Tests
     [NonParallelizable]
     public class HttpClientTransportFunctionalTest : TransportFunctionalTests
     {
+        private static RemoteCertificateValidationCallback certCallback = (_, _, _, _) => true;
+
         public HttpClientTransportFunctionalTest(bool isAsync) : base(isAsync)
         { }
 
@@ -77,7 +79,7 @@ namespace Azure.Core.Tests
         [Test]
         public void DisposeDisposesClient()
         {
-            var transport = (HttpClientTransport)GetTransport(options:new HttpPipelineTransportOptions());
+            var transport = (HttpClientTransport)GetTransport(options: new HttpPipelineTransportOptions());
             transport.Dispose();
             Assert.Throws<ObjectDisposedException>(() => transport.Client.CancelPendingRequests());
         }
