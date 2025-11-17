@@ -65,8 +65,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             var targetClient = new Mock<BlobServiceClient>(new Uri($"https://{accountName2}.blob.core.windows.net/"), null);
             targetClient.Setup(x => x.Uri).Returns(new Uri($"https://{accountName2}.blob.core.windows.net/"));
             targetClient.Setup(x => x.AccountName).Returns(accountName2);
-            targetClient.Setup(x => x.GetBlobContainerClient(containerName1)).Returns(containerClient1.Object);
-            targetClient.Setup(x => x.GetBlobContainerClient(containerName2)).Returns(containerClient2.Object);
             targetClient.Setup(x => x.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(new BlobServiceProperties(), null));
 
             // Other dependencies
