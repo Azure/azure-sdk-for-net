@@ -32,7 +32,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com).
+        /// Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com).
         /// </param>
         /// <param name="credential"> A key credential used to authenticate to the Azure Cognitive Service. </param>
         /// <param name="options"> The options for configuring the client. </param>

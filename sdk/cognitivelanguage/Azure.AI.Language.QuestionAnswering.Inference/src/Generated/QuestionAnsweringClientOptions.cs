@@ -24,8 +24,6 @@ namespace Azure.AI.Language.QuestionAnswering
             V2025_05_15_Preview = 2,
         }
 
-        internal string Version { get; }
-
         /// <summary> Initializes new instance of QuestionAnsweringClientOptions. </summary>
         public QuestionAnsweringClientOptions(ServiceVersion version = LatestVersion)
         {

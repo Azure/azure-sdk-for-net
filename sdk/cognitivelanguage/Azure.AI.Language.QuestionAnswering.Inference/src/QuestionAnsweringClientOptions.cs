@@ -30,5 +30,10 @@ namespace Azure.AI.Language.QuestionAnswering
         /// </summary>
         /// <value>If <c>null</c>, <see cref="QuestionAnsweringAudience.AzurePublicCloud" /> will be assumed.</value>
         public QuestionAnsweringAudience? Audience { get; set; }
+
+        /// <summary>
+        /// Gets the version of the Question Answering service API to use.
+        /// </summary>
+        public string Version { get; }
     }
 }
