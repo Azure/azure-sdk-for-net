@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.0-beta.1 (Unreleased)
+## 12.26.0-beta.1 (2025-11-17)
 
 ### Features Added
 - This release contains bug fixes to improve quality.
