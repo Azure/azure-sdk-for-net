@@ -14,9 +14,9 @@ parameters:
   - name: CspellConfigPath
     type: string
     default: ./.vscode/cspell.json
-  - name: EnableCspellUpgradeVerification
-    type: boolean
-    default: false
+  - name: ScriptToValidateUpgrade
+    type: string
+    default: ''
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
@@ -32,32 +32,20 @@ steps:
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true
 
-    - ${{ if eq(parameters.EnableCspellUpgradeVerification, true) }}:
-      # If the repo has a spell-check-public-api.ps1 script and there is a change
-      # to the cspell package-lock.json, verify the upgrade.
-      - pwsh: |
-          if ('true' -eq '$(Skip.SpellCheck)') {
-            Write-Host "Spell check is skipped in this build. Skipping cspell upgrade verification."
-            Write-Host "##vso[task.setvariable variable=RunCspellUpgradeVerification]false"
-            exit 0
-          }
-          $publicApiCheckExists = Test-Path 'eng/scripts/spell-check-public-api.ps1'
-          if (!$publicApiCheckExists) {
-            Write-Host "Public API spell check script not found. Skipping upgrade checks."
-            exit 0
-          }
-          Write-Host "Changed Files:"
-          ./eng/common/scripts/Generate-PR-Diff.ps1 `
-            -TargetPath '.' `
-            -ArtifactPath '$(ArtifactStagingDirectory)'
-          $changedFiles = (Get-Content '$(ArtifactStagingDirectory)/diff.json' | ConvertFrom-Json).ChangedFiles
-          Write-Host $changedFiles
+    - pwsh: |
+        $changedFiles = ./eng/common/scripts/get-changedfiles.ps1
 
-          if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
-            Write-Host "No changes to cspell package-lock.json detected."
-            exit 0
-          }
+        if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
+          Write-Host "No changes to cspell package-lock.json detected."
+          exit 0
+        }
 
-          Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
-          ./eng/scripts/spell-check-public-api.ps1
-        displayName: Verify cspell upgrade
+        Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
+        & '${{ parameters.ScriptToValidateUpgrade }}'
+      displayName: Verify cspell upgrade
+      condition: >-
+        and(
+          succeeded(), 
+          ne('true', variables['Skip.SpellCheck']),
+          ne('', parameters.ScriptToValidateUpgrade)
+        )
