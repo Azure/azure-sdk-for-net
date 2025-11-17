@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             {
                 return null;
             }
-            IReadOnlyList<SharedLimitData> value = default;
+            IReadOnlyList<ComputeLimitSharedLimitData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SharedLimitData> array = new List<SharedLimitData>();
+                    List<ComputeLimitSharedLimitData> array = new List<ComputeLimitSharedLimitData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedLimitData.DeserializeSharedLimitData(item, options));
+                        array.Add(ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(item, options));
                     }
                     value = array;
                     continue;

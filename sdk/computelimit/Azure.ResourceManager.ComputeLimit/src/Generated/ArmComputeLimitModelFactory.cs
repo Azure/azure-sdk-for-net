@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ComputeLimit.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmComputeLimitModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeLimit.GuestSubscriptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimit.ComputeLimitGuestSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="guestSubscriptionProvisioningState"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ComputeLimit.GuestSubscriptionData"/> instance for mocking. </returns>
-        public static GuestSubscriptionData GuestSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceProvisioningState? guestSubscriptionProvisioningState = null)
+        /// <returns> A new <see cref="ComputeLimit.ComputeLimitGuestSubscriptionData"/> instance for mocking. </returns>
+        public static ComputeLimitGuestSubscriptionData ComputeLimitGuestSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComputeLimitResourceProvisioningState? guestSubscriptionProvisioningState = null)
         {
-            return new GuestSubscriptionData(
+            return new ComputeLimitGuestSubscriptionData(
                 id,
                 name,
                 resourceType,
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimit.SharedLimitData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimit.ComputeLimitSharedLimitData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ComputeLimit.SharedLimitData"/> instance for mocking. </returns>
-        public static SharedLimitData SharedLimitData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SharedLimitProperties properties = null)
+        /// <returns> A new <see cref="ComputeLimit.ComputeLimitSharedLimitData"/> instance for mocking. </returns>
+        public static ComputeLimitSharedLimitData ComputeLimitSharedLimitData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComputeLimitSharedLimitProperties properties = null)
         {
-            return new SharedLimitData(
+            return new ComputeLimitSharedLimitData(
                 id,
                 name,
                 resourceType,
@@ -52,24 +52,24 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SharedLimitProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeLimitSharedLimitProperties"/>. </summary>
         /// <param name="resourceName"> The limit name properties. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="unit"> The quota units, such as Count. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.SharedLimitProperties"/> instance for mocking. </returns>
-        public static SharedLimitProperties SharedLimitProperties(LimitName resourceName = null, int? limit = null, string unit = null, ResourceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.ComputeLimitSharedLimitProperties"/> instance for mocking. </returns>
+        public static ComputeLimitSharedLimitProperties ComputeLimitSharedLimitProperties(ComputeLimitLimitName resourceName = null, int? limit = null, string unit = null, ComputeLimitResourceProvisioningState? provisioningState = null)
         {
-            return new SharedLimitProperties(resourceName, limit, unit, provisioningState, serializedAdditionalRawData: null);
+            return new ComputeLimitSharedLimitProperties(resourceName, limit, unit, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LimitName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeLimitLimitName"/>. </summary>
         /// <param name="value"> The limit name. </param>
         /// <param name="localizedValue"> The localized limit name. </param>
-        /// <returns> A new <see cref="Models.LimitName"/> instance for mocking. </returns>
-        public static LimitName LimitName(string value = null, string localizedValue = null)
+        /// <returns> A new <see cref="Models.ComputeLimitLimitName"/> instance for mocking. </returns>
+        public static ComputeLimitLimitName ComputeLimitLimitName(string value = null, string localizedValue = null)
         {
-            return new LimitName(value, localizedValue, serializedAdditionalRawData: null);
+            return new ComputeLimitLimitName(value, localizedValue, serializedAdditionalRawData: null);
         }
     }
 }

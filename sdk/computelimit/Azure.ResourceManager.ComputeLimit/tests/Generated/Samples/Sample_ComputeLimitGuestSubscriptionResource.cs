@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeLimit.Samples
 {
-    public partial class Sample_GuestSubscriptionResource
+    public partial class Sample_ComputeLimitGuestSubscriptionResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,20 +27,20 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestSubscriptionResource created on azure
-            // for more information of creating GuestSubscriptionResource, please refer to the document of GuestSubscriptionResource
+            // this example assumes you already have this ComputeLimitGuestSubscriptionResource created on azure
+            // for more information of creating ComputeLimitGuestSubscriptionResource, please refer to the document of ComputeLimitGuestSubscriptionResource
             string subscriptionId = "12345678-1234-1234-1234-123456789012";
             AzureLocation location = new AzureLocation("eastus");
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier guestSubscriptionResourceId = GuestSubscriptionResource.CreateResourceIdentifier(subscriptionId, location, guestSubscriptionId);
-            GuestSubscriptionResource guestSubscription = client.GetGuestSubscriptionResource(guestSubscriptionResourceId);
+            ResourceIdentifier computeLimitGuestSubscriptionResourceId = ComputeLimitGuestSubscriptionResource.CreateResourceIdentifier(subscriptionId, location, guestSubscriptionId);
+            ComputeLimitGuestSubscriptionResource computeLimitGuestSubscription = client.GetComputeLimitGuestSubscriptionResource(computeLimitGuestSubscriptionResourceId);
 
             // invoke the operation
-            GuestSubscriptionResource result = await guestSubscription.GetAsync();
+            ComputeLimitGuestSubscriptionResource result = await computeLimitGuestSubscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GuestSubscriptionData resourceData = result.Data;
+            ComputeLimitGuestSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestSubscriptionResource created on azure
-            // for more information of creating GuestSubscriptionResource, please refer to the document of GuestSubscriptionResource
+            // this example assumes you already have this ComputeLimitGuestSubscriptionResource created on azure
+            // for more information of creating ComputeLimitGuestSubscriptionResource, please refer to the document of ComputeLimitGuestSubscriptionResource
             string subscriptionId = "12345678-1234-1234-1234-123456789012";
             AzureLocation location = new AzureLocation("eastus");
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier guestSubscriptionResourceId = GuestSubscriptionResource.CreateResourceIdentifier(subscriptionId, location, guestSubscriptionId);
-            GuestSubscriptionResource guestSubscription = client.GetGuestSubscriptionResource(guestSubscriptionResourceId);
+            ResourceIdentifier computeLimitGuestSubscriptionResourceId = ComputeLimitGuestSubscriptionResource.CreateResourceIdentifier(subscriptionId, location, guestSubscriptionId);
+            ComputeLimitGuestSubscriptionResource computeLimitGuestSubscription = client.GetComputeLimitGuestSubscriptionResource(computeLimitGuestSubscriptionResourceId);
 
             // invoke the operation
-            await guestSubscription.DeleteAsync(WaitUntil.Completed);
+            await computeLimitGuestSubscription.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -83,22 +83,22 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestSubscriptionResource created on azure
-            // for more information of creating GuestSubscriptionResource, please refer to the document of GuestSubscriptionResource
+            // this example assumes you already have this ComputeLimitGuestSubscriptionResource created on azure
+            // for more information of creating ComputeLimitGuestSubscriptionResource, please refer to the document of ComputeLimitGuestSubscriptionResource
             string subscriptionId = "12345678-1234-1234-1234-123456789012";
             AzureLocation location = new AzureLocation("eastus");
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier guestSubscriptionResourceId = GuestSubscriptionResource.CreateResourceIdentifier(subscriptionId, location, guestSubscriptionId);
-            GuestSubscriptionResource guestSubscription = client.GetGuestSubscriptionResource(guestSubscriptionResourceId);
+            ResourceIdentifier computeLimitGuestSubscriptionResourceId = ComputeLimitGuestSubscriptionResource.CreateResourceIdentifier(subscriptionId, location, guestSubscriptionId);
+            ComputeLimitGuestSubscriptionResource computeLimitGuestSubscription = client.GetComputeLimitGuestSubscriptionResource(computeLimitGuestSubscriptionResourceId);
 
             // invoke the operation
-            GuestSubscriptionData data = new GuestSubscriptionData();
-            ArmOperation<GuestSubscriptionResource> lro = await guestSubscription.UpdateAsync(WaitUntil.Completed, data);
-            GuestSubscriptionResource result = lro.Value;
+            ComputeLimitGuestSubscriptionData data = new ComputeLimitGuestSubscriptionData();
+            ArmOperation<ComputeLimitGuestSubscriptionResource> lro = await computeLimitGuestSubscription.UpdateAsync(WaitUntil.Completed, data);
+            ComputeLimitGuestSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GuestSubscriptionData resourceData = result.Data;
+            ComputeLimitGuestSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

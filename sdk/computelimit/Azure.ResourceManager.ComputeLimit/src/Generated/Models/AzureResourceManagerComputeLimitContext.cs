@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ComputeLimit
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(GuestSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionResource))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitLimitName))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitResource))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionProperties))]
-    [ModelReaderWriterBuildable(typeof(GuestSubscriptionResource))]
-    [ModelReaderWriterBuildable(typeof(LimitName))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SharedLimitData))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
-    [ModelReaderWriterBuildable(typeof(SharedLimitProperties))]
-    [ModelReaderWriterBuildable(typeof(SharedLimitResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerComputeLimitContext : ModelReaderWriterContext
     {

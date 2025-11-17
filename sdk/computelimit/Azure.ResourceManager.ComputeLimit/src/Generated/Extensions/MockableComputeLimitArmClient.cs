@@ -35,27 +35,27 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GuestSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="GuestSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ComputeLimitGuestSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComputeLimitGuestSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ComputeLimitGuestSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestSubscriptionResource"/> object. </returns>
-        public virtual GuestSubscriptionResource GetGuestSubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeLimitGuestSubscriptionResource"/> object. </returns>
+        public virtual ComputeLimitGuestSubscriptionResource GetComputeLimitGuestSubscriptionResource(ResourceIdentifier id)
         {
-            GuestSubscriptionResource.ValidateResourceId(id);
-            return new GuestSubscriptionResource(Client, id);
+            ComputeLimitGuestSubscriptionResource.ValidateResourceId(id);
+            return new ComputeLimitGuestSubscriptionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SharedLimitResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedLimitResource.CreateResourceIdentifier" /> to create a <see cref="SharedLimitResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ComputeLimitSharedLimitResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComputeLimitSharedLimitResource.CreateResourceIdentifier" /> to create a <see cref="ComputeLimitSharedLimitResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedLimitResource"/> object. </returns>
-        public virtual SharedLimitResource GetSharedLimitResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeLimitSharedLimitResource"/> object. </returns>
+        public virtual ComputeLimitSharedLimitResource GetComputeLimitSharedLimitResource(ResourceIdentifier id)
         {
-            SharedLimitResource.ValidateResourceId(id);
-            return new SharedLimitResource(Client, id);
+            ComputeLimitSharedLimitResource.ValidateResourceId(id);
+            return new ComputeLimitSharedLimitResource(Client, id);
         }
     }
 }

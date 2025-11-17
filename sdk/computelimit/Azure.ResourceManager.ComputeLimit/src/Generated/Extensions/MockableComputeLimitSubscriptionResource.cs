@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GuestSubscriptionResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ComputeLimitGuestSubscriptionResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of GuestSubscriptionResources and their operations over a GuestSubscriptionResource. </returns>
-        public virtual GuestSubscriptionCollection GetGuestSubscriptions(AzureLocation location)
+        /// <returns> An object representing collection of ComputeLimitGuestSubscriptionResources and their operations over a ComputeLimitGuestSubscriptionResource. </returns>
+        public virtual ComputeLimitGuestSubscriptionCollection GetComputeLimitGuestSubscriptions(AzureLocation location)
         {
-            return new GuestSubscriptionCollection(Client, Id, location);
+            return new ComputeLimitGuestSubscriptionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GuestSubscriptionResource>> GetGuestSubscriptionAsync(AzureLocation location, string guestSubscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitGuestSubscriptionResource>> GetComputeLimitGuestSubscriptionAsync(AzureLocation location, string guestSubscriptionId, CancellationToken cancellationToken = default)
         {
-            return await GetGuestSubscriptions(location).GetAsync(guestSubscriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetComputeLimitGuestSubscriptions(location).GetAsync(guestSubscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,49 +100,17 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GuestSubscriptionResource> GetGuestSubscription(AzureLocation location, string guestSubscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitGuestSubscriptionResource> GetComputeLimitGuestSubscription(AzureLocation location, string guestSubscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetGuestSubscriptions(location).Get(guestSubscriptionId, cancellationToken);
+            return GetComputeLimitGuestSubscriptions(location).Get(guestSubscriptionId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SharedLimitResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ComputeLimitSharedLimitResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of SharedLimitResources and their operations over a SharedLimitResource. </returns>
-        public virtual SharedLimitCollection GetSharedLimits(AzureLocation location)
+        /// <returns> An object representing collection of ComputeLimitSharedLimitResources and their operations over a ComputeLimitSharedLimitResource. </returns>
+        public virtual ComputeLimitSharedLimitCollection GetComputeLimitSharedLimits(AzureLocation location)
         {
-            return new SharedLimitCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SharedLimit_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SharedLimitResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="name"> The name of the SharedLimit. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SharedLimitResource>> GetSharedLimitAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetSharedLimits(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return new ComputeLimitSharedLimitCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -162,7 +130,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SharedLimitResource"/></description>
+        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,9 +140,41 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SharedLimitResource> GetSharedLimit(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitSharedLimitResource>> GetComputeLimitSharedLimitAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
-            return GetSharedLimits(location).Get(name, cancellationToken);
+            return await GetComputeLimitSharedLimits(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedLimit_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeLimitSharedLimitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="name"> The name of the SharedLimit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ComputeLimitSharedLimitResource> GetComputeLimitSharedLimit(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            return GetComputeLimitSharedLimits(location).Get(name, cancellationToken);
         }
     }
 }

@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing the GuestSubscription data model.
-    /// Guest subscription that consumes shared compute limits.
+    /// A class representing the ComputeLimitSharedLimit data model.
+    /// Compute limits shared by the subscription.
     /// </summary>
-    public partial class GuestSubscriptionData : ResourceData
+    public partial class ComputeLimitSharedLimitData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,30 +51,25 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GuestSubscriptionData"/>. </summary>
-        public GuestSubscriptionData()
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitData"/>. </summary>
+        public ComputeLimitSharedLimitData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GuestSubscriptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GuestSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ComputeLimitSharedLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeLimitSharedLimitProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal GuestSubscriptionProperties Properties { get; set; }
-        /// <summary> The provisioning state of the resource. </summary>
-        public ResourceProvisioningState? GuestSubscriptionProvisioningState
-        {
-            get => Properties is null ? default : Properties.ProvisioningState;
-        }
+        public ComputeLimitSharedLimitProperties Properties { get; set; }
     }
 }

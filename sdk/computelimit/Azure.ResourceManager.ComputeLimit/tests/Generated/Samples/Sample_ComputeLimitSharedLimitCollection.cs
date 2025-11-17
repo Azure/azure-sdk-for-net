@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeLimit.Samples
 {
-    public partial class Sample_SharedLimitCollection
+    public partial class Sample_ComputeLimitSharedLimitCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SharedLimitResource
+            // get the collection of this ComputeLimitSharedLimitResource
             AzureLocation location = new AzureLocation("eastus");
-            SharedLimitCollection collection = subscriptionResource.GetSharedLimits(location);
+            ComputeLimitSharedLimitCollection collection = subscriptionResource.GetComputeLimitSharedLimits(location);
 
             // invoke the operation
             string name = "StandardDSv3Family";
-            SharedLimitData data = new SharedLimitData
+            ComputeLimitSharedLimitData data = new ComputeLimitSharedLimitData
             {
-                Properties = new SharedLimitProperties(),
+                Properties = new ComputeLimitSharedLimitProperties(),
             };
-            ArmOperation<SharedLimitResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            SharedLimitResource result = lro.Value;
+            ArmOperation<ComputeLimitSharedLimitResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            ComputeLimitSharedLimitResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SharedLimitData resourceData = result.Data;
+            ComputeLimitSharedLimitData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SharedLimitResource
+            // get the collection of this ComputeLimitSharedLimitResource
             AzureLocation location = new AzureLocation("eastus");
-            SharedLimitCollection collection = subscriptionResource.GetSharedLimits(location);
+            ComputeLimitSharedLimitCollection collection = subscriptionResource.GetComputeLimitSharedLimits(location);
 
             // invoke the operation
             string name = "StandardDSv3Family";
-            SharedLimitResource result = await collection.GetAsync(name);
+            ComputeLimitSharedLimitResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SharedLimitData resourceData = result.Data;
+            ComputeLimitSharedLimitData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SharedLimitResource
+            // get the collection of this ComputeLimitSharedLimitResource
             AzureLocation location = new AzureLocation("eastus");
-            SharedLimitCollection collection = subscriptionResource.GetSharedLimits(location);
+            ComputeLimitSharedLimitCollection collection = subscriptionResource.GetComputeLimitSharedLimits(location);
 
             // invoke the operation and iterate over the result
-            await foreach (SharedLimitResource item in collection.GetAllAsync())
+            await foreach (ComputeLimitSharedLimitResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SharedLimitData resourceData = item.Data;
+                ComputeLimitSharedLimitData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SharedLimitResource
+            // get the collection of this ComputeLimitSharedLimitResource
             AzureLocation location = new AzureLocation("eastus");
-            SharedLimitCollection collection = subscriptionResource.GetSharedLimits(location);
+            ComputeLimitSharedLimitCollection collection = subscriptionResource.GetComputeLimitSharedLimits(location);
 
             // invoke the operation
             string name = "StandardDSv3Family";
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this SharedLimitResource
+            // get the collection of this ComputeLimitSharedLimitResource
             AzureLocation location = new AzureLocation("eastus");
-            SharedLimitCollection collection = subscriptionResource.GetSharedLimits(location);
+            ComputeLimitSharedLimitCollection collection = subscriptionResource.GetComputeLimitSharedLimits(location);
 
             // invoke the operation
             string name = "StandardDSv3Family";
-            NullableResponse<SharedLimitResource> response = await collection.GetIfExistsAsync(name);
-            SharedLimitResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ComputeLimitSharedLimitResource> response = await collection.GetIfExistsAsync(name);
+            ComputeLimitSharedLimitResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SharedLimitData resourceData = result.Data;
+                ComputeLimitSharedLimitData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

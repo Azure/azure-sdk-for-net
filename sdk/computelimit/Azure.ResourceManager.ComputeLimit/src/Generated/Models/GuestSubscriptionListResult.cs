@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <summary> Initializes a new instance of <see cref="GuestSubscriptionListResult"/>. </summary>
         /// <param name="value"> The GuestSubscription items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GuestSubscriptionListResult(IEnumerable<GuestSubscriptionData> value)
+        internal GuestSubscriptionListResult(IEnumerable<ComputeLimitGuestSubscriptionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <param name="value"> The GuestSubscription items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestSubscriptionListResult(IReadOnlyList<GuestSubscriptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestSubscriptionListResult(IReadOnlyList<ComputeLimitGuestSubscriptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         }
 
         /// <summary> The GuestSubscription items on this page. </summary>
-        public IReadOnlyList<GuestSubscriptionData> Value { get; }
+        public IReadOnlyList<ComputeLimitGuestSubscriptionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

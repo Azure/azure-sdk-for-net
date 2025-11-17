@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
-    public partial class LimitName : IUtf8JsonSerializable, IJsonModel<LimitName>
+    public partial class ComputeLimitLimitName : IUtf8JsonSerializable, IJsonModel<ComputeLimitLimitName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LimitName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeLimitLimitName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LimitName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeLimitLimitName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LimitName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitLimitName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LimitName)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitLimitName)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             }
         }
 
-        LimitName IJsonModel<LimitName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeLimitLimitName IJsonModel<ComputeLimitLimitName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LimitName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitLimitName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LimitName)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitLimitName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLimitName(document.RootElement, options);
+            return DeserializeComputeLimitLimitName(document.RootElement, options);
         }
 
-        internal static LimitName DeserializeLimitName(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeLimitLimitName DeserializeComputeLimitLimitName(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LimitName(value, localizedValue, serializedAdditionalRawData);
+            return new ComputeLimitLimitName(value, localizedValue, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LimitName>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeLimitLimitName>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LimitName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitLimitName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LimitName)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitLimitName)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LimitName IPersistableModel<LimitName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeLimitLimitName IPersistableModel<ComputeLimitLimitName>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LimitName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitLimitName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLimitName(document.RootElement, options);
+                        return DeserializeComputeLimitLimitName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LimitName)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitLimitName)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LimitName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeLimitLimitName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

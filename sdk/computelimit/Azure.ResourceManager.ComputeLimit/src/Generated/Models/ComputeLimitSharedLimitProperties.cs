@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
-    /// <summary> Properties of the limit name. </summary>
-    public partial class LimitName
+    /// <summary> Properties of the compute shared limit. </summary>
+    public partial class ComputeLimitSharedLimitProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,33 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LimitName"/>. </summary>
-        /// <param name="value"> The limit name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LimitName(string value)
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitProperties"/>. </summary>
+        public ComputeLimitSharedLimitProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LimitName"/>. </summary>
-        /// <param name="value"> The limit name. </param>
-        /// <param name="localizedValue"> The localized limit name. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitProperties"/>. </summary>
+        /// <param name="resourceName"> The limit name properties. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <param name="unit"> The quota units, such as Count. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LimitName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeLimitSharedLimitProperties(ComputeLimitLimitName resourceName, int? limit, string unit, ComputeLimitResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            LocalizedValue = localizedValue;
+            ResourceName = resourceName;
+            Limit = limit;
+            Unit = unit;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LimitName"/> for deserialization. </summary>
-        internal LimitName()
-        {
-        }
-
-        /// <summary> The limit name. </summary>
-        public string Value { get; }
-        /// <summary> The localized limit name. </summary>
-        public string LocalizedValue { get; }
+        /// <summary> The limit name properties. </summary>
+        public ComputeLimitLimitName ResourceName { get; }
+        /// <summary> The maximum permitted usage of the resource. </summary>
+        public int? Limit { get; }
+        /// <summary> The quota units, such as Count. </summary>
+        public string Unit { get; }
+        /// <summary> The provisioning state of the resource. </summary>
+        public ComputeLimitResourceProvisioningState? ProvisioningState { get; }
     }
 }

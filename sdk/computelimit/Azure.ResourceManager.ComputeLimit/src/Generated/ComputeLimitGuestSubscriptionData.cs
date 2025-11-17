@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.ComputeLimit.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ComputeLimit.Models
+namespace Azure.ResourceManager.ComputeLimit
 {
-    /// <summary> Properties of the compute shared limit. </summary>
-    public partial class SharedLimitProperties
+    /// <summary>
+    /// A class representing the ComputeLimitGuestSubscription data model.
+    /// Guest subscription that consumes shared compute limits.
+    /// </summary>
+    public partial class ComputeLimitGuestSubscriptionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +51,30 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SharedLimitProperties"/>. </summary>
-        public SharedLimitProperties()
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitGuestSubscriptionData"/>. </summary>
+        public ComputeLimitGuestSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedLimitProperties"/>. </summary>
-        /// <param name="resourceName"> The limit name properties. </param>
-        /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        /// <param name="unit"> The quota units, such as Count. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitGuestSubscriptionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedLimitProperties(LimitName resourceName, int? limit, string unit, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeLimitGuestSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GuestSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ResourceName = resourceName;
-            Limit = limit;
-            Unit = unit;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The limit name properties. </summary>
-        public LimitName ResourceName { get; }
-        /// <summary> The maximum permitted usage of the resource. </summary>
-        public int? Limit { get; }
-        /// <summary> The quota units, such as Count. </summary>
-        public string Unit { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal GuestSubscriptionProperties Properties { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public ComputeLimitResourceProvisioningState? GuestSubscriptionProvisioningState
+        {
+            get => Properties is null ? default : Properties.ProvisioningState;
+        }
     }
 }

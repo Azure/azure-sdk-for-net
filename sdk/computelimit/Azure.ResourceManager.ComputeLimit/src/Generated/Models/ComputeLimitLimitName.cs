@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ComputeLimit.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ComputeLimit
+namespace Azure.ResourceManager.ComputeLimit.Models
 {
-    /// <summary>
-    /// A class representing the SharedLimit data model.
-    /// Compute limits shared by the subscription.
-    /// </summary>
-    public partial class SharedLimitData : ResourceData
+    /// <summary> Properties of the limit name. </summary>
+    public partial class ComputeLimitLimitName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,35 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SharedLimitData"/>. </summary>
-        public SharedLimitData()
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitLimitName"/>. </summary>
+        /// <param name="value"> The limit name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ComputeLimitLimitName(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedLimitData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitLimitName"/>. </summary>
+        /// <param name="value"> The limit name. </param>
+        /// <param name="localizedValue"> The localized limit name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SharedLimitProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ComputeLimitLimitName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Value = value;
+            LocalizedValue = localizedValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public SharedLimitProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitLimitName"/> for deserialization. </summary>
+        internal ComputeLimitLimitName()
+        {
+        }
+
+        /// <summary> The limit name. </summary>
+        public string Value { get; }
+        /// <summary> The localized limit name. </summary>
+        public string LocalizedValue { get; }
     }
 }

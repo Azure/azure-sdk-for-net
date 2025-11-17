@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeLimit.Samples
 {
-    public partial class Sample_GuestSubscriptionCollection
+    public partial class Sample_ComputeLimitGuestSubscriptionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this GuestSubscriptionResource
+            // get the collection of this ComputeLimitGuestSubscriptionResource
             AzureLocation location = new AzureLocation("eastus");
-            GuestSubscriptionCollection collection = subscriptionResource.GetGuestSubscriptions(location);
+            ComputeLimitGuestSubscriptionCollection collection = subscriptionResource.GetComputeLimitGuestSubscriptions(location);
 
             // invoke the operation
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
-            GuestSubscriptionData data = new GuestSubscriptionData();
-            ArmOperation<GuestSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestSubscriptionId, data);
-            GuestSubscriptionResource result = lro.Value;
+            ComputeLimitGuestSubscriptionData data = new ComputeLimitGuestSubscriptionData();
+            ArmOperation<ComputeLimitGuestSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestSubscriptionId, data);
+            ComputeLimitGuestSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GuestSubscriptionData resourceData = result.Data;
+            ComputeLimitGuestSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this GuestSubscriptionResource
+            // get the collection of this ComputeLimitGuestSubscriptionResource
             AzureLocation location = new AzureLocation("eastus");
-            GuestSubscriptionCollection collection = subscriptionResource.GetGuestSubscriptions(location);
+            ComputeLimitGuestSubscriptionCollection collection = subscriptionResource.GetComputeLimitGuestSubscriptions(location);
 
             // invoke the operation
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
-            GuestSubscriptionResource result = await collection.GetAsync(guestSubscriptionId);
+            ComputeLimitGuestSubscriptionResource result = await collection.GetAsync(guestSubscriptionId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GuestSubscriptionData resourceData = result.Data;
+            ComputeLimitGuestSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this GuestSubscriptionResource
+            // get the collection of this ComputeLimitGuestSubscriptionResource
             AzureLocation location = new AzureLocation("eastus");
-            GuestSubscriptionCollection collection = subscriptionResource.GetGuestSubscriptions(location);
+            ComputeLimitGuestSubscriptionCollection collection = subscriptionResource.GetComputeLimitGuestSubscriptions(location);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestSubscriptionResource item in collection.GetAllAsync())
+            await foreach (ComputeLimitGuestSubscriptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GuestSubscriptionData resourceData = item.Data;
+                ComputeLimitGuestSubscriptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this GuestSubscriptionResource
+            // get the collection of this ComputeLimitGuestSubscriptionResource
             AzureLocation location = new AzureLocation("eastus");
-            GuestSubscriptionCollection collection = subscriptionResource.GetGuestSubscriptions(location);
+            ComputeLimitGuestSubscriptionCollection collection = subscriptionResource.GetComputeLimitGuestSubscriptions(location);
 
             // invoke the operation
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this GuestSubscriptionResource
+            // get the collection of this ComputeLimitGuestSubscriptionResource
             AzureLocation location = new AzureLocation("eastus");
-            GuestSubscriptionCollection collection = subscriptionResource.GetGuestSubscriptions(location);
+            ComputeLimitGuestSubscriptionCollection collection = subscriptionResource.GetComputeLimitGuestSubscriptions(location);
 
             // invoke the operation
             string guestSubscriptionId = "11111111-1111-1111-1111-111111111111";
-            NullableResponse<GuestSubscriptionResource> response = await collection.GetIfExistsAsync(guestSubscriptionId);
-            GuestSubscriptionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ComputeLimitGuestSubscriptionResource> response = await collection.GetIfExistsAsync(guestSubscriptionId);
+            ComputeLimitGuestSubscriptionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GuestSubscriptionData resourceData = result.Data;
+                ComputeLimitGuestSubscriptionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

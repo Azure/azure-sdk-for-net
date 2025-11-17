@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             {
                 return null;
             }
-            ResourceProvisioningState? provisioningState = default;
+            ComputeLimitResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new ComputeLimitResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

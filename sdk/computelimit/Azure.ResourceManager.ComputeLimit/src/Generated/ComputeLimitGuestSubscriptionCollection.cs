@@ -19,31 +19,31 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GuestSubscriptionResource"/> and their operations.
-    /// Each <see cref="GuestSubscriptionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="GuestSubscriptionCollection"/> instance call the GetGuestSubscriptions method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="ComputeLimitGuestSubscriptionResource"/> and their operations.
+    /// Each <see cref="ComputeLimitGuestSubscriptionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ComputeLimitGuestSubscriptionCollection"/> instance call the GetComputeLimitGuestSubscriptions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class GuestSubscriptionCollection : ArmCollection, IEnumerable<GuestSubscriptionResource>, IAsyncEnumerable<GuestSubscriptionResource>
+    public partial class ComputeLimitGuestSubscriptionCollection : ArmCollection, IEnumerable<ComputeLimitGuestSubscriptionResource>, IAsyncEnumerable<ComputeLimitGuestSubscriptionResource>
     {
-        private readonly ClientDiagnostics _guestSubscriptionClientDiagnostics;
-        private readonly GuestSubscriptionsRestOperations _guestSubscriptionRestClient;
+        private readonly ClientDiagnostics _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics;
+        private readonly GuestSubscriptionsRestOperations _computeLimitGuestSubscriptionGuestSubscriptionsRestClient;
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="GuestSubscriptionCollection"/> class for mocking. </summary>
-        protected GuestSubscriptionCollection()
+        /// <summary> Initializes a new instance of the <see cref="ComputeLimitGuestSubscriptionCollection"/> class for mocking. </summary>
+        protected ComputeLimitGuestSubscriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GuestSubscriptionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComputeLimitGuestSubscriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        internal GuestSubscriptionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal ComputeLimitGuestSubscriptionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
-            _guestSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", GuestSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GuestSubscriptionResource.ResourceType, out string guestSubscriptionApiVersion);
-            _guestSubscriptionRestClient = new GuestSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestSubscriptionApiVersion);
+            _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ComputeLimitGuestSubscriptionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ComputeLimitGuestSubscriptionResource.ResourceType, out string computeLimitGuestSubscriptionGuestSubscriptionsApiVersion);
+            _computeLimitGuestSubscriptionGuestSubscriptionsRestClient = new GuestSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitGuestSubscriptionGuestSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GuestSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string guestSubscriptionId, GuestSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ComputeLimitGuestSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string guestSubscriptionId, ComputeLimitGuestSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.CreateOrUpdate");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _guestSubscriptionRestClient.CreateAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _guestSubscriptionRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data);
+                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data, cancellationToken).ConfigureAwait(false);
+                var uri = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation<GuestSubscriptionResource>(Response.FromValue(new GuestSubscriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource>(Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GuestSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string guestSubscriptionId, GuestSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ComputeLimitGuestSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string guestSubscriptionId, ComputeLimitGuestSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.CreateOrUpdate");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _guestSubscriptionRestClient.Create(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data, cancellationToken);
-                var uri = _guestSubscriptionRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data);
+                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Create(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data, cancellationToken);
+                var uri = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ComputeLimitArmOperation<GuestSubscriptionResource>(Response.FromValue(new GuestSubscriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ComputeLimitArmOperation<ComputeLimitGuestSubscriptionResource>(Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> is null. </exception>
-        public virtual async Task<Response<GuestSubscriptionResource>> GetAsync(string guestSubscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitGuestSubscriptionResource>> GetAsync(string guestSubscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.Get");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _guestSubscriptionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,18 +227,18 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> is null. </exception>
-        public virtual Response<GuestSubscriptionResource> Get(string guestSubscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitGuestSubscriptionResource> Get(string guestSubscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.Get");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _guestSubscriptionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken);
+                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,17 +264,17 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeLimitGuestSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeLimitGuestSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestSubscriptionRestClient.CreateListBySubscriptionLocationResourceRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _guestSubscriptionRestClient.CreateListBySubscriptionLocationResourceNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GuestSubscriptionResource(Client, GuestSubscriptionData.DeserializeGuestSubscriptionData(e)), _guestSubscriptionClientDiagnostics, Pipeline, "GuestSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateListBySubscriptionLocationResourceRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateListBySubscriptionLocationResourceNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputeLimitGuestSubscriptionResource(Client, ComputeLimitGuestSubscriptionData.DeserializeComputeLimitGuestSubscriptionData(e)), _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics, Pipeline, "ComputeLimitGuestSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,17 +294,17 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeLimitGuestSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeLimitGuestSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestSubscriptionRestClient.CreateListBySubscriptionLocationResourceRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _guestSubscriptionRestClient.CreateListBySubscriptionLocationResourceNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GuestSubscriptionResource(Client, GuestSubscriptionData.DeserializeGuestSubscriptionData(e)), _guestSubscriptionClientDiagnostics, Pipeline, "GuestSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateListBySubscriptionLocationResourceRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.CreateListBySubscriptionLocationResourceNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputeLimitGuestSubscriptionResource(Client, ComputeLimitGuestSubscriptionData.DeserializeComputeLimitGuestSubscriptionData(e)), _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics, Pipeline, "ComputeLimitGuestSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.Exists");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _guestSubscriptionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.Exists");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _guestSubscriptionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken);
+                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,18 +418,18 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> is null. </exception>
-        public virtual async Task<NullableResponse<GuestSubscriptionResource>> GetIfExistsAsync(string guestSubscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ComputeLimitGuestSubscriptionResource>> GetIfExistsAsync(string guestSubscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.GetIfExists");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _guestSubscriptionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<GuestSubscriptionResource>(response.GetRawResponse());
-                return Response.FromValue(new GuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ComputeLimitGuestSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestSubscriptionResource"/></description>
+        /// <description><see cref="ComputeLimitGuestSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,18 +463,18 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="guestSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="guestSubscriptionId"/> is null. </exception>
-        public virtual NullableResponse<GuestSubscriptionResource> GetIfExists(string guestSubscriptionId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ComputeLimitGuestSubscriptionResource> GetIfExists(string guestSubscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guestSubscriptionId, nameof(guestSubscriptionId));
 
-            using var scope = _guestSubscriptionClientDiagnostics.CreateScope("GuestSubscriptionCollection.GetIfExists");
+            using var scope = _computeLimitGuestSubscriptionGuestSubscriptionsClientDiagnostics.CreateScope("ComputeLimitGuestSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _guestSubscriptionRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken);
+                var response = _computeLimitGuestSubscriptionGuestSubscriptionsRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), guestSubscriptionId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<GuestSubscriptionResource>(response.GetRawResponse());
-                return Response.FromValue(new GuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ComputeLimitGuestSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitGuestSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        IEnumerator<GuestSubscriptionResource> IEnumerable<GuestSubscriptionResource>.GetEnumerator()
+        IEnumerator<ComputeLimitGuestSubscriptionResource> IEnumerable<ComputeLimitGuestSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<GuestSubscriptionResource> IAsyncEnumerable<GuestSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ComputeLimitGuestSubscriptionResource> IAsyncEnumerable<ComputeLimitGuestSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

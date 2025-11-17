@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    public partial class SharedLimitData : IUtf8JsonSerializable, IJsonModel<SharedLimitData>
+    public partial class ComputeLimitSharedLimitData : IUtf8JsonSerializable, IJsonModel<ComputeLimitSharedLimitData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedLimitData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeLimitSharedLimitData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SharedLimitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeLimitSharedLimitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedLimitData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        SharedLimitData IJsonModel<SharedLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeLimitSharedLimitData IJsonModel<ComputeLimitSharedLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedLimitData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharedLimitData(document.RootElement, options);
+            return DeserializeComputeLimitSharedLimitData(document.RootElement, options);
         }
 
-        internal static SharedLimitData DeserializeSharedLimitData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeLimitSharedLimitData DeserializeComputeLimitSharedLimitData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 return null;
             }
-            SharedLimitProperties properties = default;
+            ComputeLimitSharedLimitProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     {
                         continue;
                     }
-                    properties = SharedLimitProperties.DeserializeSharedLimitProperties(property.Value, options);
+                    properties = ComputeLimitSharedLimitProperties.DeserializeComputeLimitSharedLimitProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SharedLimitData(
+            return new ComputeLimitSharedLimitData(
                 id,
                 name,
                 type,
@@ -122,35 +122,35 @@ namespace Azure.ResourceManager.ComputeLimit
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SharedLimitData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeLimitSharedLimitData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SharedLimitData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SharedLimitData IPersistableModel<SharedLimitData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeLimitSharedLimitData IPersistableModel<ComputeLimitSharedLimitData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSharedLimitData(document.RootElement, options);
+                        return DeserializeComputeLimitSharedLimitData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedLimitData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SharedLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeLimitSharedLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

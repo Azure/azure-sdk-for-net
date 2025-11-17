@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedLimitData>> GetAsync(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<ComputeLimitSharedLimitData>> GetAsync(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 case 200:
                     {
-                        SharedLimitData value = default;
+                        ComputeLimitSharedLimitData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SharedLimitData.DeserializeSharedLimitData(document.RootElement);
+                        value = ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SharedLimitData)null, message.Response);
+                    return Response.FromValue((ComputeLimitSharedLimitData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedLimitData> Get(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public Response<ComputeLimitSharedLimitData> Get(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 case 200:
                     {
-                        SharedLimitData value = default;
+                        ComputeLimitSharedLimitData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SharedLimitData.DeserializeSharedLimitData(document.RootElement);
+                        value = ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SharedLimitData)null, message.Response);
+                    return Response.FromValue((ComputeLimitSharedLimitData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, AzureLocation location, string name, SharedLimitData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, AzureLocation location, string name, ComputeLimitSharedLimitData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ComputeLimit
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, AzureLocation location, string name, SharedLimitData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, AzureLocation location, string name, ComputeLimitSharedLimitData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedLimitData>> CreateAsync(string subscriptionId, AzureLocation location, string name, SharedLimitData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ComputeLimitSharedLimitData>> CreateAsync(string subscriptionId, AzureLocation location, string name, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.ComputeLimit
                 case 200:
                 case 201:
                     {
-                        SharedLimitData value = default;
+                        ComputeLimitSharedLimitData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SharedLimitData.DeserializeSharedLimitData(document.RootElement);
+                        value = ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedLimitData> Create(string subscriptionId, AzureLocation location, string name, SharedLimitData data, CancellationToken cancellationToken = default)
+        public Response<ComputeLimitSharedLimitData> Create(string subscriptionId, AzureLocation location, string name, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.ComputeLimit
                 case 200:
                 case 201:
                     {
-                        SharedLimitData value = default;
+                        ComputeLimitSharedLimitData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SharedLimitData.DeserializeSharedLimitData(document.RootElement);
+                        value = ComputeLimitSharedLimitData.DeserializeComputeLimitSharedLimitData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeLimit.Samples
 {
-    public partial class Sample_SharedLimitResource
+    public partial class Sample_ComputeLimitSharedLimitResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SharedLimitResource created on azure
-            // for more information of creating SharedLimitResource, please refer to the document of SharedLimitResource
+            // this example assumes you already have this ComputeLimitSharedLimitResource created on azure
+            // for more information of creating ComputeLimitSharedLimitResource, please refer to the document of ComputeLimitSharedLimitResource
             string subscriptionId = "12345678-1234-1234-1234-123456789012";
             AzureLocation location = new AzureLocation("eastus");
             string name = "StandardDSv3Family";
-            ResourceIdentifier sharedLimitResourceId = SharedLimitResource.CreateResourceIdentifier(subscriptionId, location, name);
-            SharedLimitResource sharedLimit = client.GetSharedLimitResource(sharedLimitResourceId);
+            ResourceIdentifier computeLimitSharedLimitResourceId = ComputeLimitSharedLimitResource.CreateResourceIdentifier(subscriptionId, location, name);
+            ComputeLimitSharedLimitResource computeLimitSharedLimit = client.GetComputeLimitSharedLimitResource(computeLimitSharedLimitResourceId);
 
             // invoke the operation
-            SharedLimitResource result = await sharedLimit.GetAsync();
+            ComputeLimitSharedLimitResource result = await computeLimitSharedLimit.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SharedLimitData resourceData = result.Data;
+            ComputeLimitSharedLimitData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SharedLimitResource created on azure
-            // for more information of creating SharedLimitResource, please refer to the document of SharedLimitResource
+            // this example assumes you already have this ComputeLimitSharedLimitResource created on azure
+            // for more information of creating ComputeLimitSharedLimitResource, please refer to the document of ComputeLimitSharedLimitResource
             string subscriptionId = "12345678-1234-1234-1234-123456789012";
             AzureLocation location = new AzureLocation("eastus");
             string name = "StandardDSv3Family";
-            ResourceIdentifier sharedLimitResourceId = SharedLimitResource.CreateResourceIdentifier(subscriptionId, location, name);
-            SharedLimitResource sharedLimit = client.GetSharedLimitResource(sharedLimitResourceId);
+            ResourceIdentifier computeLimitSharedLimitResourceId = ComputeLimitSharedLimitResource.CreateResourceIdentifier(subscriptionId, location, name);
+            ComputeLimitSharedLimitResource computeLimitSharedLimit = client.GetComputeLimitSharedLimitResource(computeLimitSharedLimitResourceId);
 
             // invoke the operation
-            await sharedLimit.DeleteAsync(WaitUntil.Completed);
+            await computeLimitSharedLimit.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -84,25 +84,25 @@ namespace Azure.ResourceManager.ComputeLimit.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SharedLimitResource created on azure
-            // for more information of creating SharedLimitResource, please refer to the document of SharedLimitResource
+            // this example assumes you already have this ComputeLimitSharedLimitResource created on azure
+            // for more information of creating ComputeLimitSharedLimitResource, please refer to the document of ComputeLimitSharedLimitResource
             string subscriptionId = "12345678-1234-1234-1234-123456789012";
             AzureLocation location = new AzureLocation("eastus");
             string name = "StandardDSv3Family";
-            ResourceIdentifier sharedLimitResourceId = SharedLimitResource.CreateResourceIdentifier(subscriptionId, location, name);
-            SharedLimitResource sharedLimit = client.GetSharedLimitResource(sharedLimitResourceId);
+            ResourceIdentifier computeLimitSharedLimitResourceId = ComputeLimitSharedLimitResource.CreateResourceIdentifier(subscriptionId, location, name);
+            ComputeLimitSharedLimitResource computeLimitSharedLimit = client.GetComputeLimitSharedLimitResource(computeLimitSharedLimitResourceId);
 
             // invoke the operation
-            SharedLimitData data = new SharedLimitData
+            ComputeLimitSharedLimitData data = new ComputeLimitSharedLimitData
             {
-                Properties = new SharedLimitProperties(),
+                Properties = new ComputeLimitSharedLimitProperties(),
             };
-            ArmOperation<SharedLimitResource> lro = await sharedLimit.UpdateAsync(WaitUntil.Completed, data);
-            SharedLimitResource result = lro.Value;
+            ArmOperation<ComputeLimitSharedLimitResource> lro = await computeLimitSharedLimit.UpdateAsync(WaitUntil.Completed, data);
+            ComputeLimitSharedLimitResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SharedLimitData resourceData = result.Data;
+            ComputeLimitSharedLimitData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

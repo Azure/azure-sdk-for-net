@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    public partial class GuestSubscriptionData : IUtf8JsonSerializable, IJsonModel<GuestSubscriptionData>
+    public partial class ComputeLimitGuestSubscriptionData : IUtf8JsonSerializable, IJsonModel<ComputeLimitGuestSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestSubscriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeLimitGuestSubscriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GuestSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeLimitGuestSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitGuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestSubscriptionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitGuestSubscriptionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        GuestSubscriptionData IJsonModel<GuestSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeLimitGuestSubscriptionData IJsonModel<ComputeLimitGuestSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitGuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestSubscriptionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitGuestSubscriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGuestSubscriptionData(document.RootElement, options);
+            return DeserializeComputeLimitGuestSubscriptionData(document.RootElement, options);
         }
 
-        internal static GuestSubscriptionData DeserializeGuestSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeLimitGuestSubscriptionData DeserializeComputeLimitGuestSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GuestSubscriptionData(
+            return new ComputeLimitGuestSubscriptionData(
                 id,
                 name,
                 type,
@@ -122,35 +122,35 @@ namespace Azure.ResourceManager.ComputeLimit
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GuestSubscriptionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeLimitGuestSubscriptionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitGuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GuestSubscriptionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitGuestSubscriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GuestSubscriptionData IPersistableModel<GuestSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeLimitGuestSubscriptionData IPersistableModel<ComputeLimitGuestSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeLimitGuestSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGuestSubscriptionData(document.RootElement, options);
+                        return DeserializeComputeLimitGuestSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestSubscriptionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitGuestSubscriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GuestSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeLimitGuestSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

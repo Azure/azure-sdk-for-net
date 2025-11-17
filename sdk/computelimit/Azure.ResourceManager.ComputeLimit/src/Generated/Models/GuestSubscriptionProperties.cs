@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <summary> Initializes a new instance of <see cref="GuestSubscriptionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestSubscriptionProperties(ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuestSubscriptionProperties(ComputeLimitResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public ComputeLimitResourceProvisioningState? ProvisioningState { get; }
     }
 }
