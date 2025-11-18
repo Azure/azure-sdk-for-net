@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -140,6 +141,89 @@ namespace Azure.ResourceManager.Cdn.Models
             return new HealthProbeSettings(probePath, probeRequestType, probeProtocol, probeIntervalInSeconds, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbePath))
+                {
+                    builder.Append("  probePath: ");
+                    if (ProbePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProbePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProbePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbeRequestType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probeRequestType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbeRequestType))
+                {
+                    builder.Append("  probeRequestType: ");
+                    builder.AppendLine($"'{ProbeRequestType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbeProtocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probeProtocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbeProtocol))
+                {
+                    builder.Append("  probeProtocol: ");
+                    builder.AppendLine($"'{ProbeProtocol.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbeIntervalInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probeIntervalInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbeIntervalInSeconds))
+                {
+                    builder.Append("  probeIntervalInSeconds: ");
+                    builder.AppendLine($"{ProbeIntervalInSeconds.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HealthProbeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +232,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support writing '{options.Format}' format.");
             }

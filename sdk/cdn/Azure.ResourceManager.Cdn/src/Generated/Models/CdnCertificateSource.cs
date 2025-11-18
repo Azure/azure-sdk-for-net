@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for using CDN managed certificate for securing custom domain.
-    /// Serialized Name: CdnCertificateSourceParameters
-    /// </summary>
+    /// <summary> Defines the parameters for using CDN managed certificate for securing custom domain. </summary>
     public partial class CdnCertificateSource : CertificateSourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
-        /// <param name="certificateType">
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </param>
+        /// <param name="certificateType"> Type of certificate used. </param>
         public CdnCertificateSource(CdnManagedCertificateType certificateType)
         {
             CertificateType = certificateType;
@@ -28,12 +22,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
-        /// <param name="typeName"> Serialized Name: CertificateSourceParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="certificateType">
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </param>
+        /// <param name="certificateType"> Type of certificate used. </param>
         internal CdnCertificateSource(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CdnManagedCertificateType certificateType) : base(typeName, serializedAdditionalRawData)
         {
             CertificateType = certificateType;
@@ -45,10 +36,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </summary>
+        /// <summary> Type of certificate used. </summary>
+        [WirePath("certificateType")]
         public CdnManagedCertificateType CertificateType { get; set; }
     }
 }

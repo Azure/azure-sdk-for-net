@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Agents.Models;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -17,9 +17,13 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
+        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeSourceParams(string knowledgeSourceName, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(knowledgeSourceName, kind, serializedAdditionalRawData)
+        internal UnknownKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, serializedAdditionalRawData)
         {
             Kind = kind;
         }

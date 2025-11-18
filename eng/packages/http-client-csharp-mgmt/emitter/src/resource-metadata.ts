@@ -5,7 +5,8 @@ const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
 const TenantScopePrefix = "/tenants";
-const ManagementGroupScopePrefix = "/providers/Microsoft.Management/managementGroups";
+const ManagementGroupScopePrefix =
+  "/providers/Microsoft.Management/managementGroups";
 const Providers = "/providers";
 
 export function calculateResourceTypeFromPath(path: string): string {
@@ -46,7 +47,7 @@ export interface ResourceMetadata {
   methods: ResourceMethod[];
   resourceScope: ResourceScope;
   parentResourceId?: string;
-  parentResourceModelId? : string;
+  parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
 }

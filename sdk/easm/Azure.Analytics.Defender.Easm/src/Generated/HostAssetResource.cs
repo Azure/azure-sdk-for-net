@@ -15,12 +15,8 @@ namespace Azure.Analytics.Defender.Easm
     {
         /// <summary> Initializes a new instance of <see cref="HostAssetResource"/>. </summary>
         /// <param name="asset"> asset. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asset"/> is null. </exception>
-        internal HostAssetResource(HostAsset asset)
+        internal HostAssetResource(HostAsset asset) : base("host")
         {
-            Argument.AssertNotNull(asset, nameof(asset));
-
-            Kind = "host";
             Asset = asset;
         }
 
@@ -39,16 +35,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="asset"> asset. </param>
-        internal HostAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IReadOnlyList<string> labels, bool? wildcard, string discoGroupName, IReadOnlyList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, HostAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, serializedAdditionalRawData)
+        internal HostAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, HostAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, additionalBinaryDataProperties)
         {
             Asset = asset;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HostAssetResource"/> for deserialization. </summary>
-        internal HostAssetResource()
-        {
         }
 
         /// <summary> asset. </summary>
