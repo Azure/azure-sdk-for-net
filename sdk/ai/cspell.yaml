@@ -1,0 +1,28 @@
+version: "0.2"
+language: en
+allowCompoundWords: true
+dictionaries:
+  - python
+  - powershell
+  - csharp
+  - softwareTerms
+words:
+  - aiprojects
+  - ansii
+  - atbash
+  - azureai
+  - bleu
+  - conv
+  - genai
+  - gleu
+  - includable
+  - inpaint
+  - inpainting
+  - linq
+  - logprobs
+  - OPENAICUA
+  - Plagiarus
+  - PNAS
+  - praepotens
+  - ubinary
+  - wfresp

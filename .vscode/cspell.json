@@ -71,6 +71,7 @@
     "blazor",
     "byok",
     "centralus",
+    "clippy",
     "colls",
     "contoso",
     "cpus",
@@ -210,21 +211,6 @@
       "words": [
         "agri",
         "mobo"
-      ]
-    },
-    {
-      "filename": "**/sdk/ai/**/*.cs",
-      "words": [
-        "ansii",
-        "atbash",
-        "azureai",
-        "bleu",
-        "gleu",
-        "includable",
-        "inpaint",
-        "inpainting",
-        "logprobs",
-        "ubinary"
       ]
     },
     {
