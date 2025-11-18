@@ -77,7 +77,23 @@ internal static class ResourceExtensions
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
                     if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
                     {
-                        SdkVersionUtils.IsDistro = true;
+                        SdkVersionUtils.VersionType = SdkVersionType.Distro;
+                    }
+                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights")
+                    {
+                        SdkVersionUtils.VersionType = SdkVersionType.ShimBase;
+                    }
+                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights.AspNetCore")
+                    {
+                        SdkVersionUtils.VersionType = SdkVersionType.ShimAspNetCore;
+                    }
+                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights.WorkerService")
+                    {
+                        SdkVersionUtils.VersionType = SdkVersionType.ShimWorkerService;
+                    }
+                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights.Web")
+                    {
+                        SdkVersionUtils.VersionType = SdkVersionType.ShimWeb;
                     }
                     break;
                 default:

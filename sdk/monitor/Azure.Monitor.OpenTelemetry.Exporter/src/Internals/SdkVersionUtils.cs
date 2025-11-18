@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static string? s_prefix;
         internal static string s_sdkVersion = GetSdkVersion();
-        internal static bool s_isDistro = false;
+        internal static SdkVersionType s_sdkVersionType = SdkVersionType.Exporter;
 
         internal static string? SdkVersionPrefix
         {
@@ -30,12 +30,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static bool IsDistro
+        internal static SdkVersionType VersionType
         {
-            get => s_isDistro;
+            get => s_sdkVersionType;
             set
             {
-                s_isDistro = value;
+                s_sdkVersionType = value;
                 s_sdkVersion = GetSdkVersion();
             }
         }
@@ -99,14 +99,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? extensionVersion = GetVersion(typeof(LiveMetrics.AzureMonitorLiveMetricsEventSource));
 #endif
 
-                if (IsDistro)
+                string extensionLabel;
+                switch (VersionType)
                 {
-                    extensionVersion += "-d";
+                    case SdkVersionType.Distro:
+                        extensionLabel = "dst";
+                        break;
+                    case SdkVersionType.ShimBase:
+                        extensionLabel = "sha";
+                        break;
+                    case SdkVersionType.ShimAspNetCore:
+                        extensionLabel = "shc";
+                        break;
+                    case SdkVersionType.ShimWorkerService:
+                        extensionLabel = "shw";
+                        break;
+                    case SdkVersionType.ShimWeb:
+                        extensionLabel = "shf";
+                        break;
+                    case SdkVersionType.Exporter:
+                    default:
+                        extensionLabel = "ext";
+                        break;
                 }
 
                 ExtensionsVersion = extensionVersion ?? "u"; // 'u' for Unknown
 
-                return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:ext{extensionVersion}");
+                return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:{extensionLabel}{extensionVersion}");
             }
             catch (Exception ex)
             {
@@ -124,5 +143,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return "dotnetu:otelu:extu"; // 'u' for Unknown
             }
         }
+    }
+
+    /// <summary>
+    /// Specifies the type of SDK for telemetry identification and version labeling.
+    /// </summary>
+    public enum SdkVersionType
+    {
+        /// <summary>Default Azure Monitor OpenTelemetry Exporter.</summary>
+        Exporter,
+        /// <summary>Azure Monitor OpenTelemetry AspNetCore Distro.</summary>
+        Distro,
+        /// <summary>Application Insights base shim (Microsoft.ApplicationInsights).</summary>
+        ShimBase,
+        /// <summary>Application Insights AspNetCore shim (Microsoft.ApplicationInsights.AspNetCore).</summary>
+        ShimAspNetCore,
+        /// <summary>Application Insights WorkerService shim (Microsoft.ApplicationInsights.WorkerService).</summary>
+        ShimWorkerService,
+        /// <summary>Application Insights Web shim (Microsoft.ApplicationInsights.Web).</summary>
+        ShimWeb
     }
 }
