@@ -23,7 +23,6 @@ If runing script locally this directory should already contain the following too
 Directory Name: docfx , Download Link: https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip
 Directory Name: ECMA2Yml , Download Link: https://www.nuget.org/packages/Microsoft.DocAsCode.ECMA2Yaml
 Directory Name: mdoc , Download Link: https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip
-Directory Name: PopImport: https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/flatcontainer/popimport/1.0.0/popimport.1.0.0.nupkg
 
 .PARAMETER BinDirectory
 RepoRoot\doc\ApiDocGeneration
@@ -117,7 +116,7 @@ Write-Verbose "Initialize Frameworks File"
 & "${MDocTool}" fx-bootstrap "${FrameworkDir}"
 
 Write-Verbose "Include XML Files"
-& "${BinDirectory}/PopImport/popimport.exe" -f "${FrameworkDir}"
+& "${RepoRoot}/eng/scripts/Invoke-PopImport.ps1" -FrameworksPath "${FrameworkDir}"
 
 Write-Verbose "Produce ECMAXML"
 & "${MDocTool}" update -fx "${FrameworkDir}" -o "${XmlOutDir}" --debug -lang docid -lang vb.net -lang fsharp --delete
