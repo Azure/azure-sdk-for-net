@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DatabaseWatcher;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDatabaseWatcherSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _databaseWatcherWatchersClientDiagnostics;
-        private WatchersRestOperations _databaseWatcherWatchersRestClient;
+        private ClientDiagnostics _watchersClientDiagnostics;
+        private Watchers _watchersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDatabaseWatcherSubscriptionResource for mocking. </summary>
         protected MockableDatabaseWatcherSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDatabaseWatcherSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDatabaseWatcherSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DatabaseWatcherWatchersClientDiagnostics => _databaseWatcherWatchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherResource.ResourceType.Namespace, Diagnostics);
-        private WatchersRestOperations DatabaseWatcherWatchersRestClient => _databaseWatcherWatchersRestClient ??= new WatchersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatabaseWatcherResource.ResourceType));
+        private ClientDiagnostics WatchersClientDiagnostics => _watchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Watchers WatchersRestClient => _watchersRestClient ??= new Watchers(WatchersClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
 
         /// <summary>
         /// List Watcher resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseWatcherResource> GetDatabaseWatchersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherResource(Client, DatabaseWatcherData.DeserializeDatabaseWatcherData(e)), DatabaseWatcherWatchersClientDiagnostics, Pipeline, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionAsyncCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
         /// List Watcher resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// <returns> A collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseWatcherResource> GetDatabaseWatchers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DatabaseWatcherWatchersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherResource(Client, DatabaseWatcherData.DeserializeDatabaseWatcherData(e)), DatabaseWatcherWatchersClientDiagnostics, Pipeline, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseWatcherResource(Client, data));
         }
     }
 }

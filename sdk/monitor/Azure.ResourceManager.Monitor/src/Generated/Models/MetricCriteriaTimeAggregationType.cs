@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the criteria time aggregation types. </summary>
+    /// <summary> The criteria time aggregation types. Previously undocumented values might be returned. </summary>
     public readonly partial struct MetricCriteriaTimeAggregationType : IEquatable<MetricCriteriaTimeAggregationType>
     {
         private readonly string _value;
