@@ -89,9 +89,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
+        /// <param name="purviewEnabled"> A value indicating whether the index is leveraging Purview-specific features. This property defaults to false and cannot be changed after index creation. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndex(string name, string description, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchIndex(string name, string description, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -110,6 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticSearch = semanticSearch;
             VectorSearch = vectorSearch;
             PermissionFilterOption = permissionFilterOption;
+            PurviewEnabled = purviewEnabled;
             _etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -138,5 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public VectorSearch VectorSearch { get; set; }
         /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
         public SearchIndexPermissionFilterOption? PermissionFilterOption { get; set; }
+        /// <summary> A value indicating whether the index is leveraging Purview-specific features. This property defaults to false and cannot be changed after index creation. </summary>
+        public bool? PurviewEnabled { get; set; }
     }
 }

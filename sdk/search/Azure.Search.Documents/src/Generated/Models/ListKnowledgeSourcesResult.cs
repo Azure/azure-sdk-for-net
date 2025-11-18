@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeSourcesResult"/>. </summary>
         /// <param name="knowledgeSources">
         /// Please note <see cref="KnowledgeSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/> and <see cref="SearchIndexKnowledgeSource"/>.
+        /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/> and <see cref="WebKnowledgeSource"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSources"/> is null. </exception>
         internal ListKnowledgeSourcesResult(IEnumerable<KnowledgeSource> knowledgeSources)
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeSourcesResult"/>. </summary>
         /// <param name="knowledgeSources">
         /// Please note <see cref="KnowledgeSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/> and <see cref="SearchIndexKnowledgeSource"/>.
+        /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/> and <see cref="WebKnowledgeSource"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ListKnowledgeSourcesResult(IReadOnlyList<KnowledgeSource> knowledgeSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets the knowledge sources
         /// Please note <see cref="KnowledgeSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/> and <see cref="SearchIndexKnowledgeSource"/>.
+        /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/> and <see cref="WebKnowledgeSource"/>.
         /// </summary>
         public IReadOnlyList<KnowledgeSource> KnowledgeSources { get; }
     }

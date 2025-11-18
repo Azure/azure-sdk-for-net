@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The operator used to compare the metric value against the threshold. </summary>
+    /// <summary> The operator used to compare the metric value against the threshold. Previously undocumented values might be returned. </summary>
     public readonly partial struct DynamicThresholdOperator : IEquatable<DynamicThresholdOperator>
     {
         private readonly string _value;

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AgriculturePlatform
 {
     /// <summary>
     /// A class representing a collection of <see cref="AgricultureServiceResource"/> and their operations.
-    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of the parent resource.
+    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AgricultureServiceCollection : ArmCollection, IEnumerable<AgricultureServiceResource>, IAsyncEnumerable<AgricultureServiceResource>
     {

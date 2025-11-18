@@ -14,66 +14,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Security services type list. </summary>
     public partial class RulestackSecurityServiceTypeList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceTypeList"/>. </summary>
         /// <param name="entry"> list. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
         internal RulestackSecurityServiceTypeList(IEnumerable<NameDescriptionObject> entry)
         {
-            Argument.AssertNotNull(entry, nameof(entry));
-
             Entry = entry.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceTypeList"/>. </summary>
         /// <param name="securityServicesTypeListType"> security services type. </param>
         /// <param name="entry"> list. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RulestackSecurityServiceTypeList(string securityServicesTypeListType, IReadOnlyList<NameDescriptionObject> entry, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackSecurityServiceTypeList(string securityServicesTypeListType, IReadOnlyList<NameDescriptionObject> entry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityServicesTypeListType = securityServicesTypeListType;
             Entry = entry;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceTypeList"/> for deserialization. </summary>
-        internal RulestackSecurityServiceTypeList()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> security services type. </summary>
         public string SecurityServicesTypeListType { get; }
+
         /// <summary> list. </summary>
         public IReadOnlyList<NameDescriptionObject> Entry { get; }
     }

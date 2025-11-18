@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DependencyMap
 {
     /// <summary>
     /// A class representing a collection of <see cref="DependencyMapDiscoverySourceResource"/> and their operations.
-    /// Each <see cref="DependencyMapDiscoverySourceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DependencyMapDiscoverySourceCollection"/> instance call the GetDependencyMapDiscoverySources method from an instance of the parent resource.
+    /// Each <see cref="DependencyMapDiscoverySourceResource"/> in the collection will belong to the same instance of <see cref="DependencyMapResource"/>.
+    /// To get a <see cref="DependencyMapDiscoverySourceCollection"/> instance call the GetDependencyMapDiscoverySources method from an instance of <see cref="DependencyMapResource"/>.
     /// </summary>
     public partial class DependencyMapDiscoverySourceCollection : ArmCollection, IEnumerable<DependencyMapDiscoverySourceResource>, IAsyncEnumerable<DependencyMapDiscoverySourceResource>
     {

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.4.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,17 @@
 
 ### Other Changes
 
+## 1.4.0-beta.4 (2025-11-18)
+
+### Features Added
+
+- Updated azure monitor metric alert APIs to version `2024-03-01-preview`.
+
 ## 1.4.0-beta.3 (2025-03-14)
 
 ### Features Added
 
-- Updated azure monitor pipeline group APIs to version `2024-10-01-preview`
+- Updated azure monitor pipeline group APIs to version `2024-10-01-preview`.
 
 ## 1.4.0-beta.2 (2025-02-14)
 

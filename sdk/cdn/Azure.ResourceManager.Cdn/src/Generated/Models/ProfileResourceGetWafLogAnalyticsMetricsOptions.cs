@@ -39,18 +39,25 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The metrics. </summary>
+        [WirePath("metrics")]
         public IList<WafMetric> Metrics { get; }
         /// <summary> The dateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset DateTimeBegin { get; }
         /// <summary> The dateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The granularity. </summary>
+        [WirePath("granularity")]
         public WafGranularity Granularity { get; }
         /// <summary> The actions. </summary>
+        [WirePath("actions")]
         public IList<WafAction> Actions { get; }
         /// <summary> The groupBy. </summary>
+        [WirePath("groupBy")]
         public IList<WafRankingGroupBy> GroupBy { get; }
         /// <summary> The ruleTypes. </summary>
+        [WirePath("ruleTypes")]
         public IList<WafRuleType> RuleTypes { get; }
     }
 }

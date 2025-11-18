@@ -10,6 +10,7 @@
     <IsClientLibrary>true</IsClientLibrary>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Developer.Playwright\src\Azure.Developer.Playwright.csproj" />

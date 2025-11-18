@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredDeviceCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredDevices method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> in the collection will belong to the same instance of <see cref="DeviceRegistryNamespaceResource"/>.
+    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredDeviceCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredDevices method from an instance of <see cref="DeviceRegistryNamespaceResource"/>.
     /// </summary>
     public partial class DeviceRegistryNamespaceDiscoveredDeviceCollection : ArmCollection, IEnumerable<DeviceRegistryNamespaceDiscoveredDeviceResource>, IAsyncEnumerable<DeviceRegistryNamespaceDiscoveredDeviceResource>
     {

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> instance call the GetHealthDataAIServicesPrivateEndpointConnectionResources method from an instance of the parent resource.
+    /// Each <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeidServiceResource"/>.
+    /// To get a <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> instance call the GetHealthDataAIServicesPrivateEndpointConnectionResources method from an instance of <see cref="DeidServiceResource"/>.
     /// </summary>
     public partial class HealthDataAIServicesPrivateEndpointConnectionResourceCollection : ArmCollection, IEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>
     {

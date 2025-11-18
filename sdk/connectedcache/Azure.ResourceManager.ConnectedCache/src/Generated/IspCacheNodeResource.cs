@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedCache.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
     /// <summary>
-    /// A Class representing an IspCacheNode along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IspCacheNodeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetIspCacheNodeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IspCustomerResource"/> using the GetIspCacheNode method.
+    /// A class representing a IspCacheNode along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IspCacheNodeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IspCustomerResource"/> using the GetIspCacheNodes method.
     /// </summary>
     public partial class IspCacheNodeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="IspCacheNodeResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="customerResourceName"> The customerResourceName. </param>
-        /// <param name="cacheNodeResourceName"> The cacheNodeResourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _ispCacheNodeIspCacheNodesOperationsClientDiagnostics;
-        private readonly IspCacheNodesRestOperations _ispCacheNodeIspCacheNodesOperationsRestClient;
+        private readonly ClientDiagnostics _ispCacheNodesOperationsClientDiagnostics;
+        private readonly IspCacheNodesOperations _ispCacheNodesOperationsRestClient;
         private readonly IspCacheNodeData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ConnectedCache/ispCustomers/ispCacheNodes";
 
-        /// <summary> Initializes a new instance of the <see cref="IspCacheNodeResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IspCacheNodeResource for mocking. </summary>
         protected IspCacheNodeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IspCacheNodeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IspCacheNodeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IspCacheNodeResource(ArmClient client, IspCacheNodeData data) : this(client, data.Id)
@@ -56,71 +46,93 @@ namespace Azure.ResourceManager.ConnectedCache
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IspCacheNodeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IspCacheNodeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IspCacheNodeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ispCacheNodeIspCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string ispCacheNodeIspCacheNodesOperationsApiVersion);
-            _ispCacheNodeIspCacheNodesOperationsRestClient = new IspCacheNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ispCacheNodeIspCacheNodesOperationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string ispCacheNodeApiVersion);
+            _ispCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
+            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, ispCacheNodeApiVersion ?? "2024-11-30-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual IspCacheNodeData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="customerResourceName"> The customerResourceName. </param>
+        /// <param name="cacheNodeResourceName"> The cacheNodeResourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// This api gets ispCacheNode resource information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IspCacheNodeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Get");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Get");
             scope.Start();
             try
             {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,118 +146,42 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets ispCacheNode resource information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IspCacheNodeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Get");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Get");
             scope.Start();
             try
             {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This api deletes an existing ispCacheNode resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedCacheArmOperation(_ispCacheNodeIspCacheNodesOperationsClientDiagnostics, Pipeline, _ispCacheNodeIspCacheNodesOperationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This api deletes an existing ispCacheNode resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ConnectedCacheArmOperation(_ispCacheNodeIspCacheNodesOperationsClientDiagnostics, Pipeline, _ispCacheNodeIspCacheNodesOperationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -258,20 +194,20 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api updates an existing ispCacheNode resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,11 +218,21 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Update");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Update");
             scope.Start();
             try
             {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ConnectedCachePatchContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,20 +246,20 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api updates an existing ispCacheNode resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,11 +270,21 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Update");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Update");
             scope.Start();
             try
             {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ConnectedCachePatchContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,34 +295,142 @@ namespace Azure.ResourceManager.ConnectedCache
         }
 
         /// <summary>
+        /// This api deletes an existing ispCacheNode resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ConnectedCacheArmOperation operation = new ConnectedCacheArmOperation(_ispCacheNodesOperationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api deletes an existing ispCacheNode resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ConnectedCacheArmOperation operation = new ConnectedCacheArmOperation(_ispCacheNodesOperationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// This api gets ispCacheNode resource information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getBgpCidrs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getBgpCidrs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetBgpCidrs</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetBgpCidrs. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MccCacheNodeBgpCidrDetails>> GetBgpCidrsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetBgpCidrs");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetBgpCidrs");
             scope.Start();
             try
             {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetBgpCidrsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetBgpCidrsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeBgpCidrDetails> response = Response.FromValue(MccCacheNodeBgpCidrDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -380,31 +444,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets ispCacheNode resource information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getBgpCidrs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getBgpCidrs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetBgpCidrs</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetBgpCidrs. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MccCacheNodeBgpCidrDetails> GetBgpCidrs(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetBgpCidrs");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetBgpCidrs");
             scope.Start();
             try
             {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.GetBgpCidrs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetBgpCidrsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeBgpCidrDetails> response = Response.FromValue(MccCacheNodeBgpCidrDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -418,31 +492,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets secrets of the ispCacheNode resource install details
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetCacheNodeInstallDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeInstallDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MccCacheNodeInstallDetails>> GetCacheNodeInstallDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeInstallDetails");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeInstallDetails");
             scope.Start();
             try
             {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetCacheNodeInstallDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -456,31 +540,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets secrets of the ispCacheNode resource install details
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetCacheNodeInstallDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeInstallDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MccCacheNodeInstallDetails> GetCacheNodeInstallDetails(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeInstallDetails");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeInstallDetails");
             scope.Start();
             try
             {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.GetCacheNodeInstallDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -494,31 +588,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets ispCacheNode resource auto update histrory information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeAutoUpdateHistory</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeAutoUpdateHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetCacheNodeAutoUpdateHistory</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeAutoUpdateHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MccCacheNodeAutoUpdateHistoryData>> GetCacheNodeAutoUpdateHistoryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeAutoUpdateHistory");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeAutoUpdateHistory");
             scope.Start();
             try
             {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetCacheNodeAutoUpdateHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeAutoUpdateHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeAutoUpdateHistoryData> response = Response.FromValue(MccCacheNodeAutoUpdateHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -532,31 +636,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets ispCacheNode resource auto update histrory information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeAutoUpdateHistory</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeAutoUpdateHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetCacheNodeAutoUpdateHistory</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeAutoUpdateHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MccCacheNodeAutoUpdateHistoryData> GetCacheNodeAutoUpdateHistory(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeAutoUpdateHistory");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeAutoUpdateHistory");
             scope.Start();
             try
             {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.GetCacheNodeAutoUpdateHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeAutoUpdateHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeAutoUpdateHistoryData> response = Response.FromValue(MccCacheNodeAutoUpdateHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -570,31 +684,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets ispCacheNode resource issues details histrory information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeMccIssueDetailsHistory</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeMccIssueDetailsHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetCacheNodeMccIssueDetailsHistory</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeMccIssueDetailsHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MccCacheNodeIssueHistoryData>> GetCacheNodeMccIssueDetailsHistoryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeMccIssueDetailsHistory");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeMccIssueDetailsHistory");
             scope.Start();
             try
             {
-                var response = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetCacheNodeMccIssueDetailsHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeMccIssueDetailsHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeIssueHistoryData> response = Response.FromValue(MccCacheNodeIssueHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -608,31 +732,41 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets ispCacheNode resource issues details histrory information
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeMccIssueDetailsHistory</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}/getCacheNodeMccIssueDetailsHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodesOperations_GetCacheNodeMccIssueDetailsHistory</description>
+        /// <term> Operation Id. </term>
+        /// <description> IspCacheNodesOperations_GetCacheNodeMccIssueDetailsHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IspCacheNodeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MccCacheNodeIssueHistoryData> GetCacheNodeMccIssueDetailsHistory(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeMccIssueDetailsHistory");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.GetCacheNodeMccIssueDetailsHistory");
             scope.Start();
             try
             {
-                var response = _ispCacheNodeIspCacheNodesOperationsRestClient.GetCacheNodeMccIssueDetailsHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetCacheNodeMccIssueDetailsHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeIssueHistoryData> response = Response.FromValue(MccCacheNodeIssueHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -642,27 +776,7 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -672,29 +786,35 @@ namespace Azure.ResourceManager.ConnectedCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.AddTag");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new IspCacheNodeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                    return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ConnectedCachePatchContent();
-                    foreach (var tag in current.Tags)
+                    IspCacheNodeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<IspCacheNodeResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -704,27 +824,7 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -734,29 +834,35 @@ namespace Azure.ResourceManager.ConnectedCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.AddTag");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _ispCacheNodeIspCacheNodesOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new IspCacheNodeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                    return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ConnectedCachePatchContent();
-                    foreach (var tag in current.Tags)
+                    IspCacheNodeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<IspCacheNodeResource> result = Update(patch, cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -766,54 +872,40 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<IspCacheNodeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.SetTags");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new IspCacheNodeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                    return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ConnectedCachePatchContent();
+                    IspCacheNodeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<IspCacheNodeResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -823,54 +915,40 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<IspCacheNodeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.SetTags");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _ispCacheNodeIspCacheNodesOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new IspCacheNodeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                    return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ConnectedCachePatchContent();
+                    IspCacheNodeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<IspCacheNodeResource> result = Update(patch, cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -880,27 +958,7 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -908,29 +966,35 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.RemoveTag");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _ispCacheNodeIspCacheNodesOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new IspCacheNodeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                    return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ConnectedCachePatchContent();
-                    foreach (var tag in current.Tags)
+                    IspCacheNodeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<IspCacheNodeResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -940,27 +1004,7 @@ namespace Azure.ResourceManager.ConnectedCache
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}/ispCacheNodes/{cacheNodeResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IspCacheNodeResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-30-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IspCacheNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -968,29 +1012,35 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _ispCacheNodeIspCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.RemoveTag");
+            using DiagnosticScope scope = _ispCacheNodesOperationsClientDiagnostics.CreateScope("IspCacheNodeResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _ispCacheNodeIspCacheNodesOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new IspCacheNodeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _ispCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<IspCacheNodeData> response = Response.FromValue(IspCacheNodeData.FromResponse(result), result);
+                    return Response.FromValue(new IspCacheNodeResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ConnectedCachePatchContent();
-                    foreach (var tag in current.Tags)
+                    IspCacheNodeData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<IspCacheNodeResource> result = Update(patch, cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
