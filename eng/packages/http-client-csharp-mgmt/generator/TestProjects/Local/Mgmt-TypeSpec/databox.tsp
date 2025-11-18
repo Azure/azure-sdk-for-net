@@ -46,6 +46,10 @@ interface JobResources {
   update is ArmCustomPatchAsync<
     JobResource,
     PatchModel = JobResourceUpdateParameter,
+    Parameters = {
+      @header("If-Match")
+      `If-Match`?: string;
+    }
   >;
 }
 
