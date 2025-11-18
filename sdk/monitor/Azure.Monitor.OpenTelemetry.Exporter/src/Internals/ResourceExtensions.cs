@@ -75,26 +75,15 @@ internal static class ResourceExtensions
                     serviceVersion = _serviceVersion;
                     break;
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
-                    if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
+                    SdkVersionUtils.VersionType = _aiSdkDistroValue switch
                     {
-                        SdkVersionUtils.VersionType = SdkVersionType.Distro;
-                    }
-                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights")
-                    {
-                        SdkVersionUtils.VersionType = SdkVersionType.ShimBase;
-                    }
-                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights.AspNetCore")
-                    {
-                        SdkVersionUtils.VersionType = SdkVersionType.ShimAspNetCore;
-                    }
-                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights.WorkerService")
-                    {
-                        SdkVersionUtils.VersionType = SdkVersionType.ShimWorkerService;
-                    }
-                    else if (_aiSdkDistroValue == "Microsoft.ApplicationInsights.Web")
-                    {
-                        SdkVersionUtils.VersionType = SdkVersionType.ShimWeb;
-                    }
+                        "Azure.Monitor.OpenTelemetry.AspNetCore" => SdkVersionType.Distro,
+                        "Microsoft.ApplicationInsights" => SdkVersionType.ShimBase,
+                        "Microsoft.ApplicationInsights.AspNetCore" => SdkVersionType.ShimAspNetCore,
+                        "Microsoft.ApplicationInsights.WorkerService" => SdkVersionType.ShimWorkerService,
+                        "Microsoft.ApplicationInsights.Web" => SdkVersionType.ShimWeb,
+                        _ => SdkVersionUtils.VersionType
+                    };
                     break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
