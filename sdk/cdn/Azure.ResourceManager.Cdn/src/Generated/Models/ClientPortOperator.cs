@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: ClientPortOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct ClientPortOperator : IEquatable<ClientPortOperator>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary>
-        /// Any
-        /// Serialized Name: ClientPortOperator.Any
-        /// </summary>
+        /// <summary> Any. </summary>
         public static ClientPortOperator Any { get; } = new ClientPortOperator(AnyValue);
-        /// <summary>
-        /// Equal
-        /// Serialized Name: ClientPortOperator.Equal
-        /// </summary>
+        /// <summary> Equal. </summary>
         public static ClientPortOperator Equal { get; } = new ClientPortOperator(EqualValue);
-        /// <summary>
-        /// Contains
-        /// Serialized Name: ClientPortOperator.Contains
-        /// </summary>
+        /// <summary> Contains. </summary>
         public static ClientPortOperator Contains { get; } = new ClientPortOperator(ContainsValue);
-        /// <summary>
-        /// BeginsWith
-        /// Serialized Name: ClientPortOperator.BeginsWith
-        /// </summary>
+        /// <summary> BeginsWith. </summary>
         public static ClientPortOperator BeginsWith { get; } = new ClientPortOperator(BeginsWithValue);
-        /// <summary>
-        /// EndsWith
-        /// Serialized Name: ClientPortOperator.EndsWith
-        /// </summary>
+        /// <summary> EndsWith. </summary>
         public static ClientPortOperator EndsWith { get; } = new ClientPortOperator(EndsWithValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: ClientPortOperator.LessThan
-        /// </summary>
+        /// <summary> LessThan. </summary>
         public static ClientPortOperator LessThan { get; } = new ClientPortOperator(LessThanValue);
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: ClientPortOperator.LessThanOrEqual
-        /// </summary>
+        /// <summary> LessThanOrEqual. </summary>
         public static ClientPortOperator LessThanOrEqual { get; } = new ClientPortOperator(LessThanOrEqualValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: ClientPortOperator.GreaterThan
-        /// </summary>
+        /// <summary> GreaterThan. </summary>
         public static ClientPortOperator GreaterThan { get; } = new ClientPortOperator(GreaterThanValue);
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: ClientPortOperator.GreaterThanOrEqual
-        /// </summary>
+        /// <summary> GreaterThanOrEqual. </summary>
         public static ClientPortOperator GreaterThanOrEqual { get; } = new ClientPortOperator(GreaterThanOrEqualValue);
-        /// <summary>
-        /// RegEx
-        /// Serialized Name: ClientPortOperator.RegEx
-        /// </summary>
+        /// <summary> RegEx. </summary>
         public static ClientPortOperator RegEx { get; } = new ClientPortOperator(RegExValue);
         /// <summary> Determines if two <see cref="ClientPortOperator"/> values are the same. </summary>
         public static bool operator ==(ClientPortOperator left, ClientPortOperator right) => left.Equals(right);
