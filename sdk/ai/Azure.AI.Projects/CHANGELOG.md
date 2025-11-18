@@ -1,10 +1,10 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleaed)
+## 1.2.0-beta.4 (Unreleaed)
 
 ### Bugs Fixed
 
-- Fixed the issue, preventing telemetry from being logged.
+- Fixed an issue preventing telemetry from being logged.
 
 ## 1.2.0-beta.3 (2025-11-15)
 

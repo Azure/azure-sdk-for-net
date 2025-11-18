@@ -175,9 +175,6 @@ namespace Azure.AI.Projects.Telemetry
             // Convert BinaryContent back to AgentVersionCreationOptions
             using var memoryStream = new MemoryStream();
             content.WriteTo(memoryStream, CancellationToken.None);
-            //debug
-            string json = Encoding.UTF8.GetString(memoryStream.ToArray());
-            //debug
             memoryStream.Position = 0;
             BinaryData binaryData = BinaryData.FromStream(memoryStream);
             AgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<AgentVersionCreationOptions>(
