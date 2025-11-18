@@ -331,7 +331,7 @@ namespace Azure.Identity.Tests
                 EventLevel.Warning);
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => response);
             var options = new TokenCredentialOptions { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -615,7 +615,7 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => response);
             var options = new TokenCredentialOptions { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -646,7 +646,7 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => response);
             var options = new TokenCredentialOptions { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -678,7 +678,7 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -1048,7 +1048,13 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(environmentVariables);
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { IsForceRefreshEnabled = true, Pipeline = CredentialPipeline.GetInstance(null, IsManagedIdentityCredential: true) })));
+            // Provide a mock transport to prevent real network calls to IMDS
+            var mockTransport = new MockTransport(req => throw new RequestFailedException("Invalid URI"));
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true);
+
+            var credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions { IsForceRefreshEnabled = true, Pipeline = pipeline, Options = options })));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
