@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -768,6 +769,158 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
+        /// [Protocol Method] Get all load tests by the fully qualified resource Id e.g
+        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg:
+        /// lastModifiedDateTime asc. Supported fields - lastModifiedDateTime
+        /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - displayName,
+        /// createdBy. For example, to search for a test, with display name is Login Test,
+        /// the search parameter can be Login.
+        /// </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetTests(string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
+            scope.Start();
+            try
+            {
+                return new LoadTestAdministrationClientGetTestsCollectionResult(
+                    this,
+                    @orderby,
+                    search,
+                    lastModifiedStartTime,
+                    lastModifiedEndTime,
+                    maxpagesize,
+                    context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all load tests by the fully qualified resource Id e.g
+        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg:
+        /// lastModifiedDateTime asc. Supported fields - lastModifiedDateTime
+        /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - displayName,
+        /// createdBy. For example, to search for a test, with display name is Login Test,
+        /// the search parameter can be Login.
+        /// </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetTestsAsync(string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
+            scope.Start();
+            try
+            {
+                return new LoadTestAdministrationClientGetTestsAsyncCollectionResult(
+                    this,
+                    @orderby,
+                    search,
+                    lastModifiedStartTime,
+                    lastModifiedEndTime,
+                    maxpagesize,
+                    context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all load tests by the fully qualified resource Id e.g
+        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
+        /// </summary>
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg:
+        /// lastModifiedDateTime asc. Supported fields - lastModifiedDateTime
+        /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - displayName,
+        /// createdBy. For example, to search for a test, with display name is Login Test,
+        /// the search parameter can be Login.
+        /// </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<LoadTest> GetTests(string @orderby = default, string search = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetTestsCollectionResultOfT(
+                this,
+                @orderby,
+                search,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Get all load tests by the fully qualified resource Id e.g
+        /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}.
+        /// </summary>
+        /// <param name="orderby">
+        /// Sort on the supported fields in (field asc/desc) format. eg:
+        /// lastModifiedDateTime asc. Supported fields - lastModifiedDateTime
+        /// </param>
+        /// <param name="search">
+        /// Prefix based, case sensitive search on searchable fields - displayName,
+        /// createdBy. For example, to search for a test, with display name is Login Test,
+        /// the search parameter can be Login.
+        /// </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter tests. </param>
+        /// <param name="maxpagesize"> Number of results in response. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<LoadTest> GetTestsAsync(string @orderby = default, string search = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetTestsAsyncCollectionResultOfT(
+                this,
+                @orderby,
+                search,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
         /// [Protocol Method] Upload input file for a given test Id. File size can't be more than 50 MB.
         /// Existing file with same name for the given test will be overwritten. File
         /// should be provided in the request body as application/octet-stream.
@@ -1315,6 +1468,122 @@ namespace Azure.Developer.LoadTesting
 
             Response result = await GetTestProfileAsync(testProfileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TestProfile)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all test profiles for the given filters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
+        /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetTestProfiles(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfiles");
+            scope.Start();
+            try
+            {
+                return new LoadTestAdministrationClientGetTestProfilesCollectionResult(
+                    this,
+                    maxpagesize,
+                    lastModifiedStartTime,
+                    lastModifiedEndTime,
+                    testProfileIds,
+                    testIds,
+                    context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all test profiles for the given filters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
+        /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetTestProfilesAsync(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfiles");
+            scope.Start();
+            try
+            {
+                return new LoadTestAdministrationClientGetTestProfilesAsyncCollectionResult(
+                    this,
+                    maxpagesize,
+                    lastModifiedStartTime,
+                    lastModifiedEndTime,
+                    testProfileIds,
+                    testIds,
+                    context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all test profiles for the given filters. </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
+        /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<TestProfile> GetTestProfiles(int? maxpagesize = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, IEnumerable<string> testProfileIds = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetTestProfilesCollectionResultOfT(
+                this,
+                maxpagesize,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                testProfileIds,
+                testIds,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Get all test profiles for the given filters. </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
+        /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<TestProfile> GetTestProfilesAsync(int? maxpagesize = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, IEnumerable<string> testProfileIds = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(
+                this,
+                maxpagesize,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                testProfileIds,
+                testIds,
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
@@ -277,10 +276,19 @@ namespace Azure.Developer.LoadTesting
         /// <remarks> Get all test profile runs for the given filters. </remarks>
         public virtual AsyncPageable<TestProfileRun> GetTestProfileRunsAsync(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, DateTimeOffset? createdDateStartTime = null, DateTimeOffset? createdDateEndTime = null, IEnumerable<string> testProfileRunIds = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> statuses = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestProfileRun.DeserializeTestProfileRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestProfileRunsAsyncCollectionResultOfT(
+                this,
+                null,
+                minEndDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> List test profile runs. </summary>
@@ -297,10 +305,19 @@ namespace Azure.Developer.LoadTesting
         /// <remarks> Get all test profile runs for the given filters. </remarks>
         public virtual Pageable<TestProfileRun> GetTestProfileRuns(DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, DateTimeOffset? createdDateStartTime = null, DateTimeOffset? createdDateEndTime = null, IEnumerable<string> testProfileRunIds = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> statuses = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestProfileRun.DeserializeTestProfileRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestProfileRunsCollectionResultOfT(
+                this,
+                null,
+                minEndDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -332,9 +349,19 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetTestProfileRunsAsync(DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestProfileRunsAsyncCollectionResult(
+                this,
+                null,
+                minStartDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                context);
         }
 
         /// <summary>
@@ -366,9 +393,19 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetTestProfileRuns(DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestProfileRunsCollectionResult(
+                this,
+                null,
+                minStartDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                context);
         }
 
         /// <summary> List the metric values for a load test run. </summary>
@@ -386,19 +423,16 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(timespan, nameof(timespan));
-
-            if (content == null)
-            {
-                content = RequestContent.Create(new { });
-            }
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
+            return new LoadTestRunClientGetMetricsAsyncCollectionResult(
+                this,
+                testRunId,
+                metricName,
+                metricNamespace,
+                timespan,
+                content,
+                aggregation,
+                interval,
+                context);
         }
 
         /// <summary> List the metric values for a load test run. </summary>

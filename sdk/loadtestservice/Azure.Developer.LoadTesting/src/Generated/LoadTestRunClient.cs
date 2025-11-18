@@ -1741,6 +1741,162 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
+        /// [Protocol Method] Get all test profile runs for the given filters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="minStartDateTime"> Minimum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxStartDateTime"> Maximum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="minEndDateTime"> Minimum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxEndDateTime"> Maximum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="createdDateStartTime"> Start DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="createdDateEndTime"> End DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="testProfileRunIds"> Comma separated list of IDs of the test profile runs to filter. </param>
+        /// <param name="testProfileIds"> Comma separated IDs of the test profiles which should be associated with the test profile runs to fetch. </param>
+        /// <param name="statuses"> Comma separated list of Statuses of the test profile runs to filter. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetTestProfileRuns(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestProfileRuns");
+            scope.Start();
+            try
+            {
+                return new LoadTestRunClientGetTestProfileRunsCollectionResult(
+                    this,
+                    maxpagesize,
+                    minStartDateTime,
+                    maxStartDateTime,
+                    minEndDateTime,
+                    maxEndDateTime,
+                    createdDateStartTime,
+                    createdDateEndTime,
+                    testProfileRunIds,
+                    testProfileIds,
+                    statuses,
+                    context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all test profile runs for the given filters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="minStartDateTime"> Minimum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxStartDateTime"> Maximum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="minEndDateTime"> Minimum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxEndDateTime"> Maximum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="createdDateStartTime"> Start DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="createdDateEndTime"> End DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="testProfileRunIds"> Comma separated list of IDs of the test profile runs to filter. </param>
+        /// <param name="testProfileIds"> Comma separated IDs of the test profiles which should be associated with the test profile runs to fetch. </param>
+        /// <param name="statuses"> Comma separated list of Statuses of the test profile runs to filter. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetTestProfileRunsAsync(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestProfileRuns");
+            scope.Start();
+            try
+            {
+                return new LoadTestRunClientGetTestProfileRunsAsyncCollectionResult(
+                    this,
+                    maxpagesize,
+                    minStartDateTime,
+                    maxStartDateTime,
+                    minEndDateTime,
+                    maxEndDateTime,
+                    createdDateStartTime,
+                    createdDateEndTime,
+                    testProfileRunIds,
+                    testProfileIds,
+                    statuses,
+                    context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all test profile runs for the given filters. </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="minStartDateTime"> Minimum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxStartDateTime"> Maximum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="minEndDateTime"> Minimum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxEndDateTime"> Maximum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="createdDateStartTime"> Start DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="createdDateEndTime"> End DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="testProfileRunIds"> Comma separated list of IDs of the test profile runs to filter. </param>
+        /// <param name="testProfileIds"> Comma separated IDs of the test profiles which should be associated with the test profile runs to fetch. </param>
+        /// <param name="statuses"> Comma separated list of Statuses of the test profile runs to filter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<TestProfileRun> GetTestProfileRuns(int? maxpagesize = default, DateTimeOffset? minStartDateTime = default, DateTimeOffset? maxStartDateTime = default, DateTimeOffset? minEndDateTime = default, DateTimeOffset? maxEndDateTime = default, DateTimeOffset? createdDateStartTime = default, DateTimeOffset? createdDateEndTime = default, IEnumerable<string> testProfileRunIds = default, IEnumerable<string> testProfileIds = default, IEnumerable<string> statuses = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestRunClientGetTestProfileRunsCollectionResultOfT(
+                this,
+                maxpagesize,
+                minStartDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Get all test profile runs for the given filters. </summary>
+        /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
+        /// <param name="minStartDateTime"> Minimum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxStartDateTime"> Maximum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="minEndDateTime"> Minimum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxEndDateTime"> Maximum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="createdDateStartTime"> Start DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="createdDateEndTime"> End DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="testProfileRunIds"> Comma separated list of IDs of the test profile runs to filter. </param>
+        /// <param name="testProfileIds"> Comma separated IDs of the test profiles which should be associated with the test profile runs to fetch. </param>
+        /// <param name="statuses"> Comma separated list of Statuses of the test profile runs to filter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<TestProfileRun> GetTestProfileRunsAsync(int? maxpagesize = default, DateTimeOffset? minStartDateTime = default, DateTimeOffset? maxStartDateTime = default, DateTimeOffset? minEndDateTime = default, DateTimeOffset? maxEndDateTime = default, DateTimeOffset? createdDateStartTime = default, DateTimeOffset? createdDateEndTime = default, IEnumerable<string> testProfileRunIds = default, IEnumerable<string> testProfileIds = default, IEnumerable<string> statuses = default, CancellationToken cancellationToken = default)
+        {
+            return new LoadTestRunClientGetTestProfileRunsAsyncCollectionResultOfT(
+                this,
+                maxpagesize,
+                minStartDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
         /// [Protocol Method] Stop test profile run for the given test profile run Id.
         /// <list type="bullet">
         /// <item>
