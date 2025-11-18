@@ -16,4 +16,4 @@ The user can specify multiple languages to check. If the user wants to check all
 ## Output
 Display results in a user-friendly and concise format, highlighting any missing dependencies that need to be addressed and how to resolve them.
 
-WHENEVER Python related requirements fail, ALWAYS ASK the user if they have set the `AZSDKTOOLS_PYTHON_VENV_PATH` system environment variable to their desired virtual environment. This tool can only check requirements in the venv path specified by that environment variable.
+When Python tool requirements fail (azpysdk, sdk_generator, ghtools, pytest), provide additional context about the `AZSDKTOOLS_PYTHON_VENV_PATH` environment variable if the user seems to be having setup issues. The verify-setup tool can only check Python requirements within the virtual environment specified by this environment variable.
