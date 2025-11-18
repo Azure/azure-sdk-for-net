@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Provisioning status of the custom domain.
-    /// Serialized Name: CustomHttpsProvisioningState
-    /// </summary>
+    /// <summary> Provisioning status of the custom domain. </summary>
     public readonly partial struct CustomHttpsProvisioningState : IEquatable<CustomHttpsProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Enabling
-        /// Serialized Name: CustomHttpsProvisioningState.Enabling
-        /// </summary>
+        /// <summary> Enabling. </summary>
         public static CustomHttpsProvisioningState Enabling { get; } = new CustomHttpsProvisioningState(EnablingValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: CustomHttpsProvisioningState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static CustomHttpsProvisioningState Enabled { get; } = new CustomHttpsProvisioningState(EnabledValue);
-        /// <summary>
-        /// Disabling
-        /// Serialized Name: CustomHttpsProvisioningState.Disabling
-        /// </summary>
+        /// <summary> Disabling. </summary>
         public static CustomHttpsProvisioningState Disabling { get; } = new CustomHttpsProvisioningState(DisablingValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: CustomHttpsProvisioningState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static CustomHttpsProvisioningState Disabled { get; } = new CustomHttpsProvisioningState(DisabledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: CustomHttpsProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static CustomHttpsProvisioningState Failed { get; } = new CustomHttpsProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="CustomHttpsProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CustomHttpsProvisioningState left, CustomHttpsProvisioningState right) => left.Equals(right);
