@@ -19,5 +19,7 @@ public partial class AgentVersionCreationOptions
     public global::Azure.AI.Projects.OpenAI.AgentDefinition Definition { get; set; }
 
     private static void DeserializeDefinitionValue(JsonProperty property, ref global::Azure.AI.Projects.OpenAI.AgentDefinition definition)
-        => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentDefinition>(property.Value, ModelSerializationExtensions.WireOptions);
+    {
+        definition = CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentDefinition>(property.Value, ModelSerializationExtensions.WireOptions);
+    }
 }

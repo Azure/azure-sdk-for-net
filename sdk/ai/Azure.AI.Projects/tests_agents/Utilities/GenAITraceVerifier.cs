@@ -6,54 +6,40 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Utilities
 {
     public class GenAiTraceVerifier
     {
-        public bool CheckSpanAttributes(Activity span, Dictionary<string, object> expectedAttributes)
+        public static void ValidateSpanAttributes(Activity span, Dictionary<string, object> expectedAttributes)
         {
             var actualAttributes = new Dictionary<string, object>();
-            foreach (var tag in span.EnumerateTagObjects())
+            foreach (KeyValuePair<string, object> tag in span.EnumerateTagObjects())
             {
                 actualAttributes[tag.Key] = tag.Value;
             }
 
-            foreach (var expected in expectedAttributes)
+            foreach (KeyValuePair<string, object> expected in expectedAttributes)
             {
-                if (!actualAttributes.ContainsKey(expected.Key))
-                {
-                    Console.WriteLine($"Attribute '{expected.Key}' not found in span.");
-                    return false;
-                }
-
+                Assert.That(actualAttributes, Contains.Key(expected.Key), $"Attribute '{expected.Key}' not found in span.");
                 var actualValue = actualAttributes[expected.Key];
-
-                if (!CheckAttributeValue(expected.Value, actualValue))
-                {
-                    Console.WriteLine($"Attribute '{expected.Key}' value mismatch. Expected: {expected.Value}, Actual: {actualValue}");
-                    return false;
-                }
+                ValidateAttributeValue(expected.Value, actualValue, expected.Key);
             }
-            return true;
         }
 
-        public bool CheckSpanEvents(Activity span, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents)
+        public static void ValidateSpanEvents(Activity span, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents)
         {
             var spanEvents = span.Events.ToList();
-            return CheckSpanEvents(spanEvents, expectedEvents);
+            ValidateSpanEvents(spanEvents, expectedEvents);
         }
 
-        public bool CheckSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents=false)
+        public static void ValidateSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents=false)
         {
             foreach (var expectedEvent in expectedEvents)
             {
                 var matchingEvent = spanEvents.FirstOrDefault(e => e.Name == expectedEvent.Name);
-                if (matchingEvent.Name == null)
-                {
-                    Console.WriteLine($"Event '{expectedEvent.Name}' not found.");
-                    return false;
-                }
+                Assert.That(matchingEvent.Name, Is.Not.Null, $"Event '{expectedEvent.Name}' not found.");
 
                 var actualEventAttributes = new Dictionary<string, object>();
                 foreach (var tag in matchingEvent.EnumerateTagObjects())
@@ -61,94 +47,76 @@ namespace Azure.AI.Projects.Tests.Utilities
                     actualEventAttributes[tag.Key] = tag.Value;
                 }
 
-                if (!CheckEventAttributes(expectedEvent.Attributes, actualEventAttributes))
-                {
-                    Console.WriteLine($"Event '{expectedEvent.Name}' attributes mismatch.");
-                    return false;
-                }
-
+                ValidateEventAttributes(expectedEvent.Attributes, actualEventAttributes, expectedEvent.Name);
                 spanEvents.Remove(matchingEvent);
             }
 
-            if (spanEvents.Any() && !allowAdditionalEvents)
-            {
-                Console.WriteLine("Unexpected additional events found in span.");
-                return false;
-            }
-
-            return true;
+            Assert.That(spanEvents.Any() && !allowAdditionalEvents, Is.False, $"Unexpected additional events {spanEvents} found in span.");
         }
 
-        public bool CheckEventAttributes(Dictionary<string, object> expected, Dictionary<string, object> actual)
+        public static void ValidateEventAttributes(Dictionary<string, object> expected, Dictionary<string, object> actual, string eventName)
         {
             var expectedKeys = new HashSet<string>(expected.Keys);
             var actualKeys = new HashSet<string>(actual.Keys);
 
-            if (!expectedKeys.SetEquals(actualKeys))
-            {
-                Console.WriteLine("Event attribute keys mismatch.");
-                return false;
-            }
-
+            Assert.That(expectedKeys.SetEquals(actualKeys), Is.True, $"The {eventName} event attribute keys mismatch.\nExpected: {expectedKeys}\nActual: {actualKeys}");
             foreach (var key in expectedKeys)
             {
-                if (!CheckAttributeValue(expected[key], actual[key]))
-                {
-                    Console.WriteLine($"Event attribute '{key}' value mismatch. Expected: {expected[key]}, Actual: {actual[key]}");
-                    return false;
-                }
+                ValidateAttributeValue(expected[key], actual[key], key);
             }
-
-            return true;
         }
 
-        private bool CheckAttributeValue(object expected, object actual)
+        private static void ValidateAttributeValue(object expected, object actual, string key)
         {
             if (expected is string expectedStr)
             {
                 if (expectedStr == "*")
                 {
-                    return !string.IsNullOrEmpty(actual?.ToString());
+                    Assert.That(actual, Is.Not.Null, $"The value for {key} i expected to be {actual} but was null.");
+                    Assert.That(actual, Is.Not.Empty, $"The value for {key} i expected to be {actual} but was empty.");
                 }
-                if (expectedStr == "+")
+                else if (expectedStr == "+")
                 {
                     if (double.TryParse(actual?.ToString(), out double numericValue))
                     {
-                        return numericValue >= 0;
+                        Assert.That(numericValue, Is.GreaterThanOrEqualTo(0), $"The value for {key} is expected to be more then 0, but was {numericValue}");
                     }
-                    return false;
+                    Assert.Fail($"The value for {key} was not set.");
                 }
-                if (IsValidJson(expectedStr) && IsValidJson(actual?.ToString()))
+                else if (IsValidJson(expectedStr) && IsValidJson(actual?.ToString()))
                 {
-                    return CheckJsonString(expectedStr, actual.ToString());
+                    ValidateJsonString(expectedStr, actual.ToString(), key);
                 }
-                return expectedStr == actual?.ToString();
+                else
+                {
+                    Assert.That(actual?.ToString(), Is.EqualTo(expectedStr), $"Expected value for {key} is {expectedStr}, but was {actual?.ToString()}");
+                }
             }
             else if (expected is Dictionary<string, object> expectedDict)
             {
                 if (actual is string actualStr && IsValidJson(actualStr))
                 {
-                    var actualDict = JsonSerializer.Deserialize<Dictionary<string, object>>(actualStr);
-                    return CheckEventAttributes(expectedDict, actualDict);
+                    Dictionary<string, object> actualDict = JsonSerializer.Deserialize<Dictionary<string, object>>(actualStr);
+                    ValidateAttributeValue(expectedDict, actualDict, key);
                 }
-                return false;
+                Assert.Fail($"The value for {key} is not a valid JSON: {actual}");
             }
             else if (expected is IEnumerable<object> expectedList)
             {
                 if (actual is string actualStr && IsValidJson(actualStr))
                 {
-                    var actualList = JsonSerializer.Deserialize<List<object>>(actualStr);
-                    return expectedList.SequenceEqual(actualList);
+                    List<object> actualList = JsonSerializer.Deserialize<List<object>>(actualStr);
+                    Assert.That(expectedList.SequenceEqual(actualList), Is.True, $"The lists for {key} are different:\nActual {actualList}\n{expectedList}");
                 }
-                return false;
+                Assert.Fail($"The value for {key} is not a valid JSON: {actual}");
             }
             else
             {
-                return expected.Equals(actual);
+                Assert.That(actual, Is.EqualTo(expected), $"Expected value for {key} is {expected}, but was {actual}");
             }
         }
 
-        private bool IsValidJson(string json)
+        private static bool IsValidJson(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
                 return false;
@@ -163,55 +131,51 @@ namespace Azure.AI.Projects.Tests.Utilities
             }
         }
 
-        private bool CheckJsonString(string expectedJson, string actualJson)
+        private static void ValidateJsonString(string expectedJson, string actualJson, string key)
         {
             try
             {
                 var expectedDoc = JsonDocument.Parse(expectedJson);
                 var actualDoc = JsonDocument.Parse(actualJson);
-                return JsonElementDeepEquals(expectedDoc.RootElement, actualDoc.RootElement);
+                AssertJsonElementDeepEquals(expectedDoc.RootElement, actualDoc.RootElement, key);
             }
             catch
             {
-                return false;
+                Assert.Fail($"Unable to parse expected or actual for {key}. Expected: {expectedJson}; Actual: {actualJson}");
             }
         }
 
-        private bool JsonElementDeepEquals(JsonElement expected, JsonElement actual)
+        private static void AssertJsonElementDeepEquals(JsonElement expected, JsonElement actual, string key)
         {
-            if (expected.ValueKind != actual.ValueKind)
-                return false;
+            Assert.That(actual.ValueKind, Is.EqualTo(expected.ValueKind), $"The value kind for key {key} differs. Expected: {expected.ValueKind}, Actual: {actual.ValueKind}");
 
             switch (expected.ValueKind)
             {
                 case JsonValueKind.Object:
                     var expectedProps = expected.EnumerateObject().OrderBy(p => p.Name).ToList();
                     var actualProps = actual.EnumerateObject().OrderBy(p => p.Name).ToList();
-                    if (expectedProps.Count != actualProps.Count)
-                        return false;
+                    Assert.That(actualProps.Count, Is.EqualTo(expectedProps.Count), $"The number of propertie for {key} was different. Expected: {expectedProps.Count}, but was {actualProps.Count}.\nExpected: {expectedProps}\nActual: {actualProps}.");
                     for (int i = 0; i < expectedProps.Count; i++)
                     {
-                        if (expectedProps[i].Name != actualProps[i].Name ||
-                            !JsonElementDeepEquals(expectedProps[i].Value, actualProps[i].Value))
-                            return false;
+                        Assert.That(actualProps[i].Name, Is.EqualTo(expectedProps[i].Name), $"The {i}-th property of {key} is named {actualProps[i].Name} bit expected property is {expectedProps[i].Name}");
+                        AssertJsonElementDeepEquals(expectedProps[i].Value, actualProps[i].Value, $"{key}/{actualProps[i].Name}");
                     }
-                    return true;
-
+                    break;
                 case JsonValueKind.Array:
                     var expectedItems = expected.EnumerateArray().ToList();
                     var actualItems = actual.EnumerateArray().ToList();
-                    if (expectedItems.Count != actualItems.Count)
-                        return false;
+                    Assert.That(actualItems.Count, Is.EqualTo(expectedItems.Count), $"The number of elements in {key} is different.  Expected: {expectedItems.Count}, but was {actualItems.Count}.\nExpected: {expectedItems}\nActual: {actualItems}.");
                     for (int i = 0; i < expectedItems.Count; i++)
                     {
-                        if (!JsonElementDeepEquals(expectedItems[i], actualItems[i]))
-                            return false;
+                        AssertJsonElementDeepEquals(expectedItems[i], actualItems[i], $"{key}/[{i}]");
                     }
-                    return true;
+                    break;
                 case JsonValueKind.Number:
-                    return expected.GetInt64() == actual.GetInt64();
+                    Assert.That(actual.GetInt64(), Is.EqualTo(expected.GetInt64()), $"Expected value for {key} is {expected}, but was {actual}.");
+                    break;
                 default:
-                    return CheckAttributeValue(expected.GetString(), actual.GetString());
+                    ValidateAttributeValue(expected.GetString(), actual.GetString(), key);
+                    break;
             }
         }
     }
