@@ -112,7 +112,6 @@ public class TestProxyProcess
 
         testProxyProcessInfo.UseShellExecute = false;
         testProxyProcessInfo.RedirectStandardOutput = true;
-        testProxyProcessInfo.RedirectStandardError = true;
 
         // Set environment variables
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
@@ -174,6 +173,12 @@ public class TestProxyProcess
             {
                 var error = _errorBuffer.ToString();
                 _errorBuffer.Clear();
+                if (error.Contains("dotnet tool restore"))
+                {
+                    throw new InvalidOperationException("An error occurred in the test proxy. You may need to install the test-proxy tool globally " +
+                        "using 'dotnet tool install -g Azure.Sdk.Tools.TestProxy' or ensure TestEnvironment.RepositoryRoot is set correctly so the " +
+                        $"test framework can restore local tools from the dotnet-tools.json manifest. The full error is: {error}");
+                }
                 throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
             }
 
@@ -227,18 +232,19 @@ public class TestProxyProcess
     {
         try
         {
-            var currentDir = Directory.GetCurrentDirectory();
-            while (currentDir != null)
+            var repoRoot = TestEnvironment.RepositoryRoot;
+            if (repoRoot != null)
             {
-                var toolsJsonPath = Path.Combine(currentDir, ".config", "dotnet-tools.json");
+                var toolsJsonPath = Path.Combine(repoRoot, ".config", "dotnet-tools.json");
+
                 if (File.Exists(toolsJsonPath))
                 {
-                    // Found a tools manifest, try to restore
+                    // Found the tools manifest at repo root, try to restore
                     var processInfo = new ProcessStartInfo
                     {
                         FileName = s_dotNetExe,
                         Arguments = "tool restore",
-                        WorkingDirectory = currentDir,
+                        WorkingDirectory = repoRoot,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
@@ -250,11 +256,7 @@ public class TestProxyProcess
                     {
                         process.WaitForExit(30000);
                     }
-                    break;
                 }
-
-                var parentDir = Directory.GetParent(currentDir);
-                currentDir = parentDir?.FullName;
             }
         }
         catch
