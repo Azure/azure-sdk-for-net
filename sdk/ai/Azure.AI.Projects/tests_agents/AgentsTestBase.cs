@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Tests;
 
 public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 {
-    #region Enumertions
+    #region Enumerations
     public enum ToolType
     {
         None,

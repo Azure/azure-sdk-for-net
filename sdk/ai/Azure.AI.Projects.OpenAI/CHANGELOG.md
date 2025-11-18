@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.4 (Unreleased)
+
+This change updates the baseline `OpenAI` dependency to the latest `2.7.0` official version. For inherited details, please see the [OpenAI .NET changelog](https://github.com/openai/openai-dotnet/tree/main/CHANGELOG.md).
+
+### Breaking Changes (beta)
+
+**Transitive from upgrade to System.ClientModel 1.8.1**:
+
+- The extension `StructuredInputs` on `ResponseCreationOptions` will now correctly return a `BinaryData` instance with enclosing quotes included when retrieving an encoded string value
+
 ## 1.0.0-beta.3 (2025-11-15)
 
 ### Bugs Fixed

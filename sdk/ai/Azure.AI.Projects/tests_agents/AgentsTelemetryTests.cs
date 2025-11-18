@@ -90,7 +90,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests1";
+        var agentName = "agentsTelemetryTests1";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -119,7 +119,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests2";
+        var agentName = "agentsTelemetryTests2";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -149,7 +149,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests3";
+        var agentName = "agentsTelemetryTests3";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -179,7 +179,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests4";
+        var agentName = "agentsTelemetryTests4";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -237,7 +237,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests5";
+        var agentName = "agentsTelemetryTests5";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -295,7 +295,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests6";
+        var agentName = "agentsTelemetryTests6";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -325,7 +325,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = GetModelDeploymentName();
-        var agentName = "agensTelemetryTests7";
+        var agentName = "agentsTelemetryTests7";
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

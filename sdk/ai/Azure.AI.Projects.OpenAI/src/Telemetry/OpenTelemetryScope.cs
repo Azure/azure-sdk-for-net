@@ -101,14 +101,14 @@
 //            // TODO: check if structured outputs should be events and follow content recording flag
 //            //var structuredInputs = promptAgentDefinition.StructuredInputs;
 
-//            string evnt = s_traceContent ? JsonSerializer.Serialize(
+//            string traceEvent = s_traceContent ? JsonSerializer.Serialize(
 //                new EventContent (promptAgentDefinition.Instructions),
 //                EventsContext.Default.EventContent
 //            ) : JsonSerializer.Serialize("", EventsContext.Default.String);
 
 //            ActivityTagsCollection messageTags = new() {
 //                { GenAiSystemKey, GenAiSystemValue},
-//                { GenAiEventContent, evnt  }
+//                { GenAiEventContent, traceEvent  }
 //            };
 
 //            scope._activity?.AddEvent(

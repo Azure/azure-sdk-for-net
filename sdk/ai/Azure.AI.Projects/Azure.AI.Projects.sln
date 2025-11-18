@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects", "src\Az
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Tests", "tests\Azure.AI.Projects.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Agents.Tests", "tests_agents\Azure.AI.Agents.Tests.csproj", "{9FA7297A-688F-54A7-CB3B-B218D605BD39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Agents.Tests", "tests_agents\Azure.AI.Projects.Agents.Tests.csproj", "{9FA7297A-688F-54A7-CB3B-B218D605BD39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.OpenAI", "..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj", "{455D4CEC-1BB6-92B9-BB23-F52A9E409337}"
 EndProject

@@ -168,7 +168,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         OpenAIResponse response;
         do
         {
-            response = await CreateAndCheckReponseAsync(
+            response = await CreateAndCheckResponseAsync(
                 responseClient,
                 inputItems);
             funcionCalled = false;
@@ -192,7 +192,7 @@ public class Sample_Function : ProjectsOpenAITestBase
     }
 
     #region Snippet:Sample_CheckResponse_Function_Async
-    public static async Task<OpenAIResponse> CreateAndCheckReponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+    public static async Task<OpenAIResponse> CreateAndCheckResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
     {
         OpenAIResponse response = await responseClient.CreateResponseAsync(
             inputItems: items);
@@ -202,7 +202,7 @@ public class Sample_Function : ProjectsOpenAITestBase
     #endregion
 
     #region Snippet:Sample_CheckResponse_Function_Sync
-    public static OpenAIResponse CreateAndCheckReponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+    public static OpenAIResponse CreateAndCheckResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
     {
         OpenAIResponse response = responseClient.CreateResponse(
             inputItems: items);
@@ -246,7 +246,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         OpenAIResponse response;
         do
         {
-            response = CreateAndCheckReponse(
+            response = CreateAndCheckResponse(
                 responseClient,
                 inputItems);
             funcionCalled = false;
