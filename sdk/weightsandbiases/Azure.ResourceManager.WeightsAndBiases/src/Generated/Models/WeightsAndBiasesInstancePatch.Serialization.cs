@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeWeightsAndBiasesInstancePatch(document.RootElement, options);
                     }
