@@ -103,7 +103,7 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkip(method))
+            if (ShouldSkipType(method.EnclosingType) || ShouldSkipMethod(method))
             {
                 return base.VisitMethod(method);
             }
@@ -274,18 +274,8 @@ namespace Azure.Generator.Visitors
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
         }
 
-        private static bool ShouldSkip(ScmMethodProvider method)
+        private static bool ShouldSkipMethod(ScmMethodProvider method)
         {
-            var typeProvider = method.EnclosingType;
-
-            // Skip if the enclosing type is not a ClientProvider or doesn't have ClientDiagnostics property
-            if (typeProvider is not ClientProvider ||
-                !typeProvider.CanonicalView.Properties
-                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true))
-            {
-                return true;
-            }
-
             // Skip instrumentation for methods returning paging collection types
             // as they have built-in instrumentation
             return IsPagingMethod(method);
