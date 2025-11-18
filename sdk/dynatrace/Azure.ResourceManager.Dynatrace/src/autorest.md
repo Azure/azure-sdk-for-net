@@ -105,7 +105,8 @@ rename-mapping:
   Status: DynatraceMonitoringState
   SubscriptionList: DynatraceMonitoredSubscriptionList
   SubscriptionListOperation: DynatraceMonitoredSubscriptionListOperation
-  MonitoredSubscriptionProperty: DynatraceMonitoredSubscriptionProperty
+  MonitoredSubscriptionProperties: DynatraceMonitoredSubscriptionProperty
+  UpgradePlanRequest: DynatraceUpgradePlanContent
 
 override-operation-name:
   Monitors_GetMarketplaceSaaSResourceDetails: GetMarketplaceSaaSResourceDetailsResult
