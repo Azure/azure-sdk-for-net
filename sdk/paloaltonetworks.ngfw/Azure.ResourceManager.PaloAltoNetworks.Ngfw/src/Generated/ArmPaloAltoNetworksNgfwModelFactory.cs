@@ -167,35 +167,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="certificateSignerResourceId"> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </param>
-        /// <param name="certificateSelfSigned"> use certificate self signed. </param>
-        /// <param name="auditComment"> comment for this object. </param>
-        /// <param name="description"> user description for this object. </param>
-        /// <param name="etag"> read only string representing last create or update. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.GlobalRulestackCertificateObjectData"/> instance for mocking. </returns>
-        public static GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certificateSignerResourceId = default, FirewallBooleanType? certificateSelfSigned = default, string auditComment = default, string description = default, ETag? etag = default, FirewallProvisioningState? provisioningState = default)
-        {
-            return new GlobalRulestackCertificateObjectData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                certificateSignerResourceId is null && certificateSelfSigned is null && auditComment is null && description is null && etag is null && provisioningState is null ? default : new CertificateObject(
-                    certificateSignerResourceId,
-                    certificateSelfSigned.Value,
-                    auditComment,
-                    description,
-                    etag,
-                    provisioningState,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> fqdn object description. </param>
         /// <param name="fqdnList"> fqdn list. </param>
         /// <param name="etag"> etag info. </param>
@@ -862,35 +833,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static StrataCloudManagerInfo StrataCloudManagerInfo(string folderName = default, string hubUri = default)
         {
             return new StrataCloudManagerInfo(folderName, hubUri, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="certificateSignerResourceId"> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </param>
-        /// <param name="certificateSelfSigned"> use certificate self signed. </param>
-        /// <param name="auditComment"> comment for this object. </param>
-        /// <param name="description"> user description for this object. </param>
-        /// <param name="etag"> read only string representing last create or update. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.LocalRulestackCertificateObjectData"/> instance for mocking. </returns>
-        public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certificateSignerResourceId = default, FirewallBooleanType? certificateSelfSigned = default, string auditComment = default, string description = default, ETag? etag = default, FirewallProvisioningState? provisioningState = default)
-        {
-            return new LocalRulestackCertificateObjectData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                certificateSignerResourceId is null && certificateSelfSigned is null && auditComment is null && description is null && etag is null && provisioningState is null ? default : new CertificateObject(
-                    certificateSignerResourceId,
-                    certificateSelfSigned.Value,
-                    auditComment,
-                    description,
-                    etag,
-                    provisioningState,
-                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
