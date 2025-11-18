@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -109,7 +110,12 @@ namespace Azure.Generator.Visitors
 
             if (method.Kind == ScmMethodKind.Protocol)
             {
-                UpdateProtocolMethodsWithDistributedTracing(method);
+                // Skip instrumentation for methods returning paging collection types
+                // as they have built-in instrumentation
+                if (!IsPagingMethod(method))
+                {
+                    UpdateProtocolMethodsWithDistributedTracing(method);
+                }
             }
             else if (IsSubClientFactoryMethod(method))
             {
@@ -280,6 +286,19 @@ namespace Azure.Generator.Visitors
 
             return methodReturnType != null &&
                 clientProvider.SubClients.Any(subClient => methodReturnType.Equals(subClient.Type));
+        }
+
+        private static bool IsPagingMethod(ScmMethodProvider method)
+        {
+            var returnType = method.Signature.ReturnType;
+            if (returnType == null)
+            {
+                return false;
+            }
+
+            // Check if the return type is Pageable<T> or AsyncPageable<T>
+            return returnType.FrameworkType == typeof(Pageable<>) ||
+                   returnType.FrameworkType == typeof(AsyncPageable<>);
         }
     }
 }
