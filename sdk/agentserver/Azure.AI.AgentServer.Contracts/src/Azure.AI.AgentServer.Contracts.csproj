@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      OPENAI001;
+      CS1591;
+      AZC0012;
+      AZC0014;
+      AZC0030;
+      AZC0031;
+      AZC0033;
+      AZC0034;
+      SA1649;
+      SA1402;
+      IDT002;
+    </NoWarn>
+
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+</Project>

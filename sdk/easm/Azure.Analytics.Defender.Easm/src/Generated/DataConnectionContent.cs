@@ -14,38 +14,55 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct DataConnectionContent : IEquatable<DataConnectionContent>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataConnectionContent"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataConnectionContent(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AssetsValue = "assets";
         private const string AttackSurfaceInsightsValue = "attackSurfaceInsights";
 
-        /// <summary> assets. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionContent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataConnectionContent(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Assets. </summary>
         public static DataConnectionContent Assets { get; } = new DataConnectionContent(AssetsValue);
-        /// <summary> attackSurfaceInsights. </summary>
+
+        /// <summary> Gets the AttackSurfaceInsights. </summary>
         public static DataConnectionContent AttackSurfaceInsights { get; } = new DataConnectionContent(AttackSurfaceInsightsValue);
+
         /// <summary> Determines if two <see cref="DataConnectionContent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataConnectionContent left, DataConnectionContent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataConnectionContent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataConnectionContent left, DataConnectionContent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectionContent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataConnectionContent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataConnectionContent(string value) => new DataConnectionContent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataConnectionContent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataConnectionContent?(string value) => value == null ? null : new DataConnectionContent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataConnectionContent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataConnectionContent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

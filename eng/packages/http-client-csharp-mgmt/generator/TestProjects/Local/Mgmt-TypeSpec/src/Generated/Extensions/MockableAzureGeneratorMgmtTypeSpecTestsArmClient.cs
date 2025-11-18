@@ -226,5 +226,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             GroupQuotaSubscriptionRequestStatusResource.ValidateResourceId(id);
             return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JooResource"/> object. </returns>
+        public virtual JooResource GetJooResource(ResourceIdentifier id)
+        {
+            JooResource.ValidateResourceId(id);
+            return new JooResource(Client, id);
+        }
     }
 }

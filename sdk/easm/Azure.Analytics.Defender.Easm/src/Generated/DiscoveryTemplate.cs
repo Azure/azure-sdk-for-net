@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The items in the current page of results. </summary>
     public partial class DiscoveryTemplate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryTemplate"/>. </summary>
         internal DiscoveryTemplate()
@@ -63,8 +34,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="city"> The name of the city. </param>
         /// <param name="seeds"> The list of disco template seeds. </param>
         /// <param name="names"> The list of disco template names. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryTemplate(string id, string name, string displayName, string industry, string region, string countryCode, string stateCode, string city, IReadOnlyList<DiscoverySource> seeds, IReadOnlyList<string> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveryTemplate(string id, string name, string displayName, string industry, string region, string countryCode, string stateCode, string city, IList<DiscoverySource> seeds, IList<string> names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -76,28 +47,37 @@ namespace Azure.Analytics.Defender.Easm
             City = city;
             Seeds = seeds;
             Names = names;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The system generated unique id for the resource. </summary>
         public string Id { get; }
+
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }
+
         /// <summary> The name that can be used for display purposes. </summary>
         public string DisplayName { get; }
+
         /// <summary> The name of the industry. </summary>
         public string Industry { get; }
+
         /// <summary> The name of the region. </summary>
         public string Region { get; }
+
         /// <summary> The country code. </summary>
         public string CountryCode { get; }
+
         /// <summary> The state code. </summary>
         public string StateCode { get; }
+
         /// <summary> The name of the city. </summary>
         public string City { get; }
+
         /// <summary> The list of disco template seeds. </summary>
-        public IReadOnlyList<DiscoverySource> Seeds { get; }
+        public IList<DiscoverySource> Seeds { get; }
+
         /// <summary> The list of disco template names. </summary>
-        public IReadOnlyList<string> Names { get; }
+        public IList<string> Names { get; }
     }
 }

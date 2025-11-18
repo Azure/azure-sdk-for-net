@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,7 +12,6 @@ using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -57,11 +55,6 @@ namespace Azure.Generator.Providers
 
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
-
-        protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
-
-        protected override string BuildName()
-            => $"{Client.Type.Name}{_operation.Name.ToIdentifierName()}{(IsAsync ? "Async" : "")}CollectionResult{(_isProtocol ? "" : "OfT")}";
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
@@ -153,7 +146,12 @@ namespace Azure.Generator.Providers
                     New.Instance(new CSharpType(typeof(List<>), typeof(BinaryData))), out itemsVariable),
                 new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<object>>(), out var itemVariable)
                 {
-                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write), new ValueExpression[] { itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions") })).Terminate()
+                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
+                        [
+                            itemVariable,
+                            Static<ModelSerializationExtensionsDefinition>().Property(ModelSerializationExtensionsDefinition.WireOptionsFieldName),
+                            Static<ModelReaderWriterContextDefinition>().Property("Default")
+                        ])).Terminate()
                 }
             ];
         }
