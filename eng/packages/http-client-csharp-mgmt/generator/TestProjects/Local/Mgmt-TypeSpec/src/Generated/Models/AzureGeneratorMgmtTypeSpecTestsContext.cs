@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -17,6 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+<<<<<<< HEAD
     [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
     [ModelReaderWriterBuildable(typeof(BarData))]
@@ -64,45 +64,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(HciVmInstanceData))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceResource))]
+=======
+>>>>>>> baf9562b6b4 (write console debug info)
     [ModelReaderWriterBuildable(typeof(JobProperties))]
     [ModelReaderWriterBuildable(typeof(JobResource))]
     [ModelReaderWriterBuildable(typeof(JobResourceData))]
     [ModelReaderWriterBuildable(typeof(JobResourcePatch))]
-    [ModelReaderWriterBuildable(typeof(JooData))]
-    [ModelReaderWriterBuildable(typeof(JooProperties))]
-    [ModelReaderWriterBuildable(typeof(JooResource))]
-    [ModelReaderWriterBuildable(typeof(LimitJsonObject))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(MarketplaceDetails))]
-    [ModelReaderWriterBuildable(typeof(NestedFooModel))]
-    [ModelReaderWriterBuildable(typeof(NetworkSibling))]
-    [ModelReaderWriterBuildable(typeof(NetworkSiblingSet))]
-    [ModelReaderWriterBuildable(typeof(NetworkSiblingSetProperties))]
-    [ModelReaderWriterBuildable(typeof(OfferDetails))]
-    [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
-    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
-    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
-    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
-    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
-    [ModelReaderWriterBuildable(typeof(QueryNetworkSiblingSetRequest))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SafeFlattenModel))]
-    [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
-    [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
-    [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(UserDetails))]
-    [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
-    [ModelReaderWriterBuildable(typeof(ZooData))]
-    [ModelReaderWriterBuildable(typeof(ZooListResult))]
-    [ModelReaderWriterBuildable(typeof(ZooPatch))]
-    [ModelReaderWriterBuildable(typeof(ZooProperties))]
-    [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
-    [ModelReaderWriterBuildable(typeof(ZooResource))]
-    [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
     public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext
     {
     }
