@@ -110,8 +110,8 @@
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
-    <AotCompatOptOut>false</AotCompatOptOut>
-    <AotAnalyzersOptOut>false</AotAnalyzersOptOut>
+    <AotCompatOptOut Condition="'$(IsShippingLibrary)' == 'true'">false</AotCompatOptOut>
+    <AotAnalyzersOptOut Condition="'$(IsShippingLibrary)' == 'true'">false</AotAnalyzersOptOut>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == '$(LtsTargetFramework)'">netstandard2.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 

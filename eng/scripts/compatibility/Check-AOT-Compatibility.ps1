@@ -6,38 +6,22 @@ param(
 ### Check if AOT compatibility is opted out ###
 
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
-$EngDir = Join-Path $RepoRoot "eng"
-$ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-$outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "aot-compat-$([System.Guid]::NewGuid()).txt"
 
-dotnet msbuild `
-    /nologo `
-    /t:GetAotCompatOptOut `
-    "$ServiceProj" `
-    /p:ServiceDirectory=$ServiceDirectory `
-    /p:Project=$PackageName `
-    /p:IncludeTests=false `
-    /p:IncludeSamples=false `
-    /p:IncludePerf=false `
-    /p:IncludeStress=false `
-    /p:OutputProjectInfoListFilePath="$outputFilePath" `
-    -tl:off | Out-Host
-
-$aotCompatLines = @()
-if (Test-Path $outputFilePath) {
-    $aotCompatLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
-    $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+# Build the path to the actual project file (same logic as used later in the script)
+if ([string]::IsNullOrEmpty($DirectoryName)) {
+    $ProjectPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageName "src" "$PackageName.csproj"
+} else {
+    $ProjectPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $DirectoryName "src" "$PackageName.csproj"
 }
 
-foreach ($line in $aotCompatLines) {
-    if ($line -like "*$PackageName:AotCompatOptOut=*") {
-        $aotCompatOptOut = $line.Split("=")[1].Trim()
-        if ($aotCompatOptOut -eq "true") {
-            Write-Host "AOT compatibility is opted out for $PackageName. Skipping AOT compatibility check."
-            exit 0
-        }
-        break
-    }
+# Get the property directly from the project file - replicating what the target does
+$output = dotnet msbuild -getProperty:AotCompatOptOut "$ProjectPath"
+
+$aotOptOut = $output.Trim() -eq "true"
+
+if ($aotOptOut) {
+    Write-Host "AOT compatibility is opted out for $PackageName. Skipping AOT compatibility check."
+        exit 0
 }
 
 ### Creating a test app ###

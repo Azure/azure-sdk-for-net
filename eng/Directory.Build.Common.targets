@@ -401,16 +401,6 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="GetAotCompatOptOut" Returns="@(AotCompatOptOutLine)">
-    <PropertyGroup>
-      <AotCompatOptOutText>$(PackageId):AotCompatOptOut=$(AotCompatOptOut)</AotCompatOptOutText>
-    </PropertyGroup>
-    
-    <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
-      <AotCompatOptOutLine Include="$(AotCompatOptOutText)" />
-    </ItemGroup>
-  </Target>
-
   <Target Name="_SetProjectDependsOnInnerTarget">
     <PropertyGroup>
       <InnerTargets>ProjectDependsOnInner</InnerTargets>
