@@ -30,6 +30,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Code interpreter](#code-interpreter)
   - [Computer use](#computer-use)
   - [Function call](#function-call)
+  - [Web Search](#web-search)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -682,6 +683,21 @@ do
     }
 } while (funcionCalled);
 Console.WriteLine(response.GetOutputText());
+```
+
+### Web Search
+
+The `WebSearchTool` allows the agent to perform web search. To improve the results we can set up the search location. After the agent was created, it can be used as usual. When needed it will use web search to answer the question.
+
+```C# Snippet:Sample_CreateAgent_WebSearch_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that can search the web",
+    Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
 ```
 
 ## Tracing

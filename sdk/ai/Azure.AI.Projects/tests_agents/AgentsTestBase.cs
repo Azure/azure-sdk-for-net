@@ -55,6 +55,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FunctionCall, "What is the nickname for Seattle, WA?" },
         {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
         {ToolType.ImageGeneration, "Generate an image of Microsoft logo."},
+        {ToolType.WebSearch, "What is special about this place?"},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.OpenAPI, "What's the weather in Seattle?"},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
@@ -81,6 +82,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.None, "You are a prompt agent."},
         {ToolType.BingGrounding, "You are helpful agent."},
         {ToolType.ImageGeneration, "Generate images based on user prompts"},
+        {ToolType.WebSearch, "You are a helpful assistant that can search the web"},
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
         {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
                                "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see." },
@@ -102,6 +104,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.CodeInterpreter, "673457"},
         {ToolType.FileSearch, "673457"},
         {ToolType.FunctionCall, "emerald"},
+        {ToolType.WebSearch, "centralia" }
     };
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
@@ -318,6 +321,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 quality: ImageGenerationToolQuality.Low,
                 size: ImageGenerationToolSize.W1024xH1024
             ),
+            ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)

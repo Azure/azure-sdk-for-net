@@ -596,6 +596,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.ImageGeneration)]
+    [TestCase(ToolType.WebSearch)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -631,7 +632,7 @@ public class AgentsTests : AgentsTestBase
             Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
             if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
             {
-                Assert.That(response.GetOutputText(), Does.Contain(expectedResponse), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
+                Assert.That(response.GetOutputText().ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
     }
