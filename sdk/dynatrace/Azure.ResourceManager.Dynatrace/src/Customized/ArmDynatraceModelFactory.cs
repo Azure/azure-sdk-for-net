@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceTagRuleData"/> instance for mocking. </returns>
         // Add this custom code due to the previous swagger definition for MetricRules only had FilteringTags as a direct child property.
-        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitorResourceLogRules logRules = null, IEnumerable<DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags = null, DynatraceProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitorResourceLogRules logRules, IEnumerable<DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags, DynatraceProvisioningState? provisioningState = null)
         {
             DynatraceMonitorResourceMetricRules metricRules = null;
             if (metricRulesFilteringTags != null)
