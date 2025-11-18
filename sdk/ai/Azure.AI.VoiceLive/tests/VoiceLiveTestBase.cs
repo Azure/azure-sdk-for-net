@@ -3,11 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Authentication.ExtendedProtection;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
@@ -15,8 +11,6 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -90,14 +84,15 @@ namespace Azure.AI.VoiceLive.Tests
 
         protected async Task<byte[]> GenerateTestAudio(string text)
         {
-            var path = Path.GetTempFileName();
             var of = SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm;
             var sc = SpeechConfig.FromEndpoint(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
             sc.SetSpeechSynthesisOutputFormat(of);
-            using (var ac = AudioConfig.FromWavFileOutput(path))
-            using (var synthsizer = new SpeechSynthesizer(sc, ac))
+
+            using (var outputStream = AudioOutputStream.CreatePullStream())
+            using (var ac = AudioConfig.FromStreamOutput(outputStream))
+            using (var speechSynthesizer = new SpeechSynthesizer(sc, ac))
             {
-                var result = await synthsizer.SpeakTextAsync(text).ConfigureAwait(false);
+                var result = await speechSynthesizer.SpeakTextAsync(text).ConfigureAwait(false);
                 if (result.Reason != ResultReason.SynthesizingAudioCompleted)
                 {
                     throw new Exception($"Error {result.Reason} was not synthesis completed");
