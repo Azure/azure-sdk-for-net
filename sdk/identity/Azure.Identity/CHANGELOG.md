@@ -1,5 +1,22 @@
 # Release History
 
+## 1.17.1 (2025-11-18)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` dependency to version 4.79.2.
+- Updated `Microsoft.Identity.Client.Extensions.Msal` dependency to version 4.79.2.
+
+## 1.18.0-beta.1 (2025-11-14)
+
+### Features Added
+
+- Added Kubernetes token proxy support (identity binding mode) to `WorkloadIdentityCredential`. When enabled via the `IsAzureKubernetesTokenProxyEnabled` option, the credential redirects token requests to an AKS-provided proxy to support scenarios exceeding the [20 federated identity credential limit](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#use-managed-identity-as-a-federated-identity-credential-fic-on-an-entra-id-app) per Entra ID application. This feature is opt-in and only available when using `WorkloadIdentityCredential` directly (not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`).
+
+### Other Changes
+
+- Deprecated legacy `ManagedIdentityCredential` constructors. Use `ManagedIdentityCredential(ManagedIdentityId id)` or `ManagedIdentityCredential(ManagedIdentityCredentialOptions options)` instead for clearer intent when specifying system-assigned or user-assigned managed identity. ([#53800](https://github.com/Azure/azure-sdk-for-net/issues/53800))
+
 ## 1.17.0 (2025-10-07)
 
 ### Bugs Fixed
