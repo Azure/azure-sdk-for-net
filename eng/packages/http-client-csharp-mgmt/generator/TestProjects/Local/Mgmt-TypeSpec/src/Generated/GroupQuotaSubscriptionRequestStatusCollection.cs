@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaSubscriptionRequestStatusResource"/> and their operations.
-    /// Each <see cref="GroupQuotaSubscriptionRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> instance call the GetGroupQuotaSubscriptionRequestStatuses method from an instance of the parent resource.
+    /// Each <see cref="GroupQuotaSubscriptionRequestStatusResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> instance call the GetGroupQuotaSubscriptionRequestStatuses method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
     public partial class GroupQuotaSubscriptionRequestStatusCollection : ArmCollection
     {
@@ -46,9 +47,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != GroupQuotaSubscriptionRequestStatusResource.ResourceType)
+            if (id.ResourceType != ManagementGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaSubscriptionRequestStatusResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), id);
             }
         }
 

@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The SavedFilter. </summary>
     public partial class SavedFilter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SavedFilter"/>. </summary>
         internal SavedFilter()
@@ -56,26 +27,30 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="filter"></param>
         /// <param name="description"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavedFilter(string id, string name, string displayName, string filter, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SavedFilter(string id, string name, string displayName, string filter, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             DisplayName = displayName;
             Filter = filter;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is typically the same as the name but might be different for different models. </summary>
         public string Id { get; }
+
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }
+
         /// <summary> The name that can be used for display purposes. </summary>
         public string DisplayName { get; }
-        /// <summary> Gets the filter. </summary>
+
+        /// <summary> Gets the Filter. </summary>
         public string Filter { get; }
-        /// <summary> Gets the description. </summary>
+
+        /// <summary> Gets the Description. </summary>
         public string Description { get; }
     }
 }

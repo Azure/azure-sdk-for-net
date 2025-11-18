@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DiscoveryGroup : IUtf8JsonSerializable, IJsonModel<DiscoveryGroup>
+    /// <summary> The DiscoveryGroup. </summary>
+    public partial class DiscoveryGroup : IJsonModel<DiscoveryGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiscoveryGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiscoveryGroup)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
-                foreach (var item in Seeds)
+                foreach (DiscoverySource item in Seeds)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -78,8 +78,13 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
-                foreach (var item in Names)
+                foreach (string item in Names)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -88,7 +93,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("excludes"u8);
                 writer.WriteStartArray();
-                foreach (var item in Excludes)
+                foreach (DiscoverySource item in Excludes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -109,15 +114,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,22 +131,27 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DiscoveryGroup IJsonModel<DiscoveryGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiscoveryGroup IJsonModel<DiscoveryGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DiscoveryGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiscoveryGroup)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiscoveryGroup(document.RootElement, options);
         }
 
-        internal static DiscoveryGroup DeserializeDiscoveryGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DiscoveryGroup DeserializeDiscoveryGroup(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,121 +162,126 @@ namespace Azure.Analytics.Defender.Easm
             string description = default;
             string tier = default;
             long? frequencyMilliseconds = default;
-            IReadOnlyList<DiscoverySource> seeds = default;
-            IReadOnlyList<string> names = default;
-            IReadOnlyList<DiscoverySource> excludes = default;
+            IList<DiscoverySource> seeds = default;
+            IList<string> names = default;
+            IList<DiscoverySource> excludes = default;
             DiscoveryRunResult latestRun = default;
             DateTimeOffset? createdDate = default;
             string templateId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"u8))
+                if (prop.NameEquals("tier"u8))
                 {
-                    tier = property.Value.GetString();
+                    tier = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("frequencyMilliseconds"u8))
+                if (prop.NameEquals("frequencyMilliseconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    frequencyMilliseconds = property.Value.GetInt64();
+                    frequencyMilliseconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("seeds"u8))
+                if (prop.NameEquals("seeds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiscoverySource> array = new List<DiscoverySource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     seeds = array;
                     continue;
                 }
-                if (property.NameEquals("names"u8))
+                if (prop.NameEquals("names"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     names = array;
                     continue;
                 }
-                if (property.NameEquals("excludes"u8))
+                if (prop.NameEquals("excludes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiscoverySource> array = new List<DiscoverySource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     excludes = array;
                     continue;
                 }
-                if (property.NameEquals("latestRun"u8))
+                if (prop.NameEquals("latestRun"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    latestRun = DiscoveryRunResult.DeserializeDiscoveryRunResult(property.Value, options);
+                    latestRun = DiscoveryRunResult.DeserializeDiscoveryRunResult(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("createdDate"u8))
+                if (prop.NameEquals("createdDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdDate = property.Value.GetDateTimeOffset("O");
+                    createdDate = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("templateId"u8))
+                if (prop.NameEquals("templateId"u8))
                 {
-                    templateId = property.Value.GetString();
+                    templateId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DiscoveryGroup(
                 id,
                 name,
@@ -280,13 +295,16 @@ namespace Azure.Analytics.Defender.Easm
                 latestRun,
                 createdDate,
                 templateId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DiscoveryGroup>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiscoveryGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -296,15 +314,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DiscoveryGroup IPersistableModel<DiscoveryGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiscoveryGroup IPersistableModel<DiscoveryGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DiscoveryGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroup>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiscoveryGroup(document.RootElement, options);
                     }
                 default:
@@ -312,22 +335,14 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DiscoveryGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DiscoveryGroup FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiscoveryGroup"/> from. </param>
+        public static explicit operator DiscoveryGroup(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiscoveryGroup(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDiscoveryGroup(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

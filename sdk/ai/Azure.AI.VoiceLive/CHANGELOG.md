@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-11-14)
 
 ### Features Added
 
@@ -13,10 +13,6 @@
   - Content size truncation respects `DiagnosticsOptions.LoggedContentSizeLimit`
   - Unified event listener experience works alongside Azure.Core HTTP logging
 - **Enhanced Samples**: Added `ContentLoggingSample.cs` and `UnifiedEventListener.cs` demonstrating WebSocket content logging integration
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 

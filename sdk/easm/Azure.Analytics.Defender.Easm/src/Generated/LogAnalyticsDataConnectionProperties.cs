@@ -19,10 +19,10 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnectionProperties"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="apiKey"> log analytics api key. </param>
         /// <param name="workspaceId"> log analytics workspace id. </param>
-        internal LogAnalyticsDataConnectionProperties(IDictionary<string, BinaryData> serializedAdditionalRawData, string apiKey, string workspaceId) : base(serializedAdditionalRawData)
+        internal LogAnalyticsDataConnectionProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties, string apiKey, string workspaceId) : base(additionalBinaryDataProperties)
         {
             ApiKey = apiKey;
             WorkspaceId = workspaceId;
@@ -30,6 +30,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> log analytics api key. </summary>
         public string ApiKey { get; set; }
+
         /// <summary> log analytics workspace id. </summary>
         public string WorkspaceId { get; set; }
     }

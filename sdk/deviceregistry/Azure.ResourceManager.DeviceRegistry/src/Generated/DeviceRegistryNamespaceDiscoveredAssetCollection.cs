@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredAssetCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredAssets method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> in the collection will belong to the same instance of <see cref="DeviceRegistryNamespaceResource"/>.
+    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredAssetCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredAssets method from an instance of <see cref="DeviceRegistryNamespaceResource"/>.
     /// </summary>
     public partial class DeviceRegistryNamespaceDiscoveredAssetCollection : ArmCollection, IEnumerable<DeviceRegistryNamespaceDiscoveredAssetResource>, IAsyncEnumerable<DeviceRegistryNamespaceDiscoveredAssetResource>
     {
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List NamespaceDiscoveredAsset resources by Namespace. </summary>
+        /// <summary>
+        /// List NamespaceDiscoveredAsset resources by Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredAssets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamespaceDiscoveredAssets_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryNamespaceDiscoveredAssetResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupAsyncCollectionResultOfT(_namespaceDiscoveredAssetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDiscoveredAssetResource(Client, data));
         }
 
-        /// <summary> List NamespaceDiscoveredAsset resources by Namespace. </summary>
+        /// <summary>
+        /// List NamespaceDiscoveredAsset resources by Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredAssets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamespaceDiscoveredAssets_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryNamespaceDiscoveredAssetResource> GetAll(CancellationToken cancellationToken = default)

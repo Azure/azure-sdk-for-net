@@ -15,12 +15,8 @@ namespace Azure.Analytics.Defender.Easm
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/>. </summary>
         /// <param name="properties"> properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        internal LogAnalyticsDataConnection(LogAnalyticsDataConnectionProperties properties)
+        internal LogAnalyticsDataConnection(LogAnalyticsDataConnectionProperties properties) : base("logAnalytics")
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Kind = "logAnalytics";
             Properties = properties;
         }
 
@@ -37,16 +33,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal LogAnalyticsDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> serializedAdditionalRawData, LogAnalyticsDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, serializedAdditionalRawData)
+        internal LogAnalyticsDataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, LogAnalyticsDataConnectionProperties properties) : base(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, additionalBinaryDataProperties)
         {
             Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/> for deserialization. </summary>
-        internal LogAnalyticsDataConnection()
-        {
         }
 
         /// <summary> properties. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelEntityResource"/> and their operations.
-    /// Each <see cref="HealthModelEntityResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthModelEntityCollection"/> instance call the GetHealthModelEntities method from an instance of the parent resource.
+    /// Each <see cref="HealthModelEntityResource"/> in the collection will belong to the same instance of <see cref="HealthModelResource"/>.
+    /// To get a <see cref="HealthModelEntityCollection"/> instance call the GetHealthModelEntities method from an instance of <see cref="HealthModelResource"/>.
     /// </summary>
     public partial class HealthModelEntityCollection : ArmCollection, IEnumerable<HealthModelEntityResource>, IAsyncEnumerable<HealthModelEntityResource>
     {
@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary> List Entity resources by HealthModel. </summary>
+        /// <summary>
+        /// List Entity resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelEntityResource"/> that may take multiple service requests to iterate over. </returns>
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.CloudHealth
                 context), data => new HealthModelEntityResource(Client, data));
         }
 
-        /// <summary> List Entity resources by HealthModel. </summary>
+        /// <summary>
+        /// List Entity resources by HealthModel
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/entities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_ListByHealthModel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelEntityResource"/> that may take multiple service requests to iterate over. </returns>

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthModelResource"/> and their operations.
-    /// Each <see cref="HealthModelResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthModelCollection"/> instance call the GetHealthModels method from an instance of the parent resource.
+    /// Each <see cref="HealthModelResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HealthModelCollection"/> instance call the GetHealthModels method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HealthModelCollection : ArmCollection, IEnumerable<HealthModelResource>, IAsyncEnumerable<HealthModelResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
-        /// <summary> List HealthModel resources by resource group. </summary>
+        /// <summary>
+        /// List HealthModel resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HealthModels_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthModelResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.CloudHealth
             return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetByResourceGroupAsyncCollectionResultOfT(_healthModelsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HealthModelResource(Client, data));
         }
 
-        /// <summary> List HealthModel resources by resource group. </summary>
+        /// <summary>
+        /// List HealthModel resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HealthModels_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthModelResource> GetAll(CancellationToken cancellationToken = default)
