@@ -1,5 +1,11 @@
 # Release History
 
+## 1.17.1 (unreleased)
+
+### Other changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.79.2.
+
 ## 1.17.0 (2025-10-07)
 
 ### Bugs Fixed
