@@ -14,23 +14,25 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
     public class DeviceRegistryCredentialsAndPoliciesFlowTest : DeviceRegistryManagementTestBase
     {
-        private readonly string _subscriptionId = "53cd450b-b108-4e6e-b048-f63c1dcc8c8f";
-        private readonly string _resourceGroupName = "adr-sdk-test-cms1";
-        private readonly AzureLocation _region = new AzureLocation("centraluseuap");
-        private readonly string _namespaceName = "cms-test-namespace-1";
-        private readonly string _policyName = "cms-test-policy-1";
+        private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
+        private readonly AzureLocation _region;
+        private readonly string _namespaceName;
+        private readonly string _policyName;
 
         //PREREQUISITES:  Create RG, MI, IoT Hub, DPS with ADR Integration first.
         // Make sure to check the RG Activity Log to ensure that the operations have completed.
         //
-        // $SubscriptionId="53cd450b-b108-4e6e-b048-f63c1dcc8c8f"
-        // $ResourceGroup="adr-sdk-test-cms1"
-        // $Location="centraluseuap"
-        // $UserIdentity="cms-test-uami-1"
-        // $NamespaceName="cms-test-namespace-1"
-        // $HubLocation="centraluseuap"
-        // $HubName="adr-sdk-cms-test-hub1"
-        // $DpsName="adr-sdk-cms-test-dps1"
+        //$suffix="sync"       //$suffix="async"
+        //$SubscriptionId="53cd450b-b108-4e6e-b048-f63c1dcc8c8f"
+        //$ResourceGroup = "adr-sdk-test-cms-"+$suffix
+        //$Location="eastus2euap"
+        //$UserIdentity="cms-test-uami-"+$suffix
+        //$NamespaceName="cms-test-namespace-"+$suffix
+        //$HubLocation="eastus2euap"
+        //$HubName="adr-sdk-cms-test-hub-"+$suffix
+        //$DpsName="adr-sdk-cms-test-dps-"+$suffix
+
         // $rgScope = "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup"
         // #create RG
         // az group create --name $ResourceGroup --location $Location
@@ -57,8 +59,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         // $HubResourceId = ($HubResource | ConvertFrom-Json).Id
         // # Manual Role Assignments on Hub for ADR Principal
         // $AdrPrincipalId = az iot adr ns show --name "$NamespaceName" --resource-group "$ResourceGroup" --query "identity.principalId" -o tsv --only-show-error
-        // az role assignment create --assignee "$AdrPrincipalId" --role "Contributor" --scope "$HubResourceId"
-        // az role assignment create --assignee "$AdrPrincipalId" --role "IoT Hub Registry Contributor" --scope "$HubResourceId"
+        // #az role assignment create --assignee "$AdrPrincipalId" --role "Contributor" --scope "$HubResourceId"
+        // #az role assignment create --assignee "$AdrPrincipalId" --role "IoT Hub Registry Contributor" --scope "$HubResourceId"
         // # Create DPS with ADR Integration
         // az iot dps create `
         //         --name "$DpsName" `
@@ -73,6 +75,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
         public DeviceRegistryCredentialsAndPoliciesFlowTest(bool isAsync) : base(isAsync)
         {
+            _subscriptionId = "53cd450b-b108-4e6e-b048-f63c1dcc8c8f";
+            _region = new AzureLocation("eastus2euap");
+
+            // Append suffix to distinguish between async and sync test runs
+            string suffix = isAsync ? "async" : "sync";
+
+            _resourceGroupName = $"adr-sdk-test-cms-{suffix}";
+            _namespaceName = $"cms-test-namespace-{suffix}";
+            _policyName = $"cms-test-policy-{suffix}";
         }
 
         [RecordedTest]
@@ -122,7 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential created successfully\n");
 
                 // Allow backend propagation after credential creation
-                await DelayForPropagationAsync(5, "Waiting for credential propagation...", sw);
+                await DelayForPropagationAsync(10, "Waiting for credential propagation...", sw);
             }
             else
             {
@@ -177,7 +188,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
 
                 // Allow backend propagation after policy creation
-                await DelayForPropagationAsync(5, "Waiting for policy propagation...", sw);
+                await DelayForPropagationAsync(10, "Waiting for policy propagation...", sw);
             }
             else
             {
@@ -232,33 +243,55 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Allow extra time for IoT Hub synchronization propagation
             await DelayForPropagationAsync(10, "Waiting for IoT Hub synchronization propagation...", sw);
 
-            // Test Policy Update - change certificate validity period
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 6: Testing UPDATE operation - changing validity to 60 days...");
+            // Step 6: GET fresh policy after sync before updating
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 6: Getting fresh policy after sync...");
+            var policyGetAfterSyncResponse = await policyCollection.GetAsync(_policyName, CancellationToken.None);
+            policyResource = policyGetAfterSyncResponse.Value;
+            var currentValidity = policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays;
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Fresh policy retrieved (current validity: {currentValidity} days)\n");
+
+            // Step 7: Test Policy Update - minimal change (only validity period)
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7: Testing UPDATE operation - changing validity from {currentValidity} to 60 days...");
+
+            // Output policy state before update
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   BEFORE UPDATE (JSON):");
+            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(policyResource.Data, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+
             var policyPatch = new PolicyPatch();
-            var updatedLeafConfig = new LeafCertificateConfiguration(validityPeriodInDays: 60);
-            var updatedCertConfig = new CertificateConfiguration(
-                new CertificateAuthorityConfiguration(SupportedKeyType.ECC),
-                updatedLeafConfig);
-            policyPatch.Properties = new PolicyUpdateProperties() { Certificate = updatedCertConfig };
+            policyPatch.Properties = new PolicyUpdateProperties()
+            {
+                Certificate = new CertificateConfiguration(
+                    policyResource.Data.Properties.Certificate.CertificateAuthorityConfiguration,  // Reuse existing config
+                    new LeafCertificateConfiguration(validityPeriodInDays: 60)
+                )
+            };
 
             var updateOperation = await policyResource.UpdateAsync(
                 WaitUntil.Completed,
                 policyPatch,
                 CancellationToken.None);
 
-            // Refresh policy to get updated data
-            policyResource = updateOperation.Value;
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Update operation initiated (not waiting for completion)");
+
+            // Allow time for update to propagate
+            await DelayForPropagationAsync(20, "Waiting for update to propagate...", sw);
+
+            // GET fresh policy after update to verify changes
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Getting fresh policy after update...");
+            var policyGetAfterUpdateResponse = await policyCollection.GetAsync(_policyName, CancellationToken.None);
+            policyResource = policyGetAfterUpdateResponse.Value;
+
+            // Output policy state after update
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   AFTER UPDATE (JSON):");
+            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(policyResource.Data, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
             // Verify update was successful
             Assert.AreEqual(60,
                 policyResource.Data.Properties.Certificate.LeafCertificateValidityPeriodInDays);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy updated successfully, validity now 60 days\n");
 
-            // Allow backend propagation after policy update
-            await DelayForPropagationAsync(5, "Waiting for policy update propagation...", sw);
-
             // Clean up: Delete Policy
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7: Deleting policy '{_policyName}'...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 8: Deleting policy '{_policyName}'...");
             var policyDeleteOperation = await policyResource.DeleteAsync(
                 WaitUntil.Completed,
                 CancellationToken.None);
@@ -268,7 +301,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsTrue(policyDeleteOperation.HasCompleted);
 
             // Allow backend cleanup after policy deletion
-            await DelayForPropagationAsync(5, "Waiting for policy deletion propagation...", sw);
+            await DelayForPropagationAsync(10, "Waiting for policy deletion propagation...", sw);
 
             // Verify policy no longer exists
             bool policyExistsAfterDelete = await policyCollection.ExistsAsync(_policyName, CancellationToken.None);
@@ -276,7 +309,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy deleted successfully\n");
 
             // Clean up: Delete Credential
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 8: Deleting credential...");
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 9: Deleting credential...");
             var credentialDeleteOperation = await credentialResource.DeleteAsync(
                 WaitUntil.Completed,
                 CancellationToken.None);
@@ -286,7 +319,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsTrue(credentialDeleteOperation.HasCompleted);
 
             // Allow backend cleanup after credential deletion
-            await DelayForPropagationAsync(5, "Waiting for credential deletion propagation...", sw);
+            await DelayForPropagationAsync(10, "Waiting for credential deletion propagation...", sw);
 
             // Verify credential no longer exists
             bool credentialExistsAfterDelete = await credentialCollection.ExistsAsync(CancellationToken.None);
