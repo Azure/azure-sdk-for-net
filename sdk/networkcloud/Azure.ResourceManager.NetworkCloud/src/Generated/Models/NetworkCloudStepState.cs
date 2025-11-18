@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> StepState represents the state of a step in an action. </summary>
-    public partial class StepState
+    public partial class NetworkCloudStepState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +45,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StepState"/>. </summary>
-        internal StepState()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStepState"/>. </summary>
+        internal NetworkCloudStepState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StepState"/>. </summary>
-        /// <param name="endTime"> The timestamp for when processing of the step reached its terminal state, in ISO 8601 format. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStepState"/>. </summary>
+        /// <param name="endOn"> The timestamp for when processing of the step reached its terminal state, in ISO 8601 format. </param>
         /// <param name="message"> The message providing additional context for the status value. May be empty, or contain diagnostic information in the case of a failure. </param>
-        /// <param name="startTime"> The timestamp for when processing of the step began, in ISO 8601 format. </param>
+        /// <param name="startOn"> The timestamp for when processing of the step began, in ISO 8601 format. </param>
         /// <param name="status"> The status of the step. A value of Completed or Failed indicates a terminal state for the step. </param>
         /// <param name="stepName"> The name for the step. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StepState(string endTime, string message, string startTime, StepStateStatus? status, string stepName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudStepState(DateTimeOffset? endOn, string message, DateTimeOffset? startOn, NetworkCloudStepStateStatus? status, string stepName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EndTime = endTime;
+            EndOn = endOn;
             Message = message;
-            StartTime = startTime;
+            StartOn = startOn;
             Status = status;
             StepName = stepName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timestamp for when processing of the step reached its terminal state, in ISO 8601 format. </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The message providing additional context for the status value. May be empty, or contain diagnostic information in the case of a failure. </summary>
         public string Message { get; }
         /// <summary> The timestamp for when processing of the step began, in ISO 8601 format. </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The status of the step. A value of Completed or Failed indicates a terminal state for the step. </summary>
-        public StepStateStatus? Status { get; }
+        public NetworkCloudStepStateStatus? Status { get; }
         /// <summary> The name for the step. </summary>
         public string StepName { get; }
     }
