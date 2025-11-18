@@ -166,9 +166,11 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public void TestSkipsInstrumentationForPagingMethods(bool isAsync)
+        [TestCase(true, ScmMethodKind.Protocol)]
+        [TestCase(false, ScmMethodKind.Protocol)]
+        [TestCase(true, ScmMethodKind.Convenience)]
+        [TestCase(false, ScmMethodKind.Convenience)]
+        public void TestSkipsInstrumentationForPagingMethods(bool isAsync, ScmMethodKind methodKind)
         {
             var visitor = new TestDistributedTracingVisitor();
 
@@ -202,7 +204,7 @@ namespace Azure.Generator.Tests.Visitors
                 $"The pageable response returned from the service.",
                 [new ParameterProvider("context", $"The request context", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
             var bodyStatements = Return(New.Instance(pagingReturnType));
-            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, methodKind);
 
             var updatedMethod = visitor.InvokeVisitMethod(method!);
             Assert.IsNotNull(updatedMethod?.BodyStatements);
@@ -210,11 +212,11 @@ namespace Azure.Generator.Tests.Visitors
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
             // Verify that the method body does NOT contain DiagnosticScope instrumentation
             Assert.IsFalse(result.Contains("DiagnosticScope"),
-                $"Paging method should not have DiagnosticScope instrumentation. Method: {(isAsync ? "AsyncPageable" : "Pageable")}");
+                $"Paging method should not have DiagnosticScope instrumentation. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
             Assert.IsFalse(result.Contains("scope.Start()"),
-                $"Paging method should not have scope.Start() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}");
+                $"Paging method should not have scope.Start() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
             Assert.IsFalse(result.Contains("scope.Failed"),
-                $"Paging method should not have scope.Failed() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}");
+                $"Paging method should not have scope.Failed() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
         }
 
         private static IEnumerable<TestCaseData> TestUpdatesConstructorsTestCases
