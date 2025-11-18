@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="EndpointResourceCollection"/> instance call the GetEndpointResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class EndpointResourceCollection : ArmCollection
+    public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointResourcesClientDiagnostics;
         private readonly EndpointResources _endpointResourcesRestClient;
@@ -246,6 +248,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List EndpointResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// List EndpointResource resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/endpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EndpointResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EndpointResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EndpointResourceData, EndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new EndpointResource(Client, data));
         }
 
         /// <summary>
@@ -482,6 +540,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<EndpointResource> IEnumerable<EndpointResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<EndpointResource> IAsyncEnumerable<EndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
