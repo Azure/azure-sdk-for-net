@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Tests
     /// This class now uses a hybrid approach - it extends the standard Azure.Core RecordedTestBase
     /// but provides manual transport configuration for System.ClientModel compatibility.
     /// </summary>
-    [Ignore("Pending migration to Microsoft.ClientModel.TestFramework after SCM product migration")]
+    [LiveOnly(Reason = "Restricted to live runs pending migration to SCM test framework")]
     public class ProjectsClientTestBase : RecordedTestBase<AIProjectsTestEnvironment>
     {
         #region Debug Method
