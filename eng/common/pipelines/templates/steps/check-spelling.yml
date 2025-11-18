@@ -38,21 +38,16 @@ steps:
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true
+    - ${{ if ne('', parameters.ScriptToValidateUpgrade) }}:
+      - pwsh: |
+          $changedFiles = ./eng/common/scripts/get-changedfiles.ps1
 
-    - pwsh: |
-        $changedFiles = ./eng/common/scripts/get-changedfiles.ps1
+          if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
+            Write-Host "No changes to cspell package-lock.json detected."
+            exit 0
+          }
 
-        if ($changedFiles -notcontains 'eng/common/spelling/package-lock.json') {
-          Write-Host "No changes to cspell package-lock.json detected."
-          exit 0
-        }
-
-        Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
-        & '${{ parameters.ScriptToValidateUpgrade }}'
-      displayName: Verify cspell upgrade
-      condition: >-
-        and(
-          succeeded(), 
-          ne('true', variables['Skip.SpellCheck']),
-          ne('', parameters.ScriptToValidateUpgrade)
-        )
+          Write-Host "Detected change to cspell package-lock.json. Running upgrade verification."
+          & '${{ parameters.ScriptToValidateUpgrade }}'
+        displayName: Verify cspell upgrade
+        condition: and(succeeded(), ne('true', variables['Skip.SpellCheck']))
