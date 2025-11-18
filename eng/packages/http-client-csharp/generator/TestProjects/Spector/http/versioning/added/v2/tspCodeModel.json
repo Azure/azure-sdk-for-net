@@ -854,6 +854,7 @@
           "crossLanguageDefinitionId": "Versioning.Added.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Added",
       "apiVersions": [
@@ -1076,6 +1077,7 @@
               "crossLanguageDefinitionId": "Versioning.Added.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2",
           "apiVersions": [

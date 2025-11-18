@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,26 @@ internal static class BicepSyntax
     public static NullLiteralExpression Null() => new();
     public static BoolLiteralExpression Value(bool value) => new(value);
     public static IntLiteralExpression Value(int value) => new(value);
+    public static BicepExpression Value(long value)
+    {
+        // see if the value falls into the int range
+        if (value >= int.MinValue && value <= int.MaxValue)
+        {
+            return BicepSyntax.Value((int)value);
+        }
+        // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+        return BicepFunction.ParseJson(BicepSyntax.Value(value.ToString())).Compile();
+    }
+    public static BicepExpression Value(double value)
+    {
+        // see if the value is a whole number
+        if (value >= int.MinValue && value <= int.MaxValue && value == Math.Floor(value))
+        {
+            return BicepSyntax.Value((int)value);
+        }
+        // otherwise we use the workaround from https://github.com/Azure/bicep/issues/1386#issuecomment-818077233
+        return BicepFunction.ParseJson(BicepSyntax.Value(value.ToString())).Compile();
+    }
     public static StringLiteralExpression Value(string value) => new(value);
     public static ArrayExpression Array(params BicepExpression[] values) => new(values);
     public static ObjectExpression Object(IDictionary<string, BicepExpression> properties) => new(properties.Keys.Select(k => new PropertyExpression(k, properties[k])).ToArray());

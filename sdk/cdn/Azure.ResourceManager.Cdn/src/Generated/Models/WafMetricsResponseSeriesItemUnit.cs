@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The WafMetricsResponseSeriesItemUnit.
-    /// Serialized Name: WafMetricsSeriesUnit
-    /// </summary>
+    /// <summary> The WafMetricsResponseSeriesItemUnit. </summary>
     public readonly partial struct WafMetricsResponseSeriesItemUnit : IEquatable<WafMetricsResponseSeriesItemUnit>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CountValue = "count";
 
-        /// <summary>
-        /// count
-        /// Serialized Name: WafMetricsSeriesUnit.count
-        /// </summary>
+        /// <summary> count. </summary>
         public static WafMetricsResponseSeriesItemUnit Count { get; } = new WafMetricsResponseSeriesItemUnit(CountValue);
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are the same. </summary>
         public static bool operator ==(WafMetricsResponseSeriesItemUnit left, WafMetricsResponseSeriesItemUnit right) => left.Equals(right);

@@ -14,38 +14,57 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentFontWeight : IEquatable<DocumentFontWeight>
     {
         private readonly string _value;
+        /// <summary> Characters are represented normally. </summary>
+        private const string NormalValue = "normal";
+        /// <summary> Characters are represented with thicker strokes. </summary>
+        private const string BoldValue = "bold";
 
         /// <summary> Initializes a new instance of <see cref="DocumentFontWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentFontWeight(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NormalValue = "normal";
-        private const string BoldValue = "bold";
+            _value = value;
+        }
 
         /// <summary> Characters are represented normally. </summary>
         public static DocumentFontWeight Normal { get; } = new DocumentFontWeight(NormalValue);
+
         /// <summary> Characters are represented with thicker strokes. </summary>
         public static DocumentFontWeight Bold { get; } = new DocumentFontWeight(BoldValue);
+
         /// <summary> Determines if two <see cref="DocumentFontWeight"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentFontWeight left, DocumentFontWeight right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentFontWeight"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentFontWeight left, DocumentFontWeight right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFontWeight"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentFontWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentFontWeight(string value) => new DocumentFontWeight(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentFontWeight"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentFontWeight?(string value) => value == null ? null : new DocumentFontWeight(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentFontWeight other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentFontWeight other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

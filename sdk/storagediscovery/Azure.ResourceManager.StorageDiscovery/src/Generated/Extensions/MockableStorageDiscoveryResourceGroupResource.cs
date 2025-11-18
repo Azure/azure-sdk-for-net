@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
             return GetCachedClient(client => new StorageDiscoveryWorkspaceCollection(client, Id));
         }
 
-        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
+        /// <summary>
+        /// Get a StorageDiscoveryWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
             return await GetStorageDiscoveryWorkspaces().GetAsync(storageDiscoveryWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
+        /// <summary>
+        /// Get a StorageDiscoveryWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>

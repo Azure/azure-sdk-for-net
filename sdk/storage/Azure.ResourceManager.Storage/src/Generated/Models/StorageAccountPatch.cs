@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
+        /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageKind? kind, IList<string> zones, Placement placement, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageKind? kind, IList<string> zones, Placement placement, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -115,6 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             AllowedCopyScope = allowedCopyScope;
             DnsEndpointType = dnsEndpointType;
+            GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -239,5 +241,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
         [WirePath("properties.dnsEndpointType")]
         public StorageDnsEndpointType? DnsEndpointType { get; set; }
+        /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
+        internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
+        /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
+        [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
+        public bool? IsBlobEnabled
+        {
+            get => GeoPriorityReplicationStatus is null ? default : GeoPriorityReplicationStatus.IsBlobEnabled;
+            set
+            {
+                if (GeoPriorityReplicationStatus is null)
+                    GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus();
+                GeoPriorityReplicationStatus.IsBlobEnabled = value;
+            }
+        }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The CveDetails. </summary>
     public partial class CveDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CveDetails"/>. </summary>
         internal CveDetails()
@@ -55,23 +26,26 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cweId"></param>
         /// <param name="cvssScore"></param>
         /// <param name="cvss3Summary"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveDetails(string name, string cweId, float? cvssScore, Cvss3Summary cvss3Summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CveDetails(string name, string cweId, float? cvssScore, Cvss3Summary cvss3Summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             CweId = cweId;
             CvssScore = cvssScore;
             Cvss3Summary = cvss3Summary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Gets the Name. </summary>
         public string Name { get; }
-        /// <summary> Gets the cwe id. </summary>
+
+        /// <summary> Gets the CweId. </summary>
         public string CweId { get; }
-        /// <summary> Gets the cvss score. </summary>
+
+        /// <summary> Gets the CvssScore. </summary>
         public float? CvssScore { get; }
-        /// <summary> Gets the cvss 3 summary. </summary>
+
+        /// <summary> Gets the Cvss3Summary. </summary>
         public Cvss3Summary Cvss3Summary { get; }
     }
 }

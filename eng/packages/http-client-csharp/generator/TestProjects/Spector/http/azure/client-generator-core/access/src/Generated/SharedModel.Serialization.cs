@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation
 {
     public partial class SharedModel : IJsonModel<SharedModel>
     {
@@ -34,6 +34,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation
 
         string IPersistableModel<SharedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator SharedModel(Response result) => throw null;
+        public static explicit operator SharedModel(Response response) => throw null;
     }
 }

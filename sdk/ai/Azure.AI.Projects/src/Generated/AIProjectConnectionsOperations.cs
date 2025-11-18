@@ -44,13 +44,12 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetConnection(string name, string clientRequestId, RequestOptions options)
+        internal virtual ClientResult GetConnection(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetConnectionRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -63,35 +62,32 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetConnectionAsync(string name, string clientRequestId, RequestOptions options)
+        internal virtual async Task<ClientResult> GetConnectionAsync(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetConnectionRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a connection by name, without populating connection credentials. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<AIProjectConnection> GetConnection(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<AIProjectConnection> GetConnection(string name, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetConnection(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetConnection(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
         /// <summary> Get a connection by name, without populating connection credentials. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string name, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetConnectionAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetConnectionAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
@@ -104,13 +100,12 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetConnectionWithCredentials(string name, string clientRequestId, RequestOptions options)
+        internal virtual ClientResult GetConnectionWithCredentials(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -123,35 +118,32 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetConnectionWithCredentialsAsync(string name, string clientRequestId, RequestOptions options)
+        internal virtual async Task<ClientResult> GetConnectionWithCredentialsAsync(string name, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetConnectionWithCredentialsRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a connection by name, with its connection credentials. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<AIProjectConnection> GetConnectionWithCredentials(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<AIProjectConnection> GetConnectionWithCredentials(string name, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetConnectionWithCredentials(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetConnectionWithCredentials(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
         /// <summary> Get a connection by name, with its connection credentials. </summary>
         /// <param name="name"> The friendly name of the connection, provided by the user. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<AIProjectConnection>> GetConnectionWithCredentialsAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<AIProjectConnection>> GetConnectionWithCredentialsAsync(string name, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetConnectionWithCredentialsAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetConnectionWithCredentialsAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectConnection)result, result.GetRawResponse());
         }
 
@@ -165,13 +157,12 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetConnections(string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetConnections(string connectionType, bool? defaultConnection, RequestOptions options)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsCollectionResult(this, connectionType, defaultConnection, clientRequestId, options);
+            return new AIProjectConnectionsOperationsGetConnectionsCollectionResult(this, connectionType, defaultConnection, options);
         }
 
         /// <summary>
@@ -184,35 +175,32 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetConnectionsAsync(string connectionType, bool? defaultConnection, RequestOptions options)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(this, connectionType, defaultConnection, clientRequestId, options);
+            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(this, connectionType, defaultConnection, options);
         }
 
         /// <summary> List all connections in the project, without populating connection credentials. </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<AIProjectConnection> GetConnections(ConnectionType? connectionType = default, bool? defaultConnection = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<AIProjectConnection> GetConnections(ConnectionType? connectionType = default, bool? defaultConnection = default, CancellationToken cancellationToken = default)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new AIProjectConnectionsOperationsGetConnectionsCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all connections in the project, without populating connection credentials. </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<AIProjectConnection> GetConnectionsAsync(ConnectionType? connectionType = default, bool? defaultConnection = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AIProjectConnection> GetConnectionsAsync(ConnectionType? connectionType = default, bool? defaultConnection = default, CancellationToken cancellationToken = default)
         {
-            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResultOfT(this, connectionType?.ToString(), defaultConnection, cancellationToken.ToRequestOptions());
         }
     }
 }

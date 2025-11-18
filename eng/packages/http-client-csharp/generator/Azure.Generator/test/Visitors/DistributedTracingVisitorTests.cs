@@ -154,7 +154,8 @@ namespace Azure.Generator.Tests.Visitors
                 $"The response returned from the service.",
                 [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
             var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
-            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, isProtocolMethod: isProtocolMethod);
+            var methodKind = isProtocolMethod ? ScmMethodKind.Protocol : ScmMethodKind.Convenience;
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, methodKind);
 
             var updatedMethod = visitor.InvokeVisitMethod(method!);
             Assert.IsNotNull(updatedMethod?.BodyStatements);

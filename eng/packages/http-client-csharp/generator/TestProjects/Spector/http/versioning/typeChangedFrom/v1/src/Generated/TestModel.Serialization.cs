@@ -38,6 +38,6 @@ namespace Versioning.TypeChangedFrom
         /// <param name="testModel"> The <see cref="TestModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(TestModel testModel) => throw null;
 
-        public static explicit operator TestModel(Response result) => throw null;
+        public static explicit operator TestModel(Response response) => throw null;
     }
 }

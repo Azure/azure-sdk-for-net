@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
@@ -73,10 +72,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
-            return new MethodProvider(
+            var methodProvider = new MethodProvider(
                 pageableOperationMethodProvider._signature,
                 pageableOperationMethodProvider._bodyStatements,
                 pageableOperationMethodProvider._enclosingType);
+
+            // Add enhanced XML documentation with structured tags
+            ResourceHelpers.BuildEnhancedXmlDocs(
+                pageableOperationMethodProvider._method,
+                pageableOperationMethodProvider._convenienceMethod.Signature.Description,
+                pageableOperationMethodProvider._enclosingType,
+                methodProvider.XmlDocs);
+
+            return methodProvider;
         }
 
         protected MethodSignature CreateSignature()

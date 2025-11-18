@@ -38,6 +38,6 @@ namespace Encode.Duration._Property
         /// <param name="defaultDurationProperty"> The <see cref="DefaultDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DefaultDurationProperty defaultDurationProperty) => throw null;
 
-        public static explicit operator DefaultDurationProperty(Response result) => throw null;
+        public static explicit operator DefaultDurationProperty(Response response) => throw null;
     }
 }

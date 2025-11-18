@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="enumProperty"> The <see cref="EnumProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(EnumProperty enumProperty) => throw null;
 
-        public static explicit operator EnumProperty(Response result) => throw null;
+        public static explicit operator EnumProperty(Response response) => throw null;
     }
 }

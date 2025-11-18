@@ -55,6 +55,17 @@ namespace Azure.Generator.Management.Utilities
                     outputParameter.Update(name: "data");
                 }
 
+                // Rename body parameters for resource/resourcecollection operations
+                if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider) &&
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                {
+                    var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
+                    if (normalizedName != null)
+                    {
+                        outputParameter.Update(name: normalizedName);
+                    }
+                }
+
                 if (parameter.IsRequired)
                 {
                     requiredParameters.Add(outputParameter);

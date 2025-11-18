@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRulesetListResult"/>. </summary>
-        internal VirtualNetworkDnsForwardingRulesetListResult()
+        /// <param name="value"> The VirtualNetworkDnsForwardingRuleset items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VirtualNetworkDnsForwardingRulesetListResult(IEnumerable<VirtualNetworkDnsForwardingRuleset> value)
         {
-            Value = new ChangeTrackingList<VirtualNetworkDnsForwardingRuleset>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRulesetListResult"/>. </summary>
-        /// <param name="value"> Enumeration of the Virtual Network DNS Forwarding Ruleset. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value"> The VirtualNetworkDnsForwardingRuleset items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkDnsForwardingRulesetListResult(IReadOnlyList<VirtualNetworkDnsForwardingRuleset> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkDnsForwardingRulesetListResult(IReadOnlyList<VirtualNetworkDnsForwardingRuleset> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enumeration of the Virtual Network DNS Forwarding Ruleset. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRulesetListResult"/> for deserialization. </summary>
+        internal VirtualNetworkDnsForwardingRulesetListResult()
+        {
+        }
+
+        /// <summary> The VirtualNetworkDnsForwardingRuleset items on this page. </summary>
         public IReadOnlyList<VirtualNetworkDnsForwardingRuleset> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -34,6 +34,6 @@ namespace _Type.Union
 
         string IPersistableModel<GetResponse4>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator GetResponse4(Response result) => throw null;
+        public static explicit operator GetResponse4(Response response) => throw null;
     }
 }
