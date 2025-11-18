@@ -27,9 +27,9 @@ namespace Azure.AI.Projects.Tests
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-            var indexName = TestEnvironment.INDEXNAME ?? "my-index";
-            var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
-            var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+            var indexName = TestEnvironment.INDEX_NAME ?? "my-index";
+            var indexVersion = TestEnvironment.INDEX_VERSION ?? "1.0";
+            var aiSearchIndexName = TestEnvironment.AI_SEARCH_INDEX_NAME ?? "my-ai-search-index-name";
 #endif
 
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());

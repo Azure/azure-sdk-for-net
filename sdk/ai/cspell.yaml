@@ -7,12 +7,14 @@ dictionaries:
   - csharp
   - softwareTerms
 words:
+  - aoai
   - aiprojects
   - ansii
   - atbash
   - azureai
   - bleu
   - conv
+  - CSDL
   - genai
   - gleu
   - includable
@@ -25,4 +27,7 @@ words:
   - PNAS
   - praepotens
   - ubinary
+  - UPIA
   - wfresp
+ignorePaths:
+  - "**/*jsonl"
