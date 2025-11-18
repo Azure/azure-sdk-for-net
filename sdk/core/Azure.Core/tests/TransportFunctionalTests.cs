@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
@@ -31,6 +32,8 @@ namespace Azure.Core.Tests
         public TransportFunctionalTests(bool isAsync) : base(isAsync)
         {
         }
+
+        internal static RemoteCertificateValidationCallback certCallback = (_, _, _, _) => true;
 
         protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null);
 
@@ -1184,60 +1187,69 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ClientCertificateCanBeRotatedFromExistingCert()
         {
+            try
+            {
 #if NETFRAMEWORK // ServicePointManager is obsolete and doesn't affect HttpClient
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
-            ServicePointManager.ServerCertificateValidationCallback = null;
+            ServicePointManager.ServerCertificateValidationCallback -= certCallback;
 #endif
-            X509Certificate2 clientCert = GetCertificate(Pfx);
-            X509Certificate2 anotherCert = GetCertificate(Pfx2);
-            bool setClientCertificate = false;
-            bool validatedCert = false;
+                X509Certificate2 clientCert = GetCertificate(Pfx);
+                X509Certificate2 anotherCert = GetCertificate(Pfx2);
+                bool setClientCertificate = false;
+                bool validatedCert = false;
 
-            using (TestServer testServer = new TestServer(
-                async context =>
+                using (TestServer testServer = new TestServer(
+                    async context =>
+                    {
+                        var cert = context.Connection.ClientCertificate;
+                        if (setClientCertificate)
+                        {
+                            Assert.NotNull(cert);
+                            Assert.AreEqual(anotherCert, cert);
+                            validatedCert = true;
+                        }
+                        else
+                        {
+                            Assert.NotNull(cert);
+                            Assert.AreEqual(clientCert, cert);
+                            validatedCert = true;
+                        }
+                        byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                        await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+                    },
+                    true))
                 {
-                    var cert = context.Connection.ClientCertificate;
-                    if (setClientCertificate)
-                    {
-                        Assert.NotNull(cert);
-                        Assert.AreEqual(anotherCert, cert);
-                        validatedCert = true;
-                    }
-                    else
-                    {
-                        Assert.NotNull(cert);
-                        Assert.AreEqual(clientCert, cert);
-                        validatedCert = true;
-                    }
-                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
-                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                },
-                true))
+                    var options = new HttpPipelineTransportOptions();
+                    options.ServerCertificateCustomValidationCallback = args => true;
+                    options.ClientCertificates.Add(clientCert);
+
+                    var transport = GetTransport(true, options);
+
+                    // Initially the first client certificate
+                    Request request = transport.CreateRequest();
+                    request.Uri.Reset(testServer.Address);
+
+                    await ExecuteRequest(request, transport);
+
+                    // Now set the client certificate and update the transport
+                    options.ClientCertificates.Clear();
+                    options.ClientCertificates.Add(anotherCert);
+
+                    transport.Update(options);
+                    setClientCertificate = true;
+
+                    request = transport.CreateRequest();
+                    request.Uri.Reset(testServer.Address);
+
+                    await ExecuteRequest(request, transport);
+                    Assert.IsTrue(validatedCert, "Client certificate was not validated after transport update.");
+                }
+            }
+            finally
             {
-                var options = new HttpPipelineTransportOptions();
-                options.ServerCertificateCustomValidationCallback = args => true;
-                options.ClientCertificates.Add(clientCert);
-
-                var transport = GetTransport(true, options);
-
-                // Initially the first client certificate
-                Request request = transport.CreateRequest();
-                request.Uri.Reset(testServer.Address);
-
-                await ExecuteRequest(request, transport);
-
-                // Now set the client certificate and update the transport
-                options.ClientCertificates.Clear();
-                options.ClientCertificates.Add(anotherCert);
-
-                transport.Update(options);
-                setClientCertificate = true;
-
-                request = transport.CreateRequest();
-                request.Uri.Reset(testServer.Address);
-
-                await ExecuteRequest(request, transport);
-                Assert.IsTrue(validatedCert, "Client certificate was not validated after transport update.");
+#if NETFRAMEWORK
+            ServicePointManager.ServerCertificateValidationCallback += certCallback;
+#endif
             }
         }
 
