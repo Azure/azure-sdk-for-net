@@ -46,47 +46,10 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public Task WrapsError_NoAudienceConfigured() => AssertWrapsErrorAsync(isAudienceConfigured: false);
+        public void WrapsError_NoAudienceConfigured() => AssertWrapsError(isAudienceConfigured: false);
 
         [Test]
-        public Task WrapsError_WrongAudienceConfigured() => AssertWrapsErrorAsync(isAudienceConfigured: true);
-
-        private async Task AssertWrapsErrorAsync(bool isAudienceConfigured)
-        {
-            var transport = new MockTransport(new MockResponse(200)); // Transport won't be reached because throwing policy throws first.
-            var pipeline = new HttpPipeline(
-                transport,
-                new HttpPipelinePolicy[]
-                {
-                    new AudienceErrorHandlingPolicy(isAudienceConfigured),
-                    new ThrowingPolicy($"Simulated authentication failure {AadAudienceErrorCode}: Resource principal not found")
-                },
-                responseClassifier: null);
-
-            var requestUri = new Uri("http://example.com");
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                if (IsAsync)
-                {
-                    var message = pipeline.CreateMessage();
-                    message.Request.Method = RequestMethod.Get;
-                    message.Request.Uri.Reset(requestUri);
-                    await pipeline.SendAsync(message, CancellationToken.None);
-                }
-                else
-                {
-                    var message = pipeline.CreateMessage();
-                    message.Request.Method = RequestMethod.Get;
-                    message.Request.Uri.Reset(requestUri);
-                    pipeline.Send(message, CancellationToken.None);
-                }
-            });
-
-            Assert.NotNull(ex);
-            StringAssert.Contains(ExpectedErrorMessage(isAudienceConfigured), ex.Message);
-            Assert.NotNull(ex.InnerException);
-            StringAssert.Contains(AadAudienceErrorCode, ex.InnerException.Message);
-        }
+        public void WrapsError_WrongAudienceConfigured() => AssertWrapsError(isAudienceConfigured: true);
 
         [Test]
         public void NonAudienceError_PassesThrough()
@@ -123,6 +86,43 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.IsNotInstanceOf<RequestFailedException>(ex); // Should not be wrapped
             Assert.AreEqual("Simulated failure WITHOUT code", ex.Message);
+        }
+
+        private void AssertWrapsError(bool isAudienceConfigured)
+        {
+            var transport = new MockTransport(new MockResponse(200)); // Transport won't be reached because throwing policy throws first.
+            var pipeline = new HttpPipeline(
+                transport,
+                new HttpPipelinePolicy[]
+                {
+                    new AudienceErrorHandlingPolicy(isAudienceConfigured),
+                    new ThrowingPolicy($"Simulated authentication failure {AadAudienceErrorCode}: Resource principal not found")
+                },
+                responseClassifier: null);
+
+            var requestUri = new Uri("http://example.com");
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                if (IsAsync)
+                {
+                    var message = pipeline.CreateMessage();
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Uri.Reset(requestUri);
+                    await pipeline.SendAsync(message, CancellationToken.None);
+                }
+                else
+                {
+                    var message = pipeline.CreateMessage();
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Uri.Reset(requestUri);
+                    pipeline.Send(message, CancellationToken.None);
+                }
+            });
+
+            Assert.NotNull(ex);
+            StringAssert.Contains(ExpectedErrorMessage(isAudienceConfigured), ex.Message);
+            Assert.NotNull(ex.InnerException);
+            StringAssert.Contains(AadAudienceErrorCode, ex.InnerException.Message);
         }
     }
 }
