@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     public class QuestionAnsweringClientTest: RecordedTestBase<QuestionAnsweringAuthoringTestEnvironment>
     {

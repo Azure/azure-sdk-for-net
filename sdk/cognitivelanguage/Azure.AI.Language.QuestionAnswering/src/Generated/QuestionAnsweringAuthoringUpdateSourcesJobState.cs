@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Job state represents the job metadata and any errors. </summary>
     public partial class QuestionAnsweringAuthoringUpdateSourcesJobState

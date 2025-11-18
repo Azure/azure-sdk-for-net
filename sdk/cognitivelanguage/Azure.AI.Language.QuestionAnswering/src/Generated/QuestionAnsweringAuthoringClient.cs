@@ -12,7 +12,7 @@ using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     // Data plane generated client.
     /// <summary> The QuestionAnsweringAuthoring service client. </summary>

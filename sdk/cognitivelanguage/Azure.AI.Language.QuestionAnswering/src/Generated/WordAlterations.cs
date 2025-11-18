@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Collection of word alterations. </summary>
     public partial class WordAlterations

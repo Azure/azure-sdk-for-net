@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> QnA Record with last updated date-time. </summary>
     public partial class RetrieveQnaRecord

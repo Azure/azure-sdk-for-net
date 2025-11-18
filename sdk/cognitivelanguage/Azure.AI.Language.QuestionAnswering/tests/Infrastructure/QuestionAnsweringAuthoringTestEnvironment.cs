@@ -4,7 +4,7 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     /// <summary>
     /// Test environment settings for the Question Answering SDK.

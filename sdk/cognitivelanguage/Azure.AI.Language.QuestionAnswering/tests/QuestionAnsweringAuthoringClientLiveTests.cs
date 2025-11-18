@@ -5,12 +5,12 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.AI.Language.QuestionAnswering;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     public class QuestionAnsweringAuthoringClientLiveTests : QuestionAnsweringAuthoringLiveTestBase
     {

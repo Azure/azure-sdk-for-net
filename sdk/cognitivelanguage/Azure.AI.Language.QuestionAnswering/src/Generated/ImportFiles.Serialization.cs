@@ -12,7 +12,7 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class ImportFiles : IUtf8JsonSerializable, IJsonModel<ImportFiles>
     {
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
             foreach (File item in Files)
             {
-                content.Add(ModelReaderWriter.Write<File>(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default), "files");
+                content.Add(ModelReaderWriter.Write<File>(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringContext.Default), "files");
             }
             return content;
         }
@@ -135,7 +135,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

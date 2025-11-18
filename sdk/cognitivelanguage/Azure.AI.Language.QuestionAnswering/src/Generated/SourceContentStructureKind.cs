@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Content structure type for sources. </summary>
     public readonly partial struct SourceContentStructureKind : IEquatable<SourceContentStructureKind>

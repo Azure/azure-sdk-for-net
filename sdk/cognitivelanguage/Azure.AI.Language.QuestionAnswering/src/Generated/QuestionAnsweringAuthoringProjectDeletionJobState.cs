@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Represents the state of a project deletion job. </summary>
     public partial class QuestionAnsweringAuthoringProjectDeletionJobState

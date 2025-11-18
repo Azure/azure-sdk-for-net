@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
     public partial class MetadataFilter

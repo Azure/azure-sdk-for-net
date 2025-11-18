@@ -8,36 +8,36 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerContext"/>. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
         /// <param name="previousQuestion"> Previous user query. </param>
-        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = null)
         {
             return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.ShortAnswerOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.ShortAnswerOptions"/>. </summary>
         /// <param name="enable"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold">
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
         /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
-        /// <returns> A new <see cref="QuestionAnswering.ShortAnswerOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.ShortAnswerOptions"/> instance for mocking. </returns>
         public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = null, int? size = null)
         {
             return new ShortAnswerOptions(enable, confidenceThreshold, size, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.AnswersResult"/>. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
-        /// <returns> A new <see cref="QuestionAnswering.AnswersResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.AnswersResult"/> instance for mocking. </returns>
         public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = null)
         {
             answers ??= new List<KnowledgeBaseAnswer>();
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return new AnswersResult(answers?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswer"/>. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
-        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswer"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswer"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidence = null, int? qnaId = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan shortAnswer = null)
         {
             questions ??= new List<string>();
@@ -75,14 +75,14 @@ namespace Azure.AI.Language.QuestionAnswering
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerDialog"/>. </summary>
         /// <param name="isContextOnly">
         /// To mark if a prompt is relevant only with a previous question or not. If true,
         /// do not include this QnA as search result for queries without context;
         /// otherwise, if false, ignores context and includes this QnA in search result.
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = null, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = null)
         {
             prompts ??= new List<KnowledgeBaseAnswerPrompt>();
@@ -90,28 +90,28 @@ namespace Azure.AI.Language.QuestionAnswering
             return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
         {
             return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswerSpan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.AnswerSpan"/>. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
-        /// <returns> A new <see cref="QuestionAnswering.AnswerSpan"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.AnswerSpan"/> instance for mocking. </returns>
         public static AnswerSpan AnswerSpan(string text = null, double? confidence = null, int? offset = null, int? length = null)
         {
             return new AnswerSpan(text, confidence, offset, length, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersFromTextOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.AnswersFromTextOptions"/>. </summary>
         /// <param name="question"> User question to query against the given text records. </param>
         /// <param name="textDocuments"> Text records to be searched for given question. </param>
         /// <param name="language">
@@ -124,7 +124,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Elements (Graphemes) according to Unicode v8.0.0. For additional information
         /// see https://aka.ms/text-analytics-offsets.
         /// </param>
-        /// <returns> A new <see cref="QuestionAnswering.AnswersFromTextOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.AnswersFromTextOptions"/> instance for mocking. </returns>
         public static AnswersFromTextOptions AnswersFromTextOptions(string question = null, IEnumerable<TextDocument> textDocuments = null, string language = null, StringIndexType? stringIndexType = null)
         {
             textDocuments ??= new List<TextDocument>();
@@ -132,9 +132,9 @@ namespace Azure.AI.Language.QuestionAnswering
             return new AnswersFromTextOptions(question, textDocuments?.ToList(), language, stringIndexType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.AnswersFromTextResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.AnswersFromTextResult"/>. </summary>
         /// <param name="answers"> Represents the answer results. </param>
-        /// <returns> A new <see cref="QuestionAnswering.AnswersFromTextResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.AnswersFromTextResult"/> instance for mocking. </returns>
         public static AnswersFromTextResult AnswersFromTextResult(IEnumerable<TextAnswer> answers = null)
         {
             answers ??= new List<TextAnswer>();
@@ -142,14 +142,14 @@ namespace Azure.AI.Language.QuestionAnswering
             return new AnswersFromTextResult(answers?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswering.TextAnswer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.TextAnswer"/>. </summary>
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
         /// <param name="shortAnswer"> Answer span object with respect to user's question. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
-        /// <returns> A new <see cref="QuestionAnswering.TextAnswer"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Inference.TextAnswer"/> instance for mocking. </returns>
         public static TextAnswer TextAnswer(string answer = null, double? confidence = null, string id = null, AnswerSpan shortAnswer = null, int? offset = null, int? length = null)
         {
             return new TextAnswer(

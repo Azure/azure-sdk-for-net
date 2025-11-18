@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Kind of matching policy to be used. </summary>
     internal readonly partial struct MatchingPolicyKind : IEquatable<MatchingPolicyKind>

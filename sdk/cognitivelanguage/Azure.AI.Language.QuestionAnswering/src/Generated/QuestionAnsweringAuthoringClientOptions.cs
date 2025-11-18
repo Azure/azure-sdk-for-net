@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Client options for QuestionAnsweringAuthoringClient. </summary>
     public partial class QuestionAnsweringAuthoringClientOptions : ClientOptions

@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
     public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
     {

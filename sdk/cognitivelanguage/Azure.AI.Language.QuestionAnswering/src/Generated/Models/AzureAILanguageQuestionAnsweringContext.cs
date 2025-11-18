@@ -7,7 +7,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     [ModelReaderWriterBuildable(typeof(SuggestedQuestionsCluster))]
     [ModelReaderWriterBuildable(typeof(SynonymAssets))]
     [ModelReaderWriterBuildable(typeof(WordAlterations))]
-    public partial class AzureAILanguageQuestionAnsweringAuthoringContext : ModelReaderWriterContext
+    public partial class AzureAILanguageQuestionAnsweringContext : ModelReaderWriterContext
     {
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
-using Azure.AI.Language.QuestionAnswering;
+using Azure.AI.Language.QuestionAnswering.Inference;
 using Azure.Core;
 using Azure.Core.Extensions;
 

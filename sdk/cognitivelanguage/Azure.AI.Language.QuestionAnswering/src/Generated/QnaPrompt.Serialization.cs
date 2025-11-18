@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class QnaPrompt : IUtf8JsonSerializable, IJsonModel<QnaPrompt>
     {
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QnaPrompt)} does not support writing '{options.Format}' format.");
             }

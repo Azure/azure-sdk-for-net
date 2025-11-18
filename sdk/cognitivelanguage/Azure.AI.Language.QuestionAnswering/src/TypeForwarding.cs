@@ -8,7 +8,7 @@
 // consumers who compiled against the original locations.
 
 using System.Runtime.CompilerServices;
-using Azure.AI.Language.QuestionAnswering; // For nested types like ServiceVersion
+using Azure.AI.Language.QuestionAnswering.Inference; // For nested types like ServiceVersion
 using Microsoft.Extensions.Azure; // For QuestionAnsweringClientExtensions
 
 // Forward core client and options types

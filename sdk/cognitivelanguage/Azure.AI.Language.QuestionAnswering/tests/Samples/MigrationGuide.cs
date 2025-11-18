@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.AI.Language.QuestionAnswering;
 using Azure.Core;
 
 #pragma warning disable IDE0051 // Remove unused private members

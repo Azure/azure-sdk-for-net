@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Kind of the asset of the project. </summary>
     public readonly partial struct AssetKind : IEquatable<AssetKind>

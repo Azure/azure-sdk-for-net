@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     /// <summary>
     /// Tests to ensure backward compatibility with older versions of the SDK.

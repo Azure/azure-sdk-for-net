@@ -5,12 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.AI.Language.QuestionAnswering;
 using Azure.Core;
 using System.Text.Json;
-using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+using Azure.AI.Language.QuestionAnswering.Tests;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
     public partial class QuestionAnsweringAuthoringClientSamples
     {

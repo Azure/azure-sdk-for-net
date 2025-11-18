@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Cloud audiences available for QuestionAnswering. </summary>
     public readonly partial struct QuestionAnsweringAudience : IEquatable<QuestionAnsweringAudience>

@@ -14,7 +14,7 @@ using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     internal static class ModelSerializationExtensions
     {

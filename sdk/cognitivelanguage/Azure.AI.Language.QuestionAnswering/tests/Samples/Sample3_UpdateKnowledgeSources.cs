@@ -8,10 +8,10 @@ using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Linq;
-using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+using Azure.AI.Language.QuestionAnswering.Tests;
 using Castle.Components.DictionaryAdapter.Xml;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
     public partial class QuestionAnsweringAuthoringClientSamples
     {

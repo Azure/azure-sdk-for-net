@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Additional properties to fine tune query results. </summary>
     public partial class QueryPreferences
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="scorer"> To specify what scoring algorithm is preferred. </param>
         /// <param name="matchingPolicy">
         /// Policy for controling exact query match behavior
-        /// Please note <see cref="QuestionAnswering.MatchingPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Inference.MatchingPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PrebuiltQueryMatchingPolicy"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public Scorer? Scorer { get; set; }
         /// <summary>
         /// Policy for controling exact query match behavior
-        /// Please note <see cref="QuestionAnswering.MatchingPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Inference.MatchingPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PrebuiltQueryMatchingPolicy"/>.
         /// </summary>
         public MatchingPolicy MatchingPolicy { get; set; }

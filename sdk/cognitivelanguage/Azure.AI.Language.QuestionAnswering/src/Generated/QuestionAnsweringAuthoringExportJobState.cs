@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Export job status, project metadata, and assets. </summary>
     public partial class QuestionAnsweringAuthoringExportJobState

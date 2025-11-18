@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     public partial class AnswersFromTextOptions
     {

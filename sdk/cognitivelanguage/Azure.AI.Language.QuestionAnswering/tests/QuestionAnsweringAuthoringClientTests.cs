@@ -3,7 +3,7 @@
 
 using System;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.AI.Language.QuestionAnswering.Inference;
 using Azure.Core.TestFramework;
 using Azure.Core;
 
