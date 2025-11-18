@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="PolicyResource"/> and their operations.
-    /// Each <see cref="PolicyResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PolicyCollection"/> instance call the GetPolicies method from an instance of the parent resource.
+    /// Each <see cref="PolicyResource"/> in the collection will belong to the same instance of <see cref="CredentialResource"/>.
+    /// To get a <see cref="PolicyCollection"/> instance call the GetPolicies method from an instance of <see cref="CredentialResource"/>.
     /// </summary>
     public partial class PolicyCollection : ArmCollection, IEnumerable<PolicyResource>, IAsyncEnumerable<PolicyResource>
     {
