@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatadogMonitorResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatadogMonitorData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogMonitorResourceData value = default;
+                        DatadogMonitorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
+                        value = DatadogMonitorData.DeserializeDatadogMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatadogMonitorResourceData)null, message.Response);
+                    return Response.FromValue((DatadogMonitorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatadogMonitorResourceData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<DatadogMonitorData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogMonitorResourceData value = default;
+                        DatadogMonitorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DatadogMonitorResourceData.DeserializeDatadogMonitorResourceData(document.RootElement);
+                        value = DatadogMonitorData.DeserializeDatadogMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatadogMonitorResourceData)null, message.Response);
+                    return Response.FromValue((DatadogMonitorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Datadog
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -338,11 +338,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="data"> The <see cref="DatadogMonitorResourceData"/> to use. </param>
+        /// <param name="data"> The <see cref="DatadogMonitorData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="data"> The <see cref="DatadogMonitorResourceData"/> to use. </param>
+        /// <param name="data"> The <see cref="DatadogMonitorData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Datadog
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Datadog
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -430,11 +430,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="patch"> The <see cref="DatadogMonitorResourcePatch"/> to use. </param>
+        /// <param name="patch"> The <see cref="DatadogMonitorPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="patch"> The <see cref="DatadogMonitorResourcePatch"/> to use. </param>
+        /// <param name="patch"> The <see cref="DatadogMonitorPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogAgreementResourceProperties item in subscriptionResource.GetMarketplaceAgreementsAsync())
+            await foreach (DatadogAgreement item in subscriptionResource.GetMarketplaceAgreementsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            DatadogAgreementResourceProperties body = new DatadogAgreementResourceProperties
+            DatadogAgreement body = new DatadogAgreement
             {
                 Properties = new DatadogAgreementProperties
                 {
-                    Accepted = true,
+                    IsAccepted = true,
                 },
             };
-            DatadogAgreementResourceProperties result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(body: body);
+            DatadogAgreement result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync(body: body);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDatadogMonitorResources_MonitorsList()
+        public async Task GetDatadogMonitors_MonitorsList()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/Monitors_List.json
             // this example is just showing the usage of "Monitors_List" operation, for the dependent resources, they will have to be created separately.
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogMonitorResource item in subscriptionResource.GetDatadogMonitorResourcesAsync())
+            await foreach (DatadogMonitorResource item in subscriptionResource.GetDatadogMonitorsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DatadogMonitorResourceData resourceData = item.Data;
+                DatadogMonitorData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCreationSupporteds_CreationSupportedList()
+        public async Task GetSubscriptionStatuses_CreationSupportedList()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/CreationSupported_List.json
             // this example is just showing the usage of "CreationSupported_List" operation, for the dependent resources, they will have to be created separately.
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             // invoke the operation and iterate over the result
             string datadogOrganizationId = "00000000-0000-0000-0000";
-            await foreach (DatadogCreateResourceSupportedResponseResult item in subscriptionResource.GetCreationSupportedsAsync(datadogOrganizationId))
+            await foreach (DatadogSubscriptionStatusResult item in subscriptionResource.GetSubscriptionStatusesAsync(datadogOrganizationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCreationSupported_CreationSupportedGet()
+        public async Task GetSubscriptionStatus_CreationSupportedGet()
         {
             // Generated from example definition: specification/datadog/resource-manager/Microsoft.Datadog/stable/2025-06-11/examples/CreationSupported_Get.json
             // this example is just showing the usage of "CreationSupported_Get" operation, for the dependent resources, they will have to be created separately.
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Datadog.Samples
 
             // invoke the operation
             string datadogOrganizationId = "00000000-0000-0000-0000";
-            DatadogCreateResourceSupportedResponseResult result = await subscriptionResource.GetCreationSupportedAsync(datadogOrganizationId);
+            DatadogSubscriptionStatusResult result = await subscriptionResource.GetSubscriptionStatusAsync(datadogOrganizationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

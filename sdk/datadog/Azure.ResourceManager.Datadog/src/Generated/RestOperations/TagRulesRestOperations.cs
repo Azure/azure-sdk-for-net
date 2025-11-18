@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoringTagRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMonitoringTagRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        MonitoringTagRuleData value = default;
+                        DataMonitoringTagRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MonitoringTagRuleData.DeserializeMonitoringTagRuleData(document.RootElement);
+                        value = DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MonitoringTagRuleData)null, message.Response);
+                    return Response.FromValue((DataMonitoringTagRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoringTagRuleData> Get(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, CancellationToken cancellationToken = default)
+        public Response<DataMonitoringTagRuleData> Get(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        MonitoringTagRuleData value = default;
+                        DataMonitoringTagRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MonitoringTagRuleData.DeserializeMonitoringTagRuleData(document.RootElement);
+                        value = DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MonitoringTagRuleData)null, message.Response);
+                    return Response.FromValue((DataMonitoringTagRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, MonitoringTagRuleData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, DataMonitoringTagRuleData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Datadog
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, MonitoringTagRuleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, DataMonitoringTagRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="ruleSetName"> Rule set name. </param>
-        /// <param name="data"> The <see cref="MonitoringTagRuleData"/> to use. </param>
+        /// <param name="data"> The <see cref="DataMonitoringTagRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MonitoringTagRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMonitoringTagRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, DataMonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -299,9 +299,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        MonitoringTagRuleData value = default;
+                        DataMonitoringTagRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MonitoringTagRuleData.DeserializeMonitoringTagRuleData(document.RootElement);
+                        value = DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="ruleSetName"> Rule set name. </param>
-        /// <param name="data"> The <see cref="MonitoringTagRuleData"/> to use. </param>
+        /// <param name="data"> The <see cref="DataMonitoringTagRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MonitoringTagRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
+        public Response<DataMonitoringTagRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName, DataMonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        MonitoringTagRuleData value = default;
+                        DataMonitoringTagRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MonitoringTagRuleData.DeserializeMonitoringTagRuleData(document.RootElement);
+                        value = DataMonitoringTagRuleData.DeserializeDataMonitoringTagRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

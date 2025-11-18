@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Datadog.Samples
             string monitorName = "myMonitor";
             string configurationName = "default";
             ResourceIdentifier datadogSingleSignOnResourceId = DatadogSingleSignOnResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
-            DatadogSingleSignOnResource datadogSingleSignOnResource = client.GetDatadogSingleSignOnResource(datadogSingleSignOnResourceId);
+            DatadogSingleSignOnResource datadogSingleSignOn = client.GetDatadogSingleSignOnResource(datadogSingleSignOnResourceId);
 
             // invoke the operation
-            DatadogSingleSignOnResource result = await datadogSingleSignOnResource.GetAsync();
+            DatadogSingleSignOnResource result = await datadogSingleSignOn.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatadogSingleSignOnResourceData resourceData = result.Data;
+            DatadogSingleSignOnData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -66,23 +66,23 @@ namespace Azure.ResourceManager.Datadog.Samples
             string monitorName = "myMonitor";
             string configurationName = "default";
             ResourceIdentifier datadogSingleSignOnResourceId = DatadogSingleSignOnResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, configurationName);
-            DatadogSingleSignOnResource datadogSingleSignOnResource = client.GetDatadogSingleSignOnResource(datadogSingleSignOnResourceId);
+            DatadogSingleSignOnResource datadogSingleSignOn = client.GetDatadogSingleSignOnResource(datadogSingleSignOnResourceId);
 
             // invoke the operation
-            DatadogSingleSignOnResourceData data = new DatadogSingleSignOnResourceData
+            DatadogSingleSignOnData data = new DatadogSingleSignOnData
             {
                 Properties = new DatadogSingleSignOnProperties
                 {
-                    SingleSignOnState = SingleSignOnState.Enable,
+                    SingleSignOnState = DatadogSingleSignOnState.Enable,
                     EnterpriseAppId = "00000000-0000-0000-0000-000000000000",
                 },
             };
-            ArmOperation<DatadogSingleSignOnResource> lro = await datadogSingleSignOnResource.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<DatadogSingleSignOnResource> lro = await datadogSingleSignOn.UpdateAsync(WaitUntil.Completed, data);
             DatadogSingleSignOnResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatadogSingleSignOnResourceData resourceData = result.Data;
+            DatadogSingleSignOnData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

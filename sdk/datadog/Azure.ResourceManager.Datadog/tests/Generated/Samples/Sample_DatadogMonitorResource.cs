@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogMonitorResource result = await datadogMonitorResource.GetAsync();
+            DatadogMonitorResource result = await datadogMonitor.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatadogMonitorResourceData resourceData = result.Data;
+            DatadogMonitorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            await datadogMonitorResource.DeleteAsync(WaitUntil.Completed);
+            await datadogMonitor.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -90,26 +90,26 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogMonitorResourcePatch patch = new DatadogMonitorResourcePatch
+            DatadogMonitorPatch patch = new DatadogMonitorPatch
             {
-                Properties = new MonitorUpdateProperties
+                Properties = new DatadogMonitorResourcePatchProperties
                 {
-                    MonitoringStatus = MonitoringStatus.Enabled,
+                    MonitoringStatus = DatadogMonitoringStatus.Enabled,
                 },
                 Tags =
 {
 ["Environment"] = "Dev"
 },
             };
-            ArmOperation<DatadogMonitorResource> lro = await datadogMonitorResource.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<DatadogMonitorResource> lro = await datadogMonitor.UpdateAsync(WaitUntil.Completed, patch);
             DatadogMonitorResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatadogMonitorResourceData resourceData = result.Data;
+            DatadogMonitorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogApiKey result = await datadogMonitorResource.GetDefaultKeyAsync();
+            DatadogApiKey result = await datadogMonitor.GetDefaultKeyAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogApiKey item in datadogMonitorResource.GetApiKeysAsync())
+            await foreach (DatadogApiKey item in datadogMonitor.GetApiKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogHost item in datadogMonitorResource.GetHostsAsync())
+            await foreach (DatadogHost item in datadogMonitor.GetHostsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LinkedResourceContent item in datadogMonitorResource.GetLinkedResourcesAsync())
+            await foreach (DatadogLinkedResourceResult item in datadogMonitor.GetLinkedResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredResourceContent item in datadogMonitorResource.GetMonitoredResourcesAsync())
+            await foreach (DatadogMonitoredResourceResult item in datadogMonitor.GetMonitoredResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -274,10 +274,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogSetPasswordLink result = await datadogMonitorResource.RefreshSetPasswordLinkAsync();
+            DatadogSetPasswordLink result = await datadogMonitor.RefreshSetPasswordLinkAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            await datadogMonitorResource.SetDefaultKeyAsync();
+            await datadogMonitor.SetDefaultKeyAsync();
 
             Console.WriteLine("Succeeded");
         }
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            DatadogBillingInfoResponseResult result = await datadogMonitorResource.GetBillingInfoAsync();
+            DatadogBillingInfoResult result = await datadogMonitor.GetBillingInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -352,21 +352,21 @@ namespace Azure.ResourceManager.Datadog.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier datadogMonitorResourceId = DatadogMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
+            DatadogMonitorResource datadogMonitor = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation
-            ResubscribeProperties body = new ResubscribeProperties
+            ResubscribeOrganizationContent content = new ResubscribeOrganizationContent
             {
                 SkuName = "planName",
                 AzureSubscriptionId = "subscriptionId",
                 ResourceGroup = "resourceGroup",
             };
-            ArmOperation<DatadogMonitorResource> lro = await datadogMonitorResource.ResubscribeOrganizationAsync(WaitUntil.Completed, body: body);
+            ArmOperation<DatadogMonitorResource> lro = await datadogMonitor.ResubscribeOrganizationAsync(WaitUntil.Completed, content: content);
             DatadogMonitorResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatadogMonitorResourceData resourceData = result.Data;
+            DatadogMonitorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

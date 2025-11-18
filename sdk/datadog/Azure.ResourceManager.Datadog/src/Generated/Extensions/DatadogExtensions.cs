@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatadogMonitoredSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatadogMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitoredSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogArmClient.GetMonitoredSubscriptionPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogArmClient.GetDatadogMonitoredSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
-        public static MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatadogMonitoredSubscriptionResource"/> object. </returns>
+        public static DatadogMonitoredSubscriptionResource GetDatadogMonitoredSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatadogArmClient(client).GetMonitoredSubscriptionPropertyResource(id);
+            return GetMockableDatadogArmClient(client).GetDatadogMonitoredSubscriptionResource(id);
         }
 
         /// <summary>
@@ -91,39 +91,39 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataMonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataMonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogArmClient.GetMonitoringTagRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogArmClient.GetDataMonitoringTagRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
-        public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMonitoringTagRuleResource"/> object. </returns>
+        public static DataMonitoringTagRuleResource GetDataMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatadogArmClient(client).GetMonitoringTagRuleResource(id);
+            return GetMockableDatadogArmClient(client).GetDataMonitoringTagRuleResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DatadogMonitorResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogResourceGroupResource.GetDatadogMonitorResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogResourceGroupResource.GetDatadogMonitors()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DatadogMonitorResources and their operations over a DatadogMonitorResource. </returns>
-        public static DatadogMonitorResourceCollection GetDatadogMonitorResources(this ResourceGroupResource resourceGroupResource)
+        public static DatadogMonitorCollection GetDatadogMonitors(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorResources();
+            return GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitors();
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogResourceGroupResource.GetDatadogMonitorResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogResourceGroupResource.GetDatadogMonitorAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatadogMonitorResource>> GetDatadogMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatadogMonitorResource>> GetDatadogMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorResourceAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogResourceGroupResource.GetDatadogMonitorResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogResourceGroupResource.GetDatadogMonitor(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<DatadogMonitorResource> GetDatadogMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        public static Response<DatadogMonitorResource> GetDatadogMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitorResource(monitorName, cancellationToken);
+            return GetMockableDatadogResourceGroupResource(resourceGroupResource).GetDatadogMonitor(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DatadogAgreementResourceProperties"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatadogAgreementResourceProperties> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatadogAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DatadogAgreement> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DatadogAgreementResourceProperties"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatadogAgreementResourceProperties> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DatadogAgreement> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceProperties,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreement,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreement body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -316,14 +316,14 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceProperties,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement(DatadogAgreement,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
+        public static Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreement body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -352,18 +352,18 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetDatadogMonitorResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetDatadogMonitors(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatadogMonitorResource> GetDatadogMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DatadogMonitorResource> GetDatadogMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetDatadogMonitorResourcesAsync(cancellationToken);
+            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetDatadogMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -388,18 +388,18 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetDatadogMonitorResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetDatadogMonitors(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DatadogMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatadogMonitorResource> GetDatadogMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<DatadogMonitorResource> GetDatadogMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetDatadogMonitorResources(cancellationToken);
+            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetDatadogMonitors(cancellationToken);
         }
 
         /// <summary>
@@ -420,19 +420,19 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetCreationSupporteds(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetSubscriptionStatuses(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DatadogCreateResourceSupportedResponseResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatadogCreateResourceSupportedResponseResult> GetCreationSupportedsAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatadogSubscriptionStatusResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DatadogSubscriptionStatusResult> GetSubscriptionStatusesAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetCreationSupportedsAsync(datadogOrganizationId, cancellationToken);
+            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetSubscriptionStatusesAsync(datadogOrganizationId, cancellationToken);
         }
 
         /// <summary>
@@ -453,19 +453,19 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetCreationSupporteds(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetSubscriptionStatuses(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="DatadogCreateResourceSupportedResponseResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatadogCreateResourceSupportedResponseResult> GetCreationSupporteds(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogSubscriptionStatusResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DatadogSubscriptionStatusResult> GetSubscriptionStatuses(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetCreationSupporteds(datadogOrganizationId, cancellationToken);
+            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetSubscriptionStatuses(datadogOrganizationId, cancellationToken);
         }
 
         /// <summary>
@@ -486,18 +486,18 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetCreationSupported(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetSubscriptionStatus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        public static async Task<Response<DatadogCreateResourceSupportedResponseResult>> GetCreationSupportedAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatadogSubscriptionStatusResult>> GetSubscriptionStatusAsync(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDatadogSubscriptionResource(subscriptionResource).GetCreationSupportedAsync(datadogOrganizationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDatadogSubscriptionResource(subscriptionResource).GetSubscriptionStatusAsync(datadogOrganizationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -518,18 +518,18 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetCreationSupported(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.GetSubscriptionStatus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="datadogOrganizationId"> Datadog Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="datadogOrganizationId"/> is null. </exception>
-        public static Response<DatadogCreateResourceSupportedResponseResult> GetCreationSupported(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
+        public static Response<DatadogSubscriptionStatusResult> GetSubscriptionStatus(this SubscriptionResource subscriptionResource, string datadogOrganizationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetCreationSupported(datadogOrganizationId, cancellationToken);
+            return GetMockableDatadogSubscriptionResource(subscriptionResource).GetSubscriptionStatus(datadogOrganizationId, cancellationToken);
         }
     }
 }

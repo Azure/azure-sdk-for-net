@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
-            if (Optional.IsDefined(Cspm))
+            if (Optional.IsDefined(IsCspm))
             {
                 writer.WritePropertyName("cspm"u8);
-                writer.WriteBooleanValue(Cspm.Value);
+                writer.WriteBooleanValue(IsCspm.Value);
             }
-            if (Optional.IsDefined(ResourceCollection))
+            if (Optional.IsDefined(IsResourceCollection))
             {
                 writer.WritePropertyName("resourceCollection"u8);
-                writer.WriteBooleanValue(ResourceCollection.Value);
+                writer.WriteBooleanValue(IsResourceCollection.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

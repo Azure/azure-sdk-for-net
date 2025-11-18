@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            IReadOnlyList<LinkedResourceContent> value = default;
+            IReadOnlyList<DatadogLinkedResourceResult> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<LinkedResourceContent> array = new List<LinkedResourceContent>();
+                    List<DatadogLinkedResourceResult> array = new List<DatadogLinkedResourceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedResourceContent.DeserializeLinkedResourceContent(item, options));
+                        array.Add(DatadogLinkedResourceResult.DeserializeDatadogLinkedResourceResult(item, options));
                     }
                     value = array;
                     continue;

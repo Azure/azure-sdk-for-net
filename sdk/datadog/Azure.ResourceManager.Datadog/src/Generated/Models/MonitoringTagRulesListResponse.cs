@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesListResponse"/>. </summary>
         /// <param name="value"> The MonitoringTagRules items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MonitoringTagRulesListResponse(IEnumerable<MonitoringTagRuleData> value)
+        internal MonitoringTagRulesListResponse(IEnumerable<DataMonitoringTagRuleData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="value"> The MonitoringTagRules items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesListResponse(IReadOnlyList<MonitoringTagRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringTagRulesListResponse(IReadOnlyList<DataMonitoringTagRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The MonitoringTagRules items on this page. </summary>
-        public IReadOnlyList<MonitoringTagRuleData> Value { get; }
+        public IReadOnlyList<DataMonitoringTagRuleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

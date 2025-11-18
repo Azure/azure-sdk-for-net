@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatadogSingleSignOnResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<DatadogSingleSignOnData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogSingleSignOnResourceData value = default;
+                        DatadogSingleSignOnData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(document.RootElement);
+                        value = DatadogSingleSignOnData.DeserializeDatadogSingleSignOnData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatadogSingleSignOnResourceData)null, message.Response);
+                    return Response.FromValue((DatadogSingleSignOnData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatadogSingleSignOnResourceData> Get(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, CancellationToken cancellationToken = default)
+        public Response<DatadogSingleSignOnData> Get(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.Datadog
             {
                 case 200:
                     {
-                        DatadogSingleSignOnResourceData value = default;
+                        DatadogSingleSignOnData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(document.RootElement);
+                        value = DatadogSingleSignOnData.DeserializeDatadogSingleSignOnData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatadogSingleSignOnResourceData)null, message.Response);
+                    return Response.FromValue((DatadogSingleSignOnData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Datadog
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="configurationName"> Configuration name. </param>
-        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="configurationName"> Configuration name. </param>
-        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/>, <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, string configurationName, DatadogSingleSignOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

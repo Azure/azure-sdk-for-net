@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Datadog.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DatadogMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatadogMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitoredSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
-        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatadogMonitoredSubscriptionResource"/> object. </returns>
+        public virtual DatadogMonitoredSubscriptionResource GetDatadogMonitoredSubscriptionResource(ResourceIdentifier id)
         {
-            MonitoredSubscriptionPropertyResource.ValidateResourceId(id);
-            return new MonitoredSubscriptionPropertyResource(Client, id);
+            DatadogMonitoredSubscriptionResource.ValidateResourceId(id);
+            return new DatadogMonitoredSubscriptionResource(Client, id);
         }
 
         /// <summary>
@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.Datadog.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DataMonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataMonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
-        public virtual MonitoringTagRuleResource GetMonitoringTagRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMonitoringTagRuleResource"/> object. </returns>
+        public virtual DataMonitoringTagRuleResource GetDataMonitoringTagRuleResource(ResourceIdentifier id)
         {
-            MonitoringTagRuleResource.ValidateResourceId(id);
-            return new MonitoringTagRuleResource(Client, id);
+            DataMonitoringTagRuleResource.ValidateResourceId(id);
+            return new DataMonitoringTagRuleResource(Client, id);
         }
     }
 }
