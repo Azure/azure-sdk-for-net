@@ -1,18 +1,12 @@
 param(
-  [string]$ServiceDirectory,
-  [string]$PackageName,
-  [string]$DirectoryName = "")
+  # Path to the csproj file for the package relative to the repository root
+  [string]$PackagePath)
 
 ### Check if AOT compatibility is opted out ###
 
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
-
-# Build the path to the actual project file (same logic as used later in the script)
-if ([string]::IsNullOrEmpty($DirectoryName)) {
-    $ProjectPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageName "src" "$PackageName.csproj"
-} else {
-    $ProjectPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $DirectoryName "src" "$PackageName.csproj"
-}
+$ProjectPath = Join-Path $RepoRoot $PackagePath
+$PackageName = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
 
 # Get the property directly from the project file - replicating what the target does
 $output = dotnet msbuild -getProperty:AotCompatOptOut "$ProjectPath"
@@ -30,9 +24,9 @@ Write-Host "Creating a test app to publish."
 
 # Set the project reference path based on whether DirectoryName was provided
 if ([string]::IsNullOrEmpty($DirectoryName)) {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj"
+    $projectRefFullPath = "..\..\..\..\$PackagePath"
 } else {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$DirectoryName\src\$PackageName.csproj"
+    $projectRefFullPath = "..\..\..\..\$PackagePath"
 }
 
 $folderPath = "\TempAotCompatFiles"
@@ -117,10 +111,10 @@ foreach ($line in $($publishOutput -split "`r`n"))
 
 ### Compare to baselined warnings ###
 
-# Baselining warnings is only allowed for a couple of the Azure.Core.* packages, hard code the file path to the expected
+# Baselining warnings is only allowed for two of the Azure.Core.* packages, hard code the file path to the expected
 # warnings as a backdoor for those packages.
 
-$expectedWarningsPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\tests\compatibility\ExpectedAotWarnings.txt"
+$expectedWarningsPath = "..\..\..\..\sdk\core\$PackageName\tests\compatibility\ExpectedAotWarnings.txt"
 
 if (Test-Path $expectedWarningsPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
@@ -144,7 +138,7 @@ if (Test-Path $expectedWarningsPath -PathType Leaf) {
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
     Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
-    Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $ServiceDirectory $PackageName'"
+    Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath'"
 
     exit $warnings.Count
 }
@@ -174,10 +168,10 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
   Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
-  Write-Host "To run locally, run eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $ServiceDirectory $PackageName"
+  Write-Host "To run locally, run eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath"
   exit 2
 }
   
 Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
-Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $ServiceDirectory $PackageName'"
+Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath'"
 exit $warnings.Count
