@@ -34,27 +34,5 @@ namespace Azure.Data.AppConfiguration
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
-
-        public AppConfigurationAudience GetWrongAudience()
-        {
-            Uri authorityHost = new(AuthorityHostUrl);
-
-            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
-            {
-                return AppConfigurationAudience.AzureGovernment;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureChina)
-            {
-                return AppConfigurationAudience.AzureGovernment;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
-            {
-                return AppConfigurationAudience.AzurePublicCloud;
-            }
-
-            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
-        }
     }
 }

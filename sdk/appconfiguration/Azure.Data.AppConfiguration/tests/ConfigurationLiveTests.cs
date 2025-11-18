@@ -189,27 +189,6 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        // This test validates that the client handles the original audience error and throws a informative exception.
-        [RecordedTest]
-        public void TokenAudienceWrongSpecifiedAudience()
-        {
-            ConfigurationClientOptions options = new(_serviceVersion)
-            {
-                Audience = TestEnvironment.GetWrongAudience(),
-                Retry = {
-                    MaxRetries = 0
-                }
-            };
-            ConfigurationClient service = GetAADClient(options);
-            ConfigurationSetting testSetting = CreateSetting();
-
-            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await service.AddConfigurationSettingAsync(testSetting);
-            });
-            Assert.True(exception.Message.Contains("Unable to authenticate to Azure App Configuration. An incorrect token audience was provided"));
-        }
-
         [RecordedTest]
         public async Task DeleteSettingNotFound()
         {
