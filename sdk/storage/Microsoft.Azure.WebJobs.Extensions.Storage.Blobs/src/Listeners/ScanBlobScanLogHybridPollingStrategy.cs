@@ -268,7 +268,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
 
                 if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified &&
-                    lastModifiedTimestamp <= containerScanInfo.PollingStartTime)
+                    (continuationToken == null || lastModifiedTimestamp <= containerScanInfo.PollingStartTime))
                 {
                     containerScanInfo.CurrentSweepCycleLatestModified = lastModifiedTimestamp;
                 }
