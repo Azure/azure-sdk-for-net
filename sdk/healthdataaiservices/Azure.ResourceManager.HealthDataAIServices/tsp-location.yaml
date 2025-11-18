@@ -1,4 +1,6 @@
 directory: specification/healthdataaiservices/HealthDataAIServices.Management
-commit: 18651ab2460e0874397f3597b91dcc00cb4ca7bc
+commit: 1ce64eb6ce4e09437f3455162888e0ec59983919
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
