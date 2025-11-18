@@ -46,16 +46,10 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task WrapsError_NoAudienceConfigured()
-        {
-            await AssertWrapsErrorAsync(isAudienceConfigured: false);
-        }
+        public Task WrapsError_NoAudienceConfigured() => AssertWrapsErrorAsync(isAudienceConfigured: false);
 
         [Test]
-        public async Task WrapsError_WrongAudienceConfigured()
-        {
-            await AssertWrapsErrorAsync(isAudienceConfigured: true);
-        }
+        public Task WrapsError_WrongAudienceConfigured() => AssertWrapsErrorAsync(isAudienceConfigured: true);
 
         private async Task AssertWrapsErrorAsync(bool isAudienceConfigured)
         {
@@ -95,7 +89,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task NonAudienceError_PassesThrough()
+        public void NonAudienceError_PassesThrough()
         {
             var transport = new MockTransport(new MockResponse(200));
             var pipeline = new HttpPipeline(
