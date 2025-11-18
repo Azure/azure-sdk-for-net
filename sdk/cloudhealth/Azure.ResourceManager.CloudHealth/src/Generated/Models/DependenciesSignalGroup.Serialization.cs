@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDependenciesSignalGroup(document.RootElement, options);
                     }

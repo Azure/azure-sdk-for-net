@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes what transforms were applied before matching.
-    /// Serialized Name: TransformType
-    /// </summary>
+    /// <summary> Describes what transforms were applied before matching. </summary>
     public readonly partial struct TransformType : IEquatable<TransformType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
-        /// <summary>
-        /// Lowercase
-        /// Serialized Name: TransformType.Lowercase
-        /// </summary>
+        /// <summary> Lowercase. </summary>
         public static TransformType Lowercase { get; } = new TransformType(LowercaseValue);
-        /// <summary>
-        /// Uppercase
-        /// Serialized Name: TransformType.Uppercase
-        /// </summary>
+        /// <summary> Uppercase. </summary>
         public static TransformType Uppercase { get; } = new TransformType(UppercaseValue);
-        /// <summary>
-        /// Trim
-        /// Serialized Name: TransformType.Trim
-        /// </summary>
+        /// <summary> Trim. </summary>
         public static TransformType Trim { get; } = new TransformType(TrimValue);
-        /// <summary>
-        /// UrlDecode
-        /// Serialized Name: TransformType.UrlDecode
-        /// </summary>
+        /// <summary> UrlDecode. </summary>
         public static TransformType UriDecode { get; } = new TransformType(UriDecodeValue);
-        /// <summary>
-        /// UrlEncode
-        /// Serialized Name: TransformType.UrlEncode
-        /// </summary>
+        /// <summary> UrlEncode. </summary>
         public static TransformType UriEncode { get; } = new TransformType(UriEncodeValue);
-        /// <summary>
-        /// RemoveNulls
-        /// Serialized Name: TransformType.RemoveNulls
-        /// </summary>
+        /// <summary> RemoveNulls. </summary>
         public static TransformType RemoveNulls { get; } = new TransformType(RemoveNullsValue);
         /// <summary> Determines if two <see cref="TransformType"/> values are the same. </summary>
         public static bool operator ==(TransformType left, TransformType right) => left.Equals(right);
