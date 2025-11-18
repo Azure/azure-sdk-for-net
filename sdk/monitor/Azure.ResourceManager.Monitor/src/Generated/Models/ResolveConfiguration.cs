@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An alert action. </summary>
-    public partial class MetricAlertAction
+    /// <summary> The ResolveConfiguration. </summary>
+    public partial class ResolveConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,32 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
-        public MetricAlertAction()
+        /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/>. </summary>
+        /// <param name="autoResolved"> Indicates whether the alert should be auto resolved. </param>
+        public ResolveConfiguration(bool autoResolved)
         {
-            WebHookProperties = new ChangeTrackingDictionary<string, string>();
+            AutoResolved = autoResolved;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricAlertAction"/>. </summary>
-        /// <param name="actionGroupId"> The id of the action group to use. </param>
-        /// <param name="webHookProperties"> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </param>
+        /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/>. </summary>
+        /// <param name="autoResolved"> Indicates whether the alert should be auto resolved. </param>
+        /// <param name="timeToResolve"> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertAction(ResourceIdentifier actionGroupId, IDictionary<string, string> webHookProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResolveConfiguration(bool autoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ActionGroupId = actionGroupId;
-            WebHookProperties = webHookProperties;
+            AutoResolved = autoResolved;
+            TimeToResolve = timeToResolve;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The id of the action group to use. </summary>
-        public ResourceIdentifier ActionGroupId { get; set; }
-        /// <summary> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </summary>
-        public IDictionary<string, string> WebHookProperties { get; }
+        /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/> for deserialization. </summary>
+        internal ResolveConfiguration()
+        {
+        }
+
+        /// <summary> Indicates whether the alert should be auto resolved. </summary>
+        public bool AutoResolved { get; set; }
+        /// <summary> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </summary>
+        public TimeSpan? TimeToResolve { get; set; }
     }
 }
