@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
     /// A class representing a collection of <see cref="ComputeLimitSharedLimitResource"/> and their operations.
-    /// Each <see cref="ComputeLimitSharedLimitResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ComputeLimitSharedLimitCollection"/> instance call the GetComputeLimitSharedLimits method from an instance of the parent resource.
+    /// Each <see cref="ComputeLimitSharedLimitResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ComputeLimitSharedLimitCollection"/> instance call the GetComputeLimitSharedLimits method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ComputeLimitSharedLimitCollection : ArmCollection, IEnumerable<ComputeLimitSharedLimitResource>, IAsyncEnumerable<ComputeLimitSharedLimitResource>
     {
@@ -267,7 +267,23 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        /// <summary> Lists all compute limits shared by the host subscription with its guest subscriptions. </summary>
+        /// <summary>
+        /// Lists all compute limits shared by the host subscription with its guest subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_ListBySubscriptionLocationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeLimitSharedLimitResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeLimitSharedLimitResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -279,7 +295,23 @@ namespace Azure.ResourceManager.ComputeLimit
             return new AsyncPageableWrapper<ComputeLimitSharedLimitData, ComputeLimitSharedLimitResource>(new SharedLimitsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_sharedLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitSharedLimitResource(Client, data));
         }
 
-        /// <summary> Lists all compute limits shared by the host subscription with its guest subscriptions. </summary>
+        /// <summary>
+        /// Lists all compute limits shared by the host subscription with its guest subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedLimits_ListBySubscriptionLocationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeLimitSharedLimitResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeLimitSharedLimitResource> GetAll(CancellationToken cancellationToken = default)

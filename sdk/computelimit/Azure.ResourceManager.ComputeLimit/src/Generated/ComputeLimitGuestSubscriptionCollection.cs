@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
     /// A class representing a collection of <see cref="ComputeLimitGuestSubscriptionResource"/> and their operations.
-    /// Each <see cref="ComputeLimitGuestSubscriptionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ComputeLimitGuestSubscriptionCollection"/> instance call the GetComputeLimitGuestSubscriptions method from an instance of the parent resource.
+    /// Each <see cref="ComputeLimitGuestSubscriptionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ComputeLimitGuestSubscriptionCollection"/> instance call the GetComputeLimitGuestSubscriptions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ComputeLimitGuestSubscriptionCollection : ArmCollection, IEnumerable<ComputeLimitGuestSubscriptionResource>, IAsyncEnumerable<ComputeLimitGuestSubscriptionResource>
     {
@@ -267,7 +267,23 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        /// <summary> Lists all guest subscriptions in a location. </summary>
+        /// <summary>
+        /// Lists all guest subscriptions in a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_ListBySubscriptionLocationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeLimitGuestSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeLimitGuestSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -279,7 +295,23 @@ namespace Azure.ResourceManager.ComputeLimit
             return new AsyncPageableWrapper<ComputeLimitGuestSubscriptionData, ComputeLimitGuestSubscriptionResource>(new GuestSubscriptionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_guestSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitGuestSubscriptionResource(Client, data));
         }
 
-        /// <summary> Lists all guest subscriptions in a location. </summary>
+        /// <summary>
+        /// Lists all guest subscriptions in a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/guestSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestSubscriptions_ListBySubscriptionLocationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeLimitGuestSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeLimitGuestSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
