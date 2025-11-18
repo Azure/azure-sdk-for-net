@@ -62,7 +62,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
             }
 
-            requestName ??= activity.DisplayName;
             Name = requestName?.Truncate(SchemaConstants.RequestData_Name_MaxLength);
             Id = activity.Context.SpanId.ToHexString();
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
