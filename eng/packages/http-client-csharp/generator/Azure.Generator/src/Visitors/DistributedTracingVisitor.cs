@@ -50,7 +50,7 @@ namespace Azure.Generator.Visitors
 
         protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
         {
-            if (ShouldSkip(constructor.EnclosingType))
+            if (ShouldSkipType(constructor.EnclosingType))
             {
                 return base.VisitConstructor(constructor);
             }
@@ -103,19 +103,14 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkip(method.EnclosingType))
+            if (ShouldSkip(method))
             {
                 return base.VisitMethod(method);
             }
 
             if (method.Kind == ScmMethodKind.Protocol)
             {
-                // Skip instrumentation for methods returning paging collection types
-                // as they have built-in instrumentation
-                if (!IsPagingMethod(method))
-                {
-                    UpdateProtocolMethodsWithDistributedTracing(method);
-                }
+                UpdateProtocolMethodsWithDistributedTracing(method);
             }
             else if (IsSubClientFactoryMethod(method))
             {
@@ -272,11 +267,28 @@ namespace Azure.Generator.Visitors
             return true;
         }
 
-        private static bool ShouldSkip(TypeProvider typeProvider)
+        private static bool ShouldSkipType(TypeProvider typeProvider)
         {
             return typeProvider is not ClientProvider ||
                 !typeProvider.CanonicalView.Properties
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+        }
+
+        private static bool ShouldSkip(ScmMethodProvider method)
+        {
+            var typeProvider = method.EnclosingType;
+
+            // Skip if the enclosing type is not a ClientProvider or doesn't have ClientDiagnostics property
+            if (typeProvider is not ClientProvider ||
+                !typeProvider.CanonicalView.Properties
+                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true))
+            {
+                return true;
+            }
+
+            // Skip instrumentation for methods returning paging collection types
+            // as they have built-in instrumentation
+            return IsPagingMethod(method);
         }
 
         private static bool IsSubClientFactoryMethod(ScmMethodProvider method)
@@ -291,7 +303,7 @@ namespace Azure.Generator.Visitors
         private static bool IsPagingMethod(ScmMethodProvider method)
         {
             var returnType = method.Signature.ReturnType;
-            if (returnType == null)
+            if (returnType == null || !returnType.IsFrameworkType)
             {
                 return false;
             }
