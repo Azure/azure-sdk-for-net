@@ -8,15 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Developer.LoadTesting
 {
+    /// <summary>
+    /// Trigger model.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleTestsTrigger"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownLoadTestingTrigger))]
-    public partial class LoadTestingTrigger : IUtf8JsonSerializable, IJsonModel<LoadTestingTrigger>
+    public abstract partial class LoadTestingTrigger : IJsonModel<LoadTestingTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LoadTestingTrigger"/> for deserialization. </summary>
+        internal LoadTestingTrigger()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestingTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestingTrigger)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("triggerId"u8);
@@ -78,15 +86,15 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -95,40 +103,49 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        LoadTestingTrigger IJsonModel<LoadTestingTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestingTrigger IJsonModel<LoadTestingTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestingTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestingTrigger)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLoadTestingTrigger(document.RootElement, options);
         }
 
-        internal static LoadTestingTrigger DeserializeLoadTestingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LoadTestingTrigger DeserializeLoadTestingTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ScheduleTestsTrigger": return ScheduleTestsTrigger.DeserializeScheduleTestsTrigger(element, options);
+                    case "ScheduleTestsTrigger":
+                        return ScheduleTestsTrigger.DeserializeScheduleTestsTrigger(element, options);
                 }
             }
             return UnknownLoadTestingTrigger.DeserializeUnknownLoadTestingTrigger(element, options);
         }
 
-        BinaryData IPersistableModel<LoadTestingTrigger>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LoadTestingTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -138,15 +155,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        LoadTestingTrigger IPersistableModel<LoadTestingTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestingTrigger IPersistableModel<LoadTestingTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestingTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestingTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadTestingTrigger(document.RootElement, options);
                     }
                 default:
@@ -154,22 +176,14 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LoadTestingTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LoadTestingTrigger FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestingTrigger"/> from. </param>
+        public static explicit operator LoadTestingTrigger(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLoadTestingTrigger(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLoadTestingTrigger(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

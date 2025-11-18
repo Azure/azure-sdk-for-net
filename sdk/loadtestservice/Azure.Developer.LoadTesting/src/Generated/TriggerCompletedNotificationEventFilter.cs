@@ -14,15 +14,14 @@ namespace Azure.Developer.LoadTesting
     public partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="TriggerCompletedNotificationEventFilter"/>. </summary>
-        public TriggerCompletedNotificationEventFilter()
+        public TriggerCompletedNotificationEventFilter() : base(NotificationEventType.TriggerCompleted)
         {
-            Kind = NotificationEventType.TriggerCompleted;
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggerCompletedNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerCompletedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerCompletedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

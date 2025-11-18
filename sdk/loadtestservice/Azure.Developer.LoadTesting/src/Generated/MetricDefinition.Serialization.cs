@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class MetricDefinition : IUtf8JsonSerializable, IJsonModel<MetricDefinition>
+    /// <summary> Metric definition. </summary>
+    public partial class MetricDefinition : IJsonModel<MetricDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +28,16 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricDefinition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Dimensions)
+                foreach (NameAndDescription item in Dimensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,8 +67,13 @@ namespace Azure.Developer.LoadTesting
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedAggregationTypes)
+                foreach (string item in SupportedAggregationTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -83,21 +87,21 @@ namespace Azure.Developer.LoadTesting
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in MetricAvailabilities)
+                foreach (MetricAvailability item in MetricAvailabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,107 +110,118 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        MetricDefinition IJsonModel<MetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricDefinition IJsonModel<MetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMetricDefinition(document.RootElement, options);
         }
 
-        internal static MetricDefinition DeserializeMetricDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MetricDefinition DeserializeMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<NameAndDescription> dimensions = default;
+            IList<NameAndDescription> dimensions = default;
             string description = default;
             string name = default;
             string @namespace = default;
             AggregationType? primaryAggregationType = default;
-            IReadOnlyList<string> supportedAggregationTypes = default;
+            IList<string> supportedAggregationTypes = default;
             MetricUnit? unit = default;
-            IReadOnlyList<MetricAvailability> metricAvailabilities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<MetricAvailability> metricAvailabilities = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensions"u8))
+                if (prop.NameEquals("dimensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NameAndDescription> array = new List<NameAndDescription>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NameAndDescription.DeserializeNameAndDescription(item, options));
                     }
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"u8))
+                if (prop.NameEquals("namespace"u8))
                 {
-                    @namespace = property.Value.GetString();
+                    @namespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryAggregationType"u8))
+                if (prop.NameEquals("primaryAggregationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryAggregationType = new AggregationType(property.Value.GetString());
+                    primaryAggregationType = new AggregationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("supportedAggregationTypes"u8))
+                if (prop.NameEquals("supportedAggregationTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     supportedAggregationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unit = new MetricUnit(property.Value.GetString());
+                    unit = new MetricUnit(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metricAvailabilities"u8))
+                if (prop.NameEquals("metricAvailabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MetricAvailability> array = new List<MetricAvailability>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MetricAvailability.DeserializeMetricAvailability(item, options));
                     }
@@ -215,10 +230,9 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MetricDefinition(
                 dimensions ?? new ChangeTrackingList<NameAndDescription>(),
                 description,
@@ -228,13 +242,16 @@ namespace Azure.Developer.LoadTesting
                 supportedAggregationTypes ?? new ChangeTrackingList<string>(),
                 unit,
                 metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MetricDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -244,15 +261,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        MetricDefinition IPersistableModel<MetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricDefinition IPersistableModel<MetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMetricDefinition(document.RootElement, options);
                     }
                 default:
@@ -260,22 +282,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MetricDefinition FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMetricDefinition(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

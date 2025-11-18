@@ -10,19 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Unknown version of LoadTestingRecurrence. </summary>
     internal partial class UnknownLoadTestingRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLoadTestingRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownLoadTestingRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(frequency, recurrenceEnd, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownLoadTestingRecurrence"/> for deserialization. </summary>
-        internal UnknownLoadTestingRecurrence()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownLoadTestingRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(frequency != default ? frequency : "unknown", recurrenceEnd, additionalBinaryDataProperties)
         {
         }
     }

@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class AutoStopCriteria : IUtf8JsonSerializable, IJsonModel<AutoStopCriteria>
+    /// <summary> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </summary>
+    public partial class AutoStopCriteria : IJsonModel<AutoStopCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoStopCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoStopCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoStopCriteria)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AutoStopDisabled))
             {
                 writer.WritePropertyName("autoStopDisabled"u8);
@@ -47,22 +46,22 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(ErrorRateTimeWindow))
             {
                 writer.WritePropertyName("errorRateTimeWindowInSeconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(ErrorRateTimeWindow.Value.ToString("%s")));
+                writer.WriteNumberValue(Convert.ToInt32(ErrorRateTimeWindow.Value.TotalSeconds));
             }
             if (Optional.IsDefined(MaximumVirtualUsersPerEngine))
             {
                 writer.WritePropertyName("maximumVirtualUsersPerEngine"u8);
                 writer.WriteNumberValue(MaximumVirtualUsersPerEngine.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,83 +70,89 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        AutoStopCriteria IJsonModel<AutoStopCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoStopCriteria IJsonModel<AutoStopCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoStopCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoStopCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutoStopCriteria(document.RootElement, options);
         }
 
-        internal static AutoStopCriteria DeserializeAutoStopCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutoStopCriteria DeserializeAutoStopCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool? autoStopDisabled = default;
             float? errorRate = default;
-            TimeSpan? errorRateTimeWindowInSeconds = default;
+            TimeSpan? errorRateTimeWindow = default;
             int? maximumVirtualUsersPerEngine = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("autoStopDisabled"u8))
+                if (prop.NameEquals("autoStopDisabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoStopDisabled = property.Value.GetBoolean();
+                    autoStopDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("errorRate"u8))
+                if (prop.NameEquals("errorRate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorRate = property.Value.GetSingle();
+                    errorRate = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("errorRateTimeWindowInSeconds"u8))
+                if (prop.NameEquals("errorRateTimeWindowInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorRateTimeWindowInSeconds = TimeSpan.FromSeconds(property.Value.GetInt32());
+                    errorRateTimeWindow = TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
-                if (property.NameEquals("maximumVirtualUsersPerEngine"u8))
+                if (prop.NameEquals("maximumVirtualUsersPerEngine"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumVirtualUsersPerEngine = property.Value.GetInt32();
+                    maximumVirtualUsersPerEngine = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindowInSeconds, maximumVirtualUsersPerEngine, serializedAdditionalRawData);
+            return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindow, maximumVirtualUsersPerEngine, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AutoStopCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoStopCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -157,15 +162,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        AutoStopCriteria IPersistableModel<AutoStopCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoStopCriteria IPersistableModel<AutoStopCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoStopCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoStopCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutoStopCriteria(document.RootElement, options);
                     }
                 default:
@@ -173,22 +183,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutoStopCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AutoStopCriteria FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAutoStopCriteria(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

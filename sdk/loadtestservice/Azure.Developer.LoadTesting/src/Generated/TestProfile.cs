@@ -11,40 +11,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> The Test Profile Model. A Test Profile resource enables you to set up a test profile which contains various configurations for a supported resource type and a load test to execute on that resource. </summary>
+    /// <summary> Test Profile Model. </summary>
     public partial class TestProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestProfile"/>. </summary>
         public TestProfile()
@@ -57,17 +28,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="description"> Description for the test profile. </param>
         /// <param name="testId"> Associated test ID for the test profile. This property is required for creating a Test Profile and it's not allowed to be updated. </param>
         /// <param name="targetResourceId"> Target resource ID on which the test profile is created. This property is required for creating a Test Profile and it's not allowed to be updated. </param>
-        /// <param name="targetResourceConfigurations">
-        /// Configurations of the target resource on which testing would be done.
-        /// Please note <see cref="LoadTesting.TargetResourceConfigurations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionFlexConsumptionTargetResourceConfigurations"/>.
-        /// </param>
+        /// <param name="targetResourceConfigurations"> Configurations of the target resource on which testing would be done. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestProfileId = testProfileId;
             DisplayName = displayName;
@@ -79,31 +46,36 @@ namespace Azure.Developer.LoadTesting
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
             LastModifiedBy = lastModifiedBy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the test profile, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </summary>
         public string TestProfileId { get; }
+
         /// <summary> Display name of the test profile. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Description for the test profile. </summary>
         public string Description { get; set; }
+
         /// <summary> Associated test ID for the test profile. This property is required for creating a Test Profile and it's not allowed to be updated. </summary>
         public string TestId { get; set; }
+
         /// <summary> Target resource ID on which the test profile is created. This property is required for creating a Test Profile and it's not allowed to be updated. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
-        /// <summary>
-        /// Configurations of the target resource on which testing would be done.
-        /// Please note <see cref="LoadTesting.TargetResourceConfigurations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionFlexConsumptionTargetResourceConfigurations"/>.
-        /// </summary>
+
+        /// <summary> Configurations of the target resource on which testing would be done. </summary>
         public TargetResourceConfigurations TargetResourceConfigurations { get; set; }
+
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
+
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
+
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? LastModifiedDateTime { get; }
+
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }
     }

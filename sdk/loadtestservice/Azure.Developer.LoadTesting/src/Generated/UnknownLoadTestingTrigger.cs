@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Unknown version of LoadTestingTrigger. </summary>
     internal partial class UnknownLoadTestingTrigger : LoadTestingTrigger
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLoadTestingTrigger"/>. </summary>
@@ -24,13 +23,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownLoadTestingTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(triggerId, displayName, description, kind, state, stateDetails, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownLoadTestingTrigger"/> for deserialization. </summary>
-        internal UnknownLoadTestingTrigger()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownLoadTestingTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(triggerId, displayName, description, kind != default ? kind : "unknown", state, stateDetails, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
         {
         }
     }

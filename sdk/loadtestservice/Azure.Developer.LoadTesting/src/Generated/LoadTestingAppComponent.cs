@@ -14,37 +14,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> An Azure resource object (Refer azure generic resource model :https://learn.microsoft.com/en-us/rest/api/resources/resources/get-by-id#genericresource). </summary>
     public partial class LoadTestingAppComponent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/>. </summary>
         /// <param name="resourceName"> Azure resource name, required while creating the app component. </param>
@@ -67,8 +38,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="resourceGroup"> Resource group name of the Azure resource. </param>
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingAppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingAppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResourceName = resourceName;
@@ -77,26 +48,27 @@ namespace Azure.Developer.LoadTesting
             ResourceGroup = resourceGroup;
             SubscriptionId = subscriptionId;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LoadTestingAppComponent"/> for deserialization. </summary>
-        internal LoadTestingAppComponent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> Azure resource name, required while creating the app component. </summary>
         public string ResourceName { get; set; }
+
         /// <summary> Azure resource type, required while creating the app component. </summary>
         public string ResourceType { get; set; }
+
         /// <summary> Azure resource display name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Resource group name of the Azure resource. </summary>
         public string ResourceGroup { get; }
+
         /// <summary> Subscription Id of the Azure resource. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> Kind of Azure resource type. </summary>
         public string Kind { get; set; }
     }

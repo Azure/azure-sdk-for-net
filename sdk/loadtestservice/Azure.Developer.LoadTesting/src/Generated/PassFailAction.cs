@@ -14,38 +14,57 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct PassFailAction : IEquatable<PassFailAction>
     {
         private readonly string _value;
+        /// <summary> Test will continue to run even if pass fail metric criteria metric gets failed. </summary>
+        private const string ContinueValue = "continue";
+        /// <summary> Test run will stop if pass fail criteria metric is not passed. </summary>
+        private const string StopValue = "stop";
 
         /// <summary> Initializes a new instance of <see cref="PassFailAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PassFailAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ContinueValue = "continue";
-        private const string StopValue = "stop";
+            _value = value;
+        }
 
         /// <summary> Test will continue to run even if pass fail metric criteria metric gets failed. </summary>
         public static PassFailAction Continue { get; } = new PassFailAction(ContinueValue);
+
         /// <summary> Test run will stop if pass fail criteria metric is not passed. </summary>
         public static PassFailAction Stop { get; } = new PassFailAction(StopValue);
+
         /// <summary> Determines if two <see cref="PassFailAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PassFailAction left, PassFailAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PassFailAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PassFailAction left, PassFailAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PassFailAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PassFailAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PassFailAction(string value) => new PassFailAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PassFailAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PassFailAction?(string value) => value == null ? null : new PassFailAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PassFailAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PassFailAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

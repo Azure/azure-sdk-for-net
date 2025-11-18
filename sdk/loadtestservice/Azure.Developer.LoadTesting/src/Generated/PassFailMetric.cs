@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Pass fail metric. </summary>
     public partial class PassFailMetric
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PassFailMetric"/>. </summary>
         public PassFailMetric()
@@ -58,8 +29,8 @@ namespace Azure.Developer.LoadTesting
         /// ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec,
         /// ‘count’ - for requests
         /// </param>
-        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
-        /// <param name="requestName"> Request name for which the Pass fail criteria has to be applied. </param>
+        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’ . </param>
+        /// <param name="requestName"> Request name for which the Pass fail criteria has to be applied . </param>
         /// <param name="value">
         /// The value to compare with the client metric. Allowed values - ‘error : [0.0 ,
         /// 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms.
@@ -67,8 +38,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="action"> Action taken after the threshold is met. Default is ‘continue’. </param>
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailMetric(PfMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PassFailMetric(PfMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientMetric = clientMetric;
             Aggregate = aggregate;
@@ -78,11 +49,12 @@ namespace Azure.Developer.LoadTesting
             Action = action;
             ActualValue = actualValue;
             Result = result;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The client metric on which the criteria should be applied. </summary>
         public PfMetrics? ClientMetric { get; set; }
+
         /// <summary>
         /// The aggregation function to be applied on the client metric. Allowed functions
         /// - ‘percentage’ - for error metric , ‘avg’, percentiles like ‘p50’, ‘p90’, &amp; so on, ‘min’,
@@ -90,19 +62,25 @@ namespace Azure.Developer.LoadTesting
         /// ‘count’ - for requests
         /// </summary>
         public PassFailAggregationFunction? Aggregate { get; set; }
-        /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
+
+        /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’ . </summary>
         public string Condition { get; set; }
-        /// <summary> Request name for which the Pass fail criteria has to be applied. </summary>
+
+        /// <summary> Request name for which the Pass fail criteria has to be applied . </summary>
         public string RequestName { get; set; }
+
         /// <summary>
         /// The value to compare with the client metric. Allowed values - ‘error : [0.0 ,
         /// 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms.
         /// </summary>
         public double? Value { get; set; }
+
         /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
         public PassFailAction? Action { get; set; }
+
         /// <summary> The actual value of the client metric for the test run. </summary>
         public double? ActualValue { get; }
+
         /// <summary> Outcome of the test run. </summary>
         public PassFailResult? Result { get; }
     }

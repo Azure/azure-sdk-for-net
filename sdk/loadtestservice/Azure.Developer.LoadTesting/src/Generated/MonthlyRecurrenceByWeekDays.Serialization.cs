@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class MonthlyRecurrenceByWeekDays : IUtf8JsonSerializable, IJsonModel<MonthlyRecurrenceByWeekDays>
+    /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
+    public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence, IJsonModel<MonthlyRecurrenceByWeekDays>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonthlyRecurrenceByWeekDays>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/> for deserialization. </summary>
+        internal MonthlyRecurrenceByWeekDays()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MonthlyRecurrenceByWeekDays>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +33,17 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonthlyRecurrenceByWeekDays)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(WeekDaysInMonth))
             {
                 writer.WritePropertyName("weekDaysInMonth"u8);
                 writer.WriteStartArray();
-                foreach (var item in WeekDaysInMonth)
+                foreach (WeekDays item in WeekDaysInMonth)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -51,92 +55,98 @@ namespace Azure.Developer.LoadTesting
             writer.WriteNumberValue(Interval);
         }
 
-        MonthlyRecurrenceByWeekDays IJsonModel<MonthlyRecurrenceByWeekDays>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonthlyRecurrenceByWeekDays IJsonModel<MonthlyRecurrenceByWeekDays>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonthlyRecurrenceByWeekDays)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LoadTestingRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonthlyRecurrenceByWeekDays)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMonthlyRecurrenceByWeekDays(document.RootElement, options);
         }
 
-        internal static MonthlyRecurrenceByWeekDays DeserializeMonthlyRecurrenceByWeekDays(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MonthlyRecurrenceByWeekDays DeserializeMonthlyRecurrenceByWeekDays(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            Frequency frequency = default;
+            RecurrenceEnd recurrenceEnd = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<WeekDays> weekDaysInMonth = default;
             int index = default;
             int interval = default;
-            Frequency frequency = default;
-            RecurrenceEnd recurrenceEnd = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("weekDaysInMonth"u8))
+                if (prop.NameEquals("frequency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    frequency = new Frequency(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("recurrenceEnd"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recurrenceEnd = RecurrenceEnd.DeserializeRecurrenceEnd(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("weekDaysInMonth"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WeekDays> array = new List<WeekDays>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new WeekDays(item.GetString()));
                     }
                     weekDaysInMonth = array;
                     continue;
                 }
-                if (property.NameEquals("index"u8))
+                if (prop.NameEquals("index"u8))
                 {
-                    index = property.Value.GetInt32();
+                    index = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("interval"u8))
+                if (prop.NameEquals("interval"u8))
                 {
-                    interval = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("frequency"u8))
-                {
-                    frequency = new Frequency(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recurrenceEnd"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recurrenceEnd = RecurrenceEnd.DeserializeRecurrenceEnd(property.Value, options);
+                    interval = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MonthlyRecurrenceByWeekDays(
                 frequency,
                 recurrenceEnd,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 weekDaysInMonth ?? new ChangeTrackingList<WeekDays>(),
                 index,
                 interval);
         }
 
-        BinaryData IPersistableModel<MonthlyRecurrenceByWeekDays>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MonthlyRecurrenceByWeekDays>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -146,15 +156,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        MonthlyRecurrenceByWeekDays IPersistableModel<MonthlyRecurrenceByWeekDays>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonthlyRecurrenceByWeekDays IPersistableModel<MonthlyRecurrenceByWeekDays>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonthlyRecurrenceByWeekDays)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonthlyRecurrenceByWeekDays>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMonthlyRecurrenceByWeekDays(document.RootElement, options);
                     }
                 default:
@@ -162,22 +177,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MonthlyRecurrenceByWeekDays>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new MonthlyRecurrenceByWeekDays FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMonthlyRecurrenceByWeekDays(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

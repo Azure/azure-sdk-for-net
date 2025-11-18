@@ -18,12 +18,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="displayName"> The name of the trigger. </param>
         /// <param name="testIds"> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="testIds"/> is null. </exception>
-        public ScheduleTestsTrigger(string displayName, IEnumerable<string> testIds) : base(displayName)
+        public ScheduleTestsTrigger(string displayName, IEnumerable<string> testIds) : base(displayName, TriggerType.ScheduleTestsTrigger)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(testIds, nameof(testIds));
 
-            Kind = TriggerType.ScheduleTestsTrigger;
             TestIds = testIds.ToList();
         }
 
@@ -38,16 +37,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="testIds"> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </param>
         /// <param name="startDateTime"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
         /// <param name="recurrenceStatus"></param>
-        /// <param name="recurrence">
-        /// Recurrence details of the trigger. Null if schedule is not recurring.
-        /// Please note <see cref="LoadTestingRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecurrenceWithCron"/>, <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="MonthlyRecurrenceByWeekDays"/> and <see cref="WeeklyRecurrence"/>.
-        /// </param>
-        internal ScheduleTestsTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> testIds, DateTimeOffset? startDateTime, RecurrenceStatus recurrenceStatus, LoadTestingRecurrence recurrence) : base(triggerId, displayName, description, kind, state, stateDetails, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, serializedAdditionalRawData)
+        /// <param name="recurrence"> Recurrence details of the trigger. Null if schedule is not recurring. </param>
+        internal ScheduleTestsTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, DateTimeOffset? startDateTime, RecurrenceStatus recurrenceStatus, LoadTestingRecurrence recurrence) : base(triggerId, displayName, description, kind, state, stateDetails, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
         {
             TestIds = testIds;
             StartDateTime = startDateTime;
@@ -55,22 +50,16 @@ namespace Azure.Developer.LoadTesting
             Recurrence = recurrence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleTestsTrigger"/> for deserialization. </summary>
-        internal ScheduleTestsTrigger()
-        {
-        }
-
         /// <summary> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </summary>
         public IList<string> TestIds { get; }
+
         /// <summary> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </summary>
         public DateTimeOffset? StartDateTime { get; set; }
-        /// <summary> Gets the recurrence status. </summary>
+
+        /// <summary> Gets the RecurrenceStatus. </summary>
         public RecurrenceStatus RecurrenceStatus { get; }
-        /// <summary>
-        /// Recurrence details of the trigger. Null if schedule is not recurring.
-        /// Please note <see cref="LoadTestingRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecurrenceWithCron"/>, <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="MonthlyRecurrenceByWeekDays"/> and <see cref="WeeklyRecurrence"/>.
-        /// </summary>
+
+        /// <summary> Recurrence details of the trigger. Null if schedule is not recurring. </summary>
         public LoadTestingRecurrence Recurrence { get; set; }
     }
 }

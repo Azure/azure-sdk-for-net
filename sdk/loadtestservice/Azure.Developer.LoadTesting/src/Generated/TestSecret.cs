@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Secret. </summary>
     public partial class TestSecret
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestSecret"/>. </summary>
         public TestSecret()
@@ -53,16 +24,17 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of <see cref="TestSecret"/>. </summary>
         /// <param name="value"> The value of the secret for the respective type. </param>
         /// <param name="secretKind"> Type of secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestSecret(string value, SecretType? secretKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TestSecret(string value, SecretType? secretKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             SecretKind = secretKind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value of the secret for the respective type. </summary>
         public string Value { get; set; }
+
         /// <summary> Type of secret. </summary>
         public SecretType? SecretKind { get; set; }
     }

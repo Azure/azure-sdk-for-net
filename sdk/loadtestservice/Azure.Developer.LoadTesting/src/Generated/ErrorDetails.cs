@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Error details if there is any failure in load test run. </summary>
     public partial class ErrorDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
         internal ErrorDetails()
@@ -55,19 +26,21 @@ namespace Azure.Developer.LoadTesting
         /// <param name="code"> Error code if there is any failure in load test run. </param>
         /// <param name="message"> Error details in case test run was not successfully run. </param>
         /// <param name="properties"> A dictionary for storing additional error information for better context. Each key is a property name (e.g., "Description", "Resolution", "Category", "Region"), and its value is an array of strings with relevant details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetails(string code, string message, IReadOnlyDictionary<string, IList<string>> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetails(string code, string message, IReadOnlyDictionary<string, IList<string>> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Error code if there is any failure in load test run. </summary>
         public string Code { get; }
+
         /// <summary> Error details in case test run was not successfully run. </summary>
         public string Message { get; }
+
         /// <summary> A dictionary for storing additional error information for better context. Each key is a property name (e.g., "Description", "Resolution", "Category", "Region"), and its value is an array of strings with relevant details. </summary>
         public IReadOnlyDictionary<string, IList<string>> Properties { get; }
     }

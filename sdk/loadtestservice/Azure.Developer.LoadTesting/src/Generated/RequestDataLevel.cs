@@ -14,38 +14,57 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct RequestDataLevel : IEquatable<RequestDataLevel>
     {
         private readonly string _value;
+        /// <summary> No request data will be collected. </summary>
+        private const string NONEValue = "NONE";
+        /// <summary> Request data will be collected in case of failed requests. </summary>
+        private const string ERRORSValue = "ERRORS";
 
         /// <summary> Initializes a new instance of <see cref="RequestDataLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RequestDataLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NONEValue = "NONE";
-        private const string ERRORSValue = "ERRORS";
+            _value = value;
+        }
 
         /// <summary> No request data will be collected. </summary>
         public static RequestDataLevel NONE { get; } = new RequestDataLevel(NONEValue);
+
         /// <summary> Request data will be collected in case of failed requests. </summary>
         public static RequestDataLevel ERRORS { get; } = new RequestDataLevel(ERRORSValue);
+
         /// <summary> Determines if two <see cref="RequestDataLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RequestDataLevel left, RequestDataLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RequestDataLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RequestDataLevel left, RequestDataLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestDataLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RequestDataLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RequestDataLevel(string value) => new RequestDataLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RequestDataLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RequestDataLevel?(string value) => value == null ? null : new RequestDataLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RequestDataLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RequestDataLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

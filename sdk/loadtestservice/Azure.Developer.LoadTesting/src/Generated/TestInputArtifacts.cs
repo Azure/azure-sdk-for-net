@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The input artifacts for the test. </summary>
     public partial class TestInputArtifacts
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestInputArtifacts"/>. </summary>
         internal TestInputArtifacts()
@@ -58,8 +29,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="inputArtifactsZipFileInfo"> The zip file with all input artifacts. </param>
         /// <param name="urlTestConfigFileInfo"> The config json file for url based test. </param>
         /// <param name="additionalFileInfo"> Additional supported files for the test run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestInputArtifacts(TestFileInfo configFileInfo, TestFileInfo testScriptFileInfo, TestFileInfo userPropertyFileInfo, TestFileInfo inputArtifactsZipFileInfo, TestFileInfo urlTestConfigFileInfo, IReadOnlyList<TestFileInfo> additionalFileInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TestInputArtifacts(TestFileInfo configFileInfo, TestFileInfo testScriptFileInfo, TestFileInfo userPropertyFileInfo, TestFileInfo inputArtifactsZipFileInfo, TestFileInfo urlTestConfigFileInfo, IReadOnlyList<TestFileInfo> additionalFileInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigFileInfo = configFileInfo;
             TestScriptFileInfo = testScriptFileInfo;
@@ -67,19 +38,24 @@ namespace Azure.Developer.LoadTesting
             InputArtifactsZipFileInfo = inputArtifactsZipFileInfo;
             UrlTestConfigFileInfo = urlTestConfigFileInfo;
             AdditionalFileInfo = additionalFileInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The load test YAML file that contains the the test configuration. </summary>
         public TestFileInfo ConfigFileInfo { get; }
+
         /// <summary> The test script file for the test run. </summary>
         public TestFileInfo TestScriptFileInfo { get; }
+
         /// <summary> The user properties file. </summary>
         public TestFileInfo UserPropertyFileInfo { get; }
+
         /// <summary> The zip file with all input artifacts. </summary>
         public TestFileInfo InputArtifactsZipFileInfo { get; }
+
         /// <summary> The config json file for url based test. </summary>
         public TestFileInfo UrlTestConfigFileInfo { get; }
+
         /// <summary> Additional supported files for the test run. </summary>
         public IReadOnlyList<TestFileInfo> AdditionalFileInfo { get; }
     }

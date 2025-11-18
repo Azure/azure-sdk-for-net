@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Configuration for quick load test. </summary>
     public partial class OptionalLoadTestConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OptionalLoadTestConfiguration"/>. </summary>
         public OptionalLoadTestConfiguration()
@@ -57,8 +28,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="virtualUsers"> No of concurrent virtual users. </param>
         /// <param name="rampUpTime"> Ramp up time in seconds. </param>
         /// <param name="duration"> Test run duration in seconds. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OptionalLoadTestConfiguration(Uri endpointUri, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OptionalLoadTestConfiguration(Uri endpointUri, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, TimeSpan? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointUri = endpointUri;
             RequestsPerSecond = requestsPerSecond;
@@ -66,19 +37,24 @@ namespace Azure.Developer.LoadTesting
             VirtualUsers = virtualUsers;
             RampUpTime = rampUpTime;
             Duration = duration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Test URL. Provide the complete HTTP URL. For example, https://contoso-app.azurewebsites.net/login. </summary>
         public Uri EndpointUri { get; set; }
+
         /// <summary> Target throughput (requests per second). This may not be necessarily achieved. The actual throughput will be lower if the application is not capable of handling it. </summary>
         public int? RequestsPerSecond { get; set; }
+
         /// <summary> Maximum response time in milliseconds of the API/endpoint. </summary>
         public int? MaxResponseTimeInMs { get; set; }
+
         /// <summary> No of concurrent virtual users. </summary>
         public int? VirtualUsers { get; set; }
+
         /// <summary> Ramp up time in seconds. </summary>
         public int? RampUpTime { get; set; }
+
         /// <summary> Test run duration in seconds. </summary>
         public TimeSpan? Duration { get; set; }
     }

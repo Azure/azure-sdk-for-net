@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class LoadTestRun : IUtf8JsonSerializable, IJsonModel<LoadTestRun>
+    /// <summary> Load test run model. </summary>
+    public partial class LoadTestRun : IJsonModel<LoadTestRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestRun)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("testRunId"u8);
@@ -72,6 +72,11 @@ namespace Azure.Developer.LoadTesting
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -80,7 +85,7 @@ namespace Azure.Developer.LoadTesting
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in ErrorDetails)
+                foreach (ErrorDetails item in ErrorDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -238,15 +243,15 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -255,22 +260,27 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        LoadTestRun IJsonModel<LoadTestRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestRun IJsonModel<LoadTestRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestRun JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestRun)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLoadTestRun(document.RootElement, options);
         }
 
-        internal static LoadTestRun DeserializeLoadTestRun(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LoadTestRun DeserializeLoadTestRun(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -295,14 +305,14 @@ namespace Azure.Developer.LoadTesting
             DateTimeOffset? startDateTime = default;
             DateTimeOffset? endDateTime = default;
             DateTimeOffset? executedDateTime = default;
-            Uri portalUrl = default;
+            Uri portalUri = default;
             long? duration = default;
             double? virtualUserHours = default;
             string subnetId = default;
             LoadTestKind? kind = default;
             RequestDataLevel? requestDataLevel = default;
             bool? debugLogsEnabled = default;
-            bool? publicIPDisabled = default;
+            bool? publicIpDisabled = default;
             CreatedByType? createdByType = default;
             Uri createdByUri = default;
             double? estimatedVirtualUserHours = default;
@@ -310,328 +320,333 @@ namespace Azure.Developer.LoadTesting
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
             string lastModifiedBy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("testRunId"u8))
+                if (prop.NameEquals("testRunId"u8))
                 {
-                    testRunId = property.Value.GetString();
+                    testRunId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("passFailCriteria"u8))
+                if (prop.NameEquals("passFailCriteria"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    passFailCriteria = PassFailCriteria.DeserializePassFailCriteria(property.Value, options);
+                    passFailCriteria = PassFailCriteria.DeserializePassFailCriteria(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("autoStopCriteria"u8))
+                if (prop.NameEquals("autoStopCriteria"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoStopCriteria = AutoStopCriteria.DeserializeAutoStopCriteria(property.Value, options);
+                    autoStopCriteria = AutoStopCriteria.DeserializeAutoStopCriteria(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secrets"u8))
+                if (prop.NameEquals("secrets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, TestSecret> dictionary = new Dictionary<string, TestSecret>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, TestSecret.DeserializeTestSecret(property0.Value, options));
+                        dictionary.Add(prop0.Name, TestSecret.DeserializeTestSecret(prop0.Value, options));
                     }
                     secrets = dictionary;
                     continue;
                 }
-                if (property.NameEquals("certificate"u8))
+                if (prop.NameEquals("certificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificate = TestCertificate.DeserializeTestCertificate(property.Value, options);
+                    certificate = TestCertificate.DeserializeTestCertificate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("environmentVariables"u8))
+                if (prop.NameEquals("environmentVariables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     environmentVariables = dictionary;
                     continue;
                 }
-                if (property.NameEquals("errorDetails"u8))
+                if (prop.NameEquals("errorDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ErrorDetails> array = new List<ErrorDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(LoadTesting.ErrorDetails.DeserializeErrorDetails(item, options));
                     }
                     errorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("testRunStatistics"u8))
+                if (prop.NameEquals("testRunStatistics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, TestRunStatistics> dictionary = new Dictionary<string, TestRunStatistics>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(property0.Value, options));
+                        dictionary.Add(prop0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
                     }
                     testRunStatistics = dictionary;
                     continue;
                 }
-                if (property.NameEquals("regionalStatistics"u8))
+                if (prop.NameEquals("regionalStatistics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, TestRunStatistics> dictionary = new Dictionary<string, TestRunStatistics>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(property0.Value, options));
+                        dictionary.Add(prop0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
                     }
                     regionalStatistics = dictionary;
                     continue;
                 }
-                if (property.NameEquals("loadTestConfiguration"u8))
+                if (prop.NameEquals("loadTestConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    loadTestConfiguration = LoadTestConfiguration.DeserializeLoadTestConfiguration(property.Value, options);
+                    loadTestConfiguration = LoadTestConfiguration.DeserializeLoadTestConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("testArtifacts"u8))
+                if (prop.NameEquals("testArtifacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testArtifacts = TestRunArtifacts.DeserializeTestRunArtifacts(property.Value, options);
+                    testArtifacts = TestRunArtifacts.DeserializeTestRunArtifacts(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("testResult"u8))
+                if (prop.NameEquals("testResult"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testResult = new PassFailTestResult(property.Value.GetString());
+                    testResult = new PassFailTestResult(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("virtualUsers"u8))
+                if (prop.NameEquals("virtualUsers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualUsers = property.Value.GetInt32();
+                    virtualUsers = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testId"u8))
+                if (prop.NameEquals("testId"u8))
                 {
-                    testId = property.Value.GetString();
+                    testId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new TestRunStatus(property.Value.GetString());
+                    status = new TestRunStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startDateTime"u8))
+                if (prop.NameEquals("startDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDateTime = property.Value.GetDateTimeOffset("O");
+                    startDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDateTime"u8))
+                if (prop.NameEquals("endDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endDateTime = property.Value.GetDateTimeOffset("O");
+                    endDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("executedDateTime"u8))
+                if (prop.NameEquals("executedDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    executedDateTime = property.Value.GetDateTimeOffset("O");
+                    executedDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("portalUrl"u8))
+                if (prop.NameEquals("portalUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    portalUrl = new Uri(property.Value.GetString());
+                    portalUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("duration"u8))
+                if (prop.NameEquals("duration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    duration = property.Value.GetInt64();
+                    duration = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("virtualUserHours"u8))
+                if (prop.NameEquals("virtualUserHours"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualUserHours = property.Value.GetDouble();
+                    virtualUserHours = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("subnetId"u8))
+                if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kind = new LoadTestKind(property.Value.GetString());
+                    kind = new LoadTestKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestDataLevel"u8))
+                if (prop.NameEquals("requestDataLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestDataLevel = new RequestDataLevel(property.Value.GetString());
+                    requestDataLevel = new RequestDataLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("debugLogsEnabled"u8))
+                if (prop.NameEquals("debugLogsEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    debugLogsEnabled = property.Value.GetBoolean();
+                    debugLogsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publicIPDisabled"u8))
+                if (prop.NameEquals("publicIPDisabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicIPDisabled = property.Value.GetBoolean();
+                    publicIpDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("createdByType"u8))
+                if (prop.NameEquals("createdByType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdByType = new CreatedByType(property.Value.GetString());
+                    createdByType = new CreatedByType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdByUri"u8))
+                if (prop.NameEquals("createdByUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdByUri = new Uri(property.Value.GetString());
+                    createdByUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("estimatedVirtualUserHours"u8))
+                if (prop.NameEquals("estimatedVirtualUserHours"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedVirtualUserHours = property.Value.GetDouble();
+                    estimatedVirtualUserHours = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"u8))
+                if (prop.NameEquals("createdDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    createdDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdBy"u8))
+                if (prop.NameEquals("createdBy"u8))
                 {
-                    createdBy = property.Value.GetString();
+                    createdBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedDateTime"u8))
+                if (prop.NameEquals("lastModifiedDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedBy"u8))
+                if (prop.NameEquals("lastModifiedBy"u8))
                 {
-                    lastModifiedBy = property.Value.GetString();
+                    lastModifiedBy = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LoadTestRun(
                 testRunId,
                 passFailCriteria,
@@ -653,14 +668,14 @@ namespace Azure.Developer.LoadTesting
                 startDateTime,
                 endDateTime,
                 executedDateTime,
-                portalUrl,
+                portalUri,
                 duration,
                 virtualUserHours,
                 subnetId,
                 kind,
                 requestDataLevel,
                 debugLogsEnabled,
-                publicIPDisabled,
+                publicIpDisabled,
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,
@@ -668,13 +683,16 @@ namespace Azure.Developer.LoadTesting
                 createdBy,
                 lastModifiedDateTime,
                 lastModifiedBy,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<LoadTestRun>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LoadTestRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -684,15 +702,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        LoadTestRun IPersistableModel<LoadTestRun>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestRun IPersistableModel<LoadTestRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadTestRun(document.RootElement, options);
                     }
                 default:
@@ -700,22 +723,14 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LoadTestRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LoadTestRun FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestRun"/> from. </param>
+        public static explicit operator LoadTestRun(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLoadTestRun(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLoadTestRun(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

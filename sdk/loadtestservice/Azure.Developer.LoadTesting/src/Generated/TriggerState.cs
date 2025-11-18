@@ -14,44 +14,67 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct TriggerState : IEquatable<TriggerState>
     {
         private readonly string _value;
+        /// <summary> The trigger is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The trigger is paused manually. </summary>
+        private const string PausedValue = "Paused";
+        /// <summary> The trigger is completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> The trigger is disabled due to error. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="TriggerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TriggerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string PausedValue = "Paused";
-        private const string CompletedValue = "Completed";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> The trigger is active. </summary>
         public static TriggerState Active { get; } = new TriggerState(ActiveValue);
+
         /// <summary> The trigger is paused manually. </summary>
         public static TriggerState Paused { get; } = new TriggerState(PausedValue);
+
         /// <summary> The trigger is completed. </summary>
         public static TriggerState Completed { get; } = new TriggerState(CompletedValue);
+
         /// <summary> The trigger is disabled due to error. </summary>
         public static TriggerState Disabled { get; } = new TriggerState(DisabledValue);
+
         /// <summary> Determines if two <see cref="TriggerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TriggerState left, TriggerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TriggerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TriggerState left, TriggerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TriggerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TriggerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TriggerState(string value) => new TriggerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TriggerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TriggerState?(string value) => value == null ? null : new TriggerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TriggerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TriggerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

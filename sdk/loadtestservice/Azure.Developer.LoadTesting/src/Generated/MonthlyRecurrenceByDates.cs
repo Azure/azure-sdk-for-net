@@ -14,19 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class MonthlyRecurrenceByDates : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByDates"/>. </summary>
-        public MonthlyRecurrenceByDates()
+        public MonthlyRecurrenceByDates() : base(Frequency.MonthlyByDates)
         {
-            Frequency = Frequency.MonthlyByDates;
             DatesInMonth = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByDates"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="datesInMonth"> Recurrence set to repeat on the specified dates of the month. Value of dates can be 1 to 31 and -1. -1 represents the last day of the month. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        internal MonthlyRecurrenceByDates(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<int> datesInMonth, int? interval) : base(frequency, recurrenceEnd, serializedAdditionalRawData)
+        internal MonthlyRecurrenceByDates(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> datesInMonth, int? interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             DatesInMonth = datesInMonth;
             Interval = interval;
@@ -34,6 +33,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Recurrence set to repeat on the specified dates of the month. Value of dates can be 1 to 31 and -1. -1 represents the last day of the month. </summary>
         public IList<int> DatesInMonth { get; }
+
         /// <summary> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </summary>
         public int? Interval { get; set; }
     }

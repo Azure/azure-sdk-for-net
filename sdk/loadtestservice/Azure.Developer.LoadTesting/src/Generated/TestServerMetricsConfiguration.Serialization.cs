@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class TestServerMetricsConfiguration : IUtf8JsonSerializable, IJsonModel<TestServerMetricsConfiguration>
+    /// <summary> Test server metrics configuration. </summary>
+    public partial class TestServerMetricsConfiguration : IJsonModel<TestServerMetricsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestServerMetricsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/> for deserialization. </summary>
+        internal TestServerMetricsConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestServerMetricsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestServerMetricsConfiguration)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(TestId))
             {
                 writer.WritePropertyName("testId"u8);
@@ -67,15 +72,15 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -84,22 +89,27 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestServerMetricsConfiguration IJsonModel<TestServerMetricsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestServerMetricsConfiguration IJsonModel<TestServerMetricsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestServerMetricsConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestServerMetricsConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTestServerMetricsConfiguration(document.RootElement, options);
         }
 
-        internal static TestServerMetricsConfiguration DeserializeTestServerMetricsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TestServerMetricsConfiguration DeserializeTestServerMetricsConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,59 +120,57 @@ namespace Azure.Developer.LoadTesting
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
             string lastModifiedBy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("testId"u8))
+                if (prop.NameEquals("testId"u8))
                 {
-                    testId = property.Value.GetString();
+                    testId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metrics"u8))
+                if (prop.NameEquals("metrics"u8))
                 {
                     Dictionary<string, ResourceMetric> dictionary = new Dictionary<string, ResourceMetric>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ResourceMetric.DeserializeResourceMetric(property0.Value, options));
+                        dictionary.Add(prop0.Name, ResourceMetric.DeserializeResourceMetric(prop0.Value, options));
                     }
                     metrics = dictionary;
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"u8))
+                if (prop.NameEquals("createdDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    createdDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdBy"u8))
+                if (prop.NameEquals("createdBy"u8))
                 {
-                    createdBy = property.Value.GetString();
+                    createdBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedDateTime"u8))
+                if (prop.NameEquals("lastModifiedDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedBy"u8))
+                if (prop.NameEquals("lastModifiedBy"u8))
                 {
-                    lastModifiedBy = property.Value.GetString();
+                    lastModifiedBy = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TestServerMetricsConfiguration(
                 testId,
                 metrics,
@@ -170,13 +178,16 @@ namespace Azure.Developer.LoadTesting
                 createdBy,
                 lastModifiedDateTime,
                 lastModifiedBy,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TestServerMetricsConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestServerMetricsConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -186,15 +197,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestServerMetricsConfiguration IPersistableModel<TestServerMetricsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestServerMetricsConfiguration IPersistableModel<TestServerMetricsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestServerMetricsConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTestServerMetricsConfiguration(document.RootElement, options);
                     }
                 default:
@@ -202,22 +218,14 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TestServerMetricsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TestServerMetricsConfiguration FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TestServerMetricsConfiguration"/> from. </param>
+        public static explicit operator TestServerMetricsConfiguration(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestServerMetricsConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTestServerMetricsConfiguration(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

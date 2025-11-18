@@ -10,18 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Unknown version of TestsNotificationEventFilter. </summary>
     internal partial class UnknownTestsNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTestsNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTestsNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownTestsNotificationEventFilter"/> for deserialization. </summary>
-        internal UnknownTestsNotificationEventFilter()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTestsNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

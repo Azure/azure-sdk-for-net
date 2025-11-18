@@ -15,25 +15,19 @@ namespace Azure.Developer.LoadTesting
     {
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        public DailyRecurrence(int interval)
+        public DailyRecurrence(int interval) : base(Frequency.Daily)
         {
-            Frequency = Frequency.Daily;
             Interval = interval;
         }
 
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        internal DailyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> serializedAdditionalRawData, int interval) : base(frequency, recurrenceEnd, serializedAdditionalRawData)
+        internal DailyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, int interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             Interval = interval;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/> for deserialization. </summary>
-        internal DailyRecurrence()
-        {
         }
 
         /// <summary> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </summary>

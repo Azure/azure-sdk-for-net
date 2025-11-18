@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class ScheduleTestsTrigger : IUtf8JsonSerializable, IJsonModel<ScheduleTestsTrigger>
+    /// <summary> ScheduleTestsTrigger model. </summary>
+    public partial class ScheduleTestsTrigger : LoadTestingTrigger, IJsonModel<ScheduleTestsTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleTestsTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ScheduleTestsTrigger"/> for deserialization. </summary>
+        internal ScheduleTestsTrigger()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduleTestsTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +33,21 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleTestsTrigger)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("testIds"u8);
             writer.WriteStartArray();
-            foreach (var item in TestIds)
+            foreach (string item in TestIds)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -59,30 +68,31 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        ScheduleTestsTrigger IJsonModel<ScheduleTestsTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduleTestsTrigger IJsonModel<ScheduleTestsTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ScheduleTestsTrigger)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LoadTestingTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleTestsTrigger)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScheduleTestsTrigger(document.RootElement, options);
         }
 
-        internal static ScheduleTestsTrigger DeserializeScheduleTestsTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScheduleTestsTrigger DeserializeScheduleTestsTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> testIds = default;
-            DateTimeOffset? startDateTime = default;
-            RecurrenceStatus recurrenceStatus = default;
-            LoadTestingRecurrence recurrence = default;
             string triggerId = default;
             string displayName = default;
             string description = default;
@@ -93,119 +103,128 @@ namespace Azure.Developer.LoadTesting
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
             string lastModifiedBy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<string> testIds = default;
+            DateTimeOffset? startDateTime = default;
+            RecurrenceStatus recurrenceStatus = default;
+            LoadTestingRecurrence recurrence = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("testIds"u8))
+                if (prop.NameEquals("triggerId"u8))
+                {
+                    triggerId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new TriggerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new TriggerState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("stateDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stateDetails = StateDetails.DeserializeStateDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("createdDateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("createdBy"u8))
+                {
+                    createdBy = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("lastModifiedDateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("lastModifiedBy"u8))
+                {
+                    lastModifiedBy = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("testIds"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     testIds = array;
                     continue;
                 }
-                if (property.NameEquals("startDateTime"u8))
+                if (prop.NameEquals("startDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDateTime = property.Value.GetDateTimeOffset("O");
+                    startDateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recurrenceStatus"u8))
+                if (prop.NameEquals("recurrenceStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recurrenceStatus = RecurrenceStatus.DeserializeRecurrenceStatus(property.Value, options);
+                    recurrenceStatus = RecurrenceStatus.DeserializeRecurrenceStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("recurrence"u8))
+                if (prop.NameEquals("recurrence"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recurrence = LoadTestingRecurrence.DeserializeLoadTestingRecurrence(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("triggerId"u8))
-                {
-                    triggerId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new TriggerType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new TriggerState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("stateDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    stateDetails = StateDetails.DeserializeStateDetails(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createdDateTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("createdBy"u8))
-                {
-                    createdBy = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastModifiedDateTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("lastModifiedBy"u8))
-                {
-                    lastModifiedBy = property.Value.GetString();
+                    recurrence = LoadTestingRecurrence.DeserializeLoadTestingRecurrence(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduleTestsTrigger(
                 triggerId,
                 displayName,
@@ -217,17 +236,20 @@ namespace Azure.Developer.LoadTesting
                 createdBy,
                 lastModifiedDateTime,
                 lastModifiedBy,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 testIds,
                 startDateTime,
                 recurrenceStatus,
                 recurrence);
         }
 
-        BinaryData IPersistableModel<ScheduleTestsTrigger>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduleTestsTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -237,15 +259,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        ScheduleTestsTrigger IPersistableModel<ScheduleTestsTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduleTestsTrigger IPersistableModel<ScheduleTestsTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScheduleTestsTrigger)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LoadTestingTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleTestsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduleTestsTrigger(document.RootElement, options);
                     }
                 default:
@@ -253,22 +280,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ScheduleTestsTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ScheduleTestsTrigger FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeScheduleTestsTrigger(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

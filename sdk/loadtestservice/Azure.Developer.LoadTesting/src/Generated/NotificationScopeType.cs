@@ -14,35 +14,52 @@ namespace Azure.Developer.LoadTesting
     internal readonly partial struct NotificationScopeType : IEquatable<NotificationScopeType>
     {
         private readonly string _value;
+        /// <summary> Notification rule is for Tests. </summary>
+        private const string TestsValue = "Tests";
 
         /// <summary> Initializes a new instance of <see cref="NotificationScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationScopeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TestsValue = "Tests";
+            _value = value;
+        }
 
         /// <summary> Notification rule is for Tests. </summary>
         public static NotificationScopeType Tests { get; } = new NotificationScopeType(TestsValue);
+
         /// <summary> Determines if two <see cref="NotificationScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationScopeType left, NotificationScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationScopeType left, NotificationScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationScopeType(string value) => new NotificationScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationScopeType?(string value) => value == null ? null : new NotificationScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

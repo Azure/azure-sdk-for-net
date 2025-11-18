@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Load test run model. </summary>
     public partial class LoadTestRun
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestRun"/>. </summary>
         public LoadTestRun()
@@ -105,8 +76,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -143,15 +114,18 @@ namespace Azure.Developer.LoadTesting
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
             LastModifiedBy = lastModifiedBy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </summary>
         public string TestRunId { get; }
+
         /// <summary> Pass fail criteria for a test. </summary>
         public PassFailCriteria PassFailCriteria { get; set; }
+
         /// <summary> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </summary>
         public AutoStopCriteria AutoStopCriteria { get; set; }
+
         /// <summary>
         /// Secrets can be stored in an Azure Key Vault or any other secret store. If the
         /// secret is stored in an Azure Key Vault, the value should be the secret
@@ -160,74 +134,105 @@ namespace Azure.Developer.LoadTesting
         /// SECRET_VALUE.
         /// </summary>
         public IDictionary<string, TestSecret> Secrets { get; }
+
         /// <summary> Certificates metadata. </summary>
         public TestCertificate Certificate { get; set; }
+
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
+
         /// <summary> Error details if there is any failure in load test run. </summary>
         public IReadOnlyList<ErrorDetails> ErrorDetails { get; }
+
         /// <summary>
         /// Test run statistics. Key is the sampler name and value is the set of statistics for performance metrics like response time, throughput, etc. from the load test run.
         /// The sampler name is the same as the name mentioned in the test script.
         /// Sampler name "Total" represents the aggregated statistics of all the samplers.
         /// </summary>
         public IReadOnlyDictionary<string, TestRunStatistics> TestRunStatistics { get; }
+
         /// <summary>
         /// Regional statistics. Key is the Azure region name and value is the test run statistics.
         /// The region name should of format accepted by ARM, and should be a region supported by Azure Load Testing. For example, East US should be passed as "eastus".
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </summary>
         public IReadOnlyDictionary<string, TestRunStatistics> RegionalStatistics { get; }
+
         /// <summary> The load test configuration. </summary>
         public LoadTestConfiguration LoadTestConfiguration { get; }
+
         /// <summary> Collection of test run artifacts. </summary>
         public TestRunArtifacts TestArtifacts { get; }
+
         /// <summary> Test result for pass/Fail criteria used during the test run. </summary>
         public PassFailTestResult? TestResult { get; }
+
         /// <summary> Number of virtual users, for which test has been run. </summary>
         public int? VirtualUsers { get; }
+
         /// <summary> Display name of a testRun. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Associated test Id. </summary>
         public string TestId { get; set; }
+
         /// <summary> The test run description. </summary>
         public string Description { get; set; }
+
         /// <summary> The test run status. </summary>
         public TestRunStatus? Status { get; }
+
         /// <summary> The test run start DateTime(RFC 3339 literal format). </summary>
         public DateTimeOffset? StartDateTime { get; }
+
         /// <summary> The test run end DateTime(RFC 3339 literal format). </summary>
         public DateTimeOffset? EndDateTime { get; }
+
         /// <summary> Test run initiated time. </summary>
         public DateTimeOffset? ExecutedDateTime { get; }
+
         /// <summary> Portal url. </summary>
         public Uri PortalUri { get; }
+
         /// <summary> Test run duration in milliseconds. </summary>
         public long? Duration { get; }
+
         /// <summary> Virtual user hours consumed by the test run. </summary>
         public double? VirtualUserHours { get; }
+
         /// <summary> Subnet ID on which the load test instances should run. </summary>
         public string SubnetId { get; }
+
         /// <summary> Type of test. </summary>
         public LoadTestKind? Kind { get; }
+
         /// <summary> Request data collection level for test run. </summary>
         public RequestDataLevel? RequestDataLevel { get; set; }
+
         /// <summary> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </summary>
         public bool? DebugLogsEnabled { get; set; }
+
         /// <summary> Inject load test engines without deploying public IP for outbound access. </summary>
         public bool? PublicIpDisabled { get; }
+
         /// <summary> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </summary>
         public CreatedByType? CreatedByType { get; set; }
+
         /// <summary> The URI pointing to the entity that created the test run. </summary>
         public Uri CreatedByUri { get; }
+
         /// <summary> Estimated virtual user hours for the test run. </summary>
         public double? EstimatedVirtualUserHours { get; }
+
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
+
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
+
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? LastModifiedDateTime { get; }
+
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }
     }

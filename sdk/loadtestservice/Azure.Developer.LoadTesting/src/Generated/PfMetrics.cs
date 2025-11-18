@@ -14,47 +14,72 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct PfMetrics : IEquatable<PfMetrics>
     {
         private readonly string _value;
+        /// <summary> Pass fail criteria for response time metric in milliseconds. </summary>
+        private const string ResponseTimeInMillisecondsValue = "response_time_ms";
+        /// <summary> Pass fail criteria for latency metric in milliseconds. </summary>
+        private const string LatencyValue = "latency";
+        /// <summary> Pass fail criteria for error metric. </summary>
+        private const string ErrorValue = "error";
+        /// <summary> Pass fail criteria for total requests. </summary>
+        private const string RequestsValue = "requests";
+        /// <summary> Pass fail criteria for request per second. </summary>
+        private const string RequestsPerSecondValue = "requests_per_sec";
 
         /// <summary> Initializes a new instance of <see cref="PfMetrics"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PfMetrics(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ResponseTimeInMillisecondsValue = "response_time_ms";
-        private const string LatencyValue = "latency";
-        private const string ErrorValue = "error";
-        private const string RequestsValue = "requests";
-        private const string RequestsPerSecondValue = "requests_per_sec";
+            _value = value;
+        }
 
         /// <summary> Pass fail criteria for response time metric in milliseconds. </summary>
         public static PfMetrics ResponseTimeInMilliseconds { get; } = new PfMetrics(ResponseTimeInMillisecondsValue);
+
         /// <summary> Pass fail criteria for latency metric in milliseconds. </summary>
         public static PfMetrics Latency { get; } = new PfMetrics(LatencyValue);
+
         /// <summary> Pass fail criteria for error metric. </summary>
         public static PfMetrics Error { get; } = new PfMetrics(ErrorValue);
+
         /// <summary> Pass fail criteria for total requests. </summary>
         public static PfMetrics Requests { get; } = new PfMetrics(RequestsValue);
+
         /// <summary> Pass fail criteria for request per second. </summary>
         public static PfMetrics RequestsPerSecond { get; } = new PfMetrics(RequestsPerSecondValue);
+
         /// <summary> Determines if two <see cref="PfMetrics"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PfMetrics left, PfMetrics right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PfMetrics"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PfMetrics left, PfMetrics right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PfMetrics"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PfMetrics"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PfMetrics(string value) => new PfMetrics(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PfMetrics"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PfMetrics?(string value) => value == null ? null : new PfMetrics(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PfMetrics other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PfMetrics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

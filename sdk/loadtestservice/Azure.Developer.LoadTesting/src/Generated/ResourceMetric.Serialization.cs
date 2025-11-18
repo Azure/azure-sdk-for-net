@@ -13,10 +13,20 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class ResourceMetric : IUtf8JsonSerializable, IJsonModel<ResourceMetric>
+    /// <summary>
+    /// Associated metric definition for particular metrics of the azure resource (
+    /// Refer :
+    /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition).
+    /// </summary>
+    public partial class ResourceMetric : IJsonModel<ResourceMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ResourceMetric"/> for deserialization. </summary>
+        internal ResourceMetric()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +38,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceMetric)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -59,15 +68,15 @@ namespace Azure.Developer.LoadTesting
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +85,27 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        ResourceMetric IJsonModel<ResourceMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceMetric IJsonModel<ResourceMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceMetric)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceMetric(document.RootElement, options);
         }
 
-        internal static ResourceMetric DeserializeResourceMetric(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourceMetric DeserializeResourceMetric(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,56 +118,54 @@ namespace Azure.Developer.LoadTesting
             string aggregation = default;
             string unit = default;
             string resourceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"u8))
+                if (prop.NameEquals("metricNamespace"u8))
                 {
-                    metricNamespace = property.Value.GetString();
+                    metricNamespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayDescription"u8))
+                if (prop.NameEquals("displayDescription"u8))
                 {
-                    displayDescription = property.Value.GetString();
+                    displayDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aggregation"u8))
+                if (prop.NameEquals("aggregation"u8))
                 {
-                    aggregation = property.Value.GetString();
+                    aggregation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString();
+                    unit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceMetric(
                 id,
                 resourceId,
@@ -163,13 +175,16 @@ namespace Azure.Developer.LoadTesting
                 aggregation,
                 unit,
                 resourceType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ResourceMetric>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -179,15 +194,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        ResourceMetric IPersistableModel<ResourceMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceMetric IPersistableModel<ResourceMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceMetric(document.RootElement, options);
                     }
                 default:
@@ -195,22 +215,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ResourceMetric FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResourceMetric(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

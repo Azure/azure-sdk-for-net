@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Test run statistics. </summary>
     public partial class TestRunStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestRunStatistics"/>. </summary>
         internal TestRunStatistics()
@@ -71,8 +42,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="throughput"> Throughput. </param>
         /// <param name="receivedKBytesPerSec"> Received network bytes. </param>
         /// <param name="sentKBytesPerSec"> Send network bytes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunStatistics(string transaction, double? sampleCount, double? errorCount, double? errorPercentage, double? meanResponseTime, double? medianResponseTime, double? maxResponseTime, double? minResponseTime, double? percentile90ResponseTime, double? percentile95ResponseTime, double? percentile99ResponseTime, double? percentile75ResponseTime, double? percentile96ResponseTime, double? percentile97ResponseTime, double? percentile98ResponseTime, double? percentile999ResponseTime, double? percentile9999ResponseTime, double? throughput, double? receivedKBytesPerSec, double? sentKBytesPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TestRunStatistics(string transaction, double? sampleCount, double? errorCount, double? errorPercentage, double? meanResponseTime, double? medianResponseTime, double? maxResponseTime, double? minResponseTime, double? percentile90ResponseTime, double? percentile95ResponseTime, double? percentile99ResponseTime, double? percentile75ResponseTime, double? percentile96ResponseTime, double? percentile97ResponseTime, double? percentile98ResponseTime, double? percentile999ResponseTime, double? percentile9999ResponseTime, double? throughput, double? receivedKBytesPerSec, double? sentKBytesPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Transaction = transaction;
             SampleCount = sampleCount;
@@ -94,47 +65,66 @@ namespace Azure.Developer.LoadTesting
             Throughput = throughput;
             ReceivedKBytesPerSec = receivedKBytesPerSec;
             SentKBytesPerSec = sentKBytesPerSec;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Transaction name. </summary>
         public string Transaction { get; }
+
         /// <summary> Sampler count. </summary>
         public double? SampleCount { get; }
+
         /// <summary> Error count. </summary>
         public double? ErrorCount { get; }
+
         /// <summary> Error percentage. </summary>
         public double? ErrorPercentage { get; }
+
         /// <summary> Mean response time. </summary>
         public double? MeanResponseTime { get; }
+
         /// <summary> Median response time. </summary>
         public double? MedianResponseTime { get; }
+
         /// <summary> Max response time. </summary>
         public double? MaxResponseTime { get; }
+
         /// <summary> Minimum response time. </summary>
         public double? MinResponseTime { get; }
+
         /// <summary> 90 percentile response time. </summary>
         public double? Percentile90ResponseTime { get; }
+
         /// <summary> 95 percentile response time. </summary>
         public double? Percentile95ResponseTime { get; }
+
         /// <summary> 99 percentile response time. </summary>
         public double? Percentile99ResponseTime { get; }
+
         /// <summary> 75 percentile response time. </summary>
         public double? Percentile75ResponseTime { get; }
+
         /// <summary> 96 percentile response time. </summary>
         public double? Percentile96ResponseTime { get; }
+
         /// <summary> 97 percentile response time. </summary>
         public double? Percentile97ResponseTime { get; }
+
         /// <summary> 98 percentile response time. </summary>
         public double? Percentile98ResponseTime { get; }
+
         /// <summary> 99.9 percentile response time. </summary>
         public double? Percentile999ResponseTime { get; }
+
         /// <summary> 99.99 percentile response time. </summary>
         public double? Percentile9999ResponseTime { get; }
+
         /// <summary> Throughput. </summary>
         public double? Throughput { get; }
+
         /// <summary> Received network bytes. </summary>
         public double? ReceivedKBytesPerSec { get; }
+
         /// <summary> Send network bytes. </summary>
         public double? SentKBytesPerSec { get; }
     }

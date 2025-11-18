@@ -13,54 +13,22 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Notification rule model.
-    /// Please note <see cref="NotificationRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="TestsNotificationRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TestsNotificationRule"/>.
     /// </summary>
     public abstract partial class NotificationRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationRule"/>. </summary>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="actionGroupIds"/> is null. </exception>
-        protected NotificationRule(string displayName, IEnumerable<string> actionGroupIds)
+        /// <param name="scope"> The scope of the notification rule. </param>
+        private protected NotificationRule(string displayName, IEnumerable<string> actionGroupIds, NotificationScopeType scope)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
-
             DisplayName = displayName;
             ActionGroupIds = actionGroupIds.ToList();
+            Scope = scope;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationRule"/>. </summary>
@@ -72,8 +40,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NotificationRuleId = notificationRuleId;
             DisplayName = displayName;
@@ -83,28 +51,30 @@ namespace Azure.Developer.LoadTesting
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
             LastModifiedBy = lastModifiedBy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NotificationRule"/> for deserialization. </summary>
-        internal NotificationRule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier of the notification rule. </summary>
         public string NotificationRuleId { get; }
+
         /// <summary> The name of the notification rule. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> The action groups to notify. </summary>
         public IList<string> ActionGroupIds { get; }
+
         /// <summary> The scope of the notification rule. </summary>
         internal NotificationScopeType Scope { get; set; }
+
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
+
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
+
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? LastModifiedDateTime { get; }
+
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }
     }

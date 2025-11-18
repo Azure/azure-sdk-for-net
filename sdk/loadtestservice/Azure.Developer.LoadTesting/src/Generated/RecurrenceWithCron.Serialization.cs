@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class RecurrenceWithCron : IUtf8JsonSerializable, IJsonModel<RecurrenceWithCron>
+    /// <summary> Recurrence is set based on cron expression. </summary>
+    public partial class RecurrenceWithCron : LoadTestingRecurrence, IJsonModel<RecurrenceWithCron>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecurrenceWithCron>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/> for deserialization. </summary>
+        internal RecurrenceWithCron()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecurrenceWithCron>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,76 +33,81 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecurrenceWithCron)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("cronExpression"u8);
             writer.WriteStringValue(CronExpression);
         }
 
-        RecurrenceWithCron IJsonModel<RecurrenceWithCron>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecurrenceWithCron IJsonModel<RecurrenceWithCron>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RecurrenceWithCron)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LoadTestingRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecurrenceWithCron)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRecurrenceWithCron(document.RootElement, options);
         }
 
-        internal static RecurrenceWithCron DeserializeRecurrenceWithCron(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RecurrenceWithCron DeserializeRecurrenceWithCron(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string cronExpression = default;
             Frequency frequency = default;
             RecurrenceEnd recurrenceEnd = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string cronExpression = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cronExpression"u8))
+                if (prop.NameEquals("frequency"u8))
                 {
-                    cronExpression = property.Value.GetString();
+                    frequency = new Frequency(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("frequency"u8))
+                if (prop.NameEquals("recurrenceEnd"u8))
                 {
-                    frequency = new Frequency(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recurrenceEnd"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recurrenceEnd = RecurrenceEnd.DeserializeRecurrenceEnd(property.Value, options);
+                    recurrenceEnd = RecurrenceEnd.DeserializeRecurrenceEnd(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("cronExpression"u8))
+                {
+                    cronExpression = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RecurrenceWithCron(frequency, recurrenceEnd, serializedAdditionalRawData, cronExpression);
+            return new RecurrenceWithCron(frequency, recurrenceEnd, additionalBinaryDataProperties, cronExpression);
         }
 
-        BinaryData IPersistableModel<RecurrenceWithCron>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecurrenceWithCron>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -107,15 +117,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        RecurrenceWithCron IPersistableModel<RecurrenceWithCron>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecurrenceWithCron IPersistableModel<RecurrenceWithCron>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecurrenceWithCron)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecurrenceWithCron>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRecurrenceWithCron(document.RootElement, options);
                     }
                 default:
@@ -123,22 +138,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecurrenceWithCron>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RecurrenceWithCron FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRecurrenceWithCron(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

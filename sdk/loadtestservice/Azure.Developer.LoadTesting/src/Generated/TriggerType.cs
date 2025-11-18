@@ -14,35 +14,52 @@ namespace Azure.Developer.LoadTesting
     internal readonly partial struct TriggerType : IEquatable<TriggerType>
     {
         private readonly string _value;
+        /// <summary> Trigger is a Scheduled Trigger on a Test. </summary>
+        private const string ScheduleTestsTriggerValue = "ScheduleTestsTrigger";
 
         /// <summary> Initializes a new instance of <see cref="TriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TriggerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScheduleTestsTriggerValue = "ScheduleTestsTrigger";
+            _value = value;
+        }
 
         /// <summary> Trigger is a Scheduled Trigger on a Test. </summary>
         public static TriggerType ScheduleTestsTrigger { get; } = new TriggerType(ScheduleTestsTriggerValue);
+
         /// <summary> Determines if two <see cref="TriggerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TriggerType left, TriggerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TriggerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TriggerType left, TriggerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TriggerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TriggerType(string value) => new TriggerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TriggerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TriggerType?(string value) => value == null ? null : new TriggerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TriggerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

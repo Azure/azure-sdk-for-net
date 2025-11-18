@@ -14,44 +14,67 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>
     {
         private readonly string _value;
+        /// <summary> Entity was created by a user. </summary>
+        private const string UserValue = "User";
+        /// <summary> Entity was created by a scheduled trigger. </summary>
+        private const string ScheduledTriggerValue = "ScheduledTrigger";
+        /// <summary> Entity was created by Azure DevOps pipelines. </summary>
+        private const string AzurePipelinesValue = "AzurePipelines";
+        /// <summary> Entity was created by GitHub Workflows. </summary>
+        private const string GitHubWorkflowsValue = "GitHubWorkflows";
 
         /// <summary> Initializes a new instance of <see cref="CreatedByType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CreatedByType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserValue = "User";
-        private const string ScheduledTriggerValue = "ScheduledTrigger";
-        private const string AzurePipelinesValue = "AzurePipelines";
-        private const string GitHubWorkflowsValue = "GitHubWorkflows";
+            _value = value;
+        }
 
         /// <summary> Entity was created by a user. </summary>
         public static CreatedByType User { get; } = new CreatedByType(UserValue);
+
         /// <summary> Entity was created by a scheduled trigger. </summary>
         public static CreatedByType ScheduledTrigger { get; } = new CreatedByType(ScheduledTriggerValue);
+
         /// <summary> Entity was created by Azure DevOps pipelines. </summary>
         public static CreatedByType AzurePipelines { get; } = new CreatedByType(AzurePipelinesValue);
+
         /// <summary> Entity was created by GitHub Workflows. </summary>
         public static CreatedByType GitHubWorkflows { get; } = new CreatedByType(GitHubWorkflowsValue);
+
         /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CreatedByType left, CreatedByType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CreatedByType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CreatedByType left, CreatedByType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CreatedByType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CreatedByType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CreatedByType(string value) => new CreatedByType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CreatedByType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CreatedByType?(string value) => value == null ? null : new CreatedByType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CreatedByType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CreatedByType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

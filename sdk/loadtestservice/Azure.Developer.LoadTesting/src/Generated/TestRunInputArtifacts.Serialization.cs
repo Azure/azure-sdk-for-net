@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class TestRunInputArtifacts : IUtf8JsonSerializable, IJsonModel<TestRunInputArtifacts>
+    /// <summary> The input artifacts for the test run. </summary>
+    public partial class TestRunInputArtifacts : IJsonModel<TestRunInputArtifacts>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestRunInputArtifacts>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestRunInputArtifacts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestRunInputArtifacts)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ConfigFileInfo))
             {
                 writer.WritePropertyName("configFileInfo"u8);
@@ -63,21 +62,21 @@ namespace Azure.Developer.LoadTesting
             {
                 writer.WritePropertyName("additionalFileInfo"u8);
                 writer.WriteStartArray();
-                foreach (var item in AdditionalFileInfo)
+                foreach (TestRunFileInfo item in AdditionalFileInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,89 +85,93 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestRunInputArtifacts IJsonModel<TestRunInputArtifacts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunInputArtifacts IJsonModel<TestRunInputArtifacts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestRunInputArtifacts JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestRunInputArtifacts)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTestRunInputArtifacts(document.RootElement, options);
         }
 
-        internal static TestRunInputArtifacts DeserializeTestRunInputArtifacts(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TestRunInputArtifacts DeserializeTestRunInputArtifacts(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TestRunFileInfo configFileInfo = default;
             TestRunFileInfo testScriptFileInfo = default;
-            TestRunFileInfo userPropFileInfo = default;
+            TestRunFileInfo userPropertyFileInfo = default;
             TestRunFileInfo inputArtifactsZipFileInfo = default;
             TestRunFileInfo urlTestConfigFileInfo = default;
             IReadOnlyList<TestRunFileInfo> additionalFileInfo = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("configFileInfo"u8))
+                if (prop.NameEquals("configFileInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    configFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("testScriptFileInfo"u8))
+                if (prop.NameEquals("testScriptFileInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testScriptFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    testScriptFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("userPropFileInfo"u8))
+                if (prop.NameEquals("userPropFileInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userPropFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    userPropertyFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("inputArtifactsZipFileInfo"u8))
+                if (prop.NameEquals("inputArtifactsZipFileInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    inputArtifactsZipFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    inputArtifactsZipFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("urlTestConfigFileInfo"u8))
+                if (prop.NameEquals("urlTestConfigFileInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    urlTestConfigFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(property.Value, options);
+                    urlTestConfigFileInfo = TestRunFileInfo.DeserializeTestRunFileInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("additionalFileInfo"u8))
+                if (prop.NameEquals("additionalFileInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TestRunFileInfo> array = new List<TestRunFileInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(TestRunFileInfo.DeserializeTestRunFileInfo(item, options));
                     }
@@ -177,24 +180,26 @@ namespace Azure.Developer.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TestRunInputArtifacts(
                 configFileInfo,
                 testScriptFileInfo,
-                userPropFileInfo,
+                userPropertyFileInfo,
                 inputArtifactsZipFileInfo,
                 urlTestConfigFileInfo,
                 additionalFileInfo ?? new ChangeTrackingList<TestRunFileInfo>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TestRunInputArtifacts>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestRunInputArtifacts>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -204,15 +209,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestRunInputArtifacts IPersistableModel<TestRunInputArtifacts>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunInputArtifacts IPersistableModel<TestRunInputArtifacts>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestRunInputArtifacts PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunInputArtifacts>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTestRunInputArtifacts(document.RootElement, options);
                     }
                 default:
@@ -220,22 +230,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TestRunInputArtifacts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TestRunInputArtifacts FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestRunInputArtifacts(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

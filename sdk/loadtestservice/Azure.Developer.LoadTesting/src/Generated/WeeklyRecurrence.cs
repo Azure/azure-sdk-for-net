@@ -14,19 +14,18 @@ namespace Azure.Developer.LoadTesting
     public partial class WeeklyRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
-        public WeeklyRecurrence()
+        public WeeklyRecurrence() : base(Frequency.Weekly)
         {
-            Frequency = Frequency.Weekly;
             DaysOfWeek = new ChangeTrackingList<WeekDays>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfWeek"> Recurrence set to repeat on the specified days of the week. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of weeks between each recurrence. </param>
-        internal WeeklyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WeekDays> daysOfWeek, int? interval) : base(frequency, recurrenceEnd, serializedAdditionalRawData)
+        internal WeeklyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WeekDays> daysOfWeek, int? interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             DaysOfWeek = daysOfWeek;
             Interval = interval;
@@ -34,6 +33,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Recurrence set to repeat on the specified days of the week. </summary>
         public IList<WeekDays> DaysOfWeek { get; }
+
         /// <summary> The interval at which the recurrence should repeat. It signifies the number of weeks between each recurrence. </summary>
         public int? Interval { get; set; }
     }

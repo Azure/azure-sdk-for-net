@@ -12,61 +12,34 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Recurrence model.
-    /// Please note <see cref="LoadTestingRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RecurrenceWithCron"/>, <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="MonthlyRecurrenceByWeekDays"/> and <see cref="WeeklyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
     /// </summary>
     public abstract partial class LoadTestingRecurrence
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingRecurrence"/>. </summary>
-        protected LoadTestingRecurrence()
+        /// <param name="frequency"> Frequency of the recurrence. </param>
+        private protected LoadTestingRecurrence(Frequency frequency)
         {
+            Frequency = frequency;
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestingRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             RecurrenceEnd = recurrenceEnd;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Frequency of the recurrence. </summary>
         internal Frequency Frequency { get; set; }
+
         /// <summary> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </summary>
         public RecurrenceEnd RecurrenceEnd { get; set; }
     }

@@ -19,17 +19,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="eventFilters">
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
-        /// Please note <see cref="TestsNotificationEventFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TestRunEndedNotificationEventFilter"/>, <see cref="TestRunStartedNotificationEventFilter"/>, <see cref="TriggerCompletedNotificationEventFilter"/> and <see cref="TriggerDisabledNotificationEventFilter"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="actionGroupIds"/> or <paramref name="eventFilters"/> is null. </exception>
-        public TestsNotificationRule(string displayName, IEnumerable<string> actionGroupIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(displayName, actionGroupIds)
+        public TestsNotificationRule(string displayName, IEnumerable<string> actionGroupIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(displayName, actionGroupIds, NotificationScopeType.Tests)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
             Argument.AssertNotNull(eventFilters, nameof(eventFilters));
 
-            Scope = NotificationScopeType.Tests;
             TestIds = new ChangeTrackingList<string>();
             EventFilters = eventFilters;
         }
@@ -43,32 +40,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="testIds"> The test ids to include. If not provided, notification will be sent for all testIds. </param>
         /// <param name="eventFilters">
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
-        /// Please note <see cref="TestsNotificationEventFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TestRunEndedNotificationEventFilter"/>, <see cref="TestRunStartedNotificationEventFilter"/>, <see cref="TriggerCompletedNotificationEventFilter"/> and <see cref="TriggerDisabledNotificationEventFilter"/>.
         /// </param>
-        internal TestsNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> testIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(notificationRuleId, displayName, actionGroupIds, scope, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, serializedAdditionalRawData)
+        internal TestsNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(notificationRuleId, displayName, actionGroupIds, scope, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
         {
             TestIds = testIds;
             EventFilters = eventFilters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/> for deserialization. </summary>
-        internal TestsNotificationRule()
-        {
-        }
-
         /// <summary> The test ids to include. If not provided, notification will be sent for all testIds. </summary>
         public IList<string> TestIds { get; }
+
         /// <summary>
         /// The event to receive notifications for along with filtering conditions.
         /// Key is a user-assigned identifier for the event filter.
-        /// Please note <see cref="TestsNotificationEventFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TestRunEndedNotificationEventFilter"/>, <see cref="TestRunStartedNotificationEventFilter"/>, <see cref="TriggerCompletedNotificationEventFilter"/> and <see cref="TriggerDisabledNotificationEventFilter"/>.
         /// </summary>
         public IDictionary<string, TestsNotificationEventFilter> EventFilters { get; }
     }

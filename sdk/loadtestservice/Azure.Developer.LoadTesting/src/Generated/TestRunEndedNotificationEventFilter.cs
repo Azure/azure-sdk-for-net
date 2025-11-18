@@ -14,16 +14,15 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunEndedNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="TestRunEndedNotificationEventFilter"/>. </summary>
-        public TestRunEndedNotificationEventFilter()
+        public TestRunEndedNotificationEventFilter() : base(NotificationEventType.TestRunEnded)
         {
-            Kind = NotificationEventType.TestRunEnded;
         }
 
         /// <summary> Initializes a new instance of <see cref="TestRunEndedNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="condition"> Event filtering condition. </param>
-        internal TestRunEndedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, TestRunEndedEventCondition condition) : base(kind, serializedAdditionalRawData)
+        internal TestRunEndedNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, TestRunEndedEventCondition condition) : base(kind, additionalBinaryDataProperties)
         {
             Condition = condition;
         }

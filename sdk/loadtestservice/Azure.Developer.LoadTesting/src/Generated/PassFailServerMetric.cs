@@ -14,44 +14,15 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Pass fail server metric. </summary>
     public partial class PassFailServerMetric
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PassFailServerMetric"/>. </summary>
         /// <param name="resourceId"> The resource id of the resource emitting the metric. </param>
         /// <param name="metricNamespace"> The server metric namespace. </param>
         /// <param name="metricName"> The server metric name. </param>
         /// <param name="aggregation"> Aggregation Type. </param>
-        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
+        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’ . </param>
         /// <param name="value"> The value to compare with the server metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/>, <paramref name="aggregation"/> or <paramref name="condition"/> is null. </exception>
         public PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value)
@@ -75,13 +46,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="metricNamespace"> The server metric namespace. </param>
         /// <param name="metricName"> The server metric name. </param>
         /// <param name="aggregation"> Aggregation Type. </param>
-        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
+        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’ . </param>
         /// <param name="value"> The value to compare with the server metric. </param>
         /// <param name="action"> Action taken after the threshold is met. Default is ‘continue’. </param>
-        /// <param name="actualValue"> The actual value of the server metric. </param>
+        /// <param name="actualValue"> The actual value of the server metric . </param>
         /// <param name="result"> Outcome of the test run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             MetricNamespace = metricNamespace;
@@ -92,30 +63,33 @@ namespace Azure.Developer.LoadTesting
             Action = action;
             ActualValue = actualValue;
             Result = result;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PassFailServerMetric"/> for deserialization. </summary>
-        internal PassFailServerMetric()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource id of the resource emitting the metric. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> The server metric namespace. </summary>
         public string MetricNamespace { get; set; }
+
         /// <summary> The server metric name. </summary>
         public string MetricName { get; set; }
+
         /// <summary> Aggregation Type. </summary>
         public string Aggregation { get; set; }
-        /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
+
+        /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’ . </summary>
         public string Condition { get; set; }
+
         /// <summary> The value to compare with the server metric. </summary>
         public double Value { get; set; }
+
         /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
         public PassFailAction? Action { get; set; }
-        /// <summary> The actual value of the server metric. </summary>
+
+        /// <summary> The actual value of the server metric . </summary>
         public double? ActualValue { get; }
+
         /// <summary> Outcome of the test run. </summary>
         public PassFailResult? Result { get; }
     }

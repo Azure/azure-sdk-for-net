@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class LoadTestConfiguration : IUtf8JsonSerializable, IJsonModel<LoadTestConfiguration>
+    /// <summary> Configurations for the load test. </summary>
+    public partial class LoadTestConfiguration : IJsonModel<LoadTestConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(EngineInstances))
             {
                 writer.WritePropertyName("engineInstances"u8);
@@ -58,21 +57,21 @@ namespace Azure.Developer.LoadTesting
             {
                 writer.WritePropertyName("regionalLoadTestConfig"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegionalLoadTestConfiguration)
+                foreach (RegionalConfiguration item in RegionalLoadTestConfiguration)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,104 +80,110 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        LoadTestConfiguration IJsonModel<LoadTestConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestConfiguration IJsonModel<LoadTestConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadTestConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLoadTestConfiguration(document.RootElement, options);
         }
 
-        internal static LoadTestConfiguration DeserializeLoadTestConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LoadTestConfiguration DeserializeLoadTestConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? engineInstances = default;
-            bool? splitAllCSVs = default;
+            bool? splitAllCsvs = default;
             bool? quickStartTest = default;
-            OptionalLoadTestConfiguration optionalLoadTestConfig = default;
-            IList<RegionalConfiguration> regionalLoadTestConfig = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            OptionalLoadTestConfiguration optionalLoadTestConfiguration = default;
+            IList<RegionalConfiguration> regionalLoadTestConfiguration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("engineInstances"u8))
+                if (prop.NameEquals("engineInstances"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    engineInstances = property.Value.GetInt32();
+                    engineInstances = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("splitAllCSVs"u8))
+                if (prop.NameEquals("splitAllCSVs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    splitAllCSVs = property.Value.GetBoolean();
+                    splitAllCsvs = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("quickStartTest"u8))
+                if (prop.NameEquals("quickStartTest"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    quickStartTest = property.Value.GetBoolean();
+                    quickStartTest = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("optionalLoadTestConfig"u8))
+                if (prop.NameEquals("optionalLoadTestConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    optionalLoadTestConfig = OptionalLoadTestConfiguration.DeserializeOptionalLoadTestConfiguration(property.Value, options);
+                    optionalLoadTestConfiguration = OptionalLoadTestConfiguration.DeserializeOptionalLoadTestConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("regionalLoadTestConfig"u8))
+                if (prop.NameEquals("regionalLoadTestConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RegionalConfiguration> array = new List<RegionalConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RegionalConfiguration.DeserializeRegionalConfiguration(item, options));
                     }
-                    regionalLoadTestConfig = array;
+                    regionalLoadTestConfiguration = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LoadTestConfiguration(
                 engineInstances,
-                splitAllCSVs,
+                splitAllCsvs,
                 quickStartTest,
-                optionalLoadTestConfig,
-                regionalLoadTestConfig ?? new ChangeTrackingList<RegionalConfiguration>(),
-                serializedAdditionalRawData);
+                optionalLoadTestConfiguration,
+                regionalLoadTestConfiguration ?? new ChangeTrackingList<RegionalConfiguration>(),
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<LoadTestConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LoadTestConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -188,15 +193,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        LoadTestConfiguration IPersistableModel<LoadTestConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestConfiguration IPersistableModel<LoadTestConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadTestConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadTestConfiguration(document.RootElement, options);
                     }
                 default:
@@ -204,22 +214,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LoadTestConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LoadTestConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLoadTestConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

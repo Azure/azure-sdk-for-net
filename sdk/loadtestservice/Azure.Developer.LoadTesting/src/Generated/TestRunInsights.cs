@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Represents insights for the test run. </summary>
     public partial class TestRunInsights
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TestRunInsights"/>. </summary>
         internal TestRunInsights()
@@ -57,22 +28,25 @@ namespace Azure.Developer.LoadTesting
         /// <param name="rows"> The rows of the insights. </param>
         /// <param name="version"> The version of the insights. </param>
         /// <param name="status"> The status of the insights. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunInsights(IReadOnlyList<TestRunInsightColumn> columns, IReadOnlyList<IDictionary<string, string>> rows, long? version, OperationState? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TestRunInsights(IReadOnlyList<TestRunInsightColumn> columns, IReadOnlyList<IDictionary<string, string>> rows, long? version, OperationState? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
             Rows = rows;
             Version = version;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The columns of the insights. </summary>
         public IReadOnlyList<TestRunInsightColumn> Columns { get; }
+
         /// <summary> The rows of the insights. </summary>
         public IReadOnlyList<IDictionary<string, string>> Rows { get; }
+
         /// <summary> The version of the insights. </summary>
         public long? Version { get; }
+
         /// <summary> The status of the insights. </summary>
         public OperationState? Status { get; }
     }

@@ -14,15 +14,14 @@ namespace Azure.Developer.LoadTesting
     public partial class TriggerDisabledNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="TriggerDisabledNotificationEventFilter"/>. </summary>
-        public TriggerDisabledNotificationEventFilter()
+        public TriggerDisabledNotificationEventFilter() : base(NotificationEventType.TriggerDisabled)
         {
-            Kind = NotificationEventType.TriggerDisabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggerDisabledNotificationEventFilter"/>. </summary>
         /// <param name="kind"> The event type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerDisabledNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerDisabledNotificationEventFilter(NotificationEventType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

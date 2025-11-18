@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class OptionalLoadTestConfiguration : IUtf8JsonSerializable, IJsonModel<OptionalLoadTestConfiguration>
+    /// <summary> Configuration for quick load test. </summary>
+    public partial class OptionalLoadTestConfiguration : IJsonModel<OptionalLoadTestConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionalLoadTestConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OptionalLoadTestConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
@@ -62,17 +61,17 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Duration.Value.ToString("%s")));
+                writer.WriteNumberValue(Convert.ToInt32(Duration.Value.TotalSeconds));
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,110 +80,116 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        OptionalLoadTestConfiguration IJsonModel<OptionalLoadTestConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OptionalLoadTestConfiguration IJsonModel<OptionalLoadTestConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OptionalLoadTestConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOptionalLoadTestConfiguration(document.RootElement, options);
         }
 
-        internal static OptionalLoadTestConfiguration DeserializeOptionalLoadTestConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OptionalLoadTestConfiguration DeserializeOptionalLoadTestConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri endpointUrl = default;
+            Uri endpointUri = default;
             int? requestsPerSecond = default;
             int? maxResponseTimeInMs = default;
             int? virtualUsers = default;
             int? rampUpTime = default;
             TimeSpan? duration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointUrl"u8))
+                if (prop.NameEquals("endpointUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointUrl = new Uri(property.Value.GetString());
+                    endpointUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestsPerSecond"u8))
+                if (prop.NameEquals("requestsPerSecond"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestsPerSecond = property.Value.GetInt32();
+                    requestsPerSecond = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxResponseTimeInMs"u8))
+                if (prop.NameEquals("maxResponseTimeInMs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxResponseTimeInMs = property.Value.GetInt32();
+                    maxResponseTimeInMs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("virtualUsers"u8))
+                if (prop.NameEquals("virtualUsers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualUsers = property.Value.GetInt32();
+                    virtualUsers = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampUpTime"u8))
+                if (prop.NameEquals("rampUpTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rampUpTime = property.Value.GetInt32();
+                    rampUpTime = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("duration"u8))
+                if (prop.NameEquals("duration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    duration = TimeSpan.FromSeconds(property.Value.GetInt32());
+                    duration = TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OptionalLoadTestConfiguration(
-                endpointUrl,
+                endpointUri,
                 requestsPerSecond,
                 maxResponseTimeInMs,
                 virtualUsers,
                 rampUpTime,
                 duration,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<OptionalLoadTestConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OptionalLoadTestConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -194,15 +199,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        OptionalLoadTestConfiguration IPersistableModel<OptionalLoadTestConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OptionalLoadTestConfiguration IPersistableModel<OptionalLoadTestConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OptionalLoadTestConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOptionalLoadTestConfiguration(document.RootElement, options);
                     }
                 default:
@@ -210,22 +220,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OptionalLoadTestConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OptionalLoadTestConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOptionalLoadTestConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

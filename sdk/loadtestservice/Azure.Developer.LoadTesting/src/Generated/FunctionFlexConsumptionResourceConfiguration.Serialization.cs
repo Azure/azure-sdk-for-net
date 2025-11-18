@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class FunctionFlexConsumptionResourceConfiguration : IUtf8JsonSerializable, IJsonModel<FunctionFlexConsumptionResourceConfiguration>
+    /// <summary> Resource configuration instance for a Flex Consumption based Azure Function App. </summary>
+    public partial class FunctionFlexConsumptionResourceConfiguration : IJsonModel<FunctionFlexConsumptionResourceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionFlexConsumptionResourceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FunctionFlexConsumptionResourceConfiguration"/> for deserialization. </summary>
+        internal FunctionFlexConsumptionResourceConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionFlexConsumptionResourceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionFlexConsumptionResourceConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceMemoryMB"u8);
             writer.WriteNumberValue(InstanceMemoryMB);
             if (Optional.IsDefined(HttpConcurrency))
@@ -41,15 +45,15 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("httpConcurrency"u8);
                 writer.WriteNumberValue(HttpConcurrency.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,59 +62,65 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        FunctionFlexConsumptionResourceConfiguration IJsonModel<FunctionFlexConsumptionResourceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionFlexConsumptionResourceConfiguration IJsonModel<FunctionFlexConsumptionResourceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionFlexConsumptionResourceConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionFlexConsumptionResourceConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFunctionFlexConsumptionResourceConfiguration(document.RootElement, options);
         }
 
-        internal static FunctionFlexConsumptionResourceConfiguration DeserializeFunctionFlexConsumptionResourceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FunctionFlexConsumptionResourceConfiguration DeserializeFunctionFlexConsumptionResourceConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long instanceMemoryMB = default;
             long? httpConcurrency = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceMemoryMB"u8))
+                if (prop.NameEquals("instanceMemoryMB"u8))
                 {
-                    instanceMemoryMB = property.Value.GetInt64();
+                    instanceMemoryMB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("httpConcurrency"u8))
+                if (prop.NameEquals("httpConcurrency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    httpConcurrency = property.Value.GetInt64();
+                    httpConcurrency = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FunctionFlexConsumptionResourceConfiguration(instanceMemoryMB, httpConcurrency, serializedAdditionalRawData);
+            return new FunctionFlexConsumptionResourceConfiguration(instanceMemoryMB, httpConcurrency, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FunctionFlexConsumptionResourceConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FunctionFlexConsumptionResourceConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -120,15 +130,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        FunctionFlexConsumptionResourceConfiguration IPersistableModel<FunctionFlexConsumptionResourceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionFlexConsumptionResourceConfiguration IPersistableModel<FunctionFlexConsumptionResourceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionFlexConsumptionResourceConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionFlexConsumptionResourceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFunctionFlexConsumptionResourceConfiguration(document.RootElement, options);
                     }
                 default:
@@ -136,22 +151,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FunctionFlexConsumptionResourceConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FunctionFlexConsumptionResourceConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFunctionFlexConsumptionResourceConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

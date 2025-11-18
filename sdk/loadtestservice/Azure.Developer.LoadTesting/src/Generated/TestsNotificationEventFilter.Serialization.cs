@@ -8,15 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
+    /// <summary>
+    /// The notification event filter for Tests scope.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TestRunEndedNotificationEventFilter"/>, <see cref="TestRunStartedNotificationEventFilter"/>, <see cref="TriggerCompletedNotificationEventFilter"/>, and <see cref="TriggerDisabledNotificationEventFilter"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownTestsNotificationEventFilter))]
-    public partial class TestsNotificationEventFilter : IUtf8JsonSerializable, IJsonModel<TestsNotificationEventFilter>
+    public abstract partial class TestsNotificationEventFilter : IJsonModel<TestsNotificationEventFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestsNotificationEventFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TestsNotificationEventFilter"/> for deserialization. </summary>
+        internal TestsNotificationEventFilter()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestsNotificationEventFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +36,22 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestsNotificationEventFilter)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,43 +60,55 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestsNotificationEventFilter IJsonModel<TestsNotificationEventFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestsNotificationEventFilter IJsonModel<TestsNotificationEventFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestsNotificationEventFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestsNotificationEventFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTestsNotificationEventFilter(document.RootElement, options);
         }
 
-        internal static TestsNotificationEventFilter DeserializeTestsNotificationEventFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TestsNotificationEventFilter DeserializeTestsNotificationEventFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "TestRunEnded": return TestRunEndedNotificationEventFilter.DeserializeTestRunEndedNotificationEventFilter(element, options);
-                    case "TestRunStarted": return TestRunStartedNotificationEventFilter.DeserializeTestRunStartedNotificationEventFilter(element, options);
-                    case "TriggerCompleted": return TriggerCompletedNotificationEventFilter.DeserializeTriggerCompletedNotificationEventFilter(element, options);
-                    case "TriggerDisabled": return TriggerDisabledNotificationEventFilter.DeserializeTriggerDisabledNotificationEventFilter(element, options);
+                    case "TestRunEnded":
+                        return TestRunEndedNotificationEventFilter.DeserializeTestRunEndedNotificationEventFilter(element, options);
+                    case "TestRunStarted":
+                        return TestRunStartedNotificationEventFilter.DeserializeTestRunStartedNotificationEventFilter(element, options);
+                    case "TriggerCompleted":
+                        return TriggerCompletedNotificationEventFilter.DeserializeTriggerCompletedNotificationEventFilter(element, options);
+                    case "TriggerDisabled":
+                        return TriggerDisabledNotificationEventFilter.DeserializeTriggerDisabledNotificationEventFilter(element, options);
                 }
             }
             return UnknownTestsNotificationEventFilter.DeserializeUnknownTestsNotificationEventFilter(element, options);
         }
 
-        BinaryData IPersistableModel<TestsNotificationEventFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestsNotificationEventFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -99,15 +118,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestsNotificationEventFilter IPersistableModel<TestsNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestsNotificationEventFilter IPersistableModel<TestsNotificationEventFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestsNotificationEventFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestsNotificationEventFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTestsNotificationEventFilter(document.RootElement, options);
                     }
                 default:
@@ -115,22 +139,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TestsNotificationEventFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TestsNotificationEventFilter FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestsNotificationEventFilter(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

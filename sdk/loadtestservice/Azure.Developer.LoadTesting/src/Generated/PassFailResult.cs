@@ -14,41 +14,62 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct PassFailResult : IEquatable<PassFailResult>
     {
         private readonly string _value;
+        /// <summary> Given pass fail criteria metric has passed. </summary>
+        private const string PassedValue = "passed";
+        /// <summary> Given pass fail criteria metric couldn't determine. </summary>
+        private const string UndeterminedValue = "undetermined";
+        /// <summary> Given pass fail criteria metric has failed. </summary>
+        private const string FailedValue = "failed";
 
         /// <summary> Initializes a new instance of <see cref="PassFailResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PassFailResult(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PassedValue = "passed";
-        private const string UndeterminedValue = "undetermined";
-        private const string FailedValue = "failed";
+            _value = value;
+        }
 
         /// <summary> Given pass fail criteria metric has passed. </summary>
         public static PassFailResult Passed { get; } = new PassFailResult(PassedValue);
+
         /// <summary> Given pass fail criteria metric couldn't determine. </summary>
         public static PassFailResult Undetermined { get; } = new PassFailResult(UndeterminedValue);
+
         /// <summary> Given pass fail criteria metric has failed. </summary>
         public static PassFailResult Failed { get; } = new PassFailResult(FailedValue);
+
         /// <summary> Determines if two <see cref="PassFailResult"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PassFailResult left, PassFailResult right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PassFailResult"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PassFailResult left, PassFailResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PassFailResult"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PassFailResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PassFailResult(string value) => new PassFailResult(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PassFailResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PassFailResult?(string value) => value == null ? null : new PassFailResult(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PassFailResult other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PassFailResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,10 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class PassFailServerMetric : IUtf8JsonSerializable, IJsonModel<PassFailServerMetric>
+    /// <summary> Pass fail server metric. </summary>
+    public partial class PassFailServerMetric : IJsonModel<PassFailServerMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PassFailServerMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PassFailServerMetric"/> for deserialization. </summary>
+        internal PassFailServerMetric()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PassFailServerMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PassFailServerMetric)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("metricNamespace"u8);
@@ -61,15 +66,15 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +83,27 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        PassFailServerMetric IJsonModel<PassFailServerMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PassFailServerMetric IJsonModel<PassFailServerMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PassFailServerMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PassFailServerMetric)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePassFailServerMetric(document.RootElement, options);
         }
 
-        internal static PassFailServerMetric DeserializePassFailServerMetric(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PassFailServerMetric DeserializePassFailServerMetric(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,73 +117,71 @@ namespace Azure.Developer.LoadTesting
             PassFailAction? action = default;
             double? actualValue = default;
             PassFailResult? result = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"u8))
+                if (prop.NameEquals("metricNamespace"u8))
                 {
-                    metricNamespace = property.Value.GetString();
+                    metricNamespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricName"u8))
+                if (prop.NameEquals("metricName"u8))
                 {
-                    metricName = property.Value.GetString();
+                    metricName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aggregation"u8))
+                if (prop.NameEquals("aggregation"u8))
                 {
-                    aggregation = property.Value.GetString();
+                    aggregation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("condition"u8))
+                if (prop.NameEquals("condition"u8))
                 {
-                    condition = property.Value.GetString();
+                    condition = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    value = property.Value.GetDouble();
+                    value = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("action"u8))
+                if (prop.NameEquals("action"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    action = new PassFailAction(property.Value.GetString());
+                    action = new PassFailAction(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("actualValue"u8))
+                if (prop.NameEquals("actualValue"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actualValue = property.Value.GetDouble();
+                    actualValue = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("result"u8))
+                if (prop.NameEquals("result"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    result = new PassFailResult(property.Value.GetString());
+                    result = new PassFailResult(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PassFailServerMetric(
                 resourceId,
                 metricNamespace,
@@ -184,13 +192,16 @@ namespace Azure.Developer.LoadTesting
                 action,
                 actualValue,
                 result,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<PassFailServerMetric>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PassFailServerMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -200,15 +211,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        PassFailServerMetric IPersistableModel<PassFailServerMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PassFailServerMetric IPersistableModel<PassFailServerMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PassFailServerMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PassFailServerMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePassFailServerMetric(document.RootElement, options);
                     }
                 default:
@@ -216,22 +232,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PassFailServerMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PassFailServerMetric FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePassFailServerMetric(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

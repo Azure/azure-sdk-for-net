@@ -15,25 +15,19 @@ namespace Azure.Developer.LoadTesting
     {
         /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/>. </summary>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </param>
-        public HourlyRecurrence(int interval)
+        public HourlyRecurrence(int interval) : base(Frequency.Hourly)
         {
-            Frequency = Frequency.Hourly;
             Interval = interval;
         }
 
         /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </param>
-        internal HourlyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> serializedAdditionalRawData, int interval) : base(frequency, recurrenceEnd, serializedAdditionalRawData)
+        internal HourlyRecurrence(Frequency frequency, RecurrenceEnd recurrenceEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties, int interval) : base(frequency, recurrenceEnd, additionalBinaryDataProperties)
         {
             Interval = interval;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/> for deserialization. </summary>
-        internal HourlyRecurrence()
-        {
         }
 
         /// <summary> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </summary>

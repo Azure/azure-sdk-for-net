@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class TestRunStatistics : IUtf8JsonSerializable, IJsonModel<TestRunStatistics>
+    /// <summary> Test run statistics. </summary>
+    public partial class TestRunStatistics : IJsonModel<TestRunStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestRunStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TestRunStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestRunStatistics)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Transaction))
             {
                 writer.WritePropertyName("transaction"u8);
@@ -134,15 +133,15 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("sentKBytesPerSec"u8);
                 writer.WriteNumberValue(SentKBytesPerSec.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,22 +150,27 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestRunStatistics IJsonModel<TestRunStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunStatistics IJsonModel<TestRunStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestRunStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TestRunStatistics)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTestRunStatistics(document.RootElement, options);
         }
 
-        internal static TestRunStatistics DeserializeTestRunStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TestRunStatistics DeserializeTestRunStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -174,237 +178,238 @@ namespace Azure.Developer.LoadTesting
             string transaction = default;
             double? sampleCount = default;
             double? errorCount = default;
-            double? errorPct = default;
-            double? meanResTime = default;
-            double? medianResTime = default;
-            double? maxResTime = default;
-            double? minResTime = default;
-            double? pct1ResTime = default;
-            double? pct2ResTime = default;
-            double? pct3ResTime = default;
-            double? pct75ResTime = default;
-            double? pct96ResTime = default;
-            double? pct97ResTime = default;
-            double? pct98ResTime = default;
-            double? pct999ResTime = default;
-            double? pct9999ResTime = default;
+            double? errorPercentage = default;
+            double? meanResponseTime = default;
+            double? medianResponseTime = default;
+            double? maxResponseTime = default;
+            double? minResponseTime = default;
+            double? percentile90ResponseTime = default;
+            double? percentile95ResponseTime = default;
+            double? percentile99ResponseTime = default;
+            double? percentile75ResponseTime = default;
+            double? percentile96ResponseTime = default;
+            double? percentile97ResponseTime = default;
+            double? percentile98ResponseTime = default;
+            double? percentile999ResponseTime = default;
+            double? percentile9999ResponseTime = default;
             double? throughput = default;
             double? receivedKBytesPerSec = default;
             double? sentKBytesPerSec = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("transaction"u8))
+                if (prop.NameEquals("transaction"u8))
                 {
-                    transaction = property.Value.GetString();
+                    transaction = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sampleCount"u8))
+                if (prop.NameEquals("sampleCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sampleCount = property.Value.GetDouble();
+                    sampleCount = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("errorCount"u8))
+                if (prop.NameEquals("errorCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorCount = property.Value.GetDouble();
+                    errorCount = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("errorPct"u8))
+                if (prop.NameEquals("errorPct"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorPct = property.Value.GetDouble();
+                    errorPercentage = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("meanResTime"u8))
+                if (prop.NameEquals("meanResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    meanResTime = property.Value.GetDouble();
+                    meanResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("medianResTime"u8))
+                if (prop.NameEquals("medianResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    medianResTime = property.Value.GetDouble();
+                    medianResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxResTime"u8))
+                if (prop.NameEquals("maxResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxResTime = property.Value.GetDouble();
+                    maxResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("minResTime"u8))
+                if (prop.NameEquals("minResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minResTime = property.Value.GetDouble();
+                    minResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct1ResTime"u8))
+                if (prop.NameEquals("pct1ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct1ResTime = property.Value.GetDouble();
+                    percentile90ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct2ResTime"u8))
+                if (prop.NameEquals("pct2ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct2ResTime = property.Value.GetDouble();
+                    percentile95ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct3ResTime"u8))
+                if (prop.NameEquals("pct3ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct3ResTime = property.Value.GetDouble();
+                    percentile99ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct75ResTime"u8))
+                if (prop.NameEquals("pct75ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct75ResTime = property.Value.GetDouble();
+                    percentile75ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct96ResTime"u8))
+                if (prop.NameEquals("pct96ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct96ResTime = property.Value.GetDouble();
+                    percentile96ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct97ResTime"u8))
+                if (prop.NameEquals("pct97ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct97ResTime = property.Value.GetDouble();
+                    percentile97ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct98ResTime"u8))
+                if (prop.NameEquals("pct98ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct98ResTime = property.Value.GetDouble();
+                    percentile98ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct999ResTime"u8))
+                if (prop.NameEquals("pct999ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct999ResTime = property.Value.GetDouble();
+                    percentile999ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("pct9999ResTime"u8))
+                if (prop.NameEquals("pct9999ResTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pct9999ResTime = property.Value.GetDouble();
+                    percentile9999ResponseTime = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("throughput"u8))
+                if (prop.NameEquals("throughput"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    throughput = property.Value.GetDouble();
+                    throughput = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("receivedKBytesPerSec"u8))
+                if (prop.NameEquals("receivedKBytesPerSec"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    receivedKBytesPerSec = property.Value.GetDouble();
+                    receivedKBytesPerSec = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("sentKBytesPerSec"u8))
+                if (prop.NameEquals("sentKBytesPerSec"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sentKBytesPerSec = property.Value.GetDouble();
+                    sentKBytesPerSec = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TestRunStatistics(
                 transaction,
                 sampleCount,
                 errorCount,
-                errorPct,
-                meanResTime,
-                medianResTime,
-                maxResTime,
-                minResTime,
-                pct1ResTime,
-                pct2ResTime,
-                pct3ResTime,
-                pct75ResTime,
-                pct96ResTime,
-                pct97ResTime,
-                pct98ResTime,
-                pct999ResTime,
-                pct9999ResTime,
+                errorPercentage,
+                meanResponseTime,
+                medianResponseTime,
+                maxResponseTime,
+                minResponseTime,
+                percentile90ResponseTime,
+                percentile95ResponseTime,
+                percentile99ResponseTime,
+                percentile75ResponseTime,
+                percentile96ResponseTime,
+                percentile97ResponseTime,
+                percentile98ResponseTime,
+                percentile999ResponseTime,
+                percentile9999ResponseTime,
                 throughput,
                 receivedKBytesPerSec,
                 sentKBytesPerSec,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TestRunStatistics>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TestRunStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -414,15 +419,20 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        TestRunStatistics IPersistableModel<TestRunStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TestRunStatistics IPersistableModel<TestRunStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TestRunStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TestRunStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTestRunStatistics(document.RootElement, options);
                     }
                 default:
@@ -430,22 +440,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TestRunStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TestRunStatistics FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestRunStatistics(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

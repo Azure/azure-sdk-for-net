@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Unknown version of NotificationRule. </summary>
     internal partial class UnknownNotificationRule : NotificationRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNotificationRule"/>. </summary>
@@ -22,13 +21,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(notificationRuleId, displayName, actionGroupIds, scope, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownNotificationRule"/> for deserialization. </summary>
-        internal UnknownNotificationRule()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNotificationRule(string notificationRuleId, string displayName, IList<string> actionGroupIds, NotificationScopeType scope, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(notificationRuleId, displayName, actionGroupIds, scope != default ? scope : "unknown", createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
         {
         }
     }

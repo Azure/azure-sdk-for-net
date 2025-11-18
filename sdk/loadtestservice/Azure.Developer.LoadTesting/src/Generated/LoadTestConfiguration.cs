@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Configurations for the load test. </summary>
     public partial class LoadTestConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestConfiguration"/>. </summary>
         public LoadTestConfiguration()
@@ -65,19 +36,20 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="optionalLoadTestConfiguration"> Configuration for quick load test. </param>
         /// <param name="regionalLoadTestConfiguration"> Region distribution configuration for the load test. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfiguration optionalLoadTestConfiguration, IList<RegionalConfiguration> regionalLoadTestConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfiguration optionalLoadTestConfiguration, IList<RegionalConfiguration> regionalLoadTestConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EngineInstances = engineInstances;
             SplitAllCsvs = splitAllCsvs;
             QuickStartTest = quickStartTest;
             OptionalLoadTestConfiguration = optionalLoadTestConfiguration;
             RegionalLoadTestConfiguration = regionalLoadTestConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of engine instances to execute load test. Supported values are in range of 1-400. Required for creating a new test. </summary>
         public int? EngineInstances { get; set; }
+
         /// <summary>
         /// If false, Azure Load Testing copies and processes your input files unmodified
         /// across all test engine instances. If true, Azure Load Testing splits the CSV
@@ -85,13 +57,16 @@ namespace Azure.Developer.LoadTesting
         /// files, each file will be split evenly.
         /// </summary>
         public bool? SplitAllCsvs { get; set; }
+
         /// <summary>
         /// If true, optionalLoadTestConfig is required and JMX script for the load test is
         /// not required to upload.
         /// </summary>
         public bool? QuickStartTest { get; set; }
+
         /// <summary> Configuration for quick load test. </summary>
         public OptionalLoadTestConfiguration OptionalLoadTestConfiguration { get; set; }
+
         /// <summary> Region distribution configuration for the load test. </summary>
         public IList<RegionalConfiguration> RegionalLoadTestConfiguration { get; }
     }

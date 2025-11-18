@@ -14,35 +14,52 @@ namespace Azure.Developer.LoadTesting
     public readonly partial struct CertificateType : IEquatable<CertificateType>
     {
         private readonly string _value;
+        /// <summary> If the certificate is stored in an Azure Key Vault. </summary>
+        private const string KeyVaultCertificateUriValue = "AKV_CERT_URI";
 
         /// <summary> Initializes a new instance of <see cref="CertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string KeyVaultCertificateUriValue = "AKV_CERT_URI";
+            _value = value;
+        }
 
         /// <summary> If the certificate is stored in an Azure Key Vault. </summary>
         public static CertificateType KeyVaultCertificateUri { get; } = new CertificateType(KeyVaultCertificateUriValue);
+
         /// <summary> Determines if two <see cref="CertificateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateType left, CertificateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateType left, CertificateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateType(string value) => new CertificateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateType?(string value) => value == null ? null : new CertificateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

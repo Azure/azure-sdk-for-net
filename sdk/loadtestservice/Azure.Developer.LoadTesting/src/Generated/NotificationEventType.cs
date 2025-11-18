@@ -14,44 +14,67 @@ namespace Azure.Developer.LoadTesting
     internal readonly partial struct NotificationEventType : IEquatable<NotificationEventType>
     {
         private readonly string _value;
+        /// <summary> Test run ended event. This event would occur when a test run reaches terminal state. </summary>
+        private const string TestRunEndedValue = "TestRunEnded";
+        /// <summary> Test run started event. This event would occur when a new test run is triggered. </summary>
+        private const string TestRunStartedValue = "TestRunStarted";
+        /// <summary> Trigger completed event. This event would occur when a trigger completes. </summary>
+        private const string TriggerCompletedValue = "TriggerCompleted";
+        /// <summary> Trigger disabled event. This event would occur when a trigger is disabled. </summary>
+        private const string TriggerDisabledValue = "TriggerDisabled";
 
         /// <summary> Initializes a new instance of <see cref="NotificationEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationEventType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TestRunEndedValue = "TestRunEnded";
-        private const string TestRunStartedValue = "TestRunStarted";
-        private const string TriggerCompletedValue = "TriggerCompleted";
-        private const string TriggerDisabledValue = "TriggerDisabled";
+            _value = value;
+        }
 
         /// <summary> Test run ended event. This event would occur when a test run reaches terminal state. </summary>
         public static NotificationEventType TestRunEnded { get; } = new NotificationEventType(TestRunEndedValue);
+
         /// <summary> Test run started event. This event would occur when a new test run is triggered. </summary>
         public static NotificationEventType TestRunStarted { get; } = new NotificationEventType(TestRunStartedValue);
+
         /// <summary> Trigger completed event. This event would occur when a trigger completes. </summary>
         public static NotificationEventType TriggerCompleted { get; } = new NotificationEventType(TriggerCompletedValue);
+
         /// <summary> Trigger disabled event. This event would occur when a trigger is disabled. </summary>
         public static NotificationEventType TriggerDisabled { get; } = new NotificationEventType(TriggerDisabledValue);
+
         /// <summary> Determines if two <see cref="NotificationEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationEventType left, NotificationEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationEventType left, NotificationEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationEventType(string value) => new NotificationEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationEventType?(string value) => value == null ? null : new NotificationEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

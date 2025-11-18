@@ -13,37 +13,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Load test model. </summary>
     public partial class LoadTest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTest"/>. </summary>
         public LoadTest()
@@ -85,8 +56,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -113,13 +84,15 @@ namespace Azure.Developer.LoadTesting
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
             LastModifiedBy = lastModifiedBy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pass fail criteria for a test. </summary>
         public PassFailCriteria PassFailCriteria { get; set; }
+
         /// <summary> Auto stop criteria for a test. This will automatically stop a load test if the error percentage is high for a certain time window. </summary>
         public AutoStopCriteria AutoStopCriteria { get; set; }
+
         /// <summary>
         /// Secrets can be stored in an Azure Key Vault or any other secret store. If the
         /// secret is stored in an Azure Key Vault, the value should be the secret
@@ -128,48 +101,70 @@ namespace Azure.Developer.LoadTesting
         /// SECRET_VALUE.
         /// </summary>
         public IDictionary<string, TestSecret> Secrets { get; }
+
         /// <summary> Certificates metadata. </summary>
         public TestCertificate Certificate { get; set; }
+
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; }
+
         /// <summary> The load test configuration. </summary>
         public LoadTestConfiguration LoadTestConfiguration { get; set; }
+
         /// <summary> Id of the test run to be marked as baseline to view trends of client-side metrics from recent test runs. </summary>
         public string BaselineTestRunId { get; set; }
+
         /// <summary> The input artifacts for the test. </summary>
         public TestInputArtifacts InputArtifacts { get; }
+
         /// <summary> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </summary>
         public string TestId { get; }
+
         /// <summary> The test description. </summary>
         public string Description { get; set; }
+
         /// <summary> Display name of a test. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Subnet ID on which the load test instances should run. </summary>
         public string SubnetId { get; set; }
+
         /// <summary> Kind of test. </summary>
         public LoadTestKind? Kind { get; set; }
+
         /// <summary> Inject load test engines without deploying public IP for outbound access. </summary>
         public bool? PublicIpDisabled { get; set; }
+
         /// <summary> Type of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityType { get; set; }
+
         /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityId { get; set; }
+
         /// <summary> Type of the managed identity referencing the metrics. </summary>
         public LoadTestingManagedIdentityType? MetricsReferenceIdentityType { get; set; }
+
         /// <summary> Resource Id of the managed identity referencing the metrics. </summary>
         public string MetricsReferenceIdentityId { get; set; }
+
         /// <summary> Type of the managed identity built in load test engines. </summary>
         public LoadTestingManagedIdentityType? EngineBuiltInIdentityType { get; set; }
+
         /// <summary> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </summary>
         public IList<string> EngineBuiltInIdentityIds { get; }
+
         /// <summary> Estimated virtual user hours for the test. </summary>
         public double? EstimatedVirtualUserHours { get; }
+
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
+
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
+
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? LastModifiedDateTime { get; }
+
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }
     }
