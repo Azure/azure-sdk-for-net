@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class EntityMaskPolicyType : IUtf8JsonSerializable, IJsonModel<EntityMaskPolicyType>
+    public partial class SyntheticReplacementPolicyType : IUtf8JsonSerializable, IJsonModel<SyntheticReplacementPolicyType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityMaskPolicyType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyntheticReplacementPolicyType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntityMaskPolicyType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SyntheticReplacementPolicyType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,33 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SyntheticReplacementPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityMaskPolicyType)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SyntheticReplacementPolicyType)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PreserveDataFormat))
+            {
+                writer.WritePropertyName("preserveDataFormat"u8);
+                writer.WriteBooleanValue(PreserveDataFormat.Value);
+            }
         }
 
-        EntityMaskPolicyType IJsonModel<EntityMaskPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SyntheticReplacementPolicyType IJsonModel<SyntheticReplacementPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SyntheticReplacementPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityMaskPolicyType)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SyntheticReplacementPolicyType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityMaskPolicyType(document.RootElement, options);
+            return DeserializeSyntheticReplacementPolicyType(document.RootElement, options);
         }
 
-        internal static EntityMaskPolicyType DeserializeEntityMaskPolicyType(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SyntheticReplacementPolicyType DeserializeSyntheticReplacementPolicyType(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -57,6 +62,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
+            bool? preserveDataFormat = default;
             RedactionPolicyKind policyKind = default;
             IList<PiiCategoriesExclude> entityTypes = default;
             string policyName = default;
@@ -65,6 +71,15 @@ namespace Azure.AI.Language.Text
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("preserveDataFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preserveDataFormat = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("policyKind"u8))
                 {
                     policyKind = new RedactionPolicyKind(property.Value.GetString());
@@ -104,46 +119,52 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntityMaskPolicyType(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategoriesExclude>(), policyName, isDefault, serializedAdditionalRawData);
+            return new SyntheticReplacementPolicyType(
+                policyKind,
+                entityTypes ?? new ChangeTrackingList<PiiCategoriesExclude>(),
+                policyName,
+                isDefault,
+                serializedAdditionalRawData,
+                preserveDataFormat);
         }
 
-        BinaryData IPersistableModel<EntityMaskPolicyType>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SyntheticReplacementPolicyType>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SyntheticReplacementPolicyType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntityMaskPolicyType)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyntheticReplacementPolicyType)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntityMaskPolicyType IPersistableModel<EntityMaskPolicyType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SyntheticReplacementPolicyType IPersistableModel<SyntheticReplacementPolicyType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SyntheticReplacementPolicyType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEntityMaskPolicyType(document.RootElement, options);
+                        return DeserializeSyntheticReplacementPolicyType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityMaskPolicyType)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyntheticReplacementPolicyType)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntityMaskPolicyType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SyntheticReplacementPolicyType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new EntityMaskPolicyType FromResponse(Response response)
+        internal static new SyntheticReplacementPolicyType FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEntityMaskPolicyType(document.RootElement);
+            return DeserializeSyntheticReplacementPolicyType(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

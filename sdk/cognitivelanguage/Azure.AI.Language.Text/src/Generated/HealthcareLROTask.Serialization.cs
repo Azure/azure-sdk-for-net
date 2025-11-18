@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class KeyPhraseOperationAction : IUtf8JsonSerializable, IJsonModel<KeyPhraseOperationAction>
+    public partial class HealthcareLROTask : IUtf8JsonSerializable, IJsonModel<HealthcareLROTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyPhraseOperationAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareLROTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KeyPhraseOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthcareLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,33 +28,33 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareLROTask)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ActionContent))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue(Parameters, options);
             }
         }
 
-        KeyPhraseOperationAction IJsonModel<KeyPhraseOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HealthcareLROTask IJsonModel<HealthcareLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareLROTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyPhraseOperationAction(document.RootElement, options);
+            return DeserializeHealthcareLROTask(document.RootElement, options);
         }
 
-        internal static KeyPhraseOperationAction DeserializeKeyPhraseOperationAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HealthcareLROTask DeserializeHealthcareLROTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            KeyPhraseActionContent parameters = default;
+            HealthcareTaskParameters parameters = default;
             string taskName = default;
             AnalyzeTextOperationActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = KeyPhraseActionContent.DeserializeKeyPhraseActionContent(property.Value, options);
+                    parameters = HealthcareTaskParameters.DeserializeHealthcareTaskParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))
@@ -94,46 +94,46 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeyPhraseOperationAction(taskName, kind, serializedAdditionalRawData, parameters);
+            return new HealthcareLROTask(taskName, kind, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<KeyPhraseOperationAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HealthcareLROTask>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROTask>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareLROTask)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyPhraseOperationAction IPersistableModel<KeyPhraseOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HealthcareLROTask IPersistableModel<HealthcareLROTask>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROTask>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKeyPhraseOperationAction(document.RootElement, options);
+                        return DeserializeHealthcareLROTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareLROTask)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KeyPhraseOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthcareLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new KeyPhraseOperationAction FromResponse(Response response)
+        internal static new HealthcareLROTask FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKeyPhraseOperationAction(document.RootElement);
+            return DeserializeHealthcareLROTask(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

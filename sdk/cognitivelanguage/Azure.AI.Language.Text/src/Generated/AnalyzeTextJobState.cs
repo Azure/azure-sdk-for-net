@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The object containing the analyze job LRO job state. </summary>
-    public partial class AnalyzeTextOperationState
+    public partial class AnalyzeTextJobState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.AI.Language.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
         /// <param name="createdAt"> Date and time job created. </param>
         /// <param name="lastUpdatedAt"> last updated date and time. </param>
         /// <param name="status"> status. </param>
-        /// <param name="actions"> List of tasks. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
-        internal AnalyzeTextOperationState(DateTimeOffset createdAt, DateTimeOffset lastUpdatedAt, TextActionState status, TextActions actions)
+        /// <param name="tasks"> List of tasks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
+        internal AnalyzeTextJobState(DateTimeOffset createdAt, DateTimeOffset lastUpdatedAt, TextActionState status, TextActions tasks)
         {
-            Argument.AssertNotNull(actions, nameof(actions));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             CreatedAt = createdAt;
             LastUpdatedAt = lastUpdatedAt;
             Status = status;
             Errors = new ChangeTrackingList<AnalyzeTextError>();
-            Actions = actions;
+            Tasks = tasks;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdAt"> Date and time job created. </param>
         /// <param name="expiresOn"> Date and time job expires. </param>
@@ -71,10 +71,10 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
-        /// <param name="actions"> List of tasks. </param>
+        /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOperationState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, TextActionState status, IReadOnlyList<AnalyzeTextError> errors, string nextLink, TextActions actions, RequestStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, TextActionState status, IReadOnlyList<AnalyzeTextError> errors, string nextLink, TextActions tasks, RequestStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             CreatedAt = createdAt;
@@ -84,13 +84,13 @@ namespace Azure.AI.Language.Text
             Status = status;
             Errors = errors;
             NextLink = nextLink;
-            Actions = actions;
+            Tasks = tasks;
             Statistics = statistics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationState"/> for deserialization. </summary>
-        internal AnalyzeTextOperationState()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/> for deserialization. </summary>
+        internal AnalyzeTextJobState()
         {
         }
 
@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Text
         /// <summary> next link. </summary>
         public string NextLink { get; }
         /// <summary> List of tasks. </summary>
-        public TextActions Actions { get; }
+        public TextActions Tasks { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
     }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class PiiOperationAction : IUtf8JsonSerializable, IJsonModel<PiiOperationAction>
+    public partial class KeyPhraseLROTask : IUtf8JsonSerializable, IJsonModel<KeyPhraseLROTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiOperationAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyPhraseLROTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PiiOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyPhraseLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,33 +28,33 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ActionContent))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue(Parameters, options);
             }
         }
 
-        PiiOperationAction IJsonModel<PiiOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KeyPhraseLROTask IJsonModel<KeyPhraseLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiOperationAction(document.RootElement, options);
+            return DeserializeKeyPhraseLROTask(document.RootElement, options);
         }
 
-        internal static PiiOperationAction DeserializePiiOperationAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KeyPhraseLROTask DeserializeKeyPhraseLROTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            PiiActionContent parameters = default;
+            KeyPhraseActionContent parameters = default;
             string taskName = default;
             AnalyzeTextOperationActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = PiiActionContent.DeserializePiiActionContent(property.Value, options);
+                    parameters = KeyPhraseActionContent.DeserializeKeyPhraseActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))
@@ -94,46 +94,46 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PiiOperationAction(taskName, kind, serializedAdditionalRawData, parameters);
+            return new KeyPhraseLROTask(taskName, kind, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<PiiOperationAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KeyPhraseLROTask>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PiiOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PiiOperationAction IPersistableModel<PiiOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KeyPhraseLROTask IPersistableModel<KeyPhraseLROTask>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePiiOperationAction(document.RootElement, options);
+                        return DeserializeKeyPhraseLROTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PiiOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyPhraseLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new PiiOperationAction FromResponse(Response response)
+        internal static new KeyPhraseLROTask FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePiiOperationAction(document.RootElement);
+            return DeserializeKeyPhraseLROTask(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text
         /// <param name="actions">
         /// List of tasks to be performed as part of the LRO.
         /// Please note <see cref="AnalyzeTextOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/> and <see cref="SentimentAnalysisOperationAction"/>.
+        /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisOperationAction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
         internal AnalyzeTextSubmitJobRequest(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions)
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text
         /// <param name="actions">
         /// List of tasks to be performed as part of the LRO.
         /// Please note <see cref="AnalyzeTextOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/> and <see cref="SentimentAnalysisOperationAction"/>.
+        /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisOperationAction"/>.
         /// </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Text
         /// <summary>
         /// List of tasks to be performed as part of the LRO.
         /// Please note <see cref="AnalyzeTextOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/> and <see cref="SentimentAnalysisOperationAction"/>.
+        /// The available derived classes include <see cref="AbstractiveSummarizationOperationAction"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationOperationAction"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisOperationAction"/>.
         /// </summary>
         public IReadOnlyList<AnalyzeTextOperationAction> Actions { get; }
         /// <summary> Default language to use for records requesting automatic language detection. </summary>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class HealthcareOperationAction : IUtf8JsonSerializable, IJsonModel<HealthcareOperationAction>
+    public partial class PiiLROTask : IUtf8JsonSerializable, IJsonModel<PiiLROTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareOperationAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiLROTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PiiLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,33 +28,33 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiLROTask)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ActionContent))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue(Parameters, options);
             }
         }
 
-        HealthcareOperationAction IJsonModel<HealthcareOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PiiLROTask IJsonModel<PiiLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiLROTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareOperationAction(document.RootElement, options);
+            return DeserializePiiLROTask(document.RootElement, options);
         }
 
-        internal static HealthcareOperationAction DeserializeHealthcareOperationAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PiiLROTask DeserializePiiLROTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            HealthcareActionContent parameters = default;
+            PiiActionContent parameters = default;
             string taskName = default;
             AnalyzeTextOperationActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = HealthcareActionContent.DeserializeHealthcareActionContent(property.Value, options);
+                    parameters = PiiActionContent.DeserializePiiActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))
@@ -94,46 +94,46 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareOperationAction(taskName, kind, serializedAdditionalRawData, parameters);
+            return new PiiLROTask(taskName, kind, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<HealthcareOperationAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PiiLROTask>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiLROTask)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareOperationAction IPersistableModel<HealthcareOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PiiLROTask IPersistableModel<PiiLROTask>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiLROTask>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHealthcareOperationAction(document.RootElement, options);
+                        return DeserializePiiLROTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiLROTask)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PiiLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new HealthcareOperationAction FromResponse(Response response)
+        internal static new PiiLROTask FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHealthcareOperationAction(document.RootElement);
+            return DeserializePiiLROTask(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

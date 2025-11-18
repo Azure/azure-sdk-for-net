@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Text
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new ChangeTrackingList<AnalyzeTextOperationResult>();
+            Items = new ChangeTrackingList<AnalyzeTextLROResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TextActions"/>. </summary>
@@ -66,11 +66,11 @@ namespace Azure.AI.Language.Text
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items">
         /// Enumerable of Analyze text job results.
-        /// Please note <see cref="AnalyzeTextOperationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbstractiveSummarizationOperationResult"/>, <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, <see cref="HealthcareOperationResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="SentimentOperationResult"/>.
+        /// Please note <see cref="AnalyzeTextLROResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationOperationResult"/>, <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="SentimentLROResult"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextActions(int completed, int failed, int inProgress, int total, IReadOnlyList<AnalyzeTextOperationResult> items, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TextActions(int completed, int failed, int inProgress, int total, IReadOnlyList<AnalyzeTextLROResult> items, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Completed = completed;
             Failed = failed;
@@ -95,9 +95,9 @@ namespace Azure.AI.Language.Text
         public int Total { get; }
         /// <summary>
         /// Enumerable of Analyze text job results.
-        /// Please note <see cref="AnalyzeTextOperationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AbstractiveSummarizationOperationResult"/>, <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, <see cref="HealthcareOperationResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="SentimentOperationResult"/>.
+        /// Please note <see cref="AnalyzeTextLROResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationOperationResult"/>, <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="SentimentLROResult"/>.
         /// </summary>
-        public IReadOnlyList<AnalyzeTextOperationResult> Items { get; }
+        public IReadOnlyList<AnalyzeTextLROResult> Items { get; }
     }
 }

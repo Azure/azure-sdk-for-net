@@ -191,12 +191,12 @@ namespace Azure.AI.Language.Text
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextOperationStatusAsync(Guid,bool?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextOperationState>> AnalyzeTextOperationStatusAsync(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,CancellationToken)']/*" />
+        public virtual async Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeTextOperationStatusAsync(jobId, showStats, top, skip, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextOperationState.FromResponse(response), response);
+            Response response = await AnalyzeTextJobStatusAsync(jobId, showStats, top, skip, context).ConfigureAwait(false);
+            return Response.FromValue(AnalyzeTextJobState.FromResponse(response), response);
         }
 
         /// <summary> Get analysis status and results. </summary>
@@ -206,12 +206,12 @@ namespace Azure.AI.Language.Text
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextOperationStatus(Guid,bool?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextOperationState> AnalyzeTextOperationStatus(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(Guid,bool?,int?,int?,CancellationToken)']/*" />
+        public virtual Response<AnalyzeTextJobState> AnalyzeTextJobStatus(Guid jobId, bool? showStats = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeTextOperationStatus(jobId, showStats, top, skip, context);
-            return Response.FromValue(AnalyzeTextOperationState.FromResponse(response), response);
+            Response response = AnalyzeTextJobStatus(jobId, showStats, top, skip, context);
+            return Response.FromValue(AnalyzeTextJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.AI.Language.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextOperationStatusAsync(Guid,bool?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -236,14 +236,14 @@ namespace Azure.AI.Language.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextOperationStatusAsync(Guid,bool?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> AnalyzeTextOperationStatusAsync(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,RequestContext)']/*" />
+        public virtual async Task<Response> AnalyzeTextJobStatusAsync(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextOperationStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextOperationStatusRequest(jobId, showStats, top, skip, context);
+                using HttpMessage message = CreateAnalyzeTextJobStatusRequest(jobId, showStats, top, skip, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -263,7 +263,7 @@ namespace Azure.AI.Language.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextOperationStatus(Guid,bool?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeTextJobStatus(Guid,bool?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -275,14 +275,14 @@ namespace Azure.AI.Language.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextOperationStatus(Guid,bool?,int?,int?,RequestContext)']/*" />
-        public virtual Response AnalyzeTextOperationStatus(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(Guid,bool?,int?,int?,RequestContext)']/*" />
+        public virtual Response AnalyzeTextJobStatus(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextOperationStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextOperationStatusRequest(jobId, showStats, top, skip, context);
+                using HttpMessage message = CreateAnalyzeTextJobStatusRequest(jobId, showStats, top, skip, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -301,8 +301,8 @@ namespace Azure.AI.Language.Text
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)']/*" />
-        public virtual async Task<Operation> AnalyzeTextSubmitOperationAsync(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)']/*" />
+        public virtual async Task<Operation> AnalyzeTextSubmitJobAsync(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
@@ -315,7 +315,7 @@ namespace Azure.AI.Language.Text
                 cancelAfter,
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await AnalyzeTextSubmitOperationAsync(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return await AnalyzeTextSubmitJobAsync(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context).ConfigureAwait(false);
         }
 
         /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
@@ -327,8 +327,8 @@ namespace Azure.AI.Language.Text
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)']/*" />
-        public virtual Operation AnalyzeTextSubmitOperation(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)']/*" />
+        public virtual Operation AnalyzeTextSubmitJob(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
@@ -341,7 +341,7 @@ namespace Azure.AI.Language.Text
                 cancelAfter,
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return AnalyzeTextSubmitOperation(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context);
+            return AnalyzeTextSubmitJob(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context);
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Azure.AI.Language.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeTextSubmitJobAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -365,17 +365,17 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation> AnalyzeTextSubmitOperationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation> AnalyzeTextSubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextSubmitOperation");
+            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextSubmitJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextSubmitOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextSubmitOperation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -394,7 +394,7 @@ namespace Azure.AI.Language.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeTextSubmitJob(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -405,17 +405,17 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperation(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual Operation AnalyzeTextSubmitOperation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,RequestContent,RequestContext)']/*" />
+        public virtual Operation AnalyzeTextSubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextSubmitOperation");
+            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextSubmitJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextSubmitOperationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextSubmitOperation", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -440,15 +440,15 @@ namespace Azure.AI.Language.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextCancelOperationAsync(WaitUntil,Guid,RequestContext)']/*" />
-        public virtual async Task<Operation> AnalyzeTextCancelOperationAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextCancelJobAsync(WaitUntil,Guid,RequestContext)']/*" />
+        public virtual async Task<Operation> AnalyzeTextCancelJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextCancelOperation");
+            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextCancelJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextCancelOperationRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextCancelOperation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -473,15 +473,15 @@ namespace Azure.AI.Language.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextCancelOperation(WaitUntil,Guid,RequestContext)']/*" />
-        public virtual Operation AnalyzeTextCancelOperation(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextCancelJob(WaitUntil,Guid,RequestContext)']/*" />
+        public virtual Operation AnalyzeTextCancelJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextCancelOperation");
+            using var scope = ClientDiagnostics.CreateScope("TextAnalysisClient.AnalyzeTextCancelJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextCancelOperationRequest(jobId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextCancelOperation", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -511,7 +511,7 @@ namespace Azure.AI.Language.Text
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeTextOperationStatusRequest(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
+        internal HttpMessage CreateAnalyzeTextJobStatusRequest(Guid jobId, bool? showStats, int? top, int? skip, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -539,7 +539,7 @@ namespace Azure.AI.Language.Text
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeTextSubmitOperationRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateAnalyzeTextSubmitJobRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -555,7 +555,7 @@ namespace Azure.AI.Language.Text
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeTextCancelOperationRequest(Guid jobId, RequestContext context)
+        internal HttpMessage CreateAnalyzeTextCancelJobRequest(Guid jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;

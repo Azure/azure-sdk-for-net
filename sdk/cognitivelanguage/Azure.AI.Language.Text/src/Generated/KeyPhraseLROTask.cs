@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
-    public partial class KeyPhraseOperationAction : AnalyzeTextOperationAction
+    public partial class KeyPhraseLROTask : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseOperationAction"/>. </summary>
-        public KeyPhraseOperationAction()
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
+        public KeyPhraseLROTask()
         {
             Kind = AnalyzeTextOperationActionKind.KeyPhraseExtraction;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="actionContent"> Key phrase extraction task parameters. </param>
-        internal KeyPhraseOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, KeyPhraseActionContent actionContent) : base(name, kind, serializedAdditionalRawData)
+        /// <param name="parameters"> Key phrase extraction task parameters. </param>
+        internal KeyPhraseLROTask(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, KeyPhraseActionContent parameters) : base(name, kind, serializedAdditionalRawData)
         {
-            ActionContent = actionContent;
+            Parameters = parameters;
         }
 
         /// <summary> Key phrase extraction task parameters. </summary>
-        public KeyPhraseActionContent ActionContent { get; set; }
+        public KeyPhraseActionContent Parameters { get; set; }
     }
 }

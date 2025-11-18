@@ -12,10 +12,10 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// Contains the AnalyzeText long running operation result object.
-    /// Please note <see cref="AnalyzeTextOperationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AbstractiveSummarizationOperationResult"/>, <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, <see cref="HealthcareOperationResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="SentimentOperationResult"/>.
+    /// Please note <see cref="AnalyzeTextLROResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AbstractiveSummarizationOperationResult"/>, <see cref="CustomEntityRecognitionOperationResult"/>, <see cref="CustomMultiLabelClassificationOperationResult"/>, <see cref="CustomSingleLabelClassificationOperationResult"/>, <see cref="EntityLinkingOperationResult"/>, <see cref="EntityRecognitionOperationResult"/>, <see cref="ExtractiveSummarizationOperationResult"/>, <see cref="HealthcareLROResult"/>, <see cref="KeyPhraseExtractionOperationResult"/>, <see cref="PiiEntityRecognitionOperationResult"/> and <see cref="SentimentLROResult"/>.
     /// </summary>
-    public abstract partial class AnalyzeTextOperationResult
+    public abstract partial class AnalyzeTextLROResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,32 +49,32 @@ namespace Azure.AI.Language.Text
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        protected AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status)
+        protected AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextActionState status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string name, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
-            Name = name;
+            TaskName = taskName;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/> for deserialization. </summary>
-        internal AnalyzeTextOperationResult()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/> for deserialization. </summary>
+        internal AnalyzeTextLROResult()
         {
         }
 
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Text
         /// <summary> The status of the task at the mentioned last update time. </summary>
         public TextActionState Status { get; }
         /// <summary> task name. </summary>
-        public string Name { get; }
+        public string TaskName { get; }
         /// <summary> Kind of the task. </summary>
         internal AnalyzeTextOperationResultsKind Kind { get; set; }
     }

@@ -43,6 +43,27 @@ namespace Azure.AI.Language.Text
             return new EntitySynonym(synonym, language, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Text.ConfidenceScoreThreshold"/>. </summary>
+        /// <param name="default"> Minimum confidence score threshold for the PII entities to be returned in the response. Entities with a confidence score below this threshold will be filtered out. Value should be between 0.0 and 1.0. </param>
+        /// <param name="overrides"> List of confidence score threshold overrides for specific PII categories. </param>
+        /// <returns> A new <see cref="Text.ConfidenceScoreThreshold"/> instance for mocking. </returns>
+        public static ConfidenceScoreThreshold ConfidenceScoreThreshold(float @default = default, IEnumerable<ConfidenceScoreThresholdOverride> overrides = null)
+        {
+            overrides ??= new List<ConfidenceScoreThresholdOverride>();
+
+            return new ConfidenceScoreThreshold(@default, overrides?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.ConfidenceScoreThresholdOverride"/>. </summary>
+        /// <param name="entity"> The PII category for which to override the confidence score threshold. </param>
+        /// <param name="value"> The confidence score threshold for the specified PII category. </param>
+        /// <param name="language"> The 2 letter ISO 639-1 language for which the override applies. If not specified, the override applies to all languages. </param>
+        /// <returns> A new <see cref="Text.ConfidenceScoreThresholdOverride"/> instance for mocking. </returns>
+        public static ConfidenceScoreThresholdOverride ConfidenceScoreThresholdOverride(PiiCategoriesExclude entity = default, float value = default, string language = null)
+        {
+            return new ConfidenceScoreThresholdOverride(entity, value, language, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextEntityLinkingResult"/>. </summary>
         /// <param name="results"> Entity linking result. </param>
         /// <returns> A new <see cref="Text.AnalyzeTextEntityLinkingResult"/> instance for mocking. </returns>
@@ -273,7 +294,7 @@ namespace Azure.AI.Language.Text
         /// <param name="metadata">
         /// The entity metadata object.
         /// Please note <see cref="BaseMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Text.AgeMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.NumericRangeMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.VolumeMetadata"/> and <see cref="Text.WeightMetadata"/>.
+        /// The available derived classes include <see cref="Text.AddressMetadata"/>, <see cref="Text.AgeMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.NumericRangeMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.VolumeMetadata"/> and <see cref="Text.WeightMetadata"/>.
         /// </param>
         /// <returns> A new <see cref="Text.NamedEntityWithMetadata"/> instance for mocking. </returns>
         public static NamedEntityWithMetadata NamedEntityWithMetadata(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string type = null, IEnumerable<EntityTag> tags = null, BaseMetadata metadata = null)
@@ -382,6 +403,29 @@ namespace Azure.AI.Language.Text
         public static CurrencyMetadata CurrencyMetadata(double value = default, string unit = null, string iso4217 = null)
         {
             return new CurrencyMetadata(MetadataKind.CurrencyMetadata, serializedAdditionalRawData: null, value, unit, iso4217);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.AddressMetadata"/>. </summary>
+        /// <param name="formatedAddress"> The fully formatted address string following postal conventions for the address's country/region. </param>
+        /// <param name="addressLines"> The full address string as recognized from the input text. </param>
+        /// <param name="city"> The city name of the address. </param>
+        /// <param name="state"> The state or province name of the address. </param>
+        /// <param name="postalCode"> The postal or ZIP code of the address. </param>
+        /// <param name="countryOrRegion"> The country or region name of the address. </param>
+        /// <returns> A new <see cref="Text.AddressMetadata"/> instance for mocking. </returns>
+        public static AddressMetadata AddressMetadata(string formatedAddress = null, IEnumerable<string> addressLines = null, string city = null, string state = null, string postalCode = null, string countryOrRegion = null)
+        {
+            addressLines ??= new List<string>();
+
+            return new AddressMetadata(
+                MetadataKind.AddressMetadata,
+                serializedAdditionalRawData: null,
+                formatedAddress,
+                addressLines?.ToList(),
+                city,
+                state,
+                postalCode,
+                countryOrRegion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DateMetadata"/>. </summary>
@@ -590,28 +634,28 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.PiiResult"/> instance for mocking. </returns>
-        public static PiiResult PiiResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<PiiActionResult> documents = null)
+        public static PiiResult PiiResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<PiiResultWithDetectedLanguage> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<PiiActionResult>();
+            documents ??= new List<PiiResultWithDetectedLanguage>();
 
             return new PiiResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.PiiActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.PiiResultWithDetectedLanguage"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.PiiActionResult"/> instance for mocking. </returns>
-        public static PiiActionResult PiiActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<PiiEntity> entities = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.PiiResultWithDetectedLanguage"/> instance for mocking. </returns>
+        public static PiiResultWithDetectedLanguage PiiResultWithDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<PiiEntity> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<PiiEntity>();
 
-            return new PiiActionResult(
+            return new PiiResultWithDetectedLanguage(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -795,7 +839,7 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextJobState"/>. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdAt"> Date and time job created. </param>
         /// <param name="expiresOn"> Date and time job expires. </param>
@@ -804,14 +848,14 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
-        /// <param name="actions"> List of tasks. </param>
+        /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextOperationState"/> instance for mocking. </returns>
-        public static AnalyzeTextOperationState AnalyzeTextOperationState(string displayName = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = null, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, TextActionState status = default, IEnumerable<AnalyzeTextError> errors = null, string nextLink = null, TextActions actions = null, RequestStatistics statistics = null)
+        /// <returns> A new <see cref="Text.AnalyzeTextJobState"/> instance for mocking. </returns>
+        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = null, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, TextActionState status = default, IEnumerable<AnalyzeTextError> errors = null, string nextLink = null, TextActions tasks = null, RequestStatistics statistics = null)
         {
             errors ??= new List<AnalyzeTextError>();
 
-            return new AnalyzeTextOperationState(
+            return new AnalyzeTextJobState(
                 displayName,
                 createdAt,
                 expiresOn,
@@ -820,7 +864,7 @@ namespace Azure.AI.Language.Text
                 status,
                 errors?.ToList(),
                 nextLink,
-                actions,
+                tasks,
                 statistics,
                 serializedAdditionalRawData: null);
         }
@@ -832,13 +876,13 @@ namespace Azure.AI.Language.Text
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items">
         /// Enumerable of Analyze text job results.
-        /// Please note <see cref="Text.AnalyzeTextOperationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Text.AbstractiveSummarizationOperationResult"/>, <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/> and <see cref="Text.SentimentOperationResult"/>.
+        /// Please note <see cref="Text.AnalyzeTextLROResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Text.AbstractiveSummarizationOperationResult"/>, <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, <see cref="Text.HealthcareLROResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/> and <see cref="Text.SentimentLROResult"/>.
         /// </param>
         /// <returns> A new <see cref="Text.TextActions"/> instance for mocking. </returns>
-        public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextOperationResult> items = null)
+        public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextLROResult> items = null)
         {
-            items ??= new List<AnalyzeTextOperationResult>();
+            items ??= new List<AnalyzeTextLROResult>();
 
             return new TextActions(
                 completed,
@@ -849,29 +893,29 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextOperationResult"/> instance for mocking. </returns>
-        public static AnalyzeTextOperationResult AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, string kind = null)
+        /// <returns> A new <see cref="Text.AnalyzeTextLROResult"/> instance for mocking. </returns>
+        public static AnalyzeTextLROResult AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, string kind = null)
         {
-            return new UnknownAnalyzeTextOperationResult(lastUpdateDateTime, status, name, kind == null ? default : new AnalyzeTextOperationResultsKind(kind), serializedAdditionalRawData: null);
+            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, taskName, kind == null ? default : new AnalyzeTextOperationResultsKind(kind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.CustomEntityRecognitionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomEntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomEntitiesResult results = null)
+        public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, CustomEntitiesResult results = null)
         {
             return new CustomEntityRecognitionOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.CustomEntityRecognitionOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -942,15 +986,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.CustomSingleLabelClassificationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomSingleLabelClassificationOperationResult"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomLabelClassificationResult results = null)
+        public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, CustomLabelClassificationResult results = null)
         {
             return new CustomSingleLabelClassificationOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.CustomSingleLabelClassificationOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1010,15 +1054,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.CustomMultiLabelClassificationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomMultiLabelClassificationOperationResult"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, CustomLabelClassificationResult results = null)
+        public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, CustomLabelClassificationResult results = null)
         {
             return new CustomMultiLabelClassificationOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.CustomMultiLabelClassificationOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1027,15 +1071,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.EntityLinkingOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> Entity linking result. </param>
         /// <returns> A new <see cref="Text.EntityLinkingOperationResult"/> instance for mocking. </returns>
-        public static EntityLinkingOperationResult EntityLinkingOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, EntityLinkingResult results = null)
+        public static EntityLinkingOperationResult EntityLinkingOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, EntityLinkingResult results = null)
         {
             return new EntityLinkingOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.EntityLinkingOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1044,15 +1088,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.EntityRecognitionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results for the task. </param>
         /// <returns> A new <see cref="Text.EntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static EntityRecognitionOperationResult EntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, EntitiesResult results = null)
+        public static EntityRecognitionOperationResult EntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, EntitiesResult results = null)
         {
             return new EntityRecognitionOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.EntityRecognitionOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1086,18 +1130,18 @@ namespace Azure.AI.Language.Text
             return new EntityActionResultWithMetadata(id, warnings?.ToList(), statistics, entities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.HealthcareOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.HealthcareLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
-        /// <returns> A new <see cref="Text.HealthcareOperationResult"/> instance for mocking. </returns>
-        public static HealthcareOperationResult HealthcareOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, HealthcareResult results = null)
+        /// <returns> A new <see cref="Text.HealthcareLROResult"/> instance for mocking. </returns>
+        public static HealthcareLROResult HealthcareLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, HealthcareResult results = null)
         {
-            return new HealthcareOperationResult(
+            return new HealthcareLROResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.HealthcareOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1225,15 +1269,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.KeyPhraseExtractionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of Key phrase extraction results. </param>
         /// <returns> A new <see cref="Text.KeyPhraseExtractionOperationResult"/> instance for mocking. </returns>
-        public static KeyPhraseExtractionOperationResult KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, KeyPhraseResult results = null)
+        public static KeyPhraseExtractionOperationResult KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, KeyPhraseResult results = null)
         {
             return new KeyPhraseExtractionOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.KeyPhraseExtractionOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1242,32 +1286,32 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.PiiEntityRecognitionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of pii results. </param>
         /// <returns> A new <see cref="Text.PiiEntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, PiiResult results = null)
+        public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, PiiResult results = null)
         {
             return new PiiEntityRecognitionOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.PiiEntityRecognitionOperationResults,
                 serializedAdditionalRawData: null,
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.SentimentOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SentimentLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        /// <returns> A new <see cref="Text.SentimentOperationResult"/> instance for mocking. </returns>
-        public static SentimentOperationResult SentimentOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, SentimentResult results = null)
+        /// <returns> A new <see cref="Text.SentimentLROResult"/> instance for mocking. </returns>
+        public static SentimentLROResult SentimentLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, SentimentResult results = null)
         {
-            return new SentimentOperationResult(
+            return new SentimentLROResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.SentimentAnalysisOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1276,15 +1320,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.ExtractiveSummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
         /// <returns> A new <see cref="Text.ExtractiveSummarizationOperationResult"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, ExtractiveSummarizationResult results = null)
+        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, ExtractiveSummarizationResult results = null)
         {
             return new ExtractiveSummarizationOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.ExtractiveSummarizationOperationResults,
                 serializedAdditionalRawData: null,
                 results);
@@ -1339,15 +1383,15 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.AbstractiveSummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
+        /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
         /// <returns> A new <see cref="Text.AbstractiveSummarizationOperationResult"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string name = null, AbstractiveSummarizationResult results = null)
+        public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = null, AbstractiveSummarizationResult results = null)
         {
             return new AbstractiveSummarizationOperationResult(
                 lastUpdateDateTime,
                 status,
-                name,
+                taskName,
                 AnalyzeTextOperationResultsKind.AbstractiveSummarizationOperationResults,
                 serializedAdditionalRawData: null,
                 results);

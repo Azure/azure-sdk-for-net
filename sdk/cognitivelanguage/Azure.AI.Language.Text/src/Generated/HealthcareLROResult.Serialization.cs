@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class SentimentOperationResult : IUtf8JsonSerializable, IJsonModel<SentimentOperationResult>
+    public partial class HealthcareLROResult : IUtf8JsonSerializable, IJsonModel<HealthcareLROResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentimentOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareLROResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SentimentOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthcareLROResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareLROResult)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -39,19 +39,19 @@ namespace Azure.AI.Language.Text
             writer.WriteObjectValue(Results, options);
         }
 
-        SentimentOperationResult IJsonModel<SentimentOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HealthcareLROResult IJsonModel<HealthcareLROResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareLROResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentimentOperationResult(document.RootElement, options);
+            return DeserializeHealthcareLROResult(document.RootElement, options);
         }
 
-        internal static SentimentOperationResult DeserializeSentimentOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HealthcareLROResult DeserializeHealthcareLROResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            SentimentResult results = default;
+            HealthcareResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextActionState status = default;
             string taskName = default;
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = SentimentResult.DeserializeSentimentResult(property.Value, options);
+                    results = HealthcareResult.DeserializeHealthcareResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SentimentOperationResult(
+            return new HealthcareLROResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
@@ -108,43 +108,43 @@ namespace Azure.AI.Language.Text
                 results);
         }
 
-        BinaryData IPersistableModel<SentimentOperationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HealthcareLROResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareLROResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SentimentOperationResult IPersistableModel<SentimentOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HealthcareLROResult IPersistableModel<HealthcareLROResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareLROResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSentimentOperationResult(document.RootElement, options);
+                        return DeserializeHealthcareLROResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareLROResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SentimentOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthcareLROResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new SentimentOperationResult FromResponse(Response response)
+        internal static new HealthcareLROResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSentimentOperationResult(document.RootElement);
+            return DeserializeHealthcareLROResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

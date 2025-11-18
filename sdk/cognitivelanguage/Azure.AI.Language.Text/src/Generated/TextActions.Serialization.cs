@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Text
             int failed = default;
             int inProgress = default;
             int total = default;
-            IReadOnlyList<AnalyzeTextOperationResult> items = default;
+            IReadOnlyList<AnalyzeTextLROResult> items = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,10 +124,10 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    List<AnalyzeTextOperationResult> array = new List<AnalyzeTextOperationResult>();
+                    List<AnalyzeTextLROResult> array = new List<AnalyzeTextLROResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextOperationResult.DeserializeAnalyzeTextOperationResult(item, options));
+                        array.Add(AnalyzeTextLROResult.DeserializeAnalyzeTextLROResult(item, options));
                     }
                     items = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Text
                 failed,
                 inProgress,
                 total,
-                items ?? new ChangeTrackingList<AnalyzeTextOperationResult>(),
+                items ?? new ChangeTrackingList<AnalyzeTextLROResult>(),
                 serializedAdditionalRawData);
         }
 

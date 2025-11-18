@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
-    public partial class PiiOperationAction : AnalyzeTextOperationAction
+    public partial class PiiLROTask : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="PiiOperationAction"/>. </summary>
-        public PiiOperationAction()
+        /// <summary> Initializes a new instance of <see cref="PiiLROTask"/>. </summary>
+        public PiiLROTask()
         {
             Kind = AnalyzeTextOperationActionKind.PiiEntityRecognition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiOperationAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiLROTask"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="actionContent"> Pii task parameters. </param>
-        internal PiiOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, PiiActionContent actionContent) : base(name, kind, serializedAdditionalRawData)
+        /// <param name="parameters"> Pii task parameters. </param>
+        internal PiiLROTask(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, PiiActionContent parameters) : base(name, kind, serializedAdditionalRawData)
         {
-            ActionContent = actionContent;
+            Parameters = parameters;
         }
 
         /// <summary> Pii task parameters. </summary>
-        public PiiActionContent ActionContent { get; set; }
+        public PiiActionContent Parameters { get; set; }
     }
 }

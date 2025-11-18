@@ -36,6 +36,26 @@ namespace Azure.AI.Language.Text
 
             writer.WritePropertyName("policyKind"u8);
             writer.WriteStringValue(PolicyKind.ToString());
+            if (Optional.IsCollectionDefined(EntityTypes))
+            {
+                writer.WritePropertyName("entityTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in EntityTypes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PolicyName))
+            {
+                writer.WritePropertyName("policyName"u8);
+                writer.WriteStringValue(PolicyName);
+            }
+            if (Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,6 +100,7 @@ namespace Azure.AI.Language.Text
                     case "characterMask": return CharacterMaskPolicyType.DeserializeCharacterMaskPolicyType(element, options);
                     case "entityMask": return EntityMaskPolicyType.DeserializeEntityMaskPolicyType(element, options);
                     case "noMask": return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
+                    case "syntheticReplacement": return SyntheticReplacementPolicyType.DeserializeSyntheticReplacementPolicyType(element, options);
                 }
             }
             return UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);
