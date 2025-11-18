@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -138,12 +139,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedServiceResource serviceFabricManagedService = client.GetServiceFabricManagedServiceResource(serviceFabricManagedServiceResourceId);
 
             // invoke the operation
-            RestartReplicaContent content = new RestartReplicaContent("00000000-0000-0000-0000-000000000000", new long[] { 123456789012345680L }, RestartKind.Simultaneous)
-            {
-                ForceRestart = false,
-                Timeout = 60L,
-            };
-            await serviceFabricManagedService.RestartReplicaAsync(WaitUntil.Completed, content);
+            ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent = new ManagedServiceRestartReplicaContent(null, null, default);
+            await serviceFabricManagedService.RestartReplicaAsync(WaitUntil.Completed, managedServiceRestartReplicaContent);
 
             Console.WriteLine("Succeeded");
         }

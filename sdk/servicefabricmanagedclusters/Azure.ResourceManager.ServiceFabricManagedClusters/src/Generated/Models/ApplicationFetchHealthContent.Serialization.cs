@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("excludeHealthStatistics"u8);
                 writer.WriteBooleanValue(ExcludeHealthStatistics.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            HealthFilter? eventsHealthStateFilter = default;
-            HealthFilter? deployedApplicationsHealthStateFilter = default;
-            HealthFilter? servicesHealthStateFilter = default;
+            ApplicationFetchHealthFilter? eventsHealthStateFilter = default;
+            ApplicationFetchHealthFilter? deployedApplicationsHealthStateFilter = default;
+            ApplicationFetchHealthFilter? servicesHealthStateFilter = default;
             bool? excludeHealthStatistics = default;
             long? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    eventsHealthStateFilter = new HealthFilter(property.Value.GetString());
+                    eventsHealthStateFilter = new ApplicationFetchHealthFilter(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deployedApplicationsHealthStateFilter"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    deployedApplicationsHealthStateFilter = new HealthFilter(property.Value.GetString());
+                    deployedApplicationsHealthStateFilter = new ApplicationFetchHealthFilter(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("servicesHealthStateFilter"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    servicesHealthStateFilter = new HealthFilter(property.Value.GetString());
+                    servicesHealthStateFilter = new ApplicationFetchHealthFilter(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("excludeHealthStatistics"u8))

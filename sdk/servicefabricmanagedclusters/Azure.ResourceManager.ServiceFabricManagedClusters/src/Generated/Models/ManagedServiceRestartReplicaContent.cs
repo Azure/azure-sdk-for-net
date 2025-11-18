@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Request to restart a replica. </summary>
-    public partial class RestartReplicaContent
+    public partial class ManagedServiceRestartReplicaContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RestartReplicaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceRestartReplicaContent"/>. </summary>
         /// <param name="partitionId"> The ID of the partition. </param>
         /// <param name="replicaIds"> The IDs of the replicas to be restarted. </param>
         /// <param name="restartKind"> The kind of restart to perform. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partitionId"/> or <paramref name="replicaIds"/> is null. </exception>
-        public RestartReplicaContent(string partitionId, IEnumerable<long> replicaIds, RestartKind restartKind)
+        public ManagedServiceRestartReplicaContent(string partitionId, IEnumerable<long> replicaIds, ManagedServiceRestartKind restartKind)
         {
             Argument.AssertNotNull(partitionId, nameof(partitionId));
             Argument.AssertNotNull(replicaIds, nameof(replicaIds));
@@ -61,25 +61,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             RestartKind = restartKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestartReplicaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceRestartReplicaContent"/>. </summary>
         /// <param name="partitionId"> The ID of the partition. </param>
         /// <param name="replicaIds"> The IDs of the replicas to be restarted. </param>
         /// <param name="restartKind"> The kind of restart to perform. </param>
         /// <param name="forceRestart"> If true, the restart operation will be forced. Use this option with care, as it may cause data loss. </param>
-        /// <param name="timeout"> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </param>
+        /// <param name="timeoutInSeconds"> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestartReplicaContent(string partitionId, IList<long> replicaIds, RestartKind restartKind, bool? forceRestart, long? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceRestartReplicaContent(string partitionId, IList<long> replicaIds, ManagedServiceRestartKind restartKind, bool? forceRestart, long? timeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartitionId = partitionId;
             ReplicaIds = replicaIds;
             RestartKind = restartKind;
             ForceRestart = forceRestart;
-            Timeout = timeout;
+            TimeoutInSeconds = timeoutInSeconds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestartReplicaContent"/> for deserialization. </summary>
-        internal RestartReplicaContent()
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceRestartReplicaContent"/> for deserialization. </summary>
+        internal ManagedServiceRestartReplicaContent()
         {
         }
 
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> The IDs of the replicas to be restarted. </summary>
         public IList<long> ReplicaIds { get; }
         /// <summary> The kind of restart to perform. </summary>
-        public RestartKind RestartKind { get; }
+        public ManagedServiceRestartKind RestartKind { get; }
         /// <summary> If true, the restart operation will be forced. Use this option with care, as it may cause data loss. </summary>
         public bool? ForceRestart { get; set; }
         /// <summary> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </summary>
-        public long? Timeout { get; set; }
+        public long? TimeoutInSeconds { get; set; }
     }
 }

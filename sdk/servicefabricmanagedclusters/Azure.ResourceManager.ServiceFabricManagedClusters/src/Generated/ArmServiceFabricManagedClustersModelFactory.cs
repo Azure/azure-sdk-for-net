@@ -375,23 +375,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 minInstancePercentage);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RestartReplicaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceRestartReplicaContent"/>. </summary>
         /// <param name="partitionId"> The ID of the partition. </param>
         /// <param name="replicaIds"> The IDs of the replicas to be restarted. </param>
         /// <param name="restartKind"> The kind of restart to perform. </param>
         /// <param name="forceRestart"> If true, the restart operation will be forced. Use this option with care, as it may cause data loss. </param>
-        /// <param name="timeout"> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </param>
-        /// <returns> A new <see cref="Models.RestartReplicaContent"/> instance for mocking. </returns>
-        public static RestartReplicaContent RestartReplicaContent(string partitionId = null, IEnumerable<long> replicaIds = null, RestartKind restartKind = default, bool? forceRestart = null, long? timeout = null)
+        /// <param name="timeoutInSeconds"> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceRestartReplicaContent"/> instance for mocking. </returns>
+        public static ManagedServiceRestartReplicaContent ManagedServiceRestartReplicaContent(string partitionId = null, IEnumerable<long> replicaIds = null, ManagedServiceRestartKind restartKind = default, bool? forceRestart = null, long? timeoutInSeconds = null)
         {
             replicaIds ??= new List<long>();
 
-            return new RestartReplicaContent(
+            return new ManagedServiceRestartReplicaContent(
                 partitionId,
                 replicaIds?.ToList(),
                 restartKind,
                 forceRestart,
-                timeout,
+                timeoutInSeconds,
                 serializedAdditionalRawData: null);
         }
 

@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        internal RequestUriBuilder CreateRestartReplicaRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, RestartReplicaContent content)
+        internal RequestUriBuilder CreateRestartReplicaRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return uri;
         }
 
-        internal HttpMessage CreateRestartReplicaRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, RestartReplicaContent content)
+        internal HttpMessage CreateRestartReplicaRequest(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -613,9 +613,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(managedServiceRestartReplicaContent, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -626,20 +626,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="serviceName"> The name of the service resource in the format of {applicationName}~{serviceName}. </param>
-        /// <param name="content"> The parameters for restarting replicas. </param>
+        /// <param name="managedServiceRestartReplicaContent"> The parameters for restarting replicas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="managedServiceRestartReplicaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestartReplicaAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, RestartReplicaContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> RestartReplicaAsync(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(managedServiceRestartReplicaContent, nameof(managedServiceRestartReplicaContent));
 
-            using var message = CreateRestartReplicaRequest(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName, content);
+            using var message = CreateRestartReplicaRequest(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName, managedServiceRestartReplicaContent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -656,20 +656,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="serviceName"> The name of the service resource in the format of {applicationName}~{serviceName}. </param>
-        /// <param name="content"> The parameters for restarting replicas. </param>
+        /// <param name="managedServiceRestartReplicaContent"> The parameters for restarting replicas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/>, <paramref name="serviceName"/> or <paramref name="managedServiceRestartReplicaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="applicationName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RestartReplica(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, RestartReplicaContent content, CancellationToken cancellationToken = default)
+        public Response RestartReplica(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName, ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(managedServiceRestartReplicaContent, nameof(managedServiceRestartReplicaContent));
 
-            using var message = CreateRestartReplicaRequest(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName, content);
+            using var message = CreateRestartReplicaRequest(subscriptionId, resourceGroupName, clusterName, applicationName, serviceName, managedServiceRestartReplicaContent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -55,27 +55,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="deployedApplicationsHealthStateFilter"> Allows filtering of the deployed applications health state objects returned in the result of application health query based on their health state. </param>
         /// <param name="servicesHealthStateFilter"> Allows filtering of the services health state objects returned in the result of services health query based on their health state. </param>
         /// <param name="excludeHealthStatistics"> Indicates whether the health statistics should be returned as part of the query result. False by default. The statistics show the number of children entities in health state Ok, Warning, and Error. </param>
-        /// <param name="timeout"> Request timeout for the health query in seconds. The default value is 60 seconds. </param>
+        /// <param name="timeoutInSeconds"> Request timeout for the health query in seconds. The default value is 60 seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationFetchHealthContent(HealthFilter? eventsHealthStateFilter, HealthFilter? deployedApplicationsHealthStateFilter, HealthFilter? servicesHealthStateFilter, bool? excludeHealthStatistics, long? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationFetchHealthContent(ApplicationFetchHealthFilter? eventsHealthStateFilter, ApplicationFetchHealthFilter? deployedApplicationsHealthStateFilter, ApplicationFetchHealthFilter? servicesHealthStateFilter, bool? excludeHealthStatistics, long? timeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventsHealthStateFilter = eventsHealthStateFilter;
             DeployedApplicationsHealthStateFilter = deployedApplicationsHealthStateFilter;
             ServicesHealthStateFilter = servicesHealthStateFilter;
             ExcludeHealthStatistics = excludeHealthStatistics;
-            Timeout = timeout;
+            TimeoutInSeconds = timeoutInSeconds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allows filtering of the health events returned in the response based on health state. </summary>
-        public HealthFilter? EventsHealthStateFilter { get; set; }
+        public ApplicationFetchHealthFilter? EventsHealthStateFilter { get; set; }
         /// <summary> Allows filtering of the deployed applications health state objects returned in the result of application health query based on their health state. </summary>
-        public HealthFilter? DeployedApplicationsHealthStateFilter { get; set; }
+        public ApplicationFetchHealthFilter? DeployedApplicationsHealthStateFilter { get; set; }
         /// <summary> Allows filtering of the services health state objects returned in the result of services health query based on their health state. </summary>
-        public HealthFilter? ServicesHealthStateFilter { get; set; }
+        public ApplicationFetchHealthFilter? ServicesHealthStateFilter { get; set; }
         /// <summary> Indicates whether the health statistics should be returned as part of the query result. False by default. The statistics show the number of children entities in health state Ok, Warning, and Error. </summary>
         public bool? ExcludeHealthStatistics { get; set; }
         /// <summary> Request timeout for the health query in seconds. The default value is 60 seconds. </summary>
-        public long? Timeout { get; set; }
+        public long? TimeoutInSeconds { get; set; }
     }
 }

@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             // invoke the operation
             ApplicationFetchHealthContent content = new ApplicationFetchHealthContent
             {
-                EventsHealthStateFilter = HealthFilter.Error,
-                DeployedApplicationsHealthStateFilter = HealthFilter.Error,
-                ServicesHealthStateFilter = HealthFilter.Error,
+                EventsHealthStateFilter = ApplicationFetchHealthFilter.Error,
+                DeployedApplicationsHealthStateFilter = ApplicationFetchHealthFilter.Error,
+                ServicesHealthStateFilter = ApplicationFetchHealthFilter.Error,
                 ExcludeHealthStatistics = true,
-                Timeout = 30L,
+                TimeoutInSeconds = 30L,
             };
             await serviceFabricManagedApplication.FetchHealthAsync(WaitUntil.Completed, content);
 

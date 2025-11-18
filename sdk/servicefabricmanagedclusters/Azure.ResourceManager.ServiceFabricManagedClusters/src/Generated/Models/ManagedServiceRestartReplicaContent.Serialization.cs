@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class RestartReplicaContent : IUtf8JsonSerializable, IJsonModel<RestartReplicaContent>
+    public partial class ManagedServiceRestartReplicaContent : IUtf8JsonSerializable, IJsonModel<ManagedServiceRestartReplicaContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestartReplicaContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceRestartReplicaContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RestartReplicaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedServiceRestartReplicaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceRestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestartReplicaContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceRestartReplicaContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("partitionId"u8);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        RestartReplicaContent IJsonModel<RestartReplicaContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedServiceRestartReplicaContent IJsonModel<ManagedServiceRestartReplicaContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceRestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestartReplicaContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceRestartReplicaContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestartReplicaContent(document.RootElement, options);
+            return DeserializeManagedServiceRestartReplicaContent(document.RootElement, options);
         }
 
-        internal static RestartReplicaContent DeserializeRestartReplicaContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedServiceRestartReplicaContent DeserializeManagedServiceRestartReplicaContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             string partitionId = default;
             IList<long> replicaIds = default;
-            RestartKind restartKind = default;
+            ManagedServiceRestartKind restartKind = default;
             bool? forceRestart = default;
             long? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("restartKind"u8))
                 {
-                    restartKind = new RestartKind(property.Value.GetString());
+                    restartKind = new ManagedServiceRestartKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("forceRestart"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RestartReplicaContent(
+            return new ManagedServiceRestartReplicaContent(
                 partitionId,
                 replicaIds,
                 restartKind,
@@ -154,35 +154,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RestartReplicaContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedServiceRestartReplicaContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceRestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestartReplicaContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceRestartReplicaContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RestartReplicaContent IPersistableModel<RestartReplicaContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedServiceRestartReplicaContent IPersistableModel<ManagedServiceRestartReplicaContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceRestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRestartReplicaContent(document.RootElement, options);
+                        return DeserializeManagedServiceRestartReplicaContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestartReplicaContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceRestartReplicaContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RestartReplicaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedServiceRestartReplicaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

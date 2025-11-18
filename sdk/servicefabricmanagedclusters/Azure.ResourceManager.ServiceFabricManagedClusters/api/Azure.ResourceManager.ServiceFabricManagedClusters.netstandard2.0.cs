@@ -74,7 +74,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation UpdateUpgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateUpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -309,7 +313,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource> Update(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>> UpdateAsync(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class ServiceFabricManagedClustersExtensions
@@ -512,8 +520,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RestartReplica(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartReplicaAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RestartReplica(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartReplicaAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -582,17 +590,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public partial class ApplicationFetchHealthContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>
     {
         public ApplicationFetchHealthContent() { }
-        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter? DeployedApplicationsHealthStateFilter { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter? EventsHealthStateFilter { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter? DeployedApplicationsHealthStateFilter { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter? EventsHealthStateFilter { get { throw null; } set { } }
         public bool? ExcludeHealthStatistics { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter? ServicesHealthStateFilter { get { throw null; } set { } }
-        public long? Timeout { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter? ServicesHealthStateFilter { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApplicationFetchHealthFilter : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApplicationFetchHealthFilter(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter All { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter Default { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter Error { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter None { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter Ok { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationFetchHealthFilter right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ApplicationHealthPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy>
     {
@@ -644,6 +674,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus ManagedAzResiliencyStatus(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus> baseResourceStatus = null, bool? isClusterZoneResilient = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedMaintenanceWindowStatus ManagedMaintenanceWindowStatus(bool? isWindowEnabled = default(bool?), bool? isRegionReady = default(bool?), bool? isWindowActive = default(bool?), bool? canApplyUpdates = default(bool?), System.DateTimeOffset? lastWindowStatusUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastWindowStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastWindowEndOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties ManagedServiceProperties(string placementConstraints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceCorrelation> correlationScheme = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceLoadMetric> serviceLoadMetrics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePlacementPolicy> servicePlacementPolicies = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServiceMoveCost? defaultMoveCost = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedServiceMoveCost?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingPolicy> scalingPolicies = null, string provisioningState = null, string serviceKind = null, string serviceTypeName = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme partitionDescription = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePackageActivationMode? servicePackageActivationMode = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePackageActivationMode?), string serviceDnsName = null) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent ManagedServiceRestartReplicaContent(string partitionId = null, System.Collections.Generic.IEnumerable<long> replicaIds = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind restartKind = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind), bool? forceRestart = default(bool?), long? timeoutInSeconds = default(long?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeAvailableSku NodeTypeAvailableSku(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSupportedSku sku = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity capacity = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFaultSimulation NodeTypeFaultSimulation(string nodeTypeName = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus? status = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus?), string operationId = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.SfmcOperationStatus? operationStatus = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.SfmcOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuCapacity NodeTypeSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? @default = default(int?), Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuScaleType? scaleType = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeSkuScaleType?)) { throw null; }
@@ -651,7 +682,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeVmssExtension NodeTypeVmssExtension(string name = null, string publisher = null, string vmssExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, string forceUpdateTag = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null, string provisioningState = null, bool? isAutomaticUpgradeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.VmssExtensionSetupOrder> setupOrder = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ResourceAzStatus ResourceAzStatus(string resourceName = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), bool? isZoneResilient = default(bool?), string details = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartDeployedCodePackageContent RestartDeployedCodePackageContent(string nodeName = null, string serviceManifestName = null, string codePackageName = null, string codePackageInstanceId = null, string servicePackageActivationId = null) { throw null; }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent RestartReplicaContent(string partitionId = null, System.Collections.Generic.IEnumerable<long> replicaIds = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind restartKind = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind), bool? forceRestart = default(bool?), long? timeout = default(long?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy RuntimeApplicationHealthPolicy(bool considerWarningAsError = false, int maxPercentUnhealthyDeployedApplications = 0, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy RuntimeRollingUpgradeUpdateMonitoringPolicy(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode rollingUpgradeMode = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeMode), bool? forceRestart = default(bool?), long? replicaSetCheckTimeoutInMilliseconds = default(long?), Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction? failureAction = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeFailureAction?), string healthCheckWaitDurationInMilliseconds = null, string healthCheckStableDurationInMilliseconds = null, string healthCheckRetryTimeoutInMilliseconds = null, string upgradeTimeoutInMilliseconds = null, string upgradeDomainTimeoutInMilliseconds = null, long? instanceCloseDelayDurationInSeconds = default(long?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpdateApplicationUpgradeContent RuntimeUpdateApplicationUpgradeContent(string name = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind upgradeKind = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeUpgradeKind), Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeApplicationHealthPolicy applicationHealthPolicy = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RuntimeRollingUpgradeUpdateMonitoringPolicy updateDescription = null) { throw null; }
@@ -839,28 +869,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HealthFilter : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HealthFilter(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter All { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter Default { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter Error { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter None { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter Ok { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.HealthFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ManagedAzResiliencyStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedAzResiliencyStatus>
@@ -1311,6 +1319,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedServiceRestartKind : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedServiceRestartKind(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind Simultaneous { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ManagedServiceRestartReplicaContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>
+    {
+        public ManagedServiceRestartReplicaContent(string partitionId, System.Collections.Generic.IEnumerable<long> replicaIds, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind restartKind) { }
+        public bool? ForceRestart { get { throw null; } set { } }
+        public string PartitionId { get { throw null; } }
+        public System.Collections.Generic.IList<long> ReplicaIds { get { throw null; } }
+        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartKind RestartKind { get { throw null; } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceRestartReplicaContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class ManagedServiceScalingMechanism : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism>
     {
         protected ManagedServiceScalingMechanism() { }
@@ -1650,38 +1690,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartDeployedCodePackageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartDeployedCodePackageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartDeployedCodePackageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartDeployedCodePackageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RestartKind : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RestartKind(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind Simultaneous { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind left, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RestartReplicaContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>
-    {
-        public RestartReplicaContent(string partitionId, System.Collections.Generic.IEnumerable<long> replicaIds, Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind restartKind) { }
-        public bool? ForceRestart { get { throw null; } set { } }
-        public string PartitionId { get { throw null; } }
-        public System.Collections.Generic.IList<long> ReplicaIds { get { throw null; } }
-        public Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartKind RestartKind { get { throw null; } }
-        public long? Timeout { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RestartReplicaContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RollingUpgradeMode : System.IEquatable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.RollingUpgradeMode>
