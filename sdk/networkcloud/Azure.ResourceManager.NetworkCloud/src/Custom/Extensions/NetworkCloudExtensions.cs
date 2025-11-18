@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudBareMetalMachinesAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of bare metal machines in the provided subscription.
@@ -78,7 +82,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudBareMetalMachines(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of cloud services networks in the provided subscription.
@@ -111,7 +119,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudCloudServicesNetworksAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of cloud services networks in the provided subscription.
@@ -144,7 +156,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudCloudServicesNetworks(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of cluster managers in the provided subscription.
@@ -177,7 +193,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudClusterManagersAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of cluster managers in the provided subscription.
@@ -210,7 +230,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudClusterManagers(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of clusters in the provided subscription.
@@ -243,7 +267,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudClustersAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of clusters in the provided subscription.
@@ -276,7 +304,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudClusters(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of Kubernetes clusters in the provided subscription.
@@ -309,7 +341,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudKubernetesClustersAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of Kubernetes clusters in the provided subscription.
@@ -342,7 +378,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudKubernetesClusters(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of layer 2 (L2) networks in the provided subscription.
@@ -375,7 +415,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudL2NetworksAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of layer 2 (L2) networks in the provided subscription.
@@ -408,7 +452,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudL2Networks(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of layer 3 (L3) networks in the provided subscription.
@@ -441,7 +489,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudL3NetworksAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of layer 3 (L3) networks in the provided subscription.
@@ -474,7 +526,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudL3Networks(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of racks in the provided subscription.
@@ -507,7 +563,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudRacksAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of racks in the provided subscription.
@@ -540,7 +600,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudRacks(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of storage appliances in the provided subscription.
@@ -573,7 +637,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudStorageAppliancesAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of storage appliances in the provided subscription.
@@ -606,7 +674,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudStorageAppliances(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of trunked networks in the provided subscription.
@@ -639,7 +711,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudTrunkedNetworksAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of trunked networks in the provided subscription.
@@ -672,7 +748,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudTrunkedNetworks(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of virtual machines in the provided subscription.
@@ -705,7 +785,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudVirtualMachinesAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of virtual machines in the provided subscription.
@@ -738,7 +822,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudVirtualMachines(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of volumes in the provided subscription.
@@ -771,7 +859,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudVolumesAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Get a list of volumes in the provided subscription.
@@ -804,6 +896,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNetworkCloudVolumes(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
+        }
     }
 }
