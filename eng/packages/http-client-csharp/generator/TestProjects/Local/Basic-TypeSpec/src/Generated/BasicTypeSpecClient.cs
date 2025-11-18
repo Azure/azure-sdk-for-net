@@ -1617,17 +1617,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithNextLink(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithNextLinkCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithNextLinkCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1643,17 +1633,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithNextLinkAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1685,17 +1665,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithStringNextLink(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithStringNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithStringNextLinkCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithStringNextLinkCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1711,17 +1681,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithStringNextLinkAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithStringNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithStringNextLinkAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1753,17 +1713,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithHeaderNextLink(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithHeaderNextLinkCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1779,17 +1729,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithHeaderNextLinkAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithHeaderNextLink");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithHeaderNextLinkAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1822,17 +1762,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithContinuationToken(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenCollectionResult(this, token, context);
         }
 
         /// <summary>
@@ -1849,17 +1779,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithContinuationTokenAsync(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResult(this, token, context);
         }
 
         /// <summary> List things with continuation token. </summary>
@@ -1894,17 +1814,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithContinuationTokenHeaderResponse(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
         }
 
         /// <summary>
@@ -1921,17 +1831,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithContinuationTokenHeaderResponseAsync(string token, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
         }
 
         /// <summary> List things with continuation token header response. </summary>
@@ -1965,17 +1865,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWithPaging(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithPagingCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithPagingCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1991,17 +1881,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWithPagingAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
-            scope.Start();
-            try
-            {
-                return new BasicTypeSpecClientGetWithPagingAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new BasicTypeSpecClientGetWithPagingAsyncCollectionResult(this, context);
         }
 
         /// <summary> List things with paging. </summary>
