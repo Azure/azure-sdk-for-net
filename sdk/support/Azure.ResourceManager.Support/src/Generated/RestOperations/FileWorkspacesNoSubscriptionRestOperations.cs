@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new file workspace. </summary>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>

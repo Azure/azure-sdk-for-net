@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="durationProperty"> The <see cref="DurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DurationProperty durationProperty) => throw null;
 
-        public static explicit operator DurationProperty(Response result) => throw null;
+        public static explicit operator DurationProperty(Response response) => throw null;
     }
 }

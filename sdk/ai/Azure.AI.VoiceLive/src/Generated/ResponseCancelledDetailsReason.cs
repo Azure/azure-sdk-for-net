@@ -5,14 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public enum ResponseCancelledDetailsReason
+    public readonly partial struct ResponseCancelledDetailsReason : IEquatable<ResponseCancelledDetailsReason>
     {
-        /// <summary> TurnDetected. </summary>
-        TurnDetected,
-        /// <summary> ClientCancelled. </summary>
-        ClientCancelled
+        private readonly string _value;
+        private const string TurnDetectedValue = "turn_detected";
+        private const string ClientCancelledValue = "client_cancelled";
+
+        /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetailsReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResponseCancelledDetailsReason(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the TurnDetected. </summary>
+        public static ResponseCancelledDetailsReason TurnDetected { get; } = new ResponseCancelledDetailsReason(TurnDetectedValue);
+
+        /// <summary> Gets the ClientCancelled. </summary>
+        public static ResponseCancelledDetailsReason ClientCancelled { get; } = new ResponseCancelledDetailsReason(ClientCancelledValue);
+
+        /// <summary> Determines if two <see cref="ResponseCancelledDetailsReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ResponseCancelledDetailsReason left, ResponseCancelledDetailsReason right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ResponseCancelledDetailsReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ResponseCancelledDetailsReason left, ResponseCancelledDetailsReason right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ResponseCancelledDetailsReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponseCancelledDetailsReason(string value) => new ResponseCancelledDetailsReason(value);
+
+        /// <summary> Converts a string to a <see cref="ResponseCancelledDetailsReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponseCancelledDetailsReason?(string value) => value == null ? null : new ResponseCancelledDetailsReason(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ResponseCancelledDetailsReason other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ResponseCancelledDetailsReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownVoiceLiveToolDefinition : IJsonModel<VoiceLiveToolDefinition>
+    internal partial class UnknownVoiceLiveToolDefinition : VoiceLiveToolDefinition, IJsonModel<VoiceLiveToolDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceLiveToolDefinition"/> for deserialization. </summary>
         internal UnknownVoiceLiveToolDefinition()
@@ -110,7 +110,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeVoiceLiveToolDefinition(document.RootElement, options);
                     }

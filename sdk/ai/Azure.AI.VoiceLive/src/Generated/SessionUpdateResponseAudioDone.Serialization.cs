@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the model-generated audio is done. Also emitted when a Response
     /// is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseAudioDone : IJsonModel<SessionUpdateResponseAudioDone>
+    public partial class SessionUpdateResponseAudioDone : SessionUpdate, IJsonModel<SessionUpdateResponseAudioDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDone"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioDone()
@@ -159,7 +159,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseAudioDone(document.RootElement, options);
                     }

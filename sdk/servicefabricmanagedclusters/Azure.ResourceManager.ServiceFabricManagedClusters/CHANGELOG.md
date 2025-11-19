@@ -1,14 +1,25 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.3.0-beta.5 (2025-11-19)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded to api-version 2025-10-01-preview.
 
-### Bugs Fixed
+## 1.3.0-beta.4 (2025-10-16)
 
-### Other Changes
+### Features Added
+
+- Upgraded to api-version 2025-06-01-preview.
+
+Cluster features
+- EnableOutboundOnlyNodeTypes
+
+Nodetype features
+- IsOutboundOnly
+
+Service Endpoint
+- NetworkIdentifier
 
 ## 1.3.0-beta.3 (2025-06-23)
 

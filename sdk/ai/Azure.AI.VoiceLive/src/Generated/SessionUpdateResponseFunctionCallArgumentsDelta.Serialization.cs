@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the model-generated function call arguments are updated. </summary>
-    public partial class SessionUpdateResponseFunctionCallArgumentsDelta : IJsonModel<SessionUpdateResponseFunctionCallArgumentsDelta>
+    public partial class SessionUpdateResponseFunctionCallArgumentsDelta : SessionUpdate, IJsonModel<SessionUpdateResponseFunctionCallArgumentsDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseFunctionCallArgumentsDelta()
@@ -165,7 +165,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(document.RootElement, options);
                     }

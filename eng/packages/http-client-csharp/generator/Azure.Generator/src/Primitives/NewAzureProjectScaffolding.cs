@@ -173,6 +173,12 @@ namespace Azure.Generator.Primitives
                 }
             }
 
+            // Add TaskExtensions if there are multipart form data operations and it hasn't already been added for LRO
+            if (!hasLongRunningOperation && AzureClientGenerator.Instance.InputLibrary.HasMultipartFormDataOperation)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("TaskExtensions.cs"), SharedSourceLinkBase));
+            }
+
             return compileIncludes;
         }
     }

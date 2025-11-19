@@ -41,6 +41,11 @@ namespace Azure.AI.Translation.Document
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options"u8);
+                writer.WriteObjectValue(Options, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,6 +84,7 @@ namespace Azure.AI.Translation.Document
                 return null;
             }
             IList<DocumentTranslationInput> inputs = default;
+            BatchOptions options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,13 +99,22 @@ namespace Azure.AI.Translation.Document
                     inputs = array;
                     continue;
                 }
+                if (property.NameEquals("options"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    options0 = BatchOptions.DeserializeBatchOptions(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TranslationBatch(inputs, serializedAdditionalRawData);
+            return new TranslationBatch(inputs, options0, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TranslationBatch>.Write(ModelReaderWriterOptions options)

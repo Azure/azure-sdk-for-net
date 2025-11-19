@@ -10,13 +10,14 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageCache.Models;
 using Azure.ResourceManager.TestFramework;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Tests
 {
     public class StorageCacheManagementTestBase : ManagementRecordedTestBase<StorageCacheManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => AzureLocation.CanadaCentral;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
        protected ResourceGroupResource DefaultResourceGroup { get; private set; }
@@ -251,6 +252,56 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 Assert.AreEqual(actual.Data.ImportPrefixes[i], expected.ImportPrefixes[i]);
             Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
             Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
+        }
+
+        protected async Task<AutoExportJobResource> CreateOrUpdateAutoExportJob(AmlFileSystemResource amlFS, string name, AutoExportJobData dataVar, bool verifyResult = false)
+        {
+            AutoExportJobCollection autoExportJobCollectionVar = amlFS.GetAutoExportJobs();
+
+            string autoExportJobName = name ?? Recording.GenerateAssetName("testautoexportjob");
+            ArmOperation<AutoExportJobResource> lro = await autoExportJobCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                autoExportJobName: autoExportJobName,
+                data: dataVar);
+            this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            if (verifyResult)
+            {
+                this.VerifyAutoExportJob(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected void VerifyAutoExportJob(AutoExportJobResource actual, AutoExportJobData expected)
+        {
+            for (int i = 0; i < actual.Data.AutoExportPrefixes.Count; i++)
+                Assert.AreEqual(actual.Data.AutoExportPrefixes[i], expected.AutoExportPrefixes[i]);
+            Assert.AreEqual(actual.Data.AdminStatus, expected.AdminStatus);
+        }
+
+        protected async Task<AutoImportJobResource> CreateOrUpdateAutoImportJob(AmlFileSystemResource amlFS, string name, AutoImportJobData dataVar, bool verifyResult = false)
+        {
+            AutoImportJobCollection autoImportJobCollectionVar = amlFS.GetAutoImportJobs();
+
+            string autoImportJobName = name ?? Recording.GenerateAssetName("testautoimportjob");
+            ArmOperation<AutoImportJobResource> lro = await autoImportJobCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                autoImportJobName: autoImportJobName,
+                data: dataVar);
+            this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            if (verifyResult)
+            {
+                this.VerifyAutoImportJob(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected void VerifyAutoImportJob(AutoImportJobResource actual, AutoImportJobData expected)
+        {
+            for (int i = 0; i < actual.Data.AutoImportPrefixes.Count; i++)
+                Assert.AreEqual(actual.Data.AutoImportPrefixes[i], expected.AutoImportPrefixes[i]);
+            Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
+            Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
+            Assert.AreEqual(actual.Data.AdminStatus, expected.AdminStatus);
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()

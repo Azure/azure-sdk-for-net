@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
     public readonly partial struct StorageDiscoverySku : IEquatable<StorageDiscoverySku>
     {
         private readonly string _value;
+        /// <summary> Standard Sku. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Free Sku. </summary>
+        private const string FreeValue = "Free";
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoverySku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageDiscoverySku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string FreeValue = "Free";
+            _value = value;
+        }
 
         /// <summary> Standard Sku. </summary>
         public static StorageDiscoverySku Standard { get; } = new StorageDiscoverySku(StandardValue);
+
         /// <summary> Free Sku. </summary>
         public static StorageDiscoverySku Free { get; } = new StorageDiscoverySku(FreeValue);
+
         /// <summary> Determines if two <see cref="StorageDiscoverySku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageDiscoverySku left, StorageDiscoverySku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageDiscoverySku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageDiscoverySku left, StorageDiscoverySku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageDiscoverySku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageDiscoverySku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageDiscoverySku(string value) => new StorageDiscoverySku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageDiscoverySku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageDiscoverySku?(string value) => value == null ? null : new StorageDiscoverySku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageDiscoverySku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageDiscoverySku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

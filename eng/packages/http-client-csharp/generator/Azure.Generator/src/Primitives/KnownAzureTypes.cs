@@ -22,7 +22,7 @@ namespace Azure.Generator.Primitives
     internal static class KnownAzureTypes
     {
         public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
-        public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
 
         private const string UuidId = "Azure.Core.uuid";
         private const string IPv4AddressId = "Azure.Core.ipV4Address";
@@ -36,13 +36,13 @@ namespace Azure.Generator.Primitives
         private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => writer.WriteStringValue(value);
 
-        private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
         private static MethodBodyStatement SerializeTypeWithToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => writer.WriteStringValue(value.InvokeToString());
 
-        private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => Static(valueType).Invoke("Parse", element.GetString());
 
         private static MethodBodyStatement SerializeResponseError(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
@@ -54,6 +54,7 @@ namespace Azure.Generator.Primitives
         private static ValueExpression DeserializeResponseError(
             CSharpType valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> options,
             SerializationFormat format)
         {

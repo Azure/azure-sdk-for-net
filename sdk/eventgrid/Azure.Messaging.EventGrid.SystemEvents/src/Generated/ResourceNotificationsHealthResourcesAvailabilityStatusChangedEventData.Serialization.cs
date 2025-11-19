@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// event.
     /// </summary>
     [JsonConverter(typeof(ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventDataConverter))]
-    public partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData : IJsonModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>
+    public partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData : ResourceNotificationsResourceUpdatedEventData, IJsonModel<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/> for deserialization. </summary>
         internal ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData()
@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(document.RootElement, options);
                     }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceIPConfiguration"/>. </summary>
-        /// <param name="name"> Name of the IP configuration. </param>
+        /// <param name="name"> For hub NVAs, primary IP configs must be named 'privatenicipconfig' and 'publicnicipconfig', with non-primary configs using these prefixes; no naming restrictions apply for NVAs in VNets. Maximum 80 character are allowed. </param>
         /// <param name="properties"> Represents a single IP configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualApplianceIPConfiguration(string name, VirtualApplianceIPConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the IP configuration. </summary>
+        /// <summary> For hub NVAs, primary IP configs must be named 'privatenicipconfig' and 'publicnicipconfig', with non-primary configs using these prefixes; no naming restrictions apply for NVAs in VNets. Maximum 80 character are allowed. </summary>
         [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Represents a single IP configuration properties. </summary>

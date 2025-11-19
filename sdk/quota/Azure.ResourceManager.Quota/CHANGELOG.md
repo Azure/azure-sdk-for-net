@@ -1,5 +1,22 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2025-09-25)
+
+### Features Added
+
+- Stable release for api-version '2025-09-01'. 
+- Make `Azure.ResourceManager.Quota` AOT-compatible.
+
 ## 1.2.0-beta.1 (2025-09-17)
 
 ### Features Added

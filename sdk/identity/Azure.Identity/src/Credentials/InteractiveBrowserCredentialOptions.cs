@@ -92,7 +92,9 @@ namespace Azure.Identity
                     {
                         ErrorMessage = BrowserCustomization.ErrorMessage,
                         SuccessMessage = BrowserCustomization.SuccessMessage,
+#pragma warning disable CS0618 // Type or member is obsolete
                         UseEmbeddedWebView = BrowserCustomization.UseEmbeddedWebView ?? false
+#pragma warning restore CS0618 // Type or member is obsolete
                     };
                 }
             }

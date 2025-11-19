@@ -54,6 +54,8 @@ export const armResourceUpdate = "Azure.ResourceManager.@armResourceUpdate";
 export const armResourceUpdateName = "@armResourceUpdate";
 const armResourceUpdateRegex = "Azure\\.ResourceManager\\.@armResourceUpdate";
 
+export const extensionResourceOperationName = "@extensionResourceOperation";
+
 export const armResourceInternal =
   "Azure.ResourceManager.Private.@armResourceInternal";
 export const armResourceInternalName = "@armResourceInternal";
@@ -85,7 +87,8 @@ export const nonResourceMethodMetadata =
 const nonResourceMethodMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
 
-export const flattenPropertyDecorator = "Azure.ResourceManager.@flattenProperty";
+export const flattenPropertyDecorator =
+  "Azure.ResourceManager.@flattenProperty";
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {

@@ -11,9 +11,9 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
-    public partial class Dog : IJsonModel<Dog>
+    public partial class Dog : Pet, IJsonModel<Dog>
     {
         internal Dog() => throw null;
 
@@ -38,6 +38,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
         /// <param name="dog"> The <see cref="Dog"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Dog dog) => throw null;
 
-        public static explicit operator Dog(Response result) => throw null;
+        public static explicit operator Dog(Response response) => throw null;
     }
 }

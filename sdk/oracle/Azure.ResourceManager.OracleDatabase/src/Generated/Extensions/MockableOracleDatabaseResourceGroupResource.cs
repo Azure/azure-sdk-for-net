@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,6 +376,213 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         public virtual Response<ExascaleDBStorageVaultResource> GetExascaleDBStorageVault(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
             return GetExascaleDBStorageVaults().Get(exascaleDbStorageVaultName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OracleNetworkAnchorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OracleNetworkAnchorResources and their operations over a OracleNetworkAnchorResource. </returns>
+        public virtual OracleNetworkAnchorCollection GetOracleNetworkAnchors()
+        {
+            return GetCachedClient(client => new OracleNetworkAnchorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a NetworkAnchor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkAnchor_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OracleNetworkAnchorResource>> GetOracleNetworkAnchorAsync(string networkAnchorName, CancellationToken cancellationToken = default)
+        {
+            return await GetOracleNetworkAnchors().GetAsync(networkAnchorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a NetworkAnchor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkAnchor_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleNetworkAnchorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkAnchorName"> The name of the NetworkAnchor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OracleNetworkAnchorResource> GetOracleNetworkAnchor(string networkAnchorName, CancellationToken cancellationToken = default)
+        {
+            return GetOracleNetworkAnchors().Get(networkAnchorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OracleResourceAnchorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OracleResourceAnchorResources and their operations over a OracleResourceAnchorResource. </returns>
+        public virtual OracleResourceAnchorCollection GetOracleResourceAnchors()
+        {
+            return GetCachedClient(client => new OracleResourceAnchorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a ResourceAnchor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OracleResourceAnchorResource>> GetOracleResourceAnchorAsync(string resourceAnchorName, CancellationToken cancellationToken = default)
+        {
+            return await GetOracleResourceAnchors().GetAsync(resourceAnchorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ResourceAnchor
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OracleResourceAnchorResource> GetOracleResourceAnchor(string resourceAnchorName, CancellationToken cancellationToken = default)
+        {
+            return GetOracleResourceAnchors().Get(resourceAnchorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OracleDBSystemResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OracleDBSystemResources and their operations over a OracleDBSystemResource. </returns>
+        public virtual OracleDBSystemCollection GetOracleDBSystems()
+        {
+            return GetCachedClient(client => new OracleDBSystemCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a DbSystem
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dbSystemName"> The name of the DbSystem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OracleDBSystemResource>> GetOracleDBSystemAsync(string dbSystemName, CancellationToken cancellationToken = default)
+        {
+            return await GetOracleDBSystems().GetAsync(dbSystemName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DbSystem
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dbSystemName"> The name of the DbSystem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OracleDBSystemResource> GetOracleDBSystem(string dbSystemName, CancellationToken cancellationToken = default)
+        {
+            return GetOracleDBSystems().Get(dbSystemName, cancellationToken);
         }
     }
 }

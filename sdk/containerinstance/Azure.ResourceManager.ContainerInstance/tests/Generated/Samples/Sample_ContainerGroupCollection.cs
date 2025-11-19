@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfidentialContainerGroup()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupCreateConfidential.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupCreateConfidential.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupCreateOrUpdateWithStandbyPool()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupCreateOrUpdateStandbyPool.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupCreateOrUpdateStandbyPool.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ ConfigMapKeyValuePairs =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupCreateWithExtensions()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupExtensions.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupExtensions.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -218,7 +218,7 @@ Version = "1.0",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupWithEncryptionProperties()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupEncryptionProperties.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupEncryptionProperties.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -285,7 +285,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupsCreateOrUpdate()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsCreateOrUpdate.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsCreateOrUpdate.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -397,7 +397,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupsCreateOrUpdateSecretReference()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsCreateOrUpdateSecretReference.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsCreateOrUpdateSecretReference.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -520,7 +520,7 @@ SecretReference =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupsCreateWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsCreatePriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsCreatePriority.json
             // this example is just showing the usage of "ContainerGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -569,7 +569,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupsGetWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGetPriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGetPriority.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -602,7 +602,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupsGetFailed()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGet_Failed.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGet_Failed.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -635,7 +635,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupsGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGet_Succeeded.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGet_Succeeded.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -668,7 +668,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ContainerGroupsListByResourceGroup()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsListByResourceGroup.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsListByResourceGroup.json
             // this example is just showing the usage of "ContainerGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -703,7 +703,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupsGetWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGetPriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGetPriority.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -732,7 +732,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupsGetFailed()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGet_Failed.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGet_Failed.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -761,7 +761,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupsGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGet_Succeeded.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGet_Succeeded.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -790,7 +790,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupsGetWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGetPriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGetPriority.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -831,7 +831,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupsGetFailed()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGet_Failed.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGet_Failed.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -872,7 +872,7 @@ Resources = new ContainerResourceRequirements(new ContainerResourceRequestsConte
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupsGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupsGet_Succeeded.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupsGet_Succeeded.json
             // this example is just showing the usage of "ContainerGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

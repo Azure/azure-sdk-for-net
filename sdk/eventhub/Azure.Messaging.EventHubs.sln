@@ -13,17 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.P
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Messaging.EventHubs.Shared", "Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.shproj", "{905C204B-E043-4219-84E1-DC90139EA643}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{AF73A238-61D1-4D1C-807F-57C19F193DC6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Perf", "Azure.Messaging.EventHubs\perf\Azure.Messaging.EventHubs.Perf.csproj", "{C1060A0E-81D7-4682-8E78-60D9F254BCA5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Tests", "Azure.Messaging.EventHubs\tests\Azure.Messaging.EventHubs.Tests.csproj", "{84A94494-7F8F-4D45-8AF4-445AFECF8E01}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Tests", "Azure.Messaging.EventHubs.Processor\tests\Azure.Messaging.EventHubs.Processor.Tests.csproj", "{4F92B92C-40B4-4F2C-8E67-103939A0E584}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Shared.Tests", "Azure.Messaging.EventHubs.Shared\tests\Azure.Messaging.EventHubs.Shared.Tests.csproj", "{3733A11A-6CA1-4759-8BEA-F64504BFBF59}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Processor.Perf", "Azure.Messaging.EventHubs.Processor\perf\Azure.Messaging.EventHubs.Processor.Perf.csproj", "{E9EF4740-4B32-401C-BE22-70CE11C62629}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Stress", "Azure.Messaging.EventHubs\stress\src\Azure.Messaging.EventHubs.Stress.csproj", "{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}"
 EndProject
@@ -47,14 +41,6 @@ Global
 		{D9481CB7-091E-4AB5-93B0-47EAA6BE3943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9481CB7-091E-4AB5-93B0-47EAA6BE3943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9481CB7-091E-4AB5-93B0-47EAA6BE3943}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF73A238-61D1-4D1C-807F-57C19F193DC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF73A238-61D1-4D1C-807F-57C19F193DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF73A238-61D1-4D1C-807F-57C19F193DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF73A238-61D1-4D1C-807F-57C19F193DC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1060A0E-81D7-4682-8E78-60D9F254BCA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1060A0E-81D7-4682-8E78-60D9F254BCA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1060A0E-81D7-4682-8E78-60D9F254BCA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1060A0E-81D7-4682-8E78-60D9F254BCA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84A94494-7F8F-4D45-8AF4-445AFECF8E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84A94494-7F8F-4D45-8AF4-445AFECF8E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84A94494-7F8F-4D45-8AF4-445AFECF8E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,10 +53,6 @@ Global
 		{3733A11A-6CA1-4759-8BEA-F64504BFBF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3733A11A-6CA1-4759-8BEA-F64504BFBF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3733A11A-6CA1-4759-8BEA-F64504BFBF59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9EF4740-4B32-401C-BE22-70CE11C62629}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B3D4A0-ACF0-45F1-9ACB-F6A786F49DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,8 +67,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{327A0C67-D9B6-4831-A53F-BFE059934787} = {4C209B69-98C3-4B12-B777-111EFF0E6F66}
-		{AF73A238-61D1-4D1C-807F-57C19F193DC6} = {4C209B69-98C3-4B12-B777-111EFF0E6F66}
-		{5CFD80DB-98F3-4E59-9792-1C421786D3D0} = {4C209B69-98C3-4B12-B777-111EFF0E6F66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9B7844C-B066-4B3D-A0E7-D5008C5EC232}

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.ClusterSupportEnded event. </summary>
     [JsonConverter(typeof(ContainerServiceClusterSupportEndedEventDataConverter))]
-    public partial class ContainerServiceClusterSupportEndedEventData : IJsonModel<ContainerServiceClusterSupportEndedEventData>
+    public partial class ContainerServiceClusterSupportEndedEventData : ContainerServiceClusterSupportEventData, IJsonModel<ContainerServiceClusterSupportEndedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndedEventData"/> for deserialization. </summary>
         internal ContainerServiceClusterSupportEndedEventData()
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeContainerServiceClusterSupportEndedEventData(document.RootElement, options);
                     }

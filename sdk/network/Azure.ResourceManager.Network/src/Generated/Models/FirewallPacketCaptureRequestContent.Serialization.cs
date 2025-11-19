@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Operation))
+            {
+                writer.WritePropertyName("operation"u8);
+                writer.WriteStringValue(Operation.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             AzureFirewallNetworkRuleProtocol? protocol = default;
             IList<AzureFirewallPacketCaptureFlags> flags = default;
             IList<AzureFirewallPacketCaptureRule> filters = default;
+            AzureFirewallPacketCaptureOperationType? operation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,6 +202,15 @@ namespace Azure.ResourceManager.Network.Models
                     filters = array;
                     continue;
                 }
+                if (property.NameEquals("operation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operation = new AzureFirewallPacketCaptureOperationType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -210,6 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                 protocol,
                 flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
                 filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>(),
+                operation,
                 serializedAdditionalRawData);
         }
 

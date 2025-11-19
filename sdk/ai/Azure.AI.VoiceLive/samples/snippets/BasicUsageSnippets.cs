@@ -35,22 +35,22 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 Model = model,
                 Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
                 Voice = new AzureStandardVoice("en-US-AvaNeural"),
-                TurnDetection = new ServerVad()
+                TurnDetection = new AzureSemanticVadTurnDetection()
                 {
                     Threshold = 0.5f,
-                    PrefixPaddingMs = 300,
-                    SilenceDurationMs = 500
+                    PrefixPadding = TimeSpan.FromMilliseconds(300),
+                    SilenceDuration = TimeSpan.FromMilliseconds(500)
                 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
 
             // Ensure modalities include audio
             sessionOptions.Modalities.Clear();
-            sessionOptions.Modalities.Add(InputModality.Text);
-            sessionOptions.Modalities.Add(InputModality.Audio);
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
 
             // Process events from the session
             await foreach (SessionUpdate serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
@@ -92,34 +92,29 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                 {
                     Temperature = 0.8f
                 },
-                TurnDetection = new AzureSemanticVad()
+                TurnDetection = new AzureSemanticVadTurnDetection()
                 {
-                    NegThreshold = 0.3f,
-                    WindowSize = 300,
                     RemoveFillerWords = true
                 },
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
 
             // Ensure modalities include audio
             sessionOptions.Modalities.Clear();
-            sessionOptions.Modalities.Add(InputModality.Text);
-            sessionOptions.Modalities.Add(InputModality.Audio);
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
             #endregion
         }
 
-        /// <summary>
-        /// Demonstrates function calling capabilities.
-        /// </summary>
-        public async Task FunctionCallingExample()
+        public async Task FunctionCallResponseExample()
         {
             Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
             var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
 
             VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
@@ -142,14 +137,13 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
                     }
                     """)
             };
-
             VoiceLiveSessionOptions sessionOptions = new()
             {
                 Model = model,
                 Instructions = "You are a weather assistant. Use the get_current_weather function to help users with weather information.",
                 Voice = new AzureStandardVoice("en-US-AvaNeural"),
-                InputAudioFormat = AudioFormat.Pcm16,
-                OutputAudioFormat = AudioFormat.Pcm16
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
             };
 
             // Add the function tool
@@ -157,10 +151,76 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
 
             // Ensure modalities include audio
             sessionOptions.Modalities.Clear();
-            sessionOptions.Modalities.Add(InputModality.Text);
-            sessionOptions.Modalities.Add(InputModality.Audio);
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
 
-            await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
+            #endregion
+
+            #region Snippet:FunctionCallResponseExample
+
+            // Process events from the session
+            await foreach (SessionUpdate serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
+            {
+                if (serverEvent is SessionUpdateResponseFunctionCallArgumentsDone functionCall)
+                {
+                    if (functionCall.Name == "get_current_weather")
+                    {
+                        // Extract parameters from the function call
+                        var parametersString = functionCall.Arguments;
+                        var parameters = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(parametersString);
+
+                        string location = parameters != null ? parameters["location"] : string.Empty;
+
+                        // Call your external weather service here and get the result
+                        string weatherInfo = $"The current weather in {location} is sunny with a temperature of 75°F.";
+
+                        // Send the function response back to the session
+                        await session.AddItemAsync(new FunctionCallOutputItem(functionCall.CallId, weatherInfo)).ConfigureAwait(false);
+
+                        // Start the next response.
+                        await session.StartResponseAsync().ConfigureAwait(false);
+                    }
+                }
+            }
+            #endregion
+        }
+
+        public async Task AddUserMessageExample()
+        {
+            Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
+            var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
+            VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
+
+            VoiceLiveSessionOptions sessionOptions = new()
+            {
+                Model = model,
+                Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
+                Voice = new AzureStandardVoice("en-US-AvaNeural"),
+                TurnDetection = new AzureSemanticVadTurnDetection()
+                {
+                    Threshold = 0.5f,
+                    PrefixPadding = TimeSpan.FromMilliseconds(300),
+                    SilenceDuration = TimeSpan.FromMilliseconds(500)
+                },
+                InputAudioFormat = InputAudioFormat.Pcm16,
+                OutputAudioFormat = OutputAudioFormat.Pcm16
+            };
+            // Ensure modalities include audio
+            sessionOptions.Modalities.Clear();
+            sessionOptions.Modalities.Add(InteractionModality.Text);
+            sessionOptions.Modalities.Add(InteractionModality.Audio);
+            await session.ConfigureSessionAsync(sessionOptions).ConfigureAwait(false);
+
+            #region Snippet:AddUserMessageExample
+
+            // Add a user message to the session
+            await session.AddItemAsync(new UserMessageItem("Hello, can you help me with my account?")).ConfigureAwait(false);
+            // Start the response from the assistant
+            await session.StartResponseAsync().ConfigureAwait(false);
+
             #endregion
         }
     }

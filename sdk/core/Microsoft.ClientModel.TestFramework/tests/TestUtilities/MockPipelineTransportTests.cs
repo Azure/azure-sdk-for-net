@@ -4,6 +4,7 @@
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -342,6 +343,7 @@ public class MockPipelineTransportTests
     {
         public NonMockPipelineMessage() : base(new MockPipelineRequest())
         {
+            NetworkTimeout ??= TimeSpan.FromSeconds(100);
         }
     }
 }

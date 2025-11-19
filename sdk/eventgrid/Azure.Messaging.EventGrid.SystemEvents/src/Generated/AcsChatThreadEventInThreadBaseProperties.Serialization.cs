@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat thread events. </summary>
-    public partial class AcsChatThreadEventInThreadBaseProperties : IJsonModel<AcsChatThreadEventInThreadBaseProperties>
+    public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties, IJsonModel<AcsChatThreadEventInThreadBaseProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/> for deserialization. </summary>
         internal AcsChatThreadEventInThreadBaseProperties()
@@ -147,7 +147,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsChatThreadEventInThreadBaseProperties(document.RootElement, options);
                     }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWaitingForActivation event. </summary>
     [JsonConverter(typeof(AcsRouterJobWaitingForActivationEventDataConverter))]
-    public partial class AcsRouterJobWaitingForActivationEventData : IJsonModel<AcsRouterJobWaitingForActivationEventData>
+    public partial class AcsRouterJobWaitingForActivationEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobWaitingForActivationEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/> for deserialization. </summary>
         internal AcsRouterJobWaitingForActivationEventData()
@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsRouterJobWaitingForActivationEventData(document.RootElement, options);
                     }

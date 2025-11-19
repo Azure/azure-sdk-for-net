@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfidentialContainerGroupProfile()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfileCreateOrUpdate_CreateConfidential.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfileCreateOrUpdate_CreateConfidential.json
             // this example is just showing the usage of "CGProfile_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupProfileCreateWithExtensions()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfileCreateOrUpdate_Extensions.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfileCreateOrUpdate_Extensions.json
             // this example is just showing the usage of "CGProfile_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupProfileWithEncryptionProperties()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfileCreateOrUpdate_EncryptionProperties.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfileCreateOrUpdate_EncryptionProperties.json
             // this example is just showing the usage of "CGProfile_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -218,7 +218,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ContainerGroupProfilesCreateOrUpdate()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesCreateOrUpdate.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesCreateOrUpdate.json
             // this example is just showing the usage of "CGProfile_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,7 +312,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesGetPriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesGetPriority.json
             // this example is just showing the usage of "CGProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -345,7 +345,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesGet.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesGet.json
             // this example is just showing the usage of "CGProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -378,7 +378,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ContainerGroupProfilesListByResourceGroup()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesListByResourceGroup.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesListByResourceGroup.json
             // this example is just showing the usage of "CGProfiles_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -413,7 +413,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupProfilesGetWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesGetPriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesGetPriority.json
             // this example is just showing the usage of "CGProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -442,7 +442,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ContainerGroupProfilesGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesGet.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesGet.json
             // this example is just showing the usage of "CGProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -471,7 +471,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupProfilesGetWithPriority()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesGetPriority.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesGetPriority.json
             // this example is just showing the usage of "CGProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -512,7 +512,7 @@ Secret =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ContainerGroupProfilesGetSucceeded()
         {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-11-01-preview/examples/ContainerGroupProfilesGet.json
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/stable/2025-09-01/examples/ContainerGroupProfilesGet.json
             // this example is just showing the usage of "CGProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

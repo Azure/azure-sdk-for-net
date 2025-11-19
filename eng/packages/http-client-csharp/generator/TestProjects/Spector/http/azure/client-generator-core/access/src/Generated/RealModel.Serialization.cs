@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
-    public partial class RealModel : IJsonModel<RealModel>
+    public partial class RealModel : AbstractModel, IJsonModel<RealModel>
     {
         internal RealModel() => throw null;
 

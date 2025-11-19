@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Dell.Storage
 {
+    /// <summary></summary>
     public partial class DellFileSystemResource : IJsonModel<DellFileSystemData>
     {
-        private static DellFileSystemData s_dataDeserializationInstance;
-        private static DellFileSystemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DellFileSystemData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DellFileSystemData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DellFileSystemData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DellFileSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DellFileSystemData>)Data).Write(writer, options);
 
-        DellFileSystemData IJsonModel<DellFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DellFileSystemData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DellFileSystemData IJsonModel<DellFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DellFileSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DellFileSystemData>(Data, options, AzureResourceManagerDellStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DellFileSystemData IPersistableModel<DellFileSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DellFileSystemData>(data, options, AzureResourceManagerDellStorageContext.Default);
 
-        string IPersistableModel<DellFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DellFileSystemData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DellFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

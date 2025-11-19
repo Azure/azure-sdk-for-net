@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatTypingIndicatorReceivedInThread event. </summary>
     [JsonConverter(typeof(AcsChatTypingIndicatorReceivedInThreadEventDataConverter))]
-    public partial class AcsChatTypingIndicatorReceivedInThreadEventData : IJsonModel<AcsChatTypingIndicatorReceivedInThreadEventData>
+    public partial class AcsChatTypingIndicatorReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties, IJsonModel<AcsChatTypingIndicatorReceivedInThreadEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatTypingIndicatorReceivedInThreadEventData"/> for deserialization. </summary>
         internal AcsChatTypingIndicatorReceivedInThreadEventData()
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsChatTypingIndicatorReceivedInThreadEventData(document.RootElement, options);
                     }

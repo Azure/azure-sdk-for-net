@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// the audio buffer. The server will also send an `conversation.item.created`
     /// event with the user message item that is created from the audio buffer.
     /// </summary>
-    public partial class SessionUpdateInputAudioBufferSpeechStopped : IJsonModel<SessionUpdateInputAudioBufferSpeechStopped>
+    public partial class SessionUpdateInputAudioBufferSpeechStopped : SessionUpdate, IJsonModel<SessionUpdateInputAudioBufferSpeechStopped>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateInputAudioBufferSpeechStopped"/> for deserialization. </summary>
         internal SessionUpdateInputAudioBufferSpeechStopped()
@@ -137,7 +137,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateInputAudioBufferSpeechStopped(document.RootElement, options);
                     }

@@ -10,28 +10,28 @@ namespace Azure.AI.VoiceLive
     /// <summary>
     ///
     /// </summary>
-    public partial class ResponseMaxOutputTokensOption : IJsonModel<ResponseMaxOutputTokensOption>
+    public partial class MaxResponseOutputTokensOption : IJsonModel<MaxResponseOutputTokensOption>
     {
-        void IJsonModel<ResponseMaxOutputTokensOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => SerializeConversationMaxTokensChoice(this, writer, options);
+        void IJsonModel<MaxResponseOutputTokensOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => SerializeMaxResponseOutputTokensOption(this, writer, options);
 
-        ResponseMaxOutputTokensOption IJsonModel<ResponseMaxOutputTokensOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MaxResponseOutputTokensOption IJsonModel<MaxResponseOutputTokensOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationMaxTokensChoice(document.RootElement, options);
+            return DeserializeMaxResponseOutputTokensOption(document.RootElement, options);
         }
 
-        BinaryData IPersistableModel<ResponseMaxOutputTokensOption>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MaxResponseOutputTokensOption>.Write(ModelReaderWriterOptions options)
         {
             return ModelReaderWriter.Write(this, options, null);
         }
 
-        ResponseMaxOutputTokensOption IPersistableModel<ResponseMaxOutputTokensOption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MaxResponseOutputTokensOption IPersistableModel<MaxResponseOutputTokensOption>.Create(BinaryData data, ModelReaderWriterOptions options)
             => FromBinaryData(data);
 
-        string IPersistableModel<ResponseMaxOutputTokensOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MaxResponseOutputTokensOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static void SerializeConversationMaxTokensChoice(ResponseMaxOutputTokensOption instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static void SerializeMaxResponseOutputTokensOption(MaxResponseOutputTokensOption instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (instance._isDefaultNullValue == true)
             {
@@ -47,31 +47,31 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        internal static ResponseMaxOutputTokensOption DeserializeConversationMaxTokensChoice(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MaxResponseOutputTokensOption DeserializeMaxResponseOutputTokensOption(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return new ResponseMaxOutputTokensOption(isDefaultNullValue: true);
+                return new MaxResponseOutputTokensOption(isDefaultNullValue: true);
             }
             if (element.ValueKind == JsonValueKind.String)
             {
-                return new ResponseMaxOutputTokensOption(stringValue: element.GetString());
+                return new MaxResponseOutputTokensOption(stringValue: element.GetString());
             }
             if (element.ValueKind == JsonValueKind.Number)
             {
-                return new ResponseMaxOutputTokensOption(numberValue: element.GetInt32());
+                return new MaxResponseOutputTokensOption(numberValue: element.GetInt32());
             }
             return null;
         }
 
-        internal static ResponseMaxOutputTokensOption FromBinaryData(BinaryData bytes)
+        internal static MaxResponseOutputTokensOption FromBinaryData(BinaryData bytes)
         {
             if (bytes is null)
             {
-                return new ResponseMaxOutputTokensOption(isDefaultNullValue: true);
+                return new MaxResponseOutputTokensOption(isDefaultNullValue: true);
             }
             using JsonDocument document = JsonDocument.Parse(bytes);
-            return DeserializeConversationMaxTokensChoice(document.RootElement);
+            return DeserializeMaxResponseOutputTokensOption(document.RootElement);
         }
     }
 }

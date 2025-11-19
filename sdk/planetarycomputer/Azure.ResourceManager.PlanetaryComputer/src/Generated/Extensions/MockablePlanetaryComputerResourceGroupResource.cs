@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PlanetaryComputer;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePlanetaryComputerResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePlanetaryComputerResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePlanetaryComputerResourceGroupResource for mocking. </summary>
         protected MockablePlanetaryComputerResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlanetaryComputerResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePlanetaryComputerResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePlanetaryComputerResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of PlanetaryComputerGeoCatalogResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PlanetaryComputerGeoCatalogResources and their operations over a PlanetaryComputerGeoCatalogResource. </returns>
+        /// <summary> Gets a collection of PlanetaryComputerGeoCatalogs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PlanetaryComputerGeoCatalogs and their operations over a PlanetaryComputerGeoCatalogResource. </returns>
         public virtual PlanetaryComputerGeoCatalogCollection GetPlanetaryComputerGeoCatalogs()
         {
             return GetCachedClient(client => new PlanetaryComputerGeoCatalogCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// Get a GeoCatalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GeoCatalog_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-11-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PlanetaryComputerGeoCatalogResource>> GetPlanetaryComputerGeoCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
             return await GetPlanetaryComputerGeoCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// Get a GeoCatalog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs/{catalogName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GeoCatalog_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-11-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         [ForwardsClientCalls]
         public virtual Response<PlanetaryComputerGeoCatalogResource> GetPlanetaryComputerGeoCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
             return GetPlanetaryComputerGeoCatalogs().Get(catalogName, cancellationToken);
         }
     }

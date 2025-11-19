@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Result of the request to list secrets. It contains a list of Secret objects and a URL link to get the next set of results.
-    /// Serialized Name: SecretListResult
-    /// </summary>
+    /// <summary> Result of the request to list secrets. It contains a list of Secret objects and a URL link to get the next set of results. </summary>
     internal partial class SecretListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecretListResult"/>. </summary>
-        /// <param name="value">
-        /// List of AzureFrontDoor secrets within a profile.
-        /// Serialized Name: SecretListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of Secret objects if there are any.
-        /// Serialized Name: SecretListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of AzureFrontDoor secrets within a profile. </param>
+        /// <param name="nextLink"> URL to get the next set of Secret objects if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecretListResult(IReadOnlyList<FrontDoorSecretData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of AzureFrontDoor secrets within a profile.
-        /// Serialized Name: SecretListResult.value
-        /// </summary>
+        /// <summary> List of AzureFrontDoor secrets within a profile. </summary>
         public IReadOnlyList<FrontDoorSecretData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of Secret objects if there are any.
-        /// Serialized Name: SecretListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of Secret objects if there are any. </summary>
         public string NextLink { get; }
     }
 }

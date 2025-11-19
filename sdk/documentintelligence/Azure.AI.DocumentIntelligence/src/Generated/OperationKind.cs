@@ -14,53 +14,84 @@ namespace Azure.AI.DocumentIntelligence
     internal readonly partial struct OperationKind : IEquatable<OperationKind>
     {
         private readonly string _value;
+        /// <summary> Build a new custom document model. </summary>
+        private const string DocumentModelBuildValue = "documentModelBuild";
+        /// <summary> Compose a new custom document model from existing models. </summary>
+        private const string DocumentModelComposeValue = "documentModelCompose";
+        /// <summary>
+        /// Copy an existing document model to potentially a different resource, region, or
+        /// subscription.
+        /// </summary>
+        private const string DocumentModelCopyToValue = "documentModelCopyTo";
+        /// <summary>
+        /// Copy an existing document classifier to potentially a different resource, region, or
+        /// subscription.
+        /// </summary>
+        private const string DocumentClassifierCopyToValue = "documentClassifierCopyTo";
+        /// <summary> Build a new custom classifier model. </summary>
+        private const string DocumentClassifierBuildValue = "documentClassifierBuild";
 
         /// <summary> Initializes a new instance of <see cref="OperationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DocumentModelBuildValue = "documentModelBuild";
-        private const string DocumentModelComposeValue = "documentModelCompose";
-        private const string DocumentModelCopyToValue = "documentModelCopyTo";
-        private const string DocumentClassifierCopyToValue = "documentClassifierCopyTo";
-        private const string DocumentClassifierBuildValue = "documentClassifierBuild";
+            _value = value;
+        }
 
         /// <summary> Build a new custom document model. </summary>
         public static OperationKind DocumentModelBuild { get; } = new OperationKind(DocumentModelBuildValue);
+
         /// <summary> Compose a new custom document model from existing models. </summary>
         public static OperationKind DocumentModelCompose { get; } = new OperationKind(DocumentModelComposeValue);
+
         /// <summary>
         /// Copy an existing document model to potentially a different resource, region, or
         /// subscription.
         /// </summary>
         public static OperationKind DocumentModelCopyTo { get; } = new OperationKind(DocumentModelCopyToValue);
+
         /// <summary>
         /// Copy an existing document classifier to potentially a different resource, region, or
         /// subscription.
         /// </summary>
         public static OperationKind DocumentClassifierCopyTo { get; } = new OperationKind(DocumentClassifierCopyToValue);
+
         /// <summary> Build a new custom classifier model. </summary>
         public static OperationKind DocumentClassifierBuild { get; } = new OperationKind(DocumentClassifierBuildValue);
+
         /// <summary> Determines if two <see cref="OperationKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationKind left, OperationKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationKind left, OperationKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationKind(string value) => new OperationKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationKind?(string value) => value == null ? null : new OperationKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,49 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> Storage Discovery Scope. This had added validations. </summary>
     public partial class StorageDiscoveryScope
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryScope"/>. </summary>
         /// <param name="displayName"> Display name of the collection. </param>
         /// <param name="resourceTypes"> Resource types for the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="resourceTypes"/> is null. </exception>
-        public StorageDiscoveryScope(string displayName, IEnumerable<StorageDiscoveryResourceType> resourceTypes)
+        public StorageDiscoveryScope(string displayName, IEnumerable<StorageDiscoveryResourceKind> resourceTypes)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(resourceTypes, nameof(resourceTypes));
@@ -66,27 +38,25 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="resourceTypes"> Resource types for the collection. </param>
         /// <param name="tagKeysOnly"> The storage account tags keys to filter. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryScope(string displayName, IList<StorageDiscoveryResourceType> resourceTypes, IList<string> tagKeysOnly, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageDiscoveryScope(string displayName, IList<StorageDiscoveryResourceKind> resourceTypes, IList<string> tagKeysOnly, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
             TagKeysOnly = tagKeysOnly;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryScope"/> for deserialization. </summary>
-        internal StorageDiscoveryScope()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Display name of the collection. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Resource types for the collection. </summary>
-        public IList<StorageDiscoveryResourceType> ResourceTypes { get; }
+        public IList<StorageDiscoveryResourceKind> ResourceTypes { get; }
+
         /// <summary> The storage account tags keys to filter. </summary>
         public IList<string> TagKeysOnly { get; }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

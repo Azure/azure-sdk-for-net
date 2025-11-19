@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of the partner managed resource. </summary>
+    /// <summary> Properties of the partner managed resource. Only appliable for SaaS NVA. </summary>
     public partial class PartnerManagedResourceProperties
     {
         /// <summary>

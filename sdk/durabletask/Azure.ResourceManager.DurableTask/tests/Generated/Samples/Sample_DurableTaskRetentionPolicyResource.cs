@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetentionPoliciesGetMaximumSet()
         {
-            // Generated from example definition: 2025-04-01-preview/RetentionPolicies_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-11-01/RetentionPolicies_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "RetentionPolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RetentionPoliciesDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-04-01-preview/RetentionPolicies_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-11-01/RetentionPolicies_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "RetentionPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RetentionPoliciesUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-04-01-preview/RetentionPolicies_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-11-01/RetentionPolicies_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "RetentionPolicy_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RetentionPoliciesCreateOrReplaceMaximumSet()
         {
-            // Generated from example definition: 2025-04-01-preview/RetentionPolicies_CreateOrReplace_MaximumSet_Gen.json
+            // Generated from example definition: 2025-11-01/RetentionPolicies_CreateOrReplace_MaximumSet_Gen.json
             // this example is just showing the usage of "RetentionPolicy_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownAzureVoice : IJsonModel<AzureVoice>
+    internal partial class UnknownAzureVoice : AzureVoice, IJsonModel<AzureVoice>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureVoice"/> for deserialization. </summary>
         internal UnknownAzureVoice()
@@ -65,13 +65,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "unknown";
+            AzureVoiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new AzureVoiceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +110,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAzureVoice(document.RootElement, options);
                     }

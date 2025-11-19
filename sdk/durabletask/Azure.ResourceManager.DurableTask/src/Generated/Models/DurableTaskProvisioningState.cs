@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DurableTask.Models
     public readonly partial struct DurableTaskProvisioningState : IEquatable<DurableTaskProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The resource is being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The resource is updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The resource is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The resource create request has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="DurableTaskProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DurableTaskProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static DurableTaskProvisioningState Succeeded { get; } = new DurableTaskProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static DurableTaskProvisioningState Failed { get; } = new DurableTaskProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static DurableTaskProvisioningState Canceled { get; } = new DurableTaskProvisioningState(CanceledValue);
+
         /// <summary> The resource is being provisioned. </summary>
         public static DurableTaskProvisioningState Provisioning { get; } = new DurableTaskProvisioningState(ProvisioningValue);
+
         /// <summary> The resource is updating. </summary>
         public static DurableTaskProvisioningState Updating { get; } = new DurableTaskProvisioningState(UpdatingValue);
+
         /// <summary> The resource is being deleted. </summary>
         public static DurableTaskProvisioningState Deleting { get; } = new DurableTaskProvisioningState(DeletingValue);
+
         /// <summary> The resource create request has been accepted. </summary>
         public static DurableTaskProvisioningState Accepted { get; } = new DurableTaskProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="DurableTaskProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DurableTaskProvisioningState left, DurableTaskProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DurableTaskProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DurableTaskProvisioningState left, DurableTaskProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DurableTaskProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DurableTaskProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DurableTaskProvisioningState(string value) => new DurableTaskProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DurableTaskProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DurableTaskProvisioningState?(string value) => value == null ? null : new DurableTaskProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DurableTaskProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DurableTaskProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ProviderRegistrationsRestOperations _providerRegistrationRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ProviderHubRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
+        private readonly ResourceActionsRestOperations _resourceActionsRestClient;
+        private readonly ClientDiagnostics _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics;
+        private readonly NewRegionFrontloadReleaseRestOperations _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient;
         private readonly ProviderRegistrationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,6 +70,11 @@ namespace Azure.ResourceManager.ProviderHub
             _providerRegistrationRestClient = new ProviderRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerRegistrationApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ProviderHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _resourceActionsRestClient = new ResourceActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", RegistrationNewRegionFrontloadReleaseResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RegistrationNewRegionFrontloadReleaseResource.ResourceType, out string registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseApiVersion);
+            _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient = new NewRegionFrontloadReleaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +190,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,6 +237,75 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Response<DefaultRolloutResource> GetDefaultRollout(string rolloutName, CancellationToken cancellationToken = default)
         {
             return GetDefaultRollouts().Get(rolloutName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RegistrationNewRegionFrontloadReleaseResources in the ProviderRegistration. </summary>
+        /// <returns> An object representing collection of RegistrationNewRegionFrontloadReleaseResources and their operations over a RegistrationNewRegionFrontloadReleaseResource. </returns>
+        public virtual RegistrationNewRegionFrontloadReleaseCollection GetRegistrationNewRegionFrontloadReleases()
+        {
+            return GetCachedClient(client => new RegistrationNewRegionFrontloadReleaseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a new region frontload release.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NewRegionFrontloadRelease_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseName"> The name of the release. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RegistrationNewRegionFrontloadReleaseResource>> GetRegistrationNewRegionFrontloadReleaseAsync(string releaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetRegistrationNewRegionFrontloadReleases().GetAsync(releaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a new region frontload release.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/newRegionFrontloadRelease/{releaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NewRegionFrontloadRelease_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="releaseName"> The name of the release. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="releaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="releaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RegistrationNewRegionFrontloadReleaseResource> GetRegistrationNewRegionFrontloadRelease(string releaseName, CancellationToken cancellationToken = default)
+        {
+            return GetRegistrationNewRegionFrontloadReleases().Get(releaseName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NotificationRegistrationResources in the ProviderRegistration. </summary>
@@ -250,7 +328,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +359,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +397,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +428,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,6 +446,71 @@ namespace Azure.ResourceManager.ProviderHub
             return GetResourceTypeRegistrations().Get(resourceType, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ProviderAuthorizedApplicationResources in the ProviderRegistration. </summary>
+        /// <returns> An object representing collection of ProviderAuthorizedApplicationResources and their operations over a ProviderAuthorizedApplicationResource. </returns>
+        public virtual ProviderAuthorizedApplicationCollection GetProviderAuthorizedApplications()
+        {
+            return GetCachedClient(client => new ProviderAuthorizedApplicationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the authorized application details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizedApplications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationId"> The application ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProviderAuthorizedApplicationResource>> GetProviderAuthorizedApplicationAsync(Guid applicationId, CancellationToken cancellationToken = default)
+        {
+            return await GetProviderAuthorizedApplications().GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the authorized application details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/authorizedApplications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizedApplications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderAuthorizedApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationId"> The application ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ProviderAuthorizedApplicationResource> GetProviderAuthorizedApplication(Guid applicationId, CancellationToken cancellationToken = default)
+        {
+            return GetProviderAuthorizedApplications().Get(applicationId, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the provider registration details.
         /// <list type="bullet">
@@ -381,7 +524,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +564,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -461,7 +604,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,7 +648,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,7 +692,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -595,7 +738,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -641,7 +784,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,7 +818,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -709,7 +852,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -747,7 +890,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -763,6 +906,180 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _defaultRestClient.CheckinManifest(Id.SubscriptionId, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourceActions/{resourceActionName}/deleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceActions_DeleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceActionName"> The resource action name. </param>
+        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteResourcesResourceActionAsync(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _resourceActionsClientDiagnostics.CreateScope("ProviderRegistrationResource.DeleteResourcesResourceAction");
+            scope.Start();
+            try
+            {
+                var response = await _resourceActionsRestClient.DeleteResourcesAsync(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation(_resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourceActions/{resourceActionName}/deleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceActions_DeleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceActionName"> The resource action name. </param>
+        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual ArmOperation DeleteResourcesResourceAction(WaitUntil waitUntil, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _resourceActionsClientDiagnostics.CreateScope("ProviderRegistrationResource.DeleteResourcesResourceAction");
+            scope.Start();
+            try
+            {
+                var response = _resourceActionsRestClient.DeleteResources(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken);
+                var operation = new ProviderHubArmOperation(_resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the new region frontload manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateNewRegionFrontloadManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NewRegionFrontloadRelease_GenerateManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<ResourceProviderManifest>> GenerateManifestNewRegionFrontloadReleaseAsync(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease");
+            scope.Start();
+            try
+            {
+                var response = await _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GenerateManifestAsync(Id.SubscriptionId, Id.Name, properties, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates the new region frontload manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/generateNewRegionFrontloadManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NewRegionFrontloadRelease_GenerateManifest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegistrationNewRegionFrontloadReleaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="properties"> The <see cref="ProviderFrontloadPayload"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<ResourceProviderManifest> GenerateManifestNewRegionFrontloadRelease(ProviderFrontloadPayload properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseClientDiagnostics.CreateScope("ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease");
+            scope.Start();
+            try
+            {
+                var response = _registrationNewRegionFrontloadReleaseNewRegionFrontloadReleaseRestClient.GenerateManifest(Id.SubscriptionId, Id.Name, properties, cancellationToken);
                 return response;
             }
             catch (Exception e)

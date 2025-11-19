@@ -14,48 +14,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Model for the check dependencies API for an informatica serverless runtime resource. </summary>
     public partial class CheckDependenciesResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CheckDependenciesResult"/>. </summary>
         /// <param name="count"> Count of dependencies. </param>
         /// <param name="id"> id of resource. </param>
         /// <param name="references"> List of dependencies. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="references"/> is null. </exception>
         internal CheckDependenciesResult(int count, string id, IEnumerable<ServerlessRuntimeDependency> references)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(references, nameof(references));
-
             Count = count;
             Id = id;
             References = references.ToList();
@@ -65,25 +32,22 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="count"> Count of dependencies. </param>
         /// <param name="id"> id of resource. </param>
         /// <param name="references"> List of dependencies. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckDependenciesResult(int count, string id, IReadOnlyList<ServerlessRuntimeDependency> references, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CheckDependenciesResult(int count, string id, IList<ServerlessRuntimeDependency> references, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             Id = id;
             References = references;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CheckDependenciesResult"/> for deserialization. </summary>
-        internal CheckDependenciesResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Count of dependencies. </summary>
         public int Count { get; }
+
         /// <summary> id of resource. </summary>
         public string Id { get; }
+
         /// <summary> List of dependencies. </summary>
-        public IReadOnlyList<ServerlessRuntimeDependency> References { get; }
+        public IList<ServerlessRuntimeDependency> References { get; }
     }
 }

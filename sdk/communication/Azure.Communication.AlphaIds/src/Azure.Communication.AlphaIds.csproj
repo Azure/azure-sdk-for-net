@@ -6,6 +6,7 @@
     <PackageTags>Microsoft Azure Communication Alpha ID Service;Microsoft;Azure;Azure Communication Service;Azure Communication Alpha ID Service;Alpha ID;Alpha Ids;Communication</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

@@ -60,12 +60,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Initializes a new instance of <see cref="SecretsManagementSettings"/>. </summary>
         /// <param name="certificateStoreLocation"> Where to store certificates on the machine. </param>
+        /// <param name="certificateStoreName"> Name of the certificate store to use on the machine, currently 'My' and 'Root' are supported. </param>
         /// <param name="observedCertificates"> The list of certificates to install on all machines in the pool. </param>
         /// <param name="keyExportable"> Defines if the key of the certificates should be exportable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretsManagementSettings(string certificateStoreLocation, IList<Uri> observedCertificates, bool keyExportable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecretsManagementSettings(string certificateStoreLocation, CertificateStoreNameOption? certificateStoreName, IList<Uri> observedCertificates, bool keyExportable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateStoreLocation = certificateStoreLocation;
+            CertificateStoreName = certificateStoreName;
             ObservedCertificates = observedCertificates;
             KeyExportable = keyExportable;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,6 +80,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Where to store certificates on the machine. </summary>
         public string CertificateStoreLocation { get; set; }
+        /// <summary> Name of the certificate store to use on the machine, currently 'My' and 'Root' are supported. </summary>
+        public CertificateStoreNameOption? CertificateStoreName { get; set; }
         /// <summary> The list of certificates to install on all machines in the pool. </summary>
         public IList<Uri> ObservedCertificates { get; }
         /// <summary> Defines if the key of the certificates should be exportable. </summary>

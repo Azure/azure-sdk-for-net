@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceDeleted event. </summary>
     [JsonConverter(typeof(IotHubDeviceDeletedEventDataConverter))]
-    public partial class IotHubDeviceDeletedEventData : IJsonModel<IotHubDeviceDeletedEventData>
+    public partial class IotHubDeviceDeletedEventData : DeviceLifeCycleEventProperties, IJsonModel<IotHubDeviceDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceDeletedEventData"/> for deserialization. </summary>
         internal IotHubDeviceDeletedEventData()
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeIotHubDeviceDeletedEventData(document.RootElement, options);
                     }

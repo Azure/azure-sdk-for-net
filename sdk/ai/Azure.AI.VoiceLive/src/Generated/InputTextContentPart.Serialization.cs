@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The InputTextContentPart. </summary>
-    public partial class InputTextContentPart : IJsonModel<InputTextContentPart>
+    /// <summary> Input text content part. </summary>
+    public partial class InputTextContentPart : MessageContentPart, IJsonModel<InputTextContentPart>
     {
         /// <summary> Initializes a new instance of <see cref="InputTextContentPart"/> for deserialization. </summary>
         internal InputTextContentPart()
@@ -49,7 +49,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UserContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageContentPart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InputTextContentPart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -68,14 +68,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "input_text";
+            ContentPartType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ContentPartType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("text"u8))
@@ -113,13 +113,13 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UserContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageContentPart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InputTextContentPart>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeInputTextContentPart(document.RootElement, options);
                     }

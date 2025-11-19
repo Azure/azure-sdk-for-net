@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class IpBlockAsset : IUtf8JsonSerializable, IJsonModel<IpBlockAsset>
+    /// <summary> The IpBlockAsset. </summary>
+    public partial class IpBlockAsset : InventoryAsset, IJsonModel<IpBlockAsset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpBlockAsset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IpBlockAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IpBlockAsset)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(IpBlock))
             {
@@ -44,7 +43,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
-                foreach (var item in Asns)
+                foreach (ObservedLong item in Asns)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -54,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("bgpPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in BgpPrefixes)
+                foreach (ObservedString item in BgpPrefixes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -64,7 +63,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("netNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetNames)
+                foreach (ObservedString item in NetNames)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -74,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrantContacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrantContacts)
+                foreach (ObservedString item in RegistrantContacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -84,7 +83,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrantOrgs"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrantOrgs)
+                foreach (ObservedString item in RegistrantOrgs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,7 +93,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("adminContacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in AdminContacts)
+                foreach (ObservedString item in AdminContacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,7 +103,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("technicalContacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in TechnicalContacts)
+                foreach (ObservedString item in TechnicalContacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -114,7 +113,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrarCreatedAt"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrarCreatedAt)
+                foreach (ObservedLong item in RegistrarCreatedAt)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -124,7 +123,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrarUpdatedAt"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrarUpdatedAt)
+                foreach (ObservedLong item in RegistrarUpdatedAt)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +133,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("netRanges"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetRanges)
+                foreach (ObservedString item in NetRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +153,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("reputations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Reputations)
+                foreach (ReputationDetails item in Reputations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -169,7 +168,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
-                foreach (var item in Sources)
+                foreach (SourceDetails item in Sources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -194,7 +193,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
-                foreach (var item in Location)
+                foreach (ObservedLocation item in Location)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -204,7 +203,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrarExpiresAt"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrarExpiresAt)
+                foreach (ObservedLong item in RegistrarExpiresAt)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -214,7 +213,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrantNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrantNames)
+                foreach (ObservedString item in RegistrantNames)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -224,7 +223,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("adminNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in AdminNames)
+                foreach (ObservedString item in AdminNames)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -234,7 +233,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("technicalNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in TechnicalNames)
+                foreach (ObservedString item in TechnicalNames)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -244,7 +243,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("adminOrgs"u8);
                 writer.WriteStartArray();
-                foreach (var item in AdminOrgs)
+                foreach (ObservedString item in AdminOrgs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -254,7 +253,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("technicalOrgs"u8);
                 writer.WriteStartArray();
-                foreach (var item in TechnicalOrgs)
+                foreach (ObservedString item in TechnicalOrgs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -264,7 +263,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("registrantPhones"u8);
                 writer.WriteStartArray();
-                foreach (var item in RegistrantPhones)
+                foreach (ObservedString item in RegistrantPhones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -274,7 +273,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("adminPhones"u8);
                 writer.WriteStartArray();
-                foreach (var item in AdminPhones)
+                foreach (ObservedString item in AdminPhones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -284,7 +283,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("technicalPhones"u8);
                 writer.WriteStartArray();
-                foreach (var item in TechnicalPhones)
+                foreach (ObservedString item in TechnicalPhones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -302,446 +301,449 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        IpBlockAsset IJsonModel<IpBlockAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpBlockAsset IJsonModel<IpBlockAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IpBlockAsset)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InventoryAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IpBlockAsset)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIpBlockAsset(document.RootElement, options);
         }
 
-        internal static IpBlockAsset DeserializeIpBlockAsset(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IpBlockAsset DeserializeIpBlockAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string ipBlock = default;
-            IReadOnlyList<ObservedLong> asns = default;
-            IReadOnlyList<ObservedString> bgpPrefixes = default;
-            IReadOnlyList<ObservedString> netNames = default;
-            IReadOnlyList<ObservedString> registrantContacts = default;
-            IReadOnlyList<ObservedString> registrantOrgs = default;
-            IReadOnlyList<ObservedString> adminContacts = default;
-            IReadOnlyList<ObservedString> technicalContacts = default;
-            IReadOnlyList<ObservedLong> registrarCreatedAt = default;
-            IReadOnlyList<ObservedLong> registrarUpdatedAt = default;
-            IReadOnlyList<ObservedString> netRanges = default;
+            IList<ObservedLong> asns = default;
+            IList<ObservedString> bgpPrefixes = default;
+            IList<ObservedString> netNames = default;
+            IList<ObservedString> registrantContacts = default;
+            IList<ObservedString> registrantOrgs = default;
+            IList<ObservedString> adminContacts = default;
+            IList<ObservedString> technicalContacts = default;
+            IList<ObservedLong> registrarCreatedAt = default;
+            IList<ObservedLong> registrarUpdatedAt = default;
+            IList<ObservedString> netRanges = default;
             string startIp = default;
             string endIp = default;
-            IReadOnlyList<ReputationDetails> reputations = default;
+            IList<ReputationDetails> reputations = default;
             DateTimeOffset? detailedFromWhoisAt = default;
-            IReadOnlyList<SourceDetails> sources = default;
+            IList<SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
             long? count = default;
-            IReadOnlyList<ObservedLocation> location = default;
-            IReadOnlyList<ObservedLong> registrarExpiresAt = default;
-            IReadOnlyList<ObservedString> registrantNames = default;
-            IReadOnlyList<ObservedString> adminNames = default;
-            IReadOnlyList<ObservedString> technicalNames = default;
-            IReadOnlyList<ObservedString> adminOrgs = default;
-            IReadOnlyList<ObservedString> technicalOrgs = default;
-            IReadOnlyList<ObservedString> registrantPhones = default;
-            IReadOnlyList<ObservedString> adminPhones = default;
-            IReadOnlyList<ObservedString> technicalPhones = default;
+            IList<ObservedLocation> location = default;
+            IList<ObservedLong> registrarExpiresAt = default;
+            IList<ObservedString> registrantNames = default;
+            IList<ObservedString> adminNames = default;
+            IList<ObservedString> technicalNames = default;
+            IList<ObservedString> adminOrgs = default;
+            IList<ObservedString> technicalOrgs = default;
+            IList<ObservedString> registrantPhones = default;
+            IList<ObservedString> adminPhones = default;
+            IList<ObservedString> technicalPhones = default;
             bool? ipv4 = default;
             bool? ipv6 = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ipBlock"u8))
+                if (prop.NameEquals("ipBlock"u8))
                 {
-                    ipBlock = property.Value.GetString();
+                    ipBlock = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asns"u8))
+                if (prop.NameEquals("asns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedLong> array = new List<ObservedLong>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     asns = array;
                     continue;
                 }
-                if (property.NameEquals("bgpPrefixes"u8))
+                if (prop.NameEquals("bgpPrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     bgpPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("netNames"u8))
+                if (prop.NameEquals("netNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     netNames = array;
                     continue;
                 }
-                if (property.NameEquals("registrantContacts"u8))
+                if (prop.NameEquals("registrantContacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantContacts = array;
                     continue;
                 }
-                if (property.NameEquals("registrantOrgs"u8))
+                if (prop.NameEquals("registrantOrgs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantOrgs = array;
                     continue;
                 }
-                if (property.NameEquals("adminContacts"u8))
+                if (prop.NameEquals("adminContacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminContacts = array;
                     continue;
                 }
-                if (property.NameEquals("technicalContacts"u8))
+                if (prop.NameEquals("technicalContacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalContacts = array;
                     continue;
                 }
-                if (property.NameEquals("registrarCreatedAt"u8))
+                if (prop.NameEquals("registrarCreatedAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedLong> array = new List<ObservedLong>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarCreatedAt = array;
                     continue;
                 }
-                if (property.NameEquals("registrarUpdatedAt"u8))
+                if (prop.NameEquals("registrarUpdatedAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedLong> array = new List<ObservedLong>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarUpdatedAt = array;
                     continue;
                 }
-                if (property.NameEquals("netRanges"u8))
+                if (prop.NameEquals("netRanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     netRanges = array;
                     continue;
                 }
-                if (property.NameEquals("startIp"u8))
+                if (prop.NameEquals("startIp"u8))
                 {
-                    startIp = property.Value.GetString();
+                    startIp = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endIp"u8))
+                if (prop.NameEquals("endIp"u8))
                 {
-                    endIp = property.Value.GetString();
+                    endIp = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reputations"u8))
+                if (prop.NameEquals("reputations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReputationDetails> array = new List<ReputationDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ReputationDetails.DeserializeReputationDetails(item, options));
                     }
                     reputations = array;
                     continue;
                 }
-                if (property.NameEquals("detailedFromWhoisAt"u8))
+                if (prop.NameEquals("detailedFromWhoisAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    detailedFromWhoisAt = property.Value.GetDateTimeOffset("O");
+                    detailedFromWhoisAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sources"u8))
+                if (prop.NameEquals("sources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SourceDetails> array = new List<SourceDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
                 }
-                if (property.NameEquals("firstSeen"u8))
+                if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    firstSeen = property.Value.GetDateTimeOffset("O");
+                    firstSeen = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSeen"u8))
+                if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSeen = property.Value.GetDateTimeOffset("O");
+                    lastSeen = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt64();
+                    count = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedLocation> array = new List<ObservedLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedLocation.DeserializeObservedLocation(item, options));
                     }
                     location = array;
                     continue;
                 }
-                if (property.NameEquals("registrarExpiresAt"u8))
+                if (prop.NameEquals("registrarExpiresAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedLong> array = new List<ObservedLong>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarExpiresAt = array;
                     continue;
                 }
-                if (property.NameEquals("registrantNames"u8))
+                if (prop.NameEquals("registrantNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantNames = array;
                     continue;
                 }
-                if (property.NameEquals("adminNames"u8))
+                if (prop.NameEquals("adminNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminNames = array;
                     continue;
                 }
-                if (property.NameEquals("technicalNames"u8))
+                if (prop.NameEquals("technicalNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalNames = array;
                     continue;
                 }
-                if (property.NameEquals("adminOrgs"u8))
+                if (prop.NameEquals("adminOrgs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminOrgs = array;
                     continue;
                 }
-                if (property.NameEquals("technicalOrgs"u8))
+                if (prop.NameEquals("technicalOrgs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalOrgs = array;
                     continue;
                 }
-                if (property.NameEquals("registrantPhones"u8))
+                if (prop.NameEquals("registrantPhones"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantPhones = array;
                     continue;
                 }
-                if (property.NameEquals("adminPhones"u8))
+                if (prop.NameEquals("adminPhones"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminPhones = array;
                     continue;
                 }
-                if (property.NameEquals("technicalPhones"u8))
+                if (prop.NameEquals("technicalPhones"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ObservedString> array = new List<ObservedString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalPhones = array;
                     continue;
                 }
-                if (property.NameEquals("ipv4"u8))
+                if (prop.NameEquals("ipv4"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipv4 = property.Value.GetBoolean();
+                    ipv4 = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ipv6"u8))
+                if (prop.NameEquals("ipv6"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipv6 = property.Value.GetBoolean();
+                    ipv6 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IpBlockAsset(
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 ipBlock,
                 asns ?? new ChangeTrackingList<ObservedLong>(),
                 bgpPrefixes ?? new ChangeTrackingList<ObservedString>(),
@@ -775,10 +777,13 @@ namespace Azure.Analytics.Defender.Easm
                 ipv6);
         }
 
-        BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -788,15 +793,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        IpBlockAsset IPersistableModel<IpBlockAsset>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpBlockAsset IPersistableModel<IpBlockAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpBlockAsset)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override InventoryAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIpBlockAsset(document.RootElement, options);
                     }
                 default:
@@ -804,22 +814,7 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IpBlockAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new IpBlockAsset FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIpBlockAsset(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

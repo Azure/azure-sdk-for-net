@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ArizeAIObservabilityEval;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Offer details for the marketplace that is selected by the user. </summary>
     public partial class ArizeAIObservabilityEvalOfferDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOfferDetails"/>. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="planName"> Plan Name for the marketplace offer. </param>
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArizeAIObservabilityEvalOfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArizeAIObservabilityEvalOfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             OfferId = offerId;
@@ -77,24 +49,24 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             PlanName = planName;
             TermUnit = termUnit;
             TermId = termId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOfferDetails"/> for deserialization. </summary>
-        internal ArizeAIObservabilityEvalOfferDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Publisher Id for the marketplace offer. </summary>
         public string PublisherId { get; set; }
+
         /// <summary> Offer Id for the marketplace offer. </summary>
         public string OfferId { get; set; }
+
         /// <summary> Plan Id for the marketplace offer. </summary>
         public string PlanId { get; set; }
+
         /// <summary> Plan Name for the marketplace offer. </summary>
         public string PlanName { get; set; }
+
         /// <summary> Plan Display Name for the marketplace offer. </summary>
         public string TermUnit { get; set; }
+
         /// <summary> Plan Display Name for the marketplace offer. </summary>
         public string TermId { get; set; }
     }

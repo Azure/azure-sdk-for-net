@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     public partial class ActionRequest
     {

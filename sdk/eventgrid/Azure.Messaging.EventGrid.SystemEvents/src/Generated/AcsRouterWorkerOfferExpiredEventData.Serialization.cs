@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferExpired event. </summary>
     [JsonConverter(typeof(AcsRouterWorkerOfferExpiredEventDataConverter))]
-    public partial class AcsRouterWorkerOfferExpiredEventData : IJsonModel<AcsRouterWorkerOfferExpiredEventData>
+    public partial class AcsRouterWorkerOfferExpiredEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerOfferExpiredEventData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -155,7 +155,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsRouterWorkerOfferExpiredEventData(document.RootElement, options);
                     }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallParticipantAdded event. </summary>
     [JsonConverter(typeof(AcsCallParticipantAddedEventDataConverter))]
-    public partial class AcsCallParticipantAddedEventData : IJsonModel<AcsCallParticipantAddedEventData>
+    public partial class AcsCallParticipantAddedEventData : AcsCallParticipantEventData, IJsonModel<AcsCallParticipantAddedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsCallParticipantAddedEventData"/> for deserialization. </summary>
         internal AcsCallParticipantAddedEventData()
@@ -205,7 +205,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsCallParticipantAddedEventData(document.RootElement, options);
                     }

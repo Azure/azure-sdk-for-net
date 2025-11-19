@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,44 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.13.0 (2025-11-14)
+
+### Features Added
+
+- Added `SnapshotAccessState` property to `DiskRestorePointInstanceView` class.
+- Added `InstantAccess` property to `RestorePointGroupData` class.
+- Added `InstantAccess` property to `RestorePointGroupPatch` class.
+- Added `InstantAccessDurationMinutes` property to `RestorePointData` class.
+- Added `EnableFips1403Encryption` property to `AdditionalCapabilities` class.
+- Modified `DiskIOPSReadWrite` and `DiskMBpsReadWrite` properties under the `VirtualMachineDataDisk` class to make the properties writable, and expanded the scope of usage from only VMSS to also include Virtual Machines and Flexible VMs.
+
+### Breaking Changes
+
+- `CommunityGallery`, `CommunityGalleryImage`, `CommunityGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
+- `SharedGallery`, `SharedGalleryImage`, `SharedGalleryImageVersion` are no longer ARM resources in the library, their corresponding `*Resource` and `*Collection` classes are now hidden. Please use related methods added in `ComputeExtensions` class instead.
+
+## 1.12.0 (2025-09-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-04-01'
+- Added `VirtualMachineScaleSet.ScaleOut` Operation.
+- Added `Tags` to `VirtualMachineScaleSetNetworkConfiguration`, `VirtualMachineScaleSetIPConfiguration`, `VirtualMachineScaleSetPublicIPAddressConfiguration` and `VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings` classes.
+- Added `Placement` property to `VirtualMachineScaleSet` class.
+- Added `ZoneAllocationPolicy` property to `ResiliencyPolicy` class.
+- Added `MaxInstancePercentPerZonePolicy` property to `AutomaticZoneRebalancingPolicy` class.
+- Added `ReservationType` property to `CapacityReservationGroup` class.
+- Added `ScheduleProfile` property to `CapacityReservation` class.
+- Added `AddProxyAgentExtension` property to `ProxyAgentSettings` class.
+- Added `ScriptShellTypes` enum to `RunCommandScriptSource` class.
+- Added `GalleryScriptReferenceId` property to `RunCommandScriptSource` class.
+- Added `AllInstancesDown` property to `ScheduledEventsPolicy` class.
+- Added `ScheduledEventsApiVersion` property to `EventGridAndResourceGraph` class.
+- Added `AutomaticZoneRebalancing` property to `OrchetrationServiceNames` class.
+- Added `highSpeedInterconnectPlacement` property to `VirtualMachineScaleSetProperties` class.
+- Added `patchNameMasksToInclude` and `patchNameMasksToExclude` properties to `WindowsParameters` class.
+
 
 ## 1.11.0 (2025-08-12)
 
@@ -25,7 +63,7 @@
 
 ### Breaking Changes
 
-- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility. 
+- Removed `GetVirtualMachineImagesWithPropertiesExpand` class as it has no utility.
 
 ## 1.10.0 (2025-06-30)
 

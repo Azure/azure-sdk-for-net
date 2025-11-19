@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string AutomaticRepairsValue = "AutomaticRepairs";
+        private const string AutomaticZoneRebalancingValue = "AutomaticZoneRebalancing";
 
         /// <summary> AutomaticRepairs. </summary>
         public static OrchestrationServiceName AutomaticRepairs { get; } = new OrchestrationServiceName(AutomaticRepairsValue);
+        /// <summary> AutomaticZoneRebalancing orchestration service. </summary>
+        public static OrchestrationServiceName AutomaticZoneRebalancing { get; } = new OrchestrationServiceName(AutomaticZoneRebalancingValue);
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are the same. </summary>
         public static bool operator ==(OrchestrationServiceName left, OrchestrationServiceName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrchestrationServiceName"/> values are not the same. </summary>

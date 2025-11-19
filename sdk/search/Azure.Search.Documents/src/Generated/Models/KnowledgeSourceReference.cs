@@ -57,20 +57,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceReference"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
-        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
-        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
-        /// <param name="maxSubQueries"> The maximum number of queries that can be issued at a time when retrieving data from this source. </param>
-        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceReference(string name, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, int? maxSubQueries, float? rerankerThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KnowledgeSourceReference(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            IncludeReferences = includeReferences;
-            IncludeReferenceSourceData = includeReferenceSourceData;
-            AlwaysQuerySource = alwaysQuerySource;
-            MaxSubQueries = maxSubQueries;
-            RerankerThreshold = rerankerThreshold;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,15 +71,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The name of the knowledge source. </summary>
         public string Name { get; set; }
-        /// <summary> Indicates whether references should be included for data retrieved from this source. </summary>
-        public bool? IncludeReferences { get; set; }
-        /// <summary> Indicates whether references should include the structured data obtained during retrieval in their payload. </summary>
-        public bool? IncludeReferenceSourceData { get; set; }
-        /// <summary> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </summary>
-        public bool? AlwaysQuerySource { get; set; }
-        /// <summary> The maximum number of queries that can be issued at a time when retrieving data from this source. </summary>
-        public int? MaxSubQueries { get; set; }
-        /// <summary> The reranker threshold all retrieved documents must meet to be included in the response. </summary>
-        public float? RerankerThreshold { get; set; }
     }
 }

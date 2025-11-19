@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventConversationItemRetrieve : IJsonModel<ClientEventConversationItemRetrieve>
+    internal partial class ClientEventConversationItemRetrieve : ClientEvent, IJsonModel<ClientEventConversationItemRetrieve>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/> for deserialization. </summary>
         internal ClientEventConversationItemRetrieve()
@@ -124,7 +124,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeClientEventConversationItemRetrieve(document.RootElement, options);
                     }

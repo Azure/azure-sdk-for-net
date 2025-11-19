@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="differentSpreadStringRecord"> The <see cref="DifferentSpreadStringRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(DifferentSpreadStringRecord differentSpreadStringRecord) => throw null;
 
-        public static explicit operator DifferentSpreadStringRecord(Response result) => throw null;
+        public static explicit operator DifferentSpreadStringRecord(Response response) => throw null;
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -638,6 +638,100 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
             using var message = CreateAddStorageCapacityRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateConfigureExascaleRequestUri(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, ConfigureExascaleCloudExadataInfrastructureDetails details)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/cloudExadataInfrastructures/", false);
+            uri.AppendPath(cloudexadatainfrastructurename, true);
+            uri.AppendPath("/configureExascale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateConfigureExascaleRequest(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, ConfigureExascaleCloudExadataInfrastructureDetails details)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Oracle.Database/cloudExadataInfrastructures/", false);
+            uri.AppendPath(cloudexadatainfrastructurename, true);
+            uri.AppendPath("/configureExascale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(details, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Configures Exascale on Cloud exadata infrastructure resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudexadatainfrastructurename"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ConfigureExascaleAsync(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, ConfigureExascaleCloudExadataInfrastructureDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using var message = CreateConfigureExascaleRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename, details);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Configures Exascale on Cloud exadata infrastructure resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudexadatainfrastructurename"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ConfigureExascale(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, ConfigureExascaleCloudExadataInfrastructureDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using var message = CreateConfigureExascaleRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename, details);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

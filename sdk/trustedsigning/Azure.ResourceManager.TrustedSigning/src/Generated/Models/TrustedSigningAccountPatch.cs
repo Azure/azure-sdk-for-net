@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
     /// <summary> Parameters for creating or updating a trusted signing account. </summary>
     public partial class TrustedSigningAccountPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountPatch"/>. </summary>
         public TrustedSigningAccountPatch()
@@ -53,26 +25,35 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> SKU of the trusted signing account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedSigningAccountPatch(IDictionary<string, string> tags, TrustedSigningAccountSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the trusted signing account. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TrustedSigningAccountPatch(IDictionary<string, string> tags, CodeSigningAccountPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            Sku = sku;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> SKU of the trusted signing account. </summary>
-        internal TrustedSigningAccountSku Sku { get; set; }
+
+        /// <summary> Properties of the trusted signing account. </summary>
+        internal CodeSigningAccountPatchProperties Properties { get; set; }
+
         /// <summary> Name of the SKU. </summary>
         public TrustedSigningSkuName? SkuName
         {
-            get => Sku is null ? default(TrustedSigningSkuName?) : Sku.Name;
+            get
+            {
+                return Properties is null ? default : Properties.SkuName;
+            }
             set
             {
-                Sku = value.HasValue ? new TrustedSigningAccountSku(value.Value) : null;
+                if (Properties is null)
+                {
+                    Properties = new CodeSigningAccountPatchProperties();
+                }
+                Properties.SkuName = value.Value;
             }
         }
     }

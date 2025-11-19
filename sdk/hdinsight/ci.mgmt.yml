@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.HDInsight
       safeName: AzureResourceManagerHDInsight
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.HDInsight
-      ExpectedWarningsFilepath: None

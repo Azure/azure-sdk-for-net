@@ -978,9 +978,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
-                recursive: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -1004,9 +1008,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                UserPrincipalName = true
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
-                userPrincipalName: true);
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             ;
             IList<PathItem> paths = await response.ToListAsync();
 
@@ -1028,9 +1036,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await SetUpFileSystemForListing(test.FileSystem);
 
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Path = "foo"
+            };
+
             // Act
-            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(
-                path: "foo");
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
             IList<PathItem> paths = await response.ToListAsync();
 
             // Assert
@@ -1142,6 +1154,28 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.NotNull(paths[0].CreatedOn);
             Assert.NotNull(paths[1].CreatedOn);
             Assert.NotNull(paths[2].CreatedOn);
+        }
+
+        [RecordedTest]
+        public async Task GetPathsAsync_BeginFrom()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            await SetUpFileSystemForListing(test.FileSystem);
+
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Recursive = true,
+                StartFrom = "foo"
+            };
+
+            // Act
+            AsyncPageable<PathItem> response = test.FileSystem.GetPathsAsync(options);
+            IList<PathItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, paths.Count);
         }
 
         [RecordedTest]

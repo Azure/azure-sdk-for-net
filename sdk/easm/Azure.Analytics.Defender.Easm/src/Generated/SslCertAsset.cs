@@ -36,7 +36,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="SslCertAsset"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sha1"></param>
         /// <param name="subjectCommonNames"></param>
         /// <param name="organizations"></param>
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sigAlgOid"></param>
         /// <param name="recent"></param>
         /// <param name="validationType"></param>
-        internal SslCertAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, string sha1, IReadOnlyList<string> subjectCommonNames, IReadOnlyList<string> organizations, IReadOnlyList<string> organizationalUnits, IReadOnlyList<string> issuerCommonNames, string sigAlgName, DateTimeOffset? invalidAfter, string serialNumber, IReadOnlyList<string> subjectAlternativeNames, IReadOnlyList<string> issuerAlternativeNames, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? invalidBefore, int? keySize, string keyAlgorithm, IReadOnlyList<string> subjectLocality, IReadOnlyList<string> subjectState, IReadOnlyList<string> subjectCountry, IReadOnlyList<string> issuerLocality, IReadOnlyList<string> issuerState, IReadOnlyList<string> issuerCountry, IReadOnlyList<string> subjectOrganizations, IReadOnlyList<string> subjectOrganizationalUnits, IReadOnlyList<string> issuerOrganizations, IReadOnlyList<string> issuerOrganizationalUnits, int? version, bool? certificateAuthority, bool? selfSigned, string sigAlgOid, bool? recent, SslCertAssetValidationType? validationType) : base(serializedAdditionalRawData)
+        internal SslCertAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string sha1, IList<string> subjectCommonNames, IList<string> organizations, IList<string> organizationalUnits, IList<string> issuerCommonNames, string sigAlgName, DateTimeOffset? invalidAfter, string serialNumber, IList<string> subjectAlternativeNames, IList<string> issuerAlternativeNames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? invalidBefore, int? keySize, string keyAlgorithm, IList<string> subjectLocality, IList<string> subjectState, IList<string> subjectCountry, IList<string> issuerLocality, IList<string> issuerState, IList<string> issuerCountry, IList<string> subjectOrganizations, IList<string> subjectOrganizationalUnits, IList<string> issuerOrganizations, IList<string> issuerOrganizationalUnits, int? version, bool? certificateAuthority, bool? selfSigned, string sigAlgOid, bool? recent, SslCertAssetValidationType? validationType) : base(additionalBinaryDataProperties)
         {
             Sha1 = sha1;
             SubjectCommonNames = subjectCommonNames;
@@ -107,71 +107,103 @@ namespace Azure.Analytics.Defender.Easm
             ValidationType = validationType;
         }
 
-        /// <summary> Gets the sha 1. </summary>
+        /// <summary> Gets the Sha1. </summary>
         public string Sha1 { get; }
-        /// <summary> Gets the subject common names. </summary>
-        public IReadOnlyList<string> SubjectCommonNames { get; }
-        /// <summary> Gets the organizations. </summary>
-        public IReadOnlyList<string> Organizations { get; }
-        /// <summary> Gets the organizational units. </summary>
-        public IReadOnlyList<string> OrganizationalUnits { get; }
-        /// <summary> Gets the issuer common names. </summary>
-        public IReadOnlyList<string> IssuerCommonNames { get; }
-        /// <summary> Gets the sig alg name. </summary>
+
+        /// <summary> Gets the SubjectCommonNames. </summary>
+        public IList<string> SubjectCommonNames { get; }
+
+        /// <summary> Gets the Organizations. </summary>
+        public IList<string> Organizations { get; }
+
+        /// <summary> Gets the OrganizationalUnits. </summary>
+        public IList<string> OrganizationalUnits { get; }
+
+        /// <summary> Gets the IssuerCommonNames. </summary>
+        public IList<string> IssuerCommonNames { get; }
+
+        /// <summary> Gets the SigAlgName. </summary>
         public string SigAlgName { get; }
-        /// <summary> Gets the invalid after. </summary>
+
+        /// <summary> Gets the InvalidAfter. </summary>
         public DateTimeOffset? InvalidAfter { get; }
-        /// <summary> Gets the serial number. </summary>
+
+        /// <summary> Gets the SerialNumber. </summary>
         public string SerialNumber { get; }
-        /// <summary> Gets the subject alternative names. </summary>
-        public IReadOnlyList<string> SubjectAlternativeNames { get; }
-        /// <summary> Gets the issuer alternative names. </summary>
-        public IReadOnlyList<string> IssuerAlternativeNames { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the SubjectAlternativeNames. </summary>
+        public IList<string> SubjectAlternativeNames { get; }
+
+        /// <summary> Gets the IssuerAlternativeNames. </summary>
+        public IList<string> IssuerAlternativeNames { get; }
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the invalid before. </summary>
+
+        /// <summary> Gets the InvalidBefore. </summary>
         public DateTimeOffset? InvalidBefore { get; }
-        /// <summary> Gets the key size. </summary>
+
+        /// <summary> Gets the KeySize. </summary>
         public int? KeySize { get; }
-        /// <summary> Gets the key algorithm. </summary>
+
+        /// <summary> Gets the KeyAlgorithm. </summary>
         public string KeyAlgorithm { get; }
-        /// <summary> Gets the subject locality. </summary>
-        public IReadOnlyList<string> SubjectLocality { get; }
-        /// <summary> Gets the subject state. </summary>
-        public IReadOnlyList<string> SubjectState { get; }
-        /// <summary> Gets the subject country. </summary>
-        public IReadOnlyList<string> SubjectCountry { get; }
-        /// <summary> Gets the issuer locality. </summary>
-        public IReadOnlyList<string> IssuerLocality { get; }
-        /// <summary> Gets the issuer state. </summary>
-        public IReadOnlyList<string> IssuerState { get; }
-        /// <summary> Gets the issuer country. </summary>
-        public IReadOnlyList<string> IssuerCountry { get; }
-        /// <summary> Gets the subject organizations. </summary>
-        public IReadOnlyList<string> SubjectOrganizations { get; }
-        /// <summary> Gets the subject organizational units. </summary>
-        public IReadOnlyList<string> SubjectOrganizationalUnits { get; }
-        /// <summary> Gets the issuer organizations. </summary>
-        public IReadOnlyList<string> IssuerOrganizations { get; }
-        /// <summary> Gets the issuer organizational units. </summary>
-        public IReadOnlyList<string> IssuerOrganizationalUnits { get; }
-        /// <summary> Gets the version. </summary>
+
+        /// <summary> Gets the SubjectLocality. </summary>
+        public IList<string> SubjectLocality { get; }
+
+        /// <summary> Gets the SubjectState. </summary>
+        public IList<string> SubjectState { get; }
+
+        /// <summary> Gets the SubjectCountry. </summary>
+        public IList<string> SubjectCountry { get; }
+
+        /// <summary> Gets the IssuerLocality. </summary>
+        public IList<string> IssuerLocality { get; }
+
+        /// <summary> Gets the IssuerState. </summary>
+        public IList<string> IssuerState { get; }
+
+        /// <summary> Gets the IssuerCountry. </summary>
+        public IList<string> IssuerCountry { get; }
+
+        /// <summary> Gets the SubjectOrganizations. </summary>
+        public IList<string> SubjectOrganizations { get; }
+
+        /// <summary> Gets the SubjectOrganizationalUnits. </summary>
+        public IList<string> SubjectOrganizationalUnits { get; }
+
+        /// <summary> Gets the IssuerOrganizations. </summary>
+        public IList<string> IssuerOrganizations { get; }
+
+        /// <summary> Gets the IssuerOrganizationalUnits. </summary>
+        public IList<string> IssuerOrganizationalUnits { get; }
+
+        /// <summary> Gets the Version. </summary>
         public int? Version { get; }
-        /// <summary> Gets the certificate authority. </summary>
+
+        /// <summary> Gets the CertificateAuthority. </summary>
         public bool? CertificateAuthority { get; }
-        /// <summary> Gets the self signed. </summary>
+
+        /// <summary> Gets the SelfSigned. </summary>
         public bool? SelfSigned { get; }
-        /// <summary> Gets the sig alg oid. </summary>
+
+        /// <summary> Gets the SigAlgOid. </summary>
         public string SigAlgOid { get; }
-        /// <summary> Gets the recent. </summary>
+
+        /// <summary> Gets the Recent. </summary>
         public bool? Recent { get; }
-        /// <summary> Gets the validation type. </summary>
+
+        /// <summary> Gets the ValidationType. </summary>
         public SslCertAssetValidationType? ValidationType { get; }
     }
 }

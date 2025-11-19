@@ -7,10 +7,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
@@ -81,7 +85,7 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
             var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             var folderPath = TestEnvironment.SAMPLEFOLDERPATH;
@@ -102,7 +106,7 @@ namespace Azure.AI.Projects.Tests
 #endif
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
-            FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
+            FileDataset fileDataset = projectClient.Datasets.UploadFile(
                 name: datasetName,
                 version: datasetVersion1,
                 filePath: filePath,
@@ -111,7 +115,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(fileDataset);
 
             Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-            FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
+            FolderDataset folderDataset = projectClient.Datasets.UploadFolder(
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
@@ -121,7 +125,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(folderDataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-            DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
+            AIProjectDataset dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
             Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -129,14 +133,14 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersions(datasetName))
             {
                 Console.WriteLine(ds);
                 Console.WriteLine(ds.Version);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasets())
             {
                 Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
             }
@@ -190,7 +194,7 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
             var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             var folderPath = TestEnvironment.SAMPLEFOLDERPATH;
@@ -211,7 +215,7 @@ namespace Azure.AI.Projects.Tests
 #endif
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion1}:");
-            FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
+            FileDataset fileDataset = await projectClient.Datasets.UploadFileAsync(
                 name: datasetName,
                 version: datasetVersion1,
                 filePath: filePath,
@@ -220,7 +224,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(fileDataset);
 
             Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-            FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAsync(
+            FolderDataset folderDataset = await projectClient.Datasets.UploadFolderAsync(
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
@@ -230,7 +234,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(folderDataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-            DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
+            AIProjectDataset dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
             Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -238,14 +242,14 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
             {
                 Console.WriteLine(ds);
                 Console.WriteLine(ds.Version);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetsAsync())
             {
                 Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
             }
@@ -279,5 +283,96 @@ namespace Azure.AI.Projects.Tests
 
             #endregion
         }
+
+        [Test]
+        [SyncOnly]
+        public void DatasetRoundTripSample()
+        {
+            #region Snippet:AI_Projects_DatasetRoundTripSample_ClientSetup
+#if SNIPPET
+            var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+            var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
+            var datasetVersion = System.Environment.GetEnvironmentVariable("DATASET_VERSION") ?? "1.0";
+            var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
+
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+#else
+            var endpoint = TestEnvironment.PROJECTENDPOINT;
+            var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
+            var filePath = TestEnvironment.SAMPLEFILEPATH;
+            var folderPath = TestEnvironment.SAMPLEFOLDERPATH;
+            var datasetVersion = "1.0";
+            try
+            {
+                datasetVersion = TestEnvironment.DATASETVERSION1;
+            }
+            catch
+            {
+                datasetVersion = "1.0";
+            }
+
+            AIProjectClient projectClient = CreateDebugClient(endpoint);
+#endif
+            #endregion
+
+            #region Snippet:AI_Projects_DatasetRoundTripSample_DatasetCreation
+
+            Console.WriteLine("Retrieve the default Azure Storage Account connection to use when creating a dataset");
+            AIProjectConnection storageConnection = projectClient.Connections.GetDefaultConnection(ConnectionType.AzureStorageAccount);
+
+            Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
+            FileDataset fileDataset = projectClient.Datasets.UploadFile(
+                name: datasetName,
+                version: datasetVersion,
+                filePath: filePath,
+                connectionName: storageConnection.Name
+                );
+            #endregion
+
+            #region Snippet:AI_Projects_DatasetRoundTripSample_DatasetDownload
+            Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion}:");
+            DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion);
+
+            Console.WriteLine($"Using DatasetCredential to initialize Azure Storage client and download the file to local disk:");
+
+            // Get the blob URI and SAS URI from the dataset credentials
+            Uri blobUri = credentials.BlobReference.BlobUri;
+            Uri sasUri = credentials.BlobReference.Credential.SasUri;
+            Console.WriteLine($"Blob URI: {blobUri}");
+            Console.WriteLine($"SAS URI: {sasUri}");
+
+            // Create BlobContainerClient using the SAS URI
+            BlobContainerClient containerClient = new BlobContainerClient(sasUri);
+            Console.WriteLine($"Container client created successfully");
+
+            // Create BlobClient from the container client using the blob name from BlobUri
+            var blobUriBuilder = new UriBuilder(blobUri);
+            var blobPathParts = blobUriBuilder.Path.TrimStart('/').Split('/');
+            string blobName = string.Join("/", blobPathParts.Skip(1)); // Skip container name, get blob path
+
+            BlobClient blobClient = containerClient.GetBlobClient(blobName);
+            Console.WriteLine($"BlobClient created successfully for blob: {blobClient.Name}");
+
+            // Define local download path
+            string downloadFileName = $"downloaded_{blobClient.Name.Replace("/", "_")}";
+            string downloadPath = Path.Combine(Path.GetTempPath(), downloadFileName);
+            Console.WriteLine($"Downloading blob to: {downloadPath}");
+
+            // Download blob to local file
+            blobClient.DownloadTo(downloadPath);
+            Console.WriteLine($"Downloaded blob '{blobClient.Name}' to '{downloadPath}' - Size: {new FileInfo(downloadPath).Length} bytes");
+            #endregion
+
+            // Clean up - delete the downloaded file and dataset
+            Console.WriteLine($"Cleaning up - deleting downloaded file: {downloadPath}");
+            if (File.Exists(downloadPath))
+            {
+                File.Delete(downloadPath);
+                Console.WriteLine("Downloaded file deleted successfully");
+            }
+
+            Console.WriteLine($"Cleaning up - deleting Dataset {datasetName} version {datasetVersion}");
+            projectClient.Datasets.Delete(datasetName, datasetVersion);
+        }
     }
-};
+}

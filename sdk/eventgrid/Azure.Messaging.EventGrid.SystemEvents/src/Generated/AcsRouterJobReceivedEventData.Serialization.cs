@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobReceived event. </summary>
     [JsonConverter(typeof(AcsRouterJobReceivedEventDataConverter))]
-    public partial class AcsRouterJobReceivedEventData : IJsonModel<AcsRouterJobReceivedEventData>
+    public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobReceivedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/> for deserialization. </summary>
         internal AcsRouterJobReceivedEventData()
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsRouterJobReceivedEventData(document.RootElement, options);
                     }

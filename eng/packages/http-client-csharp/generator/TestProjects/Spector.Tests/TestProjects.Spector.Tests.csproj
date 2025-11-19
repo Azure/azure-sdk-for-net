@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

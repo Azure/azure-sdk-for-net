@@ -10,18 +10,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation
 {
     public partial class ClientLocationClient
     {
-        public ClientLocationClient() : this(new Uri("http://localhost:3000"), new ClientLocationClientOptions()) => throw null;
+        protected ClientLocationClient() => throw null;
 
-        public ClientLocationClient(Uri endpoint, ClientLocationClientOptions options) => throw null;
+        public ClientLocationClient(string storageAccount) : this(new Uri("http://localhost:3000"), storageAccount, new ClientLocationClientOptions()) => throw null;
+
+        public ClientLocationClient(Uri endpoint, string storageAccount, ClientLocationClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -32,9 +32,9 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResponseError), ExpectedResult = "((global::System.ClientModel.Primitives.IJsonModel<global::Azure.ResponseError>)value).Write(writer, options);\n")]
         public string ValidateSerializationStatement(Type type)
         {
-            var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
-            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsExpression().As<Utf8JsonWriter>();
-            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsExpression().As<ModelReaderWriterOptions>();
+            var value = new ParameterProvider("value", $"", type).AsVariable().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsVariable().As<Utf8JsonWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
 
             var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
             Assert.IsNotNull(statement);
@@ -50,11 +50,12 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResponseError), ExpectedResult = "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Text.Encoding.UTF8.GetBytes(element.GetRawText())), options, global::Samples.SamplesContext.Default)")]
         public string ValidateDeserializationExpression(Type type)
         {
-            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
-
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
+            var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
             var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
                 type,
                 element,
+                data,
                 new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
                 SerializationFormat.Default);
             Assert.IsNotNull(expression);

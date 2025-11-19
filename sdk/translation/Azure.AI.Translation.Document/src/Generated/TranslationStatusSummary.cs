@@ -72,8 +72,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="notYetStarted"> Count of not yet started. </param>
         /// <param name="cancelled"> Number of cancelled. </param>
         /// <param name="totalCharacterCharged"> Total characters charged by the API. </param>
+        /// <param name="totalImageScansSucceeded"> Total image scans charged by the API. </param>
+        /// <param name="totalImageScansFailed"> Total image scans failed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationStatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationStatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged, int? totalImageScansSucceeded, int? totalImageScansFailed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Total = total;
             Failed = failed;
@@ -82,6 +84,8 @@ namespace Azure.AI.Translation.Document
             NotYetStarted = notYetStarted;
             Cancelled = cancelled;
             TotalCharacterCharged = totalCharacterCharged;
+            TotalImageScansSucceeded = totalImageScansSucceeded;
+            TotalImageScansFailed = totalImageScansFailed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,5 +108,9 @@ namespace Azure.AI.Translation.Document
         public int Cancelled { get; }
         /// <summary> Total characters charged by the API. </summary>
         public long TotalCharacterCharged { get; }
+        /// <summary> Total image scans charged by the API. </summary>
+        public int? TotalImageScansSucceeded { get; }
+        /// <summary> Total image scans failed. </summary>
+        public int? TotalImageScansFailed { get; }
     }
 }

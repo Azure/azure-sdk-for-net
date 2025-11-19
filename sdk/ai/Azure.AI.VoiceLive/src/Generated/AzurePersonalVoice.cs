@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzurePersonalVoice(string name, AzurePersonalVoiceModel model) : base("azure-personal")
+        public AzurePersonalVoice(string name, PersonalVoiceModels model) : base(AzureVoiceType.AzurePersonal)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -26,12 +26,12 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
-        internal AzurePersonalVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, AzurePersonalVoiceModel model) : base(@type, additionalBinaryDataProperties)
+        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;
@@ -45,6 +45,6 @@ namespace Azure.AI.VoiceLive
         public float? Temperature { get; set; }
 
         /// <summary> Underlying neural model to use for personal voice. </summary>
-        public AzurePersonalVoiceModel Model { get; set; }
+        public PersonalVoiceModels Model { get; set; }
     }
 }

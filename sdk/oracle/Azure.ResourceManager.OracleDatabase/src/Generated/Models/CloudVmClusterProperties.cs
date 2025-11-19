@@ -134,8 +134,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="compartmentOcid"> Cluster compartmentId. </param>
         /// <param name="clusterSubnetOcid"> Cluster subnet ocid. </param>
         /// <param name="computeModel"> The compute model of the VM Cluster. </param>
+        /// <param name="exascaleDBStorageVaultOcid"> Exadata Database Storage Vault ID. </param>
+        /// <param name="storageManagementType"> Specifies whether the type of storage management for the VM cluster is ASM or Exascale. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterProperties(string cloudVmClusterOcid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, string zoneOcid, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordOcid, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodeOcids, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryOcid, IList<string> dbServerOcids, string compartmentOcid, string clusterSubnetOcid, OracleDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterProperties(string cloudVmClusterOcid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, string zoneOcid, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordOcid, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodeOcids, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryOcid, IList<string> dbServerOcids, string compartmentOcid, string clusterSubnetOcid, OracleDatabaseComputeModel? computeModel, ResourceIdentifier exascaleDBStorageVaultOcid, ExadataVmClusterStorageManagementType? storageManagementType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudVmClusterOcid = cloudVmClusterOcid;
             ListenerPort = listenerPort;
@@ -187,6 +189,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             CompartmentOcid = compartmentOcid;
             ClusterSubnetOcid = clusterSubnetOcid;
             ComputeModel = computeModel;
+            ExascaleDBStorageVaultOcid = exascaleDBStorageVaultOcid;
+            StorageManagementType = storageManagementType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -295,5 +299,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string ClusterSubnetOcid { get; }
         /// <summary> The compute model of the VM Cluster. </summary>
         public OracleDatabaseComputeModel? ComputeModel { get; }
+        /// <summary> Exadata Database Storage Vault ID. </summary>
+        public ResourceIdentifier ExascaleDBStorageVaultOcid { get; set; }
+        /// <summary> Specifies whether the type of storage management for the VM cluster is ASM or Exascale. </summary>
+        public ExadataVmClusterStorageManagementType? StorageManagementType { get; }
     }
 }

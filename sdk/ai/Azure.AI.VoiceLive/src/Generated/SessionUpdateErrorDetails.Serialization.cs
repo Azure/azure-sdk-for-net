@@ -114,11 +114,6 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("code"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        code = null;
-                        continue;
-                    }
                     code = prop.Value.GetString();
                     continue;
                 }
@@ -129,21 +124,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("param"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        @param = null;
-                        continue;
-                    }
                     @param = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        eventId = null;
-                        continue;
-                    }
                     eventId = prop.Value.GetString();
                     continue;
                 }
@@ -189,7 +174,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateErrorDetails(document.RootElement, options);
                     }

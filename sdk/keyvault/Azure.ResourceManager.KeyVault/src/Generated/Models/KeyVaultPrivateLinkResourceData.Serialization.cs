@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 type,
                 systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 requiredZoneNames ?? new ChangeTrackingList<string>(),
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="taco">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
@@ -10,14 +10,8 @@
       NU5104;
     </NoWarn>
     <IsSamplesProject>true</IsSamplesProject>
-
-    </PropertyGroup>
-
+  </PropertyGroup>
   <Import Project="..\Directory.Build.props" />
-  <Target BeforeTargets="Build" Name="Taco">
-
-    <Message Text="$(AssemblyName): $(RequiredTargetFrameworks)" Importance="High"/>
-  </Target>
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);STRONGNAME_SIGNED</DefineConstants>
     <InheritDocEnabled>false</InheritDocEnabled>

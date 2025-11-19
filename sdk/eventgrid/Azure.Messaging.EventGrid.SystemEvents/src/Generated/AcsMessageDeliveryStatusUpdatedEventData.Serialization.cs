@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageDeliveryStatusUpdated event. </summary>
     [JsonConverter(typeof(AcsMessageDeliveryStatusUpdatedEventDataConverter))]
-    public partial class AcsMessageDeliveryStatusUpdatedEventData : IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>
+    public partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData, IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/> for deserialization. </summary>
         internal AcsMessageDeliveryStatusUpdatedEventData()
@@ -188,7 +188,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement, options);
                     }

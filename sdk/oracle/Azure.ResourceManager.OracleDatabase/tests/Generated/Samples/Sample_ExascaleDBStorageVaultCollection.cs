@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExascaleDbStorageVaultsCreateMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/ExascaleDbStorageVaults_Create_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "ExascaleDbStorageVault_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
 
             // invoke the operation
-            string exascaleDbStorageVaultName = "vmClusterName";
-            ExascaleDBStorageVaultData data = new ExascaleDBStorageVaultData(new AzureLocation("ltguhzffucaytqg"))
+            string exascaleDbStorageVaultName = "storagevault1";
+            ExascaleDBStorageVaultData data = new ExascaleDBStorageVaultData(new AzureLocation("zuoudqbvlxerpjtlfooyqlb"))
             {
-                Properties = new ExascaleDBStorageVaultProperties("hbsybtelyvhpalemszcvartlhwvskrnpiveqfblvkdihoytqaotdgsgauvgivzaftfgeiwlyeqzssicwrrnlxtsmeakbcsxabjlt", new ExascaleDBStorageInputDetails(21))
+                Properties = new ExascaleDBStorageVaultProperties("storagevault1", new ExascaleDBStorageInputDetails(1))
                 {
                     AdditionalFlashCacheInPercent = 0,
-                    Description = "dmnvnnduldfmrmkkvvsdtuvmsmruxzzpsfdydgytlckutfozephjygjetrauvbdfcwmti",
-                    TimeZone = "ltrbozwxjunncicrtzjrpqnqrcjgghohztrdlbfjrbkpenopyldwolslwgrgumjfkyovvkzcuxjujuxtjjzubvqvnhrswnbdgcbslopeofmtepbrrlymqwwszvsglmyuvlcuejshtpokirwklnwpcykhyinjmlqvxtyixlthtdishhmtipbygsayvgqzfrprgppylydlcskbmvwctxifdltippfvsxiughqbojqpqrekxsotnqsk",
+                    Description = "kgqvxvtegzwyppegpvqxnlslvetbjlgveofcpjddenhbpocyzwtswaeaetqkipcxyhedsymuljalirryldlbviuvidhssyiwodacajjnbpkbvbvzwzsjctsidchalyjkievnivikwnnypaojcvhmokddstxwiqxmbfmbvglfimseguwyvibwzllggjtwejdfgezoeuvjjbsyfozswihydzuscjrqnklewongumiljeordhqlsclwlmftzdoey",
+                    TimeZone = "hyjcftlal",
                 },
-                Zones = { "qk" },
+                Zones = { "npqjhyekyumfybqas" },
                 Tags =
 {
-["key7827"] = "xqi"
+["key4521"] = "rrgotvwzckepkhgkbz"
 },
             };
             ArmOperation<ExascaleDBStorageVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, exascaleDbStorageVaultName, data);
@@ -67,9 +67,44 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ExascaleDbStorageVaultsCreateMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Create_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ExascaleDBStorageVaultResource
+            ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
+
+            // invoke the operation
+            string exascaleDbStorageVaultName = "storagevault1";
+            ExascaleDBStorageVaultData data = new ExascaleDBStorageVaultData(new AzureLocation("odxgtv"));
+            ArmOperation<ExascaleDBStorageVaultResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, exascaleDbStorageVaultName, data);
+            ExascaleDBStorageVaultResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ExascaleDBStorageVaultData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExascaleDbStorageVaultsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/ExascaleDbStorageVaults_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "ExascaleDbStorageVault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +123,40 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
 
             // invoke the operation
-            string exascaleDbStorageVaultName = "vmClusterName";
+            string exascaleDbStorageVaultName = "storagevault1";
+            ExascaleDBStorageVaultResource result = await collection.GetAsync(exascaleDbStorageVaultName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ExascaleDBStorageVaultData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ExascaleDbStorageVaultsGetMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ExascaleDBStorageVaultResource
+            ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
+
+            // invoke the operation
+            string exascaleDbStorageVaultName = "storagevault1";
             ExascaleDBStorageVaultResource result = await collection.GetAsync(exascaleDbStorageVaultName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -102,7 +170,42 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExascaleDbStorageVaultsListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/ExascaleDbStorageVaults_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ExascaleDBStorageVaultResource
+            ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
+
+            // invoke the operation and iterate over the result
+            await foreach (ExascaleDBStorageVaultResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ExascaleDBStorageVaultData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ExascaleDbStorageVaultsListByResourceGroupMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_ListByResourceGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "ExascaleDbStorageVault_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +240,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExascaleDbStorageVaultsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/ExascaleDbStorageVaults_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "ExascaleDbStorageVault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +259,36 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
 
             // invoke the operation
-            string exascaleDbStorageVaultName = "vmClusterName";
+            string exascaleDbStorageVaultName = "storagevault1";
+            bool result = await collection.ExistsAsync(exascaleDbStorageVaultName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ExascaleDbStorageVaultsGetMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ExascaleDBStorageVaultResource
+            ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
+
+            // invoke the operation
+            string exascaleDbStorageVaultName = "storagevault1";
             bool result = await collection.ExistsAsync(exascaleDbStorageVaultName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -166,7 +298,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExascaleDbStorageVaultsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/ExascaleDbStorageVaults_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "ExascaleDbStorageVault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +317,48 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
 
             // invoke the operation
-            string exascaleDbStorageVaultName = "vmClusterName";
+            string exascaleDbStorageVaultName = "storagevault1";
+            NullableResponse<ExascaleDBStorageVaultResource> response = await collection.GetIfExistsAsync(exascaleDbStorageVaultName);
+            ExascaleDBStorageVaultResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ExascaleDBStorageVaultData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ExascaleDbStorageVaultsGetMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ExascaleDBStorageVaultResource
+            ExascaleDBStorageVaultCollection collection = resourceGroupResource.GetExascaleDBStorageVaults();
+
+            // invoke the operation
+            string exascaleDbStorageVaultName = "storagevault1";
             NullableResponse<ExascaleDBStorageVaultResource> response = await collection.GetIfExistsAsync(exascaleDbStorageVaultName);
             ExascaleDBStorageVaultResource result = response.HasValue ? response.Value : null;
 

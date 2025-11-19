@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(Capabilities.ToString());
             writer.WritePropertyName("preflightOptions"u8);
             writer.WriteStringValue(PreflightOptions.ToString());
+            if (Optional.IsDefined(PreflightNotifications))
+            {
+                writer.WritePropertyName("preflightNotifications"u8);
+                writer.WriteStringValue(PreflightNotifications.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             TemplateDeploymentCapability capabilities = default;
             TemplateDeploymentPreflightOption preflightOptions = default;
+            TemplateDeploymentPreflightNotification? preflightNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +97,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     preflightOptions = new TemplateDeploymentPreflightOption(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("preflightNotifications"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preflightNotifications = new TemplateDeploymentPreflightNotification(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TemplateDeploymentPolicy(capabilities, preflightOptions, serializedAdditionalRawData);
+            return new TemplateDeploymentPolicy(capabilities, preflightOptions, preflightNotifications, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateDeploymentPolicy>.Write(ModelReaderWriterOptions options)

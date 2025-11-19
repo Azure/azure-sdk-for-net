@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientCreatedOrUpdated event. </summary>
     [JsonConverter(typeof(EventGridMqttClientCreatedOrUpdatedEventDataConverter))]
-    public partial class EventGridMqttClientCreatedOrUpdatedEventData : IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>
+    public partial class EventGridMqttClientCreatedOrUpdatedEventData : EventGridMqttClientEventData, IJsonModel<EventGridMqttClientCreatedOrUpdatedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="EventGridMqttClientCreatedOrUpdatedEventData"/> for deserialization. </summary>
         internal EventGridMqttClientCreatedOrUpdatedEventData()
@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeEventGridMqttClientCreatedOrUpdatedEventData(document.RootElement, options);
                     }

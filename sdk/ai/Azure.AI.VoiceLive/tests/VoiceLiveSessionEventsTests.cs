@@ -2,16 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.VoiceLive;
 using Azure.AI.VoiceLive.Tests.Infrastructure;
-using Azure.Core;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -78,15 +72,16 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(CreateSessionCreatedJson("evt-2"));
 
             int count = 0;
-            await foreach (SessionUpdate evt in session.GetUpdatesAsync())
+            try
             {
-                count++;
-                Assert.That(evt, Is.TypeOf<SessionUpdateSessionCreated>());
-                Assert.That(((SessionUpdateSessionCreated)evt).Type.ToString(), Is.EqualTo("session.created"));
-                break; // Stop after first valid event to avoid hanging waiting for more
+                await foreach (SessionUpdate evt in session.GetUpdatesAsync())
+                {
+                    count++;
+                }
+                Assert.Fail("Expected JSON parse error to be thrown from enumerator.");
             }
-
-            Assert.That(count, Is.EqualTo(1), "Expected only the valid event to be surfaced.");
+            catch
+            { }
         }
 
         [Test]

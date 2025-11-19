@@ -562,8 +562,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AffectedObjectDetails"/>. </summary>
-        /// <param name="description"></param>
-        /// <param name="type"></param>
+        /// <param name="description"> Description of the affected object details. </param>
+        /// <param name="type"> Type of the affected object details. </param>
         /// <returns> A new <see cref="Models.AffectedObjectDetails"/> instance for mocking. </returns>
         public static AffectedObjectDetails AffectedObjectDetails(string description = null, AffectedObjectDetailsType? type = null)
         {

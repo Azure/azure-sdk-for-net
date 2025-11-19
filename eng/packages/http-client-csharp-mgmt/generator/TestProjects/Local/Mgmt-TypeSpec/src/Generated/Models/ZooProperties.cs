@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The ZooProperties. </summary>
     public partial class ZooProperties
@@ -31,6 +32,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> something. </summary>
+        [WirePath("something")]
         public string Something { get; set; }
     }
 }

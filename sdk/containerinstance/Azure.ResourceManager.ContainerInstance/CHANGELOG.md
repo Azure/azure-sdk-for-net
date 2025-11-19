@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.5 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-09-29)
+
+### Features Added
+
+- Release stable version for our service based on our latest beta version.
 
 ## 1.3.0-beta.4 (2025-09-16)
 

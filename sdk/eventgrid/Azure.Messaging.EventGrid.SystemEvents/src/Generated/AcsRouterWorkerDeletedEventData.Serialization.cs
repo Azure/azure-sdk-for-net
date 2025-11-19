@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeleted event. </summary>
     [JsonConverter(typeof(AcsRouterWorkerDeletedEventDataConverter))]
-    public partial class AcsRouterWorkerDeletedEventData : IJsonModel<AcsRouterWorkerDeletedEventData>
+    public partial class AcsRouterWorkerDeletedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerDeletedEventData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsRouterWorkerDeletedEventData(document.RootElement, options);
                     }

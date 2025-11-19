@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Name = name;
             Locations = new ChangeTrackingList<string>();
+            LocationInfo = new ChangeTrackingList<StorageSkuLocationInfo>();
             Capabilities = new ChangeTrackingList<StorageSkuCapability>();
             Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
         }
@@ -61,16 +62,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceType"> The type of the resource, usually it is 'storageAccounts'. </param>
         /// <param name="kind"> Indicates the type of storage account. </param>
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
+        /// <param name="locationInfo"></param>
         /// <param name="capabilities"> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuLocationInfo> locationInfo, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             ResourceType = resourceType;
             Kind = kind;
             Locations = locations;
+            LocationInfo = locationInfo;
             Capabilities = capabilities;
             Restrictions = restrictions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -96,6 +99,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </summary>
         [WirePath("locations")]
         public IReadOnlyList<string> Locations { get; }
+        /// <summary> Gets the location info. </summary>
+        [WirePath("locationInfo")]
+        public IReadOnlyList<StorageSkuLocationInfo> LocationInfo { get; }
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
         [WirePath("capabilities")]
         public IReadOnlyList<StorageSkuCapability> Capabilities { get; }

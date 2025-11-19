@@ -47,7 +47,7 @@ namespace Azure.AI.VoiceLive.Tests
             options.Tools.Add(new VoiceLiveFunctionDefinition("apply_refund") { Description = "Applies a refund to an order." });
             options.Tools.Add(new VoiceLiveFunctionDefinition("escalate_case") { Description = "Escalates the current case." });
 
-            await session.ConfigureConversationSessionAsync(options);
+            await session.ConfigureSessionAsync(options);
 
             var updateMessages = GetSentMessagesOfType(fake, "session.update");
             Assert.That(updateMessages, Is.Not.Empty, "Expected a session.update message containing tools.");

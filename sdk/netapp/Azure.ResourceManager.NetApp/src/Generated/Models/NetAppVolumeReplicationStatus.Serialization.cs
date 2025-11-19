@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (Optional.IsDefined(RelationshipStatus))
+            if (Optional.IsDefined(VolumeReplicationRelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
-                writer.WriteStringValue(RelationshipStatus.Value.ToString());
+                writer.WriteStringValue(VolumeReplicationRelationshipStatus.Value.ToString());
             }
-            if (Optional.IsDefined(MirrorState))
+            if (options.Format != "W" && Optional.IsDefined(MirrorState))
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             bool? healthy = default;
-            NetAppRelationshipStatus? relationshipStatus = default;
+            VolumeReplicationRelationshipStatus? relationshipStatus = default;
             NetAppMirrorState? mirrorState = default;
             string totalProgress = default;
             string errorMessage = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    relationshipStatus = new NetAppRelationshipStatus(property.Value.GetString());
+                    relationshipStatus = new VolumeReplicationRelationshipStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("mirrorState"u8))

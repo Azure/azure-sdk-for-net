@@ -87,12 +87,12 @@ public class Metrics
     ///   Initializes a new instance of the <see cref="Metrics" /> class.
     /// </summary>
     ///
-    /// <param name="instrumentationKey">The instrumentation key associated with the Application Insights resource.</param>
+    /// <param name="connectionString">The instrumentation key associated with the Application Insights resource.</param>
     ///
-    public Metrics(string instrumentationKey)
+    public Metrics(string connectionString)
     {
         var configuration = TelemetryConfiguration.CreateDefault();
-        configuration.InstrumentationKey = instrumentationKey;
+        configuration.ConnectionString = connectionString;
 
         Client = new TelemetryClient(configuration);
     }

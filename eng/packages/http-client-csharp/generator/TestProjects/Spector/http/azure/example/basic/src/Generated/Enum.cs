@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     public readonly partial struct Enum : IEquatable<Enum>
     {

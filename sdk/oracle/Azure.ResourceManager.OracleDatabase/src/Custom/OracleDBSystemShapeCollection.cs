@@ -20,10 +20,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <description>DbSystemShapes_ListByLocation</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="OracleDBSystemShapeResource"/></description>
         /// </item>
@@ -32,7 +28,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<OracleDBSystemShapeResource> GetAll(CancellationToken cancellationToken) => GetAll(cancellationToken: cancellationToken);
+        public virtual Pageable<OracleDBSystemShapeResource> GetAll(CancellationToken cancellationToken) => GetAll(null, null, cancellationToken);
 
         /// <summary>
         /// List DbSystemShape resources by Location
@@ -46,10 +42,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <description>DbSystemShapes_ListByLocation</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="OracleDBSystemShapeResource"/></description>
         /// </item>
@@ -58,6 +50,52 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(CancellationToken cancellationToken) => GetAllAsync(cancellationToken: cancellationToken);
+        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(CancellationToken cancellationToken) => GetAllAsync(null, null, cancellationToken);
+
+        /// <summary>
+        /// List DbSystemShape resources by SubscriptionLocationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbSystemShape_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemShapeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(string zone, CancellationToken cancellationToken) => GetAllAsync(zone, null, cancellationToken);
+
+        /// <summary>
+        /// List DbSystemShape resources by SubscriptionLocationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/dbSystemShapes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbSystemShape_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemShapeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<OracleDBSystemShapeResource> GetAll(string zone, CancellationToken cancellationToken) => GetAll(zone, null, cancellationToken);
     }
 }

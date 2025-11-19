@@ -285,5 +285,53 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             ExascaleDBStorageVaultResource.ValidateResourceId(id);
             return new ExascaleDBStorageVaultResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OracleNetworkAnchorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleNetworkAnchorResource.CreateResourceIdentifier" /> to create an <see cref="OracleNetworkAnchorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OracleNetworkAnchorResource"/> object. </returns>
+        public virtual OracleNetworkAnchorResource GetOracleNetworkAnchorResource(ResourceIdentifier id)
+        {
+            OracleNetworkAnchorResource.ValidateResourceId(id);
+            return new OracleNetworkAnchorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OracleResourceAnchorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleResourceAnchorResource.CreateResourceIdentifier" /> to create an <see cref="OracleResourceAnchorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OracleResourceAnchorResource"/> object. </returns>
+        public virtual OracleResourceAnchorResource GetOracleResourceAnchorResource(ResourceIdentifier id)
+        {
+            OracleResourceAnchorResource.ValidateResourceId(id);
+            return new OracleResourceAnchorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OracleDBSystemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleDBSystemResource.CreateResourceIdentifier" /> to create an <see cref="OracleDBSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OracleDBSystemResource"/> object. </returns>
+        public virtual OracleDBSystemResource GetOracleDBSystemResource(ResourceIdentifier id)
+        {
+            OracleDBSystemResource.ValidateResourceId(id);
+            return new OracleDBSystemResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OracleDBVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OracleDBVersionResource.CreateResourceIdentifier" /> to create an <see cref="OracleDBVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OracleDBVersionResource"/> object. </returns>
+        public virtual OracleDBVersionResource GetOracleDBVersionResource(ResourceIdentifier id)
+        {
+            OracleDBVersionResource.ValidateResourceId(id);
+            return new OracleDBVersionResource(Client, id);
+        }
     }
 }

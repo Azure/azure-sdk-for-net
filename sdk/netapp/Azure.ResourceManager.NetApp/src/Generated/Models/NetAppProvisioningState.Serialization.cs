@@ -13,25 +13,27 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public static string ToSerialString(this NetAppProvisioningState value) => value switch
         {
-            NetAppProvisioningState.Accepted => "Accepted",
-            NetAppProvisioningState.Creating => "Creating",
-            NetAppProvisioningState.Patching => "Patching",
-            NetAppProvisioningState.Deleting => "Deleting",
-            NetAppProvisioningState.Moving => "Moving",
-            NetAppProvisioningState.Failed => "Failed",
             NetAppProvisioningState.Succeeded => "Succeeded",
+            NetAppProvisioningState.Failed => "Failed",
+            NetAppProvisioningState.Canceled => "Canceled",
+            NetAppProvisioningState.Provisioning => "Provisioning",
+            NetAppProvisioningState.Moving => "Moving",
+            NetAppProvisioningState.Updating => "Updating",
+            NetAppProvisioningState.Deleting => "Deleting",
+            NetAppProvisioningState.Accepted => "Accepted",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NetAppProvisioningState value.")
         };
 
         public static NetAppProvisioningState ToNetAppProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return NetAppProvisioningState.Accepted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return NetAppProvisioningState.Creating;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Patching")) return NetAppProvisioningState.Patching;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return NetAppProvisioningState.Deleting;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Moving")) return NetAppProvisioningState.Moving;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return NetAppProvisioningState.Failed;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return NetAppProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return NetAppProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return NetAppProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Provisioning")) return NetAppProvisioningState.Provisioning;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Moving")) return NetAppProvisioningState.Moving;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return NetAppProvisioningState.Updating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return NetAppProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return NetAppProvisioningState.Accepted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NetAppProvisioningState value.");
         }
     }

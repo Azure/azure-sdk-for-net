@@ -5,14 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public enum ResponseIncompleteDetailsReason
+    public readonly partial struct ResponseIncompleteDetailsReason : IEquatable<ResponseIncompleteDetailsReason>
     {
-        /// <summary> MaxOutputTokens. </summary>
-        MaxOutputTokens,
-        /// <summary> ContentFilter. </summary>
-        ContentFilter
+        private readonly string _value;
+        private const string MaxOutputTokensValue = "max_output_tokens";
+        private const string ContentFilterValue = "content_filter";
+
+        /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetailsReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResponseIncompleteDetailsReason(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MaxOutputTokens. </summary>
+        public static ResponseIncompleteDetailsReason MaxOutputTokens { get; } = new ResponseIncompleteDetailsReason(MaxOutputTokensValue);
+
+        /// <summary> Gets the ContentFilter. </summary>
+        public static ResponseIncompleteDetailsReason ContentFilter { get; } = new ResponseIncompleteDetailsReason(ContentFilterValue);
+
+        /// <summary> Determines if two <see cref="ResponseIncompleteDetailsReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ResponseIncompleteDetailsReason left, ResponseIncompleteDetailsReason right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ResponseIncompleteDetailsReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ResponseIncompleteDetailsReason left, ResponseIncompleteDetailsReason right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ResponseIncompleteDetailsReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponseIncompleteDetailsReason(string value) => new ResponseIncompleteDetailsReason(value);
+
+        /// <summary> Converts a string to a <see cref="ResponseIncompleteDetailsReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponseIncompleteDetailsReason?(string value) => value == null ? null : new ResponseIncompleteDetailsReason(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ResponseIncompleteDetailsReason other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ResponseIncompleteDetailsReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

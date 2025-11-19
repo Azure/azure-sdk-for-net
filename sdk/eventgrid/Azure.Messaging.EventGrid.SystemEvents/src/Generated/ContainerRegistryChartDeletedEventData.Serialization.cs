@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ChartDeleted event. </summary>
     [JsonConverter(typeof(ContainerRegistryChartDeletedEventDataConverter))]
-    public partial class ContainerRegistryChartDeletedEventData : IJsonModel<ContainerRegistryChartDeletedEventData>
+    public partial class ContainerRegistryChartDeletedEventData : ContainerRegistryArtifactEventData, IJsonModel<ContainerRegistryChartDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryChartDeletedEventData"/> for deserialization. </summary>
         internal ContainerRegistryChartDeletedEventData()
@@ -158,7 +158,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeContainerRegistryChartDeletedEventData(document.RootElement, options);
                     }

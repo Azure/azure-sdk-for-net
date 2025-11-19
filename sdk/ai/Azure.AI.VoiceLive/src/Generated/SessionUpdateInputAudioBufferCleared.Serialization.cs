@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the input audio buffer is cleared by the client with a
     /// `input_audio_buffer.clear` event.
     /// </summary>
-    public partial class SessionUpdateInputAudioBufferCleared : IJsonModel<SessionUpdateInputAudioBufferCleared>
+    public partial class SessionUpdateInputAudioBufferCleared : SessionUpdate, IJsonModel<SessionUpdateInputAudioBufferCleared>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -115,7 +115,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateInputAudioBufferCleared(document.RootElement, options);
                     }

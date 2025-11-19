@@ -14,47 +14,72 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentTableCellKind : IEquatable<DocumentTableCellKind>
     {
         private readonly string _value;
+        /// <summary> Contains the main content/data. </summary>
+        private const string ContentValue = "content";
+        /// <summary> Describes the content of the row. </summary>
+        private const string RowHeaderValue = "rowHeader";
+        /// <summary> Describes the content of the column. </summary>
+        private const string ColumnHeaderValue = "columnHeader";
+        /// <summary> Describes the row headers, usually located at the top left corner of a table. </summary>
+        private const string StubHeadValue = "stubHead";
+        /// <summary> Describes the content in (parts of) the table. </summary>
+        private const string DescriptionValue = "description";
 
         /// <summary> Initializes a new instance of <see cref="DocumentTableCellKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentTableCellKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ContentValue = "content";
-        private const string RowHeaderValue = "rowHeader";
-        private const string ColumnHeaderValue = "columnHeader";
-        private const string StubHeadValue = "stubHead";
-        private const string DescriptionValue = "description";
+            _value = value;
+        }
 
         /// <summary> Contains the main content/data. </summary>
         public static DocumentTableCellKind Content { get; } = new DocumentTableCellKind(ContentValue);
+
         /// <summary> Describes the content of the row. </summary>
         public static DocumentTableCellKind RowHeader { get; } = new DocumentTableCellKind(RowHeaderValue);
+
         /// <summary> Describes the content of the column. </summary>
         public static DocumentTableCellKind ColumnHeader { get; } = new DocumentTableCellKind(ColumnHeaderValue);
+
         /// <summary> Describes the row headers, usually located at the top left corner of a table. </summary>
         public static DocumentTableCellKind StubHead { get; } = new DocumentTableCellKind(StubHeadValue);
+
         /// <summary> Describes the content in (parts of) the table. </summary>
         public static DocumentTableCellKind Description { get; } = new DocumentTableCellKind(DescriptionValue);
+
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentTableCellKind left, DocumentTableCellKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentTableCellKind left, DocumentTableCellKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentTableCellKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentTableCellKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentTableCellKind(string value) => new DocumentTableCellKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentTableCellKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentTableCellKind?(string value) => value == null ? null : new DocumentTableCellKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentTableCellKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentTableCellKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

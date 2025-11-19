@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("statusCode"u8))
                 {
-                    statusCode = property.Value.GetString();
+                    DeserializeStatusCode(property, ref statusCode);
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))

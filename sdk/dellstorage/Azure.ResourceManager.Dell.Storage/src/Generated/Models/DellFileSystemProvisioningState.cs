@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dell.Storage;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     public readonly partial struct DellFileSystemProvisioningState : IEquatable<DellFileSystemProvisioningState>
     {
         private readonly string _value;
+        /// <summary> File system resource creation request accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> File system resource creation started. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> File system resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> File system resource deletion started. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> File system resource creation successful. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> File system resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> File system resource creation canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> File system resource is deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> File system resource state is unknown. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DellFileSystemProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletedValue = "Deleted";
-        private const string NotSpecifiedValue = "NotSpecified";
+            _value = value;
+        }
 
         /// <summary> File system resource creation request accepted. </summary>
         public static DellFileSystemProvisioningState Accepted { get; } = new DellFileSystemProvisioningState(AcceptedValue);
+
         /// <summary> File system resource creation started. </summary>
         public static DellFileSystemProvisioningState Creating { get; } = new DellFileSystemProvisioningState(CreatingValue);
+
         /// <summary> File system resource is being updated. </summary>
         public static DellFileSystemProvisioningState Updating { get; } = new DellFileSystemProvisioningState(UpdatingValue);
+
         /// <summary> File system resource deletion started. </summary>
         public static DellFileSystemProvisioningState Deleting { get; } = new DellFileSystemProvisioningState(DeletingValue);
+
         /// <summary> File system resource creation successful. </summary>
         public static DellFileSystemProvisioningState Succeeded { get; } = new DellFileSystemProvisioningState(SucceededValue);
+
         /// <summary> File system resource creation failed. </summary>
         public static DellFileSystemProvisioningState Failed { get; } = new DellFileSystemProvisioningState(FailedValue);
+
         /// <summary> File system resource creation canceled. </summary>
         public static DellFileSystemProvisioningState Canceled { get; } = new DellFileSystemProvisioningState(CanceledValue);
+
         /// <summary> File system resource is deleted. </summary>
         public static DellFileSystemProvisioningState Deleted { get; } = new DellFileSystemProvisioningState(DeletedValue);
+
         /// <summary> File system resource state is unknown. </summary>
         public static DellFileSystemProvisioningState NotSpecified { get; } = new DellFileSystemProvisioningState(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="DellFileSystemProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DellFileSystemProvisioningState left, DellFileSystemProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DellFileSystemProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DellFileSystemProvisioningState left, DellFileSystemProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DellFileSystemProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DellFileSystemProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DellFileSystemProvisioningState(string value) => new DellFileSystemProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DellFileSystemProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DellFileSystemProvisioningState?(string value) => value == null ? null : new DellFileSystemProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DellFileSystemProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DellFileSystemProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The FunctionCallOutputItem. </summary>
-    public partial class FunctionCallOutputItem : IJsonModel<FunctionCallOutputItem>
+    /// <summary> A function call output item within a conversation. </summary>
+    public partial class FunctionCallOutputItem : ConversationRequestItem, IJsonModel<FunctionCallOutputItem>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionCallOutputItem"/> for deserialization. </summary>
         internal FunctionCallOutputItem()
@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemParamStatus();
+                    status = new ItemParamStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeFunctionCallOutputItem(document.RootElement, options);
                     }

@@ -14,53 +14,82 @@ namespace Azure.AI.Vision.ImageAnalysis
     internal readonly partial struct VisualFeaturesImpl : IEquatable<VisualFeaturesImpl>
     {
         private readonly string _value;
+        /// <summary> Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in the image. </summary>
+        private const string TagsValue = "tags";
+        /// <summary> Generate a human-readable caption sentence that describes the content of the image. </summary>
+        private const string CaptionValue = "caption";
+        /// <summary> Generate human-readable caption sentences for up to 10 different regions in the image, including one for the whole image. </summary>
+        private const string DenseCaptionsValue = "denseCaptions";
+        /// <summary> Object detection. This is similar to tags, but focused on detecting physical objects in the image and returning their location. </summary>
+        private const string ObjectsValue = "objects";
+        /// <summary> Extract printed or handwritten text from the image. Also known as Optical Character Recognition (OCR). </summary>
+        private const string ReadValue = "read";
+        /// <summary> Find representative sub-regions of the image for thumbnail generation, at desired aspect ratios, with priority given to detected faces. </summary>
+        private const string SmartCropsValue = "smartCrops";
+        /// <summary> Detect people in the image and return their location. </summary>
+        private const string PeopleValue = "people";
 
         /// <summary> Initializes a new instance of <see cref="VisualFeaturesImpl"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VisualFeaturesImpl(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TagsValue = "tags";
-        private const string CaptionValue = "caption";
-        private const string DenseCaptionsValue = "denseCaptions";
-        private const string ObjectsValue = "objects";
-        private const string ReadValue = "read";
-        private const string SmartCropsValue = "smartCrops";
-        private const string PeopleValue = "people";
+            _value = value;
+        }
 
         /// <summary> Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in the image. </summary>
         public static VisualFeaturesImpl Tags { get; } = new VisualFeaturesImpl(TagsValue);
+
         /// <summary> Generate a human-readable caption sentence that describes the content of the image. </summary>
         public static VisualFeaturesImpl Caption { get; } = new VisualFeaturesImpl(CaptionValue);
+
         /// <summary> Generate human-readable caption sentences for up to 10 different regions in the image, including one for the whole image. </summary>
         public static VisualFeaturesImpl DenseCaptions { get; } = new VisualFeaturesImpl(DenseCaptionsValue);
+
         /// <summary> Object detection. This is similar to tags, but focused on detecting physical objects in the image and returning their location. </summary>
         public static VisualFeaturesImpl Objects { get; } = new VisualFeaturesImpl(ObjectsValue);
+
         /// <summary> Extract printed or handwritten text from the image. Also known as Optical Character Recognition (OCR). </summary>
         public static VisualFeaturesImpl Read { get; } = new VisualFeaturesImpl(ReadValue);
+
         /// <summary> Find representative sub-regions of the image for thumbnail generation, at desired aspect ratios, with priority given to detected faces. </summary>
         public static VisualFeaturesImpl SmartCrops { get; } = new VisualFeaturesImpl(SmartCropsValue);
+
         /// <summary> Detect people in the image and return their location. </summary>
         public static VisualFeaturesImpl People { get; } = new VisualFeaturesImpl(PeopleValue);
+
         /// <summary> Determines if two <see cref="VisualFeaturesImpl"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VisualFeaturesImpl left, VisualFeaturesImpl right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VisualFeaturesImpl"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VisualFeaturesImpl left, VisualFeaturesImpl right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VisualFeaturesImpl"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VisualFeaturesImpl"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VisualFeaturesImpl(string value) => new VisualFeaturesImpl(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VisualFeaturesImpl"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VisualFeaturesImpl?(string value) => value == null ? null : new VisualFeaturesImpl(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VisualFeaturesImpl other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VisualFeaturesImpl other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

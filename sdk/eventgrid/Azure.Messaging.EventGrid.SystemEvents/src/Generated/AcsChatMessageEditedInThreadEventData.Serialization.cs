@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageEditedInThread event. </summary>
     [JsonConverter(typeof(AcsChatMessageEditedInThreadEventDataConverter))]
-    public partial class AcsChatMessageEditedInThreadEventData : IJsonModel<AcsChatMessageEditedInThreadEventData>
+    public partial class AcsChatMessageEditedInThreadEventData : AcsChatMessageEventInThreadBaseProperties, IJsonModel<AcsChatMessageEditedInThreadEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageEditedInThreadEventData"/> for deserialization. </summary>
         internal AcsChatMessageEditedInThreadEventData()
@@ -236,7 +236,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsChatMessageEditedInThreadEventData(document.RootElement, options);
                     }

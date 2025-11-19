@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a person detected in an image. </summary>
     public partial class DetectedPerson
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectedPerson"/>. </summary>
         internal DetectedPerson()
@@ -56,16 +27,17 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
         /// Higher values indicating higher confidence.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedPerson(ImageBoundingBox boundingBox, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedPerson(ImageBoundingBox boundingBox, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A rectangular boundary where the person was detected. </summary>
         public ImageBoundingBox BoundingBox { get; }
+
         /// <summary>
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
         /// Higher values indicating higher confidence.

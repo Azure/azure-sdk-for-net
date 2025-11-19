@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2025-11-14)
+
+### Features Added
+
+* Enabled resource metrics export by default.
+  ([#53432](https://github.com/Azure/azure-sdk-for-net/pull/53432))
+
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorExporterOptions`
+  to enable filtering logs based on trace sampling decisions, reducing log
+  volume while maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
+* Update OpenTelemetry dependencies
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
+  - OpenTelemetry 1.14.0
+
+## 1.5.0-beta.1 (2025-10-16)
+
+### Features Added
+
+* Added mapping for `enduser.pseudo.id` attribute to `user_Id`
+
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`). This now applies to both
+  `UseAzureMonitorExporter` and the direct
+  `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
 
 ## 1.4.0 (2025-05-08)
 

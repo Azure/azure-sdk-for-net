@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventInputAudioTurnEnd : IJsonModel<ClientEventInputAudioTurnEnd>
+    internal partial class ClientEventInputAudioTurnEnd : ClientEvent, IJsonModel<ClientEventInputAudioTurnEnd>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/> for deserialization. </summary>
         internal ClientEventInputAudioTurnEnd()
@@ -124,7 +124,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeClientEventInputAudioTurnEnd(document.RootElement, options);
                     }

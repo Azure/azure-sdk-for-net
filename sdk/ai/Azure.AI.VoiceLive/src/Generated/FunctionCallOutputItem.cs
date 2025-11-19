@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The FunctionCallOutputItem. </summary>
+    /// <summary> A function call output item within a conversation. </summary>
     public partial class FunctionCallOutputItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="FunctionCallOutputItem"/>. </summary>
@@ -40,11 +40,11 @@ namespace Azure.AI.VoiceLive
             Status = status;
         }
 
-        /// <summary> Gets the CallId. </summary>
-        public string CallId { get; }
+        /// <summary> Gets or sets the CallId. </summary>
+        public string CallId { get; set; }
 
-        /// <summary> Gets the Output. </summary>
-        public string Output { get; }
+        /// <summary> Gets or sets the Output. </summary>
+        public string Output { get; set; }
 
         /// <summary> Gets or sets the Status. </summary>
         public ItemParamStatus? Status { get; set; }

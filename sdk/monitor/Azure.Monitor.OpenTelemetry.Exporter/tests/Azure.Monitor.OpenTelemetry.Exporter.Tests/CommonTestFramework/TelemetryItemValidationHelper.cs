@@ -165,6 +165,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string? expectedSpanId,
             IDictionary<string, string>? expectedProperties,
             string expectedAuthUserId,
+            string expectedUserId,
             bool expectedSuccess = true,
             string expectedCloudRole = "[testNamespace]/testName",
             string expectedCloudInstance = "testInstance",
@@ -175,9 +176,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(6, telemetryItem.Tags.Count);
+            Assert.Equal(7, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
+            Assert.Equal(expectedUserId, telemetryItem.Tags["ai.user.id"]);
             Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
             Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
             Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
@@ -209,6 +211,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             IDictionary<string, string> expectedProperties,
             string? expectedSpanId,
             string expectedAuthUserId,
+            string expectedUserId,
             bool expectedSuccess = true,
             string expectedCloudRole = "[testNamespace]/testName",
             string expectedCloudInstance = "testInstance",
@@ -219,11 +222,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            var expectedTagsCount = 7;
+            var expectedTagsCount = 8;
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
+            Assert.Equal(expectedUserId, telemetryItem.Tags["ai.user.id"]);
             Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
             Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
             Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);

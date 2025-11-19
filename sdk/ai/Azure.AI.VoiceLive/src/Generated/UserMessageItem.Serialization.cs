@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The UserMessageItem. </summary>
-    public partial class UserMessageItem : IJsonModel<UserMessageItem>
+    /// <summary> A user message item within a conversation. </summary>
+    public partial class UserMessageItem : MessageItem, IJsonModel<UserMessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="UserMessageItem"/> for deserialization. </summary>
         internal UserMessageItem()
@@ -39,13 +39,6 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(UserMessageItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("content"u8);
-            writer.WriteStartArray();
-            foreach (UserContentPart item in Content)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -76,9 +69,9 @@ namespace Azure.AI.VoiceLive
             ItemType @type = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string role = "user";
+            ResponseMessageRole role = default;
+            IList<MessageContentPart> content = default;
             ItemParamStatus? status = default;
-            IList<UserContentPart> content = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -93,7 +86,17 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString();
+                    role = new ResponseMessageRole(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("content"u8))
+                {
+                    List<MessageContentPart> array = new List<MessageContentPart>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MessageContentPart.DeserializeMessageContentPart(item, options));
+                    }
+                    content = array;
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -102,17 +105,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemParamStatus();
-                    continue;
-                }
-                if (prop.NameEquals("content"u8))
-                {
-                    List<UserContentPart> array = new List<UserContentPart>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(UserContentPart.DeserializeUserContentPart(item, options));
-                    }
-                    content = array;
+                    status = new ItemParamStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,8 +118,8 @@ namespace Azure.AI.VoiceLive
                 id,
                 additionalBinaryDataProperties,
                 role,
-                status,
-                content);
+                content,
+                status);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -157,7 +150,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeUserMessageItem(document.RootElement, options);
                     }

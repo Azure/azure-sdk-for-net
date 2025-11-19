@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary>
-    /// A Class representing an InformaticaServerlessRuntime along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="InformaticaServerlessRuntimeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetInformaticaServerlessRuntimeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="InformaticaOrganizationResource"/> using the GetInformaticaServerlessRuntime method.
+    /// A class representing a InformaticaServerlessRuntime along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="InformaticaServerlessRuntimeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="InformaticaOrganizationResource"/> using the GetInformaticaServerlessRuntimes method.
     /// </summary>
     public partial class InformaticaServerlessRuntimeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="InformaticaServerlessRuntimeResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="organizationName"> The organizationName. </param>
-        /// <param name="serverlessRuntimeName"> The serverlessRuntimeName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics;
-        private readonly ServerlessRuntimesRestOperations _informaticaServerlessRuntimeServerlessRuntimesRestClient;
+        private readonly ClientDiagnostics _serverlessRuntimesClientDiagnostics;
+        private readonly ServerlessRuntimes _serverlessRuntimesRestClient;
         private readonly InformaticaServerlessRuntimeData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Informatica.DataManagement/organizations/serverlessRuntimes";
 
-        /// <summary> Initializes a new instance of the <see cref="InformaticaServerlessRuntimeResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of InformaticaServerlessRuntimeResource for mocking. </summary>
         protected InformaticaServerlessRuntimeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InformaticaServerlessRuntimeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformaticaServerlessRuntimeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal InformaticaServerlessRuntimeResource(ArmClient client, InformaticaServerlessRuntimeData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InformaticaServerlessRuntimeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformaticaServerlessRuntimeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InformaticaServerlessRuntimeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string informaticaServerlessRuntimeServerlessRuntimesApiVersion);
-            _informaticaServerlessRuntimeServerlessRuntimesRestClient = new ServerlessRuntimesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, informaticaServerlessRuntimeServerlessRuntimesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string informaticaServerlessRuntimeApiVersion);
+            _serverlessRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", ResourceType.Namespace, Diagnostics);
+            _serverlessRuntimesRestClient = new ServerlessRuntimes(_serverlessRuntimesClientDiagnostics, Pipeline, Endpoint, informaticaServerlessRuntimeApiVersion ?? "2024-05-08");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual InformaticaServerlessRuntimeData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="organizationName"> The organizationName. </param>
+        /// <param name="serverlessRuntimeName"> The serverlessRuntimeName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName, string serverlessRuntimeName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a InformaticaServerlessRuntimeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaServerlessRuntimeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<InformaticaServerlessRuntimeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Get");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Get");
             scope.Start();
             try
             {
-                var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Get a InformaticaServerlessRuntimeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaServerlessRuntimeResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<InformaticaServerlessRuntimeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Get");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Get");
             scope.Start();
             try
             {
-                var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Delete a InformaticaServerlessRuntimeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaServerlessRuntimeResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Delete");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Delete");
             scope.Start();
             try
             {
-                var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new InformaticaDataManagementArmOperation(_informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics, Pipeline, _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                InformaticaDataManagementArmOperation operation = new InformaticaDataManagementArmOperation(_serverlessRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Delete a InformaticaServerlessRuntimeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaServerlessRuntimeResource_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +262,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Delete");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Delete");
             scope.Start();
             try
             {
-                var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new InformaticaDataManagementArmOperation(_informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics, Pipeline, _informaticaServerlessRuntimeServerlessRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                InformaticaDataManagementArmOperation operation = new InformaticaDataManagementArmOperation(_serverlessRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,20 +290,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Update a InformaticaServerlessRuntimeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaServerlessRuntimeResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,11 +314,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Update");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Update");
             scope.Start();
             try
             {
-                var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, InformaticaServerlessRuntimePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,20 +342,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Update a InformaticaServerlessRuntimeResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaServerlessRuntimeResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,11 +366,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Update");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.Update");
             scope.Start();
             try
             {
-                var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, InformaticaServerlessRuntimePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,31 +394,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Checks all dependencies for a serverless runtime resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/checkDependencies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/checkDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_CheckDependencies</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_CheckDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CheckDependenciesResult>> CheckDependenciesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.CheckDependencies");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.CheckDependencies");
             scope.Start();
             try
             {
-                var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.CheckDependenciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateCheckDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CheckDependenciesResult> response = Response.FromValue(CheckDependenciesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -379,31 +442,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Checks all dependencies for a serverless runtime resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/checkDependencies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/checkDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_CheckDependencies</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_CheckDependencies. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckDependenciesResult> CheckDependencies(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.CheckDependencies");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.CheckDependencies");
             scope.Start();
             try
             {
-                var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.CheckDependencies(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateCheckDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CheckDependenciesResult> response = Response.FromValue(CheckDependenciesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -417,31 +490,36 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Starts a failed runtime resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/startFailedServerlessRuntime</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/startFailedServerlessRuntime. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_StartFailedServerlessRuntime</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_StartFailedServerlessRuntime. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartFailedServerlessRuntimeAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.StartFailedServerlessRuntime");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.StartFailedServerlessRuntime");
             scope.Start();
             try
             {
-                var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.StartFailedServerlessRuntimeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -455,31 +533,36 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Starts a failed runtime resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/startFailedServerlessRuntime</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/startFailedServerlessRuntime. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_StartFailedServerlessRuntime</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_StartFailedServerlessRuntime. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartFailedServerlessRuntime(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.StartFailedServerlessRuntime");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.StartFailedServerlessRuntime");
             scope.Start();
             try
             {
-                var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.StartFailedServerlessRuntime(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateStartFailedServerlessRuntimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -493,31 +576,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Returns a serverless runtime resource by ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/serverlessResourceById</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/serverlessResourceById. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_GetServerlessResourceById</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_ServerlessResourceById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<InformaticaServerlessRuntimeResource>> GetServerlessResourceByIdAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.GetServerlessResourceById");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.GetServerlessResourceById");
             scope.Start();
             try
             {
-                var response = await _informaticaServerlessRuntimeServerlessRuntimesRestClient.GetServerlessResourceByIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -531,31 +624,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Returns a serverless runtime resource by ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/serverlessResourceById</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}/serverlessResourceById. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_GetServerlessResourceById</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerlessRuntimes_ServerlessResourceById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaServerlessRuntimeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InformaticaServerlessRuntimeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<InformaticaServerlessRuntimeResource> GetServerlessResourceById(CancellationToken cancellationToken = default)
         {
-            using var scope = _informaticaServerlessRuntimeServerlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.GetServerlessResourceById");
+            using DiagnosticScope scope = _serverlessRuntimesClientDiagnostics.CreateScope("InformaticaServerlessRuntimeResource.GetServerlessResourceById");
             scope.Start();
             try
             {
-                var response = _informaticaServerlessRuntimeServerlessRuntimesRestClient.GetServerlessResourceById(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverlessRuntimesRestClient.CreateGetServerlessResourceByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InformaticaServerlessRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

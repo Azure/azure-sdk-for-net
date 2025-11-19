@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2025-10-09)
+
+### Features Added
+
+- Upgraded api-version tag 'package-2024-03' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/33a2135c8115465b292b71a521ea50c1cc336c8c/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md.
+   - Support Logic App Extension
+   - Support async for connected environment sub resources
+   - Support ingressConfiguration
+   - Support advanced ingress 
+   - Support private endpoint connections for managed environment
+   - Support app health check configuration for DAPR
+   - Support key vault for environment storage
 
 ## 1.4.1 (2025-08-11)
 

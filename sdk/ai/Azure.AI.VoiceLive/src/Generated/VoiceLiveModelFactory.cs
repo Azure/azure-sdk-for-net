@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.AI.VoiceLive
@@ -14,31 +15,63 @@ namespace Azure.AI.VoiceLive
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VoiceLiveModelFactory
     {
-        /// <summary> The VoiceLiveSessionOptions. </summary>
-        /// <param name="model"></param>
-        /// <param name="modalities"></param>
-        /// <param name="animation"></param>
-        /// <param name="instructions"></param>
-        /// <param name="inputAudio"></param>
-        /// <param name="inputAudioSamplingRate"></param>
-        /// <param name="inputAudioFormat"></param>
-        /// <param name="outputAudioFormat"></param>
-        /// <param name="turnDetection"></param>
-        /// <param name="inputAudioNoiseReduction"></param>
-        /// <param name="inputAudioEchoCancellation"></param>
-        /// <param name="avatar"></param>
-        /// <param name="inputAudioTranscription"></param>
-        /// <param name="outputAudioTimestampTypes"></param>
-        /// <param name="tools"></param>
-        /// <param name="temperature"></param>
-        /// <param name="agent"></param>
-        /// <param name="voiceInternal"></param>
-        /// <param name="maxResponseOutputTokens"></param>
-        /// <param name="toolChoice"></param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
-        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InputModality> modalities = default, AnimationOptions animation = default, string instructions = default, InputAudio inputAudio = default, int? inputAudioSamplingRate = default, AudioFormat? inputAudioFormat = default, AudioFormat? outputAudioFormat = default, TurnDetection turnDetection = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionSettings inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, float? temperature = default, RespondingAgentOptions agent = default, BinaryData voiceInternal = default, BinaryData maxResponseOutputTokens = default, BinaryData toolChoice = default)
+        /// <summary> Error object returned in case of API failure. </summary>
+        /// <param name="code"> Error code, or null if unspecified. </param>
+        /// <param name="message"> Human-readable error message. </param>
+        /// <param name="param"> Parameter name related to the error, if applicable. </param>
+        /// <param name="type"> Type or category of the error. </param>
+        /// <param name="eventId"> Event id of the error. </param>
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveErrorDetails"/> instance for mocking. </returns>
+        public static VoiceLiveErrorDetails VoiceLiveErrorDetails(string code = default, string message = default, string @param = default, string @type = default, string eventId = default)
         {
-            modalities ??= new ChangeTrackingList<InputModality>();
+            return new VoiceLiveErrorDetails(
+                code,
+                message,
+                @param,
+                @type,
+                eventId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A single log probability entry for a token. </summary>
+        /// <param name="token"> The token that was used to generate the log probability. </param>
+        /// <param name="logprob"> The log probability of the token. </param>
+        /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
+        /// <returns> A new <see cref="VoiceLive.LogProbProperties"/> instance for mocking. </returns>
+        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, BinaryData bytes = default)
+        {
+            return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Base for session configuration shared between request and response. </summary>
+        /// <param name="model"> The model for the session. </param>
+        /// <param name="modalities"> The modalities to be used in the session. </param>
+        /// <param name="animation"> The animation configuration for the session. </param>
+        /// <param name="voice"> The voice configuration for the session. </param>
+        /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
+        /// <param name="inputAudioSamplingRate">
+        /// Input audio sampling rate in Hz. Available values:
+        /// 
+        /// - For pcm16: 8000, 16000, 24000
+        /// 
+        /// - For g711_alaw/g711_ulaw: 8000
+        /// </param>
+        /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
+        /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
+        /// <param name="inputAudioNoiseReduction"> Configuration for input audio noise reduction. </param>
+        /// <param name="inputAudioEchoCancellation"> Configuration for echo cancellation during server-side audio processing. </param>
+        /// <param name="avatar"> Configuration for avatar streaming and behavior during the session. </param>
+        /// <param name="inputAudioTranscription"> Configuration for input audio transcription. </param>
+        /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
+        /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
+        /// <param name="toolChoice"> Specifies which tools the model is allowed to call during the session. </param>
+        /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
+        /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
+        /// <param name="turnDetection"> Type of turn detection to use. </param>
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
+        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, BinaryData turnDetection = default)
+        {
+            modalities ??= new ChangeTrackingList<InteractionModality>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
             tools ??= new ChangeTrackingList<VoiceLiveToolDefinition>();
 
@@ -46,36 +79,33 @@ namespace Azure.AI.VoiceLive
                 model,
                 modalities.ToList(),
                 animation,
+                voice,
                 instructions,
-                inputAudio,
                 inputAudioSamplingRate,
                 inputAudioFormat,
                 outputAudioFormat,
-                turnDetection,
                 inputAudioNoiseReduction,
                 inputAudioEchoCancellation,
                 avatar,
                 inputAudioTranscription,
                 outputAudioTimestampTypes.ToList(),
                 tools.ToList(),
-                temperature,
-                agent,
-                voiceInternal,
-                maxResponseOutputTokens,
                 toolChoice,
+                temperature,
+                maxResponseOutputTokens,
+                turnDetection,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Configuration for animation outputs including blendshapes, visemes, and emotion metadata. </summary>
+        /// <summary> Configuration for animation outputs including blendshapes and visemes metadata. </summary>
         /// <param name="modelName"> The name of the animation model to use. </param>
         /// <param name="outputs"> Set of output data types requested from the animation system. </param>
-        /// <param name="emotionDetectionIntervalMs"> Interval for emotion detection in milliseconds. If not set, emotion detection is disabled. </param>
         /// <returns> A new <see cref="VoiceLive.AnimationOptions"/> instance for mocking. </returns>
-        public static AnimationOptions AnimationOptions(string modelName = default, IEnumerable<AnimationOutputType> outputs = default, int? emotionDetectionIntervalMs = default)
+        public static AnimationOptions AnimationOptions(string modelName = default, IEnumerable<AnimationOutputType> outputs = default)
         {
             outputs ??= new ChangeTrackingList<AnimationOutputType>();
 
-            return new AnimationOptions(modelName, outputs.ToList(), emotionDetectionIntervalMs, additionalBinaryDataProperties: null);
+            return new AnimationOptions(modelName, outputs.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -84,26 +114,25 @@ namespace Azure.AI.VoiceLive
         /// This provides a unified interface for OpenAI voices, complementing the
         /// existing string-based OAIVoice for backward compatibility.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the OpenAI voice. </param>
         /// <returns> A new <see cref="VoiceLive.OpenAIVoice"/> instance for mocking. </returns>
-        public static OpenAIVoice OpenAIVoice(string @type = default, OAIVoice name = default)
+        public static OpenAIVoice OpenAIVoice(OAIVoice name = default)
         {
-            return new OpenAIVoice(@type, name, additionalBinaryDataProperties: null);
+            return new OpenAIVoice("openai", name, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Base for Azure voice configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, <see cref="AzurePlatformVoice"/>, and <see cref="AzurePersonalVoice"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureCustomVoice"/>, <see cref="VoiceLive.AzureStandardVoice"/>, and <see cref="VoiceLive.AzurePersonalVoice"/>.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the Azure voice. </param>
         /// <returns> A new <see cref="VoiceLive.AzureVoice"/> instance for mocking. </returns>
         public static AzureVoice AzureVoice(string @type = default)
         {
-            return new UnknownAzureVoice(@type, additionalBinaryDataProperties: null);
+            return new UnknownAzureVoice(new AzureVoiceType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Azure custom voice configuration (preferred). </summary>
+        /// <summary> Azure custom voice configuration. </summary>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="endpointId"> Endpoint ID cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
@@ -120,7 +149,7 @@ namespace Azure.AI.VoiceLive
             preferLocales ??= new ChangeTrackingList<string>();
 
             return new AzureCustomVoice(
-                "azure-custom",
+                AzureVoiceType.AzureCustom,
                 additionalBinaryDataProperties: null,
                 name,
                 endpointId,
@@ -150,36 +179,7 @@ namespace Azure.AI.VoiceLive
             preferLocales ??= new ChangeTrackingList<string>();
 
             return new AzureStandardVoice(
-                "azure-standard",
-                additionalBinaryDataProperties: null,
-                name,
-                temperature,
-                customLexiconUrl,
-                preferLocales.ToList(),
-                locale,
-                style,
-                pitch,
-                rate,
-                volume);
-        }
-
-        /// <summary> Azure platform voice configuration (variant of standard). </summary>
-        /// <param name="name"> Voice name cannot be empty. </param>
-        /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
-        /// <param name="customLexiconUrl"></param>
-        /// <param name="preferLocales"></param>
-        /// <param name="locale"></param>
-        /// <param name="style"></param>
-        /// <param name="pitch"></param>
-        /// <param name="rate"></param>
-        /// <param name="volume"></param>
-        /// <returns> A new <see cref="VoiceLive.AzurePlatformVoice"/> instance for mocking. </returns>
-        public static AzurePlatformVoice AzurePlatformVoice(string name = default, float? temperature = default, string customLexiconUrl = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
-        {
-            preferLocales ??= new ChangeTrackingList<string>();
-
-            return new AzurePlatformVoice(
-                "azure-platform",
+                AzureVoiceType.AzureStandard,
                 additionalBinaryDataProperties: null,
                 name,
                 temperature,
@@ -197,302 +197,24 @@ namespace Azure.AI.VoiceLive
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
         /// <returns> A new <see cref="VoiceLive.AzurePersonalVoice"/> instance for mocking. </returns>
-        public static AzurePersonalVoice AzurePersonalVoice(string name = default, float? temperature = default, AzurePersonalVoiceModel model = default)
+        public static AzurePersonalVoice AzurePersonalVoice(string name = default, float? temperature = default, PersonalVoiceModels model = default)
         {
-            return new AzurePersonalVoice("azure-personal", additionalBinaryDataProperties: null, name, temperature, model);
-        }
-
-        /// <summary> Voice configuration for LLM (Large Language Model) voices. </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="VoiceLive.LlmVoice"/> instance for mocking. </returns>
-        public static LlmVoice LlmVoice(string @type = default, LlmVoiceName name = default)
-        {
-            return new LlmVoice(@type, name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Configuration for client audio input. Used to specify the audio model and optional phrase list. </summary>
-        /// <param name="model"> The name of the model to use for input audio (currently only 'azure-standard' is supported). </param>
-        /// <param name="phraseList"> Optional list of phrases to bias the speech recognition engine. </param>
-        /// <returns> A new <see cref="VoiceLive.InputAudio"/> instance for mocking. </returns>
-        public static InputAudio InputAudio(string model = default, IEnumerable<string> phraseList = default)
-        {
-            phraseList ??= new ChangeTrackingList<string>();
-
-            return new InputAudio(model, phraseList.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Top-level union for turn detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NoTurnDetection"/>, <see cref="ServerVad"/>, <see cref="AzureSemanticVad"/>, <see cref="AzureSemanticVadEn"/>, <see cref="AzureSemanticVadServer"/>, and <see cref="AzureMultilingualSemanticVad"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="VoiceLive.TurnDetection"/> instance for mocking. </returns>
-        public static TurnDetection TurnDetection(string @type = default)
-        {
-            return new UnknownTurnDetection(@type.ToTurnDetectionType(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Disables turn detection. </summary>
-        /// <returns> A new <see cref="VoiceLive.NoTurnDetection"/> instance for mocking. </returns>
-        public static NoTurnDetection NoTurnDetection()
-        {
-            return new NoTurnDetection(TurnDetectionType.None, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Base model for VAD-based turn detection. </summary>
-        /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="autoTruncate"></param>
-        /// <returns> A new <see cref="VoiceLive.ServerVad"/> instance for mocking. </returns>
-        public static ServerVad ServerVad(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, bool? autoTruncate = default)
-        {
-            return new ServerVad(
-                TurnDetectionType.ServerVad,
-                additionalBinaryDataProperties: null,
-                threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                endOfUtteranceDetection,
-                autoTruncate);
-        }
-
-        /// <summary>
-        /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticDetection"/>, <see cref="AzureSemanticDetectionEn"/>, and <see cref="AzureSemanticDetectionMultilingual"/>.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns> A new <see cref="VoiceLive.EouDetection"/> instance for mocking. </returns>
-        public static EouDetection EouDetection(string model = default)
-        {
-            return new UnknownEouDetection(model.ToEOUDetectionModel(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Azure semantic end-of-utterance detection (default). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="timeout"></param>
-        /// <param name="secondaryThreshold"></param>
-        /// <param name="secondaryTimeout"></param>
-        /// <param name="disableRules"></param>
-        /// <param name="srBoost"></param>
-        /// <param name="extraImendCheck"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureSemanticDetection"/> instance for mocking. </returns>
-        public static AzureSemanticDetection AzureSemanticDetection(float? threshold = default, float? timeout = default, float? secondaryThreshold = default, float? secondaryTimeout = default, bool? disableRules = default, float? srBoost = default, bool? extraImendCheck = default)
-        {
-            return new AzureSemanticDetection(
-                EOUDetectionModel.SemanticDetectionV1,
-                additionalBinaryDataProperties: null,
-                threshold,
-                timeout,
-                secondaryThreshold,
-                secondaryTimeout,
-                disableRules,
-                srBoost,
-                extraImendCheck);
-        }
-
-        /// <summary> Azure semantic end-of-utterance detection (English-optimized). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="timeout"></param>
-        /// <param name="secondaryThreshold"></param>
-        /// <param name="secondaryTimeout"></param>
-        /// <param name="disableRules"></param>
-        /// <param name="srBoost"></param>
-        /// <param name="extraImendCheck"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureSemanticDetectionEn"/> instance for mocking. </returns>
-        public static AzureSemanticDetectionEn AzureSemanticDetectionEn(float? threshold = default, float? timeout = default, float? secondaryThreshold = default, float? secondaryTimeout = default, bool? disableRules = default, float? srBoost = default, bool? extraImendCheck = default)
-        {
-            return new AzureSemanticDetectionEn(
-                EOUDetectionModel.SemanticDetectionV1En,
-                additionalBinaryDataProperties: null,
-                threshold,
-                timeout,
-                secondaryThreshold,
-                secondaryTimeout,
-                disableRules,
-                srBoost,
-                extraImendCheck);
-        }
-
-        /// <summary> Azure semantic end-of-utterance detection (multilingual). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="timeout"></param>
-        /// <param name="secondaryThreshold"></param>
-        /// <param name="secondaryTimeout"></param>
-        /// <param name="disableRules"></param>
-        /// <param name="srBoost"></param>
-        /// <param name="extraImendCheck"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureSemanticDetectionMultilingual"/> instance for mocking. </returns>
-        public static AzureSemanticDetectionMultilingual AzureSemanticDetectionMultilingual(float? threshold = default, float? timeout = default, float? secondaryThreshold = default, float? secondaryTimeout = default, bool? disableRules = default, float? srBoost = default, bool? extraImendCheck = default)
-        {
-            return new AzureSemanticDetectionMultilingual(
-                EOUDetectionModel.SemanticDetectionV1Multilingual,
-                additionalBinaryDataProperties: null,
-                threshold,
-                timeout,
-                secondaryThreshold,
-                secondaryTimeout,
-                disableRules,
-                srBoost,
-                extraImendCheck);
-        }
-
-        /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="negThreshold"></param>
-        /// <param name="speechDurationMs"></param>
-        /// <param name="windowSize"></param>
-        /// <param name="distinctCiPhones"></param>
-        /// <param name="requireVowel"></param>
-        /// <param name="removeFillerWords"></param>
-        /// <param name="languages"></param>
-        /// <param name="autoTruncate"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureSemanticVad"/> instance for mocking. </returns>
-        public static AzureSemanticVad AzureSemanticVad(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, float? negThreshold = default, int? speechDurationMs = default, int? windowSize = default, int? distinctCiPhones = default, bool? requireVowel = default, bool? removeFillerWords = default, IEnumerable<string> languages = default, bool? autoTruncate = default)
-        {
-            languages ??= new ChangeTrackingList<string>();
-
-            return new AzureSemanticVad(
-                TurnDetectionType.AzureSemanticVad,
-                additionalBinaryDataProperties: null,
-                threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                endOfUtteranceDetection,
-                negThreshold,
-                speechDurationMs,
-                windowSize,
-                distinctCiPhones,
-                requireVowel,
-                removeFillerWords,
-                languages.ToList(),
-                autoTruncate);
-        }
-
-        /// <summary> Server Speech Detection (Azure semantic VAD, English-only). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="negThreshold"></param>
-        /// <param name="speechDurationMs"></param>
-        /// <param name="windowSize"></param>
-        /// <param name="distinctCiPhones"></param>
-        /// <param name="requireVowel"></param>
-        /// <param name="removeFillerWords"></param>
-        /// <param name="languages"></param>
-        /// <param name="autoTruncate"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureSemanticVadEn"/> instance for mocking. </returns>
-        public static AzureSemanticVadEn AzureSemanticVadEn(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, float? negThreshold = default, int? speechDurationMs = default, int? windowSize = default, int? distinctCiPhones = default, bool? requireVowel = default, bool? removeFillerWords = default, IEnumerable<string> languages = default, bool? autoTruncate = default)
-        {
-            languages ??= new ChangeTrackingList<string>();
-
-            return new AzureSemanticVadEn(
-                TurnDetectionType.AzureSemanticVadEn,
-                additionalBinaryDataProperties: null,
-                threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                endOfUtteranceDetection,
-                negThreshold,
-                speechDurationMs,
-                windowSize,
-                distinctCiPhones,
-                requireVowel,
-                removeFillerWords,
-                languages.ToList(),
-                autoTruncate);
-        }
-
-        /// <summary> Server Speech Detection (legacy `server_sd` alias). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="negThreshold"></param>
-        /// <param name="speechDurationMs"></param>
-        /// <param name="windowSize"></param>
-        /// <param name="distinctCiPhones"></param>
-        /// <param name="requireVowel"></param>
-        /// <param name="removeFillerWords"></param>
-        /// <param name="languages"></param>
-        /// <param name="autoTruncate"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureSemanticVadServer"/> instance for mocking. </returns>
-        public static AzureSemanticVadServer AzureSemanticVadServer(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, float? negThreshold = default, int? speechDurationMs = default, int? windowSize = default, int? distinctCiPhones = default, bool? requireVowel = default, bool? removeFillerWords = default, IEnumerable<string> languages = default, bool? autoTruncate = default)
-        {
-            languages ??= new ChangeTrackingList<string>();
-
-            return new AzureSemanticVadServer(
-                TurnDetectionType.ServerSd,
-                additionalBinaryDataProperties: null,
-                threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                endOfUtteranceDetection,
-                negThreshold,
-                speechDurationMs,
-                windowSize,
-                distinctCiPhones,
-                requireVowel,
-                removeFillerWords,
-                languages.ToList(),
-                autoTruncate);
-        }
-
-        /// <summary> Server Speech Detection (Azure semantic VAD). </summary>
-        /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="negThreshold"></param>
-        /// <param name="speechDurationMs"></param>
-        /// <param name="windowSize"></param>
-        /// <param name="distinctCiPhones"></param>
-        /// <param name="requireVowel"></param>
-        /// <param name="removeFillerWords"></param>
-        /// <param name="languages"></param>
-        /// <param name="autoTruncate"></param>
-        /// <returns> A new <see cref="VoiceLive.AzureMultilingualSemanticVad"/> instance for mocking. </returns>
-        public static AzureMultilingualSemanticVad AzureMultilingualSemanticVad(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, float? negThreshold = default, int? speechDurationMs = default, int? windowSize = default, int? distinctCiPhones = default, bool? requireVowel = default, bool? removeFillerWords = default, IEnumerable<string> languages = default, bool? autoTruncate = default)
-        {
-            languages ??= new ChangeTrackingList<string>();
-
-            return new AzureMultilingualSemanticVad(
-                TurnDetectionType.AzureSemanticVadMultilingual,
-                additionalBinaryDataProperties: null,
-                threshold,
-                prefixPaddingMs,
-                silenceDurationMs,
-                endOfUtteranceDetection,
-                negThreshold,
-                speechDurationMs,
-                windowSize,
-                distinctCiPhones,
-                requireVowel,
-                removeFillerWords,
-                languages.ToList(),
-                autoTruncate);
+            return new AzurePersonalVoice(AzureVoiceType.AzurePersonal, additionalBinaryDataProperties: null, name, temperature, model);
         }
 
         /// <summary> Configuration for input audio noise reduction. </summary>
         /// <param name="type"> The type of noise reduction model. </param>
         /// <returns> A new <see cref="VoiceLive.AudioNoiseReduction"/> instance for mocking. </returns>
-        public static AudioNoiseReduction AudioNoiseReduction(string @type = default)
+        public static AudioNoiseReduction AudioNoiseReduction(AudioNoiseReductionType @type = default)
         {
             return new AudioNoiseReduction(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
-        /// <param name="type"> The type of echo cancellation model to use. </param>
         /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
-        public static AudioEchoCancellation AudioEchoCancellation(string @type = default)
+        public static AudioEchoCancellation AudioEchoCancellation()
         {
-            return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
+            return new AudioEchoCancellation("server_echo_cancellation", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
@@ -532,15 +254,24 @@ namespace Azure.AI.VoiceLive
         /// <param name="codec"> Codec to use for encoding. Currently only 'h264' is supported. </param>
         /// <param name="crop"> Optional cropping settings for the video stream. </param>
         /// <param name="resolution"> Optional resolution settings for the video stream. </param>
+        /// <param name="background"> Optional background settings for the video. Allows specifying either a solid color or an image URL. </param>
+        /// <param name="gopSize"> Group of Pictures (GOP) size for video encoding. Controls the interval between keyframes, affecting compression efficiency and seeking performance. </param>
         /// <returns> A new <see cref="VoiceLive.VideoParams"/> instance for mocking. </returns>
-        public static VideoParams VideoParams(int? bitrate = default, string codec = default, VideoCrop crop = default, VideoResolution resolution = default)
+        public static VideoParams VideoParams(int? bitrate = default, string codec = default, VideoCrop crop = default, VideoResolution resolution = default, VideoBackground background = default, int? gopSize = default)
         {
-            return new VideoParams(bitrate, codec, crop, resolution, additionalBinaryDataProperties: null);
+            return new VideoParams(
+                bitrate,
+                codec,
+                crop,
+                resolution,
+                background,
+                gopSize,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines a video crop rectangle using top-left and bottom-right coordinates. </summary>
-        /// <param name="topLeftInternal"> Top-left corner of the crop region. </param>
-        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. </param>
+        /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
+        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <returns> A new <see cref="VoiceLive.VideoCrop"/> instance for mocking. </returns>
         public static VideoCrop VideoCrop(IEnumerable<int> topLeftInternal = default, IEnumerable<int> bottomRightInternal = default)
         {
@@ -559,27 +290,36 @@ namespace Azure.AI.VoiceLive
             return new VideoResolution(width, height, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Defines a video background, either a solid color or an image URL (mutually exclusive). </summary>
+        /// <param name="color"> Background color in hex format (e.g., `#00FF00FF`). Cannot be set if `image_url` is provided. </param>
+        /// <param name="imageUrl"> Background image URL. Cannot be set if `color` is provided. </param>
+        /// <returns> A new <see cref="VoiceLive.VideoBackground"/> instance for mocking. </returns>
+        public static VideoBackground VideoBackground(string color = default, string imageUrl = default)
+        {
+            return new VideoBackground(color, imageUrl, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Configuration for input audio transcription. </summary>
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-fast-transcription', 'azure-speech'.
+        /// 'azure-speech'.
         /// </param>
-        /// <param name="language"> Optional BCP-47 language code (e.g., 'en-US'). </param>
+        /// <param name="language"> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </param>
         /// <param name="customSpeech"> Optional configuration for custom speech models. </param>
         /// <param name="phraseList"> Optional list of phrase hints to bias recognition. </param>
-        /// <returns> A new <see cref="VoiceLive.AudioInputTranscriptionSettings"/> instance for mocking. </returns>
-        public static AudioInputTranscriptionSettings AudioInputTranscriptionSettings(AudioInputTranscriptionSettingsModel model = default, string language = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        /// <returns> A new <see cref="VoiceLive.AudioInputTranscriptionOptions"/> instance for mocking. </returns>
+        public static AudioInputTranscriptionOptions AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel model = default, string language = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
         {
             customSpeech ??= new ChangeTrackingDictionary<string, string>();
             phraseList ??= new ChangeTrackingList<string>();
 
-            return new AudioInputTranscriptionSettings(model, language, customSpeech, phraseList.ToList(), additionalBinaryDataProperties: null);
+            return new AudioInputTranscriptionOptions(model, language, customSpeech, phraseList.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// The base representation of a voicelive tool definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLiveFunctionDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.VoiceLiveFunctionDefinition"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveToolDefinition"/> instance for mocking. </returns>
@@ -598,27 +338,9 @@ namespace Azure.AI.VoiceLive
             return new VoiceLiveFunctionDefinition(ToolType.Function, additionalBinaryDataProperties: null, name, description, parameters);
         }
 
-        /// <summary> The RespondingAgentOptions. </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        /// <param name="agentId"></param>
-        /// <param name="threadId"></param>
-        /// <returns> A new <see cref="VoiceLive.RespondingAgentOptions"/> instance for mocking. </returns>
-        public static RespondingAgentOptions RespondingAgentOptions(string @type = default, string name = default, string description = default, string agentId = default, string threadId = default)
-        {
-            return new RespondingAgentOptions(
-                @type,
-                name,
-                description,
-                agentId,
-                threadId,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.MessageItem"/>, <see cref="VoiceLive.FunctionCallItem"/>, and <see cref="VoiceLive.FunctionCallOutputItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -628,107 +350,115 @@ namespace Azure.AI.VoiceLive
             return new UnknownConversationRequestItem(new ItemType(@type), id, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The MessageItem. </summary>
+        /// <summary> A message item within a conversation. </summary>
         /// <param name="id"></param>
-        /// <param name="status"></param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
         /// <returns> A new <see cref="VoiceLive.MessageItem"/> instance for mocking. </returns>
-        public static MessageItem MessageItem(string id = default, ItemParamStatus? status = default)
+        public static MessageItem MessageItem(string id = default, IEnumerable<MessageContentPart> content = default, ItemParamStatus? status = default)
         {
-            return new MessageItem(ItemType.Message, id, additionalBinaryDataProperties: null, default, status);
-        }
+            content ??= new ChangeTrackingList<MessageContentPart>();
 
-        /// <summary> The SystemMessageItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="VoiceLive.SystemMessageItem"/> instance for mocking. </returns>
-        public static SystemMessageItem SystemMessageItem(string id = default, ItemParamStatus? status = default, IEnumerable<InputTextContentPart> content = default)
-        {
-            content ??= new ChangeTrackingList<InputTextContentPart>();
-
-            return new SystemMessageItem(
+            return new MessageItem(
                 ItemType.Message,
                 id,
                 additionalBinaryDataProperties: null,
-                "system",
-                status,
-                content.ToList());
+                default,
+                content.ToList(),
+                status);
         }
 
-        /// <summary> The InputTextContentPart. </summary>
+        /// <summary>
+        /// Base for any message content part; discriminated by `type`.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.InputTextContentPart"/>, <see cref="VoiceLive.InputAudioContentPart"/>, and <see cref="VoiceLive.OutputTextContentPart"/>.
+        /// </summary>
+        /// <param name="type"> The type of the content part. </param>
+        /// <returns> A new <see cref="VoiceLive.MessageContentPart"/> instance for mocking. </returns>
+        public static MessageContentPart MessageContentPart(string @type = default)
+        {
+            return new UnknownMessageContentPart(new ContentPartType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input text content part. </summary>
         /// <param name="text"></param>
         /// <returns> A new <see cref="VoiceLive.InputTextContentPart"/> instance for mocking. </returns>
         public static InputTextContentPart InputTextContentPart(string text = default)
         {
-            return new InputTextContentPart("input_text", additionalBinaryDataProperties: null, text);
+            return new InputTextContentPart(ContentPartType.InputText, additionalBinaryDataProperties: null, text);
         }
 
-        /// <summary>
-        /// The UserContentPart.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputTextContentPart"/> and <see cref="InputAudioContentPart"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="VoiceLive.UserContentPart"/> instance for mocking. </returns>
-        public static UserContentPart UserContentPart(string @type = default)
-        {
-            return new UnknownUserContentPart(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The InputAudioContentPart. </summary>
+        /// <summary> Input audio content part. </summary>
         /// <param name="audio"></param>
         /// <param name="transcript"></param>
         /// <returns> A new <see cref="VoiceLive.InputAudioContentPart"/> instance for mocking. </returns>
         public static InputAudioContentPart InputAudioContentPart(string audio = default, string transcript = default)
         {
-            return new InputAudioContentPart("input_audio", additionalBinaryDataProperties: null, audio, transcript);
+            return new InputAudioContentPart(ContentPartType.InputAudio, additionalBinaryDataProperties: null, audio, transcript);
         }
 
-        /// <summary> The UserMessageItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="VoiceLive.UserMessageItem"/> instance for mocking. </returns>
-        public static UserMessageItem UserMessageItem(string id = default, ItemParamStatus? status = default, IEnumerable<UserContentPart> content = default)
+        /// <summary> Output text content part. </summary>
+        /// <param name="text"> The text content. </param>
+        /// <returns> A new <see cref="VoiceLive.OutputTextContentPart"/> instance for mocking. </returns>
+        public static OutputTextContentPart OutputTextContentPart(string text = default)
         {
-            content ??= new ChangeTrackingList<UserContentPart>();
+            return new OutputTextContentPart(ContentPartType.Text, additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> A system message item within a conversation. </summary>
+        /// <param name="id"></param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
+        /// <returns> A new <see cref="VoiceLive.SystemMessageItem"/> instance for mocking. </returns>
+        public static SystemMessageItem SystemMessageItem(string id = default, IEnumerable<MessageContentPart> content = default, ItemParamStatus? status = default)
+        {
+            content ??= new ChangeTrackingList<MessageContentPart>();
+
+            return new SystemMessageItem(
+                ItemType.Message,
+                id,
+                additionalBinaryDataProperties: null,
+                ResponseMessageRole.System,
+                content.ToList(),
+                status);
+        }
+
+        /// <summary> A user message item within a conversation. </summary>
+        /// <param name="id"></param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
+        /// <returns> A new <see cref="VoiceLive.UserMessageItem"/> instance for mocking. </returns>
+        public static UserMessageItem UserMessageItem(string id = default, IEnumerable<MessageContentPart> content = default, ItemParamStatus? status = default)
+        {
+            content ??= new ChangeTrackingList<MessageContentPart>();
 
             return new UserMessageItem(
                 ItemType.Message,
                 id,
                 additionalBinaryDataProperties: null,
-                "user",
-                status,
-                content.ToList());
+                ResponseMessageRole.User,
+                content.ToList(),
+                status);
         }
 
-        /// <summary> The AssistantMessageItem. </summary>
+        /// <summary> An assistant message item within a conversation. </summary>
         /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
         /// <returns> A new <see cref="VoiceLive.AssistantMessageItem"/> instance for mocking. </returns>
-        public static AssistantMessageItem AssistantMessageItem(string id = default, ItemParamStatus? status = default, IEnumerable<OutputTextContentPart> content = default)
+        public static AssistantMessageItem AssistantMessageItem(string id = default, IEnumerable<MessageContentPart> content = default, ItemParamStatus? status = default)
         {
-            content ??= new ChangeTrackingList<OutputTextContentPart>();
+            content ??= new ChangeTrackingList<MessageContentPart>();
 
             return new AssistantMessageItem(
                 ItemType.Message,
                 id,
                 additionalBinaryDataProperties: null,
-                "assistant",
-                status,
-                content.ToList());
+                ResponseMessageRole.Assistant,
+                content.ToList(),
+                status);
         }
 
-        /// <summary> Output text content part. </summary>
-        /// <param name="type"></param>
-        /// <param name="text"></param>
-        /// <returns> A new <see cref="VoiceLive.OutputTextContentPart"/> instance for mocking. </returns>
-        public static OutputTextContentPart OutputTextContentPart(string @type = default, string text = default)
-        {
-            return new OutputTextContentPart(@type, text, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FunctionCallItem. </summary>
+        /// <summary> A function call item within a conversation. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="callId"></param>
@@ -747,7 +477,7 @@ namespace Azure.AI.VoiceLive
                 status);
         }
 
-        /// <summary> The FunctionCallOutputItem. </summary>
+        /// <summary> A function call output item within a conversation. </summary>
         /// <param name="id"></param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
@@ -764,227 +494,286 @@ namespace Azure.AI.VoiceLive
                 status);
         }
 
-        /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateSessionAvatarConnecting"/> instance for mocking. </returns>
-        public static SessionUpdateSessionAvatarConnecting SessionUpdateSessionAvatarConnecting(string eventId = default, string serverSdp = default)
-        {
-            return new SessionUpdateSessionAvatarConnecting(ServerEventType.SessionAvatarConnecting, eventId, additionalBinaryDataProperties: null, serverSdp);
-        }
-
         /// <summary>
-        /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionUpdateSessionAvatarConnecting"/>, <see cref="SessionUpdateSessionCreated"/>, <see cref="SessionUpdateSessionUpdated"/>, <see cref="SessionUpdateError"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseEmotionHypothesis"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, and <see cref="SessionUpdateResponseAnimationVisemeDone"/>.
+        /// Top-level union for turn detection configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ServerVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>.
         /// </summary>
-        /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdate"/> instance for mocking. </returns>
-        public static SessionUpdate SessionUpdate(string @type = default, string eventId = default)
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="VoiceLive.TurnDetection"/> instance for mocking. </returns>
+        public static TurnDetection TurnDetection(string @type = default)
         {
-            return new UnknownSessionUpdate(new ServerEventType(@type), eventId, additionalBinaryDataProperties: null);
+            return new UnknownTurnDetection(new TurnDetectionType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Returned when a Session is created. Emitted automatically when a new
-        /// connection is established as the first server event. This event will contain
-        /// the default Session configuration.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="session"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateSessionCreated"/> instance for mocking. </returns>
-        public static SessionUpdateSessionCreated SessionUpdateSessionCreated(string eventId = default, VoiceLiveSessionResponse session = default)
+        /// <summary> Base model for VAD-based turn detection. </summary>
+        /// <param name="threshold"></param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
+        /// <param name="endOfUtteranceDetection"></param>
+        /// <param name="autoTruncate"></param>
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        /// <returns> A new <see cref="VoiceLive.ServerVadTurnDetection"/> instance for mocking. </returns>
+        public static ServerVadTurnDetection ServerVadTurnDetection(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, bool? autoTruncate = default, bool? createResponse = default, bool? interruptResponse = default)
         {
-            return new SessionUpdateSessionCreated(ServerEventType.SessionCreated, eventId, additionalBinaryDataProperties: null, session);
-        }
-
-        /// <summary> The VoiceLiveSessionResponse. </summary>
-        /// <param name="model"></param>
-        /// <param name="modalities"></param>
-        /// <param name="animation"></param>
-        /// <param name="instructions"></param>
-        /// <param name="inputAudio"></param>
-        /// <param name="inputAudioSamplingRate"></param>
-        /// <param name="inputAudioFormat"></param>
-        /// <param name="outputAudioFormat"></param>
-        /// <param name="turnDetection"></param>
-        /// <param name="inputAudioNoiseReduction"></param>
-        /// <param name="inputAudioEchoCancellation"></param>
-        /// <param name="avatar"></param>
-        /// <param name="inputAudioTranscription"></param>
-        /// <param name="outputAudioTimestampTypes"></param>
-        /// <param name="tools"></param>
-        /// <param name="temperature"></param>
-        /// <param name="agent"></param>
-        /// <param name="voiceInternal"></param>
-        /// <param name="maxResponseOutputTokens"></param>
-        /// <param name="toolChoice"></param>
-        /// <param name="id"></param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionResponse"/> instance for mocking. </returns>
-        public static VoiceLiveSessionResponse VoiceLiveSessionResponse(string model = default, IEnumerable<InputModality> modalities = default, AnimationOptions animation = default, string instructions = default, InputAudio inputAudio = default, int? inputAudioSamplingRate = default, AudioFormat? inputAudioFormat = default, AudioFormat? outputAudioFormat = default, TurnDetection turnDetection = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionSettings inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, float? temperature = default, RespondingAgentOptions agent = default, BinaryData voiceInternal = default, BinaryData maxResponseOutputTokens = default, BinaryData toolChoice = default, string id = default)
-        {
-            modalities ??= new ChangeTrackingList<InputModality>();
-            outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
-            tools ??= new ChangeTrackingList<VoiceLiveToolDefinition>();
-
-            return new VoiceLiveSessionResponse(
-                model,
-                modalities.ToList(),
-                animation,
-                instructions,
-                inputAudio,
-                inputAudioSamplingRate,
-                inputAudioFormat,
-                outputAudioFormat,
-                turnDetection,
-                inputAudioNoiseReduction,
-                inputAudioEchoCancellation,
-                avatar,
-                inputAudioTranscription,
-                outputAudioTimestampTypes.ToList(),
-                tools.ToList(),
-                temperature,
-                agent,
-                voiceInternal,
-                maxResponseOutputTokens,
-                toolChoice,
+            return new ServerVadTurnDetection(
+                TurnDetectionType.ServerVad,
                 additionalBinaryDataProperties: null,
-                id);
+                threshold,
+                prefixPaddingMs,
+                silenceDurationMs,
+                endOfUtteranceDetection,
+                autoTruncate,
+                createResponse,
+                interruptResponse);
         }
 
         /// <summary>
-        /// Returned when a session is updated with a `session.update` event, unless
-        /// there is an error.
+        /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticEouDetection"/>, <see cref="VoiceLive.AzureSemanticEouDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/>.
         /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="session"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateSessionUpdated"/> instance for mocking. </returns>
-        public static SessionUpdateSessionUpdated SessionUpdateSessionUpdated(string eventId = default, VoiceLiveSessionResponse session = default)
+        /// <param name="model"></param>
+        /// <returns> A new <see cref="VoiceLive.EouDetection"/> instance for mocking. </returns>
+        public static EouDetection EouDetection(string model = default)
         {
-            return new SessionUpdateSessionUpdated(ServerEventType.SessionUpdated, eventId, additionalBinaryDataProperties: null, session);
+            return new UnknownEouDetection(new EouDetectionModel(model), additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Returned when an error occurs, which could be a client problem or a server
-        /// problem. Most errors are recoverable and the session will stay open, we
-        /// recommend to implementors to monitor and log error messages by default.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="error"> Details of the error. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateError"/> instance for mocking. </returns>
-        public static SessionUpdateError SessionUpdateError(string eventId = default, SessionUpdateErrorDetails error = default)
+        /// <summary> Azure semantic end-of-utterance detection (default). </summary>
+        /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
+        /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
+        /// <returns> A new <see cref="VoiceLive.AzureSemanticEouDetection"/> instance for mocking. </returns>
+        public static AzureSemanticEouDetection AzureSemanticEouDetection(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
-            return new SessionUpdateError(ServerEventType.Error, eventId, additionalBinaryDataProperties: null, error);
+            return new AzureSemanticEouDetection(EouDetectionModel.SemanticDetectionV1, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
         }
 
-        /// <summary> Details of the error. </summary>
-        /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
-        /// <param name="code"> Error code, if any. </param>
-        /// <param name="message"> A human-readable error message. </param>
-        /// <param name="param"> Parameter related to the error, if any. </param>
-        /// <param name="eventId"> The event_id of the client event that caused the error, if applicable. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateErrorDetails"/> instance for mocking. </returns>
-        public static SessionUpdateErrorDetails SessionUpdateErrorDetails(string @type = default, string code = default, string message = default, string @param = default, string eventId = default)
+        /// <summary> Azure semantic end-of-utterance detection (English-optimized). </summary>
+        /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
+        /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
+        /// <returns> A new <see cref="VoiceLive.AzureSemanticEouDetectionEn"/> instance for mocking. </returns>
+        public static AzureSemanticEouDetectionEn AzureSemanticEouDetectionEn(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
-            return new SessionUpdateErrorDetails(
-                @type,
-                code,
-                message,
-                @param,
-                eventId,
+            return new AzureSemanticEouDetectionEn(EouDetectionModel.SemanticDetectionV1En, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
+        }
+
+        /// <summary> Azure semantic end-of-utterance detection (multilingual). </summary>
+        /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
+        /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
+        /// <returns> A new <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/> instance for mocking. </returns>
+        public static AzureSemanticEouDetectionMultilingual AzureSemanticEouDetectionMultilingual(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
+        {
+            return new AzureSemanticEouDetectionMultilingual(EouDetectionModel.SemanticDetectionV1Multilingual, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
+        }
+
+        /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
+        /// <param name="threshold"></param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
+        /// <param name="endOfUtteranceDetection"></param>
+        /// <param name="speechDurationMs"></param>
+        /// <param name="removeFillerWords"></param>
+        /// <param name="languages"></param>
+        /// <param name="autoTruncate"></param>
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        /// <returns> A new <see cref="VoiceLive.AzureSemanticVadTurnDetection"/> instance for mocking. </returns>
+        public static AzureSemanticVadTurnDetection AzureSemanticVadTurnDetection(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, int? speechDurationMs = default, bool? removeFillerWords = default, IEnumerable<string> languages = default, bool? autoTruncate = default, bool? createResponse = default, bool? interruptResponse = default)
+        {
+            languages ??= new ChangeTrackingList<string>();
+
+            return new AzureSemanticVadTurnDetection(
+                TurnDetectionType.AzureSemanticVad,
+                additionalBinaryDataProperties: null,
+                threshold,
+                prefixPaddingMs,
+                silenceDurationMs,
+                endOfUtteranceDetection,
+                speechDurationMs,
+                removeFillerWords,
+                languages.ToList(),
+                autoTruncate,
+                createResponse,
+                interruptResponse);
+        }
+
+        /// <summary> Server Speech Detection (Azure semantic VAD, English-only). </summary>
+        /// <param name="threshold"></param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
+        /// <param name="endOfUtteranceDetection"></param>
+        /// <param name="speechDurationMs"></param>
+        /// <param name="removeFillerWords"></param>
+        /// <param name="autoTruncate"></param>
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        /// <returns> A new <see cref="VoiceLive.AzureSemanticVadTurnDetectionEn"/> instance for mocking. </returns>
+        public static AzureSemanticVadTurnDetectionEn AzureSemanticVadTurnDetectionEn(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, int? speechDurationMs = default, bool? removeFillerWords = default, bool? autoTruncate = default, bool? createResponse = default, bool? interruptResponse = default)
+        {
+            return new AzureSemanticVadTurnDetectionEn(
+                TurnDetectionType.AzureSemanticVadEn,
+                additionalBinaryDataProperties: null,
+                threshold,
+                prefixPaddingMs,
+                silenceDurationMs,
+                endOfUtteranceDetection,
+                speechDurationMs,
+                removeFillerWords,
+                autoTruncate,
+                createResponse,
+                interruptResponse);
+        }
+
+        /// <summary> Server Speech Detection (Azure semantic VAD). </summary>
+        /// <param name="threshold"></param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
+        /// <param name="endOfUtteranceDetection"></param>
+        /// <param name="speechDurationMs"></param>
+        /// <param name="removeFillerWords"></param>
+        /// <param name="languages"></param>
+        /// <param name="autoTruncate"></param>
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        /// <returns> A new <see cref="VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/> instance for mocking. </returns>
+        public static AzureSemanticVadTurnDetectionMultilingual AzureSemanticVadTurnDetectionMultilingual(float? threshold = default, int? prefixPaddingMs = default, int? silenceDurationMs = default, EouDetection endOfUtteranceDetection = default, int? speechDurationMs = default, bool? removeFillerWords = default, IEnumerable<string> languages = default, bool? autoTruncate = default, bool? createResponse = default, bool? interruptResponse = default)
+        {
+            languages ??= new ChangeTrackingList<string>();
+
+            return new AzureSemanticVadTurnDetectionMultilingual(
+                TurnDetectionType.AzureSemanticVadMultilingual,
+                additionalBinaryDataProperties: null,
+                threshold,
+                prefixPaddingMs,
+                silenceDurationMs,
+                endOfUtteranceDetection,
+                speechDurationMs,
+                removeFillerWords,
+                languages.ToList(),
+                autoTruncate,
+                createResponse,
+                interruptResponse);
+        }
+
+        /// <summary> The response resource. </summary>
+        /// <param name="id"> The unique ID of the response. </param>
+        /// <param name="object"> The object type, must be `realtime.response`. </param>
+        /// <param name="status">
+        /// The final status of the response.
+        /// 
+        /// One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
+        /// </param>
+        /// <param name="statusDetails"> Additional details about the status. </param>
+        /// <param name="output"> The list of output items generated by the response. </param>
+        /// <param name="usage">
+        /// Usage statistics for the Response, this will correspond to billing. A
+        /// VoiceLive API session will maintain a conversation context and append new
+        /// Items to the Conversation, thus output from previous turns (text and
+        /// audio tokens) will become the input for later turns.
+        /// </param>
+        /// <param name="conversationId">
+        /// Which conversation the response is added to, determined by the `conversation`
+        /// field in the `response.create` event. If `auto`, the response will be added to
+        /// the default conversation and the value of `conversation_id` will be an id like
+        /// `conv_1234`. If `none`, the response will not be added to any conversation and
+        /// the value of `conversation_id` will be `null`. If responses are being triggered
+        /// by server VAD, the response will be added to the default conversation, thus
+        /// the `conversation_id` will be an id like `conv_1234`.
+        /// </param>
+        /// <param name="voice"> supported voice identifiers and configurations. </param>
+        /// <param name="modalities">
+        /// The set of modalities the model used to respond. If there are multiple modalities,
+        /// the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
+        /// could be responding in either text or audio.
+        /// </param>
+        /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
+        /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
+        /// <param name="maxOutputTokens">
+        /// Maximum number of output tokens for a single assistant response,
+        /// inclusive of tool calls, that was used in this response.
+        /// </param>
+        /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
+        public static SessionResponse SessionResponse(string id = default, string @object = default, SessionResponseStatus? status = default, ResponseStatusDetails statusDetails = default, IEnumerable<SessionResponseItem> output = default, ResponseTokenStatistics usage = default, string conversationId = default, VoiceProvider voice = default, IEnumerable<InteractionModality> modalities = default, OutputAudioFormat? outputAudioFormat = default, float? temperature = default, MaxResponseOutputTokensOption maxOutputTokens = default)
+        {
+            output ??= new ChangeTrackingList<SessionResponseItem>();
+            modalities ??= new ChangeTrackingList<InteractionModality>();
+
+            return new SessionResponse(
+                id,
+                @object,
+                status,
+                statusDetails,
+                output.ToList(),
+                usage,
+                conversationId,
+                voice,
+                modalities.ToList(),
+                outputAudioFormat,
+                temperature,
+                maxOutputTokens,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Returned when the text value of a "text" content part is updated. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response. </param>
-        /// <param name="itemId"> The ID of the item. </param>
-        /// <param name="outputIndex"> The index of the output item in the response. </param>
-        /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        /// <param name="delta"> The text delta. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseTextDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseTextDelta SessionUpdateResponseTextDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string delta = default)
-        {
-            return new SessionUpdateResponseTextDelta(
-                ServerEventType.ResponseTextDelta,
-                eventId,
-                additionalBinaryDataProperties: null,
-                responseId,
-                itemId,
-                outputIndex,
-                contentIndex,
-                delta);
-        }
-
-        /// <summary> Returned when the model-generated audio is updated. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response. </param>
-        /// <param name="itemId"> The ID of the item. </param>
-        /// <param name="outputIndex"> The index of the output item in the response. </param>
-        /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        /// <param name="delta"> Base64-encoded audio data delta. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioDelta SessionUpdateResponseAudioDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, BinaryData delta = default)
-        {
-            return new SessionUpdateResponseAudioDelta(
-                ServerEventType.ResponseAudioDelta,
-                eventId,
-                additionalBinaryDataProperties: null,
-                responseId,
-                itemId,
-                outputIndex,
-                contentIndex,
-                delta);
-        }
-
         /// <summary>
-        /// Returned when a conversation item is created. There are several scenarios that produce this event:
-        ///   - The server is generating a Response, which if successful will produce
-        ///     either one or two Items, which will be of type `message`
-        ///     (role `assistant`) or type `function_call`.
-        ///   - The input audio buffer has been committed, either by the client or the
-        ///     server (in `server_vad` mode). The server will take the content of the
-        ///     input audio buffer and add it to a new user message Item.
-        ///   - The client has sent a `conversation.item.create` event to add a new Item
-        ///     to the Conversation.
+        /// Base for all non-success response details.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ResponseCancelledDetails"/>, <see cref="VoiceLive.ResponseIncompleteDetails"/>, and <see cref="VoiceLive.ResponseFailedDetails"/>.
         /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="previousItemId">
-        /// The ID of the preceding item in the Conversation context, allows the
-        /// client to understand the order of the conversation.
-        /// </param>
-        /// <param name="item"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemCreated"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemCreated SessionUpdateConversationItemCreated(string eventId = default, string previousItemId = default, ResponseItem item = default)
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="VoiceLive.ResponseStatusDetails"/> instance for mocking. </returns>
+        public static ResponseStatusDetails ResponseStatusDetails(string @type = default)
         {
-            return new SessionUpdateConversationItemCreated(ServerEventType.ConversationItemCreated, eventId, additionalBinaryDataProperties: null, previousItemId, item);
+            return new UnknownResponseStatusDetails(new SessionResponseStatus(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details for a cancelled response. </summary>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="VoiceLive.ResponseCancelledDetails"/> instance for mocking. </returns>
+        public static ResponseCancelledDetails ResponseCancelledDetails(ResponseCancelledDetailsReason reason = default)
+        {
+            return new ResponseCancelledDetails(SessionResponseStatus.Cancelled, additionalBinaryDataProperties: null, reason);
+        }
+
+        /// <summary> Details for an incomplete response. </summary>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="VoiceLive.ResponseIncompleteDetails"/> instance for mocking. </returns>
+        public static ResponseIncompleteDetails ResponseIncompleteDetails(ResponseIncompleteDetailsReason reason = default)
+        {
+            return new ResponseIncompleteDetails(SessionResponseStatus.Incomplete, additionalBinaryDataProperties: null, reason);
+        }
+
+        /// <summary> Details for a failed response. </summary>
+        /// <param name="error"></param>
+        /// <returns> A new <see cref="VoiceLive.ResponseFailedDetails"/> instance for mocking. </returns>
+        public static ResponseFailedDetails ResponseFailedDetails(BinaryData error = default)
+        {
+            return new ResponseFailedDetails(SessionResponseStatus.Failed, additionalBinaryDataProperties: null, error);
         }
 
         /// <summary>
-        /// The ResponseItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
+        /// Base for any response item; discriminated by `type`.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, and <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
-        /// <returns> A new <see cref="VoiceLive.ResponseItem"/> instance for mocking. </returns>
-        public static ResponseItem ResponseItem(string @type = default, string id = default, string @object = default)
+        /// <returns> A new <see cref="VoiceLive.SessionResponseItem"/> instance for mocking. </returns>
+        public static SessionResponseItem SessionResponseItem(string @type = default, string id = default, string @object = default)
         {
-            return new UnknownResponseItem(new ItemType(@type), id, @object, additionalBinaryDataProperties: null);
+            return new UnknownSessionResponseItem(new ItemType(@type), id, @object, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ResponseMessageItem. </summary>
+        /// <summary> Base type for message item within a conversation. </summary>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        /// <returns> A new <see cref="VoiceLive.ResponseMessageItem"/> instance for mocking. </returns>
-        public static ResponseMessageItem ResponseMessageItem(string id = default, string @object = default, ResponseMessageRole role = default, IEnumerable<VoiceLiveContentPart> content = default, VoiceLiveResponseItemStatus status = default)
+        /// <returns> A new <see cref="VoiceLive.SessionResponseMessageItem"/> instance for mocking. </returns>
+        public static SessionResponseMessageItem SessionResponseMessageItem(string id = default, string @object = default, ResponseMessageRole role = default, IEnumerable<VoiceLiveContentPart> content = default, SessionResponseItemStatus status = default)
         {
             content ??= new ChangeTrackingList<VoiceLiveContentPart>();
 
-            return new ResponseMessageItem(
+            return new SessionResponseMessageItem(
                 ItemType.Message,
                 id,
                 @object,
@@ -995,8 +784,8 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// The VoiceLiveContentPart.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestTextContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="ResponseTextContentPart"/>, and <see cref="ResponseAudioContentPart"/>.
+        /// Base for any content part; discriminated by `type`.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.RequestTextContentPart"/>, <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.ResponseTextContentPart"/>, and <see cref="VoiceLive.ResponseAudioContentPart"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveContentPart"/> instance for mocking. </returns>
@@ -1005,7 +794,7 @@ namespace Azure.AI.VoiceLive
             return new UnknownVoiceLiveContentPart(new ContentPartType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The RequestTextContentPart. </summary>
+        /// <summary> A text content part for a request. </summary>
         /// <param name="text"></param>
         /// <returns> A new <see cref="VoiceLive.RequestTextContentPart"/> instance for mocking. </returns>
         public static RequestTextContentPart RequestTextContentPart(string text = default)
@@ -1013,7 +802,7 @@ namespace Azure.AI.VoiceLive
             return new RequestTextContentPart(ContentPartType.InputText, additionalBinaryDataProperties: null, text);
         }
 
-        /// <summary> The RequestAudioContentPart. </summary>
+        /// <summary> An audio content part for a request. </summary>
         /// <param name="transcript"></param>
         /// <returns> A new <see cref="VoiceLive.RequestAudioContentPart"/> instance for mocking. </returns>
         public static RequestAudioContentPart RequestAudioContentPart(string transcript = default)
@@ -1021,7 +810,7 @@ namespace Azure.AI.VoiceLive
             return new RequestAudioContentPart(ContentPartType.InputAudio, additionalBinaryDataProperties: null, transcript);
         }
 
-        /// <summary> The ResponseTextContentPart. </summary>
+        /// <summary> A text content part for a response. </summary>
         /// <param name="text"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseTextContentPart"/> instance for mocking. </returns>
         public static ResponseTextContentPart ResponseTextContentPart(string text = default)
@@ -1029,7 +818,7 @@ namespace Azure.AI.VoiceLive
             return new ResponseTextContentPart(ContentPartType.Text, additionalBinaryDataProperties: null, text);
         }
 
-        /// <summary> The ResponseAudioContentPart. </summary>
+        /// <summary> An audio content part for a response. </summary>
         /// <param name="transcript"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseAudioContentPart"/> instance for mocking. </returns>
         public static ResponseAudioContentPart ResponseAudioContentPart(string transcript = default)
@@ -1037,7 +826,7 @@ namespace Azure.AI.VoiceLive
             return new ResponseAudioContentPart(ContentPartType.Audio, additionalBinaryDataProperties: null, transcript);
         }
 
-        /// <summary> The ResponseFunctionCallItem. </summary>
+        /// <summary> A function call item within a conversation. </summary>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="name"></param>
@@ -1045,7 +834,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="arguments"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseFunctionCallItem"/> instance for mocking. </returns>
-        public static ResponseFunctionCallItem ResponseFunctionCallItem(string id = default, string @object = default, string name = default, string callId = default, string arguments = default, VoiceLiveResponseItemStatus status = default)
+        public static ResponseFunctionCallItem ResponseFunctionCallItem(string id = default, string @object = default, string name = default, string callId = default, string arguments = default, SessionResponseItemStatus status = default)
         {
             return new ResponseFunctionCallItem(
                 ItemType.FunctionCall,
@@ -1058,7 +847,7 @@ namespace Azure.AI.VoiceLive
                 status);
         }
 
-        /// <summary> The ResponseFunctionCallOutputItem. </summary>
+        /// <summary> A function call output item within a conversation. </summary>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="callId"></param>
@@ -1073,262 +862,6 @@ namespace Azure.AI.VoiceLive
                 additionalBinaryDataProperties: null,
                 callId,
                 output);
-        }
-
-        /// <summary>
-        /// Returned when an item in the conversation is deleted by the client with a
-        /// `conversation.item.delete` event. This event is used to synchronize the
-        /// server's understanding of the conversation history with the client's view.
-        /// </summary>
-        /// <param name="itemId"> The ID of the item that was deleted. </param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemDeleted SessionUpdateConversationItemDeleted(string itemId = default, string eventId = default)
-        {
-            return new SessionUpdateConversationItemDeleted(ServerEventType.ConversationItemDeleted, additionalBinaryDataProperties: null, itemId, eventId);
-        }
-
-        /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
-        /// <param name="item"></param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemRetrieved SessionUpdateConversationItemRetrieved(ResponseItem item = default, string eventId = default)
-        {
-            return new SessionUpdateConversationItemRetrieved(ServerEventType.ConversationItemRetrieved, additionalBinaryDataProperties: null, item, eventId);
-        }
-
-        /// <summary>
-        /// Returned when an earlier assistant audio message item is truncated by the
-        /// client with a `conversation.item.truncate` event. This event is used to
-        /// synchronize the server's understanding of the audio with the client's playback.
-        /// 
-        /// This action will truncate the audio and remove the server-side text transcript
-        /// to ensure there is no text in the context that hasn't been heard by the user.
-        /// </summary>
-        /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
-        /// <param name="contentIndex"> The index of the content part that was truncated. </param>
-        /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemTruncated SessionUpdateConversationItemTruncated(string itemId = default, int contentIndex = default, int audioEndMs = default, string eventId = default)
-        {
-            return new SessionUpdateConversationItemTruncated(
-                ServerEventType.ConversationItemTruncated,
-                additionalBinaryDataProperties: null,
-                itemId,
-                contentIndex,
-                audioEndMs,
-                eventId);
-        }
-
-        /// <summary>
-        /// This event is the output of audio transcription for user audio written to the
-        /// user audio buffer. Transcription begins when the input audio buffer is
-        /// committed by the client or server (in `server_vad` mode). Transcription runs
-        /// asynchronously with Response creation, so this event may come before or after
-        /// the Response events.
-        /// 
-        /// VoiceLive API models accept audio natively, and thus input transcription is a
-        /// separate process run on a separate ASR (Automatic Speech Recognition) model.
-        /// The transcript may diverge somewhat from the model's interpretation, and
-        /// should be treated as a rough guide.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="itemId"> The ID of the user message item containing the audio. </param>
-        /// <param name="contentIndex"> The index of the content part containing the audio. </param>
-        /// <param name="transcript"> The transcribed text. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemInputAudioTranscriptionCompleted SessionUpdateConversationItemInputAudioTranscriptionCompleted(string eventId = default, string itemId = default, int contentIndex = default, string transcript = default)
-        {
-            return new SessionUpdateConversationItemInputAudioTranscriptionCompleted(
-                ServerEventType.ConversationItemInputAudioTranscriptionCompleted,
-                eventId,
-                additionalBinaryDataProperties: null,
-                itemId,
-                contentIndex,
-                transcript);
-        }
-
-        /// <summary> Returned when the text value of an input audio transcription content part is updated. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="itemId"> The ID of the item. </param>
-        /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        /// <param name="delta"> The text delta. </param>
-        /// <param name="logprobs"> The log probabilities of the transcription. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemInputAudioTranscriptionDelta SessionUpdateConversationItemInputAudioTranscriptionDelta(string eventId = default, string itemId = default, int? contentIndex = default, string delta = default, IEnumerable<LogProbProperties> logprobs = default)
-        {
-            logprobs ??= new ChangeTrackingList<LogProbProperties>();
-
-            return new SessionUpdateConversationItemInputAudioTranscriptionDelta(
-                ServerEventType.ConversationItemInputAudioTranscriptionDelta,
-                eventId,
-                additionalBinaryDataProperties: null,
-                itemId,
-                contentIndex,
-                delta,
-                logprobs.ToList());
-        }
-
-        /// <summary> A single log probability entry for a token. </summary>
-        /// <param name="token"> The token that was used to generate the log probability. </param>
-        /// <param name="logprob"> The log probability of the token. </param>
-        /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
-        /// <returns> A new <see cref="VoiceLive.LogProbProperties"/> instance for mocking. </returns>
-        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, BinaryData bytes = default)
-        {
-            return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Returned when input audio transcription is configured, and a transcription
-        /// request for a user message failed. These events are separate from other
-        /// `error` events so that the client can identify the related Item.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="itemId"> The ID of the user message item. </param>
-        /// <param name="contentIndex"> The index of the content part containing the audio. </param>
-        /// <param name="error"> Details of the transcription error. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemInputAudioTranscriptionFailed SessionUpdateConversationItemInputAudioTranscriptionFailed(string eventId = default, string itemId = default, int contentIndex = default, VoiceLiveErrorDetails error = default)
-        {
-            return new SessionUpdateConversationItemInputAudioTranscriptionFailed(
-                ServerEventType.ConversationItemInputAudioTranscriptionFailed,
-                eventId,
-                additionalBinaryDataProperties: null,
-                itemId,
-                contentIndex,
-                error);
-        }
-
-        /// <summary> Error object returned in case of API failure. </summary>
-        /// <param name="code"> Error code, or null if unspecified. </param>
-        /// <param name="message"> Human-readable error message. </param>
-        /// <param name="param"> Parameter name related to the error, if applicable. </param>
-        /// <param name="type"> Type or category of the error. </param>
-        /// <param name="eventId"> Event id of the error. </param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveErrorDetails"/> instance for mocking. </returns>
-        public static VoiceLiveErrorDetails VoiceLiveErrorDetails(string code = default, string message = default, string @param = default, string @type = default, string eventId = default)
-        {
-            return new VoiceLiveErrorDetails(
-                code,
-                message,
-                @param,
-                @type,
-                eventId,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Returned when an input audio buffer is committed, either by the client or
-        /// automatically in server VAD mode. The `item_id` property is the ID of the user
-        /// message item that will be created, thus a `conversation.item.created` event
-        /// will also be sent to the client.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="previousItemId"> The ID of the preceding item after which the new item will be inserted. </param>
-        /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/> instance for mocking. </returns>
-        public static SessionUpdateInputAudioBufferCommitted SessionUpdateInputAudioBufferCommitted(string eventId = default, string previousItemId = default, string itemId = default)
-        {
-            return new SessionUpdateInputAudioBufferCommitted(ServerEventType.InputAudioBufferCommitted, eventId, additionalBinaryDataProperties: null, previousItemId, itemId);
-        }
-
-        /// <summary>
-        /// Returned when the input audio buffer is cleared by the client with a
-        /// `input_audio_buffer.clear` event.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/> instance for mocking. </returns>
-        public static SessionUpdateInputAudioBufferCleared SessionUpdateInputAudioBufferCleared(string eventId = default)
-        {
-            return new SessionUpdateInputAudioBufferCleared(ServerEventType.InputAudioBufferCleared, eventId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Sent by the server when in `server_vad` mode to indicate that speech has been
-        /// detected in the audio buffer. This can happen any time audio is added to the
-        /// buffer (unless speech is already detected). The client may want to use this
-        /// event to interrupt audio playback or provide visual feedback to the user.
-        /// 
-        /// The client should expect to receive a `input_audio_buffer.speech_stopped` event
-        /// when speech stops. The `item_id` property is the ID of the user message item
-        /// that will be created when speech stops and will also be included in the
-        /// `input_audio_buffer.speech_stopped` event (unless the client manually commits
-        /// the audio buffer during VAD activation).
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="audioStartMs"></param>
-        /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/> instance for mocking. </returns>
-        public static SessionUpdateInputAudioBufferSpeechStarted SessionUpdateInputAudioBufferSpeechStarted(string eventId = default, int audioStartMs = default, string itemId = default)
-        {
-            return new SessionUpdateInputAudioBufferSpeechStarted(ServerEventType.InputAudioBufferSpeechStarted, eventId, additionalBinaryDataProperties: null, audioStartMs, itemId);
-        }
-
-        /// <summary>
-        /// Returned in `server_vad` mode when the server detects the end of speech in
-        /// the audio buffer. The server will also send an `conversation.item.created`
-        /// event with the user message item that is created from the audio buffer.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="audioEndMs">
-        /// Milliseconds since the session started when speech stopped. This will
-        /// correspond to the end of audio sent to the model, and thus includes the
-        /// `min_silence_duration_ms` configured in the Session.
-        /// </param>
-        /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/> instance for mocking. </returns>
-        public static SessionUpdateInputAudioBufferSpeechStopped SessionUpdateInputAudioBufferSpeechStopped(string eventId = default, int audioEndMs = default, string itemId = default)
-        {
-            return new SessionUpdateInputAudioBufferSpeechStopped(ServerEventType.InputAudioBufferSpeechStopped, eventId, additionalBinaryDataProperties: null, audioEndMs, itemId);
-        }
-
-        /// <summary>
-        /// Returned when a new Response is created. The first event of response creation,
-        /// where the response is in an initial state of `in_progress`.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="response"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseCreated"/> instance for mocking. </returns>
-        public static SessionUpdateResponseCreated SessionUpdateResponseCreated(string eventId = default, VoiceLiveResponse response = default)
-        {
-            return new SessionUpdateResponseCreated(ServerEventType.ResponseCreated, eventId, additionalBinaryDataProperties: null, response);
-        }
-
-        /// <summary>
-        /// Base for all non-success response details.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="VoiceLive.ResponseStatusDetails"/> instance for mocking. </returns>
-        public static ResponseStatusDetails ResponseStatusDetails(string @type = default)
-        {
-            return new UnknownResponseStatusDetails(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Details for a cancelled response. </summary>
-        /// <param name="reason"></param>
-        /// <returns> A new <see cref="VoiceLive.ResponseCancelledDetails"/> instance for mocking. </returns>
-        public static ResponseCancelledDetails ResponseCancelledDetails(ResponseCancelledDetailsReason reason = default)
-        {
-            return new ResponseCancelledDetails("cancelled", additionalBinaryDataProperties: null, reason);
-        }
-
-        /// <summary> Details for an incomplete response. </summary>
-        /// <param name="reason"></param>
-        /// <returns> A new <see cref="VoiceLive.ResponseIncompleteDetails"/> instance for mocking. </returns>
-        public static ResponseIncompleteDetails ResponseIncompleteDetails(ResponseIncompleteDetailsReason reason = default)
-        {
-            return new ResponseIncompleteDetails("incomplete", additionalBinaryDataProperties: null, reason);
-        }
-
-        /// <summary> Details for a failed response. </summary>
-        /// <param name="error"></param>
-        /// <returns> A new <see cref="VoiceLive.ResponseFailedDetails"/> instance for mocking. </returns>
-        public static ResponseFailedDetails ResponseFailedDetails(BinaryData error = default)
-        {
-            return new ResponseFailedDetails("failed", additionalBinaryDataProperties: null, error);
         }
 
         /// <summary> Overall usage statistics for a response. </summary>
@@ -1379,6 +912,271 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
+        /// A voicelive server event.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, and <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>.
+        /// </summary>
+        /// <param name="type"> The type of event. </param>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdate"/> instance for mocking. </returns>
+        public static SessionUpdate SessionUpdate(string @type = default, string eventId = default)
+        {
+            return new UnknownSessionUpdate(new ServerEventType(@type), eventId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Returned when an error occurs, which could be a client problem or a server
+        /// problem. Most errors are recoverable and the session will stay open, we
+        /// recommend to implementors to monitor and log error messages by default.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="error"> Details of the error. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateError"/> instance for mocking. </returns>
+        public static SessionUpdateError SessionUpdateError(string eventId = default, SessionUpdateErrorDetails error = default)
+        {
+            return new SessionUpdateError(ServerEventType.Error, eventId, additionalBinaryDataProperties: null, error);
+        }
+
+        /// <summary> Details of the error. </summary>
+        /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
+        /// <param name="code"> Error code, if any. </param>
+        /// <param name="message"> A human-readable error message. </param>
+        /// <param name="param"> Parameter related to the error, if any. </param>
+        /// <param name="eventId"> The event_id of the client event that caused the error, if applicable. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateErrorDetails"/> instance for mocking. </returns>
+        public static SessionUpdateErrorDetails SessionUpdateErrorDetails(string @type = default, string code = default, string message = default, string @param = default, string eventId = default)
+        {
+            return new SessionUpdateErrorDetails(
+                @type,
+                code,
+                message,
+                @param,
+                eventId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Returned when a Session is created. Emitted automatically when a new
+        /// connection is established as the first server event. This event will contain
+        /// the default Session configuration.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="session"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateSessionCreated"/> instance for mocking. </returns>
+        public static SessionUpdateSessionCreated SessionUpdateSessionCreated(string eventId = default, VoiceLiveSessionResponse session = default)
+        {
+            return new SessionUpdateSessionCreated(ServerEventType.SessionCreated, eventId, additionalBinaryDataProperties: null, session);
+        }
+
+        /// <summary>
+        /// Returned when a session is updated with a `session.update` event, unless
+        /// there is an error.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="session"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateSessionUpdated"/> instance for mocking. </returns>
+        public static SessionUpdateSessionUpdated SessionUpdateSessionUpdated(string eventId = default, VoiceLiveSessionResponse session = default)
+        {
+            return new SessionUpdateSessionUpdated(ServerEventType.SessionUpdated, eventId, additionalBinaryDataProperties: null, session);
+        }
+
+        /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateAvatarConnecting"/> instance for mocking. </returns>
+        public static SessionUpdateAvatarConnecting SessionUpdateAvatarConnecting(string eventId = default, string serverSdp = default)
+        {
+            return new SessionUpdateAvatarConnecting(ServerEventType.SessionAvatarConnecting, eventId, additionalBinaryDataProperties: null, serverSdp);
+        }
+
+        /// <summary>
+        /// Returned when an input audio buffer is committed, either by the client or
+        /// automatically in server VAD mode. The `item_id` property is the ID of the user
+        /// message item that will be created, thus a `conversation.item.created` event
+        /// will also be sent to the client.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="previousItemId"> The ID of the preceding item after which the new item will be inserted. </param>
+        /// <param name="itemId"> The ID of the user message item that will be created. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/> instance for mocking. </returns>
+        public static SessionUpdateInputAudioBufferCommitted SessionUpdateInputAudioBufferCommitted(string eventId = default, string previousItemId = default, string itemId = default)
+        {
+            return new SessionUpdateInputAudioBufferCommitted(ServerEventType.InputAudioBufferCommitted, eventId, additionalBinaryDataProperties: null, previousItemId, itemId);
+        }
+
+        /// <summary>
+        /// Returned when the input audio buffer is cleared by the client with a
+        /// `input_audio_buffer.clear` event.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/> instance for mocking. </returns>
+        public static SessionUpdateInputAudioBufferCleared SessionUpdateInputAudioBufferCleared(string eventId = default)
+        {
+            return new SessionUpdateInputAudioBufferCleared(ServerEventType.InputAudioBufferCleared, eventId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Sent by the server when in `server_vad` mode to indicate that speech has been
+        /// detected in the audio buffer. This can happen any time audio is added to the
+        /// buffer (unless speech is already detected). The client may want to use this
+        /// event to interrupt audio playback or provide visual feedback to the user.
+        /// The client should expect to receive a `input_audio_buffer.speech_stopped` event
+        /// when speech stops. The `item_id` property is the ID of the user message item
+        /// that will be created when speech stops and will also be included in the
+        /// `input_audio_buffer.speech_stopped` event (unless the client manually commits
+        /// the audio buffer during VAD activation).
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="audioStartMs">
+        /// Milliseconds from the start of all audio written to the buffer during the
+        /// session when speech was first detected. This will correspond to the
+        /// beginning of audio sent to the model, and thus includes the
+        /// `prefix_padding_ms` configured in the Session.
+        /// </param>
+        /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/> instance for mocking. </returns>
+        public static SessionUpdateInputAudioBufferSpeechStarted SessionUpdateInputAudioBufferSpeechStarted(string eventId = default, int audioStartMs = default, string itemId = default)
+        {
+            return new SessionUpdateInputAudioBufferSpeechStarted(ServerEventType.InputAudioBufferSpeechStarted, eventId, additionalBinaryDataProperties: null, audioStartMs, itemId);
+        }
+
+        /// <summary>
+        /// Returned in `server_vad` mode when the server detects the end of speech in
+        /// the audio buffer. The server will also send an `conversation.item.created`
+        /// event with the user message item that is created from the audio buffer.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="audioEndMs">
+        /// Milliseconds since the session started when speech stopped. This will
+        /// correspond to the end of audio sent to the model, and thus includes the
+        /// `min_silence_duration_ms` configured in the Session.
+        /// </param>
+        /// <param name="itemId"> The ID of the user message item that will be created. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/> instance for mocking. </returns>
+        public static SessionUpdateInputAudioBufferSpeechStopped SessionUpdateInputAudioBufferSpeechStopped(string eventId = default, int audioEndMs = default, string itemId = default)
+        {
+            return new SessionUpdateInputAudioBufferSpeechStopped(ServerEventType.InputAudioBufferSpeechStopped, eventId, additionalBinaryDataProperties: null, audioEndMs, itemId);
+        }
+
+        /// <summary>
+        /// Returned when a conversation item is created. There are several scenarios that produce this event:
+        /// - The server is generating a Response, which if successful will produce
+        /// either one or two Items, which will be of type `message`
+        /// (role `assistant`) or type `function_call`.
+        /// - The input audio buffer has been committed, either by the client or the
+        /// server (in `server_vad` mode). The server will take the content of the
+        /// input audio buffer and add it to a new user message Item.
+        /// - The client has sent a `conversation.item.create` event to add a new Item
+        /// to the Conversation.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="previousItemId">
+        /// The ID of the preceding item in the Conversation context, allows the
+        /// client to understand the order of the conversation.
+        /// </param>
+        /// <param name="item"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemCreated"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemCreated SessionUpdateConversationItemCreated(string eventId = default, string previousItemId = default, SessionResponseItem item = default)
+        {
+            return new SessionUpdateConversationItemCreated(ServerEventType.ConversationItemCreated, eventId, additionalBinaryDataProperties: null, previousItemId, item);
+        }
+
+        /// <summary>
+        /// This event is the output of audio transcription for user audio written to the
+        /// user audio buffer. Transcription begins when the input audio buffer is
+        /// committed by the client or server (in `server_vad` mode). Transcription runs
+        /// asynchronously with Response creation, so this event may come before or after
+        /// the Response events.
+        /// VoiceLive API models accept audio natively, and thus input transcription is a
+        /// separate process run on a separate ASR (Automatic Speech Recognition) model.
+        /// The transcript may diverge somewhat from the model's interpretation, and
+        /// should be treated as a rough guide.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the user message item containing the audio. </param>
+        /// <param name="contentIndex"> The index of the content part containing the audio. </param>
+        /// <param name="transcript"> The transcribed text. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemInputAudioTranscriptionCompleted SessionUpdateConversationItemInputAudioTranscriptionCompleted(string eventId = default, string itemId = default, int contentIndex = default, string transcript = default)
+        {
+            return new SessionUpdateConversationItemInputAudioTranscriptionCompleted(
+                ServerEventType.ConversationItemInputAudioTranscriptionCompleted,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                contentIndex,
+                transcript);
+        }
+
+        /// <summary>
+        /// Returned when input audio transcription is configured, and a transcription
+        /// request for a user message failed. These events are separate from other
+        /// `error` events so that the client can identify the related Item.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the user message item. </param>
+        /// <param name="contentIndex"> The index of the content part containing the audio. </param>
+        /// <param name="error"> Details of the transcription error. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemInputAudioTranscriptionFailed SessionUpdateConversationItemInputAudioTranscriptionFailed(string eventId = default, string itemId = default, int contentIndex = default, VoiceLiveErrorDetails error = default)
+        {
+            return new SessionUpdateConversationItemInputAudioTranscriptionFailed(
+                ServerEventType.ConversationItemInputAudioTranscriptionFailed,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                contentIndex,
+                error);
+        }
+
+        /// <summary>
+        /// Returned when an earlier assistant audio message item is truncated by the
+        /// client with a `conversation.item.truncate` event. This event is used to
+        /// synchronize the server's understanding of the audio with the client's playback.
+        /// This action will truncate the audio and remove the server-side text transcript
+        /// to ensure there is no text in the context that hasn't been heard by the user.
+        /// </summary>
+        /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
+        /// <param name="contentIndex"> The index of the content part that was truncated. </param>
+        /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemTruncated SessionUpdateConversationItemTruncated(string itemId = default, int contentIndex = default, int audioEndMs = default, string eventId = default)
+        {
+            return new SessionUpdateConversationItemTruncated(
+                ServerEventType.ConversationItemTruncated,
+                additionalBinaryDataProperties: null,
+                itemId,
+                contentIndex,
+                audioEndMs,
+                eventId);
+        }
+
+        /// <summary>
+        /// Returned when an item in the conversation is deleted by the client with a
+        /// `conversation.item.delete` event. This event is used to synchronize the
+        /// server's understanding of the conversation history with the client's view.
+        /// </summary>
+        /// <param name="itemId"> The ID of the item that was deleted. </param>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemDeleted SessionUpdateConversationItemDeleted(string itemId = default, string eventId = default)
+        {
+            return new SessionUpdateConversationItemDeleted(ServerEventType.ConversationItemDeleted, additionalBinaryDataProperties: null, itemId, eventId);
+        }
+
+        /// <summary>
+        /// Returned when a new Response is created. The first event of response creation,
+        /// where the response is in an initial state of `in_progress`.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="response"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseCreated"/> instance for mocking. </returns>
+        public static SessionUpdateResponseCreated SessionUpdateResponseCreated(string eventId = default, SessionResponse response = default)
+        {
+            return new SessionUpdateResponseCreated(ServerEventType.ResponseCreated, eventId, additionalBinaryDataProperties: null, response);
+        }
+
+        /// <summary>
         /// Returned when a Response is done streaming. Always emitted, no matter the
         /// final state. The Response object included in the `response.done` event will
         /// include all output Items in the Response but will omit the raw audio data.
@@ -1386,7 +1184,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="response"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseDone SessionUpdateResponseDone(string eventId = default, VoiceLiveResponse response = default)
+        public static SessionUpdateResponseDone SessionUpdateResponseDone(string eventId = default, SessionResponse response = default)
         {
             return new SessionUpdateResponseDone(ServerEventType.ResponseDone, eventId, additionalBinaryDataProperties: null, response);
         }
@@ -1397,7 +1195,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/> instance for mocking. </returns>
-        public static SessionUpdateResponseOutputItemAdded SessionUpdateResponseOutputItemAdded(string eventId = default, string responseId = default, int outputIndex = default, ResponseItem item = default)
+        public static SessionUpdateResponseOutputItemAdded SessionUpdateResponseOutputItemAdded(string eventId = default, string responseId = default, int outputIndex = default, SessionResponseItem item = default)
         {
             return new SessionUpdateResponseOutputItemAdded(
                 ServerEventType.ResponseOutputItemAdded,
@@ -1417,7 +1215,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseOutputItemDone SessionUpdateResponseOutputItemDone(string eventId = default, string responseId = default, int outputIndex = default, ResponseItem item = default)
+        public static SessionUpdateResponseOutputItemDone SessionUpdateResponseOutputItemDone(string eventId = default, string responseId = default, int outputIndex = default, SessionResponseItem item = default)
         {
             return new SessionUpdateResponseOutputItemDone(
                 ServerEventType.ResponseOutputItemDone,
@@ -1474,6 +1272,27 @@ namespace Azure.AI.VoiceLive
                 outputIndex,
                 contentIndex,
                 part);
+        }
+
+        /// <summary> Returned when the text value of a "text" content part is updated. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
+        /// <param name="delta"> The text delta. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseTextDelta"/> instance for mocking. </returns>
+        public static SessionUpdateResponseTextDelta SessionUpdateResponseTextDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string delta = default)
+        {
+            return new SessionUpdateResponseTextDelta(
+                ServerEventType.ResponseTextDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                contentIndex,
+                delta);
         }
 
         /// <summary>
@@ -1546,6 +1365,27 @@ namespace Azure.AI.VoiceLive
                 transcript);
         }
 
+        /// <summary> Returned when the model-generated audio is updated. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
+        /// <param name="delta"> Base64-encoded audio data delta. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/> instance for mocking. </returns>
+        public static SessionUpdateResponseAudioDelta SessionUpdateResponseAudioDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, BinaryData delta = default)
+        {
+            return new SessionUpdateResponseAudioDelta(
+                ServerEventType.ResponseAudioDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                contentIndex,
+                delta);
+        }
+
         /// <summary>
         /// Returned when the model-generated audio is done. Also emitted when a Response
         /// is interrupted, incomplete, or cancelled.
@@ -1566,53 +1406,6 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 contentIndex);
-        }
-
-        /// <summary> Returned when the model-generated function call arguments are updated. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response. </param>
-        /// <param name="itemId"> The ID of the function call item. </param>
-        /// <param name="outputIndex"> The index of the output item in the response. </param>
-        /// <param name="callId"> The ID of the function call. </param>
-        /// <param name="delta"> The arguments delta as a JSON string. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseFunctionCallArgumentsDelta SessionUpdateResponseFunctionCallArgumentsDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string delta = default)
-        {
-            return new SessionUpdateResponseFunctionCallArgumentsDelta(
-                ServerEventType.ResponseFunctionCallArgumentsDelta,
-                eventId,
-                additionalBinaryDataProperties: null,
-                responseId,
-                itemId,
-                outputIndex,
-                callId,
-                delta);
-        }
-
-        /// <summary>
-        /// Returned when the model-generated function call arguments are done streaming.
-        /// Also emitted when a Response is interrupted, incomplete, or cancelled.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response. </param>
-        /// <param name="itemId"> The ID of the function call item. </param>
-        /// <param name="outputIndex"> The index of the output item in the response. </param>
-        /// <param name="callId"> The ID of the function call. </param>
-        /// <param name="arguments"> The final arguments as a JSON string. </param>
-        /// <param name="name"> The name of the function call. </param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseFunctionCallArgumentsDone SessionUpdateResponseFunctionCallArgumentsDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string arguments = default, string name = default)
-        {
-            return new SessionUpdateResponseFunctionCallArgumentsDone(
-                ServerEventType.ResponseFunctionCallArgumentsDone,
-                eventId,
-                additionalBinaryDataProperties: null,
-                responseId,
-                itemId,
-                outputIndex,
-                callId,
-                arguments,
-                name);
         }
 
         /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
@@ -1655,40 +1448,6 @@ namespace Azure.AI.VoiceLive
                 outputIndex);
         }
 
-        /// <summary> Represents an emotion hypothesis detected from response audio with multiple candidates. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="emotion"></param>
-        /// <param name="candidates"></param>
-        /// <param name="audioOffsetMs"></param>
-        /// <param name="audioDurationMs"></param>
-        /// <param name="responseId"></param>
-        /// <param name="itemId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseEmotionHypothesis"/> instance for mocking. </returns>
-        public static SessionUpdateResponseEmotionHypothesis SessionUpdateResponseEmotionHypothesis(string eventId = default, string emotion = default, IEnumerable<EmotionCandidate> candidates = default, int audioOffsetMs = default, int audioDurationMs = default, string responseId = default, string itemId = default)
-        {
-            candidates ??= new ChangeTrackingList<EmotionCandidate>();
-
-            return new SessionUpdateResponseEmotionHypothesis(
-                ServerEventType.ResponseEmotionHypothesis,
-                eventId,
-                additionalBinaryDataProperties: null,
-                emotion,
-                candidates.ToList(),
-                audioOffsetMs,
-                audioDurationMs,
-                responseId,
-                itemId);
-        }
-
-        /// <summary> The EmotionCandidate. </summary>
-        /// <param name="emotion"></param>
-        /// <param name="confidence"></param>
-        /// <returns> A new <see cref="VoiceLive.EmotionCandidate"/> instance for mocking. </returns>
-        public static EmotionCandidate EmotionCandidate(string emotion = default, float confidence = default)
-        {
-            return new EmotionCandidate(emotion, confidence, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
         /// <param name="eventId"></param>
         /// <param name="responseId"></param>
@@ -1698,9 +1457,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
-        /// <param name="timestampType"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default, string timestampType = default)
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default)
         {
             return new SessionUpdateResponseAudioTimestampDelta(
                 ServerEventType.ResponseAudioTimestampDelta,
@@ -1713,7 +1471,7 @@ namespace Azure.AI.VoiceLive
                 audioOffsetMs,
                 audioDurationMs,
                 text,
-                timestampType);
+                "word");
         }
 
         /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
@@ -1775,6 +1533,135 @@ namespace Azure.AI.VoiceLive
                 itemId,
                 outputIndex,
                 contentIndex);
+        }
+
+        /// <summary> Returned when the text value of an input audio transcription content part is updated. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="itemId"> The ID of the item. </param>
+        /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
+        /// <param name="delta"> The text delta. </param>
+        /// <param name="logprobs"> The log probabilities of the transcription. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemInputAudioTranscriptionDelta SessionUpdateConversationItemInputAudioTranscriptionDelta(string eventId = default, string itemId = default, int? contentIndex = default, string delta = default, IEnumerable<LogProbProperties> logprobs = default)
+        {
+            logprobs ??= new ChangeTrackingList<LogProbProperties>();
+
+            return new SessionUpdateConversationItemInputAudioTranscriptionDelta(
+                ServerEventType.ConversationItemInputAudioTranscriptionDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                contentIndex,
+                delta,
+                logprobs.ToList());
+        }
+
+        /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
+        /// <param name="item"></param>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemRetrieved SessionUpdateConversationItemRetrieved(SessionResponseItem item = default, string eventId = default)
+        {
+            return new SessionUpdateConversationItemRetrieved(ServerEventType.ConversationItemRetrieved, additionalBinaryDataProperties: null, item, eventId);
+        }
+
+        /// <summary> Returned when the model-generated function call arguments are updated. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the function call item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="delta"> The arguments delta as a JSON string. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFunctionCallArgumentsDelta SessionUpdateResponseFunctionCallArgumentsDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string delta = default)
+        {
+            return new SessionUpdateResponseFunctionCallArgumentsDelta(
+                ServerEventType.ResponseFunctionCallArgumentsDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                callId,
+                delta);
+        }
+
+        /// <summary>
+        /// Returned when the model-generated function call arguments are done streaming.
+        /// Also emitted when a Response is interrupted, incomplete, or cancelled.
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"> The ID of the response. </param>
+        /// <param name="itemId"> The ID of the function call item. </param>
+        /// <param name="outputIndex"> The index of the output item in the response. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="arguments"> The final arguments as a JSON string. </param>
+        /// <param name="name"> The name of the function call. </param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
+        public static SessionUpdateResponseFunctionCallArgumentsDone SessionUpdateResponseFunctionCallArgumentsDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string arguments = default, string name = default)
+        {
+            return new SessionUpdateResponseFunctionCallArgumentsDone(
+                ServerEventType.ResponseFunctionCallArgumentsDone,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                callId,
+                arguments,
+                name);
+        }
+
+        /// <summary>
+        /// OpenAI voice configuration with explicit type field.
+        ///             
+        ///             This provides a unified interface for OpenAI voices, complementing the
+        ///             existing string-based OAIVoice for backward compatibility.
+        /// </summary>
+        /// <param name="type"> The type of the voice. </param>
+        /// <param name="name"> The name of the OpenAI voice. </param>
+        /// <returns> A new <see cref="VoiceLive.OpenAIVoice"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OpenAIVoice OpenAIVoice(string @type, OAIVoice name)
+        {
+            return new OpenAIVoice(@type, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
+        /// <param name="type"> The type of echo cancellation model to use. </param>
+        /// <returns> A new <see cref="VoiceLive.AudioEchoCancellation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AudioEchoCancellation AudioEchoCancellation(string @type)
+        {
+            return new AudioEchoCancellation(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="responseId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="outputIndex"></param>
+        /// <param name="contentIndex"></param>
+        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
+        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
+        /// <param name="text"></param>
+        /// <param name="timestampType"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType)
+        {
+            return new SessionUpdateResponseAudioTimestampDelta(
+                ServerEventType.ResponseAudioTimestampDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                responseId,
+                itemId,
+                outputIndex,
+                contentIndex,
+                audioOffsetMs,
+                audioDurationMs,
+                text,
+                timestampType);
         }
     }
 }

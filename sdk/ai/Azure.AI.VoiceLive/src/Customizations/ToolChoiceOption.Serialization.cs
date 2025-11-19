@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
     public partial class ToolChoiceOption : IJsonModel<ToolChoiceOption>
     {
         void IJsonModel<ToolChoiceOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => SerializeConversationToolChoiceOption(this, writer, options);
+            => SerializeToolChoiceOption(this, writer, options);
 
         ToolChoiceOption IJsonModel<ToolChoiceOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationToolChoiceOption(document.RootElement, options);
+            return DeserializeToolChoiceOption(document.RootElement, options);
         }
 
         BinaryData IPersistableModel<ToolChoiceOption>.Write(ModelReaderWriterOptions options)
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
 
         string IPersistableModel<ToolChoiceOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static void SerializeConversationToolChoiceOption(ToolChoiceOption instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static void SerializeToolChoiceOption(ToolChoiceOption instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (instance.ToolCallConstraint.HasValue)
             {
@@ -39,16 +39,16 @@ namespace Azure.AI.VoiceLive
             }
             else if (instance.FunctionName is not null)
             {
-                var functionObject = new ToolChoiceFunctionObjectFunction(name: instance.FunctionName);
+                var functionObject = new ToolChoiceFunctionObject(name: instance.FunctionName);
                 writer.WriteObjectValue(functionObject, options);
             }
         }
 
-        internal static ToolChoiceOption DeserializeConversationToolChoiceOption(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ToolChoiceOption DeserializeToolChoiceOption(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Object)
             {
-                var functionObject = ToolChoiceFunctionObjectFunction.DeserializeToolChoiceFunctionObjectFunction(element, options);
+                var functionObject = ToolChoiceFunctionObject.DeserializeToolChoiceFunctionObject(element, options);
                 return new ToolChoiceOption(functionObject.Name);
             }
             if (element.ValueKind == JsonValueKind.String)
@@ -65,7 +65,7 @@ namespace Azure.AI.VoiceLive
                 return new ToolChoiceOption();
             }
             using JsonDocument document = JsonDocument.Parse(bytes);
-            return DeserializeConversationToolChoiceOption(document.RootElement);
+            return DeserializeToolChoiceOption(document.RootElement);
         }
     }
 }

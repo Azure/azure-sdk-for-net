@@ -30,10 +30,10 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Creates an options class with single tool name.
         /// </summary>
-        /// <param name="stringValue"></param>
-        public ToolChoiceOption(string stringValue)
+        /// <param name="functionName"></param>
+        public ToolChoiceOption(string functionName)
         {
-            FunctionName = stringValue;
+            FunctionName = functionName;
         }
 
         internal ToolChoiceOption() { }

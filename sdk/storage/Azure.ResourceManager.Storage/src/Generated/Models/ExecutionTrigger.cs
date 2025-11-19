@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.Storage.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExecutionTrigger"/>. </summary>
-        /// <param name="triggerType"> The trigger type of the storage task assignment execution. </param>
+        /// <param name="taskExecutionTriggerType"> The trigger type of the storage task assignment execution. </param>
         /// <param name="parameters"> The trigger parameters of the storage task assignment execution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public ExecutionTrigger(ExecutionTriggerType triggerType, ExecutionTriggerParameters parameters)
+        public ExecutionTrigger(TaskExecutionTriggerType taskExecutionTriggerType, ExecutionTriggerParameters parameters)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            TriggerType = triggerType;
+            TaskExecutionTriggerType = taskExecutionTriggerType;
             Parameters = parameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecutionTrigger"/>. </summary>
-        /// <param name="triggerType"> The trigger type of the storage task assignment execution. </param>
+        /// <param name="taskExecutionTriggerType"> The trigger type of the storage task assignment execution. </param>
         /// <param name="parameters"> The trigger parameters of the storage task assignment execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionTrigger(ExecutionTriggerType triggerType, ExecutionTriggerParameters parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecutionTrigger(TaskExecutionTriggerType taskExecutionTriggerType, ExecutionTriggerParameters parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TriggerType = triggerType;
+            TaskExecutionTriggerType = taskExecutionTriggerType;
             Parameters = parameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The trigger type of the storage task assignment execution. </summary>
         [WirePath("type")]
-        public ExecutionTriggerType TriggerType { get; set; }
+        public TaskExecutionTriggerType TaskExecutionTriggerType { get; set; }
         /// <summary> The trigger parameters of the storage task assignment execution. </summary>
         [WirePath("parameters")]
         public ExecutionTriggerParameters Parameters { get; set; }

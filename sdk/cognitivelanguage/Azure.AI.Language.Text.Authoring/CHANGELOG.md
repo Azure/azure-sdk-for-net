@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed diagnostic scope names in `TextAuthoringProject` and `TextAuthoringTrainedModel` methods.
+
 ### Other Changes
 
 ## 1.0.0-beta.2 (2025-07-24)

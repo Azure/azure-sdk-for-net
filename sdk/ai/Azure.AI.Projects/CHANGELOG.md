@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.12 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2025-11-03)
+
+### Features Added
+
+- Remove `clientRequestId` parameter from `AIProjectConnectionsOperations` and `AIProjectDeploymentsOperations` methods as this value is controlled transparently by `System.ClientModel`.
+- Remove `type` parameter from `AzureAIProjectsModelFactory.BlobReferenceSasCredential` as this is a hardcoded value.
+- Remove `pendingUploadType` parameter from `AzureAIProjectsModelFactory.PendingUploadRequest` and `AzureAIProjectsModelFactory.PendingUploadConfiguration` as this is a hardcoded value.
+
+## 1.0.0 (2025-10-01)
+
+### Features Added
+* Added convenience `CreateOrUpdate` methods for `AIProjectIndex` objects
+
+### Breaking Changes
+* Name changes:
+  * `AssetDeployment` has been renamed to `AIProjectDeployment`
+  * `BlobReference` has been renamed to `AIProjectBlobReference`
+  * `ConnectionProperties` has been renamed to `AIProjectConnection`
+  * `FileDatasetVersion` has been renamed to `FileDataset`
+  * `FolderDatasetVersion` has been renamed to `FolderDataset`
+  * `SasCredential` has been renamed to `BlobReferenceSasCredential`
+  * `SearchIndex` has been renamed to `AIProjectIndex`
+* Removed `GetOpenAIClient` method. Look at Inference samples for how to get the client now.
+* All other `Get*Client` methods have been removed. Use the `AIProjectClient` properties `Connections`, `Datasets`, `Deployments`, and `Indexes` instead.
+
+### Bugs Fixed
+* Properly handle secret key population for `AIProjectConnectionCustomCredential`, [see GitHub issue 52355](https://github.com/Azure/azure-sdk-for-net/issues/52355).
 
 ## 1.0.0-beta.11 (2025-08-20)
 
@@ -61,7 +89,7 @@
 `AIProjectsClient` to create, run and delete agents. However there have been some breaking changes in these operations. See [Agents package document and samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent) for more details.
 * Several changes to the `Connections` methods, including the response object (now it is simply called `Connection`). The class `ConnectionProperties` was renamed to `Connection`, and its properties have changed.
 * `GetAzureOpenAIChatClient` now supports returning an authenticated `AzureOpenAI` ChatClient to be used with
-AI models deployed to the Project's AI Services. 
+AI models deployed to the Project's AI Services.
 * The method `UploadFileRequest` on `AIProjectClient` had been removed, use `UploadFile` in `Datasets` instead.
 * Property `scope` on `AIProjectClient` is removed.
 * Evaluator Ids are available using the class `EvaluatorIDs` and no longer require `Azure.AI.Evaluation` package to be installed.

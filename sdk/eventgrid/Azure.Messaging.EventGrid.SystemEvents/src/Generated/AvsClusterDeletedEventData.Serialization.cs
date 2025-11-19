@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterDeleted event. </summary>
     [JsonConverter(typeof(AvsClusterDeletedEventDataConverter))]
-    public partial class AvsClusterDeletedEventData : IJsonModel<AvsClusterDeletedEventData>
+    public partial class AvsClusterDeletedEventData : AvsClusterEventData, IJsonModel<AvsClusterDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterDeletedEventData"/> for deserialization. </summary>
         internal AvsClusterDeletedEventData()
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAvsClusterDeletedEventData(document.RootElement, options);
                     }

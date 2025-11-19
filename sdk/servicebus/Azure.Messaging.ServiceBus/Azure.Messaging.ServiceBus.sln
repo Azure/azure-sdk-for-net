@@ -44,10 +44,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp", "..\..\co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp.Tests", "..\..\core\Azure.Core.Amqp\tests\Azure.Core.Amqp.Tests.csproj", "{0C1C6691-FC09-4507-92B8-1406251A1273}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.Perf", "perf\Azure.Messaging.ServiceBus.Perf.csproj", "{D740589B-D898-4C51-B334-61BBC1E82CFD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginSample", "samples\PluginSample\PluginSample.csproj", "{8FA70CB7-4230-4913-8BF0-61FC39707A3E}"
 EndProject
 Global
@@ -76,14 +72,6 @@ Global
 		{0C1C6691-FC09-4507-92B8-1406251A1273}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C1C6691-FC09-4507-92B8-1406251A1273}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C1C6691-FC09-4507-92B8-1406251A1273}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D740589B-D898-4C51-B334-61BBC1E82CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D740589B-D898-4C51-B334-61BBC1E82CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D740589B-D898-4C51-B334-61BBC1E82CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D740589B-D898-4C51-B334-61BBC1E82CFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU

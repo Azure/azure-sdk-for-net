@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public readonly partial struct CustomerTransitState : IEquatable<CustomerTransitState>
     {
         private readonly string _value;
+        /// <summary> do not have transit. </summary>
+        private const string NoTransitValue = "NoTransit";
+        /// <summary> transit provider and have own subscribers. </summary>
+        private const string CombinedTransitValue = "CombinedTransit";
+        /// <summary> pure transit provider or network service provider. </summary>
+        private const string TransitOnlyValue = "TransitOnly";
 
         /// <summary> Initializes a new instance of <see cref="CustomerTransitState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomerTransitState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoTransitValue = "NoTransit";
-        private const string CombinedTransitValue = "CombinedTransit";
-        private const string TransitOnlyValue = "TransitOnly";
+            _value = value;
+        }
 
         /// <summary> do not have transit. </summary>
         public static CustomerTransitState NoTransit { get; } = new CustomerTransitState(NoTransitValue);
+
         /// <summary> transit provider and have own subscribers. </summary>
         public static CustomerTransitState CombinedTransit { get; } = new CustomerTransitState(CombinedTransitValue);
+
         /// <summary> pure transit provider or network service provider. </summary>
         public static CustomerTransitState TransitOnly { get; } = new CustomerTransitState(TransitOnlyValue);
+
         /// <summary> Determines if two <see cref="CustomerTransitState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomerTransitState left, CustomerTransitState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomerTransitState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomerTransitState left, CustomerTransitState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomerTransitState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomerTransitState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomerTransitState(string value) => new CustomerTransitState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomerTransitState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomerTransitState?(string value) => value == null ? null : new CustomerTransitState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomerTransitState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomerTransitState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

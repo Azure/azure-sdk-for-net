@@ -451,3 +451,9 @@ op ConditionalRequest(@header("If-Match") ifMatch?: string, @header("If-None-Mat
 @convenientAPI(true)
 @get
 op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string, @header("If-Modified-Since") ifModifiedSince?: string): void;
+
+@route("multipart")
+@doc("A sample operation with multipart request")
+@convenientAPI(true)
+@post
+op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;

@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
                     throw new InvalidOperationException("Only one update enumeration can be active at a time.");
                 }
 
-                _receiveCollectionResult = new AsyncVoiceLiveMessageCollectionResult(WebSocket, cancellationToken);
+                _receiveCollectionResult = new AsyncVoiceLiveMessageCollectionResult(WebSocket, _contentLogger, _connectionId, cancellationToken);
             }
 
             try
@@ -66,20 +66,6 @@ namespace Azure.AI.VoiceLive
                     _receiveCollectionResult = null;
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets all server events from the VoiceLive service synchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>An enumerable of VoiceLive server events.</returns>
-        /// <remarks>
-        /// This method provides synchronous access to all server events from the service.
-        /// For better performance and resource utilization, consider using <see cref="GetUpdatesAsync(CancellationToken)"/> instead.
-        /// </remarks>
-        public IEnumerable<SessionUpdate> GetUpdates(CancellationToken cancellationToken = default)
-        {
-            return GetUpdatesAsync(cancellationToken).ToBlockingEnumerable(cancellationToken);
         }
 
         /// <summary>
@@ -129,30 +115,18 @@ namespace Azure.AI.VoiceLive
                 yield break;
             }
 
-            SessionUpdate serverEvent = null;
-            try
-            {
-                // Try to parse as JSON first
-                using JsonDocument document = JsonDocument.Parse(message);
-                JsonElement root = document.RootElement;
+            SessionUpdate sessionUpdate = null;
 
-                // Deserialize as a server event
-                serverEvent = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
-            }
-            catch (JsonException)
-            {
-                // If JSON parsing fails, ignore the message
-                yield break;
-            }
-            catch (Exception)
-            {
-                // If deserialization fails completely, ignore the message
-                yield break;
-            }
+            // Try to parse as JSON first
+            using JsonDocument document = JsonDocument.Parse(message);
+            JsonElement root = document.RootElement;
 
-            if (serverEvent != null)
+            // Deserialize as a server event
+            sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
+
+            if (sessionUpdate != null)
             {
-                yield return serverEvent;
+                yield return sessionUpdate;
             }
         }
     }

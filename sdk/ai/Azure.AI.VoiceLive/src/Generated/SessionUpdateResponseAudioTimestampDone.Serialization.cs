@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
-    public partial class SessionUpdateResponseAudioTimestampDone : IJsonModel<SessionUpdateResponseAudioTimestampDone>
+    public partial class SessionUpdateResponseAudioTimestampDone : SessionUpdate, IJsonModel<SessionUpdateResponseAudioTimestampDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTimestampDone"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioTimestampDone()
@@ -156,7 +156,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseAudioTimestampDone(document.RootElement, options);
                     }

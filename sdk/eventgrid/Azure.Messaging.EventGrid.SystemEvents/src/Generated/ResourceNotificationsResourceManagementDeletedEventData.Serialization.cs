@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Microsoft.ResourceNotifications.Resources.Deleted event.
     /// </summary>
     [JsonConverter(typeof(ResourceNotificationsResourceManagementDeletedEventDataConverter))]
-    public partial class ResourceNotificationsResourceManagementDeletedEventData : IJsonModel<ResourceNotificationsResourceManagementDeletedEventData>
+    public partial class ResourceNotificationsResourceManagementDeletedEventData : ResourceNotificationsResourceDeletedEventData, IJsonModel<ResourceNotificationsResourceManagementDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementDeletedEventData"/> for deserialization. </summary>
         internal ResourceNotificationsResourceManagementDeletedEventData()
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeResourceNotificationsResourceManagementDeletedEventData(document.RootElement, options);
                     }

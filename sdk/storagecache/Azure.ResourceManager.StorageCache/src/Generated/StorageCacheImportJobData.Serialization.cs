@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(AdminStatus))
+            {
+                writer.WritePropertyName("adminStatus"u8);
+                writer.WriteStringValue(AdminStatus.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(ImportPrefixes))
             {
                 writer.WritePropertyName("importPrefixes"u8);
@@ -91,6 +96,36 @@ namespace Azure.ResourceManager.StorageCache
             {
                 writer.WritePropertyName("totalBlobsImported"u8);
                 writer.WriteNumberValue(TotalBlobsImported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImportedFiles))
+            {
+                writer.WritePropertyName("importedFiles"u8);
+                writer.WriteNumberValue(ImportedFiles.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImportedDirectories))
+            {
+                writer.WritePropertyName("importedDirectories"u8);
+                writer.WriteNumberValue(ImportedDirectories.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImportedSymlinks))
+            {
+                writer.WritePropertyName("importedSymlinks"u8);
+                writer.WriteNumberValue(ImportedSymlinks.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreexistingFiles))
+            {
+                writer.WritePropertyName("preexistingFiles"u8);
+                writer.WriteNumberValue(PreexistingFiles.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreexistingDirectories))
+            {
+                writer.WritePropertyName("preexistingDirectories"u8);
+                writer.WriteNumberValue(PreexistingDirectories.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreexistingSymlinks))
+            {
+                writer.WritePropertyName("preexistingSymlinks"u8);
+                writer.WriteNumberValue(PreexistingSymlinks.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BlobsImportedPerSecond))
             {
@@ -148,6 +183,7 @@ namespace Azure.ResourceManager.StorageCache
             ResourceType type = default;
             SystemData systemData = default;
             ImportJobProvisioningStateType? provisioningState = default;
+            ImportJobAdminStatus? adminStatus = default;
             IList<string> importPrefixes = default;
             ConflictResolutionMode? conflictResolutionMode = default;
             int? maximumErrors = default;
@@ -156,6 +192,12 @@ namespace Azure.ResourceManager.StorageCache
             long? totalBlobsWalked = default;
             long? blobsWalkedPerSecond = default;
             long? totalBlobsImported = default;
+            long? importedFiles = default;
+            long? importedDirectories = default;
+            long? importedSymlinks = default;
+            long? preexistingFiles = default;
+            long? preexistingDirectories = default;
+            long? preexistingSymlinks = default;
             long? blobsImportedPerSecond = default;
             DateTimeOffset? lastCompletionTime = default;
             DateTimeOffset? lastStartedTime = default;
@@ -224,6 +266,15 @@ namespace Azure.ResourceManager.StorageCache
                                 continue;
                             }
                             provisioningState = new ImportJobProvisioningStateType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("adminStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            adminStatus = new ImportJobAdminStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("importPrefixes"u8))
@@ -308,6 +359,60 @@ namespace Azure.ResourceManager.StorageCache
                                     totalBlobsImported = property1.Value.GetInt64();
                                     continue;
                                 }
+                                if (property1.NameEquals("importedFiles"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    importedFiles = property1.Value.GetInt64();
+                                    continue;
+                                }
+                                if (property1.NameEquals("importedDirectories"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    importedDirectories = property1.Value.GetInt64();
+                                    continue;
+                                }
+                                if (property1.NameEquals("importedSymlinks"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    importedSymlinks = property1.Value.GetInt64();
+                                    continue;
+                                }
+                                if (property1.NameEquals("preexistingFiles"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    preexistingFiles = property1.Value.GetInt64();
+                                    continue;
+                                }
+                                if (property1.NameEquals("preexistingDirectories"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    preexistingDirectories = property1.Value.GetInt64();
+                                    continue;
+                                }
+                                if (property1.NameEquals("preexistingSymlinks"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    preexistingSymlinks = property1.Value.GetInt64();
+                                    continue;
+                                }
                                 if (property1.NameEquals("blobsImportedPerSecond"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -373,6 +478,7 @@ namespace Azure.ResourceManager.StorageCache
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 provisioningState,
+                adminStatus,
                 importPrefixes ?? new ChangeTrackingList<string>(),
                 conflictResolutionMode,
                 maximumErrors,
@@ -381,6 +487,12 @@ namespace Azure.ResourceManager.StorageCache
                 totalBlobsWalked,
                 blobsWalkedPerSecond,
                 totalBlobsImported,
+                importedFiles,
+                importedDirectories,
+                importedSymlinks,
+                preexistingFiles,
+                preexistingDirectories,
+                preexistingSymlinks,
                 blobsImportedPerSecond,
                 lastCompletionTime,
                 lastStartedTime,

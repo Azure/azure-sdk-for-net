@@ -13,9 +13,9 @@ namespace Azure.AI.VoiceLive
     internal partial class UnknownAzureVoice : AzureVoice
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureVoice"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> The type of the Azure voice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAzureVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownAzureVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

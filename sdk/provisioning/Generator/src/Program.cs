@@ -25,8 +25,10 @@ List<Specification> rpSpecs =
     new ContainerRegistrySpecification(),
     new ContainerServiceSpecification(),
     new CosmosDBSpecification(),
+    //new DnsSpecification(), // the Dns's mgmt SDK is majority hand-crafted, therefore here we just use this to generate a scaffold, and then hand-craft the rest.
     new EventGridSpecification(),
     new EventHubsSpecification(),
+    new FrontDoorSpecification(),
     new KeyVaultSpecification(),
     new KubernetesSpecification(),
     new KubernetesConfigurationSpecification(),

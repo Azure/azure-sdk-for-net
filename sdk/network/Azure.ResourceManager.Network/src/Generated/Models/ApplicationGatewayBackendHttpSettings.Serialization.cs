@@ -120,6 +120,26 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
+            if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
+            {
+                writer.WritePropertyName("dedicatedBackendConnection"u8);
+                writer.WriteBooleanValue(IsDedicatedBackendConnectionEnabled.Value);
+            }
+            if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
+            {
+                writer.WritePropertyName("validateCertChainAndExpiry"u8);
+                writer.WriteBooleanValue(IsValidateCertChainAndExpiryEnabled.Value);
+            }
+            if (Optional.IsDefined(IsValidateSniEnabled))
+            {
+                writer.WritePropertyName("validateSNI"u8);
+                writer.WriteBooleanValue(IsValidateSniEnabled.Value);
+            }
+            if (Optional.IsDefined(SniName))
+            {
+                writer.WritePropertyName("sniName"u8);
+                writer.WriteStringValue(SniName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -165,6 +185,10 @@ namespace Azure.ResourceManager.Network.Models
             string affinityCookieName = default;
             bool? probeEnabled = default;
             string path = default;
+            bool? dedicatedBackendConnection = default;
+            bool? validateCertChainAndExpiry = default;
+            bool? validateSNI = default;
+            string sniName = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -326,6 +350,38 @@ namespace Azure.ResourceManager.Network.Models
                             path = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("dedicatedBackendConnection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dedicatedBackendConnection = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("validateCertChainAndExpiry"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validateCertChainAndExpiry = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("validateSNI"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validateSNI = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("sniName"u8))
+                        {
+                            sniName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -363,6 +419,10 @@ namespace Azure.ResourceManager.Network.Models
                 affinityCookieName,
                 probeEnabled,
                 path,
+                dedicatedBackendConnection,
+                validateCertChainAndExpiry,
+                validateSNI,
+                sniName,
                 provisioningState);
         }
 
@@ -670,6 +730,77 @@ namespace Azure.ResourceManager.Network.Models
                     else
                     {
                         builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDedicatedBackendConnectionEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dedicatedBackendConnection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
+                {
+                    builder.Append("    dedicatedBackendConnection: ");
+                    var boolValue = IsDedicatedBackendConnectionEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateCertChainAndExpiryEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validateCertChainAndExpiry: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
+                {
+                    builder.Append("    validateCertChainAndExpiry: ");
+                    var boolValue = IsValidateCertChainAndExpiryEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateSniEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validateSNI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsValidateSniEnabled))
+                {
+                    builder.Append("    validateSNI: ");
+                    var boolValue = IsValidateSniEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SniName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sniName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SniName))
+                {
+                    builder.Append("    sniName: ");
+                    if (SniName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SniName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SniName}'");
                     }
                 }
             }

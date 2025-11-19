@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FlexComponentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/FlexComponents_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/FlexComponents_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "FlexComponent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleFlexComponentCollection collection = subscriptionResource.GetOracleFlexComponents(location);
 
             // invoke the operation
-            string flexComponentName = "flexComponent";
+            string flexComponentName = "flexname1";
             OracleFlexComponentResource result = await collection.GetAsync(flexComponentName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FlexComponentsListByParentMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/FlexComponents_ListByParent_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/FlexComponents_ListByParent_MaximumSet_Gen.json
             // this example is just showing the usage of "FlexComponent_ListByParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,8 +73,43 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleFlexComponentCollection collection = subscriptionResource.GetOracleFlexComponents(location);
 
             // invoke the operation and iterate over the result
-            OracleDatabaseSystemShape? shape = OracleDatabaseSystemShape.ExadataX11M;
+            OracleDatabaseSystemShape? shape = OracleDatabaseSystemShape.ExadataX9M;
             await foreach (OracleFlexComponentResource item in collection.GetAllAsync(shape: shape))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                OracleFlexComponentData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_FlexComponentsListByParentMaximumSetGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/FlexComponents_ListByParent_MinimumSet_Gen.json
+            // this example is just showing the usage of "FlexComponent_ListByParent" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this OracleFlexComponentResource
+            AzureLocation location = new AzureLocation("eastus");
+            OracleFlexComponentCollection collection = subscriptionResource.GetOracleFlexComponents(location);
+
+            // invoke the operation and iterate over the result
+            await foreach (OracleFlexComponentResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -90,7 +125,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_FlexComponentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/FlexComponents_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/FlexComponents_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "FlexComponent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleFlexComponentCollection collection = subscriptionResource.GetOracleFlexComponents(location);
 
             // invoke the operation
-            string flexComponentName = "flexComponent";
+            string flexComponentName = "flexname1";
             bool result = await collection.ExistsAsync(flexComponentName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -119,7 +154,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FlexComponentsGetMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/FlexComponents_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/FlexComponents_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "FlexComponent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleFlexComponentCollection collection = subscriptionResource.GetOracleFlexComponents(location);
 
             // invoke the operation
-            string flexComponentName = "flexComponent";
+            string flexComponentName = "flexname1";
             NullableResponse<OracleFlexComponentResource> response = await collection.GetIfExistsAsync(flexComponentName);
             OracleFlexComponentResource result = response.HasValue ? response.Value : null;
 

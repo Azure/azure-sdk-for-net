@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01-preview";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> Get Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.SiteManager
                         value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((EdgeSiteData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -173,7 +175,7 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> Get Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -193,6 +195,8 @@ namespace Azure.ResourceManager.SiteManager
                         value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((EdgeSiteData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -234,8 +238,8 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> create or update Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
-        /// <param name="data"> The properties of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -259,8 +263,8 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> create or update Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
-        /// <param name="data"> The properties of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -318,8 +322,8 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> update Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
-        /// <param name="patch"> The properties of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -347,8 +351,8 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> update Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
-        /// <param name="patch"> The properties of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -405,7 +409,7 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> delete Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -428,7 +432,7 @@ namespace Azure.ResourceManager.SiteManager
 
         /// <summary> delete Site at SG scope. </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
-        /// <param name="siteName"> The name of the site. </param>
+        /// <param name="siteName"> The name of the Site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -444,6 +448,82 @@ namespace Azure.ResourceManager.SiteManager
                 case 200:
                 case 204:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByServiceGroupNextPageRequestUri(string nextLink, string servicegroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByServiceGroupNextPageRequest(string nextLink, string servicegroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> list Site at SG scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="servicegroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SiteListResult>> ListByServiceGroupNextPageAsync(string nextLink, string servicegroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
+
+            using var message = CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SiteListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SiteListResult.DeserializeSiteListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> list Site at SG scope. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="servicegroupName"> The name of the service group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="servicegroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SiteListResult> ListByServiceGroupNextPage(string nextLink, string servicegroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
+
+            using var message = CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SiteListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SiteListResult.DeserializeSiteListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

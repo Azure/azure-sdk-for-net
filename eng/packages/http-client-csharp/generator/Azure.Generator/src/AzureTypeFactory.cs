@@ -17,6 +17,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Generator.Utilities;
 
 namespace Azure.Generator
 {
@@ -54,6 +55,12 @@ namespace Azure.Generator
             [
                 new("Azure.Core")
             ];
+
+        /// <inheritdoc/>
+        protected override string BuildServiceName()
+        {
+            return TypeNameUtilities.GetResourceProviderName();
+        }
 
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
@@ -119,21 +126,23 @@ namespace Azure.Generator
         public override ValueExpression DeserializeJsonValue(
             Type valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
         {
-            var expression = DeserializeJsonValueCore(valueType, element, mrwOptionsParameter, format);
-            return expression ?? base.DeserializeJsonValue(valueType, element, mrwOptionsParameter, format);
+            var expression = DeserializeJsonValueCore(valueType, element, data, mrwOptionsParameter, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, data, mrwOptionsParameter, format);
         }
 
         private ValueExpression? DeserializeJsonValueCore(
             Type valueType,
             ScopedApi<JsonElement> element,
+            ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
             SerializationFormat format)
         {
             return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
-                deserializationExpression(valueType, element, mrwOptionsParameter, format) :
+                deserializationExpression(valueType, element, data, mrwOptionsParameter, format) :
                 null;
         }
 

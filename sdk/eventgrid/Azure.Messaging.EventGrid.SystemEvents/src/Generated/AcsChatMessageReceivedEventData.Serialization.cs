@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageReceived event. </summary>
     [JsonConverter(typeof(AcsChatMessageReceivedEventDataConverter))]
-    public partial class AcsChatMessageReceivedEventData : IJsonModel<AcsChatMessageReceivedEventData>
+    public partial class AcsChatMessageReceivedEventData : AcsChatMessageEventBaseProperties, IJsonModel<AcsChatMessageReceivedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedEventData"/> for deserialization. </summary>
         internal AcsChatMessageReceivedEventData()
@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsChatMessageReceivedEventData(document.RootElement, options);
                     }

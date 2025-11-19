@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endedBy"> The communication identifier of the user who was disconnected. </param>
         /// <param name="reason"> The reason for ending the call. </param>
-        /// <param name="callDuration"> Duration of the call. </param>
+        /// <param name="callDuration"> Duration of the call in seconds. </param>
         internal AcsCallEndedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> additionalBinaryDataProperties, AcsCallEndedByProperties endedBy, AcsCallEndReasonProperties reason, TimeSpan? callDuration) : base(startedBy, serverCallId, @group, room, isTwoParty, correlationId, isRoomsCall, additionalBinaryDataProperties)
         {
             EndedBy = endedBy;

@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using NUnit.Framework;
 
@@ -123,6 +124,140 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         [Test]
+        public async Task ValidateListProperties_Unset()
+        {
+            await using var test = new Trycep();
+
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+
+                    // Create a test resource with three basic property types: string, location, and enum
+                    var storageAccount = new StorageAccount("storageAccount")
+                    {
+                        // Test basic string property
+                        Name = "test-storage",
+
+                        // Test location property
+                        Location = AzureLocation.WestUS2,
+
+                        // Test enum property
+                        StorageTier = StorageTier.Standard
+                    };
+
+                    infra.Add(storageAccount);
+                    return infra;
+                })
+                .Compare(
+                    """
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: 'test-storage'
+                      location: 'westus2'
+                      properties: {
+                        tier: 'Standard'
+                      }
+                    }
+                    """);
+        }
+
+        [Test]
+        public async Task ValidateListProperties_ForceEmpty()
+        {
+            await using var test = new Trycep();
+
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+
+                    // Create our comprehensive test resource with various property types
+                    var storageAccount = new StorageAccount("storageAccount")
+                    {
+                        // Test basic string property
+                        Name = "test-storage",
+
+                        // Test location property
+                        Location = AzureLocation.WestUS2,
+
+                        // Test enum property
+                        StorageTier = StorageTier.Standard,
+
+                        // Force empty list properties
+                        AllowedSubnets = [],
+                    };
+
+                    // Clear would also mark the list as empty
+                    storageAccount.DeniedPorts.Clear();
+
+                    infra.Add(storageAccount);
+                    return infra;
+                })
+                .Compare(
+                    """
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: 'test-storage'
+                      location: 'westus2'
+                      properties: {
+                        tier: 'Standard'
+                        allowedSubnets: []
+                        deniedPorts: []
+                      }
+                    }
+                    """);
+        }
+
+        [Test]
+        public async Task ValidateListProperties_ForceEmptyThenAdd()
+        {
+            await using var test = new Trycep();
+
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+
+                    // Create our comprehensive test resource with various property types
+                    var storageAccount = new StorageAccount("storageAccount")
+                    {
+                        // Test basic string property
+                        Name = "test-storage",
+
+                        // Test location property
+                        Location = AzureLocation.WestUS2,
+
+                        // Test enum property
+                        StorageTier = StorageTier.Standard,
+
+                        // Force empty list properties
+                        AllowedSubnets = [],
+                    };
+
+                    // Clear would also mark the list as empty
+                    storageAccount.DeniedPorts.Clear();
+
+                    storageAccount.AllowedSubnets.Add("192.168.1.0/24");
+
+                    infra.Add(storageAccount);
+                    return infra;
+                })
+                .Compare(
+                    """
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: 'test-storage'
+                      location: 'westus2'
+                      properties: {
+                        tier: 'Standard'
+                        allowedSubnets: [
+                          '192.168.1.0/24'
+                        ]
+                        deniedPorts: []
+                      }
+                    }
+                    """);
+        }
+
+        [Test]
         public async Task ValidateResourceReference()
         {
             await using var test = new Trycep();
@@ -236,6 +371,65 @@ namespace Azure.Provisioning.Tests.Primitives
                     """);
         }
 
+        [Test]
+        public async Task ValidateConstructFromBicepExpression_LowLevelApi()
+        {
+            await using var test = new Trycep();
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    ProvisioningParameter useConfig = new(nameof(useConfig), typeof(bool))
+                    {
+                        Value = true
+                    };
+                    infra.Add(useConfig);
+                    StorageAccount storageAccount = new(nameof(storageAccount), "2024-01-01")
+                    {
+                        Location = AzureLocation.CentralUS,
+                        StorageTier = StorageTier.Standard,
+                        IsEnabled = true,
+                        AllowPublicAccess = false,
+                        MaxConnections = 100,
+                    };
+                    // we would like to assign an expression to `storageAccount.StorageConfiguration`.
+                    // but now we cannot do it in the normal way until this issue was fixed: https://github.com/Azure/azure-sdk-for-net/issues/52300
+                    var config = (IBicepValue)storageAccount.StorageConfiguration;
+                    IBicepValue configValue = new StorageConfiguration
+                    {
+                        BackupRetentionDays = 30,
+                        MaxRetryAttempts = 3,
+                        EnableEncryption = true
+                    };
+                    config.Expression = new ConditionalExpression(
+                        new IdentifierExpression(useConfig.BicepIdentifier),
+                        configValue.Compile(),
+                        new NullLiteralExpression());
+                    infra.Add(storageAccount);
+                    return infra;
+                })
+                .Compare(
+                    """
+                    param useConfig bool = true
+
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: take('storageaccount${uniqueString(resourceGroup().id)}', 24)
+                      location: 'centralus'
+                      properties: {
+                        tier: 'Standard'
+                        isEnabled: true
+                        allowPublicAccess: false
+                        maxConnections: 100
+                        storageConfiguration: useConfig ? {
+                          backupRetentionDays: 30
+                          maxRetryAttempts: 3
+                          enableEncryption: true
+                        } : null
+                      }
+                    }
+                    """);
+        }
+
         /// <summary>
         /// Private nested class that implements a storage account resource
         /// to validate various property types supported by the library
@@ -313,6 +507,13 @@ namespace Azure.Provisioning.Tests.Primitives
             }
             private BicepList<string>? _allowedSubnets;
 
+            public BicepList<int> DeniedPorts
+            {
+                get { Initialize(); return _deniedPorts!; }
+                set { Initialize(); _deniedPorts!.Assign(value); }
+            }
+            private BicepList<int>? _deniedPorts;
+
             // List of models property
             public BicepList<AccessRule> AccessRules
             {
@@ -353,6 +554,7 @@ namespace Azure.Provisioning.Tests.Primitives
                 _storageConfiguration = DefineModelProperty<StorageConfiguration>("StorageConfiguration", ["properties", "storageConfiguration"]);
                 _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
                 _allowedSubnets = DefineListProperty<string>("AllowedSubnets", ["properties", "allowedSubnets"]);
+                _deniedPorts = DefineListProperty<int>("DeniedPorts", ["properties", "deniedPorts"]);
                 _accessRules = DefineListProperty<AccessRule>("AccessRules", ["properties", "accessRules"]);
 
                 // Output-only properties

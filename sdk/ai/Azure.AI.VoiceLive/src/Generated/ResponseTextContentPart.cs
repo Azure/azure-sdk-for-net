@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseTextContentPart. </summary>
+    /// <summary> A text content part for a response. </summary>
     public partial class ResponseTextContentPart : VoiceLiveContentPart
     {
         /// <summary> Initializes a new instance of <see cref="ResponseTextContentPart"/>. </summary>

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientDeleted event. </summary>
     [JsonConverter(typeof(EventGridMqttClientDeletedEventDataConverter))]
-    public partial class EventGridMqttClientDeletedEventData : IJsonModel<EventGridMqttClientDeletedEventData>
+    public partial class EventGridMqttClientDeletedEventData : EventGridMqttClientEventData, IJsonModel<EventGridMqttClientDeletedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="EventGridMqttClientDeletedEventData"/> for deserialization. </summary>
         internal EventGridMqttClientDeletedEventData()
@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeEventGridMqttClientDeletedEventData(document.RootElement, options);
                     }

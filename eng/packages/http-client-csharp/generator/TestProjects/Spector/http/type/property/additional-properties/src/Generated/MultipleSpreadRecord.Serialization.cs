@@ -38,6 +38,6 @@ namespace _Type.Property.AdditionalProperties
         /// <param name="multipleSpreadRecord"> The <see cref="MultipleSpreadRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(MultipleSpreadRecord multipleSpreadRecord) => throw null;
 
-        public static explicit operator MultipleSpreadRecord(Response result) => throw null;
+        public static explicit operator MultipleSpreadRecord(Response response) => throw null;
     }
 }

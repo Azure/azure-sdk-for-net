@@ -7,11 +7,5 @@ using System.IO;
 namespace Azure.AI.VoiceLive
 {
     public partial class OpenAIVoice : VoiceProvider
-    {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        internal override BinaryData ToBinaryData() => this.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
-    }
+    { }
 }

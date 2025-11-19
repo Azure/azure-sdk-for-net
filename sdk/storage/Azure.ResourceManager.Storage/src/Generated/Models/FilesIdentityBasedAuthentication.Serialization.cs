@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());
             }
+            if (Optional.IsDefined(SmbOAuthSettings))
+            {
+                writer.WritePropertyName("smbOAuthSettings"u8);
+                writer.WriteObjectValue(SmbOAuthSettings, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
             DirectoryServiceOption directoryServiceOptions = default;
             StorageActiveDirectoryProperties activeDirectoryProperties = default;
             DefaultSharePermission? defaultSharePermission = default;
+            SmbOAuthSettings smbOAuthSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,13 +120,22 @@ namespace Azure.ResourceManager.Storage.Models
                     defaultSharePermission = new DefaultSharePermission(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("smbOAuthSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smbOAuthSettings = SmbOAuthSettings.DeserializeSmbOAuthSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, serializedAdditionalRawData);
+            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, smbOAuthSettings, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -173,6 +188,24 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     builder.Append("  defaultSharePermission: ");
                     builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsSmbOAuthEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  smbOAuthSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    isSmbOAuthEnabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SmbOAuthSettings))
+                {
+                    builder.Append("  smbOAuthSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SmbOAuthSettings, options, 2, false, "  smbOAuthSettings: ");
                 }
             }
 

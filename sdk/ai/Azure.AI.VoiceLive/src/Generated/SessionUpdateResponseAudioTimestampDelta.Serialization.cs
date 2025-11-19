@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
-    public partial class SessionUpdateResponseAudioTimestampDelta : IJsonModel<SessionUpdateResponseAudioTimestampDelta>
+    public partial class SessionUpdateResponseAudioTimestampDelta : SessionUpdate, IJsonModel<SessionUpdateResponseAudioTimestampDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTimestampDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioTimestampDelta()
@@ -192,7 +192,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseAudioTimestampDelta(document.RootElement, options);
                     }

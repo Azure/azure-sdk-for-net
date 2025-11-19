@@ -31,6 +31,11 @@ interface PrivateLinks {
     },
     Foundations.OperationStatusResult
   >;
+  
+  @doc("Starts a failed runtime resource")
+  @post
+  startFailedServerlessRuntime(
+  ): ArmNoContentResponse | ErrorResponse;
 }
 
 /**

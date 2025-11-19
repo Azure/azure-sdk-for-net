@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ClientEventConversationItemDelete : IJsonModel<ClientEventConversationItemDelete>
+    internal partial class ClientEventConversationItemDelete : ClientEvent, IJsonModel<ClientEventConversationItemDelete>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemDelete"/> for deserialization. </summary>
         internal ClientEventConversationItemDelete()
@@ -124,7 +124,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeClientEventConversationItemDelete(document.RootElement, options);
                     }

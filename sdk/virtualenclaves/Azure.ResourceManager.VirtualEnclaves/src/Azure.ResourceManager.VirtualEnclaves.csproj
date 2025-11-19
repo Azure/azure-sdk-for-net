@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.VirtualEnclaves</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider VirtualEnclaves.</Description>
     <PackageTags>azure;management;arm;resource manager;virtualenclaves</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

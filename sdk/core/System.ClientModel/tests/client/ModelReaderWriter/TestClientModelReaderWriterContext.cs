@@ -25,6 +25,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
         private ExperimentalModel_Builder? _experimentalModel_Builder;
+        private ListOfAset_Builder? _listOfAset_Builder;
+        private DictionaryOfAset_Builder? _dictionaryOfAset_Builder;
 
         protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
         {
@@ -41,9 +43,25 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 #pragma warning disable TEST001
                 Type t when t == typeof(ExperimentalModel) => _experimentalModel_Builder ??= new ExperimentalModel_Builder(),
                 #pragma warning restore TEST001
+                Type t when t == typeof(ListOfAset) => _listOfAset_Builder ??= new(),
+                Type t when t == typeof(DictionaryOfAset) => _dictionaryOfAset_Builder ??= new(),
                 _ => null
             };
             return builder is not null;
+        }
+
+        private class DictionaryOfAset_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(DictionaryOfAset);
+
+            protected override object CreateInstance() => new DictionaryOfAset();
+        }
+
+        private class ListOfAset_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(ListOfAset);
+
+            protected override object CreateInstance() => new ListOfAset();
         }
 
         private class ModelY_Builder : ModelReaderWriterTypeBuilder

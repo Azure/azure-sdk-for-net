@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingStarted event. </summary>
     [JsonConverter(typeof(ContainerServiceNodePoolRollingStartedEventDataConverter))]
-    public partial class ContainerServiceNodePoolRollingStartedEventData : IJsonModel<ContainerServiceNodePoolRollingStartedEventData>
+    public partial class ContainerServiceNodePoolRollingStartedEventData : ContainerServiceNodePoolRollingEventData, IJsonModel<ContainerServiceNodePoolRollingStartedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingStartedEventData"/> for deserialization. </summary>
         internal ContainerServiceNodePoolRollingStartedEventData()
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeContainerServiceNodePoolRollingStartedEventData(document.RootElement, options);
                     }

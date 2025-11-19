@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
+namespace Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 {
     [PersistableModelProxy(typeof(UnknownAbstractModel))]
     public abstract partial class AbstractModel : IJsonModel<AbstractModel>
@@ -35,6 +35,6 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation
 
         string IPersistableModel<AbstractModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator AbstractModel(Response result) => throw null;
+        public static explicit operator AbstractModel(Response response) => throw null;
     }
 }

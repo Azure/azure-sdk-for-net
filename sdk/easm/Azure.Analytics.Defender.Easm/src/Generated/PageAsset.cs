@@ -65,7 +65,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"></param>
         /// <param name="httpMethod"></param>
         /// <param name="service"></param>
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="gdprAssetSecurityPolicies"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal PageAsset(IDictionary<string, BinaryData> serializedAdditionalRawData, Uri url, string httpMethod, string service, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<ObservedBoolean> successful, IReadOnlyList<ObservedInteger> httpResponseCodes, IReadOnlyList<ObservedString> httpResponseMessages, IReadOnlyList<ObservedLong> responseTimes, IReadOnlyList<ObservedBoolean> frames, IReadOnlyList<ObservedBoolean> windows, IReadOnlyList<ObservedBoolean> nonHtmlFrames, IReadOnlyList<ObservedBoolean> undirectedContent, IReadOnlyList<ObservedString> contentTypes, IReadOnlyList<ObservedLong> contentLengths, IReadOnlyList<ObservedString> windowNames, IReadOnlyList<ObservedString> charsets, IReadOnlyList<ObservedString> titles, IReadOnlyList<ObservedString> languages, IReadOnlyList<ObservedHeader> responseHeaders, IReadOnlyList<CookieDetails> cookies, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<AttributeDetails> attributes, IReadOnlyList<AssetSecurityPolicy> assetSecurityPolicies, IReadOnlyList<ObservedIntegers> responseBodyMinhashSignatures, IReadOnlyList<ObservedIntegers> fullDomMinhashSignatures, IReadOnlyList<ObservedString> responseBodyHashSignatures, IReadOnlyList<ObservedString> errors, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IReadOnlyList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IReadOnlyList<ObservedString> finalUrls, IReadOnlyList<ObservedInteger> finalResponseCodes, IReadOnlyList<ObservedBoolean> parkedPage, IReadOnlyList<ResourceUri> resourceUrls, IReadOnlyList<GuidPair> guids, IReadOnlyList<ObservedString> finalIpAddresses, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedLong> finalAsns, IReadOnlyList<IpBlock> finalIpBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IReadOnlyList<ObservedLocation> location, IReadOnlyList<AssetService> services, string siteStatus, IReadOnlyList<ObservedString> cnames, IReadOnlyList<ObservedString> cdns, string host, string domain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6) : base(serializedAdditionalRawData)
+        internal PageAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, string httpMethod, string service, IList<ObservedString> ipAddresses, IList<ObservedBoolean> successful, IList<ObservedInteger> httpResponseCodes, IList<ObservedString> httpResponseMessages, IList<ObservedLong> responseTimes, IList<ObservedBoolean> frames, IList<ObservedBoolean> windows, IList<ObservedBoolean> nonHtmlFrames, IList<ObservedBoolean> undirectedContent, IList<ObservedString> contentTypes, IList<ObservedLong> contentLengths, IList<ObservedString> windowNames, IList<ObservedString> charsets, IList<ObservedString> titles, IList<ObservedString> languages, IList<ObservedHeader> responseHeaders, IList<CookieDetails> cookies, IList<WebComponent> webComponents, IList<AttributeDetails> attributes, IList<AssetSecurityPolicy> assetSecurityPolicies, IList<ObservedIntegers> responseBodyMinhashSignatures, IList<ObservedIntegers> fullDomMinhashSignatures, IList<ObservedString> responseBodyHashSignatures, IList<ObservedString> errors, IList<SslCertAsset> sslCerts, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IList<ObservedString> finalUrls, IList<ObservedInteger> finalResponseCodes, IList<ObservedBoolean> parkedPage, IList<ResourceUri> resourceUrls, IList<GuidPair> guids, IList<ObservedString> finalIpAddresses, IList<ObservedLong> asns, IList<IpBlock> ipBlocks, IList<ObservedLong> finalAsns, IList<IpBlock> finalIpBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IList<ObservedLocation> location, IList<AssetService> services, string siteStatus, IList<ObservedString> cnames, IList<ObservedString> cdns, string host, string domain, IList<SslServerConfig> sslServerConfig, IList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
         {
             Url = url;
             HttpMethod = httpMethod;
@@ -192,127 +192,187 @@ namespace Azure.Analytics.Defender.Easm
             Ipv6 = ipv6;
         }
 
-        /// <summary> Gets the url. </summary>
+        /// <summary> Gets the Url. </summary>
         public Uri Url { get; }
-        /// <summary> Gets the http method. </summary>
+
+        /// <summary> Gets the HttpMethod. </summary>
         public string HttpMethod { get; }
-        /// <summary> Gets the service. </summary>
+
+        /// <summary> Gets the Service. </summary>
         public string Service { get; }
-        /// <summary> Gets the ip addresses. </summary>
-        public IReadOnlyList<ObservedString> IpAddresses { get; }
-        /// <summary> Gets the successful. </summary>
-        public IReadOnlyList<ObservedBoolean> Successful { get; }
-        /// <summary> Gets the http response codes. </summary>
-        public IReadOnlyList<ObservedInteger> HttpResponseCodes { get; }
-        /// <summary> Gets the http response messages. </summary>
-        public IReadOnlyList<ObservedString> HttpResponseMessages { get; }
-        /// <summary> Gets the response times. </summary>
-        public IReadOnlyList<ObservedLong> ResponseTimes { get; }
-        /// <summary> Gets the frames. </summary>
-        public IReadOnlyList<ObservedBoolean> Frames { get; }
-        /// <summary> Gets the windows. </summary>
-        public IReadOnlyList<ObservedBoolean> Windows { get; }
-        /// <summary> Gets the non html frames. </summary>
-        public IReadOnlyList<ObservedBoolean> NonHtmlFrames { get; }
-        /// <summary> Gets the undirected content. </summary>
-        public IReadOnlyList<ObservedBoolean> UndirectedContent { get; }
-        /// <summary> Gets the content types. </summary>
-        public IReadOnlyList<ObservedString> ContentTypes { get; }
-        /// <summary> Gets the content lengths. </summary>
-        public IReadOnlyList<ObservedLong> ContentLengths { get; }
-        /// <summary> Gets the window names. </summary>
-        public IReadOnlyList<ObservedString> WindowNames { get; }
-        /// <summary> Gets the charsets. </summary>
-        public IReadOnlyList<ObservedString> Charsets { get; }
-        /// <summary> Gets the titles. </summary>
-        public IReadOnlyList<ObservedString> Titles { get; }
-        /// <summary> Gets the languages. </summary>
-        public IReadOnlyList<ObservedString> Languages { get; }
-        /// <summary> Gets the response headers. </summary>
-        public IReadOnlyList<ObservedHeader> ResponseHeaders { get; }
-        /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<CookieDetails> Cookies { get; }
-        /// <summary> Gets the web components. </summary>
-        public IReadOnlyList<WebComponent> WebComponents { get; }
-        /// <summary> Gets the attributes. </summary>
-        public IReadOnlyList<AttributeDetails> Attributes { get; }
-        /// <summary> Gets the asset security policies. </summary>
-        public IReadOnlyList<AssetSecurityPolicy> AssetSecurityPolicies { get; }
-        /// <summary> Gets the response body minhash signatures. </summary>
-        public IReadOnlyList<ObservedIntegers> ResponseBodyMinhashSignatures { get; }
-        /// <summary> Gets the full dom minhash signatures. </summary>
-        public IReadOnlyList<ObservedIntegers> FullDomMinhashSignatures { get; }
-        /// <summary> Gets the response body hash signatures. </summary>
-        public IReadOnlyList<ObservedString> ResponseBodyHashSignatures { get; }
-        /// <summary> Gets the errors. </summary>
-        public IReadOnlyList<ObservedString> Errors { get; }
-        /// <summary> Gets the ssl certs. </summary>
-        public IReadOnlyList<SslCertAsset> SslCerts { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the IpAddresses. </summary>
+        public IList<ObservedString> IpAddresses { get; }
+
+        /// <summary> Gets the Successful. </summary>
+        public IList<ObservedBoolean> Successful { get; }
+
+        /// <summary> Gets the HttpResponseCodes. </summary>
+        public IList<ObservedInteger> HttpResponseCodes { get; }
+
+        /// <summary> Gets the HttpResponseMessages. </summary>
+        public IList<ObservedString> HttpResponseMessages { get; }
+
+        /// <summary> Gets the ResponseTimes. </summary>
+        public IList<ObservedLong> ResponseTimes { get; }
+
+        /// <summary> Gets the Frames. </summary>
+        public IList<ObservedBoolean> Frames { get; }
+
+        /// <summary> Gets the Windows. </summary>
+        public IList<ObservedBoolean> Windows { get; }
+
+        /// <summary> Gets the NonHtmlFrames. </summary>
+        public IList<ObservedBoolean> NonHtmlFrames { get; }
+
+        /// <summary> Gets the UndirectedContent. </summary>
+        public IList<ObservedBoolean> UndirectedContent { get; }
+
+        /// <summary> Gets the ContentTypes. </summary>
+        public IList<ObservedString> ContentTypes { get; }
+
+        /// <summary> Gets the ContentLengths. </summary>
+        public IList<ObservedLong> ContentLengths { get; }
+
+        /// <summary> Gets the WindowNames. </summary>
+        public IList<ObservedString> WindowNames { get; }
+
+        /// <summary> Gets the Charsets. </summary>
+        public IList<ObservedString> Charsets { get; }
+
+        /// <summary> Gets the Titles. </summary>
+        public IList<ObservedString> Titles { get; }
+
+        /// <summary> Gets the Languages. </summary>
+        public IList<ObservedString> Languages { get; }
+
+        /// <summary> Gets the ResponseHeaders. </summary>
+        public IList<ObservedHeader> ResponseHeaders { get; }
+
+        /// <summary> Gets the Cookies. </summary>
+        public IList<CookieDetails> Cookies { get; }
+
+        /// <summary> Gets the WebComponents. </summary>
+        public IList<WebComponent> WebComponents { get; }
+
+        /// <summary> Gets the Attributes. </summary>
+        public IList<AttributeDetails> Attributes { get; }
+
+        /// <summary> Gets the AssetSecurityPolicies. </summary>
+        public IList<AssetSecurityPolicy> AssetSecurityPolicies { get; }
+
+        /// <summary> Gets the ResponseBodyMinhashSignatures. </summary>
+        public IList<ObservedIntegers> ResponseBodyMinhashSignatures { get; }
+
+        /// <summary> Gets the FullDomMinhashSignatures. </summary>
+        public IList<ObservedIntegers> FullDomMinhashSignatures { get; }
+
+        /// <summary> Gets the ResponseBodyHashSignatures. </summary>
+        public IList<ObservedString> ResponseBodyHashSignatures { get; }
+
+        /// <summary> Gets the Errors. </summary>
+        public IList<ObservedString> Errors { get; }
+
+        /// <summary> Gets the SslCerts. </summary>
+        public IList<SslCertAsset> SslCerts { get; }
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the cause. </summary>
+
+        /// <summary> Gets the Cause. </summary>
         public PageCause Cause { get; }
-        /// <summary> Gets the referrer. </summary>
+
+        /// <summary> Gets the Referrer. </summary>
         public string Referrer { get; }
-        /// <summary> Gets the redirect urls. </summary>
-        public IReadOnlyList<ObservedString> RedirectUrls { get; }
-        /// <summary> Gets the redirect type. </summary>
+
+        /// <summary> Gets the RedirectUrls. </summary>
+        public IList<ObservedString> RedirectUrls { get; }
+
+        /// <summary> Gets the RedirectType. </summary>
         public PageAssetRedirectType? RedirectType { get; }
-        /// <summary> Gets the final urls. </summary>
-        public IReadOnlyList<ObservedString> FinalUrls { get; }
-        /// <summary> Gets the final response codes. </summary>
-        public IReadOnlyList<ObservedInteger> FinalResponseCodes { get; }
-        /// <summary> Gets the parked page. </summary>
-        public IReadOnlyList<ObservedBoolean> ParkedPage { get; }
-        /// <summary> Gets the resource urls. </summary>
-        public IReadOnlyList<ResourceUri> ResourceUrls { get; }
-        /// <summary> Gets the guids. </summary>
-        public IReadOnlyList<GuidPair> Guids { get; }
-        /// <summary> Gets the final ip addresses. </summary>
-        public IReadOnlyList<ObservedString> FinalIpAddresses { get; }
-        /// <summary> Gets the asns. </summary>
-        public IReadOnlyList<ObservedLong> Asns { get; }
-        /// <summary> Gets the ip blocks. </summary>
-        public IReadOnlyList<IpBlock> IpBlocks { get; }
-        /// <summary> Gets the final asns. </summary>
-        public IReadOnlyList<ObservedLong> FinalAsns { get; }
-        /// <summary> Gets the final ip blocks. </summary>
-        public IReadOnlyList<IpBlock> FinalIpBlocks { get; }
-        /// <summary> Gets the response bodies. </summary>
-        public IReadOnlyList<ObservedString> ResponseBodies { get; }
-        /// <summary> Gets the domain asset. </summary>
+
+        /// <summary> Gets the FinalUrls. </summary>
+        public IList<ObservedString> FinalUrls { get; }
+
+        /// <summary> Gets the FinalResponseCodes. </summary>
+        public IList<ObservedInteger> FinalResponseCodes { get; }
+
+        /// <summary> Gets the ParkedPage. </summary>
+        public IList<ObservedBoolean> ParkedPage { get; }
+
+        /// <summary> Gets the ResourceUrls. </summary>
+        public IList<ResourceUri> ResourceUrls { get; }
+
+        /// <summary> Gets the Guids. </summary>
+        public IList<GuidPair> Guids { get; }
+
+        /// <summary> Gets the FinalIpAddresses. </summary>
+        public IList<ObservedString> FinalIpAddresses { get; }
+
+        /// <summary> Gets the Asns. </summary>
+        public IList<ObservedLong> Asns { get; }
+
+        /// <summary> Gets the IpBlocks. </summary>
+        public IList<IpBlock> IpBlocks { get; }
+
+        /// <summary> Gets the FinalAsns. </summary>
+        public IList<ObservedLong> FinalAsns { get; }
+
+        /// <summary> Gets the FinalIpBlocks. </summary>
+        public IList<IpBlock> FinalIpBlocks { get; }
+
+        /// <summary> Gets the ResponseBodies. </summary>
+        public IList<ObservedString> ResponseBodies { get; }
+
+        /// <summary> Gets the DomainAsset. </summary>
         public DomainAsset DomainAsset { get; }
-        /// <summary> Gets the root url. </summary>
+
+        /// <summary> Gets the RootUrl. </summary>
         public ObservedBoolean RootUrl { get; }
-        /// <summary> Gets the is root url. </summary>
+
+        /// <summary> Gets the IsRootUrl. </summary>
         public bool? IsRootUrl { get; }
-        /// <summary> Gets the location. </summary>
-        public IReadOnlyList<ObservedLocation> Location { get; }
-        /// <summary> Gets the services. </summary>
-        public IReadOnlyList<AssetService> Services { get; }
-        /// <summary> Gets the site status. </summary>
+
+        /// <summary> Gets the Location. </summary>
+        public IList<ObservedLocation> Location { get; }
+
+        /// <summary> Gets the Services. </summary>
+        public IList<AssetService> Services { get; }
+
+        /// <summary> Gets the SiteStatus. </summary>
         public string SiteStatus { get; }
-        /// <summary> Gets the cnames. </summary>
-        public IReadOnlyList<ObservedString> Cnames { get; }
-        /// <summary> Gets the cdns. </summary>
-        public IReadOnlyList<ObservedString> Cdns { get; }
-        /// <summary> Gets the host. </summary>
+
+        /// <summary> Gets the Cnames. </summary>
+        public IList<ObservedString> Cnames { get; }
+
+        /// <summary> Gets the Cdns. </summary>
+        public IList<ObservedString> Cdns { get; }
+
+        /// <summary> Gets the Host. </summary>
         public string Host { get; }
-        /// <summary> Gets the domain. </summary>
+
+        /// <summary> Gets the Domain. </summary>
         public string Domain { get; }
-        /// <summary> Gets the ssl server config. </summary>
-        public IReadOnlyList<SslServerConfig> SslServerConfig { get; }
-        /// <summary> Gets the gdpr asset security policies. </summary>
-        public IReadOnlyList<AssetSecurityPolicy> GdprAssetSecurityPolicies { get; }
-        /// <summary> Gets the ipv 4. </summary>
-        public IReadOnlyList<ObservedBoolean> Ipv4 { get; }
-        /// <summary> Gets the ipv 6. </summary>
-        public IReadOnlyList<ObservedBoolean> Ipv6 { get; }
+
+        /// <summary> Gets the SslServerConfig. </summary>
+        public IList<SslServerConfig> SslServerConfig { get; }
+
+        /// <summary> Gets the GdprAssetSecurityPolicies. </summary>
+        public IList<AssetSecurityPolicy> GdprAssetSecurityPolicies { get; }
+
+        /// <summary> Gets the Ipv4. </summary>
+        public IList<ObservedBoolean> Ipv4 { get; }
+
+        /// <summary> Gets the Ipv6. </summary>
+        public IList<ObservedBoolean> Ipv6 { get; }
     }
 }

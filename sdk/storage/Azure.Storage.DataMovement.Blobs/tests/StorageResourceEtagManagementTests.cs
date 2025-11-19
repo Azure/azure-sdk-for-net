@@ -224,7 +224,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 CallBase = true
             };
-            mock.Setup(c => c.GetBlobsByHierarchyAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            mock.Setup(c => c.GetBlobsByHierarchyAsync(
+                It.IsAny<BlobTraits>(),
+                It.IsAny<BlobStates>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()))
                 .Returns(AsyncPageable<BlobHierarchyItem>.FromPages(new List<Page<BlobHierarchyItem>>()
                 {
                     Page<BlobHierarchyItem>.FromValues(

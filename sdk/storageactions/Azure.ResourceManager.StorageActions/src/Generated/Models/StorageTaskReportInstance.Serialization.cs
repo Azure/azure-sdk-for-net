@@ -17,7 +17,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Storage Tasks run report instance. </summary>
-    public partial class StorageTaskReportInstance : IJsonModel<StorageTaskReportInstance>
+    public partial class StorageTaskReportInstance : ResourceData, IJsonModel<StorageTaskReportInstance>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeStorageTaskReportInstance(document.RootElement, options);
                     }

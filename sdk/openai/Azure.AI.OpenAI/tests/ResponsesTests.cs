@@ -52,13 +52,12 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             FileUploadPurpose.Assistants);
         Validate(testFile);
 
-        CreateVectorStoreOperation createStoreOp = await vectorStoreClient.CreateVectorStoreAsync(
-            waitUntilCompleted: true,
+        VectorStore vectorStore = await vectorStoreClient.CreateVectorStoreAsync(
             new VectorStoreCreationOptions()
             {
                 FileIds = { testFile.Id },
             });
-        Validate(createStoreOp);
+        Validate(vectorStore);
 
         OpenAIResponse response = await client.CreateResponseAsync(
             "Using the file search tool, what's Travis's favorite food?",
@@ -66,7 +65,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             {
                 Tools =
                 {
-                    ResponseTool.CreateFileSearchTool([createStoreOp.VectorStoreId], null),
+                    ResponseTool.CreateFileSearchTool([vectorStore.Id], null),
                 }
             });
         Assert.That(response.OutputItems?.Count, Is.EqualTo(2));
@@ -80,9 +79,9 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(messageContentPart, Is.Not.Null);
         Assert.That(messageContentPart?.Text, Does.Contain("pizza"));
         Assert.That(messageContentPart?.OutputTextAnnotations, Is.Not.Null.And.Not.Empty);
-        Assert.That(messageContentPart?.OutputTextAnnotations[0].FileCitationFileId, Is.EqualTo(testFile.Id));
-        Assert.That(messageContentPart?.OutputTextAnnotations[0].FileCitationIndex, Is.GreaterThan(0));
-
+        FileCitationMessageAnnotation? citationAnnotation = messageContentPart!.OutputTextAnnotations[0] as FileCitationMessageAnnotation;
+        Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
+        Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
 
         await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
         {
@@ -121,9 +120,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                     BinaryData screenshotBytes = BinaryData.FromBytes(File.ReadAllBytes(screenshotPath));
                     ResponseItem screenshotReply = ResponseItem.CreateComputerCallOutputItem(
                         computerCall.CallId,
-                        [],
-                        screenshotBytes,
-                        "image/png");
+                        ComputerCallOutput.CreateScreenshotOutput(screenshotBytes, "image/png"));
 
                     options.PreviousResponseId = response!.Id;
                     response = await client.CreateResponseAsync(
@@ -235,7 +232,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                           }
                         }
                         """),
-                    functionSchemaIsStrict: false),
+                    strictModeEnabled: false),
             },
         };
         if (deploymentName == ComputerUseDeployment)
@@ -401,7 +398,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             "How's the weather?",
             new ResponseCreationOptions()
             {
-                Tools = { ResponseTool.CreateFunctionTool("get_weather", "gets the weather", BinaryData.FromString("{}")) },
+                Tools = { ResponseTool.CreateFunctionTool("get_weather", functionDescription: "gets the weather", functionParameters: BinaryData.FromString("{}"), strictModeEnabled: false) },
                 ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
                 TruncationMode = ResponseTruncationMode.Auto,
             });
@@ -766,8 +763,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         foreach (ResponseItem item in new ResponseItem[]
         {
             ResponseItem.CreateComputerCallItem("call_abcd", ComputerCallAction.CreateScreenshotAction(), []),
-            ResponseItem.CreateComputerCallOutputItem("call_abcd", [], "file_abcd"),
-            ResponseItem.CreateFileSearchCallItem(["query1"], []),
+            ResponseItem.CreateComputerCallOutputItem("call_abcd", ComputerCallOutput.CreateScreenshotOutput("file_abcd")),
+            ResponseItem.CreateFileSearchCallItem(["query1"]),
             ResponseItem.CreateFunctionCallItem("call_abcd", "function_name", BinaryData.Empty),
             ResponseItem.CreateFunctionCallOutputItem("call_abcd", "functionOutput"),
             ResponseItem.CreateReasoningItem("summary goes here"),
@@ -909,8 +906,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     private static readonly string s_GetWeatherAtLocationToolName = "get_weather_at_location";
     private static readonly ResponseTool s_GetWeatherAtLocationTool = ResponseTool.CreateFunctionTool(
             s_GetWeatherAtLocationToolName,
-            "Gets the weather at a specified location, optionally specifying units for temperature",
-            BinaryData.FromString("""
+            functionDescription: "Gets the weather at a specified location, optionally specifying units for temperature",
+            functionParameters: BinaryData.FromString("""
                 {
                     "type": "object",
                     "properties": {
@@ -925,5 +922,5 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                     "required": ["location"]
                 }
                 """),
-            false);
+            strictModeEnabled: false);
 }

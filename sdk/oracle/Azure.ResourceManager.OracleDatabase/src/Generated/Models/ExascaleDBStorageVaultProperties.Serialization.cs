@@ -88,6 +88,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ociUrl"u8);
                 writer.WriteStringValue(OciUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(ExadataInfrastructureId))
+            {
+                writer.WritePropertyName("exadataInfrastructureId"u8);
+                writer.WriteStringValue(ExadataInfrastructureId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedShapeAttributes))
+            {
+                writer.WritePropertyName("attachedShapeAttributes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AttachedShapeAttributes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -137,6 +152,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? vmClusterCount = default;
             string ocid = default;
             Uri ociUrl = default;
+            ResourceIdentifier exadataInfrastructureId = default;
+            IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,6 +242,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     ociUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("exadataInfrastructureId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exadataInfrastructureId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("attachedShapeAttributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ExascaleStorageShapeAttribute> array = new List<ExascaleStorageShapeAttribute>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new ExascaleStorageShapeAttribute(item.GetString()));
+                    }
+                    attachedShapeAttributes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -244,6 +284,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 vmClusterCount,
                 ocid,
                 ociUrl,
+                exadataInfrastructureId,
+                attachedShapeAttributes ?? new ChangeTrackingList<ExascaleStorageShapeAttribute>(),
                 serializedAdditionalRawData);
         }
 

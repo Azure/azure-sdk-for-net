@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive.Samples.Snippets
             #region Snippet:CreateVoiceLiveClientForSpecificApiVersion
             Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            VoiceLiveClientOptions options = new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_05_01_Preview);
+            VoiceLiveClientOptions options = new VoiceLiveClientOptions(VoiceLiveClientOptions.ServiceVersion.V2025_10_01);
             VoiceLiveClient client = new VoiceLiveClient(endpoint, credential, options);
             #endregion
         }

@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -17,66 +18,59 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         internal IDictionary<string, BinaryData> AdditionalProperties => this._additionalBinaryDataProperties;
 
-        private BinaryData VoiceInternal;
-
         /// <summary>
         /// Gets or sets the Voice.
         /// </summary>
-        public VoiceProvider Voice
-        {
-            get
-            {
-                if (VoiceInternal == null)
-                {
-                    return null;
-                }
-
-                var s = VoiceInternal.ToString();
-
-                return null;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    VoiceInternal = null;
-                }
-                else
-                {
-                    VoiceInternal = value.ToBinaryData();
-                }
-            }
-        }
-
-        [CodeGenMember("MaxResponseOutputTokens")]
-        private BinaryData _maxResponseOutputTokens;
+        public VoiceProvider Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of tokens to generate in the response.
         /// </summary>
-        public ResponseMaxOutputTokensOption MaxResponseOutputTokens
-        {
-            get => ResponseMaxOutputTokensOption.FromBinaryData(_maxResponseOutputTokens);
-            set
-            {
-                var persistable = value as IPersistableModel<ResponseMaxOutputTokensOption>;
-                _maxResponseOutputTokens = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
-            }
-        }
-
-        [CodeGenMember("ToolChoice")]
-        private BinaryData _toolChoice;
+        public MaxResponseOutputTokensOption MaxResponseOutputTokens { get; set; }
 
         /// <summary>
         /// Gets or sets the tool choice strategy for response generation.
         /// </summary>
-        public ToolChoiceOption ToolChoice
+        public ToolChoiceOption ToolChoice { get; set; }
+
+        [CodeGenMember("TurnDetection")]
+        private BinaryData _turnDetection;
+
+        /// <summary>
+        /// Gets or sets the TurnDetection.
+        /// </summary>
+        public TurnDetection TurnDetection
         {
-            get => ToolChoiceOption.FromBinaryData(_toolChoice);
+            get
+            {
+                var tdAsString = _turnDetection?.ToString();
+                if (string.IsNullOrEmpty(tdAsString))
+                {
+                    return null;
+                }
+                else if ("null" == tdAsString.ToLower(System.Globalization.CultureInfo.InvariantCulture))
+                {
+                    return new NoTurnDetection();
+                }
+                else
+                {
+                    using (JsonDocument document = JsonDocument.Parse(_turnDetection))
+                    {
+                        return TurnDetection.DeserializeTurnDetection(document.RootElement, new ModelReaderWriterOptions("J"));
+                    }
+                }
+            }
             set
             {
-                var persistable = value as IPersistableModel<ToolChoiceOption>;
-                _toolChoice = persistable?.Write(new ModelReaderWriterOptions("J")) ?? null;
+                if (value.Type == new TurnDetectionType("None"))
+                {
+                    _turnDetection = BinaryData.FromString(" null");
+                }
+                else
+                {
+                    var persist = value as IPersistableModel<TurnDetection>;
+                    _turnDetection = persist.Write(new ModelReaderWriterOptions("J"));
+                }
             }
         }
     }

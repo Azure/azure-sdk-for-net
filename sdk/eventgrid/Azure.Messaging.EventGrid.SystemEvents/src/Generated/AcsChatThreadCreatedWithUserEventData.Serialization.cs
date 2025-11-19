@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
     [JsonConverter(typeof(AcsChatThreadCreatedWithUserEventDataConverter))]
-    public partial class AcsChatThreadCreatedWithUserEventData : IJsonModel<AcsChatThreadCreatedWithUserEventData>
+    public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties, IJsonModel<AcsChatThreadCreatedWithUserEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedWithUserEventData"/> for deserialization. </summary>
         internal AcsChatThreadCreatedWithUserEventData()
@@ -253,7 +253,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement, options);
                     }

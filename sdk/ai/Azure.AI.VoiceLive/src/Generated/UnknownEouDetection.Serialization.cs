@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownEouDetection : IJsonModel<EouDetection>
+    internal partial class UnknownEouDetection : EouDetection, IJsonModel<EouDetection>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEouDetection"/> for deserialization. </summary>
         internal UnknownEouDetection()
@@ -65,13 +65,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            EOUDetectionModel model = default;
+            EouDetectionModel model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    model = prop.Value.GetString().ToEOUDetectionModel();
+                    model = new EouDetectionModel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +110,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeEouDetection(document.RootElement, options);
                     }

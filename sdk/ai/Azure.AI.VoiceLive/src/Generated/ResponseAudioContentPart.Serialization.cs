@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseAudioContentPart. </summary>
-    public partial class ResponseAudioContentPart : IJsonModel<ResponseAudioContentPart>
+    /// <summary> An audio content part for a response. </summary>
+    public partial class ResponseAudioContentPart : VoiceLiveContentPart, IJsonModel<ResponseAudioContentPart>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -117,7 +117,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeResponseAudioContentPart(document.RootElement, options);
                     }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> A grouping of signal assignments for an Azure resource. </summary>
     public partial class AzureResourceSignalGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceSignalGroup"/>. </summary>
         /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
@@ -64,24 +36,21 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="signalAssignments"> Signal definitions which are assigned to this signal group. All assignments are combined with an OR operator. </param>
         /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
         /// <param name="azureResourceId"> Azure resource ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureResourceSignalGroup(IList<EntitySignalAssignment> signalAssignments, string authenticationSetting, ResourceIdentifier azureResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureResourceSignalGroup(IList<EntitySignalAssignment> signalAssignments, string authenticationSetting, ResourceIdentifier azureResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalAssignments = signalAssignments;
             AuthenticationSetting = authenticationSetting;
             AzureResourceId = azureResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureResourceSignalGroup"/> for deserialization. </summary>
-        internal AzureResourceSignalGroup()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Signal definitions which are assigned to this signal group. All assignments are combined with an OR operator. </summary>
         public IList<EntitySignalAssignment> SignalAssignments { get; }
+
         /// <summary> Reference to the name of the authentication setting which is used for querying the data source. </summary>
         public string AuthenticationSetting { get; set; }
+
         /// <summary> Azure resource ID. </summary>
         public ResourceIdentifier AzureResourceId { get; set; }
     }

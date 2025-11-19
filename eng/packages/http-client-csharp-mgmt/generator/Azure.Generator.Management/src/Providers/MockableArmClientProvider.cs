@@ -5,12 +5,9 @@ using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
-using Humanizer;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -33,7 +30,14 @@ namespace Azure.Generator.Management.Providers
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
                 if (resource.IsExtensionResource)
                 {
-                    methods.AddRange(BuildMethodsForExtensionResource(resource));
+                    if (resource.IsSingleton)
+                    {
+                        methods.AddRange(BuildMethodsForExtensionSingletonResource(resource));
+                    }
+                    else
+                    {
+                        methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
+                    }
                 }
             }
 
@@ -66,8 +70,7 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, body, this);
         }
 
-        //TODO: handle singleton extension resource case when we actually see it
-        private IList<MethodProvider> BuildMethodsForExtensionResource(ResourceClientProvider resource)
+        private IList<MethodProvider> BuildMethodsForExtensionNonSingletonResource(ResourceClientProvider resource)
         {
             var result = new List<MethodProvider>();
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
@@ -129,6 +132,34 @@ namespace Azure.Generator.Management.Providers
                     Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
                     enclosingType);
             }
+        }
+
+        private IList<MethodProvider> BuildMethodsForExtensionSingletonResource(ResourceClientProvider resource)
+        {
+            var result = new List<MethodProvider>();
+
+            var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+            var signature = new MethodSignature(
+                $"{resource.FactoryMethodSignature.Name}",
+                $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the ArmClient",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                resource.Type,
+                $"Returns a {resource.Type:C} object.",
+                [scopeParameter]);
+
+            var body = new MethodBodyStatement[]
+            {
+                Return(New.Instance(resource.Type,
+                    [
+                        This.As<ArmResource>().Client(),
+                        MockableResourceProvider.BuildSingletonResourceIdentifier(scopeParameter.As<ResourceIdentifier>(), resource.ResourceTypeValue, resource.SingletonResourceName!)
+                    ]))
+            };
+
+            var getByScopeMethod = new MethodProvider(signature, body, this);
+            result.Add(getByScopeMethod);
+
+            return result;
         }
     }
 }

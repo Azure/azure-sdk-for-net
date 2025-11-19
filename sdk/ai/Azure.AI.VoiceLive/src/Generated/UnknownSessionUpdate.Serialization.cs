@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class UnknownSessionUpdate : IJsonModel<SessionUpdate>
+    internal partial class UnknownSessionUpdate : SessionUpdate, IJsonModel<SessionUpdate>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSessionUpdate"/> for deserialization. </summary>
         internal UnknownSessionUpdate()
@@ -116,7 +116,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdate(document.RootElement, options);
                     }

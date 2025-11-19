@@ -144,6 +144,112 @@ namespace Azure.AI.Agents.Persistent
                 serverLabel);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredComputerUseToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <param name="computerUsePreview"> Detailed information about the computer use action to be executed. </param>
+        /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCall"/> instance for mocking. </returns>
+        public static RequiredComputerUseToolCall RequiredComputerUseToolCall(string id = null, RequiredComputerUseToolCallDetails computerUsePreview = null)
+        {
+            return new RequiredComputerUseToolCall("computer_use_preview", serializedAdditionalRawData: null, id, computerUsePreview);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredComputerUseToolCallDetails"/>. </summary>
+        /// <param name="action">
+        /// The action to be performed by the computer use tool.
+        /// Please note <see cref="ComputerUseAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/> and <see cref="WaitAction"/>.
+        /// </param>
+        /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
+        /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCallDetails"/> instance for mocking. </returns>
+        public static RequiredComputerUseToolCallDetails RequiredComputerUseToolCallDetails(ComputerUseAction action = null, IEnumerable<SafetyCheck> pendingSafetyChecks = null)
+        {
+            pendingSafetyChecks ??= new List<SafetyCheck>();
+
+            return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ClickAction"/>. </summary>
+        /// <param name="x"> The x-coordinate where the click occurred. </param>
+        /// <param name="y"> The y-coordinate where the click occurred. </param>
+        /// <param name="button"> Indicates which mouse button was pressed during the click. </param>
+        /// <returns> A new <see cref="Persistent.ClickAction"/> instance for mocking. </returns>
+        public static ClickAction ClickAction(int x = default, int y = default, MouseButton button = default)
+        {
+            return new ClickAction("click", serializedAdditionalRawData: null, x, y, button);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.DoubleClickAction"/>. </summary>
+        /// <param name="x"> The x-coordinate where the double click occurred. </param>
+        /// <param name="y"> The y-coordinate where the double click occurred. </param>
+        /// <returns> A new <see cref="Persistent.DoubleClickAction"/> instance for mocking. </returns>
+        public static DoubleClickAction DoubleClickAction(int x = default, int y = default)
+        {
+            return new DoubleClickAction("double_click", serializedAdditionalRawData: null, x, y);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.DragAction"/>. </summary>
+        /// <param name="path"> An array of coordinates representing the path of the drag action. </param>
+        /// <returns> A new <see cref="Persistent.DragAction"/> instance for mocking. </returns>
+        public static DragAction DragAction(IEnumerable<CoordinatePoint> path = null)
+        {
+            path ??= new List<CoordinatePoint>();
+
+            return new DragAction("drag", serializedAdditionalRawData: null, path?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.CoordinatePoint"/>. </summary>
+        /// <param name="x"> The x-coordinate. </param>
+        /// <param name="y"> The y-coordinate. </param>
+        /// <returns> A new <see cref="Persistent.CoordinatePoint"/> instance for mocking. </returns>
+        public static CoordinatePoint CoordinatePoint(int x = default, int y = default)
+        {
+            return new CoordinatePoint(x, y, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.KeyPressAction"/>. </summary>
+        /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
+        /// <returns> A new <see cref="Persistent.KeyPressAction"/> instance for mocking. </returns>
+        public static KeyPressAction KeyPressAction(IEnumerable<string> keys = null)
+        {
+            keys ??= new List<string>();
+
+            return new KeyPressAction("keypress", serializedAdditionalRawData: null, keys?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.MoveAction"/>. </summary>
+        /// <param name="x"> The x-coordinate to move to. </param>
+        /// <param name="y"> The y-coordinate to move to. </param>
+        /// <returns> A new <see cref="Persistent.MoveAction"/> instance for mocking. </returns>
+        public static MoveAction MoveAction(int x = default, int y = default)
+        {
+            return new MoveAction("move", serializedAdditionalRawData: null, x, y);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ScrollAction"/>. </summary>
+        /// <param name="x"> The x-coordinate where the scroll occurred. </param>
+        /// <param name="y"> The y-coordinate where the scroll occurred. </param>
+        /// <param name="scrollX"> The horizontal scroll distance. </param>
+        /// <param name="scrollY"> The vertical scroll distance. </param>
+        /// <returns> A new <see cref="Persistent.ScrollAction"/> instance for mocking. </returns>
+        public static ScrollAction ScrollAction(int x = default, int y = default, int scrollX = default, int scrollY = default)
+        {
+            return new ScrollAction(
+                "scroll",
+                serializedAdditionalRawData: null,
+                x,
+                y,
+                scrollX,
+                scrollY);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.TypeAction"/>. </summary>
+        /// <param name="text"> The text to type. </param>
+        /// <returns> A new <see cref="Persistent.TypeAction"/> instance for mocking. </returns>
+        public static TypeAction TypeAction(string text = null)
+        {
+            return new TypeAction("type", serializedAdditionalRawData: null, text);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Persistent.SubmitToolApprovalAction"/>. </summary>
         /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
         /// <returns> A new <see cref="Persistent.SubmitToolApprovalAction"/> instance for mocking. </returns>
@@ -156,7 +262,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The list of tool calls that must be approved for the agent thread run to continue.
         /// Please note <see cref="Persistent.RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RequiredFunctionToolCall"/> and <see cref="Persistent.RequiredMcpToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RequiredComputerUseToolCall"/>, <see cref="Persistent.RequiredFunctionToolCall"/> and <see cref="Persistent.RequiredMcpToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.SubmitToolApprovalDetails"/> instance for mocking. </returns>
         public static SubmitToolApprovalDetails SubmitToolApprovalDetails(IEnumerable<RequiredToolCall> toolCalls = null)
@@ -236,6 +342,28 @@ namespace Azure.AI.Agents.Persistent
             return new MessageTextUriCitationDetails(uri, title, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Persistent.ComputerToolOutput"/>. </summary>
+        /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
+        /// <param name="output"> The output from the computer use tool. </param>
+        /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
+        /// <returns> A new <see cref="Persistent.ComputerToolOutput"/> instance for mocking. </returns>
+        public static ComputerToolOutput ComputerToolOutput(string toolCallId = null, ComputerScreenshot output = null, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = null)
+        {
+            acknowledgedSafetyChecks ??= new List<SafetyCheck>();
+
+            return new ComputerToolOutput("computer_call_output", toolCallId, serializedAdditionalRawData: null, output, acknowledgedSafetyChecks?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ComputerScreenshot"/>. </summary>
+        /// <param name="type"> Specifies the event type. For a computer screenshot, this property is always set to computer_screenshot. </param>
+        /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
+        /// <param name="imageUrl"> The URL of the screenshot image. </param>
+        /// <returns> A new <see cref="Persistent.ComputerScreenshot"/> instance for mocking. </returns>
+        public static ComputerScreenshot ComputerScreenshot(ComputerScreenshotType type = default, string fileId = null, string imageUrl = null)
+        {
+            return new ComputerScreenshot(type, fileId, imageUrl, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Persistent.ToolApproval"/>. </summary>
         /// <param name="toolCallId"> The ID of the tool call being resolved, as provided in the tool calls of a required action from a run. </param>
         /// <param name="approve"> The approval boolean value to be submitted. </param>
@@ -268,7 +396,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepAzureFunctionToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepBrowserAutomationToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepComputerUseToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -423,6 +551,33 @@ namespace Azure.AI.Agents.Persistent
                 name,
                 output,
                 serverLabel);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepComputerUseToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="computerUsePreview"> The detailed information about the computer use tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepComputerUseToolCall"/> instance for mocking. </returns>
+        public static RunStepComputerUseToolCall RunStepComputerUseToolCall(string id = null, RunStepComputerUseToolCallDetails computerUsePreview = null)
+        {
+            return new RunStepComputerUseToolCall("computer_use_preview", id, serializedAdditionalRawData: null, computerUsePreview);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepComputerUseToolCallDetails"/>. </summary>
+        /// <param name="action">
+        /// The action to be performed by the computer use tool.
+        /// Please note <see cref="ComputerUseAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/> and <see cref="WaitAction"/>.
+        /// </param>
+        /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
+        /// <param name="output"> The output from the computer use tool. </param>
+        /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer. </param>
+        /// <returns> A new <see cref="Persistent.RunStepComputerUseToolCallDetails"/> instance for mocking. </returns>
+        public static RunStepComputerUseToolCallDetails RunStepComputerUseToolCallDetails(ComputerUseAction action = null, IEnumerable<SafetyCheck> pendingSafetyChecks = null, ComputerScreenshot output = null, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = null)
+        {
+            pendingSafetyChecks ??= new List<SafetyCheck>();
+            acknowledgedSafetyChecks ??= new List<SafetyCheck>();
+
+            return new RunStepComputerUseToolCallDetails(action, pendingSafetyChecks?.ToList(), output, acknowledgedSafetyChecks?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepSharepointToolCall"/>. </summary>
@@ -942,7 +1097,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The collection of tool calls for the tool call detail item.
         /// Please note <see cref="Persistent.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaAzureFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/>, <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/> and <see cref="Persistent.RunStepDeltaSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
         public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
@@ -1140,6 +1295,34 @@ namespace Azure.AI.Agents.Persistent
             azureAISearch ??= new Dictionary<string, string>();
 
             return new RunStepDeltaAzureAISearchToolCall(index, id, "azure_ai_search", serializedAdditionalRawData: null, azureAISearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaComputerUseToolCall"/>. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="computerUsePreview"> The computer use data for the tool call. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaComputerUseToolCall RunStepDeltaComputerUseToolCall(int index = default, string id = null, RunStepDeltaComputerUseDetails computerUsePreview = null)
+        {
+            return new RunStepDeltaComputerUseToolCall(index, id, "computer_use_preview", serializedAdditionalRawData: null, computerUsePreview);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaComputerUseDetails"/>. </summary>
+        /// <param name="action">
+        /// The action to be performed by the computer use tool.
+        /// Please note <see cref="ComputerUseAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/> and <see cref="WaitAction"/>.
+        /// </param>
+        /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
+        /// <param name="output"> The output from the computer use tool, null if outputs have not yet been submitted. </param>
+        /// <param name="acknowledgedSafetyChecks"> Safety checks that have been acknowledged by the developer, null if outputs have not yet been submitted. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaComputerUseDetails"/> instance for mocking. </returns>
+        public static RunStepDeltaComputerUseDetails RunStepDeltaComputerUseDetails(ComputerUseAction action = null, IEnumerable<SafetyCheck> pendingSafetyChecks = null, ComputerScreenshot output = null, IEnumerable<SafetyCheck> acknowledgedSafetyChecks = null)
+        {
+            pendingSafetyChecks ??= new List<SafetyCheck>();
+            acknowledgedSafetyChecks ??= new List<SafetyCheck>();
+
+            return new RunStepDeltaComputerUseDetails(action, pendingSafetyChecks?.ToList(), output, acknowledgedSafetyChecks?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMicrosoftFabricToolCall"/>. </summary>

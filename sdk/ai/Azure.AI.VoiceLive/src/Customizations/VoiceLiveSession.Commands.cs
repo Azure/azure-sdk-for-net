@@ -43,18 +43,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Transmits audio data from a byte array.
-        /// </summary>
-        /// <param name="audio">The audio data to transmit.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="audio"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when another audio stream is already being sent.</exception>
-        public virtual void SendInputAudio(byte[] audio, CancellationToken cancellationToken = default)
-        {
-            SendInputAudioAsync(audio, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Transmits audio data from BinaryData.
         /// </summary>
         /// <param name="audio">The audio data to transmit.</param>
@@ -81,18 +69,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Transmits audio data from BinaryData.
-        /// </summary>
-        /// <param name="audio">The audio data to transmit.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="audio"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when another audio stream is already being sent.</exception>
-        public virtual void SendInputAudio(BinaryData audio, CancellationToken cancellationToken = default)
-        {
-            SendInputAudioAsync(audio, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Clears the input audio buffer.
         /// </summary>
         /// <param name="cancellationToken">An optional cancellation token.</param>
@@ -102,15 +78,6 @@ namespace Azure.AI.VoiceLive
             ThrowIfDisposed();
             ClientEventInputAudioBufferClear clearCommand = new();
             await SendCommandAsync(clearCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Clears the input audio buffer.
-        /// </summary>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        public virtual void ClearInputAudio(CancellationToken cancellationToken = default)
-        {
-            ClearInputAudioAsync(cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -126,15 +93,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Commits the input audio buffer.
-        /// </summary>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        public virtual void CommitInputAudio(CancellationToken cancellationToken = default)
-        {
-            CommitInputAudioAsync(cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Clears all input audio currently being streamed.
         /// </summary>
         /// <param name="cancellationToken">An optional cancellation token.</param>
@@ -145,15 +103,6 @@ namespace Azure.AI.VoiceLive
 
             ClientEventInputAudioClear clearCommand = new();
             await SendCommandAsync(clearCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Clears all input audio currently being streamed.
-        /// </summary>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        public virtual void ClearStreamingAudio(CancellationToken cancellationToken = default)
-        {
-            ClearStreamingAudioAsync(cancellationToken).EnsureCompleted();
         }
 
         #endregion
@@ -175,18 +124,6 @@ namespace Azure.AI.VoiceLive
 
             ClientEventInputAudioTurnStart startCommand = new(turnId);
             await SendCommandAsync(startCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Starts a new audio input turn.
-        /// </summary>
-        /// <param name="turnId">Unique identifier for the input audio turn.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
-        public virtual void StartAudioTurn(string turnId, CancellationToken cancellationToken = default)
-        {
-            StartAudioTurnAsync(turnId, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -217,19 +154,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
-        public virtual void AppendAudioToTurn(string turnId, byte[] audio, CancellationToken cancellationToken = default)
-        {
-            AppendAudioToTurnAsync(turnId, audio, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Appends audio data to an ongoing input turn.
-        /// </summary>
-        /// <param name="turnId">The ID of the turn this audio is part of.</param>
-        /// <param name="audio">The audio data to append.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public virtual async Task AppendAudioToTurnAsync(string turnId, BinaryData audio, CancellationToken cancellationToken = default)
         {
@@ -240,19 +164,6 @@ namespace Azure.AI.VoiceLive
             string base64Audio = Convert.ToBase64String(audio.ToArray());
             ClientEventInputAudioTurnAppend appendCommand = new(turnId, base64Audio);
             await SendCommandAsync(appendCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Appends audio data to an ongoing input turn.
-        /// </summary>
-        /// <param name="turnId">The ID of the turn this audio is part of.</param>
-        /// <param name="audio">The audio data to append.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
-        public virtual void AppendAudioToTurn(string turnId, BinaryData audio, CancellationToken cancellationToken = default)
-        {
-            AppendAudioToTurnAsync(turnId, audio, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -273,18 +184,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Marks the end of an audio input turn.
-        /// </summary>
-        /// <param name="turnId">The ID of the audio turn being ended.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
-        public virtual void EndAudioTurn(string turnId, CancellationToken cancellationToken = default)
-        {
-            EndAudioTurnAsync(turnId, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Cancels an in-progress input audio turn.
         /// </summary>
         /// <param name="turnId">The ID of the turn to cancel.</param>
@@ -300,19 +199,6 @@ namespace Azure.AI.VoiceLive
             ClientEventInputAudioTurnCancel cancelCommand = new(turnId);
             await SendCommandAsync(cancelCommand, cancellationToken).ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// Cancels an in-progress input audio turn.
-        /// </summary>
-        /// <param name="turnId">The ID of the turn to cancel.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
-        public virtual void CancelAudioTurn(string turnId, CancellationToken cancellationToken = default)
-        {
-            CancelAudioTurnAsync(turnId, cancellationToken).EnsureCompleted();
-        }
-
         #endregion
 
         #region Session Configuration
@@ -333,63 +219,6 @@ namespace Azure.AI.VoiceLive
             await SendCommandAsync(updateCommand, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Updates the session configuration.
-        /// </summary>
-        /// <param name="sessionOptions">The session configuration options.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        public virtual void ConfigureSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
-        {
-            ConfigureSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Updates the conversation session configuration.
-        /// </summary>
-        /// <param name="sessionOptions">The session configuration options.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task ConfigureConversationSessionAsync(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
-        {
-            await ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates the conversation session configuration.
-        /// </summary>
-        /// <param name="sessionOptions">The session configuration options.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        public virtual void ConfigureConversationSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
-        {
-            ConfigureConversationSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Updates the transcription session configuration.
-        /// </summary>
-        /// <param name="sessionOptions">The session configuration options.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task ConfigureTranscriptionSessionAsync(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
-        {
-            await ConfigureSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates the transcription session configuration.
-        /// </summary>
-        /// <param name="sessionOptions">The session configuration options.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
-        public virtual void ConfigureTranscriptionSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
-        {
-            ConfigureTranscriptionSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
-        }
-
         #endregion
 
         #region Item Management
@@ -404,17 +233,6 @@ namespace Azure.AI.VoiceLive
         public virtual async Task AddItemAsync(ConversationRequestItem item, CancellationToken cancellationToken = default)
         {
             await AddItemAsync(item, previousItemId: null, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Adds an item to the conversation.
-        /// </summary>
-        /// <param name="item">The item to add to the conversation.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-        public virtual void AddItem(ConversationRequestItem item, CancellationToken cancellationToken = default)
-        {
-            AddItem(item, previousItemId: null, cancellationToken);
         }
 
         /// <summary>
@@ -443,18 +261,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Adds an item to the conversation at a specific position.
-        /// </summary>
-        /// <param name="item">The item to add to the conversation.</param>
-        /// <param name="previousItemId">The ID of the item after which to insert the new item.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-        public virtual void AddItem(ConversationRequestItem item, string previousItemId, CancellationToken cancellationToken = default)
-        {
-            AddItemAsync(item, previousItemId, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Retrieves an item from the conversation.
         /// </summary>
         /// <param name="itemId">The ID of the item to retrieve.</param>
@@ -469,18 +275,6 @@ namespace Azure.AI.VoiceLive
 
             ClientEventConversationItemRetrieve retrieveCommand = new(itemId);
             await SendCommandAsync(retrieveCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves an item from the conversation.
-        /// </summary>
-        /// <param name="itemId">The ID of the item to retrieve.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
-        public virtual void RequestItemRetrieval(string itemId, CancellationToken cancellationToken = default)
-        {
-            RequestItemRetrievalAsync(itemId, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -501,48 +295,25 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Deletes an item from the conversation.
-        /// </summary>
-        /// <param name="itemId">The ID of the item to delete.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
-        public virtual void DeleteItem(string itemId, CancellationToken cancellationToken = default)
-        {
-            DeleteItemAsync(itemId, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Truncates the conversation history.
         /// </summary>
         /// <param name="itemId">The ID of the item up to which to truncate the conversation.</param>
         /// <param name="contentIndex">The content index within the item to truncate to.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <param name="audioEnd">Inclusive duration up to which audio is truncated</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task TruncateConversationAsync(string itemId, int contentIndex, CancellationToken cancellationToken = default)
+        public virtual async Task TruncateConversationAsync(string itemId, int contentIndex, TimeSpan audioEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             ThrowIfDisposed();
 
-            var truncateEvent = new ClientEventConversationItemTruncate(itemId, contentIndex, 0);
+            var truncateEvent = new ClientEventConversationItemTruncate(itemId, contentIndex, Convert.ToInt32(audioEnd.TotalMilliseconds));
 
             await SendCommandAsync(truncateEvent, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Truncates the conversation history.
-        /// </summary>
-        /// <param name="itemId">The ID of the item up to which to truncate the conversation.</param>
-        /// <param name="contentIndex">The content index within the item to truncate to.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemId"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
-        public virtual void TruncateConversation(string itemId, int contentIndex, CancellationToken cancellationToken = default)
-        {
-            TruncateConversationAsync(itemId, contentIndex, cancellationToken).EnsureCompleted();
-        }
         #endregion
 
         #region Response Management
@@ -555,15 +326,6 @@ namespace Azure.AI.VoiceLive
         public virtual async Task StartResponseAsync(CancellationToken cancellationToken = default)
         {
             await StartResponseAsync(responseOptions: null, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Starts a new response generation.
-        /// </summary>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        public virtual void StartResponse(CancellationToken cancellationToken = default)
-        {
-            StartResponse(responseOptions: null, cancellationToken);
         }
 
         /// <summary>
@@ -582,16 +344,6 @@ namespace Azure.AI.VoiceLive
             };
 
             await SendCommandAsync(responseEvent, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Starts a new response generation with specific options.
-        /// </summary>
-        /// <param name="responseOptions">The options for response generation.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        public virtual void StartResponse(VoiceLiveSessionOptions responseOptions, CancellationToken cancellationToken = default)
-        {
-            StartResponseAsync(responseOptions, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -615,17 +367,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Starts a new response generation with additional instructions.
-        /// </summary>
-        /// <param name="additionalInstructions">Additional instructions for this response.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="additionalInstructions"/> is null.</exception>
-        public virtual void StartResponse(string additionalInstructions, CancellationToken cancellationToken = default)
-        {
-            StartResponseAsync(additionalInstructions, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
         /// Cancels the current response generation.
         /// </summary>
         /// <param name="cancellationToken">An optional cancellation token.</param>
@@ -636,15 +377,6 @@ namespace Azure.AI.VoiceLive
 
             ClientEventResponseCancel cancelCommand = new();
             await SendCommandAsync(cancelCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Cancels the current response generation.
-        /// </summary>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        public virtual void CancelResponse(CancellationToken cancellationToken = default)
-        {
-            CancelResponseAsync(cancellationToken).EnsureCompleted();
         }
 
         #endregion
@@ -666,18 +398,6 @@ namespace Azure.AI.VoiceLive
 
             ClientEventSessionAvatarConnect avatarConnectCommand = new(clientSdp);
             await SendCommandAsync(avatarConnectCommand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Connects and provides the client's SDP (Session Description Protocol) for avatar-related media negotiation.
-        /// </summary>
-        /// <param name="clientSdp">The client's SDP offer.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="clientSdp"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="clientSdp"/> is empty.</exception>
-        public virtual void ConnectAvatar(string clientSdp, CancellationToken cancellationToken = default)
-        {
-            ConnectAvatarAsync(clientSdp, cancellationToken).EnsureCompleted();
         }
 
         #endregion

@@ -131,8 +131,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="iormConfigCache"> iormConfigCache details for Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="backupSubnetOcid"> Cluster backup subnet ocid. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
+        /// <param name="shapeAttribute"> The type of Exascale storage used for Exadata VM cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExadbVmClusterProperties(string ocid, string clusterName, string backupSubnetCidr, Uri nsgUri, OracleDatabaseProvisioningState? provisioningState, ExadbVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, DiagnosticCollectionConfig dataCollectionOptions, string displayName, string domain, int enabledEcpuCount, ResourceIdentifier exascaleDBStorageVaultId, string gridImageOcid, GridImageType? gridImageType, string giVersion, string hostname, OracleLicenseModel? licenseModel, int? memorySizeInGbs, int nodeCount, IList<CloudVmClusterNsgCidr> nsgCidrs, string zoneOcid, string privateZoneOcid, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, int? listenerPort, string shape, IList<string> sshPublicKeys, string systemVersion, string timeZone, int totalEcpuCount, ExadbVmClusterStorageDetails vmFileSystemStorage, string lifecycleDetails, string scanDnsName, IReadOnlyList<string> scanIPIds, string scanDnsRecordId, ExadbVmClusterStorageDetails snapshotFileSystemStorage, ExadbVmClusterStorageDetails totalFileSystemStorage, IReadOnlyList<string> vipIds, Uri ociUri, ExadataIormConfig iormConfigCache, string backupSubnetOcid, string subnetOcid, ExascaleStorageShapeAttribute? shapeAttribute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ClusterName = clusterName;
@@ -177,6 +178,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IormConfigCache = iormConfigCache;
             BackupSubnetOcid = backupSubnetOcid;
             SubnetOcid = subnetOcid;
+            ShapeAttribute = shapeAttribute;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -293,5 +295,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string BackupSubnetOcid { get; }
         /// <summary> Cluster subnet ocid. </summary>
         public string SubnetOcid { get; }
+        /// <summary> The type of Exascale storage used for Exadata VM cluster. </summary>
+        public ExascaleStorageShapeAttribute? ShapeAttribute { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when an Item is done streaming. Also emitted when a Response is
     /// interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseOutputItemDone : IJsonModel<SessionUpdateResponseOutputItemDone>
+    public partial class SessionUpdateResponseOutputItemDone : SessionUpdate, IJsonModel<SessionUpdateResponseOutputItemDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemDone"/> for deserialization. </summary>
         internal SessionUpdateResponseOutputItemDone()
@@ -83,7 +83,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             int outputIndex = default;
-            ResponseItem item = default;
+            SessionResponseItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -112,7 +112,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
+                    item = SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseOutputItemDone(document.RootElement, options);
                     }

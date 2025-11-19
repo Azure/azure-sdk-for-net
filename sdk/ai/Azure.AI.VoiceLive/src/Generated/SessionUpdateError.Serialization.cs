@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// problem. Most errors are recoverable and the session will stay open, we
     /// recommend to implementors to monitor and log error messages by default.
     /// </summary>
-    public partial class SessionUpdateError : IJsonModel<SessionUpdateError>
+    public partial class SessionUpdateError : SessionUpdate, IJsonModel<SessionUpdateError>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateError"/> for deserialization. </summary>
         internal SessionUpdateError()
@@ -129,7 +129,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateError(document.RootElement, options);
                     }

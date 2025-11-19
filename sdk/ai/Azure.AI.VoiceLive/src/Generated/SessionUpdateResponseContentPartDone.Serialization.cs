@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a content part is done streaming in an assistant message item.
     /// Also emitted when a Response is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseContentPartDone : IJsonModel<SessionUpdateResponseContentPartDone>
+    public partial class SessionUpdateResponseContentPartDone : SessionUpdate, IJsonModel<SessionUpdateResponseContentPartDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseContentPartDone"/> for deserialization. </summary>
         internal SessionUpdateResponseContentPartDone()
@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseContentPartDone(document.RootElement, options);
                     }

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the model-generated function call arguments are done streaming.
     /// Also emitted when a Response is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseFunctionCallArgumentsDone : IJsonModel<SessionUpdateResponseFunctionCallArgumentsDone>
+    public partial class SessionUpdateResponseFunctionCallArgumentsDone : SessionUpdate, IJsonModel<SessionUpdateResponseFunctionCallArgumentsDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/> for deserialization. </summary>
         internal SessionUpdateResponseFunctionCallArgumentsDone()
@@ -177,7 +177,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSessionUpdateResponseFunctionCallArgumentsDone(document.RootElement, options);
                     }

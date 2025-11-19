@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public readonly partial struct AutoUpdateRingType : IEquatable<AutoUpdateRingType>
     {
         private readonly string _value;
+        /// <summary> customer selection of preview update install mcc on their physical vm. </summary>
+        private const string PreviewValue = "Preview";
+        /// <summary> customer selection of slow update to install mcc on their physical vm. </summary>
+        private const string SlowValue = "Slow";
+        /// <summary> customer selection of fast / auto update to install mcc on their physical vm. </summary>
+        private const string FastValue = "Fast";
 
         /// <summary> Initializes a new instance of <see cref="AutoUpdateRingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoUpdateRingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PreviewValue = "Preview";
-        private const string SlowValue = "Slow";
-        private const string FastValue = "Fast";
+            _value = value;
+        }
 
         /// <summary> customer selection of preview update install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Preview { get; } = new AutoUpdateRingType(PreviewValue);
+
         /// <summary> customer selection of slow update to install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Slow { get; } = new AutoUpdateRingType(SlowValue);
+
         /// <summary> customer selection of fast / auto update to install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Fast { get; } = new AutoUpdateRingType(FastValue);
+
         /// <summary> Determines if two <see cref="AutoUpdateRingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoUpdateRingType left, AutoUpdateRingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoUpdateRingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoUpdateRingType left, AutoUpdateRingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoUpdateRingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoUpdateRingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoUpdateRingType(string value) => new AutoUpdateRingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoUpdateRingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoUpdateRingType?(string value) => value == null ? null : new AutoUpdateRingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoUpdateRingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoUpdateRingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
