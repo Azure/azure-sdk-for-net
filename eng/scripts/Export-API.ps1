@@ -33,7 +33,7 @@ $debugLogging = $env:SYSTEM_DEBUG -eq "true"
 $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
 $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/exportapi.binlog" : ""
 
-Invoke-LoggedMsbuildCommand "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope="$relativePackagePath" /p:SDKType=$SDKType /restore $servicesProj $diagnosticArguments"
+Invoke-LoggedMsbuildCommand "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope=`"$relativePackagePath`" /p:SDKType=$SDKType /restore $servicesProj $diagnosticArguments"
 
 # Normalize line endings to LF in generated API listing files
 Write-Host "Normalizing line endings in API listing files"
