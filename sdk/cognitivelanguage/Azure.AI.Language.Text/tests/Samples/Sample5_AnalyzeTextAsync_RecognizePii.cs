@@ -168,6 +168,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #endregion
         }
 
+        // this sample
         public async Task RecognizePii_RedactionPolicies()
         {
             Uri endpoint = TestEnvironment.Endpoint;
