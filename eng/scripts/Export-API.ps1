@@ -31,7 +31,7 @@ $debugLogging = $env:SYSTEM_DEBUG -eq "true"
 $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
 $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/exportapi.binlog" : ""
 
-dotnet build `
+."$PSScriptRoot/runwithdevopslogging.ps1" dotnet build `
     /t:ExportApi `
     /p:RunApiCompat=false `
     /p:InheritDocEnabled=false `
