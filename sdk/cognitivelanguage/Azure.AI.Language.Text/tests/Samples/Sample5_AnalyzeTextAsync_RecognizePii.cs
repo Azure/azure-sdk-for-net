@@ -168,8 +168,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #endregion
         }
 
-        // this sample
-        public async Task RecognizePii_RedactionPolicies()
+        [Test]
+        [AsyncOnly]
+        public async Task RecognizePii_RedactionPolicies_SyntheticMask()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -463,6 +464,73 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine($"Error in document {error.Id}!");
                 Console.WriteLine($"  Error code: {error.Error.Code}");
                 Console.WriteLine($"  Message: {error.Error.Message}");
+                Console.WriteLine();
+            }
+            #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task RecognizePii_ConfidenceScoreThreshold()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisClient client = new(endpoint, credential);
+
+            #region Snippet:Sample_AnalyzeTextAsync_RecognizePii_ConfidenceScoreThreshold
+            string text =
+                "My name is John Doe. My ssn is 222-45-6789. My email is john@example.com. John Doe is my name.";
+
+            // Input documents
+            MultiLanguageTextInput textInput = new MultiLanguageTextInput
+            {
+                MultiLanguageInputs =
+        {
+            new MultiLanguageInput("1", text) { Language = "en" }
+        }
+            };
+
+            // Confidence score overrides:
+            //   default = 0.3
+            //   SSN & Email overridden to 0.9 (so they get filtered out as entities)
+            ConfidenceScoreThreshold confidenceThreshold = new ConfidenceScoreThreshold(0.3f);
+            confidenceThreshold.Overrides.Add(
+                new ConfidenceScoreThresholdOverride(
+                    value: 0.9f,
+                    entity: PiiCategory.UsSocialSecurityNumber.ToString()
+                ));
+            confidenceThreshold.Overrides.Add(
+                new ConfidenceScoreThresholdOverride(
+                    value: 0.9f,
+                    entity: PiiCategory.Email.ToString()
+                ));
+
+            PiiActionContent actionContent = new PiiActionContent
+            {
+                PiiCategories = { PiiCategory.All },
+                DisableEntityValidation = true,
+                ConfidenceScoreThreshold = confidenceThreshold
+            };
+
+            AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = textInput,
+                ActionContent = actionContent
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
+            AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
+
+            PiiActionResult doc = piiResult.Results.Documents[0];
+
+            Console.WriteLine($"Redacted text: \"{doc.RedactedText}\"");
+            Console.WriteLine("Recognized entities (after confidence score filtering):");
+
+            foreach (PiiEntity entity in doc.Entities)
+            {
+                Console.WriteLine($"  Text: {entity.Text}");
+                Console.WriteLine($"  Category: {entity.Category}");
+                Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
                 Console.WriteLine();
             }
             #endregion
