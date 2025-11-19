@@ -5,7 +5,6 @@
     <!-- Signal that integration projects are building in the repo -->
     <IsClientLibrary>true</IsClientLibrary>
     <IsPackable>true</IsPackable>
-    <IsTestProject>true</IsTestProject>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <NoWarn>
       $(NoWarn);
