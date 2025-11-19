@@ -148,8 +148,9 @@ function CreateUpdatePackageWorkItem($pkgInfo)
     }
 
     $specProjectPath = ''
-    if ((Test-Path (Join-Path $pkgInfo.DirectoryPath tsp-location.yaml))){ 
-        $tspLocation = Get-Content (Join-Path $pkgInfo.DirectoryPath tsp-location.yaml) | ConvertFrom-Yaml
+    $tspLocationYmlPath = Join-Path "$PSScriptRoot/../../.." $pkgInfo.DirectoryPath 'tsp-location.yaml'
+    if (Test-Path $tspLocationYmlPath) { 
+        $tspLocation = Get-Content $tspLocationYmlPath | ConvertFrom-Yaml
         $specProjectPath = $tspLocation.directory
     }
 
