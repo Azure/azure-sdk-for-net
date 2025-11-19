@@ -56,7 +56,6 @@ if ($LASTEXITCODE) {
 # Normalize line endings to LF in generated API listing files
 Write-Host "Normalizing line endings in API listing files"
 $apiListingFiles = Get-ChildItem -Path $apiListingFilesFilter
-$apiListingFiles | Write-Host
 foreach ($file in $apiListingFiles) {
     $content = Get-Content -Path $file.FullName -Raw
     if ($content) {
