@@ -214,30 +214,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Override attribute for dependency type field.
         /// When present, takes precedence over computed type from semantic conventions.
         /// </summary>
-        internal const string AttributeMicrosoftDependencyType = "microsoft.dependency.type";
+        public const string AttributeMicrosoftDependencyType = "microsoft.dependency.type";
 
         /// <summary>
         /// Override attribute for request name field.
         /// When present, takes precedence over Activity.DisplayName.
         /// </summary>
-        internal const string AttributeMicrosoftRequestName = "microsoft.request.name";
+        public const string AttributeMicrosoftRequestName = "microsoft.request.name";
 
         /// <summary>
         /// Override attribute for request URL field.
         /// When present, takes precedence over computed URL from semantic conventions.
         /// </summary>
-        internal const string AttributeMicrosoftRequestUrl = "microsoft.request.url";
+        public const string AttributeMicrosoftRequestUrl = "microsoft.request.url";
 
         /// <summary>
         /// Override attribute for request source field.
         /// When present, takes precedence over computed source from semantic conventions.
         /// </summary>
-        internal const string AttributeMicrosoftRequestSource = "microsoft.request.source";
+        public const string AttributeMicrosoftRequestSource = "microsoft.request.source";
 
         /// <summary>
         /// Override attribute for request result code field.
         /// When present, takes precedence over computed result code from semantic conventions.
         /// </summary>
-        internal const string AttributeMicrosoftRequestResultCode = "microsoft.request.resultCode";
+        public const string AttributeMicrosoftRequestResultCode = "microsoft.request.resultCode";
     }
 }

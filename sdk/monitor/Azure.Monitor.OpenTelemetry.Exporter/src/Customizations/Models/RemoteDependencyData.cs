@@ -83,14 +83,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 : SchemaConstants.Duration_MaxValue;
             Success = activity.Status != ActivityStatusCode.Error;
 
-            // Only set Type from Azure namespace if not already set by override
-            if (string.IsNullOrEmpty(Type))
+            // Set Type from Azure namespace if present (unless already set by override attribute)
+            if (activityTagsProcessor.AzureNamespace != null)
             {
-                if (activityTagsProcessor.AzureNamespace != null)
+                if (string.IsNullOrEmpty(Type))
                 {
                     Type = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
                 }
-                else if (activity.Kind == ActivityKind.Internal)
+            }
+            else if (activity.Kind == ActivityKind.Internal)
+            {
+                if (string.IsNullOrEmpty(Type))
                 {
                     Type = "InProc";
                 }
