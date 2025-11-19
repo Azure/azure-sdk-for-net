@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -86,6 +87,21 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
+        /// </summary>
+        /// <param name="clientConnection">The <see cref="ClientConnection"/> to construct the client from.</param>
+        /// <param name="configureOptions">Optional callback to confiure the <see cref="ArmClientOptions"/>.</param>
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        public ArmClient(ClientConnection clientConnection, Action<ArmClientOptions> configureOptions = default)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+            : this(
+                  (TokenCredential)clientConnection.Credential,
+                  clientConnection.Configuration["DefaultSubscriptionId"],
+                  ArmClientOptions.Create(clientConnection, configureOptions))
+        {
         }
 
         internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)

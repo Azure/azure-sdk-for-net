@@ -179,6 +179,17 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    public partial class ConfigurableCredential : Azure.Core.TokenCredential
+    {
+        public ConfigurableCredential() { }
+        public ConfigurableCredential(Microsoft.Extensions.Configuration.IConfigurationSection configurationSection) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public static partial class ConfigurationManagerExtensions
+    {
+        public static System.ClientModel.Primitives.ClientConnection GetAzureConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
+    }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
     {
         [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
@@ -286,6 +297,10 @@ namespace Azure.Identity
         public EnvironmentCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+    }
+    public static partial class HostBuilderExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddAzureCredential(this Microsoft.Extensions.Hosting.IHostBuilder host, string sectionName) { throw null; }
     }
     public static partial class IdentityModelFactory
     {

@@ -64,6 +64,11 @@ namespace System.ClientModel
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public static partial class ConfigurationManagerExtensions
+    {
+        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName, System.ClientModel.AuthenticationTokenProvider tokenProvider) { throw null; }
+    }
     public partial class ContinuationToken
     {
         protected ContinuationToken() { }
@@ -97,6 +102,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         protected AuthenticationPolicy() { }
+        public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientConnection connection, string scope) { throw null; }
     }
     public partial class AuthenticationToken
     {
@@ -123,13 +129,15 @@ namespace System.ClientModel.Primitives
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ClientConnection(string id, string locator) { throw null; }
-        public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
-        public ClientConnection(string id, string locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
+        public ClientConnection(string id, string? locator) { throw null; }
+        public ClientConnection(string id, string? locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
+        public ClientConnection(string id, string? locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, Microsoft.Extensions.Configuration.IConfigurationSection configurationSection) { throw null; }
+        public ClientConnection(string id, string? locator, object? credential, System.ClientModel.Primitives.CredentialKind credentialKind, System.Collections.Generic.IReadOnlyDictionary<string, string>? metadata) { throw null; }
+        public Microsoft.Extensions.Configuration.IConfiguration? Configuration { get { throw null; } }
         public object? Credential { get { throw null; } }
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Locator { get { throw null; } }
+        public string? Locator { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public override string ToString() { throw null; }
         public bool TryGetLocatorAsUri(out System.Uri? uri) { throw null; }
