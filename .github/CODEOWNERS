@@ -1085,11 +1085,11 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @ghidalgo3
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @ArthurMa1978
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978 @chahibi @mandarinamdar
 
 # ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @ghidalgo3
+# ServiceOwners:                                                   @mandarinamdar
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
