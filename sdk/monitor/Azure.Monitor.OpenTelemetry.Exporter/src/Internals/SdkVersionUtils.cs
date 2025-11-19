@@ -148,7 +148,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// <summary>
     /// Specifies the type of SDK for telemetry identification and version labeling.
     /// </summary>
-    public enum SdkVersionType
+    internal enum SdkVersionType
     {
         /// <summary>Default Azure Monitor OpenTelemetry Exporter.</summary>
         Exporter,
