@@ -27,6 +27,8 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers\ApiView-Helpers.ps1)
 . (Join-Path $PSScriptRoot Helpers\DevOps-WorkItem-Helpers.ps1)
+. (Join-Path $PSScriptRoot Helpers\PSModule-Helpers.ps1)
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
 # Function to validate change log
 function ValidateChangeLog($changeLogPath, $versionString, $validationStatus)
@@ -145,6 +147,12 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         $plannedDate = "unknown"
     }
 
+    $specProjectPath = ''
+    if ((Test-Path (Join-Path $pkgInfo.DirectoryPath tsp-location.yaml))){ 
+        $tspLocation = Get-Content (Join-Path $pkgInfo.DirectoryPath tsp-location.yaml) | ConvertFrom-Yaml
+        $specProjectPath = $tspLocation.directory
+    }
+
     # Create or update package work item
     $result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
         -packageName $packageName `
@@ -155,7 +163,8 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -packageNewLibrary $pkgInfo.IsNewSDK `
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
-        -inRelease $IsReleaseBuild
+        -inRelease $IsReleaseBuild `
+        -specProjectPath $specProjectPath
 
     if (-not $result)
     {

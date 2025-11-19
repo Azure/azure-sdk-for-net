@@ -477,6 +477,10 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
         $pkg.RepoPath = $pkg.fields["Custom.PackageRepoPath"]
       }
 
+      if (!$pkg.SpecProjectPath -and $latestVersionItem.fields["Custom.SpecProjectPath"]) {
+        $pkg.SpecProjectPath = $latestVersionItem.fields["Custom.SpecProjectPath"]
+      }
+
       if ($latestVersionItem.fields["Custom.Generated"]) {
         $extraFields += "`"Generated=" + $latestVersionItem.fields["Custom.Generated"] + "`""
       }
@@ -516,6 +520,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $pkgType = $pkg.Type
   $pkgNewLibrary = $pkg.New
   $pkgRepoPath = $pkg.RepoPath
+  $specProjectPath = $pkg.SpecProjectPath
   $serviceName = $pkg.ServiceName
   $title = $lang + " - " + $pkg.DisplayName + " - " + $verMajorMinor
 
@@ -528,6 +533,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $fields += "`"PackageVersionMajorMinor=${verMajorMinor}`""
   $fields += "`"ServiceName=${serviceName}`""
   $fields += "`"PackageRepoPath=${pkgRepoPath}`""
+  $fields += "`"SpecProjectPath=${specProjectPath}`""
 
   if ($extraFields) {
     $fields += $extraFields
@@ -545,7 +551,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     if ($pkgNewLibrary -ne $existingItem.fields["Custom.PackageTypeNewLibrary"]) { $changedField = "Custom.PackageTypeNewLibrary" }
     if ($pkgRepoPath -ne $existingItem.fields["Custom.PackageRepoPath"]) { $changedField = "Custom.PackageRepoPath" }
     if ($serviceName -ne $existingItem.fields["Custom.ServiceName"]) { $changedField = "Custom.ServiceName" }
-    if ($title -ne $existingItem.fields["System.Title"]) { $changedField = "System.Title" }
+    if ($specProjectPath -ne $existingItem.fields["Custom.SpecProjectPath"]) { $changedField = "Custom.SpecProjectPath" }
 
     if ($changedField) {
       Write-Host "At least field $changedField ($($existingItem.fields[$changedField])) changed so updating."
@@ -1256,7 +1262,8 @@ function Update-DevOpsReleaseWorkItem {
     [string]$packageNewLibrary = "true",
     [string]$relatedWorkItemId = $null,
     [string]$tag = $null,
-    [bool]$inRelease = $true
+    [bool]$inRelease = $true,
+    [string]$specProjectPath = ""
   )
 
   if (!(Get-Command az -ErrorAction SilentlyContinue)) {
@@ -1280,6 +1287,7 @@ function Update-DevOpsReleaseWorkItem {
     RepoPath = $packageRepoPath
     Type = $packageType
     New = $packageNewLibrary
+    SpecProjectPath = $specProjectPath
   };
 
   if (!$plannedDate) {
