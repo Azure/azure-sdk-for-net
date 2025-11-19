@@ -1,0 +1,94 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - .github/copilot-instructions.md
+
+parameters:
+  - name: EvalProject
+    type: string
+    default: 'tools/azsdk-cli/Azure.Sdk.Tools.Cli.Evaluations'
+  - name: OpenAIEndPoint
+    type: string
+    default: 'https://ai-prmarottai3149546654251245.openai.azure.com/'
+  - name: Model
+    type: string
+    default: 'gpt-5'
+  - name: ToolsRepoName
+    type: string
+    default: 'azure-sdk-tools'
+  - name: ToolsRepoOwner
+    type: string
+    default: 'Azure'
+
+jobs:
+  - job: Run_Eval
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
+    displayName: 'Run AI Eval'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+
+    steps:
+    - checkout: self
+    - task: UseDotNet@2
+      displayName: "Use .NET SDK 8.0.x"
+      retryCountOnTaskFailure: 3
+      inputs:
+        packageType: sdk
+        version: 9.0.x
+        performMultiLevelLookup: true
+
+    - task: UseDotNet@2
+      displayName: "Use .NET SDK 8.0.x"
+      retryCountOnTaskFailure: 3
+      inputs:
+        packageType: sdk
+        version: 8.0.x
+        performMultiLevelLookup: true
+
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+        SkipCheckoutNone: true
+        Repositories:
+          - Name: ${{ parameters.ToolsRepoOwner }}/${{ parameters.ToolsRepoName }}
+            WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.ToolsRepoName }}
+        Paths:
+          - 'tools/**'
+    
+    - task: AzureCLI@2
+      displayName: 'Run eval'
+      condition: and(succeeded(), ne(variables['Skip.Eval'], 'true'))
+      inputs:
+        azureSubscription: opensource-api-connection
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        workingDirectory: '${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}'
+        inlineScript: |
+          echo "Logged in to Azure"
+          echo "Running eval in project ${{ parameters.EvalProject }}"
+          dotnet test /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) --logger trx
+      env:
+        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        DOTNET_MULTILEVEL_LOOKUP: 0
+        AZURE_OPENAI_MODEL_DEPLOYMENT_NAME: ${{ parameters.Model }}
+        AZURE_OPENAI_ENDPOINT: ${{ parameters.OpenAIEndPoint }}
+        COPILOT_INSTRUCTIONS_REPOSITORY_NAME: $(Build.Repository.Name)
+        COPILOT_INSTRUCTIONS_REPOSITORY_OWNER: $(Build.Repository.Owner)
+        COPILOT_INSTRUCTIONS_PATH: $(System.DefaultWorkingDirectory)/.github/copilot-instructions.md
+
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFiles: '**/*.trx'
+        testRunTitle: $(System.JobDisplayName)
+        testResultsFormat: 'VSTest'
+        mergeTestResults: true
