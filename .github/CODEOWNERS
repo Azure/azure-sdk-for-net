@@ -1097,10 +1097,7 @@
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Quota
-/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
-
-# ServiceLabel: %Quota %Mgmt
-# ServiceOwners:                                                   @tejasm-microsoft
+/sdk/quota/Azure.ResourceManager.*/                                @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
