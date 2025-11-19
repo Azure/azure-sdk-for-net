@@ -11,8 +11,15 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Projects.OpenAI;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices;
+using Azure.ResourceManager.CognitiveServices.Models;
+using Azure.Identity;
+using Azure.AI.OpenAI;
 using NUnit.Framework;
+using OpenAI.Chat;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
@@ -190,6 +197,10 @@ public class FineTuningTests : FineTuningTestsBase
 
             Console.WriteLine($"Created SFT job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -217,6 +228,10 @@ public class FineTuningTests : FineTuningTestsBase
 
             Console.WriteLine($"Created SFT OSS job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -243,6 +258,10 @@ public class FineTuningTests : FineTuningTestsBase
 
             Console.WriteLine($"Created DPO job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -303,6 +322,10 @@ public class FineTuningTests : FineTuningTestsBase
 
             Console.WriteLine($"Created RFT job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
@@ -432,5 +455,34 @@ public class FineTuningTests : FineTuningTestsBase
         {
             await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_List_Checkpoints()
+    {
+        // Note: This test uses a pre-completed fine-tuning job ID because checkpoints
+        // are only available for jobs in terminal state and completing a job takes signicant
+        // time and the test can't be halted that long. When re-recording this test, ensure the
+        // job used is in terminal state.
+        string preCompletedJobId = "ftjob-28b93663ef504bf280a7d96b6a1d69f7";
+
+        var (_, fineTuningClient) = GetClients();
+
+        // Retrieve the completed job
+        FineTuningJob completedJob = await fineTuningClient.GetJobAsync(preCompletedJobId);
+        Console.WriteLine($"Retrieved completed job: {completedJob.JobId}, Status: {completedJob.Status}");
+
+        // List checkpoints
+        var checkpointsList = new List<FineTuningCheckpoint>();
+        await foreach (FineTuningCheckpoint checkpoint in completedJob.GetCheckpointsAsync(new GetCheckpointsOptions()))
+        {
+            checkpointsList.Add(checkpoint);
+            Console.WriteLine($"Checkpoint: {checkpoint.Id} at step {checkpoint.StepNumber}");
+        }
+
+        Console.WriteLine($"Listed {checkpointsList.Count} checkpoints for job {completedJob.JobId}");
+        Assert.That(checkpointsList.Count, Is.GreaterThan(0));
+        Assert.That(checkpointsList[0].Id, Is.Not.Null);
+        Assert.That(checkpointsList[0].StepNumber, Is.GreaterThan(0));
     }
 }

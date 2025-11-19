@@ -8,6 +8,13 @@ Supported OpenAI models: GPT 4o, 4o-mini, 4.1, 4.1-mini
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
+- For deployment and inference samples, also install:
+  - `Azure.AI.OpenAI` - For inference with deployed models
+  - `Azure.ResourceManager.CognitiveServices` - For model deployment via Azure Resource Manager
+
+> **Important:** Ensure you use compatible versions of `Azure.AI.Projects` and `Azure.AI.OpenAI`. 
+> Refer to the [package release notes](https://github.com/Azure/azure-sdk-for-net/releases) for compatible version combinations.
+
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
@@ -291,4 +298,154 @@ OpenAIFile WaitForFileProcessing(
     Console.WriteLine($"File {fileId} processing completed successfully");
     return file;
 }
+```
+
+## Deploying a Fine-Tuned Model
+
+Once your fine-tuning job completes, you can deploy the model using Azure Resource Manager.
+
+### Asynchronous Deployment
+
+```csharp
+using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices;
+using Azure.ResourceManager.CognitiveServices.Models;
+using Azure.Identity;
+
+// Get the completed fine-tuning job
+FineTuningJob completedJob = await fineTuningClient.GetJobAsync("your-completed-job-id");
+
+// Configure deployment
+string deploymentName = $"ft-deployment-{completedJob.BaseModel}";
+string fineTunedModelName = completedJob.Value;
+
+// Create ARM client
+var credential = new DefaultAzureCredential();
+var armClient = new ArmClient(credential);
+
+// Get Cognitive Services account
+var resourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(
+    "your-subscription-id",
+    "your-resource-group",
+    "your-account-name");
+var accountResource = armClient.GetCognitiveServicesAccountResource(resourceId);
+
+// Deploy the model
+var deploymentData = new CognitiveServicesAccountDeploymentData
+{
+    Properties = new CognitiveServicesAccountDeploymentProperties
+    {
+        Model = new CognitiveServicesAccountDeploymentModel
+        {
+            Format = "OpenAI",
+            Name = fineTunedModelName,
+            Version = "1"
+        }
+    },
+    Sku = new CognitiveServicesSku("GlobalStandard") { Capacity = 50 }
+};
+
+var deploymentOperation = await accountResource.GetCognitiveServicesAccountDeployments()
+    .CreateOrUpdateAsync(Azure.WaitUntil.Completed, deploymentName, deploymentData);
+
+Console.WriteLine($"Deployment {deploymentName} completed successfully");
+```
+
+### Synchronous Deployment
+
+```csharp
+using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices;
+using Azure.ResourceManager.CognitiveServices.Models;
+using Azure.Identity;
+
+// Get the completed fine-tuning job
+FineTuningJob completedJob = fineTuningClient.GetJob("your-completed-job-id");
+
+// Configure deployment
+string deploymentName = $"ft-deployment-{completedJob.BaseModel}";
+string fineTunedModelName = completedJob.JobId;  // Job ID is the model identifier
+
+// Create ARM client
+var credential = new DefaultAzureCredential();
+var armClient = new ArmClient(credential);
+
+// Get Cognitive Services account
+var resourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(
+    "your-subscription-id",
+    "your-resource-group",
+    "your-account-name");
+var accountResource = armClient.GetCognitiveServicesAccountResource(resourceId);
+
+// Deploy the model
+var deploymentData = new CognitiveServicesAccountDeploymentData
+{
+    Properties = new CognitiveServicesAccountDeploymentProperties
+    {
+        Model = new CognitiveServicesAccountDeploymentModel
+        {
+            Format = "OpenAI",
+            Name = fineTunedModelName,
+            Version = "1"
+        }
+    },
+    Sku = new CognitiveServicesSku("GlobalStandard") { Capacity = 50 }
+};
+
+var deploymentOperation = accountResource.GetCognitiveServicesAccountDeployments()
+    .CreateOrUpdate(Azure.WaitUntil.Completed, deploymentName, deploymentData);
+
+Console.WriteLine($"Deployment {deploymentName} completed successfully");
+```
+
+## Inference with Deployed Fine-Tuned Model
+
+Perform inference with your deployed fine-tuned model using Azure OpenAI client.
+
+### Asynchronous Inference
+
+```csharp
+using Azure.AI.OpenAI;
+using Azure.Identity;
+using OpenAI.Chat;
+
+string accountName = "your-account-name";
+string deploymentName = "your-deployment-name";
+
+// Create Azure OpenAI client
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri($"https://{accountName}.openai.azure.com/");
+var azureOpenAIClient = new AzureOpenAIClient(endpoint, credential);
+
+// Get chat client for the deployment
+var chatClient = azureOpenAIClient.GetChatClient(deploymentName);
+
+// Perform inference
+ChatCompletion result = await chatClient.CompleteChatAsync("Your prompt here");
+
+Console.WriteLine($"Response: {result.Content[0].Text}");
+```
+
+### Synchronous Inference
+
+```csharp
+using Azure.AI.OpenAI;
+using Azure.Identity;
+using OpenAI.Chat;
+
+string accountName = "your-account-name";
+string deploymentName = "your-deployment-name";
+
+// Create Azure OpenAI client
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri($"https://{accountName}.openai.azure.com/");
+var azureOpenAIClient = new AzureOpenAIClient(endpoint, credential);
+
+// Get chat client for the deployment
+var chatClient = azureOpenAIClient.GetChatClient(deploymentName);
+
+// Perform inference
+ChatCompletion result = chatClient.CompleteChat("Your prompt here");
+
+Console.WriteLine($"Response: {result.Content[0].Text}");
 ```
