@@ -1097,32 +1097,45 @@ interface Employees {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
-    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+
+    const employeeClient = getAllClients(root).find(
+      (c) => c.name === "Employees"
+    );
     ok(employeeClient);
-    const employeeParentClient = getAllClients(root).find((c) => c.name === "EmployeeParents");
+    const employeeParentClient = getAllClients(root).find(
+      (c) => c.name === "EmployeeParents"
+    );
     ok(employeeParentClient);
-    
+
     const employeeModel = root.models.find((m) => m.name === "Employee");
     ok(employeeModel);
-    const employeeParentModel = root.models.find((m) => m.name === "EmployeeParent");
+    const employeeParentModel = root.models.find(
+      (m) => m.name === "EmployeeParent"
+    );
     ok(employeeParentModel);
-    
-    const listByParentMethod = employeeClient.methods.find((m) => m.name === "listByParent");
+
+    const listByParentMethod = employeeClient.methods.find(
+      (m) => m.name === "listByParent"
+    );
     ok(listByParentMethod);
-    const getMethod = employeeParentClient.methods.find((m) => m.name === "get");
+    const getMethod = employeeParentClient.methods.find(
+      (m) => m.name === "get"
+    );
     ok(getMethod);
 
     // Validate Employee resource metadata should be null (no CRUD operations)
     const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
       (d) => d.name === resourceMetadata
     );
-    strictEqual(employeeResourceMetadataDecorator, undefined, "Employee should not have resource metadata decorator without CRUD operations");
+    strictEqual(
+      employeeResourceMetadataDecorator,
+      undefined,
+      "Employee should not have resource metadata decorator without CRUD operations"
+    );
 
     // Validate EmployeeParent resource metadata
-    const parentResourceMetadataDecorator = employeeParentModel.decorators?.find(
-      (d) => d.name === resourceMetadata
-    );
+    const parentResourceMetadataDecorator =
+      employeeParentModel.decorators?.find((d) => d.name === resourceMetadata);
     ok(parentResourceMetadataDecorator);
     ok(parentResourceMetadataDecorator.arguments);
     strictEqual(
@@ -1137,14 +1150,21 @@ interface Employees {
       parentResourceMetadataDecorator.arguments.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(parentResourceMetadataDecorator.arguments.parentResourceId, undefined);
-    strictEqual(parentResourceMetadataDecorator.arguments.resourceName, "EmployeeParent");
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.parentResourceId,
+      undefined
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceName,
+      "EmployeeParent"
+    );
     strictEqual(parentResourceMetadataDecorator.arguments.methods.length, 2);
 
     // Validate EmployeeParent listByParent method
-    const listByParentEntry = parentResourceMetadataDecorator.arguments.methods.find(
-      (m: any) => m.methodId === listByParentMethod.crossLanguageDefinitionId
-    );
+    const listByParentEntry =
+      parentResourceMetadataDecorator.arguments.methods.find(
+        (m: any) => m.methodId === listByParentMethod.crossLanguageDefinitionId
+      );
     ok(listByParentEntry);
   });
 
@@ -1181,10 +1201,12 @@ interface Employees {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
-    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+
+    const employeeClient = getAllClients(root).find(
+      (c) => c.name === "Employees"
+    );
     ok(employeeClient);
-    
+
     const employeeModel = root.models.find((m) => m.name === "Employee");
     ok(employeeModel);
 

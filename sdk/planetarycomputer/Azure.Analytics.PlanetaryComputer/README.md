@@ -14,8 +14,8 @@ Use the client library for Azure Planetary Computer to:
 - Generate secure access tokens for collections and assets
 
 [Source code][source_code]
-| [Package (NuGet)][pc_nuget]
-| [API reference documentation][pc_ref_docs]
+<!-- | [Package (NuGet)][pc_nuget] -->
+<!-- | [API reference documentation][pc_ref_docs] -->
 | [Product documentation][pc_product_docs]
 
 ## Getting started
@@ -48,7 +48,7 @@ dotnet add package Azure.Identity
 
 You will also need to [register a new Microsoft Entra ID application and grant access][register_aad_app] to your GeoCatalog by assigning the appropriate role to your service principal.
 
-```C# Snippet:CreateClient
+```csharp
 string endpoint = "https://your-endpoint.geocatalog.spatio.azure.com";
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
@@ -123,19 +123,20 @@ The following section provides several code snippets covering common GeoCatalog 
 
 List all available STAC collections:
 
-```C# Snippet:ListCollections
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
+```C# Snippet:Sample01_ListCollections
+// Create a Planetary Computer client
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 StacClient stacClient = client.GetStacClient();
 
+// List all available STAC collections
 Response<StacCatalogCollections> response = await stacClient.GetCollectionsAsync();
+StacCatalogCollections collections = response.Value;
 
-foreach (StacCollectionResource collection in response.Value.Collections)
+Console.WriteLine($"Found {collections.Collections.Count} collections:");
+foreach (StacCollectionResource collection in collections.Collections)
 {
-    Console.WriteLine($"Collection: {collection.Id}");
-    Console.WriteLine($"  Title: {collection.Title}");
-    Console.WriteLine($"  Description: {collection.Description}");
+    Console.WriteLine($"  - {collection.Id}: {collection.Title}");
 }
 ```
 
@@ -143,15 +144,21 @@ foreach (StacCollectionResource collection in response.Value.Collections)
 
 Search for geospatial data items with spatial filters:
 
-```C# Snippet:SearchItems
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
-StacClient stacClient = client.GetStacClient();
+```C# Snippet:Sample04_SearchSpatial
+// Create a Planetary Computer client
 
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+
+                        StacClient stacClient = client.GetStacClient();
+
+// Search for items within a bounding box using CQL2-JSON
 var searchParams = new StacSearchParameters();
 searchParams.Collections.Add("naip");
 searchParams.FilterLang = FilterLanguage.Cql2Json;
+
+// Define a spatial filter for Atlanta, Georgia area
 searchParams.Filter["op"] = BinaryData.FromString("\"s_intersects\"");
 searchParams.Filter["args"] = BinaryData.FromObjectAsJson(new object[]
 {
@@ -172,142 +179,206 @@ searchParams.Filter["args"] = BinaryData.FromObjectAsJson(new object[]
         }
     }
 });
+
 searchParams.Limit = 10;
 
-Response<StacItemCollectionResource> searchResponse = await stacClient.SearchAsync(searchParams);
-Console.WriteLine($"Found {searchResponse.Value.Features.Count} items");
+Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
+StacItemCollectionResource results = response.Value;
+
+Console.WriteLine($"Found {results.Features.Count} items in the specified area");
+foreach (StacItemResource item in results.Features)
+{
+    Console.WriteLine($"  Item: {item.Id}");
+}
 ```
 
 ### Get STAC Item Details
 
 Retrieve detailed information about a specific STAC item:
 
-```C# Snippet:GetItem
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
-StacClient stacClient = client.GetStacClient();
+```C# Snippet:Sample04_GetItem
+// Create a Planetary Computer client
 
-Response<StacItemResource> response = await stacClient.GetItemAsync(
-    "naip",
-    "ga_m_3308421_se_16_060_20211114");
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+
+                        StacClient stacClient = client.GetStacClient();
+
+// Get a specific item by ID
+string collectionId = "naip";
+string itemId = "tx_m_2609719_se_14_060_20201216";
+
+Response<StacItemResource> response = await stacClient.GetItemAsync(collectionId, itemId);
 StacItemResource item = response.Value;
+
 Console.WriteLine($"Item ID: {item.Id}");
-Console.WriteLine($"Geometry type: {item.Geometry.Type}");
-Console.WriteLine($"Assets: {string.Join(", ", item.Assets.Keys)}");
+Console.WriteLine($"Collection: {item.Collection}");
+Console.WriteLine($"Datetime: {item.Properties?.Datetime}");
+
+Console.WriteLine($"\nAvailable Assets:");
+foreach (var asset in item.Assets)
+{
+    Console.WriteLine($"  {asset.Key}: {asset.Value.Href}");
+}
 ```
 
 ### Create STAC Collection
 
 Create a new STAC collection for organizing geospatial data:
 
-```C# Snippet:CreateCollection
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
-StacClient stacClient = client.GetStacClient();
+```C# Snippet:Sample08_CreateCollection
+// Create a Planetary Computer client
 
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+
+                        StacClient stacClient = client.GetStacClient();
+
+// Define collection ID
+string collectionId = "my-test-collection";
+
+// Define spatial extent (global coverage)
 var spatialExtent = new StacExtensionSpatialExtent();
 spatialExtent.BoundingBox.Add(new List<float> { -180.0f, -90.0f, 180.0f, 90.0f });
 
+// Define temporal extent
 var temporalExtent = new StacCollectionTemporalExtent(
-    new[] { new List<string> { "2023-01-01T00:00:00Z", "2023-12-31T23:59:59Z" } });
+    new[] { new List<string> { "2018-01-01T00:00:00Z", "2018-12-31T23:59:59Z" } }
+);
 
+// Combine spatial and temporal extents
 var extent = new StacExtensionExtent(spatialExtent, temporalExtent);
 
+// Create collection resource
 var collection = new StacCollectionResource(
-    id: "my-collection",
-    description: "A collection of geospatial data",
+    id: collectionId,
+    description: "Test collection for demonstration",
     links: new List<StacLink>(),
     license: "CC-BY-4.0",
     extent: extent)
 {
     StacVersion = "1.0.0",
-    Title = "My Collection",
+    Title = "Test Collection",
     Type = "Collection"
 };
 
+// Start collection creation (asynchronous operation)
 Operation createOperation = await stacClient.CreateCollectionAsync(
     WaitUntil.Started,
-    collection);
+    collection
+);
 
-Console.WriteLine($"Started creating collection: {collection.Id}");
+Console.WriteLine($"Collection creation started: {collectionId}");
+Console.WriteLine("Note: Collection creation is asynchronous and may take time to complete");
 ```
 
 ### Generate Map Tiles
 
 Generate map tiles from geospatial data:
 
-```C# Snippet:GetTile
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
-DataClient dataClient = client.GetDataClient();
+```C# Snippet:Sample06_GetTile
+// Create a Planetary Computer client
 
-Response response = await dataClient.GetItemTileAsync(
-    collectionId: "naip",
-    itemId: "ga_m_3308421_se_16_060_20211114",
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+
+                        DataClient dataClient = client.GetDataClient();
+
+string collectionId = "naip";
+string itemId = "tx_m_2609719_se_14_060_20201216";
+
+// Get a specific tile
+Response<BinaryData> response = await dataClient.GetTileAsync(
+    collectionId: collectionId,
+    itemId: itemId,
     tileMatrixSetId: "WebMercatorQuad",
     z: 14,
-    x: 4322,
-    y: 6463,
-    asset: "image");
+    x: 4349,
+    y: 6564,
+    scale: 1,
+    format: "png",
+    assets: new[] { "image" },
+    assetBandIndices: "image|1,2,3"
+);
 
-// Save tile to file
-using FileStream fileStream = File.Create("tile.png");
-await response.ContentStream.CopyToAsync(fileStream);
+byte[] tileImage = response.Value.ToArray();
+Console.WriteLine($"Tile image: {tileImage.Length} bytes");
 ```
 
 ### Data Ingestion Management
 
 Manage data ingestion operations:
 
-```C# Snippet:CreateIngestion
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
-IngestionClient ingestionClient = client.GetIngestionClient();
+```C# Snippet:Sample02_CompleteWorkflow
+// Create a Planetary Computer client
 
-// First, get a managed identity
-ManagedIdentityMetadata identity = null;
-await foreach (ManagedIdentityMetadata item in ingestionClient.GetManagedIdentitiesAsync())
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+
+                        IngestionClient ingestionClient = client.GetIngestionClient();
+
+string collectionId = "my-collection";
+string sourceCatalogUrl = "https://example.com/catalog.json";
+
+// Step 1: Create an ingestion definition
+var ingestionDefinition = new IngestionInformation("StaticCatalog")
 {
-    identity = item;
-    break;
+    DisplayName = "My Dataset Ingestion",
+    SourceCatalogUrl = new Uri(sourceCatalogUrl),
+    KeepOriginalAssets = true,
+    SkipExistingItems = true
+};
+
+Response<IngestionInformation> createResponse = await ingestionClient.CreateAsync(
+    collectionId,
+    ingestionDefinition);
+Guid ingestionId = createResponse.Value.Id;
+Console.WriteLine($"Created ingestion: {ingestionId}");
+
+// Step 2: Create and start an ingestion run
+Response<IngestionRun> runResponse = await ingestionClient.CreateRunAsync(collectionId, ingestionId);
+Guid runId = runResponse.Value.Id;
+Console.WriteLine($"Started ingestion run: {runId}");
+
+// Step 3: Monitor the run progress
+Response<IngestionRun> statusResponse = await ingestionClient.GetRunAsync(collectionId, ingestionId, runId);
+IngestionRun run = statusResponse.Value;
+
+Console.WriteLine($"Run Status: {run.Operation.Status}");
+Console.WriteLine($"Progress: {run.Operation.TotalSuccessfulItems}/{run.Operation.TotalItems} items");
+
+// Step 4: List all runs for this ingestion
+Console.WriteLine("\nAll runs for this ingestion:");
+await foreach (IngestionRun r in ingestionClient.GetRunsAsync(collectionId, ingestionId))
+{
+    Console.WriteLine($"  Run {r.Id}: {r.Operation.Status}");
 }
-
-// Create ingestion source with managed identity
-var connectionInfo = new ManagedIdentityConnection(
-    new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer"),
-    identity.ObjectId);
-var ingestionSource = new ManagedIdentityIngestionSource(
-    Guid.NewGuid(),
-    connectionInfo);
-
-Response<IngestionSource> sourceResponse = await ingestionClient.CreateSourceAsync(ingestionSource);
-
-Console.WriteLine($"Created ingestion source: {sourceResponse.Value.Id}");
 ```
 
 ### Generate SAS Token for Secure Access
 
 Generate Shared Access Signatures for secure data access:
 
-```C# Snippet:GenerateSasToken
-PlanetaryComputerProClient client = new PlanetaryComputerProClient(
-    new Uri(endpoint),
-    new DefaultAzureCredential());
-ManagedStorageSharedAccessSignatureClient sasClient =
-    client.GetManagedStorageSharedAccessSignatureClient();
+```C# Snippet:Sample03_GetTokenDefaultDuration
+// Create a Planetary Computer client
 
-Response<SharedAccessSignatureToken> response = await sasClient.GetTokenAsync(
-    collectionId: "naip",
-    durationInMinutes: 60);
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+
+                        ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
+
+// Get a SAS token with default duration (24 hours)
+string collectionId = "naip";
+Response<SharedAccessSignatureToken> response = await sasClient.GetTokenAsync(collectionId);
 SharedAccessSignatureToken token = response.Value;
-Console.WriteLine($"SAS Token: {token.Token.Substring(0, 20)}...");
-Console.WriteLine($"Expires: {token.ExpiresOn}");
+
+Console.WriteLine($"SAS Token: {token.Token.Substring(0, 50)}...");
+Console.WriteLine($"Expires On: {token.ExpiresOn:yyyy-MM-dd HH:mm:ss} UTC");
 ```
 
 ## Troubleshooting
@@ -318,7 +389,7 @@ When you interact with Azure Planetary Computer using the .NET SDK, errors retur
 
 For example, if you try to retrieve a collection that doesn't exist, a `404` error is returned, indicating `Resource Not Found`.
 
-```C# Snippet:HandleException
+```csharp
 PlanetaryComputerProClient client = new PlanetaryComputerProClient(
     new Uri(endpoint),
     new DefaultAzureCredential());
@@ -367,9 +438,9 @@ PlanetaryComputerProClient client = new PlanetaryComputerProClient(
 
 ## Next steps
 
-- View [samples][pc_samples] demonstrating common patterns for working with GeoCatalog resources
-- Review the [API reference documentation][pc_ref_docs] for detailed information about the client library
-- Read the [product documentation][pc_product_docs] on Microsoft Learn
+<!-- View [samples][pc_samples] demonstrating common patterns for working with GeoCatalog resources -->
+- Review the [product documentation][pc_product_docs] on Microsoft Learn
+<!-- - Review the [API reference documentation][pc_ref_docs] for detailed information about the client library -->
 
 ## Contributing
 
@@ -381,10 +452,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/src
-[pc_nuget]: https://www.nuget.org/packages/Azure.Analytics.PlanetaryComputer
-[pc_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.analytics.planetarycomputer
+<!-- [pc_nuget]: https://www.nuget.org/packages/Azure.Analytics.PlanetaryComputer -->
+<!-- [pc_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.analytics.planetarycomputer -->
 [pc_product_docs]: https://learn.microsoft.com/azure/planetary-computer/
-[pc_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/samples
+<!-- [pc_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/samples -->
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme

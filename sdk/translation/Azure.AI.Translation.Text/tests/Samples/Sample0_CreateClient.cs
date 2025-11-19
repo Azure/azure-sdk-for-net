@@ -135,7 +135,7 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:HandleBadRequest
             try
             {
-                var translation = client.Translate(Array.Empty<string>(), new[] { "This is a Test" });
+                var translation = client.Translate("", "This is a Test");
             }
             catch (RequestFailedException e)
             {
@@ -151,7 +151,7 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                var translation = await client.TranslateAsync(Array.Empty<string>(), new[] { "This is a Test" }).ConfigureAwait(false);
+                var translation = await client.TranslateAsync("", "This is a Test").ConfigureAwait(false);
             }
             catch (RequestFailedException e)
             {
