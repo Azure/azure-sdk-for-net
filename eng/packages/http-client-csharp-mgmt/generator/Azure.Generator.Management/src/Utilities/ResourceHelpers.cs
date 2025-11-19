@@ -155,13 +155,13 @@ namespace Azure.Generator.Management.Utilities
             // Request Path item
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Request Path"]),
-                new XmlDocStatement("description", [$"{operation.Path}"])));
+                new XmlDocStatement($"<description>", $"</description>", [$"{operation.Path}"])));
 
             // Operation Id item
             string operationId = GetOperationId(serviceMethod);
             listItems.Add(new XmlDocStatement("item", [],
                 new XmlDocStatement("term", [$"Operation Id"]),
-                new XmlDocStatement("description", [$"{operationId}"])));
+                new XmlDocStatement($"<description>", $"</description>", [$"{operationId}"])));
 
             // API Version item (if available)
             var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
@@ -169,7 +169,7 @@ namespace Azure.Generator.Management.Utilities
             {
                 listItems.Add(new XmlDocStatement("item", [],
                     new XmlDocStatement("term", [$"Default Api Version"]),
-                    new XmlDocStatement("description", [$"{apiVersionParam.DefaultValue.Value}"])));
+                    new XmlDocStatement($"<description>", $"</description>", [$"{apiVersionParam.DefaultValue.Value}"])));
             }
 
             // Resource item (if enclosing type is a ResourceClientProvider)
@@ -177,7 +177,7 @@ namespace Azure.Generator.Management.Utilities
             {
                 listItems.Add(new XmlDocStatement("item", [],
                     new XmlDocStatement("term", [$"Resource"]),
-                    new XmlDocStatement("description", [$"{resourceClient.Type:C}"])));
+                    new XmlDocStatement($"<description>", $"</description>", [$"{resourceClient.Type:C}"])));
             }
 
             // Create the list statement
