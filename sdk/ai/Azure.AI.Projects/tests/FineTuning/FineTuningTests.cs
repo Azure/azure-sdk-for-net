@@ -6,24 +6,20 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Tests.Utils;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using OpenAI;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Recorded tests for fine-tuning operations using test-proxy.
+/// Recorded asynchronous tests for fine-tuning operations using test-proxy.
 /// </summary>
 public class FineTuningTests : FineTuningTestsBase
 {
@@ -31,7 +27,7 @@ public class FineTuningTests : FineTuningTestsBase
     {
     }
 
-    private (OpenAIFile TrainFile, OpenAIFile ValidationFile) UploadTestFiles(OpenAIFileClient fileClient, string jobType = "sft")
+    private async Task<(OpenAIFile TrainFile, OpenAIFile ValidationFile)> UploadTestFilesAsync(OpenAIFileClient fileClient, string jobType = "sft")
     {
         var dataDirectory = GetDataDirectory();
         string trainingFileName = $"{jobType}_training_set.jsonl";
@@ -40,37 +36,37 @@ public class FineTuningTests : FineTuningTestsBase
         var validationFilePath = Path.Combine(dataDirectory, validationFileName);
 
         Console.WriteLine($"Uploading training file: {trainingFileName}...");
-        OpenAIFile trainFile = fileClient.UploadFile(
+        OpenAIFile trainFile = await fileClient.UploadFileAsync(
             BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
             trainingFileName,
             FileUploadPurpose.FineTune);
-        Assert.IsNotNull(trainFile);
-        Assert.IsNotNull(trainFile.Id);
+        Assert.That(trainFile, Is.Not.Null);
+        Assert.That(trainFile.Id, Is.Not.Null);
         Console.WriteLine($"Uploaded training file: {trainFile.Id}");
 
         Console.WriteLine($"Uploading validation file: {validationFileName}...");
-        OpenAIFile validationFile = fileClient.UploadFile(
+        OpenAIFile validationFile = await fileClient.UploadFileAsync(
             BinaryData.FromBytes(File.ReadAllBytes(validationFilePath)),
             validationFileName,
             FileUploadPurpose.FineTune);
-        Assert.IsNotNull(validationFile);
-        Assert.IsNotNull(validationFile.Id);
+        Assert.That(validationFile, Is.Not.Null);
+        Assert.That(validationFile.Id, Is.Not.Null);
         Console.WriteLine($"Uploaded validation file: {validationFile.Id}");
 
         Console.WriteLine("Waiting for files to complete processing...");
-        WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
-        WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
+        await WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        await WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         return (trainFile, validationFile);
     }
 
-    private void CleanupTestFiles(OpenAIFileClient fileClient, OpenAIFile trainFile, OpenAIFile validationFile)
+    private async Task CleanupTestFilesAsync(OpenAIFileClient fileClient, OpenAIFile trainFile, OpenAIFile validationFile)
     {
         if (trainFile != null)
         {
             try
             {
-                ClientResult<FileDeletionResult> result = fileClient.DeleteFile(trainFile.Id);
+                ClientResult<FileDeletionResult> result = await fileClient.DeleteFileAsync(trainFile.Id);
                 Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {result.Value.Deleted})");
             }
             catch (Exception ex)
@@ -83,7 +79,7 @@ public class FineTuningTests : FineTuningTestsBase
         {
             try
             {
-                ClientResult<FileDeletionResult> result = fileClient.DeleteFile(validationFile.Id);
+                ClientResult<FileDeletionResult> result = await fileClient.DeleteFileAsync(validationFile.Id);
                 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {result.Value.Deleted})");
             }
             catch (Exception ex)
@@ -93,7 +89,7 @@ public class FineTuningTests : FineTuningTestsBase
         }
     }
 
-    private FineTuningJob CreateSupervisedFineTuningJob(
+    private async Task<FineTuningJob> CreateSupervisedFineTuningJobAsync(
         FineTuningClient fineTuningClient,
         string modelName,
         string trainFileId,
@@ -102,7 +98,7 @@ public class FineTuningTests : FineTuningTestsBase
         int batchSize = 4,
         double learningRate = 0.0001)
     {
-        return fineTuningClient.FineTune(
+        return await fineTuningClient.FineTuneAsync(
             modelName,
             trainFileId,
             waitUntilCompleted: false,
@@ -116,7 +112,43 @@ public class FineTuningTests : FineTuningTestsBase
             });
     }
 
-    private FineTuningJob CreateDpoFineTuningJob(
+    private async Task<FineTuningJob> CreateSupervisedFineTuningJobForOssModelAsync(
+        FineTuningClient fineTuningClient,
+        string modelName,
+        string trainFileId,
+        string validationFileId,
+        string trainingType,
+        int epochCount = 1,
+        int batchSize = 4,
+        double learningRate = 0.0001)
+    {
+        var requestJson = new
+        {
+            model = modelName,
+            training_file = trainFileId,
+            validation_file = validationFileId,
+            trainingType = trainingType,
+            method = new
+            {
+                type = "supervised",
+                supervised = new
+                {
+                    hyperparameters = new
+                    {
+                        n_epochs = epochCount,
+                        batch_size = batchSize,
+                        learning_rate_multiplier = learningRate
+                    }
+                }
+            }
+        };
+
+        string jsonString = JsonSerializer.Serialize(requestJson);
+        BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+        return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
+    }
+
+    private async Task<FineTuningJob> CreateDpoFineTuningJobAsync(
         FineTuningClient fineTuningClient,
         string modelName,
         string trainFileId,
@@ -125,7 +157,7 @@ public class FineTuningTests : FineTuningTestsBase
         int batchSize = 4,
         double learningRate = 0.0001)
     {
-        return fineTuningClient.FineTune(
+        return await fineTuningClient.FineTuneAsync(
             modelName,
             trainFileId,
             waitUntilCompleted: false,
@@ -140,17 +172,14 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [RecordedTest]
-    public void Test_Sft_FineTuning_Create_Job()
+    public async Task Test_Sft_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        Console.WriteLine($"DEBUG: FineTuningClient type in test: {fineTuningClient.GetType().FullName}");
-        Console.WriteLine($"DEBUG: FineTuningClient base type: {fineTuningClient.GetType().BaseType?.FullName}");
-
-        var (trainFile, validationFile) = UploadTestFiles(fileClient);
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
-            FineTuningJob fineTuningJob = CreateSupervisedFineTuningJob(
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
                 trainFile.Id,
@@ -161,56 +190,49 @@ public class FineTuningTests : FineTuningTestsBase
 
             Console.WriteLine($"Created SFT job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
-
-            // Cancel the job
-            fineTuningJob.CancelAndUpdate();
-            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_Sft_FineTuning_Create_Job_Oss_Model()
+    public async Task Test_Sft_FineTuning_Create_Job_Oss_Model()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
-            FineTuningJob fineTuningJob = CreateSupervisedFineTuningJob(
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobForOssModelAsync(
                 fineTuningClient,
                 "Ministral-3B",
                 trainFile.Id,
                 validationFile.Id,
+                trainingType: "GlobalStandard",
                 epochCount: 1,
                 batchSize: 4,
                 learningRate: 0.0001);
 
             Console.WriteLine($"Created SFT OSS job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
-
-            // Cancel the job
-            fineTuningJob.CancelAndUpdate();
-            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_Dpo_FineTuning_Create_Job()
+    public async Task Test_Dpo_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "dpo");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "dpo");
 
         try
         {
-            FineTuningJob fineTuningJob = CreateDpoFineTuningJob(
+            FineTuningJob fineTuningJob = await CreateDpoFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4o-mini",
                 trainFile.Id,
@@ -221,22 +243,18 @@ public class FineTuningTests : FineTuningTestsBase
 
             Console.WriteLine($"Created DPO job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
-
-            // Cancel the job
-            fineTuningJob.CancelAndUpdate();
-            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_Rft_FineTuning_Create_Job()
+    public async Task Test_Rft_FineTuning_Create_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "rft");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "rft");
 
         // Build the JSON request manually since RL APIs are internal
         var requestJson = new
@@ -281,60 +299,56 @@ public class FineTuningTests : FineTuningTestsBase
         {
             string jsonString = JsonSerializer.Serialize(requestJson);
             BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
-            FineTuningJob fineTuningJob = fineTuningClient.FineTune(content, waitUntilCompleted: false, options: null);
+            FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
 
             Console.WriteLine($"Created RFT job: {fineTuningJob.JobId}");
             ValidateFineTuningJob(fineTuningJob);
-
-            // Cancel the job
-            fineTuningJob.CancelAndUpdate();
-            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_FineTuning_Retrieve_Job()
+    public async Task Test_FineTuning_Retrieve_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
             // Create a job first
-            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
                 trainFile.Id,
                 validationFile.Id);
 
             // Retrieve the job
-            FineTuningJob retrievedJob = fineTuningClient.GetJob(createdJob.JobId);
+            FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(createdJob.JobId);
             Console.WriteLine($"Retrieved job: {retrievedJob.JobId}");
             ValidateFineTuningJob(retrievedJob, expectedJobId: createdJob.JobId);
 
             // Cancel the job
-            retrievedJob.CancelAndUpdate();
+            await retrievedJob.CancelAndUpdateAsync();
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_FineTuning_List_Jobs()
+    public async Task Test_FineTuning_List_Jobs()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
             // Create a job first
-            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
                 trainFile.Id,
@@ -342,7 +356,7 @@ public class FineTuningTests : FineTuningTestsBase
 
             // List jobs and verify our job is in the list
             var jobsList = new List<FineTuningJob>();
-            foreach (FineTuningJob job in fineTuningClient.GetJobs())
+            await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync())
             {
                 jobsList.Add(job);
             }
@@ -351,24 +365,24 @@ public class FineTuningTests : FineTuningTestsBase
             Assert.That(jobsList.Select(j => j.JobId), Does.Contain(createdJob.JobId));
 
             // Cancel the job
-            createdJob.CancelAndUpdate();
+            await createdJob.CancelAndUpdateAsync();
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_FineTuning_Cancel_Job()
+    public async Task Test_FineTuning_Cancel_Job()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
             // Create a job
-            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
                 trainFile.Id,
@@ -377,26 +391,26 @@ public class FineTuningTests : FineTuningTestsBase
             Console.WriteLine($"Created job: {createdJob.JobId}");
 
             // Cancel the job
-            createdJob.CancelAndUpdate();
+            await createdJob.CancelAndUpdateAsync();
             Console.WriteLine($"Cancelled job: {createdJob.JobId}, Status: {createdJob.Status}");
-            Assert.AreEqual("cancelled", createdJob.Status.ToString().ToLowerInvariant());
+            Assert.That(createdJob.Status.ToString().ToLowerInvariant(), Is.EqualTo("cancelled"));
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 
     [RecordedTest]
-    public void Test_FineTuning_List_Events()
+    public async Task Test_FineTuning_List_Events()
     {
         var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = UploadTestFiles(fileClient, "sft");
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
         try
         {
             // Create a job
-            FineTuningJob createdJob = CreateSupervisedFineTuningJob(
+            FineTuningJob createdJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "gpt-4.1",
                 trainFile.Id,
@@ -404,7 +418,7 @@ public class FineTuningTests : FineTuningTestsBase
 
             // List events
             var eventsList = new List<FineTuningEvent>();
-            foreach (FineTuningEvent evt in createdJob.GetEvents(new GetEventsOptions()))
+            await foreach (FineTuningEvent evt in createdJob.GetEventsAsync(new GetEventsOptions()))
             {
                 eventsList.Add(evt);
             }
@@ -412,11 +426,11 @@ public class FineTuningTests : FineTuningTestsBase
             Assert.That(eventsList.Count, Is.GreaterThan(0));
 
             // Cancel the job
-            createdJob.CancelAndUpdate();
+            await createdJob.CancelAndUpdateAsync();
         }
         finally
         {
-            CleanupTestFiles(fileClient, trainFile, validationFile);
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
         }
     }
 }

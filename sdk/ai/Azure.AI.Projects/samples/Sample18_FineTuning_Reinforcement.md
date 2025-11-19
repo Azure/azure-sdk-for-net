@@ -40,12 +40,16 @@ OpenAIFile validationFile = await fileClient.UploadFileAsync(
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
+// Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
+// See Sample16_FineTuning_Supervised.md for a WaitForFileProcessingAsync helper method.
+
 // Build the JSON request manually for reinforcement learning
 var requestJson = new
 {
     model = "o4-mini",
     training_file = trainFile.Id,
     validation_file = validationFile.Id,
+    // trainingType = "Standard", Pass trainingType here, default is Standard
     method = new
     {
         type = "reinforcement",
@@ -90,56 +94,6 @@ FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
 Console.WriteLine($"Created RFT fine-tuning job: {fineTuningJob.JobId}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
 Console.WriteLine($"Model: {fineTuningJob.Model}");
-
-// Retrieve job details
-Console.WriteLine($"Getting fine-tuning job with ID: {fineTuningJob.JobId}");
-FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-Console.WriteLine($"Retrieved job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
-
-// List all fine-tuning jobs
-Console.WriteLine("Listing all fine-tuning jobs:");
-await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync())
-{
-    Console.WriteLine($"Job: {job.JobId}, Model: {job.Model}, Status: {job.Status}");
-}
-
-// Pause the fine-tuning job
-Console.WriteLine($"Pausing fine-tuning job with ID: {fineTuningJob.JobId}");
-await fineTuningClient.PauseFineTuningJobAsync(fineTuningJob.JobId, options: null);
-FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
-
-// Resume the fine-tuning job
-Console.WriteLine($"Resuming fine-tuning job with ID: {fineTuningJob.JobId}");
-await fineTuningClient.ResumeFineTuningJobAsync(fineTuningJob.JobId, options: null);
-FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
-
-// List events for the job
-Console.WriteLine($"Listing events of fine-tuning job: {fineTuningJob.JobId}");
-await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions()))
-{
-    Console.WriteLine($"Event: {evt.Level} - {evt.Message} at {evt.CreatedAt}");
-}
-
-// List checkpoints (job needs to be in terminal state)
-Console.WriteLine($"Listing checkpoints of fine-tuning job: {fineTuningJob.JobId}");
-await foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpointsAsync(new GetCheckpointsOptions()))
-{
-    Console.WriteLine($"Checkpoint: {checkpoint.Id} at step {checkpoint.StepNumber}");
-}
-
-// Cancel the fine-tuning job
-Console.WriteLine($"Cancelling fine-tuning job with ID: {retrievedJob.JobId}");
-await retrievedJob.CancelAndUpdateAsync();
-Console.WriteLine($"Successfully cancelled fine-tuning job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
-
-// Clean up files
-ClientResult<FileDeletionResult> trainDeleteResult = await fileClient.DeleteFileAsync(trainFile.Id);
-Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDeleteResult.Value.Deleted})");
-
-ClientResult<FileDeletionResult> validationDeleteResult = await fileClient.DeleteFileAsync(validationFile.Id);
-Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
 ```
 
 ## Synchronous Sample
@@ -169,12 +123,16 @@ OpenAIFile validationFile = fileClient.UploadFile(
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
+// Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
+// See Sample16_FineTuning_Supervised.md for a WaitForFileProcessing helper method.
+
 // Build the JSON request manually for reinforcement learning
 var requestJson = new
 {
     model = "o4-mini",
     training_file = trainFile.Id,
     validation_file = validationFile.Id,
+    // trainingType = "Standard", Pass trainingType here, default is Standard
     method = new
     {
         type = "reinforcement",
@@ -219,54 +177,4 @@ FineTuningJob fineTuningJob = fineTuningClient.FineTune(
 Console.WriteLine($"Created RFT fine-tuning job: {fineTuningJob.JobId}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
 Console.WriteLine($"Model: {fineTuningJob.Model}");
-
-// Retrieve job details
-Console.WriteLine($"Getting fine-tuning job with ID: {fineTuningJob.JobId}");
-FineTuningJob retrievedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
-Console.WriteLine($"Retrieved job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
-
-// List all fine-tuning jobs
-Console.WriteLine("Listing all fine-tuning jobs:");
-foreach (FineTuningJob job in fineTuningClient.GetJobs())
-{
-    Console.WriteLine($"Job: {job.JobId}, Model: {job.Model}, Status: {job.Status}");
-}
-
-// Pause the fine-tuning job
-Console.WriteLine($"Pausing fine-tuning job with ID: {fineTuningJob.JobId}");
-fineTuningClient.PauseFineTuningJob(fineTuningJob.JobId, options: null);
-FineTuningJob pausedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
-Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
-
-// Resume the fine-tuning job
-Console.WriteLine($"Resuming fine-tuning job with ID: {fineTuningJob.JobId}");
-fineTuningClient.ResumeFineTuningJob(fineTuningJob.JobId, options: null);
-FineTuningJob resumedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
-Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
-
-// List events for the job
-Console.WriteLine($"Listing events of fine-tuning job: {fineTuningJob.JobId}");
-foreach (FineTuningEvent evt in retrievedJob.GetEvents(new GetEventsOptions()))
-{
-    Console.WriteLine($"Event: {evt.Level} - {evt.Message} at {evt.CreatedAt}");
-}
-
-// List checkpoints (job needs to be in terminal state)
-Console.WriteLine($"Listing checkpoints of fine-tuning job: {fineTuningJob.JobId}");
-foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpoints(new GetCheckpointsOptions()))
-{
-    Console.WriteLine($"Checkpoint: {checkpoint.Id} at step {checkpoint.StepNumber}");
-}
-
-// Cancel the fine-tuning job
-Console.WriteLine($"Cancelling fine-tuning job with ID: {retrievedJob.JobId}");
-retrievedJob.CancelAndUpdate();
-Console.WriteLine($"Successfully cancelled fine-tuning job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
-
-// Clean up files
-ClientResult<FileDeletionResult> trainDeleteResult = fileClient.DeleteFile(trainFile.Id);
-Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDeleteResult.Value.Deleted})");
-
-ClientResult<FileDeletionResult> validationDeleteResult = fileClient.DeleteFile(validationFile.Id);
-Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
 ```

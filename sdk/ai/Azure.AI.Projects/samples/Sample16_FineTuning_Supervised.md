@@ -38,7 +38,15 @@ OpenAIFile validationFile = await fileClient.UploadFileAsync(
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
+// Wait for files to complete processing
+Console.WriteLine("Waiting for files to complete processing...");
+await WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+await WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
+
 // Create supervised fine-tuning job
+// Note: The default training type passed here is "Standard".
+// If you need to pass training type explicitly (e.g., "GlobalStandard"),
+// see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
 Console.WriteLine("Creating supervised fine-tuning job...");
 FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
     "gpt-4.1",
@@ -105,6 +113,43 @@ Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDelete
 
 ClientResult<FileDeletionResult> validationDeleteResult = await fileClient.DeleteFileAsync(validationFile.Id);
 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
+
+// Helper method to wait for file processing
+async Task<OpenAIFile> WaitForFileProcessingAsync(
+    OpenAIFileClient fileClient,
+    string fileId,
+    int pollIntervalSeconds = 5,
+    int maxWaitSeconds = 1800)
+{
+    var start = DateTimeOffset.Now;
+    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+    OpenAIFile file = await fileClient.GetFileAsync(fileId);
+    Console.WriteLine($"File {fileId} initial status: {file.Status}");
+
+    while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
+    {
+        if (DateTimeOffset.Now - start > timeout)
+        {
+            throw new TimeoutException(
+                $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+        }
+
+        await Task.Delay(pollInterval);
+        file = await fileClient.GetFileAsync(fileId);
+        Console.WriteLine($"File {fileId} status: {file.Status}");
+    }
+
+    if (file.Status == FileStatus.Error)
+    {
+        throw new InvalidOperationException(
+            $"File {fileId} processing failed: {file.StatusDetails}");
+    }
+
+    Console.WriteLine($"File {fileId} processing completed successfully");
+    return file;
+}
 ```
 
 ## Synchronous Sample
@@ -134,7 +179,15 @@ OpenAIFile validationFile = fileClient.UploadFile(
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
+// Wait for files to complete processing
+Console.WriteLine("Waiting for files to complete processing...");
+WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
+
 // Create supervised fine-tuning job
+// Note: The default training type passed here is "Standard".
+// If you need to pass training type explicitly (e.g., "GlobalStandard"),
+// see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
 Console.WriteLine("Creating supervised fine-tuning job...");
 FineTuningJob fineTuningJob = fineTuningClient.FineTune(
     "gpt-4.1",
@@ -201,4 +254,41 @@ Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDelete
 
 ClientResult<FileDeletionResult> validationDeleteResult = fileClient.DeleteFile(validationFile.Id);
 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
+
+// Helper method to wait for file processing
+OpenAIFile WaitForFileProcessing(
+    OpenAIFileClient fileClient,
+    string fileId,
+    int pollIntervalSeconds = 5,
+    int maxWaitSeconds = 1800)
+{
+    var start = DateTimeOffset.Now;
+    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+    OpenAIFile file = fileClient.GetFile(fileId);
+    Console.WriteLine($"File {fileId} initial status: {file.Status}");
+
+    while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
+    {
+        if (DateTimeOffset.Now - start > timeout)
+        {
+            throw new TimeoutException(
+                $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+        }
+
+        System.Threading.Thread.Sleep(pollInterval);
+        file = fileClient.GetFile(fileId);
+        Console.WriteLine($"File {fileId} status: {file.Status}");
+    }
+
+    if (file.Status == FileStatus.Error)
+    {
+        throw new InvalidOperationException(
+            $"File {fileId} processing failed: {file.StatusDetails}");
+    }
+
+    Console.WriteLine($"File {fileId} processing completed successfully");
+    return file;
+}
 ```

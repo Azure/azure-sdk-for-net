@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Tests
                 exceptionThrown = true;
                 Console.WriteLine($"Expected exception when retrieving deleted dataset: {ex.Message}");
             }
-            Assert.IsTrue(exceptionThrown, "Expected an exception when retrieving a deleted dataset version.");
+            Assert.That(exceptionThrown, Is.True, "Expected an exception when retrieving a deleted dataset version.");
         }
 
         private async Task DatasetsFileTestAsync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects.Tests
                 exceptionThrown = true;
                 Console.WriteLine($"Expected exception when retrieving deleted dataset: {ex.Message}");
             }
-            Assert.IsTrue(exceptionThrown, "Expected an exception when retrieving a deleted dataset version.");
+            Assert.That(exceptionThrown, Is.True, "Expected an exception when retrieving a deleted dataset version.");
         }
     }
 };
