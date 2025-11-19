@@ -96,17 +96,12 @@ public partial class ExtraDataDictionary : IDictionary<string, BinaryData>
 
     public bool TryGetValue(ReadOnlySpan<byte> key, out BinaryData value)
     {
-        // Try/catch: temporary SCM 1.8.0 workaround for TryGetJson
-        try
+        if (_parentOptions.Patch.TryGetJson(GetPathBytes(key), out ReadOnlyMemory<byte> jsonValueBytes)
+            && !jsonValueBytes.IsEmpty)
         {
-            if (_parentOptions.Patch.TryGetJson(GetPathBytes(key), out ReadOnlyMemory<byte> jsonValueBytes)
-                && !jsonValueBytes.IsEmpty)
-            {
-                value = BinaryData.FromBytes(jsonValueBytes);
-                return true;
-            }
+            value = BinaryData.FromBytes(jsonValueBytes);
+            return true;
         }
-        catch { }
         value = null;
         return false;
     }
@@ -128,19 +123,14 @@ public partial class ExtraDataDictionary : IDictionary<string, BinaryData>
             && _parentOptions.Patch.TryGetJson(rootPathBytes, out ReadOnlyMemory<byte> jsonValueBytes)
             && !jsonValueBytes.IsEmpty)
         {
-            try
+            using JsonDocument document = JsonDocument.Parse(jsonValueBytes);
+            if (document.RootElement.ValueKind == JsonValueKind.Object)
             {
-                using JsonDocument document = JsonDocument.Parse(jsonValueBytes);
-                if (document.RootElement.ValueKind == JsonValueKind.Object)
+                foreach (JsonProperty property in document.RootElement.EnumerateObject())
                 {
-                    foreach (JsonProperty property in document.RootElement.EnumerateObject())
-                    {
-                        result.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    }
+                    result.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            catch (JsonException)
-            { }
         }
         return result;
     }

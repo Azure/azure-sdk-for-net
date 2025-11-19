@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.IO;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -219,14 +220,14 @@ namespace Azure.AI.Projects.Telemetry
                 // TODO: check if structured outputs should be events and follow content recording flag
                 //var structuredInputs = promptAgentDefinition.StructuredInputs;
 
-                string evnt = s_traceContent ? JsonSerializer.Serialize(
+                string traceEvent = s_traceContent ? JsonSerializer.Serialize(
                     new EventContent (promptAgentDefinition.Instructions),
                     EventsContext.Default.EventContent
                 ) : JsonSerializer.Serialize("", EventsContext.Default.String);
 
                 ActivityTagsCollection messageTags = new() {
                     { GenAiSystemKey, GenAiSystemValue},
-                    { GenAiEventContent, evnt  }
+                    { GenAiEventContent, traceEvent  }
                 };
 
                 scope._activity?.AddEvent(

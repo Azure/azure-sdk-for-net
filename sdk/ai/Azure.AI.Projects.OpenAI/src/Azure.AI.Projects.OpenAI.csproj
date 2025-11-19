@@ -8,12 +8,28 @@
       ongoing forward compatibility.
     </Description>
     <AssemblyTitle>Microsoft Foundry OpenAI .NET Extensions</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure.AI.Projects.OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);OPENAI001;CS1591;AZC0007;AZC0012;AZC0015;AZC0030;AZC0031;AZC0034;SA1649;SA1402;AZC0035</NoWarn>
-    <!-- C# 14 extension property features; unnecessary once C# 14 releases -->
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Acknowledge experimental OpenAI features -->
+    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
+    <!-- Temporary suppression of XML doc requirement -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Ignore Azure-Core-specific constructor rule -->
+    <NoWarn>$(NoWarn);AZC0007</NoWarn>
+    <!-- Ignore Azure-Core-specific pageable rule -->
+    <NoWarn>$(NoWarn);AZC0015</NoWarn>
+    <!-- Ignore ModelFactory error (applied to externally originating types) -->
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- For C# 14 extension property support, pending full toolchain integration -->
     <LangVersion>preview</LangVersion>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
   </PropertyGroup>
 
   <ItemGroup>

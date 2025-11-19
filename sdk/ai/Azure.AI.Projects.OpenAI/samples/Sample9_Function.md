@@ -158,11 +158,11 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-5. To supply functions outputs, we will need to obtain responses multiple times. We will define methods `CreateAndCheckReponse` and `CreateAndCheckReponseAsync` for brevity.
+5. To supply functions outputs, we will need to obtain responses multiple times. We will define methods `CreateAndCheckResponse` and `CreateAndCheckResponseAsync` for brevity.
 
 Synchronous sample:
 ```C# Snippet:Sample_CheckResponse_Function_Sync
-public static OpenAIResponse CreateAndCheckReponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+public static OpenAIResponse CreateAndCheckResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
 {
     OpenAIResponse response = responseClient.CreateResponse(
         inputItems: items);
@@ -173,7 +173,7 @@ public static OpenAIResponse CreateAndCheckReponse(OpenAIResponseClient response
 
 Asynchronous sample:
 ```C# Snippet:Sample_CheckResponse_Function_Async
-public static async Task<OpenAIResponse> CreateAndCheckReponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+public static async Task<OpenAIResponse> CreateAndCheckResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
 {
     OpenAIResponse response = await responseClient.CreateResponseAsync(
         inputItems: items);
@@ -194,7 +194,7 @@ bool funcionCalled = false;
 OpenAIResponse response;
 do
 {
-    response = CreateAndCheckReponse(
+    response = CreateAndCheckResponse(
         responseClient,
         inputItems);
     funcionCalled = false;
@@ -222,7 +222,7 @@ bool funcionCalled = false;
 OpenAIResponse response;
 do
 {
-    response = await CreateAndCheckReponseAsync(
+    response = await CreateAndCheckResponseAsync(
         responseClient,
         inputItems);
     funcionCalled = false;

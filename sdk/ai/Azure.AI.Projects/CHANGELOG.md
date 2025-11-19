@@ -1,5 +1,11 @@
 # Release History
 
+## 1.2.0-beta.4 (2025-11-17)
+
+### Bugs Fixed
+
+- Fixed an issue preventing telemetry from being logged.
+
 ## 1.2.0-beta.3 (2025-11-15)
 
 ### Bugs Fixed

@@ -4,9 +4,9 @@
 
 - Total libraries: 421
 - Management Plane (Swagger): 162
-- Management Plane (TSP-Old): 43
+- Management Plane (TSP-Old): 42
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
-- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 20
+- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 21
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
 - Data Plane (Swagger): 111
@@ -204,7 +204,7 @@ Total: 111
 
 ## Management Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp-mgmt)
 
-TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 20
+TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 21
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -212,6 +212,7 @@ TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by t
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval |
 | cloudhealth | Azure.ResourceManager.CloudHealth | sdk/cloudhealth/Azure.ResourceManager.CloudHealth |
 | computerecommender | Azure.ResourceManager.Compute.Recommender | sdk/computerecommender/Azure.ResourceManager.Compute.Recommender |
+| connectedcache | Azure.ResourceManager.ConnectedCache | sdk/connectedcache/Azure.ResourceManager.ConnectedCache |
 | dellstorage | Azure.ResourceManager.Dell.Storage | sdk/dellstorage/Azure.ResourceManager.Dell.Storage |
 | dependencymap | Azure.ResourceManager.DependencyMap | sdk/dependencymap/Azure.ResourceManager.DependencyMap |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry |
@@ -232,7 +233,7 @@ TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by t
 
 ## Management Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 43
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 42
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -242,7 +243,6 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | chaos | Azure.ResourceManager.Chaos | sdk/chaos/Azure.ResourceManager.Chaos |
 | computefleet | Azure.ResourceManager.ComputeFleet | sdk/computefleet/Azure.ResourceManager.ComputeFleet |
 | computeschedule | Azure.ResourceManager.ComputeSchedule | sdk/computeschedule/Azure.ResourceManager.ComputeSchedule |
-| connectedcache | Azure.ResourceManager.ConnectedCache | sdk/connectedcache/Azure.ResourceManager.ConnectedCache |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher |
 | databox | Azure.ResourceManager.DataBox | sdk/databox/Azure.ResourceManager.DataBox |

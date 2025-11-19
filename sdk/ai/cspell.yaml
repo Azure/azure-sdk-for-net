@@ -1,0 +1,33 @@
+version: "0.2"
+language: en
+allowCompoundWords: true
+dictionaries:
+  - python
+  - powershell
+  - csharp
+  - softwareTerms
+words:
+  - aoai
+  - aiprojects
+  - ansii
+  - atbash
+  - azureai
+  - bleu
+  - conv
+  - CSDL
+  - genai
+  - gleu
+  - includable
+  - inpaint
+  - inpainting
+  - linq
+  - logprobs
+  - OPENAICUA
+  - Plagiarus
+  - PNAS
+  - praepotens
+  - ubinary
+  - UPIA
+  - wfresp
+ignorePaths:
+  - "**/*jsonl"

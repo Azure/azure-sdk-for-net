@@ -30,7 +30,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {
@@ -74,7 +74,7 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAICONNECTIONNAME;
+            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
         }
         catch
         {

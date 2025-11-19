@@ -4,6 +4,7 @@ using System;
 using System.ClientModel.Primitives;
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
+using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
@@ -16,13 +17,15 @@ public class AgentsSmokeTests : AgentsTestBase
 {
     public AgentsSmokeTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
     {
-        // TestDiagnostics = false;
     }
 
     [Test]
+    [LiveOnly]
     public void CanGetClients()
     {
-        AIProjectClient projectClient = GetTestProjectClient();
+        AIProjectClient projectClient = new(
+            new Uri("https://ai.azure.com/mock/endpoint/api/projects/myProject"),
+            new MockCredential());
         Assert.That(projectClient, Is.Not.Null);
         AIProjectAgentsOperations agentClient = projectClient.Agents;
         Assert.That(agentClient, Is.Not.Null);

@@ -2,34 +2,32 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
-    <Version>1.2.0-beta.3</Version>
+    <Version>1.2.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Projects</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <LangVersion>preview</LangVersion>
-    <ImplicitUsings>disable</ImplicitUsings>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- For C# 14 extension property support, pending full toolchain integration -->
+    <LangVersion>preview</LangVersion>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <NoWarn>
-        $(NoWarn);
-        CS1591;
-        AZC0012;
-        SA1649;
-        SA1402;
+      $(NoWarn)
+      <!-- Acknowledge OpenAI experimental features -->
+      ;OPENAI001
+      <!-- Temporary suppression of XML doc requirement -->
+      ;CS1591
+      <!-- Suppress 'too generic of names' rule -->
+      ;AZC0012
     </NoWarn>
-    <!--
-      Suppression of OPENAI001 handles temporary [Experimental] leakage from OpenAI library internals for generated MRWContext.
-      The longer-term fix is tracked along with:
-        - https://github.com/Azure/azure-sdk-for-net/issues/51256
-        - https://github.com/Azure/autorest.csharp/issues/5364
-    -->
-    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
-    <NoWarn>$(NoWarn);AZC0015</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
