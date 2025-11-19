@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the task definition for an Entities Recognition task. </summary>
-    public partial class EntitiesLROTask : AnalyzeTextOperationAction
+    public partial class EntitiesOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="EntitiesLROTask"/>. </summary>
-        public EntitiesLROTask()
+        /// <summary> Initializes a new instance of <see cref="EntitiesOperationAction"/>. </summary>
+        public EntitiesOperationAction()
         {
             Kind = AnalyzeTextOperationActionKind.EntityRecognition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntitiesLROTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="parameters"> Task parameters. </param>
-        internal EntitiesLROTask(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntitiesActionContent parameters) : base(name, kind, serializedAdditionalRawData)
+        /// <param name="actionContent"> Task parameters. </param>
+        internal EntitiesOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntitiesActionContent actionContent) : base(name, kind, serializedAdditionalRawData)
         {
-            Parameters = parameters;
+            ActionContent = actionContent;
         }
 
         /// <summary> Task parameters. </summary>
-        public EntitiesActionContent Parameters { get; set; }
+        public EntitiesActionContent ActionContent { get; set; }
     }
 }

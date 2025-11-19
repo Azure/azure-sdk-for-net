@@ -1781,101 +1781,101 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,CancellationToken)">
+    <member name="AnalyzeTextOperationStatusAsync(Guid,bool?,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call AnalyzeTextJobStatusAsync.
+This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync.
+This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync.
+This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync.
+This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync.
+This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextJobStatus(Guid,bool?,int?,int?,CancellationToken)">
+    <member name="AnalyzeTextOperationStatus(Guid,bool?,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call AnalyzeTextJobStatus.
+This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatus.
+This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatus.
+This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatus.
+This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatus.
+This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextJobStatusAsync(Guid,bool?,int?,int?,RequestContext)">
+    <member name="AnalyzeTextOperationStatusAsync(Guid,bool?,int?,int?,RequestContext)">
       <example>
-This sample shows how to call AnalyzeTextJobStatusAsync and parse the result.
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1887,13 +1887,13 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync and parse the result.
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1905,13 +1905,13 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync and parse the result.
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1923,13 +1923,13 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync and parse the result.
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1941,106 +1941,13 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextJobStatusAsync and parse the result.
+This sample shows how to call AnalyzeTextOperationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-]]></code></example>
-    </member>
-    <member name="AnalyzeTextJobStatus(Guid,bool?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call AnalyzeTextJobStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Response response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-]]></code>
-This sample shows how to call AnalyzeTextJobStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Response response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-]]></code>
-This sample shows how to call AnalyzeTextJobStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Response response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-]]></code>
-This sample shows how to call AnalyzeTextJobStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Response response = client.AnalyzeTextJobStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-]]></code>
-This sample shows how to call AnalyzeTextJobStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-Response response = client.AnalyzeTextJobStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2053,9 +1960,102 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextSubmitJobAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)">
+    <member name="AnalyzeTextOperationStatus(Guid,bool?,int?,int?,RequestContext)">
       <example>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextOperationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+Response response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2068,7 +2068,7 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
     new AbstractiveSummarizationOperationAction
     {
@@ -2081,7 +2081,7 @@ Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2094,7 +2094,7 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
     new AbstractiveSummarizationOperationAction
     {
@@ -2106,7 +2106,7 @@ Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2122,24 +2122,24 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
-    new EntitiesLROTask
+    new EntitiesOperationAction
     {
-        Parameters = new EntitiesActionContent
+        ActionContent = new EntitiesActionContent
         {
             ModelVersion = "latest",
         },
         Name = "Recognize Entities",
     },
-    new CustomEntitiesLROTask
+    new CustomEntitiesOperationAction
     {
-        Parameters = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
+        ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
         Name = "Recognize US Regions",
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2152,11 +2152,11 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
-    new HealthcareLROTask
+    new HealthcareOperationAction
     {
-        Parameters = new HealthcareTaskParameters
+        ActionContent = new HealthcareActionContent
         {
             ModelVersion = "latest",
             FhirVersion = FhirVersion._401,
@@ -2165,7 +2165,7 @@ Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2178,11 +2178,11 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
-    new HealthcareLROTask
+    new HealthcareOperationAction
     {
-        Parameters = new HealthcareTaskParameters
+        ActionContent = new HealthcareActionContent
         {
             ModelVersion = "latest",
         },
@@ -2190,9 +2190,9 @@ Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed
 });
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextSubmitJob(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)">
+    <member name="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)">
       <example>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2205,7 +2205,7 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
     new AbstractiveSummarizationOperationAction
     {
@@ -2218,7 +2218,7 @@ Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2231,7 +2231,7 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
     new AbstractiveSummarizationOperationAction
     {
@@ -2243,7 +2243,7 @@ Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2259,24 +2259,24 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
-    new EntitiesLROTask
+    new EntitiesOperationAction
     {
-        Parameters = new EntitiesActionContent
+        ActionContent = new EntitiesActionContent
         {
             ModelVersion = "latest",
         },
         Name = "Recognize Entities",
     },
-    new CustomEntitiesLROTask
+    new CustomEntitiesOperationAction
     {
-        Parameters = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
+        ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
         Name = "Recognize US Regions",
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2289,11 +2289,11 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
-    new HealthcareLROTask
+    new HealthcareOperationAction
     {
-        Parameters = new HealthcareTaskParameters
+        ActionContent = new HealthcareActionContent
         {
             ModelVersion = "latest",
             FhirVersion = FhirVersion._401,
@@ -2302,7 +2302,7 @@ Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput
     }
 });
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2315,11 +2315,11 @@ MultiLanguageTextInput textInput = new MultiLanguageTextInput
         Language = "en",
     }},
 };
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
 {
-    new HealthcareLROTask
+    new HealthcareOperationAction
     {
-        Parameters = new HealthcareTaskParameters
+        ActionContent = new HealthcareActionContent
         {
             ModelVersion = "latest",
         },
@@ -2327,9 +2327,9 @@ Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput
 });
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextSubmitJobAsync(WaitUntil,RequestContent,RequestContext)">
+    <member name="AnalyzeTextSubmitOperationAsync(WaitUntil,RequestContent,RequestContext)">
       <example>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2364,9 +2364,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2400,9 +2400,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2452,9 +2452,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2488,9 +2488,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJobAsync.
+This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2522,12 +2522,12 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextSubmitJob(WaitUntil,RequestContent,RequestContext)">
+    <member name="AnalyzeTextSubmitOperation(WaitUntil,RequestContent,RequestContext)">
       <example>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2562,9 +2562,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2598,9 +2598,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2650,9 +2650,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2686,9 +2686,9 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
 ]]></code>
-This sample shows how to call AnalyzeTextSubmitJob.
+This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2720,29 +2720,29 @@ using RequestContent content = RequestContent.Create(new
         }
     },
 });
-Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextCancelJobAsync(WaitUntil,Guid,RequestContext)">
+    <member name="AnalyzeTextCancelOperationAsync(WaitUntil,Guid,RequestContext)">
       <example>
-This sample shows how to call AnalyzeTextCancelJobAsync.
+This sample shows how to call AnalyzeTextCancelOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Operation operation = await client.AnalyzeTextCancelJobAsync(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code></example>
     </member>
-    <member name="AnalyzeTextCancelJob(WaitUntil,Guid,RequestContext)">
+    <member name="AnalyzeTextCancelOperation(WaitUntil,Guid,RequestContext)">
       <example>
-This sample shows how to call AnalyzeTextCancelJob.
+This sample shows how to call AnalyzeTextCancelOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-Operation operation = client.AnalyzeTextCancelJob(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
 ]]></code></example>
     </member>
   </members>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the results for an Abstractive Summarization task. </summary>
-    public partial class AbstractiveSummarizationOperationResult : AnalyzeTextLROResult
+    public partial class AbstractiveSummarizationOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
@@ -29,11 +29,11 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="taskName"> task name. </param>
+        /// <param name="name"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> Results of the task. </param>
-        internal AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AbstractiveSummarizationResult results) : base(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData)
+        internal AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string name, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AbstractiveSummarizationResult results) : base(lastUpdateDateTime, status, name, kind, serializedAdditionalRawData)
         {
             Results = results;
         }

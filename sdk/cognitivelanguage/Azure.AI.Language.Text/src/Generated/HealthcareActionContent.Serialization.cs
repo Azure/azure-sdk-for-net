@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class HealthcareTaskParameters : IUtf8JsonSerializable, IJsonModel<HealthcareTaskParameters>
+    public partial class HealthcareActionContent : IUtf8JsonSerializable, IJsonModel<HealthcareActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareTaskParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareTaskParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthcareActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareTaskParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareActionContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(LoggingOptOut))
@@ -76,19 +76,19 @@ namespace Azure.AI.Language.Text
             }
         }
 
-        HealthcareTaskParameters IJsonModel<HealthcareTaskParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HealthcareActionContent IJsonModel<HealthcareActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareTaskParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareActionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareTaskParameters(document.RootElement, options);
+            return DeserializeHealthcareActionContent(document.RootElement, options);
         }
 
-        internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HealthcareActionContent DeserializeHealthcareActionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -152,7 +152,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareTaskParameters(
+            return new HealthcareActionContent(
                 loggingOptOut,
                 modelVersion,
                 stringIndexType,
@@ -161,43 +161,43 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HealthcareTaskParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HealthcareActionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareActionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareTaskParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareTaskParameters IPersistableModel<HealthcareTaskParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HealthcareActionContent IPersistableModel<HealthcareActionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareTaskParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareActionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHealthcareTaskParameters(document.RootElement, options);
+                        return DeserializeHealthcareActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareTaskParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareTaskParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthcareActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HealthcareTaskParameters FromResponse(Response response)
+        internal static HealthcareActionContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHealthcareTaskParameters(document.RootElement);
+            return DeserializeHealthcareActionContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

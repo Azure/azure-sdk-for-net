@@ -1942,13 +1942,13 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1963,13 +1963,13 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -1984,35 +1984,35 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Convenience()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Convenience_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationTaskResult()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2027,13 +2027,13 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationTaskResult_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2048,35 +2048,35 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationTaskResult_Convenience()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAbstractiveSummarizationTaskResult_Convenience_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2091,13 +2091,13 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2112,35 +2112,35 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Convenience()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Convenience_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeTextJobStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
+            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2155,13 +2155,13 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
+            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2176,35 +2176,35 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Convenience()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Convenience_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("15e4a46b-62e2-4386-8d36-9c2a92bb45dd"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareTaskStatusRequest()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeTextJobStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2219,13 +2219,13 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareTaskStatusRequest_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
+            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -2240,29 +2240,29 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareTaskStatusRequest_Convenience()
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextJobStatus_SuccessfulHealthcareTaskStatusRequest_Convenience_Async()
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2297,12 +2297,12 @@ instruction = "XYZ-code",
 }
             },
             });
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2337,12 +2337,12 @@ instruction = "XYZ-code",
 }
             },
             });
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Convenience()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2355,7 +2355,7 @@ instruction = "XYZ-code",
 Language = "en",
 }},
             };
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
 new AbstractiveSummarizationOperationAction
 {
@@ -2371,7 +2371,7 @@ Name = "Document Abstractive Summarization Task 1",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Convenience_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2384,7 +2384,7 @@ Name = "Document Abstractive Summarization Task 1",
 Language = "en",
 }},
             };
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
 new AbstractiveSummarizationOperationAction
 {
@@ -2400,7 +2400,7 @@ Name = "Document Abstractive Summarization Task 1",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationTaskSubmit()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2434,12 +2434,12 @@ sentenceCount = 1,
 }
             },
             });
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationTaskSubmit_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2473,12 +2473,12 @@ sentenceCount = 1,
 }
             },
             });
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationTaskSubmit_Convenience()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2491,7 +2491,7 @@ sentenceCount = 1,
 Language = "en",
 }},
             };
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
 new AbstractiveSummarizationOperationAction
 {
@@ -2506,7 +2506,7 @@ Name = "Document Abstractive Summarization Task 1",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulAbstractiveSummarizationTaskSubmit_Convenience_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2519,7 +2519,7 @@ Name = "Document Abstractive Summarization Task 1",
 Language = "en",
 }},
             };
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
 new AbstractiveSummarizationOperationAction
 {
@@ -2534,7 +2534,7 @@ Name = "Document Abstractive Summarization Task 1",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2584,12 +2584,12 @@ deploymentName = "MyDeployment",
 }
             },
             });
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2639,12 +2639,12 @@ deploymentName = "MyDeployment",
 }
             },
             });
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Convenience()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2660,19 +2660,19 @@ Language = "en",
 Language = "en",
 }},
             };
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new EntitiesLROTask
+new EntitiesOperationAction
 {
-Parameters = new EntitiesActionContent
+ActionContent = new EntitiesActionContent
 {
 ModelVersion = "latest",
 },
 Name = "Recognize Entities",
 },
-new CustomEntitiesLROTask
+new CustomEntitiesOperationAction
 {
-Parameters = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
+ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
 Name = "Recognize US Regions",
 }
             });
@@ -2680,7 +2680,7 @@ Name = "Recognize US Regions",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Convenience_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2696,19 +2696,19 @@ Language = "en",
 Language = "en",
 }},
             };
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new EntitiesLROTask
+new EntitiesOperationAction
 {
-Parameters = new EntitiesActionContent
+ActionContent = new EntitiesActionContent
 {
 ModelVersion = "latest",
 },
 Name = "Recognize Entities",
 },
-new CustomEntitiesLROTask
+new CustomEntitiesOperationAction
 {
-Parameters = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
+ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
 Name = "Recognize US Regions",
 }
             });
@@ -2716,7 +2716,7 @@ Name = "Recognize US Regions",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcareDocumentTypePostRequest()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2750,12 +2750,12 @@ documentType = "DischargeSummary",
 }
             },
             });
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcareDocumentTypePostRequest_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2789,12 +2789,12 @@ documentType = "DischargeSummary",
 }
             },
             });
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcareDocumentTypePostRequest_Convenience()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2807,11 +2807,11 @@ documentType = "DischargeSummary",
 Language = "en",
 }},
             };
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
-Parameters = new HealthcareTaskParameters
+ActionContent = new HealthcareActionContent
 {
 ModelVersion = "latest",
 FhirVersion = FhirVersion._401,
@@ -2823,7 +2823,7 @@ DocumentType = HealthcareDocumentType.DischargeSummary,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcareDocumentTypePostRequest_Convenience_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2836,11 +2836,11 @@ DocumentType = HealthcareDocumentType.DischargeSummary,
 Language = "en",
 }},
             };
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
-Parameters = new HealthcareTaskParameters
+ActionContent = new HealthcareActionContent
 {
 ModelVersion = "latest",
 FhirVersion = FhirVersion._401,
@@ -2852,7 +2852,7 @@ DocumentType = HealthcareDocumentType.DischargeSummary,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcarePostRequest()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2884,12 +2884,12 @@ modelVersion = "latest",
 }
             },
             });
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcarePostRequest_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2921,12 +2921,12 @@ modelVersion = "latest",
 }
             },
             });
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcarePostRequest_Convenience()
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2939,11 +2939,11 @@ modelVersion = "latest",
 Language = "en",
 }},
             };
-            Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
-Parameters = new HealthcareTaskParameters
+ActionContent = new HealthcareActionContent
 {
 ModelVersion = "latest",
 },
@@ -2953,7 +2953,7 @@ ModelVersion = "latest",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitJob_SuccessfulHealthcarePostRequest_Convenience_Async()
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2966,11 +2966,11 @@ ModelVersion = "latest",
 Language = "en",
 }},
             };
-            Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
-Parameters = new HealthcareTaskParameters
+ActionContent = new HealthcareActionContent
 {
 ModelVersion = "latest",
 },
@@ -2980,24 +2980,24 @@ ModelVersion = "latest",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextCancelJob_SuccessfulAnalyzeTextJobsCancelRequest()
+        public void Example_Text_AnalyzeTextCancelOperation_SuccessfulAnalyzeTextJobsCancelRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Operation operation = client.AnalyzeTextCancelJob(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextCancelJob_SuccessfulAnalyzeTextJobsCancelRequest_Async()
+        public async Task Example_Text_AnalyzeTextCancelOperation_SuccessfulAnalyzeTextJobsCancelRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            Operation operation = await client.AnalyzeTextCancelJobAsync(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+            Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
         }
     }
 }

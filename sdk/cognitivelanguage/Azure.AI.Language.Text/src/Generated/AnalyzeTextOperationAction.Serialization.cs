@@ -83,15 +83,15 @@ namespace Azure.AI.Language.Text
                 switch (discriminator.GetString())
                 {
                     case "AbstractiveSummarization": return AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(element, options);
-                    case "CustomEntityRecognition": return CustomEntitiesLROTask.DeserializeCustomEntitiesLROTask(element, options);
+                    case "CustomEntityRecognition": return CustomEntitiesOperationAction.DeserializeCustomEntitiesOperationAction(element, options);
                     case "CustomMultiLabelClassification": return CustomMultiLabelClassificationOperationAction.DeserializeCustomMultiLabelClassificationOperationAction(element, options);
                     case "CustomSingleLabelClassification": return CustomSingleLabelClassificationOperationAction.DeserializeCustomSingleLabelClassificationOperationAction(element, options);
-                    case "EntityLinking": return EntityLinkingLROTask.DeserializeEntityLinkingLROTask(element, options);
-                    case "EntityRecognition": return EntitiesLROTask.DeserializeEntitiesLROTask(element, options);
+                    case "EntityLinking": return EntityLinkingOperationAction.DeserializeEntityLinkingOperationAction(element, options);
+                    case "EntityRecognition": return EntitiesOperationAction.DeserializeEntitiesOperationAction(element, options);
                     case "ExtractiveSummarization": return ExtractiveSummarizationOperationAction.DeserializeExtractiveSummarizationOperationAction(element, options);
-                    case "Healthcare": return HealthcareLROTask.DeserializeHealthcareLROTask(element, options);
-                    case "KeyPhraseExtraction": return KeyPhraseLROTask.DeserializeKeyPhraseLROTask(element, options);
-                    case "PiiEntityRecognition": return PiiLROTask.DeserializePiiLROTask(element, options);
+                    case "Healthcare": return HealthcareOperationAction.DeserializeHealthcareOperationAction(element, options);
+                    case "KeyPhraseExtraction": return KeyPhraseOperationAction.DeserializeKeyPhraseOperationAction(element, options);
+                    case "PiiEntityRecognition": return PiiOperationAction.DeserializePiiOperationAction(element, options);
                     case "SentimentAnalysis": return SentimentAnalysisOperationAction.DeserializeSentimentAnalysisOperationAction(element, options);
                 }
             }

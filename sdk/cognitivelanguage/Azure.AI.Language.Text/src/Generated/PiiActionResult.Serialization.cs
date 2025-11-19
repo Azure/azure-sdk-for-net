@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class PiiResultWithDetectedLanguage : IUtf8JsonSerializable, IJsonModel<PiiResultWithDetectedLanguage>
+    public partial class PiiActionResult : IUtf8JsonSerializable, IJsonModel<PiiActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiResultWithDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PiiResultWithDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PiiActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiResultWithDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("id"u8);
@@ -79,19 +79,19 @@ namespace Azure.AI.Language.Text
             }
         }
 
-        PiiResultWithDetectedLanguage IJsonModel<PiiResultWithDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PiiActionResult IJsonModel<PiiActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiResultWithDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiResultWithDetectedLanguage(document.RootElement, options);
+            return DeserializePiiActionResult(document.RootElement, options);
         }
 
-        internal static PiiResultWithDetectedLanguage DeserializePiiResultWithDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PiiActionResult DeserializePiiActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -163,7 +163,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PiiResultWithDetectedLanguage(
+            return new PiiActionResult(
                 id,
                 warnings,
                 statistics,
@@ -173,43 +173,43 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PiiResultWithDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PiiActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PiiResultWithDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PiiResultWithDetectedLanguage IPersistableModel<PiiResultWithDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PiiActionResult IPersistableModel<PiiActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiResultWithDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePiiResultWithDetectedLanguage(document.RootElement, options);
+                        return DeserializePiiActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiResultWithDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PiiResultWithDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PiiActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PiiResultWithDetectedLanguage FromResponse(Response response)
+        internal static PiiActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePiiResultWithDetectedLanguage(document.RootElement);
+            return DeserializePiiActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    internal partial class UnknownAnalyzeTextLROResult : IUtf8JsonSerializable, IJsonModel<AnalyzeTextLROResult>
+    internal partial class UnknownAnalyzeTextOperationResult : IUtf8JsonSerializable, IJsonModel<AnalyzeTextOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextLROResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AnalyzeTextLROResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AnalyzeTextOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextOperationResult)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        AnalyzeTextLROResult IJsonModel<AnalyzeTextLROResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AnalyzeTextOperationResult IJsonModel<AnalyzeTextOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextLROResult(document.RootElement, options);
+            return DeserializeAnalyzeTextOperationResult(document.RootElement, options);
         }
 
-        internal static UnknownAnalyzeTextLROResult DeserializeUnknownAnalyzeTextLROResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAnalyzeTextOperationResult DeserializeUnknownAnalyzeTextOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,53 +91,53 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData);
+            return new UnknownAnalyzeTextOperationResult(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AnalyzeTextLROResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AnalyzeTextOperationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AnalyzeTextLROResult IPersistableModel<AnalyzeTextLROResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AnalyzeTextOperationResult IPersistableModel<AnalyzeTextOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAnalyzeTextLROResult(document.RootElement, options);
+                        return DeserializeAnalyzeTextOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextLROResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AnalyzeTextLROResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AnalyzeTextOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownAnalyzeTextLROResult FromResponse(Response response)
+        internal static new UnknownAnalyzeTextOperationResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUnknownAnalyzeTextLROResult(document.RootElement);
+            return DeserializeUnknownAnalyzeTextOperationResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextLROResult>(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<AnalyzeTextOperationResult>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

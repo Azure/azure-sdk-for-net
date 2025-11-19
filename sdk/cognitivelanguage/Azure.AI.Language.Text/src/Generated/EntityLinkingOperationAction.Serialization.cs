@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class EntityLinkingLROTask : IUtf8JsonSerializable, IJsonModel<EntityLinkingLROTask>
+    public partial class EntityLinkingOperationAction : IUtf8JsonSerializable, IJsonModel<EntityLinkingOperationAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityLinkingLROTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityLinkingOperationAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntityLinkingLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityLinkingOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,33 +28,33 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingOperationAction)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(ActionContent))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                writer.WriteObjectValue(ActionContent, options);
             }
         }
 
-        EntityLinkingLROTask IJsonModel<EntityLinkingLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityLinkingOperationAction IJsonModel<EntityLinkingOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityLinkingOperationAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityLinkingLROTask(document.RootElement, options);
+            return DeserializeEntityLinkingOperationAction(document.RootElement, options);
         }
 
-        internal static EntityLinkingLROTask DeserializeEntityLinkingLROTask(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityLinkingOperationAction DeserializeEntityLinkingOperationAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,46 +94,46 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntityLinkingLROTask(taskName, kind, serializedAdditionalRawData, parameters);
+            return new EntityLinkingOperationAction(taskName, kind, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<EntityLinkingLROTask>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityLinkingOperationAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingOperationAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntityLinkingLROTask IPersistableModel<EntityLinkingLROTask>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityLinkingOperationAction IPersistableModel<EntityLinkingOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityLinkingOperationAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEntityLinkingLROTask(document.RootElement, options);
+                        return DeserializeEntityLinkingOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityLinkingOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntityLinkingLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityLinkingOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new EntityLinkingLROTask FromResponse(Response response)
+        internal static new EntityLinkingOperationAction FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEntityLinkingLROTask(document.RootElement);
+            return DeserializeEntityLinkingOperationAction(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

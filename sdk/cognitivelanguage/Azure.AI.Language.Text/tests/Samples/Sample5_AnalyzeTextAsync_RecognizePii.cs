@@ -122,7 +122,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     ModelVersion = "latest",
                     // Avaliable RedactionPolicies: EntityMaskPolicyType, CharacterMaskPolicyType, and NoMaskPolicyType
-                    RedactionPolicy = new EntityMaskPolicyType()
+                    RedactionPolicies =
+                {
+                new EntityMaskPolicyType
+                {
+                    // defaultPolicy: use entity mask for everything unless overridden
+                    PolicyName = "defaultPolicy",
+                    IsDefault = true,
+                }
+                }
                 }
             };
 
@@ -156,6 +164,98 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine($"  Message: {analyzeTextDocumentError.Error.Message}");
                 Console.WriteLine();
                 continue;
+            }
+            #endregion
+        }
+
+        public async Task RecognizePii_RedactionPolicies()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisClient client = new(endpoint, credential);
+
+            #region Snippet:Sample5_AnalyzeTextAsync_RecognizePii_RedactionPolicies
+            string documentText = "My name is John Doe. My ssn is 123-45-6789. My email is john@example.com..";
+
+            AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs =
+            {
+                new MultiLanguageInput("A", documentText) { Language = "en" },
+                new MultiLanguageInput("B", documentText) { Language = "en" },
+            }
+                },
+                ActionContent = new PiiActionContent
+                {
+                    PiiCategories = { PiiCategory.All },
+
+                    RedactionPolicies =
+            {
+                new EntityMaskPolicyType
+                {
+                    // defaultPolicy: use entity mask for everything unless overridden
+                    PolicyName = "defaultPolicy",
+                    IsDefault = true,
+                },
+                new CharacterMaskPolicyType
+                {
+                    // customMaskForSSN: keep the last 4 digits of SSN, mask the rest
+                    PolicyName = "customMaskForSSN",
+                    UnmaskLength = 4,
+                    UnmaskFromEnd = false,
+                    EntityTypes =
+                    {
+                        PiiCategoriesExclude.UsSocialSecurityNumber
+                    },
+                },
+                new SyntheticReplacementPolicyType
+                {
+                    // syntheticMaskForPerson: generate synthetic values for Person and Email
+                    PolicyName = "syntheticMaskForPerson",
+                    EntityTypes =
+                    {
+                        PiiCategoriesExclude.Person,
+                        PiiCategoriesExclude.Email
+                    },
+                }
+            }
+                }
+            };
+
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
+            AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
+
+            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+            {
+                Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
+                Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\"");
+                Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
+
+                foreach (PiiEntity entity in piiResult.Entities)
+                {
+                    Console.WriteLine($"    Text: {entity.Text}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.Subcategory))
+                    {
+                        Console.WriteLine($"    SubCategory: {entity.Subcategory}");
+                    }
+                    Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine();
+            }
+
+            foreach (DocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
+            {
+                Console.WriteLine($"  Error on document {analyzeTextDocumentError.Id}!");
+                Console.WriteLine($"  Document error code: {analyzeTextDocumentError.Error.Code}");
+                Console.WriteLine($"  Message: {analyzeTextDocumentError.Error.Message}");
+                Console.WriteLine();
             }
             #endregion
         }
