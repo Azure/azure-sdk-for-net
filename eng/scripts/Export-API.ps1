@@ -51,11 +51,18 @@ foreach ($file in $apiListingFiles) {
 }
 
 if ($SpellCheckPublicApiSurface) {
-    Write-Host "Spell check public API surface (found $($apiListingFiles.Count) files)"
-    &"$PSScriptRoot/../common/spelling/Invoke-Cspell.ps1" `
-        -FileList $apiListingFiles.FullName
+    Write-Host "Spell check public API surface"
+
+    if ($PSCmdlet.ParameterSetName -eq 'PackagePath') {
+        &"$PSScriptRoot/spell-check-public-api.ps1" `
+            -RelativePackagePath $relativePackagePath
+    } else {
+        &"$PSScriptRoot/spell-check-public-api.ps1" `
+            -ServiceDirectory $relativePackagePath
+    }
 
     if ($LASTEXITCODE) {
         Write-Host "##vso[task.LogIssue type=error;]Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
+        exit $LASTEXITCODE
     }
 }
