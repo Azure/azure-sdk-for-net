@@ -1085,8 +1085,8 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978 @chahibi @mandarinamdar
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @gmoralessanchez @mandarinamdar
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @ArthurMa1978 @gmoralessanchez @mandarinamdar
 
 # ServiceLabel: %Planetary Computer %Mgmt
 # ServiceOwners:                                                   @mandarinamdar
