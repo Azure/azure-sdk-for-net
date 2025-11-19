@@ -1,7 +1,6 @@
 [CmdletBinding()]
 param (
-    [Parameter(Position=0)]
-    [Parameter(Mandatory=$true, ParameterSetName='ServiceDirectory')]
+    [Parameter(Position=0, Mandatory=$true, ParameterSetName='ServiceDirectory')]
     [string] $ServiceDirectory,
 
     [string] $SDKType = "all",
