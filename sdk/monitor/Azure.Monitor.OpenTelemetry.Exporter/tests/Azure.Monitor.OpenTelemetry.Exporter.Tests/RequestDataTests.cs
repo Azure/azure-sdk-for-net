@@ -230,6 +230,60 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
         }
 
+        [Fact]
+        public void ValidateRequestDataWithStatusDescription()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            var httpUrl = "https://www.foo.bar/search";
+            var statusDescription = "Request failed due to timeout";
+            activity.SetStatus(ActivityStatusCode.Error, statusDescription);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "500");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.False(requestData.Success);
+            Assert.True(requestData.Properties.ContainsKey("otel.status_description"));
+            Assert.Equal(statusDescription, requestData.Properties["otel.status_description"]);
+        }
+
+        [Fact]
+        public void ValidateRequestDataWithoutStatusDescription()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Server,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            var httpUrl = "https://www.foo.bar/search";
+            activity.SetStatus(ActivityStatusCode.Error); // No description
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "500");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            Assert.False(requestData.Success);
+            Assert.False(requestData.Properties.ContainsKey("otel.status_description"));
+        }
+
         private ActivityLink AddActivityLink(long enqueuedTime)
         {
             ActivityTagsCollection tags = new ActivityTagsCollection

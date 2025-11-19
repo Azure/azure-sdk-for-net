@@ -266,5 +266,61 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal("unitTestAddress:unitTestPort", remoteDependencyData.Target);
         }
+
+        [Fact]
+        public void ValidateRemoteDependencyDataWithStatusDescription()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            var httpUrl = "https://www.foo.bar/search";
+            var statusDescription = "Dependency call failed due to network error";
+            activity.SetStatus(ActivityStatusCode.Error, statusDescription);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "503");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
+
+            Assert.False(remoteDependencyData.Success);
+            Assert.True(remoteDependencyData.Properties.ContainsKey("otel.status_description"));
+            Assert.Equal(statusDescription, remoteDependencyData.Properties["otel.status_description"]);
+        }
+
+        [Fact]
+        public void ValidateRemoteDependencyDataWithoutStatusDescription()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            var httpUrl = "https://www.foo.bar/search";
+            activity.SetStatus(ActivityStatusCode.Error); // No description
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl);
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "503");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
+
+            Assert.False(remoteDependencyData.Success);
+            Assert.False(remoteDependencyData.Properties.ContainsKey("otel.status_description"));
+        }
     }
 }
