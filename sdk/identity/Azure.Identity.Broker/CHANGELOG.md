@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.78.0
+
 ## 1.3.0 (2025-09-04)
 
 ### Breaking Changes
