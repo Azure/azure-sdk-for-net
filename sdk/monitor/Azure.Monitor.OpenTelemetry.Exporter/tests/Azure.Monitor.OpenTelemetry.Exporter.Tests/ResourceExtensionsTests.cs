@@ -188,7 +188,7 @@ public class ResourceExtensionsTests
     [InlineData("Microsoft.ApplicationInsights.AspNetCore", "shc", SdkVersionType.ShimAspNetCore)]
     [InlineData("Microsoft.ApplicationInsights.WorkerService", "shw", SdkVersionType.ShimWorkerService)]
     [InlineData("Microsoft.ApplicationInsights.Web", "shf", SdkVersionType.ShimWeb)]
-    public void SetsSdkShimLabelForAllShimPackages(string distroName, string expectedLabel, SdkVersionType expectedType)
+    internal void SetsSdkShimLabelForAllShimPackages(string distroName, string expectedLabel, SdkVersionType expectedType)
     {
         // SDK version is static, preserve to clean up later.
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
