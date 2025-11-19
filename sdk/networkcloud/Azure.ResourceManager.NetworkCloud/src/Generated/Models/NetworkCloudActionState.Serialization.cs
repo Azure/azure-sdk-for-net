@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ActionState : IUtf8JsonSerializable, IJsonModel<ActionState>
+    public partial class NetworkCloudActionState : IUtf8JsonSerializable, IJsonModel<NetworkCloudActionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudActionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ActionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudActionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudActionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudActionState)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(ActionType))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        ActionState IJsonModel<ActionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkCloudActionState IJsonModel<NetworkCloudActionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudActionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudActionState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionState(document.RootElement, options);
+            return DeserializeNetworkCloudActionState(document.RootElement, options);
         }
 
-        internal static ActionState DeserializeActionState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkCloudActionState DeserializeNetworkCloudActionState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             string actionType = default;
             string correlationId = default;
-            string endTime = default;
+            DateTimeOffset? endTime = default;
             string message = default;
             string startTime = default;
-            ActionStateStatus? status = default;
-            IReadOnlyList<StepState> stepStates = default;
+            NetworkCloudActionStateStatus? status = default;
+            IReadOnlyList<NetworkCloudStepState> stepStates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    status = new ActionStateStatus(property.Value.GetString());
+                    status = new NetworkCloudActionStateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stepStates"u8))
@@ -162,10 +166,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<StepState> array = new List<StepState>();
+                    List<NetworkCloudStepState> array = new List<NetworkCloudStepState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepState.DeserializeStepState(item, options));
+                        array.Add(NetworkCloudStepState.DeserializeNetworkCloudStepState(item, options));
                     }
                     stepStates = array;
                     continue;
@@ -176,46 +180,46 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ActionState(
+            return new NetworkCloudActionState(
                 actionType,
                 correlationId,
                 endTime,
                 message,
                 startTime,
                 status,
-                stepStates ?? new ChangeTrackingList<StepState>(),
+                stepStates ?? new ChangeTrackingList<NetworkCloudStepState>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ActionState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkCloudActionState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudActionState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudActionState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ActionState IPersistableModel<ActionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkCloudActionState IPersistableModel<NetworkCloudActionState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudActionState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeActionState(document.RootElement, options);
+                        return DeserializeNetworkCloudActionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudActionState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ActionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudActionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

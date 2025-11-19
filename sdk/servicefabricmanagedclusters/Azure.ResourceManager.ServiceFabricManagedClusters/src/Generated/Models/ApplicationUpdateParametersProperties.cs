@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.NetworkCloud.Models
+namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> CertificateInfo represents the non-private information of an X.509 Certificate. </summary>
-    public partial class CertificateInfo
+    /// <summary> Properties for application update request. </summary>
+    internal partial class ApplicationUpdateParametersProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateInfo"/>. </summary>
-        internal CertificateInfo()
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpdateParametersProperties"/>. </summary>
+        public ApplicationUpdateParametersProperties()
         {
+            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateInfo"/>. </summary>
-        /// <param name="hash"> The hash value of the X.509 Certificate. </param>
-        /// <param name="value"> The textual value of the X.509 Certificate. </param>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpdateParametersProperties"/>. </summary>
+        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateInfo(string hash, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationUpdateParametersProperties(IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Hash = hash;
-            Value = value;
+            Parameters = parameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The hash value of the X.509 Certificate. </summary>
-        public string Hash { get; }
-        /// <summary> The textual value of the X.509 Certificate. </summary>
-        public string Value { get; }
+        /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
+        public IDictionary<string, string> Parameters { get; }
     }
 }

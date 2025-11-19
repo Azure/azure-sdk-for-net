@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class CertificateInfo : IUtf8JsonSerializable, IJsonModel<CertificateInfo>
+    public partial class NetworkCloudCertificateInfo : IUtf8JsonSerializable, IJsonModel<NetworkCloudCertificateInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudCertificateInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CertificateInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudCertificateInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudCertificateInfo)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Hash))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        CertificateInfo IJsonModel<CertificateInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkCloudCertificateInfo IJsonModel<NetworkCloudCertificateInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudCertificateInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertificateInfo(document.RootElement, options);
+            return DeserializeNetworkCloudCertificateInfo(document.RootElement, options);
         }
 
-        internal static CertificateInfo DeserializeCertificateInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkCloudCertificateInfo DeserializeNetworkCloudCertificateInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CertificateInfo(hash, value, serializedAdditionalRawData);
+            return new NetworkCloudCertificateInfo(hash, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CertificateInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkCloudCertificateInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudCertificateInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CertificateInfo IPersistableModel<CertificateInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkCloudCertificateInfo IPersistableModel<NetworkCloudCertificateInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCertificateInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCertificateInfo(document.RootElement, options);
+                        return DeserializeNetworkCloudCertificateInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudCertificateInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CertificateInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudCertificateInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
