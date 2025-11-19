@@ -112,6 +112,42 @@ public class FineTuningTests : FineTuningTestsBase
             });
     }
 
+    private async Task<FineTuningJob> CreateSupervisedFineTuningJobForOssModelAsync(
+        FineTuningClient fineTuningClient,
+        string modelName,
+        string trainFileId,
+        string validationFileId,
+        string trainingType,
+        int epochCount = 1,
+        int batchSize = 4,
+        double learningRate = 0.0001)
+    {
+        var requestJson = new
+        {
+            model = modelName,
+            training_file = trainFileId,
+            validation_file = validationFileId,
+            trainingType = trainingType,
+            method = new
+            {
+                type = "supervised",
+                supervised = new
+                {
+                    hyperparameters = new
+                    {
+                        n_epochs = epochCount,
+                        batch_size = batchSize,
+                        learning_rate_multiplier = learningRate
+                    }
+                }
+            }
+        };
+
+        string jsonString = JsonSerializer.Serialize(requestJson);
+        BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+        return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
+    }
+
     private async Task<FineTuningJob> CreateDpoFineTuningJobAsync(
         FineTuningClient fineTuningClient,
         string modelName,
@@ -169,11 +205,12 @@ public class FineTuningTests : FineTuningTestsBase
 
         try
         {
-            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobForOssModelAsync(
                 fineTuningClient,
                 "Ministral-3B",
                 trainFile.Id,
                 validationFile.Id,
+                trainingType: "GlobalStandard",
                 epochCount: 1,
                 batchSize: 4,
                 learningRate: 0.0001);
