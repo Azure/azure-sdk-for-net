@@ -187,9 +187,18 @@ namespace Azure.Developer.LoadTesting
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestRunsAsyncCollectionResult(
+                this,
+                orderby,
+                search,
+                testId,
+                executionFrom,
+                executionTo,
+                status,
+                null,
+                [],
+                [],
+                context);
         }
 
         /// <summary> Get all test runs with given filters. </summary>
@@ -205,9 +214,18 @@ namespace Azure.Developer.LoadTesting
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BinaryData> GetTestRuns(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestRunsCollectionResult(
+                this,
+                orderby,
+                search,
+                testId,
+                executionFrom,
+                executionTo,
+                status,
+                null,
+                [],
+                [],
+                context);
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -230,10 +248,18 @@ namespace Azure.Developer.LoadTesting
         public virtual AsyncPageable<LoadTestRun> GetTestRunsAsync(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, CancellationToken cancellationToken)
 #pragma warning restore AZC0002
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LoadTestRun.DeserializeLoadTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestRunsAsyncCollectionResultOfT(
+                this,
+                orderby,
+                search,
+                testId,
+                executionFrom,
+                executionTo,
+                status,
+                null,
+                [],
+                [],
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -256,10 +282,18 @@ namespace Azure.Developer.LoadTesting
         public virtual Pageable<LoadTestRun> GetTestRuns(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, CancellationToken cancellationToken)
 #pragma warning restore AZC0002
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, null, null, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LoadTestRun.DeserializeLoadTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            return new LoadTestRunClientGetTestRunsCollectionResultOfT(
+                this,
+                orderby,
+                search,
+                testId,
+                executionFrom,
+                executionTo,
+                status,
+                null,
+                [],
+                [],
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> List test profile runs. </summary>
@@ -406,63 +440,6 @@ namespace Azure.Developer.LoadTesting
                 testProfileIds,
                 statuses,
                 context);
-        }
-
-        /// <summary> List the metric values for a load test run. </summary>
-        /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="metricName"> Metric name. </param>
-        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="timespan"> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. Allowed values: &quot;PT5S&quot; | &quot;PT10S&quot; | &quot;PT1M&quot; | &quot;PT5M&quot; | &quot;PT1H&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
-        {
-            return new LoadTestRunClientGetMetricsAsyncCollectionResult(
-                this,
-                testRunId,
-                metricName,
-                metricNamespace,
-                timespan,
-                content,
-                aggregation,
-                interval,
-                context);
-        }
-
-        /// <summary> List the metric values for a load test run. </summary>
-        /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
-        /// <param name="metricName"> Metric name. </param>
-        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="timespan"> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. Allowed values: &quot;PT5S&quot; | &quot;PT10S&quot; | &quot;PT1M&quot; | &quot;PT5M&quot; | &quot;PT1H&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(timespan, nameof(timespan));
-
-            if (content == null)
-            {
-                content = RequestContent.Create(new { });
-            }
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
     }
 }

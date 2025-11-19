@@ -696,19 +696,9 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFiles");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-                return new LoadTestAdministrationClientGetTestFilesCollectionResult(this, testId, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTestFilesCollectionResult(this, testId, context);
         }
 
         /// <summary>
@@ -727,19 +717,9 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFiles");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-                return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(this, testId, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(this, testId, context);
         }
 
         /// <summary> Get all test files. </summary>
@@ -794,24 +774,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTests(string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetTestsCollectionResult(
-                    this,
-                    @orderby,
-                    search,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTestsCollectionResult(
+                this,
+                @orderby,
+                search,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
         }
 
         /// <summary>
@@ -840,24 +810,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTestsAsync(string @orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetTestsAsyncCollectionResult(
-                    this,
-                    @orderby,
-                    search,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTestsAsyncCollectionResult(
+                this,
+                @orderby,
+                search,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
         }
 
         /// <summary>
@@ -1488,24 +1448,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTestProfiles(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfiles");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetTestProfilesCollectionResult(
-                    this,
-                    maxpagesize,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    testProfileIds,
-                    testIds,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTestProfilesCollectionResult(
+                this,
+                maxpagesize,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                testProfileIds,
+                testIds,
+                context);
         }
 
         /// <summary>
@@ -1526,24 +1476,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTestProfilesAsync(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestProfiles");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetTestProfilesAsyncCollectionResult(
-                    this,
-                    maxpagesize,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    testProfileIds,
-                    testIds,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTestProfilesAsyncCollectionResult(
+                this,
+                maxpagesize,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                testProfileIds,
+                testIds,
+                context);
         }
 
         /// <summary> Get all test profiles for the given filters. </summary>
@@ -1854,24 +1794,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTriggers(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTriggers");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetTriggersCollectionResult(
-                    this,
-                    testIds,
-                    states,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTriggersCollectionResult(
+                this,
+                testIds,
+                states,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
         }
 
         /// <summary>
@@ -1892,24 +1822,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTriggersAsync(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTriggers");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetTriggersAsyncCollectionResult(
-                    this,
-                    testIds,
-                    states,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetTriggersAsyncCollectionResult(
+                this,
+                testIds,
+                states,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -2220,24 +2140,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetNotificationRules(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRules");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetNotificationRulesCollectionResult(
-                    this,
-                    testIds,
-                    scopes,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetNotificationRulesCollectionResult(
+                this,
+                testIds,
+                scopes,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
         }
 
         /// <summary>
@@ -2258,24 +2168,14 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetNotificationRulesAsync(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetNotificationRules");
-            scope.Start();
-            try
-            {
-                return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResult(
-                    this,
-                    testIds,
-                    scopes,
-                    lastModifiedStartTime,
-                    lastModifiedEndTime,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResult(
+                this,
+                testIds,
+                scopes,
+                lastModifiedStartTime,
+                lastModifiedEndTime,
+                maxpagesize,
+                context);
         }
 
         /// <summary> Resource list operation template. </summary>

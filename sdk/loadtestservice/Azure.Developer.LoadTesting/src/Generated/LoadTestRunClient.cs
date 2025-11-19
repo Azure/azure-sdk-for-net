@@ -804,31 +804,21 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDimensionValues");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
-                Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-                Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-                return new LoadTestRunClientGetMetricDimensionValuesCollectionResult(
-                    this,
-                    testRunId,
-                    name,
-                    metricname,
-                    metricNamespace,
-                    timespan,
-                    interval,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestRunClientGetMetricDimensionValuesCollectionResult(
+                this,
+                testRunId,
+                name,
+                metricname,
+                metricNamespace,
+                timespan,
+                interval,
+                context);
         }
 
         /// <summary>
@@ -855,31 +845,21 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDimensionValues");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
-                Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-                Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
-                return new LoadTestRunClientGetMetricDimensionValuesAsyncCollectionResult(
-                    this,
-                    testRunId,
-                    name,
-                    metricname,
-                    metricNamespace,
-                    timespan,
-                    interval,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestRunClientGetMetricDimensionValuesAsyncCollectionResult(
+                this,
+                testRunId,
+                name,
+                metricname,
+                metricNamespace,
+                timespan,
+                interval,
+                context);
         }
 
         /// <summary> List the dimension values for the given metric dimension name. </summary>
@@ -1164,6 +1144,90 @@ namespace Azure.Developer.LoadTesting
             return Response.FromValue((MetricNamespaces)result, result);
         }
 
+        /// <summary>
+        /// [Protocol Method] List the metric values for a load test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="aggregation"> The aggregation. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+
+            return new LoadTestRunClientGetMetricsCollectionResult(
+                this,
+                testRunId,
+                metricname,
+                metricNamespace,
+                timespan,
+                content,
+                aggregation,
+                interval,
+                context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List the metric values for a load test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="aggregation"> The aggregation. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
+            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+
+            return new LoadTestRunClientGetMetricsAsyncCollectionResult(
+                this,
+                testRunId,
+                metricname,
+                metricNamespace,
+                timespan,
+                content,
+                aggregation,
+                interval,
+                context);
+        }
+
         /// <summary> List the metric values for a load test run. </summary>
         /// <param name="testRunId">
         /// Unique name for the load test run, must contain only lower-case alphabetic,
@@ -1261,28 +1325,18 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTestRuns(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRuns");
-            scope.Start();
-            try
-            {
-                return new LoadTestRunClientGetTestRunsCollectionResult(
-                    this,
-                    @orderby,
-                    search,
-                    testId,
-                    executionFrom,
-                    executionTo,
-                    status,
-                    maxpagesize,
-                    createdByTypes,
-                    testIds,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestRunClientGetTestRunsCollectionResult(
+                this,
+                @orderby,
+                search,
+                testId,
+                executionFrom,
+                executionTo,
+                status,
+                maxpagesize,
+                createdByTypes,
+                testIds,
+                context);
         }
 
         /// <summary>
@@ -1314,28 +1368,18 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRuns");
-            scope.Start();
-            try
-            {
-                return new LoadTestRunClientGetTestRunsAsyncCollectionResult(
-                    this,
-                    @orderby,
-                    search,
-                    testId,
-                    executionFrom,
-                    executionTo,
-                    status,
-                    maxpagesize,
-                    createdByTypes,
-                    testIds,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestRunClientGetTestRunsAsyncCollectionResult(
+                this,
+                @orderby,
+                search,
+                testId,
+                executionFrom,
+                executionTo,
+                status,
+                maxpagesize,
+                createdByTypes,
+                testIds,
+                context);
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1763,29 +1807,19 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTestProfileRuns(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestProfileRuns");
-            scope.Start();
-            try
-            {
-                return new LoadTestRunClientGetTestProfileRunsCollectionResult(
-                    this,
-                    maxpagesize,
-                    minStartDateTime,
-                    maxStartDateTime,
-                    minEndDateTime,
-                    maxEndDateTime,
-                    createdDateStartTime,
-                    createdDateEndTime,
-                    testProfileRunIds,
-                    testProfileIds,
-                    statuses,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestRunClientGetTestProfileRunsCollectionResult(
+                this,
+                maxpagesize,
+                minStartDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                context);
         }
 
         /// <summary>
@@ -1811,29 +1845,19 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTestProfileRunsAsync(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestProfileRuns");
-            scope.Start();
-            try
-            {
-                return new LoadTestRunClientGetTestProfileRunsAsyncCollectionResult(
-                    this,
-                    maxpagesize,
-                    minStartDateTime,
-                    maxStartDateTime,
-                    minEndDateTime,
-                    maxEndDateTime,
-                    createdDateStartTime,
-                    createdDateEndTime,
-                    testProfileRunIds,
-                    testProfileIds,
-                    statuses,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new LoadTestRunClientGetTestProfileRunsAsyncCollectionResult(
+                this,
+                maxpagesize,
+                minStartDateTime,
+                maxStartDateTime,
+                minEndDateTime,
+                maxEndDateTime,
+                createdDateStartTime,
+                createdDateEndTime,
+                testProfileRunIds,
+                testProfileIds,
+                statuses,
+                context);
         }
 
         /// <summary> Get all test profile runs for the given filters. </summary>
