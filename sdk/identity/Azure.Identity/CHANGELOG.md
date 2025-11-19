@@ -1,14 +1,10 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.17.1 (unreleased)
 
 ### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
 
 ## 1.18.0-beta.1 (2025-11-14)
 
