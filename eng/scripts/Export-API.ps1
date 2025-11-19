@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param (
-    [Parameter(Position=0, Mandatory=$true, ParameterSetName='ServiceDirectory')]
+    [Parameter(Position=0)]
+
+    [Parameter(Mandatory=$true, ParameterSetName='ServiceDirectory')]
     [string] $ServiceDirectory,
 
     [string] $SDKType = "all",
@@ -16,9 +18,6 @@ if ($SpellCheckPublicApiSurface -and -not (Get-Command 'npx')) {
     Write-Error "Could not locate npx. Install NodeJS (includes npm and npx) https://nodejs.org/en/download/"
     exit 1
 }
-
-. $PSScriptRoot/../common/scripts/Helpers/CommandInvocation-Helpers.ps1
-
 $relativePackagePath = $ServiceDirectory
 $apiListingFilesFilter = "$PSScriptRoot/../../sdk/$ServiceDirectory/*/api/*.cs"
 
@@ -33,11 +32,31 @@ $debugLogging = $env:SYSTEM_DEBUG -eq "true"
 $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
 $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/exportapi.binlog" : ""
 
-Invoke-LoggedMsbuildCommand "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope=`"$relativePackagePath`" /p:SDKType=$SDKType /restore $servicesProj $diagnosticArguments"
+dotnet build `
+    /t:ExportApi `
+    /p:RunApiCompat=false `
+    /p:InheritDocEnabled=false `
+    /p:GeneratePackageOnBuild=false `
+    /p:Configuration=Release `
+    /p:IncludeSamples=false `
+    /p:IncludePerf=false `
+    /p:IncludeStress=false `
+    /p:IncludeTests=false `
+    /p:Scope="$relativePackagePath" `
+    /p:SDKType=$SDKType `
+    /restore `
+    $servicesProj `
+    $diagnosticArguments
+
+if ($LASTEXITCODE) {
+    Write-Host "##vso[task.LogIssue type=error;]API export failed. See the build logs for details."
+    exit $LASTEXITCODE
+}
 
 # Normalize line endings to LF in generated API listing files
 Write-Host "Normalizing line endings in API listing files"
-$apiListingFiles = Get-ChildItem -Path $apiListingFilesFilter -ErrorAction SilentlyContinue
+$apiListingFiles = Get-ChildItem -Path $apiListingFilesFilter
+$apiListingFiles | Write-Host
 foreach ($file in $apiListingFiles) {
     $content = Get-Content -Path $file.FullName -Raw
     if ($content) {
@@ -52,8 +71,14 @@ foreach ($file in $apiListingFiles) {
 
 if ($SpellCheckPublicApiSurface) {
     Write-Host "Spell check public API surface"
-    &"$PSScriptRoot/spell-check-public-api.ps1" `
-        -ServiceDirectory $ServiceDirectory
+
+    if ($PSCmdlet.ParameterSetName -eq 'PackagePath') {
+        &"$PSScriptRoot/spell-check-public-api.ps1" `
+            -RelativePackagePath $relativePackagePath
+    } else {
+        &"$PSScriptRoot/spell-check-public-api.ps1" `
+            -ServiceDirectory $relativePackagePath
+    }
 
     if ($LASTEXITCODE) {
         Write-Host "##vso[task.LogIssue type=error;]Spelling errors detected. To correct false positives or learn about spell checking see: https://aka.ms/azsdk/engsys/spellcheck"
