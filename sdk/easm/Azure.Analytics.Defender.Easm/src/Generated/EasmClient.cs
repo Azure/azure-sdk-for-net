@@ -83,27 +83,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAssetResources(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetAssetResourcesCollectionResult(
-                    this,
-                    filter,
-                    @orderby,
-                    skip,
-                    maxpagesize,
-                    mark,
-                    responseType,
-                    responseIncludes,
-                    recentOnly,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetAssetResourcesCollectionResult(
+                this,
+                filter,
+                @orderby,
+                skip,
+                maxpagesize,
+                mark,
+                responseType,
+                responseIncludes,
+                recentOnly,
+                context);
         }
 
         /// <summary>
@@ -127,27 +117,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAssetResourcesAsync(string filter, string @orderby, int? skip, int? maxpagesize, string mark, string responseType, IEnumerable<string> responseIncludes, bool? recentOnly, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetAssetResources");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetAssetResourcesAsyncCollectionResult(
-                    this,
-                    filter,
-                    @orderby,
-                    skip,
-                    maxpagesize,
-                    mark,
-                    responseType,
-                    responseIncludes,
-                    recentOnly,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetAssetResourcesAsyncCollectionResult(
+                this,
+                filter,
+                @orderby,
+                skip,
+                maxpagesize,
+                mark,
+                responseType,
+                responseIncludes,
+                recentOnly,
+                context);
         }
 
         /// <summary> Retrieve a list of assets for the provided search parameters. </summary>
@@ -615,19 +595,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDeltaDetails(RequestContent content, int? skip = default, int? maxpagesize = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDeltaDetails");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(content, nameof(content));
 
-                return new EasmClientGetDeltaDetailsCollectionResult(this, content, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDeltaDetailsCollectionResult(this, content, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -647,19 +617,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDeltaDetailsAsync(RequestContent content, int? skip = default, int? maxpagesize = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDeltaDetails");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(content, nameof(content));
 
-                return new EasmClientGetDeltaDetailsAsyncCollectionResult(this, content, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDeltaDetailsAsyncCollectionResult(this, content, skip, maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of deltas for the provided time range. </summary>
@@ -793,17 +753,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDataConnections(int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnections");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetDataConnectionsCollectionResult(this, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDataConnectionsCollectionResult(this, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -821,17 +771,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDataConnectionsAsync(int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDataConnections");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetDataConnectionsAsyncCollectionResult(this, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDataConnectionsAsyncCollectionResult(this, skip, maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of data connections. </summary>
@@ -1240,17 +1180,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDiscoveryGroups(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroups");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetDiscoveryGroupsCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDiscoveryGroupsCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -1269,17 +1199,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDiscoveryGroupsAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroups");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetDiscoveryGroupsAsyncCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDiscoveryGroupsAsyncCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of discovery group for the provided search parameters. </summary>
@@ -1783,25 +1703,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDiscoveryGroupRuns(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroupRuns");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                return new EasmClientGetDiscoveryGroupRunsCollectionResult(
-                    this,
-                    groupName,
-                    filter,
-                    skip,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDiscoveryGroupRunsCollectionResult(
+                this,
+                groupName,
+                filter,
+                skip,
+                maxpagesize,
+                context);
         }
 
         /// <summary>
@@ -1823,25 +1733,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDiscoveryGroupRunsAsync(string groupName, string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryGroupRuns");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-                return new EasmClientGetDiscoveryGroupRunsAsyncCollectionResult(
-                    this,
-                    groupName,
-                    filter,
-                    skip,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDiscoveryGroupRunsAsyncCollectionResult(
+                this,
+                groupName,
+                filter,
+                skip,
+                maxpagesize,
+                context);
         }
 
         /// <summary> Retrieve a collection of discovery run results for a discovery group with a given groupName. </summary>
@@ -2080,17 +1980,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetDiscoveryTemplates(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryTemplates");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetDiscoveryTemplatesCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDiscoveryTemplatesCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -2109,17 +1999,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetDiscoveryTemplatesAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetDiscoveryTemplates");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetDiscoveryTemplatesAsyncCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetDiscoveryTemplatesAsyncCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of disco templates for the provided search parameters. </summary>
@@ -2588,17 +2468,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSavedFilters(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilters");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetSavedFiltersCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetSavedFiltersCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -2617,17 +2487,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSavedFiltersAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetSavedFilters");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetSavedFiltersAsyncCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetSavedFiltersAsyncCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of saved filters for the provided search parameters. </summary>
@@ -2951,23 +2811,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetTasks(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTasks");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetTasksCollectionResult(
-                    this,
-                    filter,
-                    @orderby,
-                    skip,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetTasksCollectionResult(
+                this,
+                filter,
+                @orderby,
+                skip,
+                maxpagesize,
+                context);
         }
 
         /// <summary>
@@ -2987,23 +2837,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetTasksAsync(string filter, string @orderby, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetTasks");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetTasksAsyncCollectionResult(
-                    this,
-                    filter,
-                    @orderby,
-                    skip,
-                    maxpagesize,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetTasksAsyncCollectionResult(
+                this,
+                filter,
+                @orderby,
+                skip,
+                maxpagesize,
+                context);
         }
 
         /// <summary> Retrieve a list of tasks for the provided search parameters. </summary>
@@ -3423,17 +3263,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetCisaCves(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetCisaCves");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetCisaCvesCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetCisaCvesCollectionResult(this, context);
         }
 
         /// <summary>
@@ -3449,17 +3279,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetCisaCvesAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetCisaCves");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetCisaCvesAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetCisaCvesAsyncCollectionResult(this, context);
         }
 
         /// <summary> Retrieve a list of CisaCves for the provided search parameters. </summary>
@@ -3586,17 +3406,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetPolicies(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicies");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetPoliciesCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetPoliciesCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -3615,17 +3425,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetPoliciesAsync(string filter, int? skip, int? maxpagesize, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EasmClient.GetPolicies");
-            scope.Start();
-            try
-            {
-                return new EasmClientGetPoliciesAsyncCollectionResult(this, filter, skip, maxpagesize, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new EasmClientGetPoliciesAsyncCollectionResult(this, filter, skip, maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of policies for the provided search parameters. </summary>

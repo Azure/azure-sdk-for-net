@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ConnectedCache
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeIspCustomerData(document.RootElement, options);
                     }
@@ -221,11 +221,10 @@ namespace Azure.ResourceManager.ConnectedCache
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="IspCustomerData"/> from. </param>
-        internal static IspCustomerData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IspCustomerData"/> from. </param>
+        internal static IspCustomerData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeIspCustomerData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
