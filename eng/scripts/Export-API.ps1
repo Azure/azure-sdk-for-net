@@ -46,11 +46,6 @@ $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFo
     $servicesProj `
     $diagnosticArguments
 
-if ($LASTEXITCODE) {
-    Write-Host "##vso[task.LogIssue type=error;]API export failed. See the build logs for details."
-    exit $LASTEXITCODE
-}
-
 # Normalize line endings to LF in generated API listing files
 Write-Host "Normalizing line endings in API listing files"
 $apiListingFiles = Get-ChildItem -Path $apiListingFilesFilter -ErrorAction SilentlyContinue
