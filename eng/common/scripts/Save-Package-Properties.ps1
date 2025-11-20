@@ -144,6 +144,7 @@ foreach ($pkg in $allPackageProperties)
     if (-not [System.String]::IsNullOrEmpty($pkg.Group)) {
       Write-Host "GroupId: $($pkg.Group)"
     }
+    Write-Host "Spec Project Path: $($pkg.SpecProjectPath)"
     Write-Host "Release date: $($pkg.ReleaseStatus)"
     $configFilePrefix = $pkg.Name
 

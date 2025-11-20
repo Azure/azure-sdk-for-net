@@ -27,8 +27,6 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers\ApiView-Helpers.ps1)
 . (Join-Path $PSScriptRoot Helpers\DevOps-WorkItem-Helpers.ps1)
-. (Join-Path $PSScriptRoot Helpers\PSModule-Helpers.ps1)
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
 # Function to validate change log
 function ValidateChangeLog($changeLogPath, $versionString, $validationStatus)
@@ -147,15 +145,6 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         $plannedDate = "unknown"
     }
 
-    $specProjectPath = ''
-    $tspLocationYmlPath = Join-Path "$PSScriptRoot/../../.." $pkgInfo.DirectoryPath 'tsp-location.yaml'
-    if (Test-Path $tspLocationYmlPath) {
-        Write-Host "Found tsp-location.yaml at path: $tspLocationYmlPath"
-        $tspLocation = Get-Content $tspLocationYmlPath | ConvertFrom-Yaml
-        $specProjectPath = $tspLocation.directory
-        Write-Host "Spec project path extracted from tsp-location.yaml: $specProjectPath"
-    }
-
     # Create or update package work item
     $result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
         -packageName $packageName `
@@ -167,7 +156,7 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
         -inRelease $IsReleaseBuild `
-        -specProjectPath $specProjectPath
+        -specProjectPath $pkgInfo.SpecProjectPath
 
     if (-not $result)
     {
