@@ -157,9 +157,8 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - template: /eng/common/testproxy/test-proxy-tool.yml
-        parameters:
-          runProxy: false
+      - pwsh: |
+          dotnet tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
 
       - pwsh: >
           ./eng/scripts/runwithdevopslogging.ps1
