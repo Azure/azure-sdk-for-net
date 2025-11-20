@@ -1,14 +1,10 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.13.1 (2025-11-19)
 
 ### Other Changes
+
+- Updated `Azure.Identity` dependency to version 1.17.1
 
 ## 1.13.0 (2025-09-22)
 
