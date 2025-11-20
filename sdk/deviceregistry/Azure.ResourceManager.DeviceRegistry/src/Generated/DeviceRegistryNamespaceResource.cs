@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2025-10-01");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -783,6 +783,29 @@ namespace Azure.ResourceManager.DeviceRegistry
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of Credentials in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of Credentials and their operations over a CredentialResource. </returns>
+        public virtual CredentialCollection GetCredentials()
+        {
+            return GetCachedClient(client => new CredentialCollection(client, Id));
+        }
+
+        /// <summary> Get a Credential. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CredentialResource>> GetCredentialAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetCredentials().GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Credential. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<CredentialResource> GetCredential(CancellationToken cancellationToken = default)
+        {
+            return GetCredentials().Get(cancellationToken);
         }
 
         /// <summary> Gets a collection of DeviceRegistryNamespaceAssets in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
