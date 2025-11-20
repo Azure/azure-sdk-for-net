@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +31,7 @@ public class TestProxyProcess
     private static readonly bool s_enableDebugProxyLogging;
 
     internal virtual TestProxyAdminClient AdminClient { get; }
-    internal virtual TestProxyClient ProxyClient { get; }
+    internal virtual TestProxyClient ProxyClient { get; } 
 
     /// <summary>
     /// The IP address used for the test proxy. Uses 127.0.0.1 instead of localhost to avoid SSL callback slowness.
@@ -57,21 +56,7 @@ public class TestProxyProcess
     /// <exception cref="InvalidOperationException">Thrown when the .NET installation directory is not found.</exception>
     static TestProxyProcess()
     {
-        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
-        var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
-        if (!HasDotNetExe(installDir))
-        {
-            installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
-        }
-
-        if (installDir == null)
-        {
-            throw new InvalidOperationException("DOTNET install directory was not found");
-        }
-
-        s_dotNetExe = Path.Combine(installDir, dotNetExeName);
-
-        bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
+        s_dotNetExe = TryGetDotnetExePath();
         s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
     }
 
@@ -112,6 +97,7 @@ public class TestProxyProcess
 
         testProxyProcessInfo.UseShellExecute = false;
         testProxyProcessInfo.RedirectStandardOutput = true;
+        testProxyProcessInfo.RedirectStandardError = true;
 
         // Set environment variables
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
@@ -205,66 +191,6 @@ public class TestProxyProcess
             });
     }
 
-    private static bool TryParsePort(string? output, string scheme, out int? port)
-    {
-        if (output == null)
-        {
-            TestContext.Progress.WriteLine("output was null");
-            port = null;
-            return false;
-        }
-        string nowListeningOn = "Now listening on: ";
-        int nowListeningOnLength = nowListeningOn.Length;
-        var index = output.IndexOf($"{nowListeningOn}{scheme}:", StringComparison.CurrentCultureIgnoreCase);
-        if (index > -1)
-        {
-            var start = index + nowListeningOnLength;
-            var uri = output.Substring(start, output.Length - start).Trim();
-            port = new Uri(uri).Port;
-            return true;
-        }
-
-        port = null;
-        return false;
-    }
-
-    private static void TryRestoreLocalTools()
-    {
-        try
-        {
-            var repoRoot = TestEnvironment.RepositoryRoot;
-            if (repoRoot != null)
-            {
-                var toolsJsonPath = Path.Combine(repoRoot, ".config", "dotnet-tools.json");
-
-                if (File.Exists(toolsJsonPath))
-                {
-                    // Found the tools manifest at repo root, try to restore
-                    var processInfo = new ProcessStartInfo
-                    {
-                        FileName = s_dotNetExe,
-                        Arguments = "tool restore",
-                        WorkingDirectory = repoRoot,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
-
-                    using var process = Process.Start(processInfo);
-                    if (process != null)
-                    {
-                        process.WaitForExit(30000);
-                    }
-                }
-            }
-        }
-        catch
-        {
-            // If restore fails, silently continue - the dotnet test-proxy command will handle it
-        }
-    }
-
     /// <summary>
     /// Starts the test proxy
     /// </summary>
@@ -297,18 +223,6 @@ public class TestProxyProcess
         }
     }
 
-    private static string? GetTestProxyPath()
-    {
-        // Look for environment variable override
-        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
-        if (!string.IsNullOrEmpty(envPath))
-        {
-            return envPath;
-        }
-
-        return null;
-    }
-
     /// <summary>
     /// Checks the test proxy output for any logged information and errors.
     /// If debug logging is enabled, outputs the collected logs and clears the buffer.
@@ -334,6 +248,116 @@ public class TestProxyProcess
             var error = _errorBuffer.ToString();
             _errorBuffer.Clear();
             throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
+        }
+    }
+
+    private static string? GetTestProxyPath()
+    {
+        // Look for environment variable override
+        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
+        if (!string.IsNullOrEmpty(envPath))
+        {
+            return envPath;
+        }
+
+        return null;
+    }
+
+    internal static bool TryParsePort(string? output, string scheme, out int? port)
+    {
+        if (output == null)
+        {
+            TestContext.Progress.WriteLine("output was null");
+            port = null;
+            return false;
+        }
+        string nowListeningOn = "Now listening on: ";
+        int nowListeningOnLength = nowListeningOn.Length;
+        var index = output.IndexOf($"{nowListeningOn}{scheme}:", StringComparison.CurrentCultureIgnoreCase);
+        if (index > -1)
+        {
+            var start = index + nowListeningOnLength;
+            var uri = output.Substring(start, output.Length - start).Trim();
+            port = new Uri(uri).Port;
+            return true;
+        }
+
+        port = null;
+        return false;
+    }
+
+    internal static string TryGetDotnetExePath()
+    {
+        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
+        var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
+        if (!HasDotNetExe(installDir))
+        {
+            installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
+        }
+
+        if (installDir == null)
+        {
+            throw new InvalidOperationException("DOTNET install directory was not found");
+        }
+
+        bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
+        return Path.Combine(installDir, dotNetExeName);
+    }
+
+    internal static void TryRestoreLocalTools()
+    {
+        try
+        {
+            var repoRoot = TestEnvironment.RepositoryRoot;
+            if (repoRoot != null)
+            {
+                var toolsJsonPath = Path.Combine(repoRoot, ".config", "dotnet-tools.json");
+
+                if (File.Exists(toolsJsonPath))
+                {
+                    var processInfo = new ProcessStartInfo
+                    {
+                        FileName = s_dotNetExe,
+                        Arguments = "tool restore",
+                        WorkingDirectory = repoRoot,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+
+                    using var process = Process.Start(processInfo);
+                    if (process != null)
+                    {
+                        var completed = process.WaitForExit(6000);
+
+                        if (!completed)
+                        {
+                            try
+                            { process.Kill(); }
+                            catch { }
+                        }
+                        else if (process.ExitCode != 0)
+                        {
+                            var errorOutput = process.StandardError.ReadToEnd();
+                            var standardOutput = process.StandardOutput.ReadToEnd();
+
+                            if (!string.IsNullOrEmpty(errorOutput) || !string.IsNullOrEmpty(standardOutput))
+                            {
+                                TestContext.Progress.WriteLine($"dotnet tool restore failed (exit code {process.ExitCode}):");
+                                if (!string.IsNullOrEmpty(standardOutput))
+                                    TestContext.Progress.WriteLine($"stdout: {standardOutput}");
+                                if (!string.IsNullOrEmpty(errorOutput))
+                                    TestContext.Progress.WriteLine($"stderr: {errorOutput}");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            TestContext.Progress.WriteLine($"Error trying to run dotnet tool restore: {ex.Message}");
         }
     }
 }
