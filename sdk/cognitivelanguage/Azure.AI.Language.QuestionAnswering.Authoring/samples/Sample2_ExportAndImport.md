@@ -4,7 +4,7 @@ This sample demonstrates how to export and import Question Answering projects. T
 
 To export, import, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringAuthoringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:QuestionAnsweringAuthoringClient_Create
+```C# Snippet:QuestionAnsweringAuthoringClient_Create_Authoring
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 To export a Question Answering project, you will need to set your project name and choose an export format before calling c as shown below:
 
-```C# Snippet:QuestionAnsweringAuthoringClient_ExportProject
+```C# Snippet:QuestionAnsweringAuthoringClient_ExportProject_Authoring
 Operation exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
 // retrieve export operation response, and extract url of exported file
@@ -31,7 +31,7 @@ string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl")
 
 To import a project, you could provide the data of the exported project in the specified import format through a RequestContent instance as shown below. Alternatively, you can define a `fileUri` property in your request content, which would enable you to provide the URI for a publicly available file containing the details for the project to be imported.
 
-```C# Snippet:QuestionAnsweringAuthoringClient_ImportProject
+```C# Snippet:QuestionAnsweringAuthoringClient_ImportProject_Authoring
 // Set import project name and request content
 string importedProjectName = "{ProjectNameToBeImported}";
 RequestContent importRequestContent = RequestContent.Create(new
@@ -57,7 +57,7 @@ Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}"
 
 To get information regarding a specific project, the `GetProjectDetails()` method can be used as follows:
 
-```C# Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails
+```C# Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails_Authoring
 Response<QuestionAnsweringProject> projectDetails = client.GetProjectDetails(importedProjectName);
 
 Console.WriteLine(projectDetails.GetRawResponse().Content);
@@ -67,7 +67,7 @@ Console.WriteLine(projectDetails.GetRawResponse().Content);
 
 ### Exporting a Project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync_Authoring
 Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
 // retrieve export operation response, and extract url of exported file
@@ -77,7 +77,7 @@ string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl")
 
 ### Importing a project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync_Authoring
 // Set import project name and request content
 string importedProjectName = "{ProjectNameToBeImported}";
 RequestContent importRequestContent = RequestContent.Create(new
@@ -101,8 +101,9 @@ Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}"
 
 ### Getting Project Details
 
-```C# Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync_Authoring
 Response<QuestionAnsweringProject> projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
 
 Console.WriteLine(projectDetails.GetRawResponse().Content);
 ```
+

@@ -46,13 +46,13 @@ You can use an API key or Azure Active Directory (AAD) credentials (including Ma
 
 Add the authoring namespace:
 
-```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
+```C# Snippet:QuestionAnsweringAuthoringClient_Namespace_Authoring
 using Azure.AI.Language.QuestionAnswering.Authoring;
 ```
 
 #### Create a QuestionAnsweringAuthoringClient (API key)
 
-```C# Snippet:QuestionAnsweringAuthoringClient_Create
+```C# Snippet:QuestionAnsweringAuthoringClient_Create_Authoring
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -61,7 +61,7 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 
 #### Create a QuestionAnsweringAuthoringClient (Managed Identity / DefaultAzureCredential)
 
-```C# Snippet:QuestionAnsweringAuthoringClient_CreateWithDefaultCredential
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateWithDefaultCredential_Authoring
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 TokenCredential credential = new DefaultAzureCredential();
 
@@ -100,7 +100,7 @@ Client instances are thread-safe and intended to be reused.
 
 ### Create a project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject_Authoring
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
@@ -128,7 +128,7 @@ foreach (QuestionAnsweringProject project in projects)
 
 ### Deploy a project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject_Authoring
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
 
@@ -145,7 +145,7 @@ foreach (ProjectDeployment deployment in deployments)
 
 ### Add (or update) knowledge sources
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources_Authoring
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
@@ -218,3 +218,4 @@ See the root repository contributing guide for how to build, test, and submit ch
 [authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/
 [questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [authoring_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering-authoring/operation-groups?view=rest-language-question-answering-authoring-2025-05-15-preview
+

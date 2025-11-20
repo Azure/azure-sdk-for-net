@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27),
             });
 
-            #region Snippet:QuestionAnsweringClient_Chat
+            #region Snippet:QuestionAnsweringClient_Chat_Inference
             string projectName = "{ProjectName}";
             string deploymentName = "{DeploymentName}";
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 QuestionAnsweringModelFactory.KnowledgeBaseAnswer(qnaId: 27),
             });
 
-            #region Snippet:QuestionAnsweringClient_ChatAsync
+            #region Snippet:QuestionAnsweringClient_ChatAsync_Inference
             string projectName = "{ProjectName}";
             string deploymentName = "{DeploymentName}";
             // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
@@ -88,3 +88,4 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         }
     }
 }
+

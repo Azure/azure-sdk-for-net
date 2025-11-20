@@ -4,7 +4,7 @@ This sample demonstrates how to update knowledge sources, question and answer pa
 
 To add knowledge sources, update question and answer pairs, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringAuthoringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:QuestionAnsweringAuthoringClient_Create
+```C# Snippet:QuestionAnsweringAuthoringClient_Create_Authoring
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 To add a new knowledge source to your project, you can set up a `RequestContent` instance with the appropriate parameters and call the `UpdateSources` method. In the following example, a source of type "url" is being added to our project.
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources_UpdateSample
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources_UpdateSample_Authoring
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 string testProjectName = "{ProjectName}";
@@ -51,7 +51,7 @@ Console.WriteLine($"Sources: {sources}");
 
 Similarily, you can use the `UpdateQnas` method to add new question and answer pairs as follows:
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateQnas_Authoring
 string question = "{NewQuestion}";
 string answer = "{NewAnswer}";
 RequestContent updateQnasRequestContent = RequestContent.Create(
@@ -79,7 +79,7 @@ Console.WriteLine($"Qnas: {qnas}");
 
 ### Updating synonyms
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms_Authoring
 RequestContent updateSynonymsRequestContent = RequestContent.Create(
     new
     {
@@ -117,7 +117,7 @@ foreach (WordAlterations synonym in synonyms)
 
 If active learning is being used, the `AddFeedback` can be used to specify a user's feedback to a specific question as follows:
 
-```C# Snippet:QuestionAnsweringAuthoringClient_AddFeedback
+```C# Snippet:QuestionAnsweringAuthoringClient_AddFeedback_Authoring
 RequestContent addFeedbackRequestContent = RequestContent.Create(
     new
     {
@@ -139,7 +139,7 @@ Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRe
 
 ### Adding a knowledge base source
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample_Authoring
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 string testProjectName = "{ProjectName}";
@@ -169,7 +169,7 @@ Console.WriteLine($"Sources: {sources}");
 
 ### Adding a qna pair
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync_Authoring
 string question = "{NewQuestion}";
 string answer = "{NewAnswer}";
 RequestContent updateQnasRequestContent = RequestContent.Create(
@@ -197,7 +197,7 @@ Console.WriteLine($"Qnas: {qnas}");
 
 ### Updating synonyms
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync_Authoring
 RequestContent updateSynonymsRequestContent = RequestContent.Create(
     new
     {
@@ -233,7 +233,7 @@ await foreach (WordAlterations synonym in synonyms)
 
 ### Add active learning feedback
 
-```C# Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync_Authoring
 RequestContent addFeedbackRequestContent = RequestContent.Create(
     new
     {
@@ -250,3 +250,4 @@ RequestContent addFeedbackRequestContent = RequestContent.Create(
 
 Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
 ```
+

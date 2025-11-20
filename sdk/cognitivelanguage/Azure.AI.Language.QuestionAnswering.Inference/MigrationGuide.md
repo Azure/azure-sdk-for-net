@@ -51,7 +51,7 @@ QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
 
 Now in `Azure.AI.Language.QuestionAnswering`, you create a `QuestionAnsweringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
-```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient_Inference
 Uri endpoint = new Uri("{LanguageQnaEndpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
@@ -74,7 +74,7 @@ QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowle
 
 Now in `Azure.AI.Language.QuestionAnswering` you use `client.QueryKnowledgeBaseAsync`:
 
-```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase_Inference
 var project = new Azure.AI.Language.QuestionAnswering.QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
 Azure.Response<Azure.AI.Language.QuestionAnswering.AnswersResult> response =
     await client.GetAnswersAsync("{Question}", project);
@@ -96,7 +96,7 @@ QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync(
 
 Now in `Azure.AI.Language.QuestionAnswering`, you use `QueryKnowledgeBaseOptions` to set `projectName`, `deploymentName`, and `question` along with setting the `context` to have `previousQnaId`:
 
-```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat_Inference
 var project = new Azure.AI.Language.QuestionAnswering.QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
 var options = new Azure.AI.Language.QuestionAnswering.AnswersOptions
 {
@@ -116,3 +116,4 @@ Azure.Response<Azure.AI.Language.QuestionAnswering.AnswersResult> responseFollow
 | Both in same app | `Azure.AI.Language.QuestionAnswering` | No extra reference needed unless pinning different preview versions. |
 
 > Service API version referenced by current previews: `2025-05-15-preview`.
+

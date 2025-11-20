@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             string exportedProjectName = CreateTestProjectName();
             CreateProject(exportedProjectName);
 
-            #region Snippet:QuestionAnsweringAuthoringClient_ExportProject
+            #region Snippet:QuestionAnsweringAuthoringClient_ExportProject_Authoring
             Operation exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(exportOperation.HasCompleted);
             Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_ImportProject
+            #region Snippet:QuestionAnsweringAuthoringClient_ImportProject_Authoring
             // Set import project name and request content
             string importedProjectName = "{ProjectNameToBeImported}";
 #if !SNIPPET
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
-            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails
+            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails_Authoring
             Response<QuestionAnsweringProject> projectDetails = client.GetProjectDetails(importedProjectName);
 
             Console.WriteLine(projectDetails.GetRawResponse().Content);
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             string exportedProjectName = CreateTestProjectName();
             await CreateProjectAsync(exportedProjectName);
 
-            #region Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync_Authoring
             Operation exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(exportOperation.HasCompleted);
             Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync_Authoring
             // Set import project name and request content
             string importedProjectName = "{ProjectNameToBeImported}";
 #if !SNIPPET
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
-            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync_Authoring
             Response<QuestionAnsweringProject> projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
 
             Console.WriteLine(projectDetails.GetRawResponse().Content);
@@ -133,3 +133,4 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         }
     }
 }
+

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
         private async Task Language_QnA_MigrationGuide_Runtime()
         {
-            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
+            #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient_Inference
             Uri endpoint = new Uri("{LanguageQnaEndpoint}");
             AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
 #pragma warning disable SA1509
             {
-                #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
+                #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase_Inference
                 var project = new Azure.AI.Language.QuestionAnswering.QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
                 Azure.Response<Azure.AI.Language.QuestionAnswering.AnswersResult> response =
                     await client.GetAnswersAsync("{Question}", project);
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             }
 
             {
-                #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
+                #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat_Inference
                 var project = new Azure.AI.Language.QuestionAnswering.QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
                 var options = new Azure.AI.Language.QuestionAnswering.AnswersOptions
                 {
@@ -50,3 +50,4 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         }
     }
 }
+

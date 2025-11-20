@@ -33,12 +33,12 @@ You need an endpoint plus either an API key or AAD credential.
 
 #### API key
 
-```C# Snippet:QuestionAnsweringClient_Namespaces
+```C# Snippet:QuestionAnsweringClient_Namespaces_Inference
 using Azure.Core;
 using Azure.AI.Language.QuestionAnswering;
 ```
 
-```C# Snippet:QuestionAnsweringClient_Create
+```C# Snippet:QuestionAnsweringClient_Create_Inference
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -47,11 +47,11 @@ QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credentia
 
 #### Azure Active Directory (AAD)
 
-```C# Snippet:QuestionAnswering_Identity_Namespace
+```C# Snippet:QuestionAnswering_Identity_Namespace_Inference
 using Azure.Identity;
 ```
 
-```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
+```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential_Inference
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
@@ -89,7 +89,7 @@ Client instances are thread‑safe; reuse them across threads and requests.
 
 ### Ask a question
 
-```C# Snippet:QuestionAnsweringClient_GetAnswers
+```C# Snippet:QuestionAnsweringClient_GetAnswers_Inference
 string projectName = "{ProjectName}";
 string deploymentName = "{DeploymentName}";
 QuestionAnsweringProject project = new QuestionAnsweringProject(projectName, deploymentName);
@@ -105,7 +105,7 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 
 ### Ask a follow‑up question (chit‑chat)
 
-```C# Snippet:QuestionAnsweringClient_Chat
+```C# Snippet:QuestionAnsweringClient_Chat_Inference
 string projectName = "{ProjectName}";
 string deploymentName = "{DeploymentName}";
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
@@ -132,7 +132,7 @@ Common HTTP status codes map directly from service responses (e.g. 400 invalid p
 
 Bad request example:
 
-```C# Snippet:QuestionAnsweringClient_BadRequest
+```C# Snippet:QuestionAnsweringClient_BadRequest_Inference
 try
 {
     QuestionAnsweringProject project = new QuestionAnsweringProject("invalid-knowledgebase", "test");

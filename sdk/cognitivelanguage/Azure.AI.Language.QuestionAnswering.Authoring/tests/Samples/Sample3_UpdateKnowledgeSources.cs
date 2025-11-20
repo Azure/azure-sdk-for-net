@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         {
             QuestionAnsweringAuthoringClient client = Client;
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources_UpdateSample
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources_UpdateSample_Authoring
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
             string testProjectName = "{ProjectName}";
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.ToString().Contains(sourceUri));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas_Authoring
 
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.That(qnas.ToString().Contains(question));
             Assert.That(qnas.ToString().Contains(answer));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms_Authoring
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -130,7 +130,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.That(synonyms.Any(synonym => synonym.Alterations[0].ToString().Contains("qnamaker")));
             Assert.That(synonyms.Any(synonym => synonym.Alterations[1].ToString().Contains("qna maker")));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_AddFeedback
+            #region Snippet:QuestionAnsweringAuthoringClient_AddFeedback_Authoring
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -157,7 +157,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         {
             QuestionAnsweringAuthoringClient client = Client;
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample_Authoring
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
             string testProjectName = "{ProjectName}";
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.ToString().Contains(sourceUri));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync_Authoring
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
 #if !SNIPPET
@@ -228,7 +228,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.That(qnas.ToString().Contains(question));
             Assert.That(qnas.ToString().Contains(answer));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync_Authoring
             RequestContent updateSynonymsRequestContent = RequestContent.Create(
                 new
                 {
@@ -266,7 +266,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.Alterations[0].ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.Alterations[1].ToString().Contains("qna maker")));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync_Authoring
             RequestContent addFeedbackRequestContent = RequestContent.Create(
                 new
                 {
@@ -288,3 +288,4 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         }
     }
 }
+

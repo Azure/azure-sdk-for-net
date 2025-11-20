@@ -4,7 +4,7 @@ This sample demonstrates how to create and deploy Question Answering projects. T
 
 To create, deploy, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringAuthoringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:QuestionAnsweringAuthoringClient_Create
+```C# Snippet:QuestionAnsweringAuthoringClient_Create_Authoring
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 To create a new Question Answering project, you will need to set your project name as well as the request content and call `CreateProject()` as shown below:
 
-```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject_Authoring
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
@@ -51,7 +51,7 @@ You might want to add a knowledge base source to your project before deployment.
 
 The following snippet shows how to add a new knowledge base source to your project using the `UpdateSources()` method.
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources_Authoring
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
@@ -80,7 +80,7 @@ Console.WriteLine($"Sources: {sources}");
 
 ### Deploy your Project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject_Authoring
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
 
@@ -99,7 +99,7 @@ foreach (ProjectDeployment deployment in deployments)
 
 ### Creating a Project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync_Authoring
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
@@ -129,7 +129,7 @@ await foreach (QuestionAnsweringProject project in projects)
 
 ### Adding a knowledge base source
 
-```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_Authoring
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
@@ -158,7 +158,7 @@ Console.WriteLine($"Sources: {sources}");
 
 ### Deploy your Project
 
-```C# Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync_Authoring
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
 
@@ -172,3 +172,4 @@ await foreach (ProjectDeployment deployment in deployments)
     Console.WriteLine(deployment);
 }
 ```
+

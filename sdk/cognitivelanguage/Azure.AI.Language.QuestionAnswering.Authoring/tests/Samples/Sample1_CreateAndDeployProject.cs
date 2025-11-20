@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         public void CreateAndDeploy()
         {
             QuestionAnsweringAuthoringClient client = Client;
-            #region Snippet:QuestionAnsweringAuthoringClient_CreateProject
+            #region Snippet:QuestionAnsweringAuthoringClient_CreateProject_Authoring
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
@@ -55,7 +55,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             var x = projects.ToList();
             Assert.That(projects.Any(project => project.ProjectName.ToString().Contains(newProjectName)));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources_Authoring
 
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.ToString().Contains(sourceUri));
 
-#region Snippet:QuestionAnsweringAuthoringClient_DeployProject
+#region Snippet:QuestionAnsweringAuthoringClient_DeployProject_Authoring
             // Set deployment name and start operation
             string newDeploymentName = "{DeploymentName}";
 #if !SNIPPET
@@ -117,7 +117,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         {
             QuestionAnsweringAuthoringClient client = Client;
 
-#region Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync
+#region Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync_Authoring
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.AreEqual(201, creationResponse.Status);
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ProjectName.ToString().Contains(newProjectName)));
 
-#region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_Authoring
 
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.ToString().Contains(sourceUri));
 
-#region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
+#region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync_Authoring
             // Set deployment name and start operation
             string newDeploymentName = "{DeploymentName}";
 #if !SNIPPET
@@ -211,3 +211,4 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         }
     }
 }
+

@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-#region Snippet:QuestionAnsweringClient_Namespaces
+#region Snippet:QuestionAnsweringClient_Namespaces_Inference
 using Azure.Core;
 using Azure.AI.Language.QuestionAnswering;
 #endregion
-#region Snippet:QuestionAnswering_Identity_Namespace
+#region Snippet:QuestionAnswering_Identity_Namespace_Inference
 using Azure.Identity;
 #endregion
 using Azure.Core.TestFramework;
@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
     {
         public void CreateQuestionAnsweringClient()
         {
-            #region Snippet:QuestionAnsweringClient_Create
+            #region Snippet:QuestionAnsweringClient_Create_Inference
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
         public void CreateQuestionAnsweringClientWithDefaultAzureCredential()
         {
-            #region Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
+            #region Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential_Inference
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         {
             QuestionAnsweringClient client = Client;
 
-            #region Snippet:QuestionAnsweringClient_BadRequest
+            #region Snippet:QuestionAnsweringClient_BadRequest_Inference
             try
             {
                 QuestionAnsweringProject project = new QuestionAnsweringProject("invalid-knowledgebase", "test");
@@ -55,3 +55,4 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         }
     }
 }
+
