@@ -1,17 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <!-- We don't care about XML doc comments on test types and members -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <!-- Reference the Client Library -->
-  <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.AI.Language.QuestionAnswering.csproj" />
-  </ItemGroup>
-  
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -20,6 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\cognitiveservices\Knowledge.QnAMaker\src\Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.csproj" />
+    <ProjectReference Include="..\src\Azure.AI.Language.QuestionAnswering.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\test-resources.json" />
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring
+namespace Azure.AI.Language.QuestionAnswering
 {
     internal static class ModelSerializationExtensions
     {
@@ -171,15 +171,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
-                    break;
-                case IJsonModel<T> jsonModel:
-                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -235,7 +232,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     foreach (var pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue<object>(pair.Value, options);
+                        writer.WriteObjectValue<object>(pair.Value);
                     }
                     writer.WriteEndObject();
                     break;
@@ -243,7 +240,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
-                        writer.WriteObjectValue<object>(item, options);
+                        writer.WriteObjectValue<object>(item);
                     }
                     writer.WriteEndArray();
                     break;
@@ -255,9 +252,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
         {
-            writer.WriteObjectValue<object>(value, options);
+            writer.WriteObjectValue<object>(value);
         }
 
         internal static bool IsSentinelValue(BinaryData value)

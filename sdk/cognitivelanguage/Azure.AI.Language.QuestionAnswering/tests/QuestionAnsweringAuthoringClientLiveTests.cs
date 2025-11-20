@@ -10,13 +10,33 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     public class QuestionAnsweringAuthoringClientLiveTests : QuestionAnsweringAuthoringLiveTestBase
     {
-        public QuestionAnsweringAuthoringClientLiveTests(bool isAsync, QuestionAnsweringAuthoringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, RecordedTestMode.Playback /* RecordedTestMode.Record /* to record */)
+        public QuestionAnsweringAuthoringClientLiveTests(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
+        }
+
+        [RecordedTest]
+        public async Task SupportsAadAuthentication()
+        {
+            QuestionAnsweringAuthoringClient client = CreateClient<QuestionAnsweringAuthoringClient>(
+               TestEnvironment.Endpoint,
+               TestEnvironment.Credential,
+               InstrumentClientOptions(
+                    new QuestionAnsweringClientOptions()));
+
+            string testProjectName = CreateTestProjectName();
+
+            Response createProjectResponse = await CreateProjectAsync(testProjectName);
+            Response projectDetailsResponse = await client.GetProjectDetailsAsync(testProjectName);
+
+            Assert.AreEqual(201, createProjectResponse.Status);
+            Assert.AreEqual(200, projectDetailsResponse.Status);
+
+            await client.DeleteProjectAsync(WaitUntil.Completed, testProjectName);
         }
 
         [RecordedTest]
@@ -24,13 +44,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
         {
             string testProjectName = CreateTestProjectName();
             Response createProjectResponse = await CreateProjectAsync(testProjectName);
-            AsyncPageable<QuestionAnsweringProject> projects = Client.GetProjectsAsync();
-            Response<QuestionAnsweringProject> projectDetailsResponse = await Client.GetProjectDetailsAsync(testProjectName);
+            AsyncPageable<BinaryData> projects = Client.GetProjectsAsync();
+            Response projectDetailsResponse = await Client.GetProjectDetailsAsync(testProjectName);
 
             Assert.AreEqual(201, createProjectResponse.Status);
-            Assert.AreEqual(200, projectDetailsResponse.GetRawResponse().Status);
-            Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ProjectName.Contains(testProjectName)));
-            Assert.That(projectDetailsResponse.GetRawResponse().Content.ToString().Contains(testProjectName));
+            Assert.AreEqual(200, projectDetailsResponse.Status);
+            Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(testProjectName)));
+            Assert.That(projectDetailsResponse.Content.ToString().Contains(testProjectName));
         }
 
         [RecordedTest]
@@ -57,11 +77,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                         }
                 });
 
-            Operation updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
             string testDeploymentName = "production";
-            Operation deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
-            BinaryData deployment = deploymentOperation.GetRawResponse().Content;
+            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Completed, testProjectName, testDeploymentName);
+            BinaryData deployment = deploymentOperation.Value;
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployment.ToString(), Contains.Substring(testDeploymentName));
@@ -91,13 +111,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                         }
                 });
 
-            Operation updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
-            BinaryData sources = updateQnasOperation.GetRawResponse().Content;
+            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+            AsyncPageable<BinaryData> sources = updateQnasOperation.Value;
 
             Assert.True(updateQnasOperation.HasCompleted);
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
-            Assert.That(sources.ToString().Contains(question));
-            Assert.That(sources.ToString().Contains(answer));
+            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
+            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
         }
 
         [RecordedTest]
@@ -124,12 +144,49 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                         }
                 });
 
-            Operation updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
-            BinaryData sources = updateSourcesOperation.GetRawResponse().Content;
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
+            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);
-            Assert.That(sources.ToString().Contains(sourceUri));
+            Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
+        }
+
+        [RecordedTest]
+        public async Task UpdateSynonyms()
+        {
+            string testProjectName = CreateTestProjectName();
+            await CreateProjectAsync(testProjectName);
+
+            RequestContent updateSynonymsRequestContent = RequestContent.Create(
+                new
+                {
+                    value = new[] {
+                        new  {
+                                alterations = new[]
+                                {
+                                    "qnamaker",
+                                    "qna maker",
+                                }
+                             },
+                        new  {
+                                alterations = new[]
+                                {
+                                    "qna",
+                                    "question and answer",
+                                }
+                             }
+                    }
+                });
+
+            Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
+
+            // Synonyms can be retrieved as follows
+            AsyncPageable<BinaryData> synonyms = Client.GetSynonymsAsync(testProjectName);
+
+            Assert.AreEqual(204, updateSynonymsResponse.Status);
+            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
+            Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
         }
 
         [RecordedTest]
@@ -139,9 +196,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             await CreateProjectAsync(testProjectName);
 
             string exportFormat = "json";
-            Operation exportOperation = await Client.ExportAsync(WaitUntil.Completed, testProjectName, exportFormat);
+            Operation<BinaryData> exportOperation = await Client.ExportAsync(WaitUntil.Completed, testProjectName, exportFormat);
 
-            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.GetRawResponse().Content);
+            JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
 
             Assert.True(exportOperation.HasCompleted);
@@ -172,15 +229,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
                 }
             });
 
-            Operation importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
+            Operation<BinaryData> importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
             EnqueueProjectDeletion(testProjectName);
 
-            Response<QuestionAnsweringProject> projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
+            Response projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
-            Assert.AreEqual(200, projectDetails.GetRawResponse().Status);
-            Assert.That(projectDetails.GetRawResponse().Content.ToString().Contains(testProjectName));
+            Assert.AreEqual(200, projectDetails.Status);
+            Assert.That(projectDetails.Content.ToString().Contains(testProjectName));
         }
 
         [RecordedTest]

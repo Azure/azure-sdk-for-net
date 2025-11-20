@@ -1,78 +1,120 @@
-# Migrate from Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker to Azure.AI.Language.QuestionAnswering Authoring
+# Migrate from Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker to Azure.AI.Language.QuestionAnswering
 
-> [!NOTE]
-> Scope: This guide covers **authoring (project / knowledge sources / QnA / export / delete)** migration from QnAMaker to the modern Authoring SDK.
-> For **runtime querying (inference)** migration, see the separate runtime migration guide and the inference package `Azure.AI.Language.QuestionAnswering.Inference`.
-> Service API version referenced by current previews: `2025-05-15-preview`.
+This guide is intended to assist in the migration to the new Question Answering client library [`Azure.AI.Language.QuestionAnswering`](https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering) from the old one [`Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`](https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker). It will focus on side-by-side comparisons for similar operations between the two packages.
 
-This guide helps migrate from the old client library [`Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`](https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker) to the modern authoring client library `Azure.AI.Language.QuestionAnswering.Authoring`. It focuses on side‑by‑side comparisons for authoring operations (creating/updating/exporting/deleting).
-
-For general usage and more samples, refer to the [Authoring README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) and [Authoring samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples).
+Familiarity with the `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker` library is assumed. For those new to the Question Answering client library for .NET, please refer to the [`Azure.AI.Language.QuestionAnswering` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) and [`Azure.AI.Language.QuestionAnswering` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples) for the `Azure.AI.Language.QuestionAnswering` library rather than this guide.
 
 ## Table of contents
 
 - [Migration benefits](#migration-benefits)
 - [General changes](#general-changes)
   - [Package and namespaces](#package-and-namespaces)
-  - [Package split and choosing the right package](#package-split-and-choosing-the-right-package)
-  - [Type forwarding & compatibility](#type-forwarding--compatibility)
-  - [Authoring client](#authoring-client)
+  - [Runtime Client](#runtime-client)
+    - [Authenticating runtime client](#authenticating-runtime-client)
+    - [Querying a question](#querying-a-question)
+    - [Chatting](#chatting)
+  - [Authoring Client](#authoring-client)
     - [Authenticating authoring client](#authenticating-authoring-client)
-    - [Creating a project (was: knowledge base)](#creating-a-project-was-knowledge-base)
-    - [Updating knowledge sources (was: update KB)](#updating-knowledge-sources-was-update-kb)
-    - [Updating QnAs](#updating-qnas)
-    - [Exporting a project](#exporting-a-project)
-    - [Deleting a project (was: delete KB)](#deleting-a-project-was-delete-kb)
+    - [Creating knowledge base](#creating-knowledge-base)
+    - [Updating knowledge base](#updating-knowledge-base)
+    - [Exporting knowledge base](#exporting-knowledge-base)
+    - [Deleting knowledge base](#deleting-knowledge-base)
 
 ## Migration benefits
 
-Azure’s modern client libraries adopt consistent design guidelines:
-- Uniform naming, shapes, and async patterns across services.
-- Better long‑running operation handling (`Operation<T>`).
-- Clear separation of **authoring vs inference responsibilities** to slim dependency surfaces.
+A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
 
-See the general [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) and [.NET‑specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) for deeper details.
+There were several areas of consistent feedback expressed across the Azure client library ecosystem. One of the most important is that the client libraries for different Azure services have not had a consistent approach to organization, naming, and API structure. Additionally, many developers have felt that the learning curve was difficult, and the APIs did not offer a good, approachable, and consistent onboarding story for those learning Azure or exploring a specific Azure service.
+
+To try and improve the development experience across Azure services, including Question Answering, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
 
 ## General changes
 
 ### Package and namespaces
 
-Legacy pattern: `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`
-Modern pattern: `Azure.AI.Language.QuestionAnswering` (root) with authoring namespace: `Azure.AI.Language.QuestionAnswering.Authoring`.
+Package names and the namespace root for the modern Azure client libraries for .NET have changed. Each will follow the pattern `Azure.[Area].[Services]` where the legacy clients followed the pattern `Microsoft.Azure.[Service]`. This provides a quick and accessible means to help understand, at a glance, whether you are using the modern or legacy clients.
 
-Legacy “knowledge base” concepts map to modern “project” + “deployment” terminology.
+In the case of Question Answering, the modern client libraries have packages and namespaces that begin with `Azure.AI.Language.QuestionAnswering` and were released beginning with version 1. The legacy client libraries have packages and namespaces that begin with `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker` and a version of 2.x.x or below.
 
-### Package split and choosing the right package
+### Runtime Client
 
-Starting with the 2.0.0 preview split:
+#### Authenticating runtime client
 
-| Scenario | NuGet package | Notes |
-|----------|---------------|-------|
-| Authoring only (create/update/deploy/export/delete) | `Azure.AI.Language.QuestionAnswering` | Includes authoring APIs; forwards inference types. |
-| Runtime querying only | `Azure.AI.Language.QuestionAnswering.Inference` | Smaller surface (no authoring operations). |
-| Both authoring + runtime in same app | `Azure.AI.Language.QuestionAnswering` | Inference types available via type forwarding; optional to add inference package only if pinning versions. |
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerRuntimeClient` along with `EndpointKeyServiceClientCredentials`:
 
-### Type forwarding & compatibility
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
+EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{ApiKey}");
 
-- Inference types (`QuestionAnsweringClient`, `AnswersResult`, etc.) are **type‑forwarded** from the authoring package to the inference implementation, preserving source & binary compatibility.
-- Existing code that queried and now upgrades to include authoring needs **no code changes** for inference usage.
-- Pure query projects can remove the authoring package and add `Azure.AI.Language.QuestionAnswering.Inference` for a leaner dependency set.
-- Future previews may reduce or hide forwarded inference APIs from the authoring package—track the CHANGELOG for status.
+QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
+{
+    RuntimeEndpoint = "{QnaMakerEndpoint}"
+};
+```
 
-### Authoring client
+Now in `Azure.AI.Language.QuestionAnswering`, you create a `QuestionAnsweringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
+
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
+Uri endpoint = new Uri("{LanguageQnaEndpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+
+QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
+```
+
+#### Querying a question
+
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could query for a question using `QueryDTO`:
+
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
+QueryDTO queryDTO = new QueryDTO();
+queryDTO.Question = "{Question}";
+
+QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
+```
+
+Now in `Azure.AI.Language.QuestionAnswering` you use `client.QueryKnowledgeBaseAsync`:
+
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
+QuestionAnsweringProject project = new QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
+Response<AnswersResult> response = await client.GetAnswersAsync("{Question}", project);
+```
+
+#### Chatting
+
+ Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could chat using `QueryDTO` along with setting the `context` to have `previousQnaId`:
+
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
+QueryDTO queryDTOFollowUp = new QueryDTO();
+queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1);
+
+QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
+```
+
+Now in `Azure.AI.Language.QuestionAnswering`, you use `QueryKnowledgeBaseOptions` to set `projectName`, `deploymentName`, and `question` along with setting the `context` to have `previousQnaId`:
+
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_Chat
+QuestionAnsweringProject project = new QuestionAnsweringProject("{ProjectName}", "{DeploymentName}");
+AnswersOptions options = new AnswersOptions
+{
+    AnswerContext = new KnowledgeBaseAnswerContext(1)
+};
+
+Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{Question}", project, options);
+```
+
+### Authoring Client
 
 #### Authenticating authoring client
 
-Previously (QnAMaker) `QnAMakerClient` with `ApiKeyServiceClientCredentials`:
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerClient` along with `EndpointKeyServiceClientCredentials`:
 
-```C#
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
 QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{QnAMakerSubscriptionKey}"), new HttpClient(), false)
 {
     Endpoint = "{QnaMakerEndpoint}"
 };
 ```
 
-Now use `QuestionAnsweringAuthoringClient` with `AzureKeyCredential`:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you create a `QuestionAnsweringAuthoringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
 Uri endpoint = new Uri("{LanguageQnaEndpoint}");
@@ -81,11 +123,11 @@ AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
-#### Creating a project (was: knowledge base)
+#### Creating knowledge base
 
-Previously creating a `Knowledgebase` with `CreateKbDTO`:
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a new `Knowledgebase` using a `QnADTO`:
 
-```C#
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
 Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
 {
     Name = "{KnowledgeBaseName}", QnaList = new List<QnADTO>
@@ -102,7 +144,7 @@ Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp =
 });
 ```
 
-Now create a **project** (`CreateProjectAsync`) with JSON properties:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can create a new Question Answering project by defining a `RequestContent` instance with the needed project creation properties:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
 string newProjectName = "{ProjectName}";
@@ -121,11 +163,11 @@ RequestContent creationRequestContent = RequestContent.Create(
 Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
 ```
 
-#### Updating knowledge sources (was: update KB)
+#### Updating knowledge base
 
-Legacy “update” used `UpdateKbOperationDTO`:
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could update your knowledge base using a `UpdateKbOperationDTO`:
 
-```C#
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
 Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp = await client.Knowledgebase.UpdateAsync("{KnowledgeBaseID}",
     new UpdateKbOperationDTO
     {
@@ -146,7 +188,7 @@ Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp =
     });
 ```
 
-Modern source ingestion uses `UpdateSourcesAsync`:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can add a new knowledge source using the `UpdateSourcesAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
 string sourceUri = "{SourceURI}";
@@ -166,12 +208,10 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, "{ProjectName}", updateSourcesRequestContent);
+Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, "{ProjectName}", updateSourcesRequestContent);
 ```
 
-#### Updating QnAs
-
-Legacy added QnA pairs via KB update DTO; modern adds/updates QnA with `UpdateQnasAsync`:
+You can also update a project's questions and answers directly as follows:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateQnas
 RequestContent updateQnasRequestContent = RequestContent.Create(
@@ -189,42 +229,33 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation updateQnasOperation = await client.UpdateQnasAsync(WaitUntil.Completed, "{ProjectName}", updateQnasRequestContent);
+Operation<AsyncPageable<BinaryData>> updateQnasOperation = await client.UpdateQnasAsync(WaitUntil.Completed, "{ProjectName}", updateQnasRequestContent);
 ```
 
-#### Exporting a project
+#### Exporting knowledge base
 
-Previously downloaded KB with `DownloadAsync`:
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could download your knowledge base using the `DownloadAsync` method:
 
-```C#
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DownloadKnowledgeBase
 QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("{KnowledgeBaseID}", EnvironmentType.Test);
 ```
 
-Modern export:
+Now you can export your Question Answering project:
 
-```C#
+```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_ExportProject
 Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, "{ProjectName}", "{ExportFormat}");
 ```
 
-#### Deleting a project (was: delete KB)
+#### Deleting knowledge base
 
-Legacy delete:
+Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could delete your knowledge base using the `DeleteAsync` method:
 
-```C#
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledgeBase
 await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
 ```
 
-Modern delete project:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can delete a project using the `DeleteProjectAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
 Operation deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
 ```
-
-## Summary
-
-- “Knowledge base” → “Project” + “Deployment”.
-- Authoring operations moved to `QuestionAnsweringAuthoringClient`.
-- Inference types remain accessible for compatibility but can be consumed from the dedicated inference package if authoring is not needed.
-- Use service version `2025-05-15-preview` with the 2.0.0 preview authoring package.
-
-> For pure runtime migration examples (querying / follow‑up / confidence tuning), see the runtime (Inference) migration guide.

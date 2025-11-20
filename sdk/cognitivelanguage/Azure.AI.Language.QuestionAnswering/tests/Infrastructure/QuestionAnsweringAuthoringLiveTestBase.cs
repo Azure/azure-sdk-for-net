@@ -8,13 +8,13 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
+namespace Azure.AI.Language.QuestionAnswering.Tests
 {
-    public partial class QuestionAnsweringAuthoringLiveTestBase : QuestionAnsweringAuthoringTestBase<QuestionAnsweringAuthoringClient>
+    public partial class QuestionAnsweringAuthoringLiveTestBase : QuestionAnsweringTestBase<QuestionAnsweringAuthoringClient>
     {
         private ConcurrentQueue<string> _projects = new();
 
-        public QuestionAnsweringAuthoringLiveTestBase(bool isAsync, QuestionAnsweringAuthoringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+        public QuestionAnsweringAuthoringLiveTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, serviceVersion, mode)
         {
         }
