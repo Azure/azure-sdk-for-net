@@ -280,6 +280,7 @@
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
+        "esxi",
         "iscsi",
         "mirrorings",
         "nsxt",
