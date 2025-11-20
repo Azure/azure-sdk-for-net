@@ -157,6 +157,10 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
+      - template: /eng/common/testproxy/test-proxy-tool.yml
+        parameters:
+          runProxy: false
+
       - pwsh: >
           ./eng/scripts/runwithdevopslogging.ps1
           dotnet test eng/service.proj
