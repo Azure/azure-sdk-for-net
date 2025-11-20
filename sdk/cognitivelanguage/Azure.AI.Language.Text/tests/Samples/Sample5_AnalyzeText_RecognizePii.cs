@@ -469,7 +469,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new(endpoint, credential);
 
-            #region Snippet:Sample_AnalyzeText_RecognizePii_ConfidenceScoreThreshold
+            #region Snippet:Sample5_AnalyzeText_RecognizePii_ConfidenceScoreThreshold
             string text =
                 "My name is John Doe. My ssn is 222-45-6789. My email is john@example.com. John Doe is my name.";
 
