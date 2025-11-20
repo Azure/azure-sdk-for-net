@@ -149,9 +149,11 @@ function CreateUpdatePackageWorkItem($pkgInfo)
 
     $specProjectPath = ''
     $tspLocationYmlPath = Join-Path "$PSScriptRoot/../../.." $pkgInfo.DirectoryPath 'tsp-location.yaml'
-    if (Test-Path $tspLocationYmlPath) { 
+    if (Test-Path $tspLocationYmlPath) {
+        Write-Host "Found tsp-location.yaml at path: $tspLocationYmlPath"
         $tspLocation = Get-Content $tspLocationYmlPath | ConvertFrom-Yaml
         $specProjectPath = $tspLocation.directory
+        Write-Host "Spec project path extracted from tsp-location.yaml: $specProjectPath"
     }
 
     # Create or update package work item
