@@ -117,8 +117,8 @@ function Get-SdkLibraries {
                 continue
             }
 
-            # Skip libraries that start with "Microsoft."
-            if ($libraryDir.Name.StartsWith("Microsoft.")) {
+            # Skip libraries that start with "Microsoft." or don't start with "Azure."
+            if ($libraryDir.Name.StartsWith("Microsoft.") -or -not $libraryDir.Name.StartsWith("Azure.")) {
                 continue
             }
 
@@ -155,134 +155,60 @@ function New-MarkdownReport {
     # Generate a markdown report from the library inventory.
 
     # Group by type and generator
-    $mgmtSwagger = $Libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "Swagger" }
-    $dataSwagger = $Libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "Swagger" }
-
-    # Old TypeSpec libraries
-    $mgmtTspOld = $Libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "TSP-Old" }
-    $dataTspOld = $Libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "TSP-Old" }
-
-    # Group by specific TypeSpec generator
-    # First, identify all unique new generator types
-    $newGeneratorTypes = $Libraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") } |
-                        Select-Object -ExpandProperty generator -Unique | Sort-Object
-
-    # Create groups for each generator type
-    $mgmtTspByGenerator = @{}
-    $dataTspByGenerator = @{}
-
-    foreach ($genType in $newGeneratorTypes) {
-        $mgmtTspByGenerator[$genType] = $Libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq $genType }
-        $dataTspByGenerator[$genType] = $Libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq $genType }
-    }
-
+    $mgmtLibraries = $Libraries | Where-Object { $_.type -eq "Management" }
+    $dataLibraries = $Libraries | Where-Object { $_.type -eq "Data Plane" }
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
+
+    # Count libraries by generator type
+    $mgmtSwagger = ($mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }).Count
+    $mgmtNewEmitter = ($mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }).Count
+    $mgmtTspOld = ($mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }).Count
+    
+    $dataSwagger = ($dataLibraries | Where-Object { $_.generator -eq "Swagger" }).Count
+    $dataNewEmitter = ($dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }).Count
+    $dataTspOld = ($dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }).Count
 
     $report = @()
     $report += "# Azure SDK for .NET Libraries Inventory`n"
 
     $report += "## Summary`n"
     $report += "- Total libraries: $($Libraries.Count)"
-    $report += "- Management Plane (Swagger): $($mgmtSwagger.Count)"
-    $report += "- Management Plane (TSP-Old): $($mgmtTspOld.Count)"
-
-    # List all new generator types with counts
-    foreach ($genType in $newGeneratorTypes) {
-        $report += "- Management Plane (TypeSpec - $genType): $($mgmtTspByGenerator[$genType].Count)"
-    }
-
-    $report += "- Data Plane (Swagger): $($dataSwagger.Count)"
-    $report += "- Data Plane (TSP-Old): $($dataTspOld.Count)"
-
-    # List all new generator types with counts for data plane
-    foreach ($genType in $newGeneratorTypes) {
-        $report += "- Data Plane (TypeSpec - $genType): $($dataTspByGenerator[$genType].Count)"
-    }
-
+    $report += "- Management Plane (MPG): $($mgmtLibraries.Count)"
+    $report += "  - Autorest/Swagger: $mgmtSwagger"
+    $report += "  - New Emitter (TypeSpec): $mgmtNewEmitter"
+    $report += "  - Old TypeSpec: $mgmtTspOld"
+    $report += "- Data Plane (DPG): $($dataLibraries.Count)"
+    $report += "  - Autorest/Swagger: $dataSwagger"
+    $report += "  - New Emitter (TypeSpec): $dataNewEmitter"
+    $report += "  - Old TypeSpec: $dataTspOld"
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
 
-    # Add sections for each TypeSpec generator for Data Plane
-    foreach ($genType in $newGeneratorTypes) {
-        if ($dataTspByGenerator[$genType].Count -gt 0) {
-            $report += "## Data Plane Libraries using TypeSpec ($genType)`n"
-            $report += "TypeSpec with $genType generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing $genType, or through special handling for specific libraries. Total: $($dataTspByGenerator[$genType].Count)`n"
-            $report += "| Service | Library | Path |"
-            $report += "| ------- | ------- | ---- |"
-            $sortedLibs = $dataTspByGenerator[$genType] | Sort-Object service, library
-            foreach ($lib in $sortedLibs) {
-                $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
-            }
-            $report += "`n"
-        }
+    # Data Plane Libraries Table
+    $report += "## Data Plane Libraries (DPG)`n"
+    $report += "Libraries that provide client APIs for Azure services.`n"
+    $report += "| Service | Library | Path | New Emitter | Autorest |"
+    $report += "| ------- | ------- | ---- | ----------- | -------- |"
+    $sortedDataLibs = $dataLibraries | Sort-Object service, library
+    foreach ($lib in $sortedDataLibs) {
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✓" } else { "" }
+        $autorest = if ($lib.generator -eq "Swagger") { "✓" } else { "" }
+        $report += "| $($lib.service) | $($lib.library) | $($lib.path) | $newEmitter | $autorest |"
     }
+    $report += "`n"
 
-    # Old TypeSpec Data Plane Libraries
-    if ($dataTspOld.Count -gt 0) {
-        $report += "## Data Plane Libraries using TypeSpec (Old Generator)`n"
-        $report += "TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: $($dataTspOld.Count)`n"
-        $report += "| Service | Library | Path |"
-        $report += "| ------- | ------- | ---- |"
-        $sortedLibs = $dataTspOld | Sort-Object service, library
-        foreach ($lib in $sortedLibs) {
-            $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
-        }
-        $report += "`n"
+    # Management Plane Libraries Table
+    $report += "## Management Plane Libraries (MPG)`n"
+    $report += "Libraries that provide resource management APIs for Azure services.`n"
+    $report += "| Service | Library | Path | New Emitter | Autorest |"
+    $report += "| ------- | ------- | ---- | ----------- | -------- |"
+    $sortedMgmtLibs = $mgmtLibraries | Sort-Object service, library
+    foreach ($lib in $sortedMgmtLibs) {
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✓" } else { "" }
+        $autorest = if ($lib.generator -eq "Swagger") { "✓" } else { "" }
+        $report += "| $($lib.service) | $($lib.library) | $($lib.path) | $newEmitter | $autorest |"
     }
-
-    # Data Plane Swagger Libraries
-    if ($dataSwagger.Count -gt 0) {
-        $report += "## Data Plane Libraries using Swagger`n"
-        $report += "Total: $($dataSwagger.Count)`n"
-        $report += "| Service | Library | Path |"
-        $report += "| ------- | ------- | ---- |"
-        $sortedLibs = $dataSwagger | Sort-Object service, library
-        foreach ($lib in $sortedLibs) {
-            $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
-        }
-        $report += "`n"
-    }
-
-    # Add sections for each TypeSpec generator for Management Plane
-    foreach ($genType in $newGeneratorTypes) {
-        if ($mgmtTspByGenerator[$genType].Count -gt 0) {
-            $report += "## Management Plane Libraries using TypeSpec ($genType)`n"
-            $report += "TypeSpec with $genType generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing $genType, or through special handling for specific libraries. Total: $($mgmtTspByGenerator[$genType].Count)`n"
-            $report += "| Service | Library | Path |"
-            $report += "| ------- | ------- | ---- |"
-            $sortedLibs = $mgmtTspByGenerator[$genType] | Sort-Object service, library
-            foreach ($lib in $sortedLibs) {
-                $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
-            }
-            $report += "`n"
-        }
-    }
-
-    # Old TypeSpec Management Plane Libraries
-    if ($mgmtTspOld.Count -gt 0) {
-        $report += "## Management Plane Libraries using TypeSpec (Old Generator)`n"
-        $report += "TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: $($mgmtTspOld.Count)`n"
-        $report += "| Service | Library | Path |"
-        $report += "| ------- | ------- | ---- |"
-        $sortedLibs = $mgmtTspOld | Sort-Object service, library
-        foreach ($lib in $sortedLibs) {
-            $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
-        }
-        $report += "`n"
-    }
-
-    # Management Plane Swagger Libraries
-    if ($mgmtSwagger.Count -gt 0) {
-        $report += "## Management Plane Libraries using Swagger`n"
-        $report += "Total: $($mgmtSwagger.Count)`n"
-        $report += "| Service | Library | Path |"
-        $report += "| ------- | ------- | ---- |"
-        $sortedLibs = $mgmtSwagger | Sort-Object service, library
-        foreach ($lib in $sortedLibs) {
-            $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
-        }
-        $report += "`n"
-    }
+    $report += "`n"
 
     # No Generator Libraries
     $report += "## Libraries with No Generator`n"
