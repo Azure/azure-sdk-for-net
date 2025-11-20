@@ -103,6 +103,8 @@ public class TestProxyProcess
         }
         else
         {
+            TryRestoreLocalTools();
+
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
                 $"tool run test-proxy start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
@@ -219,6 +221,46 @@ public class TestProxyProcess
 
         port = null;
         return false;
+    }
+
+    private static void TryRestoreLocalTools()
+    {
+        try
+        {
+            var currentDir = Directory.GetCurrentDirectory();
+            while (currentDir != null)
+            {
+                var toolsJsonPath = Path.Combine(currentDir, ".config", "dotnet-tools.json");
+                if (File.Exists(toolsJsonPath))
+                {
+                    // Found a tools manifest, try to restore
+                    var processInfo = new ProcessStartInfo
+                    {
+                        FileName = s_dotNetExe,
+                        Arguments = "tool restore",
+                        WorkingDirectory = currentDir,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+
+                    using var process = Process.Start(processInfo);
+                    if (process != null)
+                    {
+                        process.WaitForExit(30000);
+                    }
+                    break;
+                }
+
+                var parentDir = Directory.GetParent(currentDir);
+                currentDir = parentDir?.FullName;
+            }
+        }
+        catch
+        {
+            // If restore fails, silently continue - the dotnet test-proxy command will handle it
+        }
     }
 
     /// <summary>
