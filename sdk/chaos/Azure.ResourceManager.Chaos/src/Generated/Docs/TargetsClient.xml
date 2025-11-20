@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetTargetAsync(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargetAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.GetTargetAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetTargetAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.GetTargetAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTarget(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTarget and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.GetTarget("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetTarget with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.GetTarget("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateAsync(string,string,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Response response = await client.CreateOrUpdateAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        key = new object(),
+    },
+    location = "<location>",
+});
+Response response = await client.CreateOrUpdateAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Response response = client.CreateOrUpdate("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        key = new object(),
+    },
+    location = "<location>",
+});
+Response response = client.CreateOrUpdate("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.DeleteAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.DeleteAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.Delete("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.Delete("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<targetName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetTargetsAsync(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargetsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+await foreach (BinaryData item in client.GetTargetsAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetTargetsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+await foreach (BinaryData item in client.GetTargetsAsync("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<continuationToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTargets(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargets and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+foreach (BinaryData item in client.GetTargets("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetTargets with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetsClient client = new TargetsClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+foreach (BinaryData item in client.GetTargets("<resourceGroupName>", "<parentProviderNamespace>", "<parentResourceType>", "<parentResourceName>", "<continuationToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

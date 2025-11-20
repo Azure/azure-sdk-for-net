@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetCapabilityTypeAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCapabilityTypeAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.GetCapabilityTypeAsync("<location>", "<targetTypeName>", "<capabilityTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCapabilityTypeAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.GetCapabilityTypeAsync("<location>", "<targetTypeName>", "<capabilityTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("targetType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("parametersSchema").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("urn").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacActions")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacDataActions")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("requiredAzureRoleDefinitionIds")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("runtimeProperties").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCapabilityType(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCapabilityType and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.GetCapabilityType("<location>", "<targetTypeName>", "<capabilityTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCapabilityType with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.GetCapabilityType("<location>", "<targetTypeName>", "<capabilityTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("targetType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("parametersSchema").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("urn").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacActions")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacDataActions")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("requiredAzureRoleDefinitionIds")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("runtimeProperties").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCapabilityTypesAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCapabilityTypesAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+await foreach (BinaryData item in client.GetCapabilityTypesAsync("<location>", "<targetTypeName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCapabilityTypesAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+await foreach (BinaryData item in client.GetCapabilityTypesAsync("<location>", "<targetTypeName>", "<continuationToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("targetType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("parametersSchema").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("urn").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacActions")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacDataActions")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("requiredAzureRoleDefinitionIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("runtimeProperties").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCapabilityTypes(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCapabilityTypes and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+foreach (BinaryData item in client.GetCapabilityTypes("<location>", "<targetTypeName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCapabilityTypes with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CapabilityTypesClient client = new CapabilityTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+foreach (BinaryData item in client.GetCapabilityTypes("<location>", "<targetTypeName>", "<continuationToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("targetType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("parametersSchema").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("urn").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacActions")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("azureRbacDataActions")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("requiredAzureRoleDefinitionIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("runtimeProperties").GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

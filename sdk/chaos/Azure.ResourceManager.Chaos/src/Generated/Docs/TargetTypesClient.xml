@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetTargetTypeAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargetTypeAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.GetTargetTypeAsync("<location>", "<targetTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").ToString());
+]]></code>
+This sample shows how to call GetTargetTypeAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = await client.GetTargetTypeAsync("<location>", "<targetTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("propertiesSchema").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("resourceTypes")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTargetType(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargetType and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.GetTargetType("<location>", "<targetTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").ToString());
+]]></code>
+This sample shows how to call GetTargetType with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+Response response = client.GetTargetType("<location>", "<targetTypeName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("propertiesSchema").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("resourceTypes")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTargetTypesAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargetTypesAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+await foreach (BinaryData item in client.GetTargetTypesAsync("<location>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").ToString());
+}
+]]></code>
+This sample shows how to call GetTargetTypesAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+await foreach (BinaryData item in client.GetTargetTypesAsync("<location>", "<continuationToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("propertiesSchema").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("resourceTypes")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTargetTypes(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTargetTypes and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+foreach (BinaryData item in client.GetTargetTypes("<location>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").ToString());
+}
+]]></code>
+This sample shows how to call GetTargetTypes with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+TargetTypesClient client = new TargetTypesClient(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), credential);
+
+foreach (BinaryData item in client.GetTargetTypes("<location>", "<continuationToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("propertiesSchema").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("resourceTypes")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+    Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>
