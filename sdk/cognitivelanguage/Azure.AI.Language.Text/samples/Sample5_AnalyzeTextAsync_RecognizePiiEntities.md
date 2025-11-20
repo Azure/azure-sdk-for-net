@@ -114,7 +114,15 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
     {
         ModelVersion = "latest",
         // Avaliable RedactionPolicies: EntityMaskPolicyType, CharacterMaskPolicyType, and NoMaskPolicyType
-        RedactionPolicy = new EntityMaskPolicyType()
+        RedactionPolicies =
+    {
+    new EntityMaskPolicyType
+    {
+        // defaultPolicy: use entity mask for everything unless overridden
+        PolicyName = "defaultPolicy",
+        IsDefault = true,
+    }
+    }
     }
 };
 

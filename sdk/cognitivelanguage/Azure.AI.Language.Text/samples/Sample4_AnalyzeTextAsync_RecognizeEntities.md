@@ -107,7 +107,7 @@ To recognize entities in multiple documents, call `AnalyzeText` on the `TextAnal
 ```C# Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_Preview
 Uri endpoint = TestEnvironment.Endpoint;
 AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_11_15_Preview);
 var client = new TextAnalysisClient(endpoint, credential, options);
 
 string textA =
