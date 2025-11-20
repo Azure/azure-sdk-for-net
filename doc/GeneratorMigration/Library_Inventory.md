@@ -8,13 +8,11 @@
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 24
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
-- Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
 - Data Plane (Swagger): 111
-- Data Plane (TSP-Old): 16
+- Data Plane (TSP-Old): 17
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 14
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
-- Data Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 1
 - No generator: 52
 
 
@@ -50,21 +48,13 @@ TypeSpec with @typespec/http-client-csharp generator is detected by the presence
 | openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 
 
-## Data Plane Libraries using TypeSpec (Unknown TypeSpec Generator: eng/emitter-package.json)
+## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with Unknown TypeSpec Generator: eng/emitter-package.json generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing Unknown TypeSpec Generator: eng/emitter-package.json, or through special handling for specific libraries. Total: 1
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 17
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | ai | Azure.AI.Agents.Persistent | sdk/ai/Azure.AI.Agents.Persistent |
-
-
-## Data Plane Libraries using TypeSpec (Old Generator)
-
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 16
-
-| Service | Library | Path |
-| ------- | ------- | ---- |
 | anomalydetector | Azure.AI.AnomalyDetector | sdk/anomalydetector/Azure.AI.AnomalyDetector |
 | batch | Azure.Compute.Batch | sdk/batch/Azure.Compute.Batch |
 | cognitivelanguage | Azure.AI.Language.Conversations | sdk/cognitivelanguage/Azure.AI.Language.Conversations |
