@@ -1,7 +1,7 @@
 {
-  "name": "cspell-version-pin",
-  "version": "1.0.0",
+  "name": "@azure-tools/cspell",
+  "private": true,
   "dependencies": {
-    "cspell": "^9.2.1"
+    "cspell": "9.2.1"
   }
 }
