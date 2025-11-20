@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -44,6 +46,11 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -102,6 +109,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
+            if (Optional.IsDefined(ResolveConfiguration))
+            {
+                writer.WritePropertyName("resolveConfiguration"u8);
+                writer.WriteObjectValue(ResolveConfiguration, options);
+            }
             if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
@@ -121,6 +133,28 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("isMigrated"u8);
                 writer.WriteBooleanValue(IsMigrated.Value);
+            }
+            if (Optional.IsCollectionDefined(CustomProperties))
+            {
+                writer.WritePropertyName("customProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(ActionProperties))
+            {
+                writer.WritePropertyName("actionProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ActionProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -161,6 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
             string description = default;
             int? severity = default;
             bool? enabled = default;
@@ -171,9 +206,12 @@ namespace Azure.ResourceManager.Monitor.Models
             AzureLocation? targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             bool? autoMitigate = default;
+            ResolveConfiguration resolveConfiguration = default;
             IList<MetricAlertAction> actions = default;
             DateTimeOffset? lastUpdatedTime = default;
             bool? isMigrated = default;
+            IDictionary<string, string> customProperties = default;
+            IDictionary<string, string> actionProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,6 +228,15 @@ namespace Azure.ResourceManager.Monitor.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMonitorContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -292,6 +339,15 @@ namespace Azure.ResourceManager.Monitor.Models
                             autoMitigate = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("resolveConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resolveConfiguration = ResolveConfiguration.DeserializeResolveConfiguration(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("actions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -324,6 +380,34 @@ namespace Azure.ResourceManager.Monitor.Models
                             isMigrated = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("customProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            customProperties = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("actionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            actionProperties = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -335,6 +419,7 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MetricAlertPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
                 description,
                 severity,
                 enabled,
@@ -345,9 +430,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 targetResourceRegion,
                 criteria,
                 autoMitigate,
+                resolveConfiguration,
                 actions ?? new ChangeTrackingList<MetricAlertAction>(),
                 lastUpdatedTime,
                 isMigrated,
+                customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                actionProperties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

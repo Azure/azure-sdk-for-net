@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.StorageDiscovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageDiscoveryWorkspaceResource"/> and their operations.
-    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of the parent resource.
+    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class StorageDiscoveryWorkspaceCollection : ArmCollection, IEnumerable<StorageDiscoveryWorkspaceResource>, IAsyncEnumerable<StorageDiscoveryWorkspaceResource>
     {

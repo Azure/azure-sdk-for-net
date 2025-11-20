@@ -7,114 +7,188 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary>
-    /// A class representing the LocalRulestack data model.
-    /// PaloAltoNetworks LocalRulestack
-    /// </summary>
+    /// <summary> PaloAltoNetworks LocalRulestack. </summary>
     public partial class LocalRulestackData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public LocalRulestackData(AzureLocation location) : base(location)
         {
-            AssociatedSubscriptions = new ChangeTrackingList<string>();
+
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="panETag"> PanEtag info. </param>
-        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
-        /// <param name="scope"> Rulestack Type. </param>
-        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
-        /// <param name="description"> rulestack description. </param>
-        /// <param name="defaultMode"> Mode for default rules creation. </param>
-        /// <param name="minAppIdVersion"> minimum version. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="securityServices"> Security Profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalRulestackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag, AzureLocation? panLocation, RulestackScopeType? scope, IList<string> associatedSubscriptions, string description, RuleCreationDefaultMode? defaultMode, string minAppIdVersion, FirewallProvisioningState? provisioningState, RulestackSecurityServices securityServices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal LocalRulestackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RulestackProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            PanETag = panETag;
-            PanLocation = panLocation;
-            Scope = scope;
-            AssociatedSubscriptions = associatedSubscriptions;
-            Description = description;
-            DefaultMode = defaultMode;
-            MinAppIdVersion = minAppIdVersion;
-            ProvisioningState = provisioningState;
-            SecurityServices = securityServices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackData"/> for deserialization. </summary>
-        internal LocalRulestackData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal RulestackProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> PanEtag info. </summary>
-        public ETag? PanETag { get; set; }
+        public ETag? PanETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PanETag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.PanETag = value.Value;
+            }
+        }
+
         /// <summary> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </summary>
-        public AzureLocation? PanLocation { get; set; }
+        public AzureLocation? PanLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PanLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.PanLocation = value.Value;
+            }
+        }
+
         /// <summary> Rulestack Type. </summary>
-        public RulestackScopeType? Scope { get; set; }
+        public RulestackScopeType? Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.Scope = value.Value;
+            }
+        }
+
         /// <summary> subscription scope of global rulestack. </summary>
-        public IList<string> AssociatedSubscriptions { get; }
+        public IList<string> AssociatedSubscriptions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                return Properties.AssociatedSubscriptions;
+            }
+        }
+
         /// <summary> rulestack description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Mode for default rules creation. </summary>
-        public RuleCreationDefaultMode? DefaultMode { get; set; }
+        public RuleCreationDefaultMode? DefaultMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.DefaultMode = value.Value;
+            }
+        }
+
         /// <summary> minimum version. </summary>
-        public string MinAppIdVersion { get; set; }
+        public string MinAppIdVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinAppIdVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.MinAppIdVersion = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirewallProvisioningState? ProvisioningState { get; }
+        public FirewallProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Security Profile. </summary>
-        public RulestackSecurityServices SecurityServices { get; set; }
+        public RulestackSecurityServices SecurityServices
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityServices;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulestackProperties();
+                }
+                Properties.SecurityServices = value;
+            }
+        }
     }
 }

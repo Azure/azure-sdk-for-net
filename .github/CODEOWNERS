@@ -239,7 +239,7 @@
 # ServiceOwners:                                                   @olduroja
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/                                            @quentinRobinson
+/sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
 
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
@@ -281,10 +281,10 @@
 # ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz @vikaspalaskar
+/sdk/translation/                                                  @jrjrguo @SG-MS
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @swmachan @mikeymcz @vikaspalaskar
+# ServiceOwners:                                                   @jrjrguo @SG-MS
 
 # ServiceLabel: %Commerce
 # ServiceOwners:                                                   @ms-premp @qiaozha
@@ -444,6 +444,12 @@
 
 # ServiceLabel: %DataBox Edge
 # ServiceOwners:                                                   @a-t-mason @ganzee @manuaery
+
+# PRLabel: %Datadog
+/sdk/datadog/Azure.ResourceManager.*/                              @jbhanuchand @ArcturusZhang @ArthurMa1978
+
+# ServiceLabel: %Datadog %Mgmt
+# ServiceOwners:                                                   @jbhanuchand
 
 # PRLabel: %Defender EASM
 /sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
@@ -1085,19 +1091,13 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978
-
-# ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @shaktichetan23
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Quota
-/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
-
-# ServiceLabel: %Quota %Mgmt
-# ServiceOwners:                                                   @tejasm-microsoft
+/sdk/quota/Azure.ResourceManager.*/                                @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil

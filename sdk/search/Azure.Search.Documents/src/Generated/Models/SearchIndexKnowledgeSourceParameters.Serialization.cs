@@ -36,10 +36,30 @@ namespace Azure.Search.Documents.Indexes.Models
 
             writer.WritePropertyName("searchIndexName"u8);
             writer.WriteStringValue(SearchIndexName);
-            if (Optional.IsDefined(SourceDataSelect))
+            if (Optional.IsCollectionDefined(SourceDataFields))
             {
-                writer.WritePropertyName("sourceDataSelect"u8);
-                writer.WriteStringValue(SourceDataSelect);
+                writer.WritePropertyName("sourceDataFields"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourceDataFields)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SearchFields))
+            {
+                writer.WritePropertyName("searchFields"u8);
+                writer.WriteStartArray();
+                foreach (var item in SearchFields)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SemanticConfigurationName))
+            {
+                writer.WritePropertyName("semanticConfigurationName"u8);
+                writer.WriteStringValue(SemanticConfigurationName);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +99,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string searchIndexName = default;
-            string sourceDataSelect = default;
+            IList<SearchIndexFieldReference> sourceDataFields = default;
+            IList<SearchIndexFieldReference> searchFields = default;
+            string semanticConfigurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,9 +111,37 @@ namespace Azure.Search.Documents.Indexes.Models
                     searchIndexName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceDataSelect"u8))
+                if (property.NameEquals("sourceDataFields"u8))
                 {
-                    sourceDataSelect = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SearchIndexFieldReference> array = new List<SearchIndexFieldReference>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchIndexFieldReference.DeserializeSearchIndexFieldReference(item, options));
+                    }
+                    sourceDataFields = array;
+                    continue;
+                }
+                if (property.NameEquals("searchFields"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SearchIndexFieldReference> array = new List<SearchIndexFieldReference>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchIndexFieldReference.DeserializeSearchIndexFieldReference(item, options));
+                    }
+                    searchFields = array;
+                    continue;
+                }
+                if (property.NameEquals("semanticConfigurationName"u8))
+                {
+                    semanticConfigurationName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SearchIndexKnowledgeSourceParameters(searchIndexName, sourceDataSelect, serializedAdditionalRawData);
+            return new SearchIndexKnowledgeSourceParameters(searchIndexName, sourceDataFields ?? new ChangeTrackingList<SearchIndexFieldReference>(), searchFields ?? new ChangeTrackingList<SearchIndexFieldReference>(), semanticConfigurationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchIndexKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options)

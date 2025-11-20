@@ -56,14 +56,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
+        /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative runtime in seconds allowed for all indexers in the service over the current UTC period. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxFieldsPerIndex = maxFieldsPerIndex;
             MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
             MaxComplexCollectionFieldsPerIndex = maxComplexCollectionFieldsPerIndex;
             MaxComplexObjectsInCollectionsPerDocument = maxComplexObjectsInCollectionsPerDocument;
             MaxStoragePerIndexInBytes = maxStoragePerIndexInBytes;
+            MaxCumulativeIndexerRuntimeSeconds = maxCumulativeIndexerRuntimeSeconds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? MaxComplexObjectsInCollectionsPerDocument { get; }
         /// <summary> The maximum amount of storage in bytes allowed per index. </summary>
         public long? MaxStoragePerIndexInBytes { get; }
+        /// <summary> The maximum cumulative runtime in seconds allowed for all indexers in the service over the current UTC period. </summary>
+        public long? MaxCumulativeIndexerRuntimeSeconds { get; }
     }
 }

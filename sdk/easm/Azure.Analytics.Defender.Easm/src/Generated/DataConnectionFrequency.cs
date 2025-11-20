@@ -14,41 +14,59 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct DataConnectionFrequency : IEquatable<DataConnectionFrequency>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataConnectionFrequency"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataConnectionFrequency(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DailyValue = "daily";
         private const string WeeklyValue = "weekly";
         private const string MonthlyValue = "monthly";
 
-        /// <summary> daily. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataConnectionFrequency(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Daily. </summary>
         public static DataConnectionFrequency Daily { get; } = new DataConnectionFrequency(DailyValue);
-        /// <summary> weekly. </summary>
+
+        /// <summary> Gets the Weekly. </summary>
         public static DataConnectionFrequency Weekly { get; } = new DataConnectionFrequency(WeeklyValue);
-        /// <summary> monthly. </summary>
+
+        /// <summary> Gets the Monthly. </summary>
         public static DataConnectionFrequency Monthly { get; } = new DataConnectionFrequency(MonthlyValue);
+
         /// <summary> Determines if two <see cref="DataConnectionFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataConnectionFrequency left, DataConnectionFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataConnectionFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataConnectionFrequency left, DataConnectionFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectionFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataConnectionFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataConnectionFrequency(string value) => new DataConnectionFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataConnectionFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataConnectionFrequency?(string value) => value == null ? null : new DataConnectionFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataConnectionFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataConnectionFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

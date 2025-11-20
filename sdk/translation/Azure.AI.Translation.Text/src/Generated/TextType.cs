@@ -14,38 +14,57 @@ namespace Azure.AI.Translation.Text
     public readonly partial struct TextType : IEquatable<TextType>
     {
         private readonly string _value;
+        /// <summary> Plain text. </summary>
+        private const string PlainValue = "Plain";
+        /// <summary> HTML-encoded text. </summary>
+        private const string HtmlValue = "Html";
 
         /// <summary> Initializes a new instance of <see cref="TextType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PlainValue = "Plain";
-        private const string HtmlValue = "Html";
+            _value = value;
+        }
 
         /// <summary> Plain text. </summary>
         public static TextType Plain { get; } = new TextType(PlainValue);
+
         /// <summary> HTML-encoded text. </summary>
         public static TextType Html { get; } = new TextType(HtmlValue);
+
         /// <summary> Determines if two <see cref="TextType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextType left, TextType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TextType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextType left, TextType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TextType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TextType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TextType(string value) => new TextType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TextType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TextType?(string value) => value == null ? null : new TextType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TextType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TextType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

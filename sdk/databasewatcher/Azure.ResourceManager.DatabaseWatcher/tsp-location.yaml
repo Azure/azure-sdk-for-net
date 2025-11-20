@@ -1,3 +1,4 @@
 directory: specification/databasewatcher/DatabaseWatcher.Management
-commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
+commit: 5726a1414285a8525540c78116372d2254205be2
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlanetaryComputerGeoCatalogResource"/> and their operations.
-    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of the parent resource.
+    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PlanetaryComputerGeoCatalogCollection : ArmCollection, IEnumerable<PlanetaryComputerGeoCatalogResource>, IAsyncEnumerable<PlanetaryComputerGeoCatalogResource>
     {

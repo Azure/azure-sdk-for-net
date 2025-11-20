@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// A class representing a collection of <see cref="ConnectedClusterResource"/> and their operations.
-    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of the parent resource.
+    /// Each <see cref="ConnectedClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConnectedClusterCollection"/> instance call the GetConnectedClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConnectedClusterCollection : ArmCollection, IEnumerable<ConnectedClusterResource>, IAsyncEnumerable<ConnectedClusterResource>
     {
