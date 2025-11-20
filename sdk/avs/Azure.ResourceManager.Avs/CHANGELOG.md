@@ -1,8 +1,10 @@
 # Release History
 
-## 1.6.0-beta.1 (2025-12-10)
+## 1.6.0 (2025-12-10)
 
 ### Features Added
+
+- Upgraded api-version tag to 'package-2025-09-01'.
 
 ## 1.5.0 (2025-07-02)
 
