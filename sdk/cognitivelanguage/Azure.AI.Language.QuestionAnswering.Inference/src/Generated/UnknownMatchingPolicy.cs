@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Unknown version of MatchingPolicy. </summary>
     internal partial class UnknownMatchingPolicy : MatchingPolicy

@@ -7,7 +7,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.QuestionAnswering
     [ModelReaderWriterBuildable(typeof(TextAnswer))]
     [ModelReaderWriterBuildable(typeof(TextDocument))]
     [ModelReaderWriterBuildable(typeof(UnknownMatchingPolicy))]
-    public partial class AzureAILanguageQuestionAnsweringContext : ModelReaderWriterContext
+    public partial class AzureAILanguageQuestionAnsweringInferenceContext : ModelReaderWriterContext
     {
     }
 }

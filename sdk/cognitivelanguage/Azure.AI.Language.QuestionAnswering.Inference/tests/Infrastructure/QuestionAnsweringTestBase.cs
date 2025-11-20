@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests
+namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 {
     /// <summary>
     /// Base class for live client tests using different service versions.

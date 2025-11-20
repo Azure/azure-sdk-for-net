@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests
+namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 {
     public class QuestionAnsweringProjectTests
     {

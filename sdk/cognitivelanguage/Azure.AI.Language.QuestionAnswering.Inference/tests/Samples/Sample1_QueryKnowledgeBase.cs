@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Inference.Tests.Samples
 {
     public partial class QuestionAnsweringClientSamples
     {

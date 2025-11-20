@@ -8,14 +8,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
-using Azure.AI.Language.QuestionAnswering;
+using Azure.AI.Language.QuestionAnswering.Inference;
 using Azure.Core;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="QuestionAnsweringClient"/> to client builder. </summary>
-    [CodeGenType("AILanguageQuestionAnsweringClientBuilderExtensions")]
+    [CodeGenType("AILanguageQuestionAnsweringInferenceClientBuilderExtensions")]
     public static partial class QuestionAnsweringClientExtensions
     {
     }

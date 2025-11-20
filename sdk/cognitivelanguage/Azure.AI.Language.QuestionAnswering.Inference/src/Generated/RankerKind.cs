@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Type of ranker to be used. </summary>
     public readonly partial struct RankerKind : IEquatable<RankerKind>

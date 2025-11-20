@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary>
     /// Hand-authored extensions for <see cref="QuestionAnsweringClientOptions"/>.

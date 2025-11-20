@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests
+namespace Azure.AI.Language.QuestionAnswering.Inference.Tests
 {
     public class QuestionAnsweringClientLiveTests : QuestionAnsweringTestBase<QuestionAnsweringClient>
     {

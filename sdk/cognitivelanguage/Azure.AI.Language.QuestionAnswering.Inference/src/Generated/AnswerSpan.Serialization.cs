@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Language.QuestionAnswering
+namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     public partial class AnswerSpan : IUtf8JsonSerializable, IJsonModel<AnswerSpan>
     {
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.QuestionAnswering
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringInferenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AnswerSpan)} does not support writing '{options.Format}' format.");
             }

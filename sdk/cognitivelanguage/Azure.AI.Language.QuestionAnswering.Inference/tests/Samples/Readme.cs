@@ -11,7 +11,7 @@ using Azure.Identity;
 #endregion
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
+namespace Azure.AI.Language.QuestionAnswering.Inference.Tests.Samples
 {
     public partial class QuestionAnsweringClientSamples : QuestionAnsweringTestBase<QuestionAnsweringClient>
     {
