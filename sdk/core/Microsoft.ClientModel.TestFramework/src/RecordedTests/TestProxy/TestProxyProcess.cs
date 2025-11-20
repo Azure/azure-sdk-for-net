@@ -257,9 +257,8 @@ public class TestProxyProcess
                 currentDir = parentDir?.FullName;
             }
         }
-        catch (Exception e)
+        catch
         {
-            TestContext.Progress.WriteLine($"Restore failure is: {e}");
             // If restore fails, silently continue - the dotnet test-proxy command will handle it
         }
     }
