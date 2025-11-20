@@ -22,6 +22,10 @@ class PackageProps {
     [HashTable]$ArtifactDetails
     [HashTable]$CIParameters
 
+    # Path from root of azure-rest-api-specs repo to spec project (read from
+    # tsp-location.yaml if it exists in the package directory)
+    [string]$SpecProjectPath
+
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory) {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
     }
@@ -59,6 +63,10 @@ class PackageProps {
         }
         else {
             $this.ChangeLogPath = $null
+        }
+
+        if (Test-Path (Join-Path $directoryPath 'tsp-location.yaml')) {
+            $this.SpecProjectPath = (LoadFrom-Yaml (Join-Path $directoryPath 'tsp-location.yaml')).directory
         }
 
         $this.CIParameters = @{"CIMatrixConfigs" = @()}
