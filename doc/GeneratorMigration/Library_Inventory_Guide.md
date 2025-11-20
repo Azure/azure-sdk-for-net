@@ -6,9 +6,9 @@ This document outlines how to generate and maintain the inventory of libraries i
 
 The library inventory helps us:
 
-1. Track all libraries in the repository
+1. Track all Azure.* libraries in the repository (legacy non-Azure.* libraries are excluded)
 2. Categorize them as data plane or management plane
-3. Identify which generator (Swagger or TypeSpec) they use
+3. Identify which generator (New Emitter, Autorest, or Old TypeSpec) they use
 4. Plan migrations to newer generators
 
 ## Generating the Inventory
@@ -23,8 +23,9 @@ pwsh doc/GeneratorMigration/Library_Inventory.ps1
 
 2. The script will:
    - Scan all libraries in the `sdk/` directory
+   - Filter out libraries that don't start with "Azure.*" (legacy libraries)
    - Categorize them by type (data plane or management plane)
-   - Identify the generator used (Swagger or TypeSpec)
+   - Identify the generator used (New Emitter, Autorest, or Old TypeSpec)
    - Generate a markdown report (`doc/GeneratorMigration/Library_Inventory.md`)
 
 3. If you need JSON output for programmatic use, use the `-Json` flag:
@@ -66,13 +67,18 @@ If none of these TypeSpec indicators are found but there is evidence of code gen
 
 The inventory markdown file provides:
 
-1. Overall summary counts
-2. Tables for each category:
-   - Data Plane libraries using TypeSpec
-   - Data Plane libraries using Swagger
-   - Management Plane libraries using TypeSpec
-   - Management Plane libraries using Swagger
-   - Libraries with unknown generator
+1. Overall summary counts with breakdown by generator type
+2. Two main tables:
+   - **Data Plane Libraries (DPG)**: Client APIs for Azure services
+     - Columns: Service, Library, Path, New Emitter, Autorest
+   - **Management Plane Libraries (MPG)**: Resource management APIs for Azure services
+     - Columns: Service, Library, Path, New Emitter, Autorest
+3. Libraries with no generator (listed separately)
+
+Each table uses checkmarks (✓) to indicate the generator type:
+- **New Emitter** column: Libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
+- **Autorest** column: Libraries using Swagger/Autorest
+- **No checkmarks**: Libraries using old TypeSpec (TSP-Old) or no generator
 
 ## Updating the Inventory
 
