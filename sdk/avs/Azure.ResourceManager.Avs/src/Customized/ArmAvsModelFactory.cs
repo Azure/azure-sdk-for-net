@@ -299,5 +299,190 @@ namespace Azure.ResourceManager.Avs.Models
                 hosts: hosts?.ToList()
             );
         }
+
+        // Additional overloads to satisfy API contract compatibility
+
+        /// <summary> Initializes a new instance of <see cref="Models.AddonHcxProperties"/>. </summary>
+        /// <param name="provisioningState"> The state of the addon provisioning. </param>
+        /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
+        /// <returns> A new <see cref="Models.AddonHcxProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState, string offer)
+        {
+            return AddonHcxProperties(provisioningState, offer, null, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsCloudLinkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsCloudLinkData AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud)
+        {
+            return AvsCloudLinkData(id, name, resourceType, systemData, null, status, linkedCloud);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AvsManagementCluster"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsManagementCluster AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts)
+        {
+            return AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement)
+        {
+            return AvsPrivateCloudClusterVirtualMachineData(id, name, resourceType, systemData, null, displayName, moRefId, folderPath, restrictMovement);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudData AvsPrivateCloudData(
+            ResourceIdentifier id,
+            string name,
+            ResourceType resourceType,
+            SystemData systemData,
+            IDictionary<string, string> tags,
+            AzureLocation location,
+            AvsManagementCluster managementCluster,
+            InternetConnectivityState? internet,
+            IEnumerable<SingleSignOnIdentitySource> identitySources,
+            PrivateCloudAvailabilityProperties availability,
+            CustomerManagedEncryption encryption,
+            IEnumerable<string> extendedNetworkBlocks,
+            AvsPrivateCloudProvisioningState? provisioningState,
+            ExpressRouteCircuit circuit,
+            AvsPrivateCloudEndpoints endpoints,
+            string networkBlock,
+            string managementNetwork,
+            string provisioningNetwork,
+            string vMotionNetwork,
+            string vCenterPassword,
+            string nsxtPassword,
+            string vCenterCertificateThumbprint,
+            string nsxtCertificateThumbprint,
+            IEnumerable<ResourceIdentifier> externalCloudLinks,
+            ExpressRouteCircuit secondaryCircuit,
+            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised,
+            ResourceIdentifier virtualNetworkId,
+            AvsDnsZoneType? dnsZoneType,
+            AvsSku sku,
+            ManagedServiceIdentity identity,
+            IEnumerable<string> zones)
+        {
+            return AvsPrivateCloudData(
+                id, name, resourceType, systemData, tags, location,
+                managementCluster, internet, identitySources, availability, encryption,
+                extendedNetworkBlocks, provisioningState, circuit, endpoints,
+                networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork,
+                vCenterPassword, nsxtPassword, vCenterCertificateThumbprint,
+                nsxtCertificateThumbprint, externalCloudLinks, secondaryCircuit,
+                nsxPublicIPQuotaRaised, virtualNetworkId, dnsZoneType, null, sku, identity, zones);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudData AvsPrivateCloudData(
+            ResourceIdentifier id,
+            string name,
+            ResourceType resourceType,
+            SystemData systemData,
+            IDictionary<string, string> tags,
+            AzureLocation location,
+            AvsSku sku,
+            ManagedServiceIdentity identity,
+            AvsManagementCluster managementCluster,
+            InternetConnectivityState? internet,
+            IEnumerable<SingleSignOnIdentitySource> identitySources,
+            PrivateCloudAvailabilityProperties availability,
+            CustomerManagedEncryption encryption,
+            IEnumerable<string> extendedNetworkBlocks,
+            AvsPrivateCloudProvisioningState? provisioningState,
+            ExpressRouteCircuit circuit,
+            AvsPrivateCloudEndpoints endpoints,
+            string networkBlock,
+            string managementNetwork,
+            string provisioningNetwork,
+            string vMotionNetwork,
+            string vCenterPassword,
+            string nsxtPassword,
+            string vCenterCertificateThumbprint,
+            string nsxtCertificateThumbprint,
+            IEnumerable<ResourceIdentifier> externalCloudLinks,
+            ExpressRouteCircuit secondaryCircuit,
+            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised,
+            ResourceIdentifier virtualNetworkId,
+            AvsDnsZoneType? dnsZoneType)
+        {
+            return AvsPrivateCloudData(
+                id, name, resourceType, systemData, tags, location,
+                managementCluster, internet, identitySources, availability, encryption,
+                extendedNetworkBlocks, provisioningState, circuit, endpoints,
+                networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork,
+                vCenterPassword, nsxtPassword, vCenterCertificateThumbprint,
+                nsxtCertificateThumbprint, externalCloudLinks, secondaryCircuit,
+                nsxPublicIPQuotaRaised, virtualNetworkId, dnsZoneType, null, sku, identity, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, ResourceIdentifier elasticSanVolumeTargetId, DatastoreStatus? status)
+        {
+            return AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId, diskPoolVolume, elasticSanVolumeTargetId, null, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, DatastoreStatus? status)
+        {
+            return AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId, diskPoolVolume, null, null, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudEndpoints"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager)
+        {
+            return AvsPrivateCloudEndpoints(nsxtManager, vcsa, hcxCloudManager, null, null, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.HcxEnterpriseSiteData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string activationKey, HcxEnterpriseSiteStatus? status)
+        {
+            return HcxEnterpriseSiteData(id, name, resourceType, systemData, null, activationKey, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.ScriptCmdletData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, TimeSpan? timeout, IEnumerable<ScriptParameter> parameters)
+        {
+            return ScriptCmdletData(id, name, resourceType, systemData, null, description, timeout, null, parameters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.ScriptPackageData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri)
+        {
+            return ScriptPackageData(id, name, resourceType, systemData, null, description, version, company, uri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
+        {
+            return WorkloadNetworkData(id, name, resourceType, systemData, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkGatewayData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string path)
+        {
+            return WorkloadNetworkGatewayData(id, name, resourceType, systemData, null, displayName, path);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVirtualMachineData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType)
+        {
+            return WorkloadNetworkVirtualMachineData(id, name, resourceType, systemData, null, displayName, vmType);
+        }
     }
 }
