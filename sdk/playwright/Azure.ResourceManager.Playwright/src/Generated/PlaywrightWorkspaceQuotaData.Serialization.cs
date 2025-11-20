@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Playwright
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, options);
                     }
@@ -174,11 +174,10 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PlaywrightWorkspaceQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceQuotaData"/> from. </param>
-        internal static PlaywrightWorkspaceQuotaData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceQuotaData"/> from. </param>
+        internal static PlaywrightWorkspaceQuotaData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

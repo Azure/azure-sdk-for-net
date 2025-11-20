@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeIspCacheNodeResourceListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IspCacheNodeResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="IspCacheNodeResourceListResult"/> from. </param>
-        internal static IspCacheNodeResourceListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IspCacheNodeResourceListResult"/> from. </param>
+        internal static IspCacheNodeResourceListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeIspCacheNodeResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

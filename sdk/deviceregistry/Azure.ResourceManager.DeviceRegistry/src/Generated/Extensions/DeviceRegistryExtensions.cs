@@ -85,6 +85,30 @@ namespace Azure.ResourceManager.DeviceRegistry
             return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistryNamespaceResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="CredentialResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
+        public static CredentialResource GetCredentialResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetCredentialResource(id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="PolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PolicyResource"/> object. </returns>
+        public static PolicyResource GetPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetPolicyResource(id);
+        }
+
         /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>

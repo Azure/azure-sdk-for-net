@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeProductSerialNumberRequestStatus(document.RootElement, options);
                     }
@@ -141,11 +141,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProductSerialNumberRequestStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ProductSerialNumberRequestStatus"/> from. </param>
-        internal static ProductSerialNumberRequestStatus FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProductSerialNumberRequestStatus"/> from. </param>
+        internal static ProductSerialNumberRequestStatus FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeProductSerialNumberRequestStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

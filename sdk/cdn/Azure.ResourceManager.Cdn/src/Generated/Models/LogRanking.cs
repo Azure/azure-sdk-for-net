@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The LogRanking.
-    /// Serialized Name: LogRanking
-    /// </summary>
+    /// <summary> The LogRanking. </summary>
     public readonly partial struct LogRanking : IEquatable<LogRanking>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UserAgentValue = "userAgent";
         private const string CountryOrRegionValue = "countryOrRegion";
 
-        /// <summary>
-        /// url
-        /// Serialized Name: LogRanking.url
-        /// </summary>
+        /// <summary> url. </summary>
         public static LogRanking Uri { get; } = new LogRanking(UriValue);
-        /// <summary>
-        /// referrer
-        /// Serialized Name: LogRanking.referrer
-        /// </summary>
+        /// <summary> referrer. </summary>
         public static LogRanking Referrer { get; } = new LogRanking(ReferrerValue);
-        /// <summary>
-        /// browser
-        /// Serialized Name: LogRanking.browser
-        /// </summary>
+        /// <summary> browser. </summary>
         public static LogRanking Browser { get; } = new LogRanking(BrowserValue);
-        /// <summary>
-        /// userAgent
-        /// Serialized Name: LogRanking.userAgent
-        /// </summary>
+        /// <summary> userAgent. </summary>
         public static LogRanking UserAgent { get; } = new LogRanking(UserAgentValue);
-        /// <summary>
-        /// countryOrRegion
-        /// Serialized Name: LogRanking.countryOrRegion
-        /// </summary>
+        /// <summary> countryOrRegion. </summary>
         public static LogRanking CountryOrRegion { get; } = new LogRanking(CountryOrRegionValue);
         /// <summary> Determines if two <see cref="LogRanking"/> values are the same. </summary>
         public static bool operator ==(LogRanking left, LogRanking right) => left.Equals(right);

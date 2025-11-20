@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DependencyMap
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDependencyMapDiscoverySourceData(document.RootElement, options);
                     }
@@ -221,11 +221,10 @@ namespace Azure.ResourceManager.DependencyMap
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DependencyMapDiscoverySourceData"/> from. </param>
-        internal static DependencyMapDiscoverySourceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DependencyMapDiscoverySourceData"/> from. </param>
+        internal static DependencyMapDiscoverySourceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDependencyMapDiscoverySourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
