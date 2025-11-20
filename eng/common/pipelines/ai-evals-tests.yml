@@ -82,9 +82,8 @@ jobs:
         DOTNET_MULTILEVEL_LOOKUP: 0
         AZURE_OPENAI_MODEL_DEPLOYMENT_NAME: ${{ parameters.Model }}
         AZURE_OPENAI_ENDPOINT: ${{ parameters.OpenAIEndPoint }}
-        COPILOT_INSTRUCTIONS_REPOSITORY_NAME: $(Build.Repository.Name)
-        COPILOT_INSTRUCTIONS_REPOSITORY_OWNER: $(Build.Repository.Owner)
-        COPILOT_INSTRUCTIONS_PATH: $(System.DefaultWorkingDirectory)/.github/copilot-instructions.md
+        REPOSITORY_NAME: $(Build.Repository.Name)
+        COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/.github/copilot-instructions.md
 
     - task: PublishTestResults@2
       condition: succeededOrFailed()
