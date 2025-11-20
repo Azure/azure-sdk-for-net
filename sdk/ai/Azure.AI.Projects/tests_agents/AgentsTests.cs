@@ -597,6 +597,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.ImageGeneration)]
     [TestCase(ToolType.WebSearch)]
+    [TestCase(ToolType.AzureAISearch)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -607,7 +608,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient(headers);
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
+            options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
         ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
@@ -635,16 +636,27 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(response.GetOutputText().ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
+        if (toolType == ToolType.AzureAISearch)
+        {
+            bool isUriCitationFound = false;
+            // Check Annotation for Azure AI Search tool.
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                isUriCitationFound |= ContainsAnnotation(item);
+            }
+            Assert.That(isUriCitationFound, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
+        }
     }
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
+    [TestCase(ToolType.AzureAISearch)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
+            options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         bool isStarted = false;
@@ -681,6 +693,10 @@ public class AgentsTests : AgentsTestBase
                                 annotationMet |= annotation.GetType() == annotationType;
                             }
                         }
+                    }
+                    if (toolType == ToolType.AzureAISearch)
+                    {
+                        annotationMet = ContainsAnnotation(itemDoneUpdate.Item);
                     }
                 }
                 else
@@ -741,7 +757,7 @@ public async Task TestToolChoiceWorks()
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient.OpenAI))
+            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient))
         );
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new()
@@ -848,7 +864,7 @@ public async Task TestToolChoiceWorks()
         Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient.OpenAI, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
+            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
             agentVersion.Name);
@@ -1095,6 +1111,32 @@ public async Task TestToolChoiceWorks()
             protocolRequestOptions);
 
         Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
+    }
+
+    private static bool ContainsAnnotation(ResponseItem item)
+    {
+        bool isUriCitationFound = false;
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        isUriCitationFound = true;
+                        Assert.That(uriAnnotation.Title, Does.Contain("product_info_7.md"), $"Wrong citation title {uriAnnotation.Title}, should be \"product_info_7.md\"");
+                        // The next check is disabled, because of an ADO issue 4836442.
+                        // Assert.That(uriAnnotation.Uri, Does.Contain("www.microsoft.com"), $"Wrong citation title {uriAnnotation.Uri}, should be \"www.microsoft.com\"");
+                    }
+                    else
+                    {
+                        Assert.Fail($"Found unexpected annotation {annotation}");
+                    }
+                }
+            }
+        }
+        return isUriCitationFound;
     }
 
     private static readonly string s_HelloWorkflowYaml = """

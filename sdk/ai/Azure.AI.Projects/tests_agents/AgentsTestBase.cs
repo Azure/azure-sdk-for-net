@@ -88,7 +88,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                                "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see." },
         {ToolType.OpenAPI, "You are helpful agent."},
         {ToolType.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
-        {ToolType.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
+        {ToolType.AzureAISearch, "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`."},
         {ToolType.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
         {ToolType.FileSearch,  "You are helpful agent."},
         {ToolType.BrowserAutomation, "You are an Agent helping with browser automation tasks. " +
@@ -104,7 +104,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.CodeInterpreter, "673457"},
         {ToolType.FileSearch, "673457"},
         {ToolType.FunctionCall, "emerald"},
-        {ToolType.WebSearch, "centralia" }
+        {ToolType.WebSearch, "centralia" },
+        {ToolType.AzureAISearch, "60"},
     };
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
@@ -114,7 +115,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 
     public Dictionary<ToolType, Type> ExpectedAnnotations = new()
     {
-        {ToolType.FileSearch, typeof(FileCitationMessageAnnotation) }
+        {ToolType.FileSearch, typeof(FileCitationMessageAnnotation) },
+        {ToolType.AzureAISearch, typeof(UriCitationMessageAnnotation) },
     };
     #endregion
 
@@ -267,12 +269,25 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         _ => throw new NotImplementedException(),
     };
 
+    private AzureAISearchToolIndex GetAISearchIndex(AIProjectClient projectClient)
+    {
+        AzureAISearchToolIndex index = new()
+        {
+            ProjectConnectionId = TestEnvironment.AI_SEARCH_CONNECTION_NAME,
+            IndexName = "sample_index",
+            TopK = 5,
+            Filter = "category eq 'sleeping bag'",
+            QueryType = AzureAISearchQueryType.Simple
+        };
+        return index;
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
     /// <param name="toolType"></param>
     /// <returns></returns>
-    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, OpenAIClient oaiClient, string model = default)
+    protected async Task<AgentDefinition> GetAgentToolDefinition(ToolType toolType, AIProjectClient projectClient, string model = default)
     {
         ResponseTool tool = toolType switch
         {
@@ -293,7 +308,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                         )
                     )
                 ),
-            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(oaiClient)).Id]),
+            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(projectClient.OpenAI)).Id]),
             ToolType.FunctionCall => ResponseTool.CreateFunctionTool(
                 functionName: "GetCityNicknameForTest",
                 functionDescription: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
@@ -322,6 +337,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 size: ImageGenerationToolSize.W1024xH1024
             ),
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
+            ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex(projectClient)])),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
