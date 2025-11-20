@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGlobalRulestackInfo(document.RootElement, options);
                     }
@@ -141,11 +141,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GlobalRulestackInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GlobalRulestackInfo"/> from. </param>
-        internal static GlobalRulestackInfo FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GlobalRulestackInfo"/> from. </param>
+        internal static GlobalRulestackInfo FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGlobalRulestackInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the source of the SSL certificate.
-    /// Serialized Name: AfdCertificateType
-    /// </summary>
+    /// <summary> Defines the source of the SSL certificate. </summary>
     public readonly partial struct FrontDoorCertificateType : IEquatable<FrontDoorCertificateType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
-        /// <summary>
-        /// CustomerCertificate
-        /// Serialized Name: AfdCertificateType.CustomerCertificate
-        /// </summary>
+        /// <summary> CustomerCertificate. </summary>
         public static FrontDoorCertificateType CustomerCertificate { get; } = new FrontDoorCertificateType(CustomerCertificateValue);
-        /// <summary>
-        /// ManagedCertificate
-        /// Serialized Name: AfdCertificateType.ManagedCertificate
-        /// </summary>
+        /// <summary> ManagedCertificate. </summary>
         public static FrontDoorCertificateType ManagedCertificate { get; } = new FrontDoorCertificateType(ManagedCertificateValue);
-        /// <summary>
-        /// AzureFirstPartyManagedCertificate
-        /// Serialized Name: AfdCertificateType.AzureFirstPartyManagedCertificate
-        /// </summary>
+        /// <summary> AzureFirstPartyManagedCertificate. </summary>
         public static FrontDoorCertificateType AzureFirstPartyManagedCertificate { get; } = new FrontDoorCertificateType(AzureFirstPartyManagedCertificateValue);
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorCertificateType left, FrontDoorCertificateType right) => left.Equals(right);

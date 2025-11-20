@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeMapsResourceListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MapsResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MapsResourceListResult"/> from. </param>
-        internal static MapsResourceListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MapsResourceListResult"/> from. </param>
+        internal static MapsResourceListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMapsResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

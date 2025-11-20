@@ -260,17 +260,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetModels(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModels");
-            scope.Start();
-            try
-            {
-                return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context);
         }
 
         /// <summary>
@@ -286,17 +276,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetModelsAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModels");
-            scope.Start();
-            try
-            {
-                return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context);
         }
 
         /// <summary> List all document models. </summary>
@@ -582,17 +562,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperations(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperations");
-            scope.Start();
-            try
-            {
-                return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context);
         }
 
         /// <summary>
@@ -608,17 +578,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperations");
-            scope.Start();
-            try
-            {
-                return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context);
         }
 
         /// <summary> Lists all operations. </summary>
@@ -806,17 +766,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetClassifiers(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifiers");
-            scope.Start();
-            try
-            {
-                return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context);
         }
 
         /// <summary>
@@ -832,17 +782,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetClassifiersAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifiers");
-            scope.Start();
-            try
-            {
-                return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context);
         }
 
         /// <summary> List all document classifiers. </summary>

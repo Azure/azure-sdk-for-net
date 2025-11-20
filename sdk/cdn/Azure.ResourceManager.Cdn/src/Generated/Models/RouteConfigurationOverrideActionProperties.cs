@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the route configuration override action.
-    /// Serialized Name: RouteConfigurationOverrideActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the route configuration override action. </summary>
     public partial class RouteConfigurationOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
@@ -23,16 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="originGroupOverride">
-        /// A reference to the origin group override configuration. Leave empty to use the default origin group on route.
-        /// Serialized Name: RouteConfigurationOverrideActionParameters.originGroupOverride
-        /// </param>
-        /// <param name="cacheConfiguration">
-        /// The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: RouteConfigurationOverrideActionParameters.cacheConfiguration
-        /// </param>
+        /// <param name="originGroupOverride"> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </param>
+        /// <param name="cacheConfiguration"> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </param>
         internal RouteConfigurationOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration) : base(typeName, serializedAdditionalRawData)
         {
             OriginGroupOverride = originGroupOverride;
@@ -40,15 +31,11 @@ namespace Azure.ResourceManager.Cdn.Models
             TypeName = typeName;
         }
 
-        /// <summary>
-        /// A reference to the origin group override configuration. Leave empty to use the default origin group on route.
-        /// Serialized Name: RouteConfigurationOverrideActionParameters.originGroupOverride
-        /// </summary>
+        /// <summary> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </summary>
+        [WirePath("originGroupOverride")]
         public OriginGroupOverride OriginGroupOverride { get; set; }
-        /// <summary>
-        /// The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: RouteConfigurationOverrideActionParameters.cacheConfiguration
-        /// </summary>
+        /// <summary> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </summary>
+        [WirePath("cacheConfiguration")]
         public CacheConfiguration CacheConfiguration { get; set; }
     }
 }

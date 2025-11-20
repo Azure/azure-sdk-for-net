@@ -126,7 +126,7 @@
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
     <PackageReference Update="Azure.Monitor.Query.Logs" Version="1.0.0" />
-    <PackageReference Update="Azure.Identity" Version="1.16.0" />
+    <PackageReference Update="Azure.Identity" Version="1.17.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.7.0" />
@@ -185,9 +185,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.7.0" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.78.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.78.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.78.0" />
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
@@ -339,7 +339,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.50.0" />
-    <PackageReference Update="Azure.Identity" Version="1.16.0" />
+    <PackageReference Update="Azure.Identity" Version="1.17.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
@@ -415,6 +415,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
     <PackageReference Update="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
+    <PackageReference Update="Microsoft.CognitiveServices.Speech"  Version="1.47.0"/>
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
