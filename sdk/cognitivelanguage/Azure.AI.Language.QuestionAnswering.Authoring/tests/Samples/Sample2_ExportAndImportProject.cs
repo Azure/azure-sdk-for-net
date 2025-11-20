@@ -133,4 +133,3 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
         }
     }
 }
-

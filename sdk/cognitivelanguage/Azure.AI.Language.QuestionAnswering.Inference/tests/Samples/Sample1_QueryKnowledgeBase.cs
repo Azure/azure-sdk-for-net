@@ -65,4 +65,3 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         }
     }
 }
-
