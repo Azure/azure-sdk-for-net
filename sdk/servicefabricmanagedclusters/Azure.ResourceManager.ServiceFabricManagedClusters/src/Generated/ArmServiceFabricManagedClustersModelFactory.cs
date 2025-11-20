@@ -114,6 +114,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RestartDeployedCodePackageContent"/>. </summary>
+        /// <param name="nodeName"> The name of the node where the code package needs to be restarted. Use '*' to restart on all nodes where the code package is running. </param>
+        /// <param name="serviceManifestName"> The name of the service manifest as specified in the code package. </param>
+        /// <param name="codePackageName"> The name of the code package as specified in the service manifest. </param>
+        /// <param name="codePackageInstanceId"> The instance ID for currently running entry point. For a code package setup entry point (if specified) runs first and after it finishes main entry point is started. Each time entry point executable is run, its instance ID will change. If 0 is passed in as the code package instance ID, the API will restart the code package with whatever instance ID it is currently running. If an instance ID other than 0 is passed in, the API will restart the code package only if the current Instance ID matches the passed in instance ID. Note, passing in the exact instance ID (not 0) in the API is safer, because if ensures at most one restart of the code package. </param>
+        /// <param name="servicePackageActivationId"> The activation id of a deployed service package. If ServicePackageActivationMode specified at the time of creating the service is 'SharedProcess' (or if it is not specified, in which case it defaults to 'SharedProcess'), then value of ServicePackageActivationId is always an empty string. </param>
+        /// <returns> A new <see cref="Models.RestartDeployedCodePackageContent"/> instance for mocking. </returns>
+        public static RestartDeployedCodePackageContent RestartDeployedCodePackageContent(string nodeName = null, string serviceManifestName = null, string codePackageName = null, string codePackageInstanceId = null, string servicePackageActivationId = null)
+        {
+            return new RestartDeployedCodePackageContent(
+                nodeName,
+                serviceManifestName,
+                codePackageName,
+                codePackageInstanceId,
+                servicePackageActivationId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -355,6 +373,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 instanceCount,
                 minInstanceCount,
                 minInstancePercentage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceRestartReplicaContent"/>. </summary>
+        /// <param name="partitionId"> The ID of the partition. </param>
+        /// <param name="replicaIds"> The IDs of the replicas to be restarted. </param>
+        /// <param name="restartKind"> The kind of restart to perform. </param>
+        /// <param name="forceRestart"> If true, the restart operation will be forced. Use this option with care, as it may cause data loss. </param>
+        /// <param name="timeoutInSeconds"> The server timeout for performing the operation in seconds. This timeout specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceRestartReplicaContent"/> instance for mocking. </returns>
+        public static ManagedServiceRestartReplicaContent ManagedServiceRestartReplicaContent(string partitionId = null, IEnumerable<long> replicaIds = null, ManagedServiceRestartKind restartKind = default, bool? forceRestart = null, long? timeoutInSeconds = null)
+        {
+            replicaIds ??= new List<long>();
+
+            return new ManagedServiceRestartReplicaContent(
+                partitionId,
+                replicaIds?.ToList(),
+                restartKind,
+                forceRestart,
+                timeoutInSeconds,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedClusterVersion"/>. </summary>
