@@ -1,6 +1,6 @@
 # Sample web search with agent in Azure.AI.Projects.OpenAI.
 
-In this example we will use the Agent to peform the web search in given location.
+In this example we will use the Agent to perform the web search in given location.
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
