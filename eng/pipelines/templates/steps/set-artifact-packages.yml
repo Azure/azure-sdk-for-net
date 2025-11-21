@@ -53,7 +53,7 @@ steps:
     condition: ne(variables['ProjectNames'], '')
 
   - ${{ if eq(parameters.Restore, true) }}:
-    - template: /eng/common/testproxy/test-proxy-tool.yml
+    - template: /eng/common/testproxy/test-proxy-standalone-tool.yml
       parameters:
         runProxy: false
 
@@ -66,33 +66,14 @@ steps:
         foreach ($proj in $changedProjects) {
           $assets = Join-Path (Join-Path "$(Build.SourcesDirectory)" $proj.DirectoryPath) "assets.json"
           if (Test-Path $assets) {
-            Write-Host "Restoring $assets"
-            if ($IsWindows) {
-              & "$(Build.BinariesDirectory)/test-proxy/test-proxy.exe" restore -a $assets
-            } else {
-              & "$(Build.BinariesDirectory)/test-proxy/test-proxy" restore -a $assets
-            }
+            Write-Host "Restoring: '& \"$(PROXY_EXE)\" restore -a $assets'"
+            & "$(PROXY_EXE)" restore -a $assets
           }
         }
       displayName: Restore Recordings
 
     - pwsh: |
-        if (Test-Path "$(Build.BinariesDirectory)/test-proxy/") {
-          if ($IsWindows) {
-            $proxyExe = Join-Path "$(Build.BinariesDirectory)" "test-proxy" "test-proxy.exe"
-            Write-Host "Setting TEST_PROXY_EXE_PATH to '$proxyExe'"
-            Write-Host "##vso[task.setvariable variable=TEST_PROXY_EXE_PATH]$proxyExe"
-          }
-          else {
-            $proxyExe = Join-Path "$(Build.BinariesDirectory)" "test-proxy" "test-proxy"
-            Write-Host "Setting TEST_PROXY_EXE_PATH to '$proxyExe'"
-            Write-Host "##vso[task.setvariable variable=TEST_PROXY_EXE_PATH]$proxyExe"
-          }
-        }
-        else {
-          Write-Error "Could not locate the global test-proxy tool within $(Build.BinariesDirectory)/test-proxy/"
-          exit 1
-        }
+        "##vso[task.setvariable variable=TEST_PROXY_EXE_PATH]$(PROXY_EXE)"
       displayName: Set TEST_PROXY_EXE_PATH
 
     - pwsh: |
