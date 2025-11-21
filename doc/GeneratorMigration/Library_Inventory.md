@@ -1,5 +1,15 @@
 # Azure SDK for .NET Libraries Inventory
 
+## Table of Contents
+
+- [Summary](#summary)
+- [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)
+- [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
+- [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
+- [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
+- [Libraries with No Generator](#libraries-with-no-generator)
+
+
 ## Summary
 
 - Total libraries: 395
@@ -18,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 16 / 169 (9.5%)
+**Migration Status**: 16 / 32 (50%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -155,7 +165,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 24 / 226 (10.6%)
+**Migration Status**: 24 / 66 (36.4%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |

@@ -67,30 +67,33 @@ If none of these TypeSpec indicators are found but there is evidence of code gen
 
 The inventory markdown file provides:
 
-1. Overall summary counts with breakdown by generator type
-2. Two main tables for libraries with TypeSpec (tsp-location.yaml):
+1. **Table of Contents**: Quick navigation links to all sections
+2. **Overall summary counts** with breakdown by generator type
+3. Two main tables for libraries with TypeSpec (tsp-location.yaml):
    - **Data Plane Libraries (DPG) - Migrated to New Emitter**: Client APIs using TypeSpec
      - Columns: Service, Library, New Emitter
-     - Includes migration status (e.g., "16 / 169 (9.5%)")
+     - Migration status shows: migrated / total TypeSpec libraries (e.g., "16 / 32 (50%)")
      - **Only includes libraries with tsp-location.yaml file**
      - Shows ✅ for libraries using new emitters, blank for old TypeSpec
    - **Management Plane Libraries (MPG) - Migrated to New Emitter**: Resource management APIs using TypeSpec
      - Columns: Service, Library, New Emitter
-     - Includes migration status (e.g., "24 / 226 (10.6%)")
+     - Migration status shows: migrated / total TypeSpec libraries (e.g., "24 / 66 (36.4%)")
      - **Only includes libraries with tsp-location.yaml file**
      - Shows ✅ for libraries using new emitters, blank for old TypeSpec
-3. Two separate tables for libraries still on Swagger:
+4. Two separate tables for libraries still on Swagger:
    - **Data Plane Libraries (DPG) - Still on Swagger**: Libraries not yet migrated to TypeSpec
      - Columns: Service, Library
    - **Management Plane Libraries (MPG) - Still on Swagger**: Libraries not yet migrated to TypeSpec
      - Columns: Service, Library
-4. Libraries with no generator (listed separately)
+5. Libraries with no generator (listed separately)
 
 The migration tables use ✅ emoji to indicate the generator type:
 - **New Emitter** column: ✅ for libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
 - **No checkmark**: Libraries using old TypeSpec (TSP-Old) with tsp-location.yaml but not yet migrated to new emitter
 
-**Important**: Migration tables only include libraries that have a `tsp-location.yaml` file. Libraries without this file (even if they have other TypeSpec indicators) are not included in the migration tracking tables.
+**Important**: 
+- Migration tables only include libraries that have a `tsp-location.yaml` file. Libraries without this file are not included in the migration tracking tables.
+- Migration status percentages are calculated as: (libraries with new emitter) / (total libraries with tsp-location.yaml in that table) × 100
 
 Libraries still on Swagger/Autorest are listed in separate "Still on Swagger" tables and are not included in the migration tables.
 

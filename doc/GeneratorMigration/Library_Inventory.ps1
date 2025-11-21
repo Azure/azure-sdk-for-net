@@ -178,17 +178,31 @@ function New-MarkdownReport {
     $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
     $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
-    # Calculate migration percentages
+    # Calculate TypeSpec library counts (only those with tsp-location.yaml)
+    $mgmtTypeSpecLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true }
+    $dataTypeSpecLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true }
+
+    # Calculate migration percentages (migrated / total TypeSpec libraries)
     $mgmtMigrated = $mgmtNewEmitter.Count
-    $mgmtTotal = $mgmtLibraries.Count
-    $mgmtPercentage = if ($mgmtTotal -gt 0) { [math]::Round(($mgmtMigrated / $mgmtTotal) * 100, 1) } else { 0 }
+    $mgmtTypeSpecTotal = $mgmtTypeSpecLibs.Count
+    $mgmtPercentage = if ($mgmtTypeSpecTotal -gt 0) { [math]::Round(($mgmtMigrated / $mgmtTypeSpecTotal) * 100, 1) } else { 0 }
     
     $dataMigrated = $dataNewEmitter.Count
-    $dataTotal = $dataLibraries.Count
-    $dataPercentage = if ($dataTotal -gt 0) { [math]::Round(($dataMigrated / $dataTotal) * 100, 1) } else { 0 }
+    $dataTypeSpecTotal = $dataTypeSpecLibs.Count
+    $dataPercentage = if ($dataTypeSpecTotal -gt 0) { [math]::Round(($dataMigrated / $dataTypeSpecTotal) * 100, 1) } else { 0 }
 
     $report = @()
     $report += "# Azure SDK for .NET Libraries Inventory`n"
+
+    # Table of Contents
+    $report += "## Table of Contents`n"
+    $report += "- [Summary](#summary)"
+    $report += "- [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)"
+    $report += "- [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)"
+    $report += "- [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)"
+    $report += "- [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)"
+    $report += "- [Libraries with No Generator](#libraries-with-no-generator)"
+    $report += "`n"
 
     $report += "## Summary`n"
     $report += "- Total libraries: $($Libraries.Count)"
@@ -206,7 +220,7 @@ function New-MarkdownReport {
     # Data Plane Libraries Table (migrated to new emitter) - only include libraries with tsp-location.yaml
     $report += "## Data Plane Libraries (DPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
-    $report += "**Migration Status**: $dataMigrated / $dataTotal ($dataPercentage%)`n"
+    $report += "**Migration Status**: $dataMigrated / $dataTypeSpecTotal ($dataPercentage%)`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
     # Only include libraries that have tsp-location.yaml
@@ -233,7 +247,7 @@ function New-MarkdownReport {
     # Management Plane Libraries Table (migrated to new emitter) - only include libraries with tsp-location.yaml
     $report += "## Management Plane Libraries (MPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
-    $report += "**Migration Status**: $mgmtMigrated / $mgmtTotal ($mgmtPercentage%)`n"
+    $report += "**Migration Status**: $mgmtMigrated / $mgmtTypeSpecTotal ($mgmtPercentage%)`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
     # Only include libraries that have tsp-location.yaml
