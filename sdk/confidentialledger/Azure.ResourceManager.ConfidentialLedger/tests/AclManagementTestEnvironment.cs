@@ -8,6 +8,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
     public class AclManagementTestEnvironment : TestEnvironment
     {
         public string TestLedgerNamePrefix => GetRecordedVariable("TEST-LEDGER-NAME-PREFIX");
-        public string TestUserObjectId => GetRecordedVariable("TEST-USER-OBJECT-ID");
+        public string TestUserObjectId => GetRecordedVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
     }
 }
