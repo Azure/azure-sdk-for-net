@@ -99,6 +99,14 @@ function Get-GeneratorType {
     return "No Generator"
 }
 
+function Test-HasTspLocation {
+    param([string]$Path)
+    
+    # Check if the library has a tsp-location.yaml file
+    $tspLocationFiles = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue
+    return ($tspLocationFiles.Count -gt 0)
+}
+
 function Get-SdkLibraries {
     param([string]$SdkRoot)
 
@@ -129,6 +137,7 @@ function Get-SdkLibraries {
             if ((Test-Path $srcPath) -or $csprojFiles) {
                 $libraryType = if (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
                 $generator = Get-GeneratorType $libraryDir.FullName
+                $hasTspLocation = Test-HasTspLocation $libraryDir.FullName
 
                 # Calculate relative path from parent of SDK root (to include 'sdk' prefix)
                 $repoRoot = Split-Path $SdkRoot -Parent
@@ -141,6 +150,7 @@ function Get-SdkLibraries {
                     path = $relativePath
                     type = $libraryType
                     generator = $generator
+                    hasTspLocation = $hasTspLocation
                 }
             }
         }
@@ -193,16 +203,16 @@ function New-MarkdownReport {
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
 
-    # Data Plane Libraries Table (migrated to new emitter) - exclude Swagger libraries
+    # Data Plane Libraries Table (migrated to new emitter) - only include libraries with tsp-location.yaml
     $report += "## Data Plane Libraries (DPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
     $report += "**Migration Status**: $dataMigrated / $dataTotal ($dataPercentage%)`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
-    # Only include libraries that are NOT using Swagger
-    $sortedDataLibs = $dataLibraries | Where-Object { $_.generator -ne "Swagger" } | Sort-Object service, library
+    # Only include libraries that have tsp-location.yaml
+    $sortedDataLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true } | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { '<span style="color:green">✓</span>' } else { "" }
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✅" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
     }
     $report += "`n"
@@ -220,16 +230,16 @@ function New-MarkdownReport {
         $report += "`n"
     }
 
-    # Management Plane Libraries Table (migrated to new emitter) - exclude Swagger libraries
+    # Management Plane Libraries Table (migrated to new emitter) - only include libraries with tsp-location.yaml
     $report += "## Management Plane Libraries (MPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
     $report += "**Migration Status**: $mgmtMigrated / $mgmtTotal ($mgmtPercentage%)`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
-    # Only include libraries that are NOT using Swagger
-    $sortedMgmtLibs = $mgmtLibraries | Where-Object { $_.generator -ne "Swagger" } | Sort-Object service, library
+    # Only include libraries that have tsp-location.yaml
+    $sortedMgmtLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true } | Sort-Object service, library
     foreach ($lib in $sortedMgmtLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { '<span style="color:green">✓</span>' } else { "" }
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✅" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
     }
     $report += "`n"

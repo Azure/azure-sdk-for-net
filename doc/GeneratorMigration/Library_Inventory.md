@@ -22,88 +22,38 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
-| agentserver | Azure.AI.AgentServer.AgentFramework |  |
-| agentserver | Azure.AI.AgentServer.Core |  |
 | ai | Azure.AI.Agents.Persistent |  |
-| ai | Azure.AI.Inference |  |
-| ai | Azure.AI.Projects | <span style="color:green">✓</span> |
-| ai | Azure.AI.VoiceLive | <span style="color:green">✓</span> |
+| ai | Azure.AI.Projects | ✅ |
+| ai | Azure.AI.VoiceLive | ✅ |
 | anomalydetector | Azure.AI.AnomalyDetector |  |
-| appconfiguration | Azure.Data.AppConfiguration | <span style="color:green">✓</span> |
+| appconfiguration | Azure.Data.AppConfiguration | ✅ |
 | batch | Azure.Compute.Batch |  |
-| cloudmachine | Azure.Projects |  |
-| cloudmachine | Azure.Projects.AI |  |
-| cloudmachine | Azure.Projects.AI.Foundry |  |
-| cloudmachine | Azure.Projects.Provisioning |  |
-| cloudmachine | Azure.Projects.Tsp |  |
-| cloudmachine | Azure.Projects.Web |  |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
-| communication | Azure.Communication.Common |  |
 | communication | Azure.Communication.JobRouter |  |
 | communication | Azure.Communication.Messages |  |
 | communication | Azure.Communication.ProgrammableConnectivity |  |
 | confidentialledger | Azure.Security.CodeTransparency |  |
 | contentsafety | Azure.AI.ContentSafety |  |
-| core | Azure.Core |  |
-| core | Azure.Core.Amqp |  |
-| core | Azure.Core.Experimental |  |
-| core | Azure.Core.Expressions.DataFactory |  |
 | devcenter | Azure.Developer.DevCenter |  |
-| documentintelligence | Azure.AI.DocumentIntelligence | <span style="color:green">✓</span> |
-| easm | Azure.Analytics.Defender.Easm | <span style="color:green">✓</span> |
-| eventgrid | Azure.Messaging.EventGrid |  |
-| eventgrid | Azure.Messaging.EventGrid.Namespaces | <span style="color:green">✓</span> |
-| eventgrid | Azure.Messaging.EventGrid.SystemEvents | <span style="color:green">✓</span> |
-| eventhub | Azure.Messaging.EventHubs |  |
-| eventhub | Azure.Messaging.EventHubs.Processor |  |
-| eventhub | Azure.Messaging.EventHubs.Shared |  |
-| extensions | Azure.Extensions.AspNetCore.Configuration.Secrets |  |
-| extensions | Azure.Extensions.AspNetCore.DataProtection.Blobs |  |
-| extensions | Azure.Extensions.AspNetCore.DataProtection.Keys |  |
-| face | Azure.AI.Vision.Face |  |
-| healthdataaiservices | Azure.Health.Deidentification | <span style="color:green">✓</span> |
-| healthinsights | Azure.Health.Insights.CancerProfiling |  |
-| healthinsights | Azure.Health.Insights.ClinicalMatching |  |
-| healthinsights | Azure.Health.Insights.RadiologyInsights |  |
-| identity | Azure.Identity |  |
-| identity | Azure.Identity.Broker |  |
-| keyvault | Azure.Security.KeyVault.Administration | <span style="color:green">✓</span> |
-| keyvault | Azure.Security.KeyVault.Certificates |  |
-| keyvault | Azure.Security.KeyVault.Keys |  |
-| keyvault | Azure.Security.KeyVault.Secrets |  |
-| keyvault | Azure.Security.KeyVault.Shared |  |
+| documentintelligence | Azure.AI.DocumentIntelligence | ✅ |
+| easm | Azure.Analytics.Defender.Easm | ✅ |
+| eventgrid | Azure.Messaging.EventGrid.Namespaces | ✅ |
+| eventgrid | Azure.Messaging.EventGrid.SystemEvents | ✅ |
+| healthdataaiservices | Azure.Health.Deidentification | ✅ |
+| keyvault | Azure.Security.KeyVault.Administration | ✅ |
 | loadtestservice | Azure.Developer.LoadTesting |  |
-| loadtestservice | Azure.Developer.Playwright |  |
-| loadtestservice | Azure.Developer.Playwright.MSTest |  |
-| loadtestservice | Azure.Developer.Playwright.NUnit |  |
-| maps | Azure.Maps.Common |  |
-| modelsrepository | Azure.IoT.ModelsRepository |  |
-| monitor | Azure.Monitor.Ingestion | <span style="color:green">✓</span> |
-| monitor | Azure.Monitor.OpenTelemetry.AspNetCore |  |
-| monitor | Azure.Monitor.Query.Logs | <span style="color:green">✓</span> |
-| monitor | Azure.Monitor.Query.Metrics | <span style="color:green">✓</span> |
+| monitor | Azure.Monitor.Ingestion | ✅ |
+| monitor | Azure.Monitor.Query.Logs | ✅ |
+| monitor | Azure.Monitor.Query.Metrics | ✅ |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation |  |
-| openai | Azure.AI.OpenAI | <span style="color:green">✓</span> |
-| openai | Azure.AI.OpenAI.Assistants |  |
-| provisioning | Azure.Provisioning.Deployment |  |
-| provisioning | Azure.Provisioning.Dns |  |
 | purview | Azure.Analytics.Purview.DataMap |  |
-| schemaregistry | Azure.Data.SchemaRegistry | <span style="color:green">✓</span> |
-| servicebus | Azure.Messaging.ServiceBus |  |
-| storage | Azure.Storage.Blobs.ChangeFeed |  |
-| storage | Azure.Storage.Common |  |
-| storage | Azure.Storage.DataMovement |  |
-| storage | Azure.Storage.DataMovement.Blobs |  |
-| storage | Azure.Storage.DataMovement.Files.Shares |  |
-| storage | Azure.Storage.Internal.Avro |  |
-| synapse | Azure.Analytics.Synapse.Shared |  |
+| schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | translation | Azure.AI.Translation.Document |  |
-| translation | Azure.AI.Translation.Text | <span style="color:green">✓</span> |
-| vision | Azure.AI.Vision.ImageAnalysis | <span style="color:green">✓</span> |
-| webpubsub | Azure.Messaging.WebPubSub.Client |  |
+| translation | Azure.AI.Translation.Text | ✅ |
+| vision | Azure.AI.Vision.ImageAnalysis | ✅ |
 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
@@ -209,51 +159,51 @@ Libraries that provide resource management APIs for Azure services and have been
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
-| agricultureplatform | Azure.ResourceManager.AgriculturePlatform | <span style="color:green">✓</span> |
-| arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | <span style="color:green">✓</span> |
+| agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
+| arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | avs | Azure.ResourceManager.Avs |  |
 | azurestackhci | Azure.ResourceManager.Hci.Vm |  |
 | carbon | Azure.ResourceManager.CarbonOptimization |  |
 | chaos | Azure.ResourceManager.Chaos |  |
-| cloudhealth | Azure.ResourceManager.CloudHealth | <span style="color:green">✓</span> |
+| cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet |  |
-| computelimit | Azure.ResourceManager.ComputeLimit | <span style="color:green">✓</span> |
-| computerecommender | Azure.ResourceManager.Compute.Recommender | <span style="color:green">✓</span> |
+| computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
+| computerecommender | Azure.ResourceManager.Compute.Recommender | ✅ |
 | computeschedule | Azure.ResourceManager.ComputeSchedule |  |
-| connectedcache | Azure.ResourceManager.ConnectedCache | <span style="color:green">✓</span> |
+| connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime |  |
-| databasewatcher | Azure.ResourceManager.DatabaseWatcher | <span style="color:green">✓</span> |
+| databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
 | databox | Azure.ResourceManager.DataBox |  |
-| dellstorage | Azure.ResourceManager.Dell.Storage | <span style="color:green">✓</span> |
-| dependencymap | Azure.ResourceManager.DependencyMap | <span style="color:green">✓</span> |
+| dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
+| dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices |  |
-| deviceregistry | Azure.ResourceManager.DeviceRegistry | <span style="color:green">✓</span> |
+| deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure |  |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations |  |
-| durabletask | Azure.ResourceManager.DurableTask | <span style="color:green">✓</span> |
+| durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric |  |
 | grafana | Azure.ResourceManager.Grafana |  |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules |  |
-| healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | <span style="color:green">✓</span> |
+| healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
-| hybridkubernetes | Azure.ResourceManager.Kubernetes | <span style="color:green">✓</span> |
+| hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
 | impactreporting | Azure.ResourceManager.ImpactReporting |  |
-| informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | <span style="color:green">✓</span> |
+| informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations |  |
-| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | <span style="color:green">✓</span> |
+| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster |  |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas |  |
 | mysql | Azure.ResourceManager.MySql |  |
 | neonpostgres | Azure.ResourceManager.NeonPostgres |  |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation |  |
 | oracle | Azure.ResourceManager.OracleDatabase |  |
-| paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | <span style="color:green">✓</span> |
-| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | <span style="color:green">✓</span> |
-| planetarycomputer | Azure.ResourceManager.PlanetaryComputer | <span style="color:green">✓</span> |
-| playwright | Azure.ResourceManager.Playwright | <span style="color:green">✓</span> |
-| portalservices | Azure.ResourceManager.PortalServicesCopilot | <span style="color:green">✓</span> |
+| paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
+| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
+| planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
+| playwright | Azure.ResourceManager.Playwright | ✅ |
+| portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
 | qumulo | Azure.ResourceManager.Qumulo |  |
 | quota | Azure.ResourceManager.Quota |  |
@@ -266,13 +216,13 @@ Libraries that provide resource management APIs for Azure services and have been
 | servicenetworking | Azure.ResourceManager.ServiceNetworking |  |
 | sitemanager | Azure.ResourceManager.SiteManager |  |
 | standbypool | Azure.ResourceManager.StandbyPool |  |
-| storageactions | Azure.ResourceManager.StorageActions | <span style="color:green">✓</span> |
-| storagediscovery | Azure.ResourceManager.StorageDiscovery | <span style="color:green">✓</span> |
+| storageactions | Azure.ResourceManager.StorageActions | ✅ |
+| storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
 | storagemover | Azure.ResourceManager.StorageMover |  |
 | terraform | Azure.ResourceManager.Terraform |  |
-| trustedsigning | Azure.ResourceManager.TrustedSigning | <span style="color:green">✓</span> |
+| trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
 | virtualenclaves | Azure.ResourceManager.VirtualEnclaves |  |
-| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | <span style="color:green">✓</span> |
+| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration |  |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance |  |
 
