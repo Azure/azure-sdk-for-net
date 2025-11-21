@@ -357,6 +357,12 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
+                    // Handle case where supportedModels might be an array instead of an object
+                    if (prop.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        // Skip deserialization if it's an array (service returns different format)
+                        continue;
+                    }
                     supportedModels = SupportedModels.DeserializeSupportedModels(prop.Value, options);
                     continue;
                 }
@@ -448,7 +454,18 @@ namespace Azure.AI.ContentUnderstanding
         internal static ContentAnalyzer FromLroResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContentAnalyzer(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+            JsonElement rootElement = document.RootElement;
+
+            // Check if the response has a "result" property, otherwise use the root element directly
+            if (rootElement.TryGetProperty("result", out JsonElement resultElement))
+            {
+                return DeserializeContentAnalyzer(resultElement, ModelSerializationExtensions.WireOptions);
+            }
+            else
+            {
+                // The response might be the ContentAnalyzer directly
+                return DeserializeContentAnalyzer(rootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

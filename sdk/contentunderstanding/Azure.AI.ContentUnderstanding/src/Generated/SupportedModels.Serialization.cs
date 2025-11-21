@@ -106,6 +106,11 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
+            // Handle case where the service returns an array instead of an object
+            if (element.ValueKind == JsonValueKind.Array)
+            {
+                return null;
+            }
             IDictionary<string, string> completion = default;
             IDictionary<string, string> embedding = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -113,6 +118,11 @@ namespace Azure.AI.ContentUnderstanding
             {
                 if (prop.NameEquals("completion"u8))
                 {
+                    // Handle case where completion might be an array instead of an object
+                    if (prop.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
@@ -130,6 +140,11 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("embedding"u8))
                 {
+                    // Handle case where embedding might be an array instead of an object
+                    if (prop.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
