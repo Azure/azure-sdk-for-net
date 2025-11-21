@@ -103,7 +103,10 @@ public class TestProxyProcess
         }
         else
         {
-            TryRestoreLocalTools();
+            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("TF_BUILD")))
+            {
+                TryRestoreLocalTools();
+            }
 
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
