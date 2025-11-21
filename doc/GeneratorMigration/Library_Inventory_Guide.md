@@ -68,24 +68,27 @@ If none of these TypeSpec indicators are found but there is evidence of code gen
 The inventory markdown file provides:
 
 1. Overall summary counts with breakdown by generator type
-2. Four main tables for migrated libraries:
-   - **Data Plane Libraries (DPG) - Migrated to New Emitter**: Client APIs migrated to new TypeSpec
-     - Columns: Service, Library, New Emitter, Autorest
+2. Two main tables for libraries migrated to new emitters (excludes Swagger libraries):
+   - **Data Plane Libraries (DPG) - Migrated to New Emitter**: Client APIs that have been migrated or are in process
+     - Columns: Service, Library, New Emitter
      - Includes migration status (e.g., "16 / 169 (9.5%)")
-   - **Management Plane Libraries (MPG) - Migrated to New Emitter**: Resource management APIs migrated to new TypeSpec
-     - Columns: Service, Library, New Emitter, Autorest
+     - Only shows libraries NOT on Swagger
+   - **Management Plane Libraries (MPG) - Migrated to New Emitter**: Resource management APIs that have been migrated or are in process
+     - Columns: Service, Library, New Emitter
      - Includes migration status (e.g., "24 / 226 (10.6%)")
-3. Two tables for libraries still on Swagger:
+     - Only shows libraries NOT on Swagger
+3. Two separate tables for libraries still on Swagger:
    - **Data Plane Libraries (DPG) - Still on Swagger**: Libraries not yet migrated
-     - Columns: Service, Library (no generator columns needed)
+     - Columns: Service, Library
    - **Management Plane Libraries (MPG) - Still on Swagger**: Libraries not yet migrated
-     - Columns: Service, Library (no generator columns needed)
+     - Columns: Service, Library
 4. Libraries with no generator (listed separately)
 
-The migrated tables use green checkmarks (🟢) to indicate the generator type:
-- **New Emitter** column: Libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
-- **Autorest** column: Libraries using Swagger/Autorest
-- **No checkmarks**: Libraries using old TypeSpec (TSP-Old) or no generator
+The migration tables use green checkmarks (✓) styled in green to indicate the generator type:
+- **New Emitter** column: Green ✓ for libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
+- **No checkmark**: Libraries using old TypeSpec (TSP-Old) or no generator
+
+Libraries still on Swagger/Autorest are listed in separate "Still on Swagger" tables and are not included in the migration tables.
 
 The migration status shows the number of libraries migrated to the new emitter out of the total, along with the percentage.
 

@@ -193,17 +193,17 @@ function New-MarkdownReport {
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
 
-    # Data Plane Libraries Table (migrated to new emitter)
+    # Data Plane Libraries Table (migrated to new emitter) - exclude Swagger libraries
     $report += "## Data Plane Libraries (DPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
     $report += "**Migration Status**: $dataMigrated / $dataTotal ($dataPercentage%)`n"
-    $report += "| Service | Library | New Emitter | Autorest |"
-    $report += "| ------- | ------- | ----------- | -------- |"
-    $sortedDataLibs = $dataLibraries | Sort-Object service, library
+    $report += "| Service | Library | New Emitter |"
+    $report += "| ------- | ------- | ----------- |"
+    # Only include libraries that are NOT using Swagger
+    $sortedDataLibs = $dataLibraries | Where-Object { $_.generator -ne "Swagger" } | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "🟢" } else { "" }
-        $autorest = if ($lib.generator -eq "Swagger") { "🟢" } else { "" }
-        $report += "| $($lib.service) | $($lib.library) | $newEmitter | $autorest |"
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { '<span style="color:green">✓</span>' } else { "" }
+        $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
     }
     $report += "`n"
 
@@ -220,17 +220,17 @@ function New-MarkdownReport {
         $report += "`n"
     }
 
-    # Management Plane Libraries Table (migrated to new emitter)
+    # Management Plane Libraries Table (migrated to new emitter) - exclude Swagger libraries
     $report += "## Management Plane Libraries (MPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
     $report += "**Migration Status**: $mgmtMigrated / $mgmtTotal ($mgmtPercentage%)`n"
-    $report += "| Service | Library | New Emitter | Autorest |"
-    $report += "| ------- | ------- | ----------- | -------- |"
-    $sortedMgmtLibs = $mgmtLibraries | Sort-Object service, library
+    $report += "| Service | Library | New Emitter |"
+    $report += "| ------- | ------- | ----------- |"
+    # Only include libraries that are NOT using Swagger
+    $sortedMgmtLibs = $mgmtLibraries | Where-Object { $_.generator -ne "Swagger" } | Sort-Object service, library
     foreach ($lib in $sortedMgmtLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "🟢" } else { "" }
-        $autorest = if ($lib.generator -eq "Swagger") { "🟢" } else { "" }
-        $report += "| $($lib.service) | $($lib.library) | $newEmitter | $autorest |"
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { '<span style="color:green">✓</span>' } else { "" }
+        $report += "| $($lib.service) | $($lib.library) | $newEmitter |"
     }
     $report += "`n"
 
