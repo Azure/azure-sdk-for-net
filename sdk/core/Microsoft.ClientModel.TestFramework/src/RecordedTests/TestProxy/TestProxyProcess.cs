@@ -103,10 +103,7 @@ public class TestProxyProcess
         }
         else
         {
-            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("TF_BUILD")))
-            {
-                TryRestoreLocalTools();
-            }
+            TryRestoreLocalTools();
 
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -253,6 +250,16 @@ public class TestProxyProcess
                     {
                         process.WaitForExit(30000);
                     }
+
+                    if (process == null || process.ExitCode != 0)
+                    {
+                        TestContext.Progress.WriteLine("dotnet tool restore failed.");
+
+                        TestContext.Progress.WriteLine("dotnet tool stdout:");
+                        TestContext.Progress.WriteLine(process?.StandardOutput.ReadToEnd());
+                        TestContext.Progress.WriteLine("dotnet tool stderr:");
+                        TestContext.Progress.WriteLine(process?.StandardError.ReadToEnd());
+                    }
                     break;
                 }
 
@@ -260,8 +267,9 @@ public class TestProxyProcess
                 currentDir = parentDir?.FullName;
             }
         }
-        catch
+        catch (Exception e)
         {
+            TestContext.Progress.WriteLine("Failed to restore local tools. Exception: " + e.Message + "\n" + e.StackTrace);
             // If restore fails, silently continue - the dotnet test-proxy command will handle it
         }
     }

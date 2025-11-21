@@ -53,7 +53,7 @@ steps:
     condition: ne(variables['ProjectNames'], '')
 
   - ${{ if eq(parameters.Restore, true) }}:
-    - template: /eng/common/testproxy/test-proxy-standalone-tool.yml
+    - template: /eng/common/testproxy/test-proxy-tool.yml
       parameters:
         runProxy: false
 
@@ -66,17 +66,12 @@ steps:
         foreach ($proj in $changedProjects) {
           $assets = Join-Path (Join-Path "$(Build.SourcesDirectory)" $proj.DirectoryPath) "assets.json"
           if (Test-Path $assets) {
-            Write-Host "Restoring: '& \"$(PROXY_EXE)\" restore -a $assets'"
-            & "$(PROXY_EXE)" restore -a $assets
+            Write-Host "Restoring $assets"
+            if ($IsWindows) {
+              & "$(Build.BinariesDirectory)/test-proxy/test-proxy.exe" restore -a $assets
+            } else {
+              & "$(Build.BinariesDirectory)/test-proxy/test-proxy" restore -a $assets
+            }
           }
         }
       displayName: Restore Recordings
-
-    - pwsh: |
-        "##vso[task.setvariable variable=TEST_PROXY_EXE_PATH]$(PROXY_EXE)"
-      displayName: Set TEST_PROXY_EXE_PATH
-
-    - pwsh: |
-        Write-Host $env:TEST_PROXY_EXE_PATH
-        & $env:TEST_PROXY_EXE_PATH --version
-      displayName: Verify Test Proxy Installation
