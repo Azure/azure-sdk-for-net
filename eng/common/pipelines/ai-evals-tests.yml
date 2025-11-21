@@ -70,7 +70,6 @@ jobs:
     
     - task: AzureCLI@2
       displayName: 'Run eval'
-      condition: and(succeeded(), ne(variables['Skip.Eval'], 'true'))
       inputs:
         azureSubscription: opensource-api-connection
         scriptType: 'bash'
