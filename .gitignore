@@ -182,6 +182,3 @@ tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp
-
-# Local-only files and temporary scripts (not committed to git)
-**/__local_only/

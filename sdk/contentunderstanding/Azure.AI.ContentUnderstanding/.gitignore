@@ -1,0 +1,6 @@
+# Local-only files and temporary scripts (not committed to git)
+__local_only/
+
+# User-specific configuration files
+samples/appsettings.json
+
