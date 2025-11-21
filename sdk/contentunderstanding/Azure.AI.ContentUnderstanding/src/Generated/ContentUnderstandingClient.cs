@@ -202,7 +202,7 @@ namespace Azure.AI.ContentUnderstanding
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
 
-            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments, default);
+            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), default);
             Operation<BinaryData> result = await AnalyzeAsync(waitUntil, analyzerId, spreadModel, stringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
         }
