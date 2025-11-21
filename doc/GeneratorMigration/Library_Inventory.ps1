@@ -187,37 +187,37 @@ function New-MarkdownReport {
     # Data Plane Libraries Table
     $report += "## Data Plane Libraries (DPG)`n"
     $report += "Libraries that provide client APIs for Azure services.`n"
-    $report += "| Service | Library | Path | New Emitter | Autorest |"
-    $report += "| ------- | ------- | ---- | ----------- | -------- |"
+    $report += "| Service | Library | New Emitter | Autorest |"
+    $report += "| ------- | ------- | ----------- | -------- |"
     $sortedDataLibs = $dataLibraries | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
         $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✓" } else { "" }
         $autorest = if ($lib.generator -eq "Swagger") { "✓" } else { "" }
-        $report += "| $($lib.service) | $($lib.library) | $($lib.path) | $newEmitter | $autorest |"
+        $report += "| $($lib.service) | $($lib.library) | $newEmitter | $autorest |"
     }
     $report += "`n"
 
     # Management Plane Libraries Table
     $report += "## Management Plane Libraries (MPG)`n"
     $report += "Libraries that provide resource management APIs for Azure services.`n"
-    $report += "| Service | Library | Path | New Emitter | Autorest |"
-    $report += "| ------- | ------- | ---- | ----------- | -------- |"
+    $report += "| Service | Library | New Emitter | Autorest |"
+    $report += "| ------- | ------- | ----------- | -------- |"
     $sortedMgmtLibs = $mgmtLibraries | Sort-Object service, library
     foreach ($lib in $sortedMgmtLibs) {
         $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✓" } else { "" }
         $autorest = if ($lib.generator -eq "Swagger") { "✓" } else { "" }
-        $report += "| $($lib.service) | $($lib.library) | $($lib.path) | $newEmitter | $autorest |"
+        $report += "| $($lib.service) | $($lib.library) | $newEmitter | $autorest |"
     }
     $report += "`n"
 
     # No Generator Libraries
     $report += "## Libraries with No Generator`n"
     $report += "Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: $($noGenerator.Count)`n"
-    $report += "| Service | Library | Path |"
-    $report += "| ------- | ------- | ---- |"
+    $report += "| Service | Library |"
+    $report += "| ------- | ------- |"
     $sortedLibs = $noGenerator | Sort-Object service, library
     foreach ($lib in $sortedLibs) {
-        $report += "| $($lib.service) | $($lib.library) | $($lib.path) |"
+        $report += "| $($lib.service) | $($lib.library) |"
     }
 
     return ($report -join "`n")

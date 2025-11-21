@@ -70,9 +70,9 @@ The inventory markdown file provides:
 1. Overall summary counts with breakdown by generator type
 2. Two main tables:
    - **Data Plane Libraries (DPG)**: Client APIs for Azure services
-     - Columns: Service, Library, Path, New Emitter, Autorest
+     - Columns: Service, Library, New Emitter, Autorest
    - **Management Plane Libraries (MPG)**: Resource management APIs for Azure services
-     - Columns: Service, Library, Path, New Emitter, Autorest
+     - Columns: Service, Library, New Emitter, Autorest
 3. Libraries with no generator (listed separately)
 
 Each table uses checkmarks (✓) to indicate the generator type:
