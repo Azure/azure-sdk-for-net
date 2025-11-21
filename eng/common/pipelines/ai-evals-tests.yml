@@ -77,14 +77,14 @@ jobs:
         workingDirectory: '${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}'
         inlineScript: |
           echo "Logged in to Azure"
-          echo "Running eval in project ${{ parameters.EvalProject }}"
+          echo "Running eval in project ${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}"
           dotnet test /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) --logger trx
       env:
         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
         DOTNET_MULTILEVEL_LOOKUP: 0
         AZURE_OPENAI_MODEL_DEPLOYMENT_NAME: ${{ parameters.Model }}
-        AZURE_OPENAI_ENDPOINT: $(Build.Repository.Name)/${{ parameters.OpenAIEndPoint }}
+        AZURE_OPENAI_ENDPOINT: ${{ parameters.OpenAIEndPoint }}
         REPOSITORY_NAME: $(Build.Repository.Name)
         COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)/.github/copilot-instructions.md
 
