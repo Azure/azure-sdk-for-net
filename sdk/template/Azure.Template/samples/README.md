@@ -5,14 +5,19 @@ languages:
 products:
 # Including relevant stubs from https://review.learn.microsoft.com/help/contribute/metadata-taxonomies#product
 - azure
-- microsoft-defender
 name: Azure.Template samples for .NET
 description: Samples for the Azure.Template client library.
 ---
 
 # Azure.Template Samples
 
-These code samples show common scenarios with the Azure Template client library.
+This is a template directory for Azure SDK samples generated from TypeSpec.
 
-|[Sample1_HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs) |Get secrets synchronously.|
-|[Sample1_HelloWorld_Async](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorldAsync.cs)] |Get secrets asynchronously.|
+Replace this content with samples specific to your generated client library. Common scenarios to document include:
+
+- Basic client initialization and authentication
+- Common API operations
+- Error handling patterns
+- Advanced configuration options
+
+Samples should be added to the `tests/Samples/` directory and referenced here.
