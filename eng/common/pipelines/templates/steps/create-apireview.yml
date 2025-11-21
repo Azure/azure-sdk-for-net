@@ -41,7 +41,7 @@ steps:
       inputs:
         filePath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
         arguments: >
-          -PackageInfoFiles ('${{ convertToJson(parameters.PackageInfoFiles) }}' | ConvertFrom-Json -NoEnumerate)
+          -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
           -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
           -ArtifactPath '${{parameters.ArtifactPath}}'
           -ArtifactName ${{ parameters.ArtifactName }}
