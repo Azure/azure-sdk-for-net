@@ -136,7 +136,7 @@ namespace Azure.Identity.Tests
                 TenantId = TenantId,
                 ClientId = ClientId,
                 TokenFilePath = tokenFilePath,
-                EnableAzureProxy = true,
+                IsAzureProxyEnabled = true,
                 MsalClient = mockConfidentialMsalClient,
                 Pipeline = CredentialPipeline.GetInstance(null)
             };
@@ -157,7 +157,7 @@ namespace Azure.Identity.Tests
                 TenantId = TenantId,
                 ClientId = ClientId,
                 TokenFilePath = tokenFilePath,
-                EnableAzureProxy = true,
+                IsAzureProxyEnabled = true,
                 MsalClient = mockConfidentialMsalClient,
                 Pipeline = CredentialPipeline.GetInstance(null)
             };
@@ -198,7 +198,7 @@ namespace Azure.Identity.Tests
                 TenantId = TenantId,
                 ClientId = ClientId,
                 TokenFilePath = tokenFilePath,
-                EnableAzureProxy = true,
+                IsAzureProxyEnabled = true,
                 MsalClient = mockConfidentialMsalClient,
                 Pipeline = CredentialPipeline.GetInstance(null)
             };
@@ -226,7 +226,7 @@ namespace Azure.Identity.Tests
                 TenantId = TenantId,
                 ClientId = ClientId,
                 TokenFilePath = tokenFilePath,
-                EnableAzureProxy = true,
+                IsAzureProxyEnabled = true,
                 MsalClient = mockConfidentialMsalClient,
                 Pipeline = CredentialPipeline.GetInstance(null)
             };
