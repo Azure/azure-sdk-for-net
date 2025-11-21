@@ -1,0 +1,5 @@
+{
+  "AZURE_CONTENT_UNDERSTANDING_ENDPOINT": "https://your-resource-name.cognitiveservices.azure.com/",
+  "AZURE_CONTENT_UNDERSTANDING_KEY": "your-api-key-here-or-leave-empty-for-DefaultAzureCredential"
+}
+
