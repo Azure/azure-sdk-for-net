@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- TODO: Revert after Azure.Core ships
+      <PackageReference Include="Azure.Core" /> -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
