@@ -251,18 +251,6 @@ public class TestProxyProcess
         }
     }
 
-    private static string? GetTestProxyPath()
-    {
-        // Look for environment variable override
-        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
-        if (!string.IsNullOrEmpty(envPath))
-        {
-            return envPath;
-        }
-
-        return null;
-    }
-
     internal static bool TryParsePort(string? output, string scheme, out int? port)
     {
         if (output == null)
@@ -284,24 +272,6 @@ public class TestProxyProcess
 
         port = null;
         return false;
-    }
-
-    internal static string TryGetDotnetExePath()
-    {
-        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
-        var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
-        if (!HasDotNetExe(installDir))
-        {
-            installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
-        }
-
-        if (installDir == null)
-        {
-            throw new InvalidOperationException("DOTNET install directory was not found");
-        }
-
-        bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
-        return Path.Combine(installDir, dotNetExeName);
     }
 
     internal static void TryRestoreLocalTools()
@@ -359,5 +329,35 @@ public class TestProxyProcess
         {
             TestContext.Progress.WriteLine($"Error trying to run dotnet tool restore: {ex.Message}");
         }
+    }
+
+    private static string? GetTestProxyPath()
+    {
+        // Look for environment variable override
+        var envPath = Environment.GetEnvironmentVariable("TEST_PROXY_EXE_PATH");
+        if (!string.IsNullOrEmpty(envPath))
+        {
+            return envPath;
+        }
+
+        return null;
+    }
+
+    private static string TryGetDotnetExePath()
+    {
+        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
+        var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
+        if (!HasDotNetExe(installDir))
+        {
+            installDir = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator).FirstOrDefault(HasDotNetExe);
+        }
+
+        if (installDir == null)
+        {
+            throw new InvalidOperationException("DOTNET install directory was not found");
+        }
+
+        bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
+        return Path.Combine(installDir, dotNetExeName);
     }
 }

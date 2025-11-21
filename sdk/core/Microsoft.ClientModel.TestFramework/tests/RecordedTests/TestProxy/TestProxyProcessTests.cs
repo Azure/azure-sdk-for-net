@@ -11,24 +11,6 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 public class TestProxyProcessTests
 {
     [Test]
-    public void ConstructorFindsDotNetUsingDotnetInstallDir()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorFindsDotNetUsingPathEnvironmentVariable()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorThrowsWhenDotNetNotFound()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
     public void ConstructorUsesDebugModeEnvironmentVariable()
     {
         // and sets proxy port accordingly
@@ -115,7 +97,7 @@ public class TestProxyProcessTests
     [Test]
     public void TryRestoreLocalToolsFindsConfigFile()
     {
-        //throw new NotImplementedException();
+        TestProxyProcess.TryRestoreLocalTools();
     }
 
     [Test]
@@ -139,7 +121,6 @@ public class TestProxyProcessTests
     [Test]
     public void StartStartsNewProcessWhenNoneExists()
     {
-        //throw new NotImplementedException();
     }
 
     [Test]
