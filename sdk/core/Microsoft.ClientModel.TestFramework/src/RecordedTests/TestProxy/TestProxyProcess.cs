@@ -31,7 +31,7 @@ public class TestProxyProcess
     private static readonly bool s_enableDebugProxyLogging;
 
     internal virtual TestProxyAdminClient AdminClient { get; }
-    internal virtual TestProxyClient ProxyClient { get; } 
+    internal virtual TestProxyClient ProxyClient { get; }
 
     /// <summary>
     /// The IP address used for the test proxy. Uses 127.0.0.1 instead of localhost to avoid SSL callback slowness.

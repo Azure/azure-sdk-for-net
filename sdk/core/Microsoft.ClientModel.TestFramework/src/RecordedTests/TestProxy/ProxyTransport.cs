@@ -43,13 +43,21 @@ public class ProxyTransport : PipelineTransport
         bool useFiddler = TestEnvironment.EnableFiddler;
         string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
         _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxyProcess.IpAddress;
-        var handler = new HttpClientHandler
+
+        if (innerTransport is HttpClientPipelineTransport httpClientTransport)
         {
-            ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
-            AllowAutoRedirect = false,
-            UseCookies = false
-        };
-        _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+            _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
+        }
+        else // override
+        {
+            _innerTransport = innerTransport;
+        }
     }
 
     /// <inheritdoc/>

@@ -17,6 +17,10 @@ public class MapsClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
+    public MapsClient()
+    {
+    }
+
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions options = default)
     {
         if (endpoint is null)

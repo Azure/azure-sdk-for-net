@@ -23,7 +23,7 @@ public class CountryRegion : IJsonModel<CountryRegion>
             throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(CountryRegion)}'");
         }
 
-        string? isoCode = default;
+        string isoCode = default;
 
         foreach (JsonProperty property in element.EnumerateObject())
         {

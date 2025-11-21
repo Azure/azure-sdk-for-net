@@ -27,8 +27,8 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
             throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(IPAddressCountryPair)}'");
         }
 
-        CountryRegion? countryRegion = default;
-        IPAddress? ipAddress = default;
+        CountryRegion countryRegion = default;
+        IPAddress ipAddress = default;
 
         foreach (JsonProperty property in element.EnumerateObject())
         {
