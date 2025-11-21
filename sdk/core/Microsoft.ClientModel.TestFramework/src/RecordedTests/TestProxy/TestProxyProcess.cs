@@ -98,8 +98,8 @@ public class TestProxyProcess
         if (proxyPath is not null)
         {
             testProxyProcessInfo = new ProcessStartInfo(
-                s_dotNetExe,
-                $"\"{proxyPath}\" start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
+                proxyPath,
+                $"start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
         }
         else
         {
