@@ -108,7 +108,7 @@ $env:AZURE_CONTENT_UNDERSTANDING_KEY="your-api-key-here"  # Optional
 | [CreateAnalyzer](./CreateAnalyzer) | Create a custom analyzer with field schema and use it | Custom analyzer creation, field schema definition, LRO operations, using custom analyzers |
 | [UpdateAnalyzer](./UpdateAnalyzer) | Update analyzer properties (description and tags) | Analyzer updates, PATCH operations, tag management |
 | [DeleteAnalyzer](./DeleteAnalyzer) | Delete a custom analyzer | Analyzer lifecycle management, cleanup operations |
-| [GetResultFile](./GetResultFile) | Get result files (keyframes) from video analysis | Video analysis, keyframe extraction, GetResultFile API, operation ID handling |
+| [GetResultFile](./GetResultFile) | Get result files (keyframes) from video analysis | Video analysis, keyframe extraction, GetResultFile API, operation ID handling, LRO polling |
 | [AnalyzeBinaryRawJson](./AnalyzeBinaryRawJson) | Analyze a PDF file and save raw JSON response | Binary file upload, protocol method usage, raw JSON response access |
 
 ## Running a Sample
