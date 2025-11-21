@@ -253,12 +253,12 @@ public class TestProxyProcess
 
                     if (process == null || process.ExitCode != 0)
                     {
-                        TestContext.Progress.WriteLine("dotnet tool restore failed.");
+                        Console.WriteLine("dotnet tool restore failed.");
 
-                        TestContext.Progress.WriteLine("dotnet tool stdout:");
-                        TestContext.Progress.WriteLine(process?.StandardOutput.ReadToEnd());
-                        TestContext.Progress.WriteLine("dotnet tool stderr:");
-                        TestContext.Progress.WriteLine(process?.StandardError.ReadToEnd());
+                        Console.WriteLine("dotnet tool stdout:");
+                        Console.WriteLine(process?.StandardOutput.ReadToEnd());
+                        Console.WriteLine("dotnet tool stderr:");
+                        Console.WriteLine(process?.StandardError.ReadToEnd());
                     }
                     break;
                 }
@@ -269,7 +269,7 @@ public class TestProxyProcess
         }
         catch (Exception e)
         {
-            TestContext.Progress.WriteLine("Failed to restore local tools. Exception: " + e.Message + "\n" + e.StackTrace);
+            Console.WriteLine("Failed to restore local tools. Exception: " + e.Message + "\n" + e.StackTrace);
             // If restore fails, silently continue - the dotnet test-proxy command will handle it
         }
     }
