@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- Approved override to LtsTargetFramework -->
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
-
+    <!-- TODO: Double-check the need for an override after Ignite -->
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <PackageTags>Azure.AI.AgentServer.Core</PackageTags>
   </PropertyGroup>
 

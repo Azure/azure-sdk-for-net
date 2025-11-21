@@ -21,7 +21,7 @@
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
@@ -105,19 +105,6 @@
 
   </ItemGroup>
 
-  <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-    <PackageReference Remove="System.Buffers" />
-    <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Remove="System.Memory" />
-    <PackageReference Remove="System.Net.Http" />
-    <PackageReference Remove="System.Numerics.Vectors" />
-    <PackageReference Remove="System.Text.Encodings.Web" />
-    <PackageReference Remove="System.Text.Json" />
-    <PackageReference Remove="System.Threading.Channels" />
-    <PackageReference Remove="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
@@ -156,12 +143,46 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
+  <!-- Import default references based on project type (this implicitly adds package references) -->
   <PropertyGroup>
     <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
     <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
     <DefaultReferenceTargets Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">AzSdk.test.reference.targets</DefaultReferenceTargets>
+  </PropertyGroup>
 
-    <!-- Disable running of tests for test helper libraries -->
+  <!-- Remove packages built into the .NET 6+ runtime -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+    <PackageReference Remove="System.Buffers" />
+    <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
+    <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Numerics.Vectors" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
+    <PackageReference Remove="System.Text.Json" />
+    <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <!-- Remove packages built into the .NET 10+ runtime -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+    <PackageReference Remove="Microsoft.CSharp" />
+    <PackageReference Remove="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Remove="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Remove="Microsoft.Extensions.Hosting" />
+    <PackageReference Remove="Microsoft.Extensions.Http" />
+    <PackageReference Remove="Microsoft.Extensions.Logging.Configuration" />
+    <PackageReference Remove="System.Formats.Asn1" />
+    <PackageReference Remove="System.Linq.Async" />
+    <PackageReference Remove="System.IO.Compression" />
+    <PackageReference Remove="System.Net.WebSockets.Client" />
+    <PackageReference Remove="System.Reflection.Emit" />
+    <PackageReference Remove="System.Runtime.InteropServices" />
+    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
+    <PackageReference Remove="System.ValueTuple" />
+  </ItemGroup>
+
+  <!-- Disable running of tests for test helper libraries -->
+  <PropertyGroup>
     <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 

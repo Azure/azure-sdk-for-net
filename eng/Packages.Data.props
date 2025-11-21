@@ -377,8 +377,13 @@
     <PackageReference Update="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageReference Update="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
-    <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.*" />
+    <PackageReference Update="Microsoft.AspNetCore" Version="2.3.0" />
+
+    <!-- The AspNetCore.Mvc.Testing package has a hard association on a specific target framework -->
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0"/>
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.11" Condition="'$(TargetFramework)' == 'net9.0'"/>
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.22" Condition="'$(TargetFramework)' == 'net8.0'"/>
+
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
