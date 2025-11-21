@@ -109,7 +109,7 @@ As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token
 
 ## Identity binding mode (WorkloadIdentityCredential)
 
-`WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `IsAzureKubernetesTokenProxyEnabled ` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
+`WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `EnableAzureProxy` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
 
 **Note:** This feature is only available when using `WorkloadIdentityCredential` directly. It is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
 
@@ -118,7 +118,7 @@ As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token
 ```C# Snippet:WorkloadIdentityCredentialWithIdentityBinding
 var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
 {
-    IsAzureKubernetesTokenProxyEnabled = true  // Enable identity binding mode
+    EnableAzureProxy = true  // Enable identity binding mode
 });
 ```
 
@@ -142,7 +142,7 @@ If you're currently using `ManagedIdentityCredential` for workload identity in A
 // After (with identity binding support):
 var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
 {
-    IsAzureKubernetesTokenProxyEnabled = true
+    EnableAzureProxy = true
 });
 ```
 
