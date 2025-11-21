@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch
         public string Id { get; }
         /// <summary> The URL of the Compute Node. </summary>
         public Uri Uri { get; }
-        /// <summary> The current state of the Compute Node. The Spot/Low-priority Compute Node has been preempted. Tasks which were running on the Compute Node when it was preempted will be rescheduled when another Compute Node becomes available. </summary>
+        /// <summary> The current state of the Compute Node.</summary>
         public BatchNodeState State { get; }
         /// <summary> Whether the Compute Node is available for Task scheduling. </summary>
         public SchedulingState? SchedulingState { get; }
