@@ -75,3 +75,20 @@ steps:
           }
         }
       displayName: Restore Recordings
+
+    - pwsh: |
+        if (Test-Path "$(Build.BinariesDirectory)/test-proxy/") {
+          if ($IsWindows) {
+            Write-Host "Setting TEST_PROXY_EXE_PATH to '$(Build.BinariesDirectory)/test-proxy/test-proxy.exe'"
+            Write-Host "##vso[task.setvariable variable=TEST_PROXY_EXE_PATH]$(Build.BinariesDirectory)/test-proxy/test-proxy.exe"
+          }
+          else {
+            Write-Host "Setting TEST_PROXY_EXE_PATH to '$(Build.BinariesDirectory)/test-proxy/test-proxy'"
+            Write-Host "##vso[task.setvariable variable=TEST_PROXY_EXE_PATH]$(Build.BinariesDirectory)/test-proxy/test-proxy"
+          }
+        }
+        else {
+          Write-Error "Could not locate the global test-proxy tool within $(Build.BinariesDirectory)/test-proxy/"
+          exit 1
+        }
+      displayName: Set TEST_PROXY_EXE_PATH
