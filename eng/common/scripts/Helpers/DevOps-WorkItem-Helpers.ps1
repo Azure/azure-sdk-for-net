@@ -268,6 +268,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "Custom.Generated"
   $fields += "Custom.RoadmapState"
   $fields += "Microsoft.VSTS.Common.StateChangeDate"
+  $fields += "Custom.SpecProjectPath"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
@@ -533,7 +534,10 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $fields += "`"PackageVersionMajorMinor=${verMajorMinor}`""
   $fields += "`"ServiceName=${serviceName}`""
   $fields += "`"PackageRepoPath=${pkgRepoPath}`""
-  $fields += "`"SpecProjectPath=${specProjectPath}`""
+
+  if ($specProjectPath) {
+    $fields += "`"Custom.SpecProjectPath=${specProjectPath}`""
+  }
 
   if ($extraFields) {
     $fields += $extraFields
@@ -552,7 +556,6 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     if ($pkgRepoPath -ne $existingItem.fields["Custom.PackageRepoPath"]) { $changedField = "Custom.PackageRepoPath" }
     if ($specProjectPath -ne $existingItem.fields["Custom.SpecProjectPath"]) { $changedField = "Custom.SpecProjectPath" }
     if ($serviceName -ne $existingItem.fields["Custom.ServiceName"]) { $changedField = "Custom.ServiceName" }
-    if ($title -ne $existingItem.fields["System.Title"]) { $changedField = "System.Title" }
 
     if ($changedField) {
       Write-Host "At least field $changedField ($($existingItem.fields[$changedField])) changed so updating."
@@ -1335,9 +1338,16 @@ function Update-DevOpsReleaseWorkItem {
   }
   $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions
 
-  if ($workItem.fields."Custom.SpecProjectPath" -ne $package.SpecProjectPath) {
-    Write-Host "Updating SpecProjectPath for work item $($workItem.id) to $($package.SpecProjectPath)"
-    UpdateWorkItem -id $workItem.id -fields "`"Custom.SpecProjectPath=$($package.SpecProjectPath)`""
+
+
+  if ((!$workItem.fields.ContainsKey('Custom.SpecProjectPath') -and $packageInfo.SpecProjectPath) -or
+      ($workItem.fields.ContainsKey('Custom.SpecProjectPath') -and ($workItem.fields['Custom.SpecProjectPath'] -ne $packageInfo.SpecProjectPath))
+  ) {
+    Write-Host "Updating SpecProjectPath to '$($packageInfo.SpecProjectPath)' for work item [$($workItem.id)]"
+    UpdateWorkItem `
+      -id $workItem.id `
+      -fields "`"Custom.SpecProjectPath=$($packageInfo.SpecProjectPath)`"" `
+      -outputCommand $false
   }
 
   Write-Host "Release tracking item is at https://dev.azure.com/azure-sdk/Release/_workitems/edit/$($updatedWI.id)/"
