@@ -69,6 +69,34 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
 
+        [Test]
+        public void WithPageSizeParameter()
+        {
+            CreatePagingOperationWithPageSize();
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
+        public void WithPageSizeParameterAsync()
+        {
+            CreatePagingOperationWithPageSize();
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
         private static void CreatePagingOperation()
         {
             var inputModel = InputFactory.Model("cat", properties:
@@ -83,6 +111,27 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                     "page",
                     properties: [InputFactory.Property("cats", InputFactory.Array(inputModel))]));
             var operation = InputFactory.Operation("getCats", parameters: [parameter], responses: [response]);
+            var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
+            var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
+
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
+        }
+
+        private static void CreatePagingOperationWithPageSize()
+        {
+            var inputModel = InputFactory.Model("cat", properties:
+            [
+                InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
+            ]);
+            var animalKindParameter = InputFactory.QueryParameter("animalKind", InputPrimitiveType.String, isRequired: true);
+            var pageSizeParameter = InputFactory.QueryParameter("pageSize", InputPrimitiveType.Int32, isRequired: false);
+            var pagingMetadata = InputFactory.PagingMetadata(["cats"], null, null, ["pageSize"]);
+            var response = InputFactory.OperationResponse(
+                [200],
+                InputFactory.Model(
+                    "page",
+                    properties: [InputFactory.Property("cats", InputFactory.Array(inputModel))]));
+            var operation = InputFactory.Operation("getCats", parameters: [animalKindParameter, pageSizeParameter], responses: [response]);
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
 

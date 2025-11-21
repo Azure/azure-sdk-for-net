@@ -533,6 +533,19 @@ namespace Azure.Generator.Tests.Common
         }
 
         /// <summary>
+        /// Construct paging metadata with page size parameter segments
+        /// </summary>
+        /// <param name="itemPropertySegments"></param>
+        /// <param name="nextLink"></param>
+        /// <param name="continuationToken"></param>
+        /// <param name="pageSizeParameterSegments"></param>
+        /// <returns></returns>
+        public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken, IReadOnlyList<string> pageSizeParameterSegments)
+        {
+            return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken, pageSizeParameterSegments);
+        }
+
+        /// <summary>
         /// Construct paging service method
         /// </summary>
         /// <param name="name"></param>

@@ -224,6 +224,29 @@ namespace Azure.Generator.Providers
             return new MethodProvider(signature, body, this);
         }
 
+        private bool IsPageSizeParameter(FieldProvider field)
+        {
+            // Check if this field corresponds to the page size parameter based on PageSizeParameterSegments
+            if (_paging.PageSizeParameterSegments == null || _paging.PageSizeParameterSegments.Count == 0)
+            {
+                return false;
+            }
+
+            // Field names have underscores prefix (e.g., "_pageSize"), but segments don't (e.g., "pageSize")
+            // Remove the underscore prefix from field name for comparison
+            var fieldNameWithoutUnderscore = field.Name.TrimStart('_');
+
+            // For simple cases, the first segment is the parameter name
+            return _paging.PageSizeParameterSegments.Count == 1 &&
+                   fieldNameWithoutUnderscore.Equals(_paging.PageSizeParameterSegments[0], StringComparison.OrdinalIgnoreCase);
+        }
+
+        private ValueExpression GetFieldValueOrPageSizeHint(FieldProvider field)
+        {
+            // If this field is the page size parameter, use the pageSizeHint; otherwise use the field's value
+            return IsPageSizeParameter(field) ? PageSizeHintParameter : field.AsValueExpression;
+        }
+
         private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)
         {
             var createNextLinkRequestMethodName =
@@ -232,22 +255,36 @@ namespace Azure.Generator.Providers
                 nextPageUri.NotEqual(Null),
                 ClientField.Invoke(
                     createNextLinkRequestMethodName,
-                    [nextPageUri, .. RequestFields.Select(f => f.AsValueExpression)]),
+                    [nextPageUri, .. RequestFields.Select(f => GetFieldValueOrPageSizeHint(f))]),
                 ClientField.Invoke(
                     CreateRequestMethodName,
-                    [.. RequestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
+                    [.. RequestFields.Select(f => GetFieldValueOrPageSizeHint(f))])).As<HttpMessage>();
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
-            var arguments = RequestFields.Select(f => f.Name.Equals(NextTokenField?.Name) ? continuationToken : f.AsValueExpression);
+            var arguments = RequestFields.Select(f =>
+            {
+                if (f.Name.Equals(NextTokenField?.Name))
+                {
+                    return continuationToken;
+                }
+                else if (IsPageSizeParameter(f))
+                {
+                    return PageSizeHintParameter;
+                }
+                else
+                {
+                    return f.AsValueExpression;
+                }
+            });
 
             return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
         {
-            ValueExpression[] arguments = [.. RequestFields.Select(f => f.AsValueExpression)];
+            ValueExpression[] arguments = [.. RequestFields.Select(f => GetFieldValueOrPageSizeHint(f))];
 
             return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }
