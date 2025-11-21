@@ -35,7 +35,7 @@ namespace Azure.Developer.LoadTesting
 
             options ??= new LoadTestingClientOptions();
 
-            _endpoint = new Uri($"https://{endpoint}");
+            _endpoint = endpoint;
             _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
