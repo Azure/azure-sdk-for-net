@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
@@ -37,6 +38,19 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ChaosExperimentRunStepStatus))]
     [ModelReaderWriterBuildable(typeof(ChaosExperimentStep))]
     [ModelReaderWriterBuildable(typeof(ChaosKeyValuePair))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ChaosPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ChaosScenarioConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(ChaosScenarioConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosScenarioData))]
+    [ModelReaderWriterBuildable(typeof(ChaosScenarioResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosScenarioRunData))]
+    [ModelReaderWriterBuildable(typeof(ChaosScenarioRunResource))]
     [ModelReaderWriterBuildable(typeof(ChaosTargetData))]
     [ModelReaderWriterBuildable(typeof(ChaosTargetFilter))]
     [ModelReaderWriterBuildable(typeof(ChaosTargetListSelector))]
@@ -48,6 +62,11 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ChaosTargetSelector))]
     [ModelReaderWriterBuildable(typeof(ChaosTargetSimpleFilter))]
     [ModelReaderWriterBuildable(typeof(ChaosTargetSimpleFilterParameters))]
+    [ModelReaderWriterBuildable(typeof(ChaosWorkspaceData))]
+    [ModelReaderWriterBuildable(typeof(ChaosWorkspacePatch))]
+    [ModelReaderWriterBuildable(typeof(ChaosWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(CustomerDataStorageProperties))]
+    [ModelReaderWriterBuildable(typeof(EntraIdentity))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsError))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetails))]
@@ -55,7 +74,25 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionListResult))]
     [ModelReaderWriterBuildable(typeof(ExperimentListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(PermissionError))]
+    [ModelReaderWriterBuildable(typeof(PrivateAccessData))]
+    [ModelReaderWriterBuildable(typeof(PrivateAccessListResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateAccessPatch))]
+    [ModelReaderWriterBuildable(typeof(PrivateAccessProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateAccessResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(Recommendation))]
+    [ModelReaderWriterBuildable(typeof(ResourceStateError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ScenarioConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(ScenarioConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(ScenarioErrors))]
+    [ModelReaderWriterBuildable(typeof(ScenarioListResult))]
+    [ModelReaderWriterBuildable(typeof(ScenarioProperties))]
+    [ModelReaderWriterBuildable(typeof(ScenarioRunListResult))]
+    [ModelReaderWriterBuildable(typeof(ScenarioRunProperties))]
+    [ModelReaderWriterBuildable(typeof(ScenarioRunSummaryAction))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TargetTypeListResult))]
@@ -63,6 +100,11 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetFilter))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetSelector))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(ValidationData))]
+    [ModelReaderWriterBuildable(typeof(ValidationProperties))]
+    [ModelReaderWriterBuildable(typeof(ValidationResource))]
+    [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
+    [ModelReaderWriterBuildable(typeof(WorkspaceProperties))]
     public partial class AzureResourceManagerChaosContext : ModelReaderWriterContext
     {
     }

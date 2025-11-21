@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
@@ -54,6 +55,11 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -84,6 +90,7 @@ namespace Azure.ResourceManager.Chaos
             string status = default;
             DateTimeOffset? startedAt = default;
             DateTimeOffset? stoppedAt = default;
+            ChaosProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,6 +151,15 @@ namespace Azure.ResourceManager.Chaos
                             stoppedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ChaosProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -161,6 +177,7 @@ namespace Azure.ResourceManager.Chaos
                 status,
                 startedAt,
                 stoppedAt,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

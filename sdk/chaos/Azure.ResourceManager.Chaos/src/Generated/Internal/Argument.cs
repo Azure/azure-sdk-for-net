@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ChaosManagementClient
+namespace Azure.ResourceManager.Chaos
 {
     internal static class Argument
     {
