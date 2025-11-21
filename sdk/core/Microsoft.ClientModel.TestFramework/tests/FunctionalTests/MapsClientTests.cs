@@ -47,7 +47,7 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
         _transport.ExpectSyncPipeline = !IsAsync;
     }
 
-    public MapsClientTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+    public MapsClientTests(bool isAsync) : base(isAsync)
     {
     }
 
