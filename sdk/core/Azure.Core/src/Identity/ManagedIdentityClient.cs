@@ -66,10 +66,9 @@ namespace Azure.Identity
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             AuthenticationResult result;
-
-#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Deprecated code
             MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
-#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0618 // Deprecated code
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
