@@ -105,7 +105,7 @@ $env:AZURE_CONTENT_UNDERSTANDING_KEY="your-api-key-here"  # Optional
 | [AnalyzeUrl](./AnalyzeUrl) | Analyze a document from a URL | Document analysis from remote URL, markdown extraction, table and page information |
 | [AnalyzeBinary](./AnalyzeBinary) | Analyze a PDF file from disk | Binary file input, object model usage, document properties |
 | [AnalyzeUrlPrebuiltInvoice](./AnalyzeUrlPrebuiltInvoice) | Extract invoice fields from a URL using prebuilt-invoice | Structured field extraction, nested objects, currency fields, array handling |
-| [CreateOrReplaceAnalyzer](./CreateOrReplaceAnalyzer) | Create a custom analyzer with field schema and use it | Custom analyzer creation, field schema definition, LRO operations, using custom analyzers |
+| [CreateAnalyzer](./CreateAnalyzer) | Create a custom analyzer with field schema and use it | Custom analyzer creation, field schema definition, LRO operations, using custom analyzers |
 | [UpdateAnalyzer](./UpdateAnalyzer) | Update analyzer properties (description and tags) | Analyzer updates, PATCH operations, tag management |
 | [DeleteAnalyzer](./DeleteAnalyzer) | Delete a custom analyzer | Analyzer lifecycle management, cleanup operations |
 | [GetResultFile](./GetResultFile) | Get result files (keyframes) from video analysis | Video analysis, keyframe extraction, GetResultFile API, operation ID handling |
@@ -151,8 +151,8 @@ samples/
 ├── AnalyzeUrlPrebuiltInvoice/  # Sample: Extract invoice fields
 │   ├── AnalyzeUrlPrebuiltInvoice.csproj
 │   └── Program.cs
-├── CreateOrReplaceAnalyzer/    # Sample: Create and use custom analyzer
-│   ├── CreateOrReplaceAnalyzer.csproj
+├── CreateAnalyzer/    # Sample: Create and use custom analyzer
+│   ├── CreateAnalyzer.csproj
 │   └── Program.cs
 ├── UpdateAnalyzer/             # Sample: Update analyzer properties
 │   ├── UpdateAnalyzer.csproj
