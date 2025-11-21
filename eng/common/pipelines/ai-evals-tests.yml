@@ -38,7 +38,6 @@ jobs:
       os: linux
 
     steps:
-    - checkout: self
     - task: UseDotNet@2
       displayName: "Use .NET SDK 9.0.x"
       retryCountOnTaskFailure: 3
@@ -59,10 +58,15 @@ jobs:
       parameters:
         SkipCheckoutNone: true
         Repositories:
+          - Name: $(Build.Repository.Name)
+            Commitish: $(Build.SourceVersion)
+            WorkingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
           - Name: ${{ parameters.ToolsRepoOwner }}/${{ parameters.ToolsRepoName }}
             WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.ToolsRepoName }}
         Paths:
           - 'tools/**'
+          - eng/common/**
+          - .github/copilot-instructions.md
     
     - task: AzureCLI@2
       displayName: 'Run eval'
@@ -81,9 +85,9 @@ jobs:
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
         DOTNET_MULTILEVEL_LOOKUP: 0
         AZURE_OPENAI_MODEL_DEPLOYMENT_NAME: ${{ parameters.Model }}
-        AZURE_OPENAI_ENDPOINT: ${{ parameters.OpenAIEndPoint }}
+        AZURE_OPENAI_ENDPOINT: $(Build.Repository.Name)/${{ parameters.OpenAIEndPoint }}
         REPOSITORY_NAME: $(Build.Repository.Name)
-        COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/.github/copilot-instructions.md
+        COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)/.github/copilot-instructions.md
 
     - task: PublishTestResults@2
       condition: succeededOrFailed()
