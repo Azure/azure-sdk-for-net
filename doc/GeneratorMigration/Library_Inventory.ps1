@@ -160,13 +160,22 @@ function New-MarkdownReport {
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
 
     # Count libraries by generator type
-    $mgmtSwagger = ($mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }).Count
-    $mgmtNewEmitter = ($mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }).Count
-    $mgmtTspOld = ($mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }).Count
+    $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
+    $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
+    $mgmtTspOld = $mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }
     
-    $dataSwagger = ($dataLibraries | Where-Object { $_.generator -eq "Swagger" }).Count
-    $dataNewEmitter = ($dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }).Count
-    $dataTspOld = ($dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }).Count
+    $dataSwagger = $dataLibraries | Where-Object { $_.generator -eq "Swagger" }
+    $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
+    $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
+
+    # Calculate migration percentages
+    $mgmtMigrated = $mgmtNewEmitter.Count
+    $mgmtTotal = $mgmtLibraries.Count
+    $mgmtPercentage = if ($mgmtTotal -gt 0) { [math]::Round(($mgmtMigrated / $mgmtTotal) * 100, 1) } else { 0 }
+    
+    $dataMigrated = $dataNewEmitter.Count
+    $dataTotal = $dataLibraries.Count
+    $dataPercentage = if ($dataTotal -gt 0) { [math]::Round(($dataMigrated / $dataTotal) * 100, 1) } else { 0 }
 
     $report = @()
     $report += "# Azure SDK for .NET Libraries Inventory`n"
@@ -174,41 +183,69 @@ function New-MarkdownReport {
     $report += "## Summary`n"
     $report += "- Total libraries: $($Libraries.Count)"
     $report += "- Management Plane (MPG): $($mgmtLibraries.Count)"
-    $report += "  - Autorest/Swagger: $mgmtSwagger"
-    $report += "  - New Emitter (TypeSpec): $mgmtNewEmitter"
-    $report += "  - Old TypeSpec: $mgmtTspOld"
+    $report += "  - Autorest/Swagger: $($mgmtSwagger.Count)"
+    $report += "  - New Emitter (TypeSpec): $($mgmtNewEmitter.Count)"
+    $report += "  - Old TypeSpec: $($mgmtTspOld.Count)"
     $report += "- Data Plane (DPG): $($dataLibraries.Count)"
-    $report += "  - Autorest/Swagger: $dataSwagger"
-    $report += "  - New Emitter (TypeSpec): $dataNewEmitter"
-    $report += "  - Old TypeSpec: $dataTspOld"
+    $report += "  - Autorest/Swagger: $($dataSwagger.Count)"
+    $report += "  - New Emitter (TypeSpec): $($dataNewEmitter.Count)"
+    $report += "  - Old TypeSpec: $($dataTspOld.Count)"
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
 
-    # Data Plane Libraries Table
-    $report += "## Data Plane Libraries (DPG)`n"
-    $report += "Libraries that provide client APIs for Azure services.`n"
+    # Data Plane Libraries Table (migrated to new emitter)
+    $report += "## Data Plane Libraries (DPG) - Migrated to New Emitter`n"
+    $report += "Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
+    $report += "**Migration Status**: $dataMigrated / $dataTotal ($dataPercentage%)`n"
     $report += "| Service | Library | New Emitter | Autorest |"
     $report += "| ------- | ------- | ----------- | -------- |"
     $sortedDataLibs = $dataLibraries | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✓" } else { "" }
-        $autorest = if ($lib.generator -eq "Swagger") { "✓" } else { "" }
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "🟢" } else { "" }
+        $autorest = if ($lib.generator -eq "Swagger") { "🟢" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter | $autorest |"
     }
     $report += "`n"
 
-    # Management Plane Libraries Table
-    $report += "## Management Plane Libraries (MPG)`n"
-    $report += "Libraries that provide resource management APIs for Azure services.`n"
+    # Data Plane Libraries still on Swagger
+    if ($dataSwagger.Count -gt 0) {
+        $report += "## Data Plane Libraries (DPG) - Still on Swagger`n"
+        $report += "Libraries that have not yet been migrated to the new TypeSpec emitter. Total: $($dataSwagger.Count)`n"
+        $report += "| Service | Library |"
+        $report += "| ------- | ------- |"
+        $sortedDataSwagger = $dataSwagger | Sort-Object service, library
+        foreach ($lib in $sortedDataSwagger) {
+            $report += "| $($lib.service) | $($lib.library) |"
+        }
+        $report += "`n"
+    }
+
+    # Management Plane Libraries Table (migrated to new emitter)
+    $report += "## Management Plane Libraries (MPG) - Migrated to New Emitter`n"
+    $report += "Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
+    $report += "**Migration Status**: $mgmtMigrated / $mgmtTotal ($mgmtPercentage%)`n"
     $report += "| Service | Library | New Emitter | Autorest |"
     $report += "| ------- | ------- | ----------- | -------- |"
     $sortedMgmtLibs = $mgmtLibraries | Sort-Object service, library
     foreach ($lib in $sortedMgmtLibs) {
-        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✓" } else { "" }
-        $autorest = if ($lib.generator -eq "Swagger") { "✓" } else { "" }
+        $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "🟢" } else { "" }
+        $autorest = if ($lib.generator -eq "Swagger") { "🟢" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter | $autorest |"
     }
     $report += "`n"
+
+    # Management Plane Libraries still on Swagger
+    if ($mgmtSwagger.Count -gt 0) {
+        $report += "## Management Plane Libraries (MPG) - Still on Swagger`n"
+        $report += "Libraries that have not yet been migrated to the new TypeSpec emitter. Total: $($mgmtSwagger.Count)`n"
+        $report += "| Service | Library |"
+        $report += "| ------- | ------- |"
+        $sortedMgmtSwagger = $mgmtSwagger | Sort-Object service, library
+        foreach ($lib in $sortedMgmtSwagger) {
+            $report += "| $($lib.service) | $($lib.library) |"
+        }
+        $report += "`n"
+    }
 
     # No Generator Libraries
     $report += "## Libraries with No Generator`n"

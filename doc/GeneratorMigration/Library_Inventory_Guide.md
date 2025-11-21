@@ -68,17 +68,26 @@ If none of these TypeSpec indicators are found but there is evidence of code gen
 The inventory markdown file provides:
 
 1. Overall summary counts with breakdown by generator type
-2. Two main tables:
-   - **Data Plane Libraries (DPG)**: Client APIs for Azure services
+2. Four main tables for migrated libraries:
+   - **Data Plane Libraries (DPG) - Migrated to New Emitter**: Client APIs migrated to new TypeSpec
      - Columns: Service, Library, New Emitter, Autorest
-   - **Management Plane Libraries (MPG)**: Resource management APIs for Azure services
+     - Includes migration status (e.g., "16 / 169 (9.5%)")
+   - **Management Plane Libraries (MPG) - Migrated to New Emitter**: Resource management APIs migrated to new TypeSpec
      - Columns: Service, Library, New Emitter, Autorest
-3. Libraries with no generator (listed separately)
+     - Includes migration status (e.g., "24 / 226 (10.6%)")
+3. Two tables for libraries still on Swagger:
+   - **Data Plane Libraries (DPG) - Still on Swagger**: Libraries not yet migrated
+     - Columns: Service, Library (no generator columns needed)
+   - **Management Plane Libraries (MPG) - Still on Swagger**: Libraries not yet migrated
+     - Columns: Service, Library (no generator columns needed)
+4. Libraries with no generator (listed separately)
 
-Each table uses checkmarks (✓) to indicate the generator type:
+The migrated tables use green checkmarks (🟢) to indicate the generator type:
 - **New Emitter** column: Libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
 - **Autorest** column: Libraries using Swagger/Autorest
 - **No checkmarks**: Libraries using old TypeSpec (TSP-Old) or no generator
+
+The migration status shows the number of libraries migrated to the new emitter out of the total, along with the percentage.
 
 ## Updating the Inventory
 
