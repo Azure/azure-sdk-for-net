@@ -478,10 +478,6 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
         $pkg.RepoPath = $pkg.fields["Custom.PackageRepoPath"]
       }
 
-      if (!$pkg.SpecProjectPath -and $latestVersionItem.fields["Custom.SpecProjectPath"]) {
-        $pkg.SpecProjectPath = $latestVersionItem.fields["Custom.SpecProjectPath"]
-      }
-
       if ($latestVersionItem.fields["Custom.Generated"]) {
         $extraFields += "`"Generated=" + $latestVersionItem.fields["Custom.Generated"] + "`""
       }
