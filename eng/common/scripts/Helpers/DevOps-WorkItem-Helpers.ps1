@@ -1334,6 +1334,11 @@ function Update-DevOpsReleaseWorkItem {
   }
   $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions
 
+  if ($workItem.fields."Custom.SpecProjectPath" -ne $package.SpecProjectPath) {
+    Write-Host "Updating SpecProjectPath for work item $($workItem.id) to $($package.SpecProjectPath)"
+    UpdateWorkItem -id $workItem.id -fields "`"Custom.SpecProjectPath=$($package.SpecProjectPath)`""
+  }
+
   Write-Host "Release tracking item is at https://dev.azure.com/azure-sdk/Release/_workitems/edit/$($updatedWI.id)/"
   return $true
 }
