@@ -15,8 +15,7 @@ param(
   [string]$packageNewLibrary = "true",
   [string]$relatedWorkItemId = $null,
   [string]$tag = $null,
-  [bool]$inRelease = $true,
-  [string]$specProjectPath = ""
+  [bool]$inRelease = $true
 )
 #Requires -Version 6.0
 Set-StrictMode -Version 3
@@ -58,7 +57,6 @@ $packageInfo = [PSCustomObject][ordered]@{
   RepoPath = $packageRepoPath
   Type = $packageType
   New = $packageNewLibrary
-  SpecProjectPath = $specProjectPath
 };
 
 if (!$plannedDate) {
