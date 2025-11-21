@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchTaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<BatchTaskSchedulingPolicy>
+    public partial class IPTag : IUtf8JsonSerializable, IJsonModel<IPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BatchTaskSchedulingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,22 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPTag)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(JobDefaultOrder))
+            if (Optional.IsDefined(IpTagType))
             {
-                writer.WritePropertyName("jobDefaultOrder"u8);
-                writer.WriteStringValue(JobDefaultOrder.Value.ToString());
+                writer.WritePropertyName("ipTagType"u8);
+                writer.WriteStringValue(IpTagType);
             }
-            writer.WritePropertyName("nodeFillType"u8);
-            writer.WriteStringValue(NodeFillType.ToString());
+            if (Optional.IsDefined(Tag))
+            {
+                writer.WritePropertyName("tag"u8);
+                writer.WriteStringValue(Tag);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,19 +61,19 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchTaskSchedulingPolicy IJsonModel<BatchTaskSchedulingPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IPTag IJsonModel<IPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchTaskSchedulingPolicy(document.RootElement, options);
+            return DeserializeIPTag(document.RootElement, options);
         }
 
-        internal static BatchTaskSchedulingPolicy DeserializeBatchTaskSchedulingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IPTag DeserializeIPTag(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,24 +81,20 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchJobDefaultOrder? jobDefaultOrder = default;
-            BatchNodeFillType nodeFillType = default;
+            string ipTagType = default;
+            string tag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobDefaultOrder"u8))
+                if (property.NameEquals("ipTagType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobDefaultOrder = new BatchJobDefaultOrder(property.Value.GetString());
+                    ipTagType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeFillType"u8))
+                if (property.NameEquals("tag"u8))
                 {
-                    nodeFillType = new BatchNodeFillType(property.Value.GetString());
+                    tag = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,46 +103,46 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchTaskSchedulingPolicy(jobDefaultOrder, nodeFillType, serializedAdditionalRawData);
+            return new IPTag(ipTagType, tag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BatchTaskSchedulingPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IPTag>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPTag)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BatchTaskSchedulingPolicy IPersistableModel<BatchTaskSchedulingPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IPTag IPersistableModel<IPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchTaskSchedulingPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBatchTaskSchedulingPolicy(document.RootElement, options);
+                        return DeserializeIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPTag)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BatchTaskSchedulingPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchTaskSchedulingPolicy FromResponse(Response response)
+        internal static IPTag FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchTaskSchedulingPolicy(document.RootElement);
+            return DeserializeIPTag(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

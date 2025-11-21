@@ -61,11 +61,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
-            if (Optional.IsDefined(ResourceTags))
-            {
-                writer.WritePropertyName("resourceTags"u8);
-                writer.WriteStringValue(ResourceTags);
-            }
             if (Optional.IsDefined(TargetDedicatedNodes))
             {
                 writer.WritePropertyName("targetDedicatedNodes"u8);
@@ -106,16 +101,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
@@ -155,11 +140,6 @@ namespace Azure.Compute.Batch
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(TargetNodeCommunicationMode))
-            {
-                writer.WritePropertyName("targetNodeCommunicationMode"u8);
-                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToString());
             }
             if (Optional.IsDefined(UpgradePolicy))
             {
@@ -209,7 +189,6 @@ namespace Azure.Compute.Batch
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             TimeSpan? resizeTimeout = default;
-            string resourceTags = default;
             int? targetDedicatedNodes = default;
             int? targetLowPriorityNodes = default;
             bool? enableAutoScale = default;
@@ -218,12 +197,10 @@ namespace Azure.Compute.Batch
             bool? enableInterNodeCommunication = default;
             NetworkConfiguration networkConfiguration = default;
             BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<UserAccount> userAccounts = default;
             IList<BatchMetadataItem> metadata = default;
             IList<MountConfiguration> mountConfiguration = default;
-            BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
             UpgradePolicy upgradePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -273,11 +250,6 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     resizeTimeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("resourceTags"u8))
-                {
-                    resourceTags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetDedicatedNodes"u8))
@@ -348,20 +320,6 @@ namespace Azure.Compute.Batch
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("applicationPackageReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -418,15 +376,6 @@ namespace Azure.Compute.Batch
                     mountConfiguration = array;
                     continue;
                 }
-                if (property.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("upgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -449,7 +398,6 @@ namespace Azure.Compute.Batch
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 resizeTimeout,
-                resourceTags,
                 targetDedicatedNodes,
                 targetLowPriorityNodes,
                 enableAutoScale,
@@ -458,12 +406,10 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
                 metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
-                targetNodeCommunicationMode,
                 upgradePolicy,
                 serializedAdditionalRawData);
         }
