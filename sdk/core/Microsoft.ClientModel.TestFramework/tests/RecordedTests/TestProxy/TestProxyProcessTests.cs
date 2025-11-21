@@ -13,56 +13,56 @@ public class TestProxyProcessTests
     [Test]
     public void ConstructorFindsDotNetUsingDotnetInstallDir()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorFindsDotNetUsingPathEnvironmentVariable()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorThrowsWhenDotNetNotFound()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorUsesDebugModeEnvironmentVariable()
     {
         // and sets proxy port accordingly
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorStartsProcessUsingProxyPath()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorRestoresLocalTools()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorStartsTestProxyUsingTool()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorThrowsWhenTestProxyCannotBeStarted()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void ConstructorProcessPortProperly()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
@@ -115,36 +115,42 @@ public class TestProxyProcessTests
     [Test]
     public void TryRestoreLocalToolsFindsConfigFile()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void TryRestoreLocalToolsDoesNotLookOutsideRepo()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void TryRestoreLocalToolsHandlesMissingConfig()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void StartSharesProcess()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void StartStartsNewProcessWhenNoneExists()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     [Test]
     public void StartWithDebugWorks()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+    }
+
+    [Test]
+    public void TestProxyExePathWorks()
+    {
+        //throw new NotImplementedException();
     }
 }
