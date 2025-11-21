@@ -248,7 +248,18 @@ namespace Azure.AI.ContentUnderstanding
         internal static AnalyzeResult FromLroResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAnalyzeResult(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+            JsonElement rootElement = document.RootElement;
+
+            // Check if the response has a "result" property, otherwise use the root element directly
+            if (rootElement.TryGetProperty("result", out JsonElement resultElement))
+            {
+                return DeserializeAnalyzeResult(resultElement, ModelSerializationExtensions.WireOptions);
+            }
+            else
+            {
+                // The response might be the AnalyzeResult directly
+                return DeserializeAnalyzeResult(rootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

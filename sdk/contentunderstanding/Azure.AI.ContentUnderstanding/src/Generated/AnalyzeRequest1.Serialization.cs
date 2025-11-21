@@ -44,7 +44,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ModelDeployments))
+            if (Optional.IsCollectionDefined(ModelDeployments) && ModelDeployments.Count > 0)
             {
                 writer.WritePropertyName("modelDeployments"u8);
                 writer.WriteStartObject();
