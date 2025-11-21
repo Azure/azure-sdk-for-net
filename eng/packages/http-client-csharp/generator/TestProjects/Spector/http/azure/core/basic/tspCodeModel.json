@@ -1866,7 +1866,8 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
