@@ -5931,7 +5931,8 @@
                 "next"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -6032,7 +6033,8 @@
                 "next"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -6145,7 +6147,8 @@
                 "next"
               ],
               "responseLocation": "Header"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -6290,7 +6293,8 @@
                 "nextToken"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -6447,7 +6451,8 @@
                 "next-token"
               ],
               "responseLocation": "Header"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -6542,7 +6547,8 @@
           "pagingMetadata": {
             "itemPropertySegments": [
               "items"
-            ]
+            ],
+            "pageSizeParameterSegments": []
           }
         },
         {
