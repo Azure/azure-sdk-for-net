@@ -228,7 +228,8 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         }
       ],
