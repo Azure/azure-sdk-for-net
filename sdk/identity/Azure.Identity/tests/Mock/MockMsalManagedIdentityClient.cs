@@ -34,13 +34,13 @@ namespace Azure.Identity.Tests.Mock
             return new ValueTask<IManagedIdentityApplication>(ClientAppFactory(cancellationToken));
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
             if (AcquireTokenForManagedIdentityAsyncFactory != null)
             {
                 return new ValueTask<AuthenticationResult>(AcquireTokenForManagedIdentityAsyncFactory(requestContext, cancellationToken));
             }
-            return base.AcquireTokenForManagedIdentityAsyncCore(async, requestContext, cancellationToken);
+            return base.AcquireTokenForManagedIdentityAsyncCore(async, requestContext, isTokenBindingAvailable, cancellationToken);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.MtlsPop;
 
 namespace Azure.Identity
 {
@@ -94,13 +95,13 @@ namespace Azure.Identity
             return client;
         }
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
-            await AcquireTokenForManagedIdentityAsyncCore(true, requestContext, cancellationToken).ConfigureAwait(false);
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsync(TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken) =>
+            await AcquireTokenForManagedIdentityAsyncCore(true, requestContext, isTokenBindingAvailable, cancellationToken).ConfigureAwait(false);
 
-        public virtual AuthenticationResult AcquireTokenForManagedIdentity(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
-            AcquireTokenForManagedIdentityAsyncCore(false, requestContext, cancellationToken).EnsureCompleted();
+        public virtual AuthenticationResult AcquireTokenForManagedIdentity(TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken) =>
+            AcquireTokenForManagedIdentityAsyncCore(false, requestContext, isTokenBindingAvailable, cancellationToken).EnsureCompleted();
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
             IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, cancellationToken).ConfigureAwait(false);
 
@@ -109,6 +110,11 @@ namespace Azure.Identity
             if (!string.IsNullOrEmpty(requestContext.Claims))
             {
                 builder.WithClaims(requestContext.Claims);
+            }
+
+            if (isTokenBindingAvailable)
+            {
+                builder.WithMtlsProofOfPossession();
             }
 
             if (_isForceRefreshEnabled)

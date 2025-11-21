@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensibility;
 using MSAL = Microsoft.Identity.Client.ManagedIdentity;
@@ -62,9 +63,11 @@ namespace Azure.Identity
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             AuthenticationResult result;
-#pragma warning disable CS0618 // Deprecated code
-            MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
-#pragma warning restore CS0618 // Deprecated code
+#pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
+            MSAL.ManagedIdentitySource availableSource = async ?
+                await _msalManagedIdentityClient.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false) :
+                _msalManagedIdentityClient.GetManagedIdentitySourceAsync(cancellationToken).EnsureCompleted();
+#pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
@@ -93,8 +96,8 @@ namespace Azure.Identity
             {
                 // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
                 result = async ?
-                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
-                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
+                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, availableSource == MSAL.ManagedIdentitySource.ImdsV2, cancellationToken).ConfigureAwait(false) :
+                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, availableSource == MSAL.ManagedIdentitySource.ImdsV2, cancellationToken);
             }
             // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
             catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
