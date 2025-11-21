@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
         public void QuestionAnsweringAuthoringClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringClient(null, (TokenCredential)null));
+                () => new QuestionAnsweringAuthoringClient(null, (TokenCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests
             Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringClient(endpoint, (TokenCredential)null));
+                () => new QuestionAnsweringAuthoringClient(endpoint, (TokenCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
 
