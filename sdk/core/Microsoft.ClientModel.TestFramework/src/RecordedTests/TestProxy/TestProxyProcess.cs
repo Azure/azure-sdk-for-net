@@ -51,6 +51,11 @@ public class TestProxyProcess
     public int? ProxyPortHttps => _proxyPortHttps;
 
     /// <summary>
+    /// Did we restore the tool from a specific directory?
+    /// </summary>
+    private string? _toolDirectory;
+
+    /// <summary>
     /// Initializes static members of the <see cref="TestProxyProcess"/> class.
     /// Locates the .NET executable and configures debug logging settings.
     /// </summary>
@@ -106,6 +111,7 @@ public class TestProxyProcess
         else
         {
             toolDirectory = TryRestoreLocalTools();
+            _toolDirectory = toolDirectory;
 
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -181,7 +187,7 @@ public class TestProxyProcess
             {
                 var error = _errorBuffer.ToString();
                 _errorBuffer.Clear();
-                throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
+                throw new InvalidOperationException($"An error occurred in the test proxy: {error}. We ran in the context of the tool directory {_toolDirectory??"NULLED OUT"}");
             }
 
             // if no errors, fallback to this exception
