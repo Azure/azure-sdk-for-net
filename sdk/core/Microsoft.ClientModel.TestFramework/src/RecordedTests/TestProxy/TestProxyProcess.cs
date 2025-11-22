@@ -255,13 +255,7 @@ public class TestProxyProcess
                     var stderr = process?.StandardError.ReadToEnd() ?? string.Empty;
                     var exit = process?.ExitCode;
 
-                    if (exit != 0)
-                    {
-                        throw new InvalidOperationException(
-                            $"dotnet tool restore failed (exit {exit}){Environment.NewLine}stdout:{Environment.NewLine}{stdout}{Environment.NewLine}stderr:{Environment.NewLine}{stderr}");
-                    }
-
-                    break;
+                    throw new InvalidOperationException($"dotnet tool restore failed (exit {exit}){Environment.NewLine}stdout:{Environment.NewLine}{stdout}{Environment.NewLine}stderr:{Environment.NewLine}{stderr}");
                 }
 
                 var parentDir = Directory.GetParent(currentDir);
