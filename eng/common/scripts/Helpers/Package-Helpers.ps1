@@ -266,3 +266,20 @@ function Split-ArrayIntoBatches {
 
   return , $batches
 }
+
+# Get the full package name based on packageInfo properties
+# Returns Group+ArtifactName if Group exists and has a value, otherwise returns Name
+function Get-FullPackageName {
+    param (
+        [Parameter(Mandatory=$true)]
+        [PSCustomObject]$PackageInfo
+    )
+    
+    if ($PackageInfo.PSObject.Members.Name -contains "Group") {
+        $groupId = $PackageInfo.Group
+        if ($groupId) {
+            return "${groupId}+$($PackageInfo.ArtifactName)"
+        }
+    }
+    return $PackageInfo.Name
+}
