@@ -251,16 +251,16 @@ public class TestProxyProcess
                         process.WaitForExit(30000);
                     }
 
-                    if (process == null || process.ExitCode != 0)
-                    {
-                        Console.Error.WriteLine("dotnet tool restore failed.");
+                    var stdout = process?.StandardOutput.ReadToEnd() ?? string.Empty;
+                    var stderr = process?.StandardError.ReadToEnd() ?? string.Empty;
+                    var exit = process?.ExitCode;
 
-                        Console.Error.WriteLine("dotnet tool stdout:");
-                        Console.Error.WriteLine(process?.StandardOutput.ReadToEnd());
-                        Console.Error.WriteLine("dotnet tool stderr:");
-                        Console.Error.WriteLine(process?.StandardError.ReadToEnd());
-                        Console.Error.Flush();
+                    if (exit != 0)
+                    {
+                        throw new InvalidOperationException(
+                            $"dotnet tool restore failed (exit {exit}){Environment.NewLine}stdout:{Environment.NewLine}{stdout}{Environment.NewLine}stderr:{Environment.NewLine}{stderr}");
                     }
+
                     break;
                 }
 
