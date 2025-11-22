@@ -11,6 +11,8 @@ namespace OpenAI
     internal readonly partial struct ReasoningEffort : IEquatable<ReasoningEffort>
     {
         private readonly string _value;
+        private const string NoneValue = "none";
+        private const string MinimalValue = "minimal";
         private const string LowValue = "low";
         private const string MediumValue = "medium";
         private const string HighValue = "high";
@@ -24,6 +26,12 @@ namespace OpenAI
 
             _value = value;
         }
+
+        /// <summary> Gets the None. </summary>
+        public static ReasoningEffort None { get; } = new ReasoningEffort(NoneValue);
+
+        /// <summary> Gets the Minimal. </summary>
+        public static ReasoningEffort Minimal { get; } = new ReasoningEffort(MinimalValue);
 
         /// <summary> Gets the Low. </summary>
         public static ReasoningEffort Low { get; } = new ReasoningEffort(LowValue);

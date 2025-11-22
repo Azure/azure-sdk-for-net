@@ -12,6 +12,7 @@ using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
+using Azure.Core.Pipeline;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -539,23 +540,22 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The service is not ready.")]
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task TestMemorySearch(bool useConversation)
+    public async Task TestMemorySearch()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        //try
-        //{
-        //    var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
-        //}
-        //catch { }
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
+        try
+        {
+            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        }
+        catch { }
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        memoryDefinitions.Options = new(true, true);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
-        string scope = "Test scope";
+        string scope = "user_123";
         MemorySearchOptions opts = new(scope)
         {
-            Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
+            Items = { ResponseItem.CreateUserMessageItem("Name assistamt's favorite animal") },
             ResultOptions = new MemorySearchResultOptions()
             {
                 MaxMemories = 1,
@@ -569,24 +569,20 @@ public class AgentsTests : AgentsTestBase
         // Populate the scope and make sure, we can get the result.
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
         ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
-
-        MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(
-            store.Name,
-            new MemoryUpdateOptions(scope)
+        int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
+        MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
+            memoryStoreName: store.Name,
+            options: new MemoryUpdateOptions(scope)
             {
-                Items = { userItem, agentItem }
-            });
-
-        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
-        {
-            if (Mode != RecordedTestMode.Playback)
-                await Task.Delay(TimeSpan.FromMilliseconds(500));
-            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(store.Name, updateResult.UpdateId);
-        }
+                Items = { userItem, agentItem },
+                UpdateDelay = 0,
+            },
+            pollingInterval: pollingInterval);
         Assert.That(updateResult.Status == MemoryStoreUpdateStatus.Completed, $"Unexpected status {updateResult.Status}");
+        Assert.That(updateResult.Details.MemoryOperations.Count, Is.GreaterThan(0));
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
-            options: new MemorySearchOptions(scope)
+            options: opts
         );
         Assert.That(resp.Memories.Count, Is.EqualTo(1), $"The number of found items is {resp.Memories.Count}, while expected 1.");
         Assert.That(resp.Memories[0].MemoryItem.Content.ToLower(), Does.Contain("plagiarus"));
