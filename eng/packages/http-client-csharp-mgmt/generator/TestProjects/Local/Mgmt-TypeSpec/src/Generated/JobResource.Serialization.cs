@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class JobResource : IJsonModel<JobResourceData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         JobResourceData IJsonModel<JobResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JobResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JobResourceData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<JobResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JobResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobResourceData IPersistableModel<JobResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JobResourceData>(data, options, MgmtTypeSpecContext.Default);
+        JobResourceData IPersistableModel<JobResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JobResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<JobResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ResourceHttpRequest"/>. </summary>
         /// <param name="clientRequestId"> The client request ID. </param>
         /// <param name="clientIpAddress"> The client IP address. </param>
-        /// <param name="methodString"></param>
+        /// <param name="methodString"> The request method. </param>
         /// <param name="url"> The url used in the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string methodString, string url, IDictionary<string, BinaryData> additionalBinaryDataProperties)

@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppService
       safeName: AzureResourceManagerAppService
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.AppService
-      ExpectedWarningsFilepath: None

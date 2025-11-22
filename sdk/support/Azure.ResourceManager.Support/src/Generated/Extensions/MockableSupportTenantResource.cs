@@ -41,6 +41,144 @@ namespace Azure.ResourceManager.Support.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of TenantSupportTicketResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantSupportTicketResources and their operations over a TenantSupportTicketResource. </returns>
+        public virtual TenantSupportTicketCollection GetTenantSupportTickets()
+        {
+            return GetCachedClient(client => new TenantSupportTicketCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TenantSupportTicketResource>> GetTenantSupportTicketAsync(string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TenantSupportTicketResource> GetTenantSupportTicket(string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            return GetTenantSupportTickets().Get(supportTicketName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TenantFileWorkspaceResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantFileWorkspaceResources and their operations over a TenantFileWorkspaceResource. </returns>
+        public virtual TenantFileWorkspaceCollection GetTenantFileWorkspaces()
+        {
+            return GetCachedClient(client => new TenantFileWorkspaceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TenantFileWorkspaceResource>> GetTenantFileWorkspaceAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantFileWorkspaces().GetAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TenantFileWorkspaceResource> GetTenantFileWorkspace(string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return GetTenantFileWorkspaces().Get(fileWorkspaceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public virtual SupportAzureServiceCollection GetSupportAzureServices()
@@ -110,144 +248,6 @@ namespace Azure.ResourceManager.Support.Mocking
             return GetSupportAzureServices().Get(serviceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantSupportTicketResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantSupportTicketResources and their operations over a TenantSupportTicketResource. </returns>
-        public virtual TenantSupportTicketCollection GetTenantSupportTickets()
-        {
-            return GetCachedClient(client => new TenantSupportTicketCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportTicketsNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantSupportTicketResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TenantSupportTicketResource>> GetTenantSupportTicketAsync(string supportTicketName, CancellationToken cancellationToken = default)
-        {
-            return await GetTenantSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportTicketsNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantSupportTicketResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TenantSupportTicketResource> GetTenantSupportTicket(string supportTicketName, CancellationToken cancellationToken = default)
-        {
-            return GetTenantSupportTickets().Get(supportTicketName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of TenantFileWorkspaceResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TenantFileWorkspaceResources and their operations over a TenantFileWorkspaceResource. </returns>
-        public virtual TenantFileWorkspaceCollection GetTenantFileWorkspaces()
-        {
-            return GetCachedClient(client => new TenantFileWorkspaceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets details for a specific file workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspacesNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantFileWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TenantFileWorkspaceResource>> GetTenantFileWorkspaceAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            return await GetTenantFileWorkspaces().GetAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets details for a specific file workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspacesNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantFileWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TenantFileWorkspaceResource> GetTenantFileWorkspace(string fileWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            return GetTenantFileWorkspaces().Get(fileWorkspaceName, cancellationToken);
-        }
-
         /// <summary>
         /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
         /// <list type="bullet">
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Input to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)

@@ -61,9 +61,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The Configuration items on this page. </summary>
-        public IReadOnlyList<MySqlFlexibleServerConfigurationData> Values { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

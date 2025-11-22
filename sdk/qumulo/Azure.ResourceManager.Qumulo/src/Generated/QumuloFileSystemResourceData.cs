@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
     /// A class representing the QumuloFileSystemResource data model.
-    /// A FileSystem Resource by Qumulo
+    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
     /// </summary>
     public partial class QumuloFileSystemResourceData : TrackedResourceData
     {
@@ -54,27 +54,9 @@ namespace Azure.ResourceManager.Qumulo
 
         /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="storageSku"> Storage Sku. </param>
-        /// <param name="userDetails"> User Details. </param>
-        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
-        /// <param name="adminPassword"> Initial administrator password of the resource. </param>
-        /// <param name="initialCapacity"> Storage capacity in TB. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="userDetails"/>, <paramref name="delegatedSubnetId"/> or <paramref name="adminPassword"/> is null. </exception>
-        public QumuloFileSystemResourceData(AzureLocation location, MarketplaceDetails marketplaceDetails, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : base(location)
+        public QumuloFileSystemResourceData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(marketplaceDetails, nameof(marketplaceDetails));
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
-            Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
-            Argument.AssertNotNull(adminPassword, nameof(adminPassword));
-
-            MarketplaceDetails = marketplaceDetails;
-            StorageSku = storageSku;
-            UserDetails = userDetails;
-            DelegatedSubnetId = delegatedSubnetId;
             PrivateIPs = new ChangeTrackingList<IPAddress>();
-            AdminPassword = adminPassword;
-            InitialCapacity = initialCapacity;
         }
 
         /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/>. </summary>
@@ -84,31 +66,31 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="storageSku"> Storage Sku. </param>
+        /// <param name="armProvisioningState"> Provisioning State of the resource. </param>
+        /// <param name="storageSkuName"> Storage Sku. </param>
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
         /// <param name="clusterLoginUri"> File system Id of the resource. </param>
         /// <param name="privateIPs"> Private IPs of the resource. </param>
         /// <param name="adminPassword"> Initial administrator password of the resource. </param>
-        /// <param name="initialCapacity"> Storage capacity in TB. </param>
         /// <param name="availabilityZone"> Availability zone. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="initialCapacity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MarketplaceDetails marketplaceDetails, QumuloProvisioningState? provisioningState, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, Uri clusterLoginUri, IList<IPAddress> privateIPs, string adminPassword, int initialCapacity, string availabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, QumuloUserDetails userDetails, string delegatedSubnetId, Uri clusterLoginUri, IList<IPAddress> privateIPs, string adminPassword, string availabilityZone, ManagedServiceIdentity identity, int initialCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             MarketplaceDetails = marketplaceDetails;
-            ProvisioningState = provisioningState;
-            StorageSku = storageSku;
+            ArmProvisioningState = armProvisioningState;
+            StorageSkuName = storageSkuName;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
             ClusterLoginUri = clusterLoginUri;
             PrivateIPs = privateIPs;
             AdminPassword = adminPassword;
-            InitialCapacity = initialCapacity;
             AvailabilityZone = availabilityZone;
+            Identity = identity;
+            InitialCapacity = initialCapacity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -117,26 +99,19 @@ namespace Azure.ResourceManager.Qumulo
         {
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Marketplace details. </summary>
         public MarketplaceDetails MarketplaceDetails { get; set; }
         /// <summary> Provisioning State of the resource. </summary>
-        public QumuloProvisioningState? ProvisioningState { get; }
+        public QumuloArmProvisioningState? ArmProvisioningState { get; }
         /// <summary> Storage Sku. </summary>
-        public StorageSku StorageSku { get; set; }
+        public string StorageSkuName { get; set; }
         /// <summary> User Details. </summary>
         internal QumuloUserDetails UserDetails { get; set; }
         /// <summary> User Email. </summary>
         public string UserDetailsEmail
         {
             get => UserDetails is null ? default : UserDetails.Email;
-            set
-            {
-                if (UserDetails is null)
-                    UserDetails = new QumuloUserDetails();
-                UserDetails.Email = value;
-            }
+            set => UserDetails = new QumuloUserDetails(value);
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
@@ -147,9 +122,9 @@ namespace Azure.ResourceManager.Qumulo
         public IList<IPAddress> PrivateIPs { get; }
         /// <summary> Initial administrator password of the resource. </summary>
         public string AdminPassword { get; set; }
-        /// <summary> Storage capacity in TB. </summary>
-        public int InitialCapacity { get; set; }
         /// <summary> Availability zone. </summary>
         public string AvailabilityZone { get; set; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

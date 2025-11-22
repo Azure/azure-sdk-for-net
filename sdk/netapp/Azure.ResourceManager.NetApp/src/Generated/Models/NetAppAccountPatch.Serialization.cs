@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("multiAdStatus"u8);
                 writer.WriteStringValue(MultiAdStatus.Value.ToString());
             }
+            if (Optional.IsDefined(LdapConfiguration))
+            {
+                writer.WritePropertyName("ldapConfiguration"u8);
+                writer.WriteObjectValue(LdapConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? disableShowmount = default;
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
+            LdapConfiguration ldapConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,6 +257,15 @@ namespace Azure.ResourceManager.NetApp.Models
                             multiAdStatus = new MultiAdStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("ldapConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -274,6 +289,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 disableShowmount,
                 nfsV4IdDomain,
                 multiAdStatus,
+                ldapConfiguration,
                 serializedAdditionalRawData);
         }
 

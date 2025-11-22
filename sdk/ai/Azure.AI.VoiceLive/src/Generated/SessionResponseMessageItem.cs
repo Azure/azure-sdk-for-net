@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="object"> Gets the Object. </param>
+        /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="content"></param>

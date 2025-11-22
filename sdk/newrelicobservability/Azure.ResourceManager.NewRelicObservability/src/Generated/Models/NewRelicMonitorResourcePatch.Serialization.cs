@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData, options);
             }
+            if (Optional.IsDefined(SaaSData))
+            {
+                writer.WritePropertyName("saaSData"u8);
+                writer.WriteObjectValue(SaaSData, options);
+            }
             if (Optional.IsDefined(OrgCreationSource))
             {
                 writer.WritePropertyName("orgCreationSource"u8);
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             NewRelicAccountProperties newRelicAccountProperties = default;
             NewRelicObservabilityUserInfo userInfo = default;
             NewRelicPlanDetails planData = default;
+            NewRelicObservabilitySaaSContent saaSData = default;
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
             NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -187,6 +193,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("saaSData"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            saaSData = NewRelicObservabilitySaaSContent.DeserializeNewRelicObservabilitySaaSContent(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("orgCreationSource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -220,6 +235,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 newRelicAccountProperties,
                 userInfo,
                 planData,
+                saaSData,
                 orgCreationSource,
                 accountCreationSource,
                 serializedAdditionalRawData);

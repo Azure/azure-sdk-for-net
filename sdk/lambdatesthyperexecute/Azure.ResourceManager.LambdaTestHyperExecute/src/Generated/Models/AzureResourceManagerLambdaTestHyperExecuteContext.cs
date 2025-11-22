@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.LambdaTestHyperExecute.Models;
 using Azure.ResourceManager.Models;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
     [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteUserDetails))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLambdaTestHyperExecuteContext : ModelReaderWriterContext

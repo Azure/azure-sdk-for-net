@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableTrustedSigningArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableTrustedSigningArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableTrustedSigningArmClient for mocking. </summary>
         protected MockableTrustedSigningArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrustedSigningArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTrustedSigningArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTrustedSigningArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableTrustedSigningArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TrustedSigningAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrustedSigningAccountResource.CreateResourceIdentifier" /> to create a <see cref="TrustedSigningAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrustedSigningAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrustedSigningAccountResource"/> object. </returns>
         public virtual TrustedSigningAccountResource GetTrustedSigningAccountResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             return new TrustedSigningAccountResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TrustedSigningCertificateProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrustedSigningCertificateProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrustedSigningCertificateProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrustedSigningCertificateProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrustedSigningCertificateProfileResource"/> object. </returns>
         public virtual TrustedSigningCertificateProfileResource GetTrustedSigningCertificateProfileResource(ResourceIdentifier id)

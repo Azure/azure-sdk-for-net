@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The Cvss3Summary. </summary>
     public partial class Cvss3Summary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="Cvss3Summary"/>. </summary>
         internal Cvss3Summary()
@@ -68,8 +39,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reportConfidence"></param>
         /// <param name="exploitabilityScore"></param>
         /// <param name="impactScore"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Cvss3Summary(string version, string vectorString, string attackVector, string attackComplexity, string privilegesRequired, string userInteraction, string scope, string confidentialityImpact, string integrityImpact, string availabilityImpact, float? baseScore, string baseSeverity, string exploitCodeMaturity, string remediationLevel, string reportConfidence, float? exploitabilityScore, float? impactScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Cvss3Summary(string version, string vectorString, string attackVector, string attackComplexity, string privilegesRequired, string userInteraction, string scope, string confidentialityImpact, string integrityImpact, string availabilityImpact, float? baseScore, string baseSeverity, string exploitCodeMaturity, string remediationLevel, string reportConfidence, float? exploitabilityScore, float? impactScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             VectorString = vectorString;
@@ -88,42 +59,58 @@ namespace Azure.Analytics.Defender.Easm
             ReportConfidence = reportConfidence;
             ExploitabilityScore = exploitabilityScore;
             ImpactScore = impactScore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the version. </summary>
+        /// <summary> Gets the Version. </summary>
         public string Version { get; }
-        /// <summary> Gets the vector string. </summary>
+
+        /// <summary> Gets the VectorString. </summary>
         public string VectorString { get; }
-        /// <summary> Gets the attack vector. </summary>
+
+        /// <summary> Gets the AttackVector. </summary>
         public string AttackVector { get; }
-        /// <summary> Gets the attack complexity. </summary>
+
+        /// <summary> Gets the AttackComplexity. </summary>
         public string AttackComplexity { get; }
-        /// <summary> Gets the privileges required. </summary>
+
+        /// <summary> Gets the PrivilegesRequired. </summary>
         public string PrivilegesRequired { get; }
-        /// <summary> Gets the user interaction. </summary>
+
+        /// <summary> Gets the UserInteraction. </summary>
         public string UserInteraction { get; }
-        /// <summary> Gets the scope. </summary>
+
+        /// <summary> Gets the Scope. </summary>
         public string Scope { get; }
-        /// <summary> Gets the confidentiality impact. </summary>
+
+        /// <summary> Gets the ConfidentialityImpact. </summary>
         public string ConfidentialityImpact { get; }
-        /// <summary> Gets the integrity impact. </summary>
+
+        /// <summary> Gets the IntegrityImpact. </summary>
         public string IntegrityImpact { get; }
-        /// <summary> Gets the availability impact. </summary>
+
+        /// <summary> Gets the AvailabilityImpact. </summary>
         public string AvailabilityImpact { get; }
-        /// <summary> Gets the base score. </summary>
+
+        /// <summary> Gets the BaseScore. </summary>
         public float? BaseScore { get; }
-        /// <summary> Gets the base severity. </summary>
+
+        /// <summary> Gets the BaseSeverity. </summary>
         public string BaseSeverity { get; }
-        /// <summary> Gets the exploit code maturity. </summary>
+
+        /// <summary> Gets the ExploitCodeMaturity. </summary>
         public string ExploitCodeMaturity { get; }
-        /// <summary> Gets the remediation level. </summary>
+
+        /// <summary> Gets the RemediationLevel. </summary>
         public string RemediationLevel { get; }
-        /// <summary> Gets the report confidence. </summary>
+
+        /// <summary> Gets the ReportConfidence. </summary>
         public string ReportConfidence { get; }
-        /// <summary> Gets the exploitability score. </summary>
+
+        /// <summary> Gets the ExploitabilityScore. </summary>
         public float? ExploitabilityScore { get; }
-        /// <summary> Gets the impact score. </summary>
+
+        /// <summary> Gets the ImpactScore. </summary>
         public float? ImpactScore { get; }
     }
 }

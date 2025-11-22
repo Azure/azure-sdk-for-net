@@ -23,15 +23,19 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
         {
+            // Update the type name and namespace for resource models
+            // We need to update this during PreVisitModel because we will create multiple ParameterProvider with the same model type
             type.Update(
                 relativeFilePath: TransformRelativeFilePath(type),
-                name: TransformName(type));
+                name: TransformName(type),
+                @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
 
             foreach (var serialization in type.SerializationProviders)
             {
                 serialization.Update(
                     relativeFilePath: TransformRelativeFilePathForSerialization(serialization),
-                    name: TransformName(serialization));
+                    name: TransformName(serialization),
+                @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
             }
         }
     }

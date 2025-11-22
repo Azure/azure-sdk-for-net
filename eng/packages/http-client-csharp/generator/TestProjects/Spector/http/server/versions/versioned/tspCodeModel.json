@@ -27,68 +27,13 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "Server.Versions.Versioned",
-            "doc": "The version of the API.",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v2021_01_01_preview",
-                "value": "2021-01-01-preview",
-                "doc": "The version 2022-12-01-preview.",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              },
-              {
-                "$id": "7",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v2022_12_01_preview",
-                "value": "2022-12-01-preview",
-                "doc": "The version 2022-12-01-preview.",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Server.Versions.Versioned.Versions",
-            "apiVersions": [
-              "2021-01-01-preview",
-              "2022-12-01-preview"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "4",
           "kind": "enumvalue",
           "name": "v2022_12_01_preview",
           "value": "2022-12-01-preview",
@@ -96,7 +41,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "4"
+            "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
           "decorators": []
@@ -114,14 +59,14 @@
   "models": [],
   "clients": [
     {
-      "$id": "9",
+      "$id": "5",
       "kind": "client",
       "name": "VersionedClient",
       "namespace": "Server.Versions.Versioned",
       "doc": "Illustrates versioned server.",
       "methods": [
         {
-          "$id": "10",
+          "$id": "6",
           "kind": "basic",
           "name": "withoutApiVersion",
           "accessibility": "public",
@@ -130,7 +75,7 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "11",
+            "$id": "7",
             "name": "withoutApiVersion",
             "resourceName": "Versioned",
             "accessibility": "public",
@@ -161,7 +106,7 @@
           "crossLanguageDefinitionId": "Server.Versions.Versioned.withoutApiVersion"
         },
         {
-          "$id": "12",
+          "$id": "8",
           "kind": "basic",
           "name": "withQueryApiVersion",
           "accessibility": "public",
@@ -170,18 +115,18 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "13",
+            "$id": "9",
             "name": "withQueryApiVersion",
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "14",
+                "$id": "10",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "type": {
-                  "$id": "15",
+                  "$id": "11",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -191,7 +136,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "16",
+                    "$id": "12",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -231,7 +176,7 @@
           "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion"
         },
         {
-          "$id": "17",
+          "$id": "13",
           "kind": "basic",
           "name": "withPathApiVersion",
           "accessibility": "public",
@@ -240,18 +185,18 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "18",
+            "$id": "14",
             "name": "withPathApiVersion",
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "19",
+                "$id": "15",
                 "kind": "path",
                 "name": "apiVersion",
                 "serializedName": "apiVersion",
                 "type": {
-                  "$id": "20",
+                  "$id": "16",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -264,7 +209,7 @@
                 "skipUrlEncoding": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "21",
+                    "$id": "17",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -304,7 +249,7 @@
           "crossLanguageDefinitionId": "Server.Versions.Versioned.withPathApiVersion"
         },
         {
-          "$id": "22",
+          "$id": "18",
           "kind": "basic",
           "name": "withQueryOldApiVersion",
           "accessibility": "public",
@@ -313,18 +258,18 @@
             "2022-12-01-preview"
           ],
           "operation": {
-            "$id": "23",
+            "$id": "19",
             "name": "withQueryOldApiVersion",
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "24",
+                "$id": "20",
                 "kind": "query",
                 "name": "apiVersion",
                 "serializedName": "api-version",
                 "type": {
-                  "$id": "25",
+                  "$id": "21",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -334,7 +279,7 @@
                 "explode": false,
                 "defaultValue": {
                   "type": {
-                    "$id": "26",
+                    "$id": "22",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -376,13 +321,13 @@
       ],
       "parameters": [
         {
-          "$id": "27",
+          "$id": "23",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "28",
+            "$id": "24",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -395,8 +340,39 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "Server.Versions.Versioned.endpoint"
+        },
+        {
+          "$id": "25",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "type": {
+            "$id": "26",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "27",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2022-12-01-preview"
+          },
+          "optional": false,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": []
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Versions.Versioned",
       "apiVersions": [

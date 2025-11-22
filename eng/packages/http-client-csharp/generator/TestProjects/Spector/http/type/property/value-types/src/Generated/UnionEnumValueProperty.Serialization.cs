@@ -36,6 +36,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="unionEnumValueProperty"> The <see cref="UnionEnumValueProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnionEnumValueProperty unionEnumValueProperty) => throw null;
 
-        public static explicit operator UnionEnumValueProperty(Response result) => throw null;
+        public static explicit operator UnionEnumValueProperty(Response response) => throw null;
     }
 }

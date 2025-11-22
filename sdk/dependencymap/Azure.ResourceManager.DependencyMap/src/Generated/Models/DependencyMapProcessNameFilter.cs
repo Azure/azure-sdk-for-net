@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
     /// <summary> Process name filter for dependency map visualization apis. </summary>
     public partial class DependencyMapProcessNameFilter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilter"/>. </summary>
         /// <param name="operator"> Operator for process name filter. </param>
@@ -61,21 +33,17 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilter"/>. </summary>
         /// <param name="operator"> Operator for process name filter. </param>
         /// <param name="processNames"> List of process names on which the operator should be applied. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyMapProcessNameFilter(DependencyMapProcessNameFilterOperator @operator, IList<string> processNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DependencyMapProcessNameFilter(DependencyMapProcessNameFilterOperator @operator, IList<string> processNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Operator = @operator;
             ProcessNames = processNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilter"/> for deserialization. </summary>
-        internal DependencyMapProcessNameFilter()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operator for process name filter. </summary>
         public DependencyMapProcessNameFilterOperator Operator { get; }
+
         /// <summary> List of process names on which the operator should be applied. </summary>
         public IList<string> ProcessNames { get; }
     }

@@ -823,9 +823,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class MCPApproval
     {
         public MCPApproval(Azure.AI.Agents.Persistent.MCPApprovalPerTool perToolApproval) { }
-        public MCPApproval(string trust) { }
-        public bool AlwaysApprove { get { throw null; } }
-        public bool NeverApprove { get { throw null; } }
+        public MCPApproval(string requireApproval) { }
+        public bool AlwaysRequireApproval { get { throw null; } }
+        public bool NeverRequireApproval { get { throw null; } }
         public Azure.AI.Agents.Persistent.MCPApprovalPerTool PerToolApproval { get { throw null; } }
     }
     public partial class MCPApprovalPerTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>
@@ -1596,6 +1596,7 @@ namespace Azure.AI.Agents.Persistent
     }
     public static partial class PersistentAgentsClientExtensions
     {
+        public static Microsoft.Extensions.AI.AITool AsAITool(this Azure.AI.Agents.Persistent.ToolDefinition tool) { throw null; }
         public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null) { throw null; }
     }
     public static partial class PersistentAgentsExtensions
@@ -3212,6 +3213,7 @@ namespace Azure.AI.Agents.Persistent
         public SubmitToolApprovalUpdate(Azure.AI.Agents.Persistent.ThreadRun run, Azure.AI.Agents.Persistent.RequiredMcpToolCall mcpToolCall) { }
         public string Arguments { get { throw null; } }
         public string Name { get { throw null; } }
+        public string ServerLabel { get { throw null; } }
         public string ToolCallId { get { throw null; } }
     }
     public partial class SubmitToolOutputsAction : Azure.AI.Agents.Persistent.RequiredAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.SubmitToolOutputsAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.SubmitToolOutputsAction>

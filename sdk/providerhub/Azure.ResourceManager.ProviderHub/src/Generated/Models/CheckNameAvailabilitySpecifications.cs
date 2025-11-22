@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilitySpecifications"/>. </summary>
-        /// <param name="isDefaultValidationEnabled"></param>
-        /// <param name="resourceTypesWithCustomValidation"></param>
+        /// <param name="isDefaultValidationEnabled"> Whether default validation is enabled. </param>
+        /// <param name="resourceTypesWithCustomValidation"> The resource types with custom validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CheckNameAvailabilitySpecifications(bool? isDefaultValidationEnabled, IList<string> resourceTypesWithCustomValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the is default validation enabled. </summary>
+        /// <summary> Whether default validation is enabled. </summary>
         public bool? IsDefaultValidationEnabled { get; set; }
-        /// <summary> Gets the resource types with custom validation. </summary>
+        /// <summary> The resource types with custom validation. </summary>
         public IList<string> ResourceTypesWithCustomValidation { get; }
     }
 }

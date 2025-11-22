@@ -38,6 +38,6 @@ namespace Encode.Duration._Property
         /// <param name="int32SecondsDurationProperty"> The <see cref="Int32SecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Int32SecondsDurationProperty int32SecondsDurationProperty) => throw null;
 
-        public static explicit operator Int32SecondsDurationProperty(Response result) => throw null;
+        public static explicit operator Int32SecondsDurationProperty(Response response) => throw null;
     }
 }

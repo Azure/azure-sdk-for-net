@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    /// <summary> The List Appliances operation response. </summary>
+    /// <summary> Paged collection of Appliance items. </summary>
     internal partial class ApplianceListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/>. </summary>
-        internal ApplianceListResult()
+        /// <param name="value"> The Appliance items on this page. </param>
+        internal ApplianceListResult(IEnumerable<ResourceConnectorApplianceData> value)
         {
-            Value = new ChangeTrackingList<ResourceConnectorApplianceData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/>. </summary>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        /// <param name="value"> The list of Appliances. </param>
+        /// <param name="value"> The Appliance items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceListResult(string nextLink, IReadOnlyList<ResourceConnectorApplianceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplianceListResult(IReadOnlyList<ResourceConnectorApplianceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of Appliances. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/> for deserialization. </summary>
+        internal ApplianceListResult()
+        {
+        }
+
+        /// <summary> The Appliance items on this page. </summary>
         public IReadOnlyList<ResourceConnectorApplianceData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

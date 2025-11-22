@@ -274,4 +274,72 @@ options: {}
         
         {GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileNoEmitter -sdkRepoRoot "/test"} | Should -Throw "*namespace*"
     }
+
+    it("should resolve emitter-output-dir placeholders") {
+        $testTspEmitterConfig = Join-Path $testTspConfigDir "tspconfig-emitter-output.yaml"
+        $testConfigEmitterOutput = @"
+parameters:
+    service-dir:
+        default: testservice
+options:
+    "@azure-tools/typespec-csharp":
+        namespace: Azure.TestService.Client
+        service-dir: sdk/testservice2
+        emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+"@
+                $testConfigEmitterOutput | Out-File -FilePath $testTspEmitterConfig -Encoding UTF8
+
+                $testSdkRoot = "/test/sdk/root"
+                $result = GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterConfig -sdkRepoRoot $testSdkRoot
+                $expected = Join-Path $testSdkRoot "sdk" "testservice2" "Azure.TestService.Client"
+                $result | Should -Be $expected
+    }
+
+    it("should resolve emitter-output-dir without placeholders") {
+        $testTspEmitterConfigNoPlaceholder = Join-Path $testTspConfigDir "tspconfig-emitter-output-static.yaml"
+        $testConfigEmitterOutputStatic = @"
+parameters:
+    service-dir:
+        default: testservice
+options:
+    "@azure-tools/typespec-csharp":
+        namespace: Azure.TestService2.Client
+        service-dir: sdk/testservice2
+        emitter-output-dir: "{output-dir}/sdk/testservice/Azure.TestService.Client"
+"@
+                $testConfigEmitterOutputStatic | Out-File -FilePath $testTspEmitterConfigNoPlaceholder -Encoding UTF8
+
+                $testSdkRoot = "/test/sdk/root"
+                $result = GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterConfigNoPlaceholder -sdkRepoRoot $testSdkRoot
+                $expected = Join-Path $testSdkRoot "sdk" "testservice" "Azure.TestService.Client"
+                $result | Should -Be $expected
+    }
+
+    it("should throw when emitter-output-dir uses service-dir placeholder without definition") {
+        $testTspEmitterMissingService = Join-Path $testTspConfigDir "tspconfig-emitter-output-missing-service.yaml"
+        $testConfigEmitterMissingService = @"
+options:
+    "@azure-tools/typespec-csharp":
+        namespace: Azure.TestService.Client
+        emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+"@
+        $testConfigEmitterMissingService | Out-File -FilePath $testTspEmitterMissingService -Encoding UTF8
+
+        { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingService -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'service-dir'*"
+    }
+
+    it("should throw when emitter-output-dir uses namespace placeholder without definition") {
+        $testTspEmitterMissingNamespace = Join-Path $testTspConfigDir "tspconfig-emitter-output-missing-namespace.yaml"
+        $testConfigEmitterMissingNamespace = @"
+parameters:
+    service-dir:
+        default: testservice
+options:
+    "@azure-tools/typespec-csharp":
+        emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+"@
+        $testConfigEmitterMissingNamespace | Out-File -FilePath $testTspEmitterMissingNamespace -Encoding UTF8
+
+        { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingNamespace -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'namespace'*"
+    }
 }

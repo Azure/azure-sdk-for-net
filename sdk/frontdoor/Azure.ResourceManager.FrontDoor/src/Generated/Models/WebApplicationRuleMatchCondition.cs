@@ -86,16 +86,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Request variable to compare with. </summary>
+        [WirePath("matchVariable")]
         public WebApplicationRuleMatchVariable MatchVariable { get; set; }
         /// <summary> Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
         /// <summary> Comparison type to use for matching with the variable value. </summary>
+        [WirePath("operator")]
         public WebApplicationRuleMatchOperator Operator { get; set; }
         /// <summary> Describes if the result of this condition should be negated. </summary>
+        [WirePath("negateCondition")]
         public bool? IsNegateCondition { get; set; }
         /// <summary> List of possible match values. </summary>
+        [WirePath("matchValue")]
         public IList<string> MatchValue { get; }
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<WebApplicationRuleMatchTransformType> Transforms { get; }
     }
 }

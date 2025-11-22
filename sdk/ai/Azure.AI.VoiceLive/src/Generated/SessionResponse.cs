@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="SessionResponse"/>. </summary>
         /// <param name="id"> The unique ID of the response. </param>
-        /// <param name="object"></param>
+        /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response.
         /// 
@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens">
         /// Maximum number of output tokens for a single assistant response,
-        ///     inclusive of tool calls, that was used in this response.
+        /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SessionResponse(string id, string @object, SessionResponseStatus? status, ResponseStatusDetails statusDetails, IList<SessionResponseItem> output, ResponseTokenStatistics usage, string conversationId, VoiceProvider voice, IList<InteractionModality> modalities, OutputAudioFormat? outputAudioFormat, float? temperature, MaxResponseOutputTokensOption maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)

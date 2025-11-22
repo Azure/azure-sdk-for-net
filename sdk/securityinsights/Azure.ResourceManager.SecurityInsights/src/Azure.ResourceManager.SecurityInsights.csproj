@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.SecurityInsights</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.SecurityInsights.</Description>
     <PackageTags>azure;management;arm;resource manager;securityinsights</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

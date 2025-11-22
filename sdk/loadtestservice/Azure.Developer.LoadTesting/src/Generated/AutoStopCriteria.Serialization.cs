@@ -49,6 +49,11 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("errorRateTimeWindowInSeconds"u8);
                 writer.WriteNumberValue(Convert.ToInt32(ErrorRateTimeWindow.Value.ToString("%s")));
             }
+            if (Optional.IsDefined(MaximumVirtualUsersPerEngine))
+            {
+                writer.WritePropertyName("maximumVirtualUsersPerEngine"u8);
+                writer.WriteNumberValue(MaximumVirtualUsersPerEngine.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +94,7 @@ namespace Azure.Developer.LoadTesting
             bool? autoStopDisabled = default;
             float? errorRate = default;
             TimeSpan? errorRateTimeWindowInSeconds = default;
+            int? maximumVirtualUsersPerEngine = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,13 +126,22 @@ namespace Azure.Developer.LoadTesting
                     errorRateTimeWindowInSeconds = TimeSpan.FromSeconds(property.Value.GetInt32());
                     continue;
                 }
+                if (property.NameEquals("maximumVirtualUsersPerEngine"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumVirtualUsersPerEngine = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindowInSeconds, serializedAdditionalRawData);
+            return new AutoStopCriteria(autoStopDisabled, errorRate, errorRateTimeWindowInSeconds, maximumVirtualUsersPerEngine, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoStopCriteria>.Write(ModelReaderWriterOptions options)

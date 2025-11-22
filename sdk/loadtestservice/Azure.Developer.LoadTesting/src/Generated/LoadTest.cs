@@ -80,12 +80,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="metricsReferenceIdentityId"> Resource Id of the managed identity referencing the metrics. </param>
         /// <param name="engineBuiltInIdentityType"> Type of the managed identity built in load test engines. </param>
         /// <param name="engineBuiltInIdentityIds"> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </param>
+        /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTest(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, LoadTestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, LoadTestingManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, LoadTestingManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -107,6 +108,7 @@ namespace Azure.Developer.LoadTesting
             MetricsReferenceIdentityId = metricsReferenceIdentityId;
             EngineBuiltInIdentityType = engineBuiltInIdentityType;
             EngineBuiltInIdentityIds = engineBuiltInIdentityIds;
+            EstimatedVirtualUserHours = estimatedVirtualUserHours;
             CreatedDateTime = createdDateTime;
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
@@ -160,6 +162,8 @@ namespace Azure.Developer.LoadTesting
         public LoadTestingManagedIdentityType? EngineBuiltInIdentityType { get; set; }
         /// <summary> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </summary>
         public IList<string> EngineBuiltInIdentityIds { get; }
+        /// <summary> Estimated virtual user hours for the test. </summary>
+        public double? EstimatedVirtualUserHours { get; }
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
         /// <summary> The user that created. </summary>

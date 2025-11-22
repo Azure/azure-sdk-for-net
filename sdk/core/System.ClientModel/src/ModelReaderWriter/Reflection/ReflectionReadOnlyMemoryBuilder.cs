@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
 
+[RequiresDynamicCode("This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.")]
 [RequiresUnreferencedCode("This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.")]
 internal class ReflectionReadOnlyMemoryBuilder<T> : ModelReaderWriterTypeBuilder
 {

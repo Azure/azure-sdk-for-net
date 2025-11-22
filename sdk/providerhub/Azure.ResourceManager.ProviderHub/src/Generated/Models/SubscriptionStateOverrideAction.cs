@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionStateOverrideAction"/>. </summary>
-        /// <param name="state"></param>
-        /// <param name="action"></param>
+        /// <param name="state"> The state. </param>
+        /// <param name="action"> The action. </param>
         public SubscriptionStateOverrideAction(SubscriptionTransitioningState state, SubscriptionNotificationOperation action)
         {
             State = state;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionStateOverrideAction"/>. </summary>
-        /// <param name="state"></param>
-        /// <param name="action"></param>
+        /// <param name="state"> The state. </param>
+        /// <param name="action"> The action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionStateOverrideAction(SubscriptionTransitioningState state, SubscriptionNotificationOperation action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the state. </summary>
+        /// <summary> The state. </summary>
         public SubscriptionTransitioningState State { get; set; }
-        /// <summary> Gets or sets the action. </summary>
+        /// <summary> The action. </summary>
         public SubscriptionNotificationOperation Action { get; set; }
     }
 }

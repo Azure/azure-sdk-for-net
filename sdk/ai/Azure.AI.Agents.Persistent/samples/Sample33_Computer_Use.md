@@ -6,7 +6,7 @@ To enable your Agent to Computer Use tool, you use `ComputerUseToolDefinition` a
 ```C# Snippet:ComputerUse_CreateAgentClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var environment = System.Environment.GetEnvironmentVariable("COMPUTER_USE_ENVIRONMENT", "windows");
+var environment = System.Environment.GetEnvironmentVariable("COMPUTER_USE_ENVIRONMENT") ?? "windows";
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
@@ -303,7 +303,7 @@ ListRunSteps(steps);
 
 Asynchronous sample:
 ```C# Snippet:ComputerUse_ListSteps_Async
-IEnumerable < RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
+IEnumerable <RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
 ListRunSteps(steps);
 ```
 

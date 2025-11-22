@@ -34,6 +34,6 @@ namespace _Type.Property.Nullable
 
         string IPersistableModel<CollectionsByteProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator CollectionsByteProperty(Response result) => throw null;
+        public static explicit operator CollectionsByteProperty(Response response) => throw null;
     }
 }

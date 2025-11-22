@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -110,6 +111,15 @@ namespace Azure.Generator.Management.Providers
             {
                 Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
             };
+
+            foreach (var p in methodSignature.Parameters)
+            {
+                var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
+                if (normalizedName != null)
+                {
+                    p.Update(name: normalizedName);
+                }
+            }
 
             return new MethodProvider(methodSignature, body, this);
 

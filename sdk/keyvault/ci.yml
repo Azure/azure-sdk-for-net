@@ -47,7 +47,3 @@ extends:
       safeName: AzureSecurityKeyVaultSecrets
       triggeringPaths:
       - Azure.Security.Keyvault.Shared
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Security.KeyVault.Secrets
-      ExpectedWarningsFilepath: None

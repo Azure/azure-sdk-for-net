@@ -114,7 +114,7 @@ public partial class Sample_PersistentAgents_Computer_Use : SamplesBase<AIAgents
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var environment = System.Environment.GetEnvironmentVariable("COMPUTER_USE_ENVIRONMENT", "windows");
+        var environment = System.Environment.GetEnvironmentVariable("COMPUTER_USE_ENVIRONMENT") ?? "windows";
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -122,7 +122,6 @@ public partial class Sample_PersistentAgents_Computer_Use : SamplesBase<AIAgents
 #endif
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
-
         // Step 1: Create an agent
         #region Snippet:ComputerUse_CreateAgent_Async
         ComputerUseToolDefinition computerUse = new(
@@ -211,7 +210,7 @@ public partial class Sample_PersistentAgents_Computer_Use : SamplesBase<AIAgents
         #endregion
 
         #region Snippet:ComputerUse_ListSteps_Async
-        IEnumerable < RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
+        IEnumerable <RunStep> steps = await client.Runs.GetRunStepsAsync(threadId: run.ThreadId, runId: run.Id).ToListAsync();
         ListRunSteps(steps);
         #endregion
 
@@ -229,7 +228,7 @@ public partial class Sample_PersistentAgents_Computer_Use : SamplesBase<AIAgents
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var environment = System.Environment.GetEnvironmentVariable("COMPUTER_USE_ENVIRONMENT", "windows");
+        var environment = System.Environment.GetEnvironmentVariable("COMPUTER_USE_ENVIRONMENT") ?? "windows";
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;

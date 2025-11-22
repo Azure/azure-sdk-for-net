@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The EndpointProperties. </summary>
     internal partial class EndpointProperties
@@ -37,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the Prop. </summary>
+        [WirePath("prop")]
         public string Prop { get; set; }
     }
 }

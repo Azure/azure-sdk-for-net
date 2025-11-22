@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.DevOpsInfrastructure</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider DevOpsInfrastructure.</Description>
     <PackageTags>azure;management;arm;resource manager;devopsinfrastructure</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

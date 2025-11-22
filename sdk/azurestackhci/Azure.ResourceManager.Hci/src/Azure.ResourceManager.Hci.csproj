@@ -7,5 +7,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.AzureStackHCI.</Description>
     <PackageTags>azure;management;arm;resource manager;azurestackhci</PackageTags>
     <NoWarn>$(NoWarn);AZC0032;AZC0030</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

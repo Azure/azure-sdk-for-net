@@ -9,8 +9,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Client options for <see cref="KeyVaultAccessControlClient"/>. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01;
     }
 }

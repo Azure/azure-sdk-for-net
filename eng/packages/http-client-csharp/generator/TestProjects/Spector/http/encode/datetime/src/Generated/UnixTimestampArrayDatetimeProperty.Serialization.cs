@@ -38,6 +38,6 @@ namespace Encode.Datetime
         /// <param name="unixTimestampArrayDatetimeProperty"> The <see cref="UnixTimestampArrayDatetimeProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(UnixTimestampArrayDatetimeProperty unixTimestampArrayDatetimeProperty) => throw null;
 
-        public static explicit operator UnixTimestampArrayDatetimeProperty(Response result) => throw null;
+        public static explicit operator UnixTimestampArrayDatetimeProperty(Response response) => throw null;
     }
 }

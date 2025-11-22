@@ -38,6 +38,6 @@ namespace _Type.Property.ValueTypes
         /// <param name="bytesProperty"> The <see cref="BytesProperty"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(BytesProperty bytesProperty) => throw null;
 
-        public static explicit operator BytesProperty(Response result) => throw null;
+        public static explicit operator BytesProperty(Response response) => throw null;
     }
 }

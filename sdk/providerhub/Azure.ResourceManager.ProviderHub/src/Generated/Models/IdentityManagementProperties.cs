@@ -48,22 +48,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="IdentityManagementProperties"/>. </summary>
         public IdentityManagementProperties()
         {
+            ApplicationIds = new ChangeTrackingList<string>();
+            DelegationAppIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IdentityManagementProperties"/>. </summary>
-        /// <param name="managementType"></param>
-        /// <param name="applicationId"></param>
+        /// <param name="managementType"> The type. </param>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="applicationIds"> The application ids. </param>
+        /// <param name="delegationAppIds"> The delegation app ids. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityManagementProperties(IdentityManagementType? managementType, string applicationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IdentityManagementProperties(IdentityManagementType? managementType, string applicationId, IList<string> applicationIds, IList<string> delegationAppIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagementType = managementType;
             ApplicationId = applicationId;
+            ApplicationIds = applicationIds;
+            DelegationAppIds = delegationAppIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the management type. </summary>
+        /// <summary> The type. </summary>
         public IdentityManagementType? ManagementType { get; set; }
-        /// <summary> Gets or sets the application id. </summary>
+        /// <summary> The application id. </summary>
         public string ApplicationId { get; set; }
+        /// <summary> The application ids. </summary>
+        public IList<string> ApplicationIds { get; }
+        /// <summary> The delegation app ids. </summary>
+        public IList<string> DelegationAppIds { get; }
     }
 }

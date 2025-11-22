@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Qumulo.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetQumuloFileSystemResources_FileSystemsListBySubscriptionMaximumSetGen()
+        public async Task GetQumuloFileSystemResources_FileSystemsListBySubscription()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_ListBySubscription_MaximumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "382E8C7A-AC80-4D70-8580-EFE99537B9B7";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Qumulo.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetQumuloFileSystemResources_FileSystemsListBySubscriptionMinimumSetGen()
         {
-            // Generated from example definition: specification/liftrqumulo/resource-manager/Qumulo.Storage/stable/2022-10-12/examples/FileSystems_ListBySubscription_MinimumSet_Gen.json
-            // this example is just showing the usage of "FileSystems_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-06-19/FileSystems_ListBySubscription_MinimumSet_Gen.json
+            // this example is just showing the usage of "FileSystemResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

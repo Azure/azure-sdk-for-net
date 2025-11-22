@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.8 (Unreleased)
+## 11.8.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,69 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.8.0-beta.1 (2025-11-13)
+
+### Features Added
+- Added support for `2025-11-01-preview` service version.
+- Added support for multiple facet aggregation types: `avg`, `min`, `max`, `cardinality` in `FacetResult` for enhanced analytics capabilities.
+- Added support for new `KnowledgeSourceKind` types: `web`, `remoteSharePoint`, `indexedSharePoint`, `indexedOneLake`.
+- Added support for `sharepoint` data source type in `SearchIndexerDataSourceType`.
+- Added `product` scoring function aggregation type in `ScoringFunctionAggregation`.
+- Added support for new Azure OpenAI models: `gpt-5`, `gpt-5-mini`, `gpt-5-nano` in `AzureOpenAIModelName`.
+- Added enhanced runtime tracking with `runtime` property in `SearchIndexerStatus` and `indexersRuntime` property in `ServiceStatistics`.
+- Added optional `purviewEnabled` property in `SearchIndex` for data governance integration.
+- Added `maxCumulativeIndexerRuntimeSeconds` property in `ServiceLimits` for runtime constraints.
+- Added enhanced knowledge source configuration options:
+  - `sourceDataFields`, `searchFields`, `semanticConfigurationName` in `SearchIndexKnowledgeSourceParameters`
+  - `isADLSGen2`, `ingestionParameters` in `AzureBlobKnowledgeSourceParameters`
+- Added optional parameter `x-ms-enable-elevated-read` for document retrieval operations with elevated permissions.
+- Added support for partial content responses (HTTP 206) in knowledge base operations.
+- Added `error` property in `KnowledgeBaseActivityRecord` for improved error tracking.
+- Added enhanced knowledge source parameters: `includeReferences`, `includeReferenceSourceData`, `alwaysQuerySource`, `rerankerThreshold` in `SearchIndexKnowledgeSourceParams`.
+
+### Breaking Changes
+- Renamed Knowledge Agent to Knowledge Base across all APIs and models:
+  - All `KnowledgeAgent*` classes renamed to `KnowledgeBase*` equivalents
+  - API paths changed from `/agents` to `/knowledgebases`
+  - Client parameter `AgentNameParameter` replaced with `KnowledgeBaseNameParameter`
+  - All agent-related activity record types updated with new naming convention
+- Removed deprecated Knowledge Agent configuration models:
+  - `KnowledgeAgentOutputConfiguration`
+  - `KnowledgeAgentRequestLimits`
+  - `KnowledgeAgentModel`
+  - `KnowledgeAgentModelKind`
+  - `KnowledgeAgentAzureOpenAIModel`
+- Removed properties from `KnowledgeSourceReference`:
+  - `includeReferences`
+  - `includeReferenceSourceData`
+  - `alwaysQuerySource`
+  - `maxSubQueries`
+  - `rerankerThreshold`
+- Removed `sourceDataSelect` property from `SearchIndexKnowledgeSourceParameters`.
+- Removed properties from `AzureBlobKnowledgeSourceParameters`:
+  - `identity`
+  - `embeddingModel`
+  - `chatCompletionModel`
+  - `ingestionSchedule`
+  - `disableImageVerbalization`
+
+## 11.7.0 (2025-10-09)
+
+### Features Added
+- Added support for `2025-09-01` service version.
+- Support for reranker boosted scores in search results and the ability to sort results on either reranker or reranker boosted scores in `SemanticConfiguration.RankingOrder`.
+- Support for `VectorSearchCompression.RescoringOptions` to configure how vector compression handles the original vector when indexing and how vectors are used during rescoring.
+- Added `SearchIndex.Description` to provide a textual description of the index.
+- Support for `LexicalNormalizer` when defining `SearchIndex`, `SimpleField`, and `SearchableField` and the ability to use it when analyzing text with `SearchIndexClient.AnalyzeText`.
+- Support `DocumentIntelligenceLayoutSkill` skillset skill and `OneLake` `SearchIndexerDataSourceConnection` data source.
+- Support for `QueryDebugMode` in searching to retrieve detailed information about search processing. Only vector is supported for `QueryDebugMode`.
+
+### Breaking Changes
+- `VectorSearchCompression.RerankWithOriginalVectors` and `VectorSearchCompression.DefaultOversampling` don't work with
+  `2025-09-01` and were replaced by `VectorSearchCompression.RescoringOptions.EnabledRescoring` and 
+  `VectorSearchCompression.RescoringOptions.DefaultOversampling`. If using `2024-07-01` continue using the old properties,
+  otherwise if using `2025-09-01` use the new properties in `RescoringOptions`.
 
 ## 11.7.0-beta.7 (2025-09-05)
 

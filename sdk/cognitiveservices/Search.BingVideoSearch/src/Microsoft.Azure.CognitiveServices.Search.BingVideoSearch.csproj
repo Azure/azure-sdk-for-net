@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"> 
+<Project Sdk="Microsoft.NET.Sdk"> 
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Video Search Client Library</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Video Search API.</Description>
@@ -11,6 +11,7 @@
     2. Change client class name to `VideoSearchClient`.
     ]]>
 	</PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>

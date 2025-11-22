@@ -585,8 +585,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 for (int i = ids.Count; i < agentLimit; i++)
                 {
-                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-                    ids.Add((await GetAgent(client)).Id);
+                    PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                        model: "gpt-4o",
+                        name: AGENT_NAME,
+                        instructions: "You are helpful agent.");
+                    ids.Add(agent.Id);
                 }
             }
             // Test calling before.
@@ -724,7 +727,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -764,7 +767,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "What is the stock price of Microsoft and the weather in Seattle?");
 
             // Run the agent
-            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
 
             // Check run steps
@@ -810,7 +813,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Greater(messages.Count, 0);
 
             // NOTE: Comment out these four lines if you plan to reuse the agent later.
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -2177,6 +2180,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestMcpToolStreaming()
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
             string searchApiCode = "search_azure_rest_api_code";
@@ -2256,6 +2261,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             // Commenting DeepResearch as it is not compatible with unit test framework iterations
             // and connection breaks after timeout during streaming test.
             // The error says that the thread already contains the active run.
@@ -2321,7 +2328,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 model: "gpt-4o",
                 instruction: "Analyze images from internally uploaded files."
             );
-            PersistentAgentThread thread = client.Threads.CreateThread();
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
             var contentBlocks = new List<MessageInputContentBlock>
             {
                 new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
@@ -2337,12 +2344,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
             }
 
-            PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 contentBlocks: contentBlocks
             );
-            ThreadRun run = client.Runs.CreateRun(
+            ThreadRun run = await client.Runs.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -2374,7 +2381,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(
                 client: client,
-                model: "gpt-4o",
+                model: "computer-use-preview",
                 instruction: ToolInstructions[ToolTypes.ComputerUse],
                 tools: [computerUse]
             );
@@ -2428,27 +2435,26 @@ namespace Azure.AI.Agents.Persistent.Tests
                 RunStatus.Completed,
                 run.Status,
                 run.LastError?.Message);
-            // TODO: Uncomment the check for run steps when the issue with the service will be resolved.
-            //IEnumerable<RunStep> steps = client.Runs.GetRunSteps(run).Where((x) => x.StepDetails is RunStepToolCallDetails);
-            //Assert.That(steps.Any(), "No tool call were found.");
-            //bool computerCallFound = false;
-            //foreach (RunStep step in steps)
-            //{
-            //    if (step.StepDetails is RunStepToolCallDetails details)
-            //    {
-            //        foreach (RunStepToolCall call in details.ToolCalls)
-            //        {
-            //            if (call is RunStepComputerUseToolCall)
-            //            {
-            //                computerCallFound = true;
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    if (computerCallFound)
-            //        break;
-            //}
-            //Assert.True(computerCallFound, "Computer use call was not found.");
+            IEnumerable<RunStep> steps = (await client.Runs.GetRunStepsAsync(run).ToListAsync()).Where((x) => x.StepDetails is RunStepToolCallDetails);
+            Assert.That(steps.Any(), "No tool call were found.");
+            bool computerCallFound = false;
+            foreach (RunStep step in steps)
+            {
+                if (step.StepDetails is RunStepToolCallDetails details)
+                {
+                    foreach (RunStepToolCall call in details.ToolCalls)
+                    {
+                        if (call is RunStepComputerUseToolCall)
+                        {
+                            computerCallFound = true;
+                            break;
+                        }
+                    }
+                }
+                if (computerCallFound)
+                    break;
+            }
+            Assert.True(computerCallFound, "Computer use call was not found.");
             List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: thread.Id).ToListAsync();
             Assert.Greater(messages.Count, 1);
         }

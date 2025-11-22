@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Treatment of URL query terms when forming the cache key. </summary>
+        [WirePath("queryParameterStripDirective")]
         public FrontDoorQuery? QueryParameterStripDirective { get; set; }
         /// <summary> query parameters to include or exclude (comma separated). </summary>
+        [WirePath("queryParameters")]
         public string QueryParameters { get; set; }
         /// <summary> Whether to use dynamic compression for cached content. </summary>
+        [WirePath("dynamicCompression")]
         public DynamicCompressionEnabled? DynamicCompression { get; set; }
         /// <summary> The duration for which the content needs to be cached. Allowed format is in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). HTTP requires the value to be no more than a year. </summary>
+        [WirePath("cacheDuration")]
         public TimeSpan? CacheDuration { get; set; }
     }
 }

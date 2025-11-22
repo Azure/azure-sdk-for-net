@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: DeviceRegistry
 namespace: Azure.ResourceManager.DeviceRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/b440cf2c8cffa273a680b49b082faef69a4bee13/specification/deviceregistry/resource-manager/readme.md
-tag: package-preview-2024-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/52fc376d009c4d96b89cfc410c11a38358a18f5b/specification/deviceregistry/resource-manager/readme.md
+tag: package-2025-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -25,8 +25,11 @@ use-model-reader-writer: true
 prepend-rp-prefix:
   - Asset
   - AssetEndpointProfile
-  - DiscoveredAsset
-  - DiscoveredAssetEndpointProfile
+  - Namespace
+  - NamespaceAsset
+  - NamespaceDevice
+  - NamespaceDiscoveredAsset
+  - NamespaceDiscoveredDevice
   - SchemaRegistry
   - Schema
   - SchemaVersion

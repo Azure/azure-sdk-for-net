@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 
@@ -239,6 +240,17 @@ namespace Azure.Health.Deidentification
         public static StringIndex StringIndex(int utf8 = default, int utf16 = default, int codePoint = default)
         {
             return new StringIndex(utf8, utf16, codePoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
+        /// <param name="inputText"> Input text to de-identify. </param>
+        /// <param name="operationType"> Operation to perform on the input documents. </param>
+        /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
+        /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
+        {
+            return DeidentificationContent(inputText, operationType, taggedEntities: default, customizations);
         }
     }
 }

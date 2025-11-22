@@ -65,11 +65,13 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
+        /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerFrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrafficControllerFrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, SecurityPolicyConfigurations securityPolicyConfigurations, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Fqdn = fqdn;
+            SecurityPolicyConfigurations = securityPolicyConfigurations;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -81,6 +83,8 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         /// <summary> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </summary>
         public string Fqdn { get; }
+        /// <summary> Frontend Security Policy Configuration. </summary>
+        public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
         /// <summary> Provisioning State of Traffic Controller Frontend Resource. </summary>
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
     }

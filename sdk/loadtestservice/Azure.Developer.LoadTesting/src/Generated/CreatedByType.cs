@@ -24,11 +24,17 @@ namespace Azure.Developer.LoadTesting
 
         private const string UserValue = "User";
         private const string ScheduledTriggerValue = "ScheduledTrigger";
+        private const string AzurePipelinesValue = "AzurePipelines";
+        private const string GitHubWorkflowsValue = "GitHubWorkflows";
 
         /// <summary> Entity was created by a user. </summary>
         public static CreatedByType User { get; } = new CreatedByType(UserValue);
         /// <summary> Entity was created by a scheduled trigger. </summary>
         public static CreatedByType ScheduledTrigger { get; } = new CreatedByType(ScheduledTriggerValue);
+        /// <summary> Entity was created by Azure DevOps pipelines. </summary>
+        public static CreatedByType AzurePipelines { get; } = new CreatedByType(AzurePipelinesValue);
+        /// <summary> Entity was created by GitHub Workflows. </summary>
+        public static CreatedByType GitHubWorkflows { get; } = new CreatedByType(GitHubWorkflowsValue);
         /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
         public static bool operator ==(CreatedByType left, CreatedByType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CreatedByType"/> values are not the same. </summary>
