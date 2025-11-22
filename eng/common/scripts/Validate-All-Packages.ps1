@@ -135,8 +135,8 @@ function IsVersionShipped($packageName, $packageVersion)
 function CreateUpdatePackageWorkItem($pkgInfo)
 {
     # This function will create or update package work item in Azure DevOps
+    $fullPkgNameInRemoteFeed = Get-FullPackageName -PackageInfo $pkgInfo
     $versionString = $pkgInfo.Version
-    $packageName = $pkgInfo.Name
     $plannedDate = $pkgInfo.ReleaseStatus
     $setReleaseState = $true
     if (!$plannedDate -or $plannedDate -eq "Unreleased")
@@ -147,7 +147,7 @@ function CreateUpdatePackageWorkItem($pkgInfo)
 
     # Create or update package work item
     $result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
-        -packageName $packageName `
+        -packageName $fullPkgNameInRemoteFeed `
         -version $versionString `
         -plannedDate $plannedDate `
         -packageRepoPath $pkgInfo.serviceDirectory `
@@ -175,13 +175,17 @@ function ProcessPackage($packageInfo)
     $changeLogPath = $packageInfo.ChangeLogPath
     $versionString = $packageInfo.Version
     Write-Host "Checking if we need to create or update work item for package $pkgName with version $versionString."
-    $isShipped = IsVersionShipped $pkgName $versionString
+
+    # If there's a groupId that means this is Java and pkgName = GroupId+ArtifactName
+    Write-Host "Package name before checking groupId: $pkgName"
+    $fullPkgNameInRemoteFeed = Get-FullPackageName -PackageInfo $packageInfo
+    $isShipped = IsVersionShipped $fullPkgNameInRemoteFeed $versionString
     if ($isShipped) {
         Write-Host "Package work item already exists for version [$versionString] that is marked as shipped. Skipping the update of package work item."
         return
     }
 
-    Write-Host "Validating package $pkgName with version $versionString."
+    Write-Host "Validating package $fullPkgNameInRemoteFeed with version $versionString."
 
     # Change log validation
     $changeLogStatus = [PSCustomObject]@{
@@ -196,6 +200,7 @@ function ProcessPackage($packageInfo)
 
     # If there's a groupId that means this is Java and pkgName = GroupId+ArtifactName
     # but the VerifyAPIReview requires GroupId:ArtifactName
+    # Can API view handle groupId+artifactName format so that we can use consistent format?
     Write-Host "Package name before checking groupId: $fullPackageName"
     if ($packageInfo.PSObject.Members.Name -contains "Group") {
         $groupId = $packageInfo.Group
@@ -208,7 +213,7 @@ function ProcessPackage($packageInfo)
     $apireviewDetails = VerifyAPIReview $fullPackageName $packageInfo.Version $Language
 
     $pkgValidationDetails= [PSCustomObject]@{
-        Name = $pkgName
+        Name = $fullPkgNameInRemoteFeed
         Version = $packageInfo.Version
         ChangeLogValidation = $changeLogStatus
         APIReviewValidation = $apireviewDetails.ApiviewApproval
@@ -219,6 +224,7 @@ function ProcessPackage($packageInfo)
     Write-Host "Output: $($output)"
 
     # Create json token file in artifact path
+    # Does the following validation file name also need to use full package name with groupId?
     $tokenFile = Join-Path $ArtifactPath "$($packageInfo.ArtifactName)-Validation.json"
     $output | Out-File -FilePath $tokenFile -Encoding utf8
 
