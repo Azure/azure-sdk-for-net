@@ -208,14 +208,8 @@ namespace Azure.Generator.Providers
                 {
                     return InvokeCreateRequestForNextLink(nextPageParameter);
                 }
-                else if (_paging.ContinuationToken is not null)
-                {
-                    return InvokeCreateRequestForContinuationToken(nextPageParameter);
-                }
-                else
-                {
-                    return InvokeCreateRequestForSingle();
-                }
+
+                return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations()).As<HttpMessage>();
             }
 
             TryExpression BuildTryExpression()
@@ -228,28 +222,46 @@ namespace Azure.Generator.Providers
         {
             var createNextLinkRequestMethodName =
                 Client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature.Name;
+
             return new TernaryConditionalExpression(
                 nextPageUri.NotEqual(Null),
                 ClientField.Invoke(
                     createNextLinkRequestMethodName,
-                    [nextPageUri, .. RequestFields.Select(f => f.AsValueExpression)]),
+                    [nextPageUri, .. ApplyRequestArgumentTransformations()]),
                 ClientField.Invoke(
                     CreateRequestMethodName,
-                    [.. RequestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
+                    [.. ApplyRequestArgumentTransformations()])).As<HttpMessage>();
+        }
+
+        private IReadOnlyList<ValueExpression> ApplyRequestArgumentTransformations()
+        {
+            FieldProvider? pageSizeField = null;
+
+            // If there is only a single segment for page size, we will just replace the argument with the page size hint parameter
+            // as the page size parameter is directly mapped to a request parameter.
+            if (PageSizeRootField != null && Paging.PageSizeParameterSegments.Count == 1)
+            {
+                pageSizeField = PageSizeRootField;
+            }
+
+            if (_paging.ContinuationToken != null)
+            {
+                return [.. RequestFields.Select(
+                    f => f.Name == NextTokenField?.Name ? ContinuationTokenParameter
+                        : f == pageSizeField ? PageSizeHintParameter : f.AsValueExpression) ];
+            }
+
+            return [.. RequestFields.Select(f => f == pageSizeField ? PageSizeHintParameter : f.AsValueExpression)];
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
-            var arguments = RequestFields.Select(f => f.Name.Equals(NextTokenField?.Name) ? continuationToken : f.AsValueExpression);
-
-            return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
+            return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations()).As<HttpMessage>();
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
         {
-            ValueExpression[] arguments = [.. RequestFields.Select(f => f.AsValueExpression)];
-
-            return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
+            return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations()).As<HttpMessage>();
         }
 
         protected override ConstructorProvider[] BuildConstructors()
