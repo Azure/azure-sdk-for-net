@@ -35,7 +35,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-4. Create a conversation and get the `OpenAIResponse` object.
+4. Create get the `OpenAIResponse` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Sync
@@ -57,7 +57,7 @@ OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Sync
-string scope = "Joke from conversation";
+string scope = "Joke";
 MemoryUpdateOptions memoryOptions = new(scope);
 memoryOptions.Items.Add(request);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -70,7 +70,7 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Async
-string scope = "Joke from conversation";
+string scope = "Joke";
 MemoryUpdateOptions memoryOptions = new(scope);
 memoryOptions.Items.Add(request);
 while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
@@ -86,7 +86,7 @@ foreach (ResponseItem item in response.OutputItems)
 Console.WriteLine(response.GetOutputText());
 ```
 
-6. Create `MemoryStoreObject` and add the memory related to previous conversation, stored in `MemoryUpdateOptions`.
+6. Create `MemoryStore` and add the memory related to previous conversation, stored in `MemoryUpdateOptions`. If the operation fails, throw the appropriate error.
 
 Synchronous sample:
 ```C# Snippet:CreateMemoryStore_MemoryTool_Sync
@@ -94,16 +94,16 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
+memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
 MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
     name: "jokeMemory",
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
 );
-MemoryUpdateResult updateResult = projectClient.MemoryStores.UpdateMemories(memoryStoreName: memoryStore.Name, options: memoryOptions);
-while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+MemoryUpdateResult updateResult = projectClient.MemoryStores.WaitForMemoriesUpdate(memoryStoreName: memoryStore.Name, options: memoryOptions, pollingInterval: 500);
+if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
 {
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
+    throw new InvalidOperationException(updateResult.ErrorDetails);
 }
 ```
 
@@ -113,16 +113,16 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
+memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
 MemoryStore memoryStore = await projectClient.MemoryStores.CreateMemoryStoreAsync(
     name: "jokeMemory",
     definition: memoryStoreDefinition,
     description: "Memory store for conversation."
 );
-MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(memoryStoreName: memoryStore.Name, options: memoryOptions);
-while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(memoryStoreName: memoryStore.Name, options: memoryOptions, pollingInterval: 500);
+if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
 {
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(memoryStore.Name, updateResult.UpdateId);
+    throw new InvalidOperationException(updateResult.ErrorDetails);
 }
 ```
 
@@ -135,7 +135,7 @@ MemorySearchOptions searchOptions = new(scope)
     Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
 };
 MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
-    memoryStoreName: memoryStore.Id,
+    memoryStoreName: memoryStore.Name,
     options: searchOptions
 );
 Console.WriteLine("==The output from memory search tool.==");
@@ -190,7 +190,7 @@ AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-9. Create a new conversation and get the response about memorized answers.
+9. Get the response about memorized answers.
 
 Synchronous sample:
 ```C# Snippet:Sample_AnotherConversation_MemoryTool_Sync

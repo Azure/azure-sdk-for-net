@@ -173,15 +173,16 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             embeddingModel: embeddingDeploymentName
         );
         memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
-        try
-        { projectClient.MemoryStores.DeleteMemoryStore("jokeMemory"); }
-        catch { }
         MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
             name: "jokeMemory",
             definition: memoryStoreDefinition,
             description: "Memory store for conversation."
         );
         MemoryUpdateResult updateResult = projectClient.MemoryStores.WaitForMemoriesUpdate(memoryStoreName: memoryStore.Name, options: memoryOptions, pollingInterval: 500);
+        if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
+        {
+            throw new InvalidOperationException(updateResult.ErrorDetails);
+        }
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Sync
         MemorySearchOptions searchOptions = new(scope)

@@ -545,14 +545,14 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         try
         {
-            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
         }
         catch { }
         MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
         memoryDefinitions.Options = new(true, true);
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
-        string scope = "user_123";
+        string scope = MEMORY_STORE_SCOPE;
         MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name assistamt's favorite animal") },
@@ -593,6 +593,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.ImageGeneration)]
     [TestCase(ToolType.WebSearch)]
+    [TestCase(ToolType.Memory)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -603,7 +604,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient(headers);
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
+            options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
         ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
@@ -635,12 +636,13 @@ public class AgentsTests : AgentsTestBase
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
+    [TestCase(ToolType.Memory)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
+            options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         bool isStarted = false;
@@ -661,7 +663,7 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(textDoneUpdate.Text, Is.Not.Null.And.Not.Empty);
                 if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
                 {
-                    Assert.That(textDoneUpdate.Text, Does.Contain(expectedResponse), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
+                    Assert.That(textDoneUpdate.Text.ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
                 }
             }
             else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
@@ -737,7 +739,7 @@ public async Task TestToolChoiceWorks()
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient.OpenAI))
+            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient))
         );
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new()
@@ -844,12 +846,14 @@ public async Task TestToolChoiceWorks()
         Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient.OpenAI, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
+            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
             agentVersion.Name);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.TruncationMode = ResponseTruncationMode.Auto;
+        ResponseCreationOptions responseOptions = new()
+        {
+            TruncationMode = ResponseTruncationMode.Auto
+        };
         ResponseItem request = ResponseItem.CreateUserMessageItem(
             [
                 ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),

@@ -611,6 +611,8 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.MemoryStore> UpdateMemoryStore(string name, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateMemoryStoreAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.MemoryStore>> UpdateMemoryStoreAsync(string name, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.AI.Projects.MemoryUpdateResult WaitForMemoriesUpdate(string memoryStoreName, int pollingInterval, Azure.AI.Projects.MemoryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.Projects.MemoryUpdateResult> WaitForMemoriesUpdateAsync(string memoryStoreName, int pollingInterval, Azure.AI.Projects.MemoryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AIProjectTelemetry
     {
@@ -2672,6 +2674,12 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.Trigger System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Trigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Trigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Trigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UpdateMemoriesLROPoller
+    {
+        public UpdateMemoriesLROPoller(Azure.AI.Projects.AIProjectMemoryStoresOperations operations, Azure.AI.Projects.MemoryUpdateResult initialResult, int pollingInterval) { }
+        public System.ClientModel.ClientResult<Azure.AI.Projects.MemoryUpdateResult> WaitForCompletion() { throw null; }
+        public System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.MemoryUpdateResult>> WaitForCompletionAsync() { throw null; }
     }
     public partial class UserProfileMemoryItem : Azure.AI.Projects.MemoryItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.UserProfileMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.UserProfileMemoryItem>
     {
