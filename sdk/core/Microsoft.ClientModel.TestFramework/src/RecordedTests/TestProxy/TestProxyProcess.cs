@@ -95,15 +95,17 @@ public class TestProxyProcess
 
         ProcessStartInfo testProxyProcessInfo;
 
+        string? toolDirectory = null;
+
         if (proxyPath is not null)
         {
             testProxyProcessInfo = new ProcessStartInfo(
-                proxyPath,
-                $"start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
+                s_dotNetExe,
+                $"\"{proxyPath}\" start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
         }
         else
         {
-            TryRestoreLocalTools();
+            toolDirectory = TryRestoreLocalTools();
 
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -113,6 +115,11 @@ public class TestProxyProcess
         testProxyProcessInfo.UseShellExecute = false;
         testProxyProcessInfo.RedirectStandardOutput = true;
         testProxyProcessInfo.RedirectStandardError = true;
+
+        if (toolDirectory != null)
+        {
+            testProxyProcessInfo.WorkingDirectory = toolDirectory;
+        }
 
         // Set environment variables
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
@@ -136,7 +143,7 @@ public class TestProxyProcess
             {
                 while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardError.EndOfStream)
                 {
-                    var error = _testProxyProcess.StandardError.ReadLine();
+                    var error = _testProxyProcess.StandardError.ReadLine() + _testProxyProcess.StandardOutput.ReadLine();
                     // output to console in case another error in the test causes the exception to not be propagated
                     TestContext.Progress.WriteLine(error);
                     _errorBuffer.AppendLine(error);
@@ -223,42 +230,45 @@ public class TestProxyProcess
         return false;
     }
 
-    private static void TryRestoreLocalTools()
+    private static string? TryRestoreLocalTools()
     {
-        var currentDir = Directory.GetCurrentDirectory();
-        while (currentDir != null)
+        try
         {
-            var toolsJsonPath = Path.Combine(currentDir, ".config", "dotnet-tools.json");
-            if (File.Exists(toolsJsonPath))
+            var currentDir = Directory.GetCurrentDirectory();
+            while (currentDir != null)
             {
-                // Found a tools manifest, try to restore
-                var processInfo = new ProcessStartInfo
+                var toolsJsonPath = Path.Combine(currentDir, ".config", "dotnet-tools.json");
+                if (File.Exists(toolsJsonPath))
                 {
-                    FileName = s_dotNetExe,
-                    Arguments = "tool restore",
-                    WorkingDirectory = currentDir,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
-                };
+                    // Found a tools manifest, try to restore
+                    var processInfo = new ProcessStartInfo
+                    {
+                        FileName = s_dotNetExe,
+                        Arguments = "tool restore",
+                        WorkingDirectory = currentDir,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
 
-                using var process = Process.Start(processInfo);
-                if (process != null)
-                {
-                    process.WaitForExit(30000);
+                    using var process = Process.Start(processInfo);
+                    if (process != null)
+                    {
+                        process.WaitForExit(30000);
+                    }
+                    return currentDir;
                 }
 
-                var stdout = process?.StandardOutput.ReadToEnd() ?? string.Empty;
-                var stderr = process?.StandardError.ReadToEnd() ?? string.Empty;
-                var exit = process?.ExitCode;
-
-                throw new InvalidOperationException($"dotnet tool restore failed (exit {exit}){Environment.NewLine}stdout:{Environment.NewLine}{stdout}{Environment.NewLine}stderr:{Environment.NewLine}{stderr}");
+                var parentDir = Directory.GetParent(currentDir);
+                currentDir = parentDir?.FullName;
             }
-
-            var parentDir = Directory.GetParent(currentDir);
-            currentDir = parentDir?.FullName;
         }
+        catch
+        {
+            // If restore fails, silently continue - the dotnet test-proxy command will handle it
+        }
+        return null;
     }
 
     /// <summary>
