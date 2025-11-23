@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.IO;
 using System.Reflection;
@@ -19,7 +21,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         // Files are located at: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/tree/changjian-wang/init-content-understanding-dotnet/ContentUnderstanding.Common/data
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/changjian-wang/init-content-understanding-dotnet/ContentUnderstanding.Common/data/{0}";
 
-        private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
         /// <summary>
         /// Gets the endpoint URL for the Content Understanding service.
@@ -38,6 +40,21 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// The API key is sanitized in recordings to prevent exposing secrets.
         /// </remarks>
         public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the GPT-4.1 deployment name (optional).
+        /// </summary>
+        public string? Gpt41Deployment => GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT");
+
+        /// <summary>
+        /// Gets the GPT-4.1-mini deployment name (optional).
+        /// </summary>
+        public string? Gpt41MiniDeployment => GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT");
+
+        /// <summary>
+        /// Gets the text-embedding-3-large deployment name (optional).
+        /// </summary>
+        public string? TextEmbedding3LargeDeployment => GetRecordedOptionalVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
 
         /// <summary>
         /// Creates a file path for a test asset file.
