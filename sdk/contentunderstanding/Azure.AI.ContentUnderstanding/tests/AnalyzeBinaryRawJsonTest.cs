@@ -6,11 +6,12 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.ContentUnderstanding;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.ContentUnderstanding.Tests.Samples
+namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
     /// Test class for Azure Content Understanding Analyze Binary Raw JSON sample.

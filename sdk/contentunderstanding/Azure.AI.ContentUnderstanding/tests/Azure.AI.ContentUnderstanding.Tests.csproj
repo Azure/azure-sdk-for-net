@@ -17,12 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.AI.ContentUnderstanding.csproj" />
-    <ProjectReference Include="..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.AI.ContentUnderstanding.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Samples\SampleFiles\**\*">
+    <None Update="samples\SampleFiles\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

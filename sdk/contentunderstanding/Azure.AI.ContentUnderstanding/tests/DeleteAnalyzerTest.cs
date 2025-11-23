@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.ContentUnderstanding;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.ContentUnderstanding.Tests.Samples
+namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
     /// Test class for Azure Content Understanding Delete Analyzer sample.
