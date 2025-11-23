@@ -105,6 +105,7 @@ $env:AZURE_CONTENT_UNDERSTANDING_KEY="your-api-key-here"  # Optional
 | [AnalyzeUrl](./AnalyzeUrl) | Analyze a document from a URL | Document analysis from remote URL, markdown extraction, table and page information |
 | [AnalyzeBinary](./AnalyzeBinary) | Analyze a PDF file from disk | Binary file input, object model usage, document properties |
 | [AnalyzeUrlPrebuiltInvoice](./AnalyzeUrlPrebuiltInvoice) | Extract invoice fields from a URL using prebuilt-invoice | Structured field extraction, nested objects, currency fields, array handling |
+| [Classifier](./Classifier) | Create classifiers to categorize documents and extract fields | Content categories, document classification, custom analyzers, segmentation |
 | [CreateAnalyzer](./CreateAnalyzer) | Create a custom analyzer with field schema and use it | Custom analyzer creation, field schema definition, LRO operations, using custom analyzers |
 | [UpdateAnalyzer](./UpdateAnalyzer) | Update analyzer properties (description and tags) | Analyzer updates, PATCH operations, tag management |
 | [DeleteAnalyzer](./DeleteAnalyzer) | Delete a custom analyzer | Analyzer lifecycle management, cleanup operations |
@@ -150,6 +151,9 @@ samples/
 │   └── Program.cs
 ├── AnalyzeUrlPrebuiltInvoice/  # Sample: Extract invoice fields
 │   ├── AnalyzeUrlPrebuiltInvoice.csproj
+│   └── Program.cs
+├── Classifier/                  # Sample: Create classifiers to categorize documents
+│   ├── Classifier.csproj
 │   └── Program.cs
 ├── CreateAnalyzer/    # Sample: Create and use custom analyzer
 │   ├── CreateAnalyzer.csproj
