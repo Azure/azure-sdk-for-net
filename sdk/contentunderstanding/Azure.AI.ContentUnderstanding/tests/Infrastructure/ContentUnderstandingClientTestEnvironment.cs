@@ -15,8 +15,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
     {
         private const string AssetsFolderName = "samples/SampleFiles";
 
-        // We are using assets from the Content Understanding test samples directory.
-        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/tests/{0}/{1}";
+        // We are using assets from the Azure-Samples repository.
+        // Files are located at: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/tree/changjian-wang/init-content-understanding-dotnet/ContentUnderstanding.Common/data
+        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/changjian-wang/init-content-understanding-dotnet/ContentUnderstanding.Common/data/{0}";
 
         private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -51,11 +52,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Creates a URI for a test asset file hosted on GitHub.
         /// </summary>
-        /// <param name="filename">The name of the test asset file.</param>
+        /// <param name="filename">The name of the test asset file in the Azure-Samples repository.</param>
         /// <returns>A URI pointing to the test asset file.</returns>
         public static Uri CreateUri(string filename)
         {
-            var uriString = string.Format(FileUriFormat, AssetsFolderName, filename);
+            var uriString = string.Format(FileUriFormat, filename);
             return new Uri(uriString);
         }
 
