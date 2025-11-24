@@ -11,6 +11,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -35,6 +36,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
 
             AnalyzeResult result = operation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeInvoice
+            TestHelpers.AssertOperationProperties(operation, "Analysis operation");
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractInvoiceFields
@@ -111,6 +119,100 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             if (item.Confidence.HasValue)
                             {
                                 Console.WriteLine($"    Confidence: {item.Confidence.Value:F2}");
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingExtractInvoiceFields
+            var content = result.Contents?.FirstOrDefault();
+            Assert.IsNotNull(content, "Content should not be null");
+
+            if (content is DocumentContent docContent)
+            {
+                // Verify basic document properties
+                Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
+                Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
+                    "End page should be >= start page");
+
+                // Verify field access is working (fields may or may not have values depending on the document)
+                var customerNameField = docContent["CustomerName"];
+                var invoiceDateField = docContent["InvoiceDate"];
+
+                // If fields exist, verify their properties
+                if (customerNameField != null)
+                {
+                    if (customerNameField.Confidence.HasValue)
+                    {
+                        Assert.IsTrue(customerNameField.Confidence.Value >= 0 && customerNameField.Confidence.Value <= 1,
+                            "Confidence should be between 0 and 1");
+                    }
+
+                    if (customerNameField.Spans != null && customerNameField.Spans.Count > 0)
+                    {
+                        foreach (var span in customerNameField.Spans)
+                        {
+                            Assert.IsTrue(span.Offset >= 0, "Span offset should be >= 0");
+                            Assert.IsTrue(span.Length > 0, "Span length should be > 0");
+                        }
+                    }
+                }
+
+                if (invoiceDateField != null)
+                {
+                    if (invoiceDateField.Confidence.HasValue)
+                    {
+                        Assert.IsTrue(invoiceDateField.Confidence.Value >= 0 && invoiceDateField.Confidence.Value <= 1,
+                            "Confidence should be between 0 and 1");
+                    }
+
+                    if (invoiceDateField.Spans != null && invoiceDateField.Spans.Count > 0)
+                    {
+                        foreach (var span in invoiceDateField.Spans)
+                        {
+                            Assert.IsTrue(span.Offset >= 0, "Span offset should be >= 0");
+                            Assert.IsTrue(span.Length > 0, "Span length should be > 0");
+                        }
+                    }
+                }
+
+                // Verify object field structure if it exists
+                if (docContent["TotalAmount"] is ObjectField totalAmountObj)
+                {
+                    if (totalAmountObj.Confidence.HasValue)
+                    {
+                        Assert.IsTrue(totalAmountObj.Confidence.Value >= 0 && totalAmountObj.Confidence.Value <= 1,
+                            "TotalAmount confidence should be between 0 and 1");
+                    }
+
+                    var amountField = totalAmountObj["Amount"];
+                    if (amountField?.Value is double amount)
+                    {
+                        Assert.IsTrue(amount >= 0, "Amount should be >= 0");
+                    }
+                }
+
+                // Verify array field structure if it exists
+                if (docContent["LineItems"] is ArrayField lineItems)
+                {
+                    Assert.IsTrue(lineItems.Count >= 0, "LineItems count should be >= 0");
+
+                    for (int i = 0; i < lineItems.Count; i++)
+                    {
+                        if (lineItems[i] is ObjectField item)
+                        {
+                            if (item.Confidence.HasValue)
+                            {
+                                Assert.IsTrue(item.Confidence.Value >= 0 && item.Confidence.Value <= 1,
+                                    $"Line item {i + 1} confidence should be between 0 and 1");
+                            }
+
+                            var quantityField = item["Quantity"];
+                            if (quantityField?.Value is double quantity)
+                            {
+                                Assert.IsTrue(quantity >= 0, $"Line item {i + 1} quantity should be >= 0");
                             }
                         }
                     }

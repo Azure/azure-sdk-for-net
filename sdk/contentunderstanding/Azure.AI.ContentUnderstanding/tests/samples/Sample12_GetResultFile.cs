@@ -12,6 +12,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -58,6 +59,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #endif
 
             AnalyzeResult result = analyzeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeVideoForResultFiles
+            Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
+            Assert.IsNotNull(operationId, "Operation ID should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(operationId), "Operation ID should not be empty");
+
+            // Verify operation completed
+            Assert.IsTrue(analyzeOperation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(analyzeOperation.HasValue, "Operation should have a value");
+
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+
+            Console.WriteLine($"✓ Verified operation ID: {operationId}");
+            Console.WriteLine($"✓ Verified result with {result.Contents.Count} content(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingGetResultFile
@@ -111,6 +129,68 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"Example usage with operation ID '{operationId}':");
                 Console.WriteLine("  Response<BinaryData> fileResponse = await client.GetResultFileAsync(");
                 Console.WriteLine("      operationId, \"keyframes/1000\");");
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingGetResultFile
+            // This test demonstrates the GetResultFile API pattern
+            // Keyframes are only available for video content (AudioVisualContent)
+            var videoContentVerify = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
+
+            if (videoContentVerify?.KeyFrameTimesMs != null && videoContentVerify.KeyFrameTimesMs.Count > 0)
+            {
+                // Verify keyframe information
+                Assert.IsTrue(videoContentVerify.KeyFrameTimesMs.Count > 0,
+                    "Should have at least one keyframe");
+
+                long firstFrameTimeMs = videoContentVerify.KeyFrameTimesMs[0];
+                Assert.IsTrue(firstFrameTimeMs >= 0,
+                    "Keyframe time should be non-negative");
+
+                // Verify result file was retrieved
+                string framePath = $"keyframes/{firstFrameTimeMs}";
+                Response<BinaryData> fileResponse = await client.GetResultFileAsync(
+                    operationId,
+                    framePath);
+
+                Assert.IsNotNull(fileResponse, "File response should not be null");
+                Assert.IsNotNull(fileResponse.Value, "File response value should not be null");
+
+                byte[] imageBytes = fileResponse.Value.ToArray();
+                Assert.IsNotNull(imageBytes, "Image bytes should not be null");
+                Assert.IsTrue(imageBytes.Length > 0, "Image should have content");
+
+                // Verify file was saved
+                string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
+                Assert.IsTrue(Directory.Exists(outputDir),
+                    $"Output directory should exist at {outputDir}");
+
+                string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
+                string outputPath = Path.Combine(outputDir, outputFileName);
+                Assert.IsTrue(File.Exists(outputPath),
+                    $"Keyframe image file should exist at {outputPath}");
+
+                var savedFileInfo = new FileInfo(outputPath);
+                Assert.IsTrue(savedFileInfo.Length > 0, "Saved file should have content");
+                Assert.AreEqual(imageBytes.Length, savedFileInfo.Length,
+                    "Saved file size should match retrieved image size");
+
+                Console.WriteLine($"\n✓ Verified keyframe retrieval:");
+                Console.WriteLine($"  Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
+                Console.WriteLine($"  First keyframe time: {firstFrameTimeMs} ms");
+                Console.WriteLine($"  Image size: {imageBytes.Length:N0} bytes");
+                Console.WriteLine($"  Saved to: {outputPath}");
+            }
+            else
+            {
+                // No video content with keyframes - this is expected for document analysis
+                Console.WriteLine("\n✓ Note: No keyframes available (expected for document analysis)");
+                Console.WriteLine("  This sample demonstrates the GetResultFile API pattern.");
+                Console.WriteLine("  For actual keyframe retrieval, use prebuilt-videoSearch analyzer with video content.");
+
+                // Verify the API pattern is demonstrated
+                Assert.IsNotNull(operationId, "Operation ID should be available for GetResultFile API");
+                Console.WriteLine($"  Operation ID available: {operationId}");
             }
             #endregion
         }

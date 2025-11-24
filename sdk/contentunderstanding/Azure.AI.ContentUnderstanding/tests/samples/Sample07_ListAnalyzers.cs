@@ -12,6 +12,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -90,6 +91,55 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
             }
 #endif
+            #endregion
+
+            #region Assertion:ContentUnderstandingListAnalyzers
+            Assert.IsNotNull(analyzers, "Analyzers list should not be null");
+            Assert.IsTrue(analyzers.Count > 0, "Should have at least one analyzer");
+
+            // Verify prebuilt analyzers exist (there should always be some prebuilt analyzers)
+            Assert.IsTrue(prebuiltCount > 0, "Should have at least one prebuilt analyzer");
+            Assert.AreEqual(analyzers.Count, prebuiltCount + customCount,
+                "Total count should equal prebuilt + custom count");
+
+            // Verify each analyzer has required properties
+            foreach (var analyzer in analyzers)
+            {
+                Assert.IsNotNull(analyzer, "Analyzer should not be null");
+                Assert.IsNotNull(analyzer.AnalyzerId, "Analyzer ID should not be null");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(analyzer.AnalyzerId),
+                    "Analyzer ID should not be empty or whitespace");
+
+                // Status may be null for some analyzers, but if present should be valid
+                // Description is optional, so no assertion needed
+            }
+
+            // Verify common prebuilt analyzers exist
+            var analyzerIds = analyzers.Select(a => a.AnalyzerId).ToList();
+            var commonPrebuiltAnalyzers = new[]
+            {
+                "prebuilt-document",
+                "prebuilt-documentSearch",
+                "prebuilt-invoice"
+            };
+
+            foreach (var prebuiltId in commonPrebuiltAnalyzers)
+            {
+                Assert.IsTrue(analyzerIds.Contains(prebuiltId),
+                    $"Should contain common prebuilt analyzer: {prebuiltId}");
+            }
+
+            // Verify prebuilt analyzer naming convention
+            var prebuiltAnalyzers = analyzers.Where(a => a.AnalyzerId?.StartsWith("prebuilt-") == true).ToList();
+            foreach (var prebuilt in prebuiltAnalyzers)
+            {
+                Assert.IsTrue(prebuilt.AnalyzerId!.StartsWith("prebuilt-"),
+                    $"Prebuilt analyzer ID should start with 'prebuilt-': {prebuilt.AnalyzerId}");
+            }
+
+            Console.WriteLine($"\n✓ Verification completed:");
+            Console.WriteLine($"  Total analyzers: {analyzers.Count}");
+            Console.WriteLine($"  Prebuilt: {prebuiltCount}, Custom: {customCount}");
             #endregion
         }
     }

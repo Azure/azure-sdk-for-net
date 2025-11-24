@@ -13,6 +13,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -45,6 +46,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("Prebuilt-documentSearch Analyzer:");
             Console.WriteLine(analyzerJson);
             #endregion
+
+            #region Assertion:ContentUnderstandingGetPrebuiltAnalyzer
+            Assert.IsNotNull(response, "Response should not be null");
+            Assert.IsNotNull(analyzer, "Analyzer should not be null");
+            Assert.IsNotNull(analyzerJson, "Analyzer JSON should not be null");
+            Assert.IsTrue(analyzerJson.Length > 0, "Analyzer JSON should not be empty");
+
+            // Verify raw response
+            var rawResponse = response.GetRawResponse();
+            Assert.IsNotNull(rawResponse, "Raw response should not be null");
+            Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
+            #endregion
         }
 
         [RecordedTest]
@@ -73,6 +86,24 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string invoiceAnalyzerJson = JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
             Console.WriteLine("Prebuilt-invoice Analyzer:");
             Console.WriteLine(invoiceAnalyzerJson);
+            #endregion
+
+            #region Assertion:ContentUnderstandingGetPrebuiltInvoice
+            Assert.IsNotNull(invoiceResponse, "Response should not be null");
+            Assert.IsNotNull(invoiceAnalyzer, "Invoice analyzer should not be null");
+            Assert.IsNotNull(invoiceAnalyzerJson, "Invoice analyzer JSON should not be null");
+            Assert.IsTrue(invoiceAnalyzerJson.Length > 0, "Invoice analyzer JSON should not be empty");
+
+            // Verify invoice analyzer has field schema (prebuilt-invoice should have predefined fields)
+            Assert.IsNotNull(invoiceAnalyzer.FieldSchema, "Invoice analyzer should have field schema");
+            Assert.IsNotNull(invoiceAnalyzer.FieldSchema!.Fields, "Invoice analyzer should have fields");
+            Assert.IsTrue(invoiceAnalyzer.FieldSchema.Fields.Count > 0,
+                "Invoice analyzer should have at least one field");
+
+            // Verify raw response
+            var rawResponse = invoiceResponse.GetRawResponse();
+            Assert.IsNotNull(rawResponse, "Raw response should not be null");
+            Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
             #endregion
         }
 
@@ -179,6 +210,55 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 string analyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
                 Console.WriteLine("Custom Analyzer:");
                 Console.WriteLine(analyzerJson);
+                #endregion
+
+                #region Assertion:ContentUnderstandingGetCustomAnalyzer
+                Assert.IsNotNull(response, "Response should not be null");
+                Assert.IsNotNull(retrievedAnalyzer, "Retrieved analyzer should not be null");
+                Assert.IsNotNull(analyzerJson, "Analyzer JSON should not be null");
+                Assert.IsTrue(analyzerJson.Length > 0, "Analyzer JSON should not be empty");
+
+                // Verify the analyzer properties match what we created
+                Assert.AreEqual("prebuilt-document", retrievedAnalyzer.BaseAnalyzerId,
+                    "Base analyzer ID should match");
+                Assert.AreEqual("Test analyzer for GetAnalyzer sample", retrievedAnalyzer.Description,
+                    "Description should match");
+
+                // Verify field schema
+                Assert.IsNotNull(retrievedAnalyzer.FieldSchema, "Field schema should not be null");
+                Assert.AreEqual("test_schema", retrievedAnalyzer.FieldSchema!.Name,
+                    "Schema name should match");
+                Assert.IsNotNull(retrievedAnalyzer.FieldSchema.Fields, "Fields should not be null");
+                Assert.AreEqual(1, retrievedAnalyzer.FieldSchema.Fields.Count,
+                    "Should have 1 custom field");
+                Assert.IsTrue(retrievedAnalyzer.FieldSchema.Fields.ContainsKey("company_name"),
+                    "Should contain company_name field");
+
+                // Verify field definition
+                var companyNameField = retrievedAnalyzer.FieldSchema.Fields["company_name"];
+                Assert.AreEqual(ContentFieldType.String, companyNameField.Type,
+                    "Field type should be String");
+                Assert.AreEqual(GenerationMethod.Extract, companyNameField.Method,
+                    "Field method should be Extract");
+                Assert.AreEqual("Name of the company", companyNameField.Description,
+                    "Field description should match");
+
+                // Verify config
+                Assert.IsNotNull(retrievedAnalyzer.Config, "Config should not be null");
+                Assert.AreEqual(true, retrievedAnalyzer.Config!.ReturnDetails,
+                    "ReturnDetails should be true");
+
+                // Verify models
+                Assert.IsNotNull(retrievedAnalyzer.Models, "Models should not be null");
+                Assert.IsTrue(retrievedAnalyzer.Models.Count >= 1,
+                    "Should have at least 1 model mapping");
+                Assert.IsTrue(retrievedAnalyzer.Models.ContainsKey("completion"),
+                    "Should contain completion model");
+
+                // Verify raw response
+                var rawResponse = response.GetRawResponse();
+                Assert.IsNotNull(rawResponse, "Raw response should not be null");
+                Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
                 #endregion
             }
             finally

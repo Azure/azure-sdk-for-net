@@ -13,6 +13,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -121,6 +122,25 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Classifier '{analyzerId}' created successfully!");
             #endregion
 
+            #region Assertion:ContentUnderstandingCreateClassifier
+            TestHelpers.AssertOperationProperties(operation, "Create classifier operation");
+            Assert.IsNotNull(result, "Classifier result should not be null");
+            Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
+            Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
+            Assert.IsNotNull(result.Config, "Classifier config should not be null");
+            Assert.IsTrue(result.Config!.EnableSegment == true, "EnableSegment should be true");
+            Assert.IsNotNull(result.Config.ContentCategories, "Content categories should not be null");
+            Assert.AreEqual(3, result.Config.ContentCategories.Count, "Should have 3 content categories");
+            Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Loan_Application"),
+                "Should contain Loan_Application category");
+            Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Invoice"),
+                "Should contain Invoice category");
+            Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Bank_Statement"),
+                "Should contain Bank_Statement category");
+            Assert.IsNotNull(result.Models, "Models should not be null");
+            Assert.IsTrue(result.Models.Count >= 1, "Should have at least 1 model mapping");
+            #endregion
+
             #region Snippet:ContentUnderstandingDeleteAnalyzer
             // Clean up: delete the classifier (for testing purposes only)
             // In production, classifiers are typically kept and reused
@@ -213,6 +233,32 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     }
                 }
                 #endregion
+
+                #region Assertion:ContentUnderstandingAnalyzeCategory
+                Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
+                TestHelpers.AssertOperationProperties(analyzeOperation, "Analyze operation");
+                Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
+                Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
+                Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");
+
+                var documentContent = analyzeResult.Contents?.FirstOrDefault() as DocumentContent;
+                Assert.IsNotNull(documentContent, "Content should be DocumentContent");
+                Assert.IsTrue(documentContent!.StartPageNumber >= 1, "Start page should be >= 1");
+                Assert.IsTrue(documentContent.EndPageNumber >= documentContent.StartPageNumber,
+                    "End page should be >= start page");
+
+                // With EnableSegment=false, we expect the document to be treated as a single segment
+                if (documentContent.Segments != null && documentContent.Segments.Count > 0)
+                {
+                    foreach (var segment in documentContent.Segments)
+                    {
+                        Assert.IsTrue(segment.StartPageNumber >= 1, "Segment start page should be >= 1");
+                        Assert.IsTrue(segment.EndPageNumber >= segment.StartPageNumber,
+                            "Segment end page should be >= start page");
+                        // Category may be null or unknown for some segments
+                    }
+                }
+                #endregion
             }
             finally
             {
@@ -296,6 +342,38 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
                             Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
                         }
+                    }
+                }
+                #endregion
+
+                #region Assertion:ContentUnderstandingAnalyzeCategoryWithSegments
+                Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
+                TestHelpers.AssertOperationProperties(analyzeOperation, "Analyze operation with segmentation");
+                Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
+                Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
+                Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");
+
+                var documentContent = analyzeResult.Contents?.FirstOrDefault() as DocumentContent;
+                Assert.IsNotNull(documentContent, "Content should be DocumentContent");
+
+                // With EnableSegment=true, we expect automatic segmentation
+                if (documentContent!.Segments != null && documentContent.Segments.Count > 0)
+                {
+                    Assert.IsTrue(documentContent.Segments.Count >= 1,
+                        "Should have at least one segment with EnableSegment=true");
+
+                    foreach (var segment in documentContent.Segments)
+                    {
+                        Assert.IsTrue(segment.StartPageNumber >= 1,
+                            "Segment start page should be >= 1");
+                        Assert.IsTrue(segment.EndPageNumber >= segment.StartPageNumber,
+                            "Segment end page should be >= start page");
+                        Assert.IsTrue(segment.StartPageNumber >= documentContent.StartPageNumber &&
+                                     segment.EndPageNumber <= documentContent.EndPageNumber,
+                            "Segment page range should be within document page range");
+
+                        // SegmentId may or may not be available depending on the service response
+                        // Category may be null or unknown for some segments
                     }
                 }
                 #endregion

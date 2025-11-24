@@ -12,6 +12,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -78,11 +79,35 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var sourceResult = createOperation.Value;
             Console.WriteLine($"Source analyzer '{sourceAnalyzerId}' created successfully!");
 
+            #region Assertion:ContentUnderstandingCreateSourceAnalyzer
+            TestHelpers.AssertOperationProperties(createOperation, "Create source analyzer operation");
+            Assert.IsNotNull(sourceResult, "Source analyzer result should not be null");
+            Assert.AreEqual("prebuilt-document", sourceResult.BaseAnalyzerId, "Base analyzer ID should match");
+            Assert.AreEqual("Source analyzer for copying", sourceResult.Description, "Description should match");
+            Assert.IsNotNull(sourceResult.Config, "Config should not be null");
+            Assert.IsNotNull(sourceResult.FieldSchema, "Field schema should not be null");
+            Assert.AreEqual(2, sourceResult.FieldSchema!.Fields.Count, "Should have 2 fields");
+            Assert.IsTrue(sourceResult.Tags.ContainsKey("modelType"), "Should contain modelType tag");
+            Assert.AreEqual("in_development", sourceResult.Tags["modelType"], "modelType tag should match");
+            Console.WriteLine($"✓ Verified source analyzer '{sourceAnalyzerId}' created successfully");
+            #endregion
+
             // Get the source analyzer to see its description and tags before copying
             var sourceResponse = await client.GetAnalyzerAsync(sourceAnalyzerId);
             ContentAnalyzer sourceAnalyzerInfo = sourceResponse.Value;
             Console.WriteLine($"Source analyzer description: {sourceAnalyzerInfo.Description}");
             Console.WriteLine($"Source analyzer tags: {string.Join(", ", sourceAnalyzerInfo.Tags.Select(kvp => $"{kvp.Key}={kvp.Value}"))}");
+
+            #region Assertion:ContentUnderstandingGetSourceAnalyzer
+            Assert.IsNotNull(sourceResponse, "Source analyzer response should not be null");
+            Assert.IsNotNull(sourceAnalyzerInfo, "Source analyzer info should not be null");
+            Assert.AreEqual("Source analyzer for copying", sourceAnalyzerInfo.Description,
+                "Source description should match");
+            Assert.IsTrue(sourceAnalyzerInfo.Tags.ContainsKey("modelType"),
+                "Source should contain modelType tag");
+            Assert.AreEqual("in_development", sourceAnalyzerInfo.Tags["modelType"],
+                "Source modelType tag should be 'in_development'");
+            #endregion
 
             try
             {
@@ -100,6 +125,38 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     targetAnalyzerId,
                     sourceAnalyzerId);
 #endif
+                #endregion
+
+                #region Assertion:ContentUnderstandingCopyAnalyzer
+                // Verify the target analyzer was created by copying
+                var copiedResponse = await client.GetAnalyzerAsync(targetAnalyzerId);
+                Assert.IsNotNull(copiedResponse, "Copied analyzer response should not be null");
+
+                ContentAnalyzer copiedAnalyzer = copiedResponse.Value;
+                Assert.IsNotNull(copiedAnalyzer, "Copied analyzer should not be null");
+
+                // Verify the copied analyzer has the same properties as the source
+                Assert.AreEqual(sourceAnalyzerInfo.BaseAnalyzerId, copiedAnalyzer.BaseAnalyzerId,
+                    "Copied analyzer should have same base analyzer ID");
+                Assert.AreEqual(sourceAnalyzerInfo.Description, copiedAnalyzer.Description,
+                    "Copied analyzer should have same description");
+
+                // Verify field schema was copied
+                Assert.IsNotNull(copiedAnalyzer.FieldSchema, "Copied analyzer should have field schema");
+                Assert.AreEqual(sourceAnalyzerInfo.FieldSchema!.Fields.Count, copiedAnalyzer.FieldSchema!.Fields.Count,
+                    "Copied analyzer should have same number of fields");
+                Assert.IsTrue(copiedAnalyzer.FieldSchema.Fields.ContainsKey("company_name"),
+                    "Copied analyzer should contain company_name field");
+                Assert.IsTrue(copiedAnalyzer.FieldSchema.Fields.ContainsKey("total_amount"),
+                    "Copied analyzer should contain total_amount field");
+
+                // Verify tags were copied
+                Assert.IsTrue(copiedAnalyzer.Tags.ContainsKey("modelType"),
+                    "Copied analyzer should contain modelType tag");
+                Assert.AreEqual("in_development", copiedAnalyzer.Tags["modelType"],
+                    "Copied analyzer should have same tag value");
+
+                Console.WriteLine($"✓ Verified analyzer copied from '{sourceAnalyzerId}' to '{targetAnalyzerId}'");
                 #endregion
 
                 // Step 3: Update the target analyzer with a production tag
@@ -144,6 +201,38 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"Updated target analyzer description: {updatedTargetAnalyzer.Description}");
                 Console.WriteLine($"Updated target analyzer tag: {updatedTargetAnalyzer.Tags["modelType"]}");
 #endif
+                #endregion
+
+                #region Assertion:ContentUnderstandingUpdateAndVerifyAnalyzer
+                Assert.IsNotNull(targetResponse, "Target analyzer response should not be null");
+                Assert.IsNotNull(targetAnalyzer, "Target analyzer should not be null");
+
+                Assert.IsNotNull(updatedResponse, "Updated analyzer response should not be null");
+                Assert.IsNotNull(updatedTargetAnalyzer, "Updated target analyzer should not be null");
+
+                // Verify description is preserved from copy (not changed by tag-only update)
+                Assert.AreEqual("Source analyzer for copying", updatedTargetAnalyzer.Description,
+                    "Description should be preserved from source");
+
+                // Verify tag was updated
+                Assert.IsTrue(updatedTargetAnalyzer.Tags.ContainsKey("modelType"),
+                    "Updated analyzer should contain modelType tag");
+                Assert.AreEqual("model_in_production", updatedTargetAnalyzer.Tags["modelType"],
+                    "Tag should be updated to 'model_in_production'");
+
+                // Verify field schema is still intact after update
+                Assert.IsNotNull(updatedTargetAnalyzer.FieldSchema,
+                    "Field schema should still exist after update");
+                Assert.AreEqual(2, updatedTargetAnalyzer.FieldSchema!.Fields.Count,
+                    "Should still have 2 fields after update");
+
+                // Verify base analyzer ID is preserved
+                Assert.AreEqual(sourceAnalyzerInfo.BaseAnalyzerId, updatedTargetAnalyzer.BaseAnalyzerId,
+                    "Base analyzer ID should be preserved");
+
+                Console.WriteLine($"✓ Verified target analyzer updated successfully");
+                Console.WriteLine($"  Description: {updatedTargetAnalyzer.Description}");
+                Console.WriteLine($"  Tag modelType: in_development → model_in_production");
                 #endregion
             }
             finally
