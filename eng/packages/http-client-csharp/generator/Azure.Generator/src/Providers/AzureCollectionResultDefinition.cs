@@ -12,6 +12,7 @@ using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -235,7 +236,7 @@ namespace Azure.Generator.Providers
                 Client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature;
 
             // The next link request method may not contain all the same parameters as the original create request method.
-            var createNextLinkParameters = new HashSet<string>(createNextLinkRequestMethodSignature.Parameters.Select(p => p.Name));
+            var createNextLinkParameters = new HashSet<string>(createNextLinkRequestMethodSignature.Parameters.Select(p => p.Name.ToVariableName()));
 
             return new TernaryConditionalExpression(
                 nextPageUri.NotEqual(Null),
@@ -245,7 +246,7 @@ namespace Azure.Generator.Providers
                         nextPageUri,
                         .. ApplyRequestArgumentTransformations(
                             pageSizeVariable,
-                            RequestFields.Where(f => createNextLinkParameters.Contains(f.AsParameter.Name)))
+                            RequestFields.Where(f => createNextLinkParameters.Contains(f.AsParameter.Name.ToVariableName())))
                     ]),
                 ClientField.Invoke(
                     CreateRequestMethodName,
