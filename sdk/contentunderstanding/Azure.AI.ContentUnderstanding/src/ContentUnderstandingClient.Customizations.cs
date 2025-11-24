@@ -48,8 +48,11 @@ namespace Azure.AI.ContentUnderstanding
 
             AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), new ChangeTrackingDictionary<string, BinaryData>());
             Operation<BinaryData> result = await AnalyzeAsync(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
+            string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
+            Console.WriteLine($"DEBUG: AnalyzeAsync extracted operationId={operationId}");
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
-            return new AnalyzeResultOperation(converted);
+            return new AnalyzeResultOperation(converted, operationId);
         }
 
         /// <summary> Extract content and fields from input. </summary>
@@ -71,8 +74,10 @@ namespace Azure.AI.ContentUnderstanding
 
             AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), new ChangeTrackingDictionary<string, BinaryData>());
             Operation<BinaryData> result = Analyze(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext());
+            // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
+            string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.Analyze");
-            return new AnalyzeResultOperation(converted);
+            return new AnalyzeResultOperation(converted, operationId);
         }
 
         /// <summary> Extract content and fields from binary input. </summary>
@@ -99,8 +104,10 @@ namespace Azure.AI.ContentUnderstanding
 
             // Ignore stringEncoding parameter - always use utf16 for .NET
             Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(BinaryData.FromBytes(binaryInput)), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
+            string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
-            return new AnalyzeResultOperation(converted);
+            return new AnalyzeResultOperation(converted, operationId);
         }
 
         /// <summary> Extract content and fields from binary input. </summary>
@@ -127,8 +134,33 @@ namespace Azure.AI.ContentUnderstanding
 
             // Ignore stringEncoding parameter - always use utf16 for .NET
             Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(BinaryData.FromBytes(binaryInput)), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext());
+            // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
+            string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
-            return new AnalyzeResultOperation(converted);
+            return new AnalyzeResultOperation(converted, operationId);
+        }
+
+        /// <summary>
+        /// Extracts the operation ID from an Operation&lt;BinaryData&gt; by reading the Operation-Location header.
+        /// </summary>
+        private static string? ExtractOperationIdFromBinaryDataOperation(Operation<BinaryData> operation)
+        {
+            var rawResponse = operation.GetRawResponse();
+            if (rawResponse != null && rawResponse.Headers.TryGetValue("Operation-Location", out var operationLocation))
+            {
+                // Extract operation ID from the URL: .../analyzerResults/{operationId}
+                // Use the same approach as the old extension method for consistency
+                if (Uri.TryCreate(operationLocation, UriKind.Absolute, out var uri))
+                {
+                    var segments = uri.Segments;
+                    if (segments.Length > 0)
+                    {
+                        return segments[segments.Length - 1].TrimEnd('/');
+                    }
+                }
+            }
+
+            return null;
         }
 
         // TODO: Uncomment these methods when ready to regenerate the SDK.

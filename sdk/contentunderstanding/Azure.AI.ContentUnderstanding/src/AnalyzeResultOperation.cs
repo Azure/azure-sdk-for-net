@@ -3,7 +3,6 @@
 
 #nullable enable
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,10 +15,6 @@ namespace Azure.AI.ContentUnderstanding
     /// </summary>
     public class AnalyzeResultOperation : Operation<AnalyzeResult>
     {
-        // Operation-Location header pattern:
-        // https://<endpoint>/analyzerResults/{operationId}?api-version=<version>
-        private static readonly Regex s_operationLocationRegex = new(@"[^/]+/([^?/]+)(?:\?|$)", RegexOptions.Compiled);
-
         private readonly Operation<AnalyzeResult> _innerOperation;
         private readonly string? _operationId;
 
@@ -35,17 +30,18 @@ namespace Azure.AI.ContentUnderstanding
         /// Initializes a new instance of <see cref="AnalyzeResultOperation"/>.
         /// </summary>
         /// <param name="innerOperation">The inner operation to wrap.</param>
-        public AnalyzeResultOperation(Operation<AnalyzeResult> innerOperation)
+        /// <param name="operationId">Optional operation ID. If not provided, will be extracted from the operation's raw response.</param>
+        public AnalyzeResultOperation(Operation<AnalyzeResult> innerOperation, string? operationId = null)
         {
             _innerOperation = innerOperation ?? throw new ArgumentNullException(nameof(innerOperation));
-            _operationId = ExtractOperationId(innerOperation);
+            _operationId = operationId ?? ExtractOperationId(innerOperation);
         }
 
         /// <summary>
         /// Gets the operation ID from the Operation-Location header of the operation response.
         /// Returns null if the operation ID is not available.
         /// </summary>
-        public string? OperationId => _operationId;
+        public string OperationId => Id;
 
         /// <inheritdoc/>
         public override string Id => _operationId ?? throw new InvalidOperationException("The operation ID was not present in the service response.");
@@ -89,13 +85,17 @@ namespace Azure.AI.ContentUnderstanding
         private static string? ExtractOperationId(Operation<AnalyzeResult> operation)
         {
             var rawResponse = operation.GetRawResponse();
-            if (rawResponse.Headers.TryGetValue("Operation-Location", out var operationLocation))
+            if (rawResponse != null && rawResponse.Headers.TryGetValue("Operation-Location", out var operationLocation))
             {
                 // Extract operation ID from the URL: .../analyzerResults/{operationId}
-                var match = s_operationLocationRegex.Match(operationLocation);
-                if (match.Success && match.Groups.Count > 1)
+                // Use the same approach as the old extension method for consistency
+                if (Uri.TryCreate(operationLocation, UriKind.Absolute, out var uri))
                 {
-                    return match.Groups[1].Value.TrimEnd('/');
+                    var segments = uri.Segments;
+                    if (segments.Length > 0)
+                    {
+                        return segments[segments.Length - 1].TrimEnd('/');
+                    }
                 }
             }
 
