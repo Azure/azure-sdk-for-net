@@ -323,7 +323,7 @@ function Copy-LocalGeneratorDlls {
     $dllsToCopy = @(
         "Azure.Generator.dll",
         "Microsoft.TypeSpec.Generator.dll",
-        "Microsoft.Typespec.Generator.ClientModel.dll",
+        "Microsoft.TypeSpec.Generator.ClientModel.dll",
         "Microsoft.TypeSpec.Generator.Input.dll"
     )
 
