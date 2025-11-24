@@ -178,9 +178,9 @@ function New-MarkdownReport {
     $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
     $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
-    # Calculate TypeSpec library counts (only those with tsp-location.yaml)
+    # Calculate TypeSpec library counts (only those with tsp-location.yaml or Azure.AI.OpenAI with special handling)
     $mgmtTypeSpecLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true }
-    $dataTypeSpecLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true }
+    $dataTypeSpecLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" }
 
     # Calculate migration percentages (migrated / total TypeSpec libraries)
     $mgmtMigrated = $mgmtNewEmitter.Count
@@ -223,8 +223,8 @@ function New-MarkdownReport {
     $report += "**Migration Status**: $dataMigrated / $dataTypeSpecTotal ($dataPercentage%)`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
-    # Only include libraries that have tsp-location.yaml
-    $sortedDataLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true } | Sort-Object service, library
+    # Only include libraries that have tsp-location.yaml or are Azure.AI.OpenAI (special case with hardcoded handling)
+    $sortedDataLibs = $dataLibraries | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" } | Sort-Object service, library
     foreach ($lib in $sortedDataLibs) {
         $newEmitter = if ($lib.generator -notin @("Swagger", "TSP-Old", "No Generator")) { "✅" } else { "" }
         $report += "| $($lib.service) | $($lib.library) | $newEmitter |"

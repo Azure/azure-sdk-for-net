@@ -428,9 +428,10 @@ function getResourceScopeOfMethod(
   return undefined;
 }
 
-// TODO -- this logic needs to be refined in the near future.
 function getOperationScope(path: string): ResourceScope {
-  if (
+  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
+    return ResourceScope.Extension;
+  } else if (
     path.startsWith(
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/"
     )
