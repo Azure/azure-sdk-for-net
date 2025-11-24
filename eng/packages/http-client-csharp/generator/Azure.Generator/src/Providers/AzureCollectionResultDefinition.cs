@@ -193,75 +193,85 @@ namespace Azure.Generator.Providers
                 null,
                 [PageSizeHintParameter, nextPageParameter]);
 
-            var body = new MethodBodyStatement[]
+            var bodyStatements = new List<MethodBodyStatement>();
+
+            // If there's a page size field, declare a local variable that uses pageSizeHint if available, otherwise the stored field
+            VariableExpression? pageSizeVariable = null;
+            if (PageSizeField != null)
             {
-                Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable),
-                UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
-                scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
-                new TryCatchFinallyStatement
-                    (BuildTryExpression(), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()]))
-            };
+                bodyStatements.Add(Declare("pageSize", PageSizeField.Type,
+                    new TernaryConditionalExpression(
+                        PageSizeHintParameter.Property("HasValue"),
+                        PageSizeHintParameter.Property("Value"),
+                        PageSizeField),
+                    out pageSizeVariable));
+            }
+
+            bodyStatements.Add(Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable));
+            bodyStatements.Add(UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable));
+            bodyStatements.Add(scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate());
+            bodyStatements.Add(new TryCatchFinallyStatement
+                (BuildTryExpression(), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()])));
 
             ValueExpression BuildCreateHttpMessageExpression()
             {
                 if (_paging.NextLink is not null)
                 {
-                    return InvokeCreateRequestForNextLink(nextPageParameter);
+                    return InvokeCreateRequestForNextLink(nextPageParameter, pageSizeVariable);
                 }
 
-                return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations()).As<HttpMessage>();
+                return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations(pageSizeVariable)).As<HttpMessage>();
             }
 
             TryExpression BuildTryExpression()
                 => new TryExpression(Return(ClientField.Property("Pipeline").Invoke(IsAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, RequestOptionsField], IsAsync)));
 
-            return new MethodProvider(signature, body, this);
+            return new MethodProvider(signature, bodyStatements.ToArray(), this);
         }
 
-        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri, VariableExpression? pageSizeVariable)
         {
-            var createNextLinkRequestMethodName =
-                Client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature.Name;
+            var createNextLinkRequestMethodSignature =
+                Client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature;
+
+            // The next link request method may not contain all the same parameters as the original create request method.
+            var createNextLinkParameters = new HashSet<string>(createNextLinkRequestMethodSignature.Parameters.Select(p => p.Name));
 
             return new TernaryConditionalExpression(
                 nextPageUri.NotEqual(Null),
                 ClientField.Invoke(
-                    createNextLinkRequestMethodName,
-                    [nextPageUri, .. ApplyRequestArgumentTransformations()]),
+                    createNextLinkRequestMethodSignature.Name,
+                    [
+                        nextPageUri,
+                        .. ApplyRequestArgumentTransformations(
+                            pageSizeVariable,
+                            RequestFields.Where(f => createNextLinkParameters.Contains(f.AsParameter.Name)))
+                    ]),
                 ClientField.Invoke(
                     CreateRequestMethodName,
-                    [.. ApplyRequestArgumentTransformations()])).As<HttpMessage>();
+                    [.. ApplyRequestArgumentTransformations(pageSizeVariable)])).As<HttpMessage>();
         }
 
-        private IReadOnlyList<ValueExpression> ApplyRequestArgumentTransformations()
+        private IReadOnlyList<ValueExpression> ApplyRequestArgumentTransformations(
+            VariableExpression? pageSizeVariable,
+            IEnumerable<FieldProvider>? requestFields = null)
         {
             FieldProvider? pageSizeField = null;
+            requestFields ??= RequestFields;
 
-            // If there is only a single segment for page size, we will just replace the argument with the page size hint parameter
-            // as the page size parameter is directly mapped to a request parameter.
-            if (PageSizeRootField != null && Paging.PageSizeParameterSegments.Count == 1)
+            if (PageSizeField != null)
             {
-                pageSizeField = PageSizeRootField;
+                pageSizeField = PageSizeField;
             }
 
             if (_paging.ContinuationToken != null)
             {
-                return [.. RequestFields.Select(
+                return [.. requestFields.Select(
                     f => f.Name == NextTokenField?.Name ? ContinuationTokenParameter
-                        : f == pageSizeField ? PageSizeHintParameter : f.AsValueExpression) ];
+                        : f.Name == pageSizeField?.Name && pageSizeVariable != null ? pageSizeVariable : f.AsValueExpression) ];
             }
 
-            return [.. RequestFields.Select(f => f == pageSizeField ? PageSizeHintParameter : f.AsValueExpression)];
-        }
-
-        private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
-        {
-            return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations()).As<HttpMessage>();
-        }
-
-        private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
-        {
-            return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations()).As<HttpMessage>();
+            return [.. requestFields.Select(f => f.Name == pageSizeField?.Name && pageSizeVariable != null ? pageSizeVariable : f.AsValueExpression)];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
