@@ -374,7 +374,7 @@ elseif ($PackageInfoFiles -and $PackageInfoFiles.Count -gt 0) {
     # Lowest Priority: Direct PackageInfoFiles (new method)
     Write-Host "Using PackageInfoFiles parameter with $($PackageInfoFiles.Count) files"
     # Filter out empty strings or whitespace-only entries
-    $ProcessedPackageInfoFiles = $PackageInfoFiles | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+    $ProcessedPackageInfoFiles = @($PackageInfoFiles | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
 }
 else {
     Write-Error "No package information provided. Please provide either 'PackageName', 'ArtifactList', or 'PackageInfoFiles' parameters."
