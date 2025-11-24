@@ -1,6 +1,6 @@
 # Release History
 
-## 1.13.0 (2025-11-26)
+## 1.14.0 (2025-11-26)
 
 ### Features Added
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1da0ccefea2127820defac6496bf4710c0902d78/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
