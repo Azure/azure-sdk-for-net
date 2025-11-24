@@ -38,7 +38,8 @@ export enum ResourceScope {
   Tenant = "Tenant",
   Subscription = "Subscription",
   ResourceGroup = "ResourceGroup",
-  ManagementGroup = "ManagementGroup"
+  ManagementGroup = "ManagementGroup",
+  Extension = "Extension"
 }
 
 export interface ResourceMetadata {

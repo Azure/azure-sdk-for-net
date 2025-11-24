@@ -47,6 +47,18 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynatraceMonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> object. </returns>
+        public virtual DynatraceMonitoredSubscriptionPropertyResource GetDynatraceMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
+        {
+            DynatraceMonitoredSubscriptionPropertyResource.ValidateResourceId(id);
+            return new DynatraceMonitoredSubscriptionPropertyResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DynatraceTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DynatraceTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

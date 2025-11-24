@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    internal partial class DynatraceMonitorResourceMetricRules : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorResourceMetricRules>
+    public partial class DynatraceMonitorResourceMetricRules : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorResourceMetricRules>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorResourceMetricRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 throw new FormatException($"The model {nameof(DynatraceMonitorResourceMetricRules)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(SendingMetrics))
+            {
+                writer.WritePropertyName("sendingMetrics"u8);
+                writer.WriteStringValue(SendingMetrics.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
@@ -81,11 +86,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
+            MetricsSendingStatus? sendingMetrics = default;
             IList<DynatraceMonitorResourceFilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sendingMetrics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sendingMetrics = new MetricsSendingStatus(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("filteringTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,7 +121,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DynatraceMonitorResourceMetricRules(filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>(), serializedAdditionalRawData);
+            return new DynatraceMonitorResourceMetricRules(sendingMetrics, filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorResourceMetricRules>.Write(ModelReaderWriterOptions options)

@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 throw new FormatException($"The model {nameof(DynatraceSsoDetailsContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(UserPrincipal))
-            {
-                writer.WritePropertyName("userPrincipal"u8);
-                writer.WriteStringValue(UserPrincipal);
-            }
+            writer.WritePropertyName("userPrincipal"u8);
+            writer.WriteStringValue(UserPrincipal);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
