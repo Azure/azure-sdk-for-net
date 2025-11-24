@@ -50,7 +50,7 @@ Before using the Content Understanding SDK, you need to set up a Microsoft Found
 After creating your Microsoft Foundry resource, you must grant yourself the **Cognitive Services User** role to enable API calls for setting default GPT deployments:
 
 1. Go to [Azure Portal](https://portal.azure.com/)
-2. Navigate to your Azure AI Foundry resource
+2. Navigate to your Microsoft Foundry resource
 3. Go to **Access Control (IAM)** in the left menu
 4. Click **Add** > **Add role assignment**
 5. Select the **Cognitive Services User** role
@@ -155,8 +155,7 @@ The SDK provides `Operation<T>` types that handle polling automatically when usi
 
 ### Main Classes
 
-* **`ContentUnderstandingClient`** - The main client for analyzing content using prebuilt or custom analyzers
-* **`ContentUnderstandingAdministrationClient`** - The administration client for creating, managing, and configuring analyzers
+* **`ContentUnderstandingClient`** - The main client for analyzing content, as well as creating, managing, and configuring analyzers
 * **`AnalyzeResult`** - Contains the structured results of an analysis operation, including content elements, markdown, and metadata
 
 Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
@@ -200,7 +199,7 @@ See the [samples directory](https://github.com/Azure/azure-sdk-for-net/tree/main
 - Make sure you have the **Cognitive Services User** role assigned to your account
 
 **Error: "Model deployment not found" or "Default model deployment not configured"**
-- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in Azure AI Foundry
+- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in Microsoft Foundry
 - Verify you have configured the default model deployments (see [Configure Model Deployments](#step-3-configure-model-deployments-required-for-prebuilt-analyzers))
 - Check that your deployment names match what you configured in the defaults
 

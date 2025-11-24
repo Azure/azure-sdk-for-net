@@ -255,7 +255,7 @@ This allows you to:
 
 **Solutions**:
 - Run [Sample 00: Configure model deployment defaults][sample00] first
-- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in your Azure AI Foundry resource
+- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in your Microsoft Foundry resource
 - Verify the deployment names match what you configured in Sample 00
 
 ### Build Errors
