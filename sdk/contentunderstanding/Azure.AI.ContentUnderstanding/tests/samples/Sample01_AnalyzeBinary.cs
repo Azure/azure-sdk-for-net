@@ -12,6 +12,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -42,6 +43,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             AnalyzeResult result = operation.Value;
             #endregion
 
+            #region Assertion:ContentUnderstandingAnalyzeBinaryAsync
+            Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
+            TestHelpers.AssertOperationProperties(operation, "Analysis operation");
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            #endregion
+
             #region Snippet:ContentUnderstandingExtractMarkdown
             // A PDF file has only one content element even if it contains multiple pages
             MediaContent? content = null;
@@ -60,6 +67,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     Console.WriteLine("(No markdown content available)");
                 }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingExtractMarkdown
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+            Assert.IsNotNull(content, "Content should not be null");
+            if (content is MediaContent mediaContent)
+            {
+                Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
+                Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
             }
             #endregion
 
@@ -92,6 +110,35 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         Console.WriteLine($"  Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns");
                         tableCounter++;
+                    }
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAccessDocumentProperties
+            if (content is DocumentContent docContent)
+            {
+                Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
+                Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
+                Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
+                    "End page should be >= start page");
+
+                if (docContent.Pages != null && docContent.Pages.Count > 0)
+                {
+                    foreach (var page in docContent.Pages)
+                    {
+                        Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
+                        Assert.IsTrue(page.Width > 0, "Page width should be > 0");
+                        Assert.IsTrue(page.Height > 0, "Page height should be > 0");
+                    }
+                }
+
+                if (docContent.Tables != null && docContent.Tables.Count > 0)
+                {
+                    foreach (var table in docContent.Tables)
+                    {
+                        Assert.IsTrue(table.RowCount > 0, "Table should have at least 1 row");
+                        Assert.IsTrue(table.ColumnCount > 0, "Table should have at least 1 column");
                     }
                 }
             }
