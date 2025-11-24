@@ -41,6 +41,7 @@ namespace Azure.Template.Tests
             // TemplateClient client = CreateClient();
             // var response = await client.YourMethodAsync("parameter");
             // Assert.IsNotNull(response);
+            await Task.CompletedTask;
             throw new NotImplementedException("Update this test with actual client methods");
         }
     }
