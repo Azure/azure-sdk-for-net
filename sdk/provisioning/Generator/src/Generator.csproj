@@ -26,8 +26,7 @@
     <PackageReference Include="Azure.ResourceManager.AppContainers" />
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
     <PackageReference Include="Azure.ResourceManager.AppService" />
-    <!-- <PackageReference Include="Azure.ResourceManager.Cdn" /> -->
-    <ProjectReference Include="..\..\..\cdn\Azure.ResourceManager.Cdn\src\Azure.ResourceManager.Cdn.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Cdn" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
     <PackageReference Include="Azure.ResourceManager.Communication" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
