@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.Compute.Skus</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Azure.ResourceManager.Compute.Skus.</Description>
     <PackageTags>azure;management;arm;resource manager;azure.resourcemanager.compute.skus</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

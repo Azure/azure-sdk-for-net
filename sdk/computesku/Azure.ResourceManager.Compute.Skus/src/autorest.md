@@ -9,7 +9,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: ComputeSku
-namespace: Azure.ResourceManager.Compute.Skus
+namespace: Azure.ResourceManager.Compute
 title: ComputeManagementClient
 # require: https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/readme.md
 tag: split-package-2025-04-01-skus
@@ -28,6 +28,12 @@ use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
+
+override-operation-name:
+  ResourceSkus_List: GetComputeResourceSkus
+
+rename-mapping:
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
 ```
 
 ## Tag: split-package-2025-04-01-skus
