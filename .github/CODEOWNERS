@@ -1089,7 +1089,7 @@
 /sdk/planetarycomputer/Azure.ResourceManager.*/                    @ArthurMa1978 @chahibi @mandarinamdar
 
 # ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @mandarinamdar
+# ServiceOwners:                                                   @chahibi @mandarinamdar
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
