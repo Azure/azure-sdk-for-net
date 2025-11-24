@@ -24,6 +24,7 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string CONTAINER_APP_RESOURCE_ID => WrappedGetRecordedVariable("CONTAINER_APP_RESOURCE_ID", isSecret: false);
         public string KNOWN_CONVERSATION_ID => WrappedGetRecordedVariable("KNOWN_CONVERSATION_ID", isSecret: false);
         public string PARITY_OPENAI_API_KEY => WrappedGetRecordedVariable("OPENAI_API_KEY");
+        public string AI_SEARCH_CONNECTION_NAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
 
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {

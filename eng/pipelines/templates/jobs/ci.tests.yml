@@ -157,6 +157,9 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
+      - pwsh: |
+          dotnet tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
+
       - pwsh: >
           ./eng/scripts/runwithdevopslogging.ps1
           dotnet test eng/service.proj

@@ -594,6 +594,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.ImageGeneration)]
     [TestCase(ToolType.WebSearch)]
     [TestCase(ToolType.Memory)]
+    [TestCase(ToolType.AzureAISearch)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -632,11 +633,22 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(response.GetOutputText().ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
+        if (toolType == ToolType.AzureAISearch)
+        {
+            bool isUriCitationFound = false;
+            // Check Annotation for Azure AI Search tool.
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                isUriCitationFound |= ContainsAnnotation(item);
+            }
+            Assert.That(isUriCitationFound, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
+        }
     }
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.Memory)]
+    [TestCase(ToolType.AzureAISearch)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -679,6 +691,10 @@ public class AgentsTests : AgentsTestBase
                                 annotationMet |= annotation.GetType() == annotationType;
                             }
                         }
+                    }
+                    if (toolType == ToolType.AzureAISearch)
+                    {
+                        annotationMet = ContainsAnnotation(itemDoneUpdate.Item);
                     }
                 }
                 else
@@ -1095,6 +1111,32 @@ public async Task TestToolChoiceWorks()
             protocolRequestOptions);
 
         Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
+    }
+
+    private static bool ContainsAnnotation(ResponseItem item)
+    {
+        bool isUriCitationFound = false;
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        isUriCitationFound = true;
+                        Assert.That(uriAnnotation.Title, Does.Contain("product_info_7.md"), $"Wrong citation title {uriAnnotation.Title}, should be \"product_info_7.md\"");
+                        // The next check is disabled, because of an ADO issue 4836442.
+                        // Assert.That(uriAnnotation.Uri, Does.Contain("www.microsoft.com"), $"Wrong citation title {uriAnnotation.Uri}, should be \"www.microsoft.com\"");
+                    }
+                    else
+                    {
+                        Assert.Fail($"Found unexpected annotation {annotation}");
+                    }
+                }
+            }
+        }
+        return isUriCitationFound;
     }
 
     private static readonly string s_HelloWorkflowYaml = """

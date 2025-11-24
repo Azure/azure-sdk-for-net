@@ -2675,12 +2675,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Trigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Trigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateMemoriesLROPoller
-    {
-        public UpdateMemoriesLROPoller(Azure.AI.Projects.AIProjectMemoryStoresOperations operations, Azure.AI.Projects.MemoryUpdateResult initialResult, int pollingInterval) { }
-        public System.ClientModel.ClientResult<Azure.AI.Projects.MemoryUpdateResult> WaitForCompletion() { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.MemoryUpdateResult>> WaitForCompletionAsync() { throw null; }
-    }
     public partial class UserProfileMemoryItem : Azure.AI.Projects.MemoryItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.UserProfileMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.UserProfileMemoryItem>
     {
         public UserProfileMemoryItem(string memoryId, System.DateTimeOffset updatedAt, string scope, string content) { }
