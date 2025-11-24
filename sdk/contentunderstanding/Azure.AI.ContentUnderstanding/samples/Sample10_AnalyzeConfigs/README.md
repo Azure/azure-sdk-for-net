@@ -1,6 +1,6 @@
 # Sample10_AnalyzeConfigs
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to extract additional features from documents such as charts, hyperlinks, formulas, and annotations.
 For detailed documentation, see [Sample10_AnalyzeConfigs.md](../Sample10_AnalyzeConfigs.md).
 
 ## Prerequisites

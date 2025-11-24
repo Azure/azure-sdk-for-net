@@ -1,6 +1,6 @@
 # Sample09_DeleteAnalyzer
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to delete a custom analyzer.
 For detailed documentation, see [Sample09_DeleteAnalyzer.md](../Sample09_DeleteAnalyzer.md).
 
 ## Prerequisites

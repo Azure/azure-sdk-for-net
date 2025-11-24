@@ -13,7 +13,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
+/// This sample demonstrates how to list all available analyzers in your Microsoft Foundry resource.
 ///
 /// Prerequisites:
 ///     - Azure subscription

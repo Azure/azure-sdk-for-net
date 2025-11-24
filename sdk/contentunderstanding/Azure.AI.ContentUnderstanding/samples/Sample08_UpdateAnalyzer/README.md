@@ -1,6 +1,6 @@
 # Sample08_UpdateAnalyzer
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to update an existing custom analyzer, including updating its description and tags.
 For detailed documentation, see [Sample08_UpdateAnalyzer.md](../Sample08_UpdateAnalyzer.md).
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 # Sample06_GetAnalyzer
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to retrieve information about analyzers, including prebuilt analyzers and custom analyzers.
 For detailed documentation, see [Sample06_GetAnalyzer.md](../Sample06_GetAnalyzer.md).
 
 ## Prerequisites

@@ -12,7 +12,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
+/// This sample demonstrates how to delete a custom analyzer.
 ///
 /// Prerequisites:
 ///     - Azure subscription

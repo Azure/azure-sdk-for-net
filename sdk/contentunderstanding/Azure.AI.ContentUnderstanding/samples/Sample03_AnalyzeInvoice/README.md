@@ -1,6 +1,6 @@
 # Sample03_AnalyzeInvoice
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer.
 For detailed documentation, see [Sample03_AnalyzeInvoice.md](../Sample03_AnalyzeInvoice.md).
 
 ## Prerequisites

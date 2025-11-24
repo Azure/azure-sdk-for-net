@@ -13,7 +13,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
+/// This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents.
 ///
 /// Prerequisites:
 ///     - Azure subscription

@@ -1,6 +1,6 @@
 # Sample11_AnalyzeReturnRawJson
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to access the raw JSON response from analysis operations using protocol methods.
 For detailed documentation, see [Sample11_AnalyzeReturnRawJson.md](../Sample11_AnalyzeReturnRawJson.md).
 
 ## Prerequisites
