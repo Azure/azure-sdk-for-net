@@ -157,14 +157,9 @@ public static partial class AzureChatExtensions
         if (chatCompletion?.Choices?.FirstOrDefault()?.Message?.Patch.GetBytesOrDefaultEx("$.reasoning_content"u8)
             is BinaryData reasoningContentBytes)
         {
-            string serialReasoningContent = reasoningContentBytes.ToString();
-            if (serialReasoningContent.Length > 2
-                && serialReasoningContent[0] == '"'
-                && serialReasoningContent[serialReasoningContent.Length - 1] == '"')
-            {
-                return serialReasoningContent.Substring(1, serialReasoningContent.Length - 2);
-            }
-            return serialReasoningContent;
+            Utf8JsonReader reader = new(reasoningContentBytes);
+            reader.Read();
+            return reader.GetString();
         }
         return null;
     }
