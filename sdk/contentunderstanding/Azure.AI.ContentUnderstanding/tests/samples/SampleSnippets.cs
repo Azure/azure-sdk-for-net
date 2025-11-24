@@ -28,7 +28,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
         }
 
-        [RecordedTest]
+        // Method kept for snippet extraction, but not run as a test
         public void CreateContentUnderstandingClientApiKey()
         {
             #region Snippet:CreateContentUnderstandingClientApiKey

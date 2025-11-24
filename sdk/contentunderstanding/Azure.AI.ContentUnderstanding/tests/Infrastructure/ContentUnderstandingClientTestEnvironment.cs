@@ -57,6 +57,36 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string? TextEmbedding3LargeDeployment => GetRecordedOptionalVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
 
         /// <summary>
+        /// Gets the source resource ID for cross-resource copying (optional).
+        /// </summary>
+        public string? SourceResourceId => GetRecordedOptionalVariable("SOURCE_RESOURCE_ID", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the source region for cross-resource copying (optional).
+        /// </summary>
+        public string? SourceRegion => GetRecordedOptionalVariable("SOURCE_REGION", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the target endpoint for cross-resource copying (optional).
+        /// </summary>
+        public string? TargetEndpoint => GetRecordedOptionalVariable("TARGET_ENDPOINT", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the target resource ID for cross-resource copying (optional).
+        /// </summary>
+        public string? TargetResourceId => GetRecordedOptionalVariable("TARGET_RESOURCE_ID", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the target region for cross-resource copying (optional).
+        /// </summary>
+        public string? TargetRegion => GetRecordedOptionalVariable("TARGET_REGION", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the target API key for cross-resource copying (optional).
+        /// </summary>
+        public string? TargetKey => GetRecordedOptionalVariable("TARGET_KEY", options => options.IsSecret());
+
+        /// <summary>
         /// Creates a file path for a test asset file.
         /// </summary>
         /// <param name="filename">The name of the test asset file.</param>

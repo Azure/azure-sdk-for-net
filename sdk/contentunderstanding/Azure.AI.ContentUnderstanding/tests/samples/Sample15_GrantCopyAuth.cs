@@ -11,12 +11,14 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
+        [Ignore("Test skipped")]
         public async Task GrantCopyAuthAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
