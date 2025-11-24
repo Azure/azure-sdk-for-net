@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class LocationConnectorResource : IJsonModel<LinkerResourceData>
+    public partial class ServiceLinkerLocationConnectorResource : IJsonModel<LinkerResourceData>
     {
         private static LinkerResourceData s_dataDeserializationInstance;
         private static LinkerResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

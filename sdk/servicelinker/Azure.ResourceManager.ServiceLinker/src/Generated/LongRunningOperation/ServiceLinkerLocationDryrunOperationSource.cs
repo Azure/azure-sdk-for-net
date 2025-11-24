@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal class ServiceLinkerLocationDryrunResourceOperationSource : IOperationSource<ServiceLinkerLocationDryrunResource>
+    internal class ServiceLinkerLocationDryrunOperationSource : IOperationSource<ServiceLinkerLocationDryrunResource>
     {
         private readonly ArmClient _client;
 
-        internal ServiceLinkerLocationDryrunResourceOperationSource(ArmClient client)
+        internal ServiceLinkerLocationDryrunOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -294,15 +294,15 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocationConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationConnectorResource.CreateResourceIdentifier" /> to create a <see cref="LocationConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ServiceLinkerLocationConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceLinkerLocationConnectorResource.CreateResourceIdentifier" /> to create a <see cref="ServiceLinkerLocationConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationConnectorResource"/> object. </returns>
-        public virtual LocationConnectorResource GetLocationConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceLinkerLocationConnectorResource"/> object. </returns>
+        public virtual ServiceLinkerLocationConnectorResource GetServiceLinkerLocationConnectorResource(ResourceIdentifier id)
         {
-            LocationConnectorResource.ValidateResourceId(id);
-            return new LocationConnectorResource(Client, id);
+            ServiceLinkerLocationConnectorResource.ValidateResourceId(id);
+            return new ServiceLinkerLocationConnectorResource(Client, id);
         }
     }
 }

@@ -110,7 +110,8 @@ generate-arm-resource-extensions:
 request-path-to-resource-name:
   /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}: LinkerResource
   /{resourceUri}/providers/Microsoft.ServiceLinker/dryruns/{dryrunName}: ServiceLinkerDryrun
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}: ServiceLinkerLocationDryrunResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}: ServiceLinkerLocationDryrun
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}: ServiceLinkerLocationConnector
 
 override-operation-name:
   ConfigurationNames_List: GetServiceLinkerConfigurationNames

@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal class LocationConnectorOperationSource : IOperationSource<LocationConnectorResource>
+    internal class ServiceLinkerLocationConnectorOperationSource : IOperationSource<ServiceLinkerLocationConnectorResource>
     {
         private readonly ArmClient _client;
 
-        internal LocationConnectorOperationSource(ArmClient client)
+        internal ServiceLinkerLocationConnectorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        LocationConnectorResource IOperationSource<LocationConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceLinkerLocationConnectorResource IOperationSource<ServiceLinkerLocationConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
-            return new LocationConnectorResource(_client, data);
+            return new ServiceLinkerLocationConnectorResource(_client, data);
         }
 
-        async ValueTask<LocationConnectorResource> IOperationSource<LocationConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceLinkerLocationConnectorResource> IOperationSource<ServiceLinkerLocationConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<LinkerResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceLinkerContext.Default);
-            return await Task.FromResult(new LocationConnectorResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new ServiceLinkerLocationConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

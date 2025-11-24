@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <summary> Gets a collection of ServiceLinkerLocationDryrunResources in the ResourceGroupResource. </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <returns> An object representing collection of ServiceLinkerLocationDryrunResources and their operations over a ServiceLinkerLocationDryrunResource. </returns>
-        public virtual ServiceLinkerLocationDryrunResourceCollection GetServiceLinkerLocationDryrunResources(AzureLocation location)
+        public virtual ServiceLinkerLocationDryrunCollection GetServiceLinkerLocationDryruns(AzureLocation location)
         {
-            return new ServiceLinkerLocationDryrunResourceCollection(Client, Id, location);
+            return new ServiceLinkerLocationDryrunCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceLinkerLocationDryrunResource>> GetServiceLinkerLocationDryrunResourceAsync(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceLinkerLocationDryrunResource>> GetServiceLinkerLocationDryrunAsync(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceLinkerLocationDryrunResources(location).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceLinkerLocationDryruns(location).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -100,49 +100,17 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceLinkerLocationDryrunResource> GetServiceLinkerLocationDryrunResource(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceLinkerLocationDryrunResource> GetServiceLinkerLocationDryrun(AzureLocation location, string dryrunName, CancellationToken cancellationToken = default)
         {
-            return GetServiceLinkerLocationDryrunResources(location).Get(dryrunName, cancellationToken);
+            return GetServiceLinkerLocationDryruns(location).Get(dryrunName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocationConnectorResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ServiceLinkerLocationConnectorResources in the ResourceGroupResource. </summary>
         /// <param name="location"> The name of Azure region. </param>
-        /// <returns> An object representing collection of LocationConnectorResources and their operations over a LocationConnectorResource. </returns>
-        public virtual LocationConnectorCollection GetLocationConnectors(AzureLocation location)
+        /// <returns> An object representing collection of ServiceLinkerLocationConnectorResources and their operations over a ServiceLinkerLocationConnectorResource. </returns>
+        public virtual ServiceLinkerLocationConnectorCollection GetServiceLinkerLocationConnectors(AzureLocation location)
         {
-            return new LocationConnectorCollection(Client, Id, location);
-        }
-
-        /// <summary>
-        /// Returns Connector resource for a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connector_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="connectorName"> The name of the LinkerResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LocationConnectorResource>> GetLocationConnectorAsync(AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
-        {
-            return await GetLocationConnectors(location).GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return new ServiceLinkerLocationConnectorCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -162,7 +130,7 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,9 +140,41 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocationConnectorResource> GetLocationConnector(AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceLinkerLocationConnectorResource>> GetServiceLinkerLocationConnectorAsync(AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
         {
-            return GetLocationConnectors(location).Get(connectorName, cancellationToken);
+            return await GetServiceLinkerLocationConnectors(location).GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns Connector resource for a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="connectorName"> The name of the LinkerResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceLinkerLocationConnectorResource> GetServiceLinkerLocationConnector(AzureLocation location, string connectorName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceLinkerLocationConnectors(location).Get(connectorName, cancellationToken);
         }
     }
 }

@@ -17,10 +17,10 @@ using Azure.ResourceManager.ServiceLinker.Models;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A Class representing a ServiceLinkerLocationDryrunResource along with the instance operations that can be performed on it.
+    /// A Class representing a ServiceLinkerLocationDryrun along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceLinkerLocationDryrunResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetServiceLinkerLocationDryrunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceLinkerLocationDryrunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceLinkerLocationDryrun method.
     /// </summary>
     public partial class ServiceLinkerLocationDryrunResource : ArmResource
     {
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ServiceLinker
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics;
-        private readonly ConnectorRestOperations _serviceLinkerLocationDryrunResourceConnectorRestClient;
+        private readonly ClientDiagnostics _serviceLinkerLocationDryrunConnectorClientDiagnostics;
+        private readonly ConnectorRestOperations _serviceLinkerLocationDryrunConnectorRestClient;
         private readonly ServiceLinkerDryrunData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceLinkerLocationDryrunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceLinkerLocationDryrunResourceConnectorApiVersion);
-            _serviceLinkerLocationDryrunResourceConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerLocationDryrunResourceConnectorApiVersion);
+            _serviceLinkerLocationDryrunConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serviceLinkerLocationDryrunConnectorApiVersion);
+            _serviceLinkerLocationDryrunConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerLocationDryrunConnectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceLinkerLocationDryrunResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Get");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceLinkerLocationDryrunResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Get");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Delete");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.DeleteDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateDeleteDryrunRequestUri(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.DeleteDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _serviceLinkerLocationDryrunConnectorRestClient.CreateDeleteDryrunRequestUri(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ServiceLinkerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Delete");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.DeleteDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var uri = _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateDeleteDryrunRequestUri(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.DeleteDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var uri = _serviceLinkerLocationDryrunConnectorRestClient.CreateDeleteDryrunRequestUri(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ServiceLinkerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Update");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.UpdateDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunResourceOperationSource(Client), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateUpdateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.UpdateDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunOperationSource(Client), _serviceLinkerLocationDryrunConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunConnectorRestClient.CreateUpdateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -333,12 +333,12 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Update");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.UpdateDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunResourceOperationSource(Client), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateUpdateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.UpdateDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunOperationSource(Client), _serviceLinkerLocationDryrunConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunConnectorRestClient.CreateUpdateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

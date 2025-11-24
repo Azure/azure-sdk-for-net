@@ -17,14 +17,14 @@ using Azure.ResourceManager.ServiceLinker.Models;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A Class representing a LocationConnector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LocationConnectorResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLocationConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLocationConnector method.
+    /// A Class representing a ServiceLinkerLocationConnector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceLinkerLocationConnectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceLinkerLocationConnectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceLinkerLocationConnector method.
     /// </summary>
-    public partial class LocationConnectorResource : ArmResource
+    public partial class ServiceLinkerLocationConnectorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LocationConnectorResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ServiceLinkerLocationConnectorResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="location"> The location. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.ServiceLinker
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _locationConnectorConnectorClientDiagnostics;
-        private readonly ConnectorRestOperations _locationConnectorConnectorRestClient;
+        private readonly ClientDiagnostics _serviceLinkerLocationConnectorConnectorClientDiagnostics;
+        private readonly ConnectorRestOperations _serviceLinkerLocationConnectorConnectorRestClient;
         private readonly LinkerResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/locations/connectors";
 
-        /// <summary> Initializes a new instance of the <see cref="LocationConnectorResource"/> class for mocking. </summary>
-        protected LocationConnectorResource()
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationConnectorResource"/> class for mocking. </summary>
+        protected ServiceLinkerLocationConnectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LocationConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LocationConnectorResource(ArmClient client, LinkerResourceData data) : this(client, data.Id)
+        internal ServiceLinkerLocationConnectorResource(ArmClient client, LinkerResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LocationConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LocationConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceLinkerLocationConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _locationConnectorConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string locationConnectorConnectorApiVersion);
-            _locationConnectorConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, locationConnectorConnectorApiVersion);
+            _serviceLinkerLocationConnectorConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serviceLinkerLocationConnectorConnectorApiVersion);
+            _serviceLinkerLocationConnectorConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerLocationConnectorConnectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocationConnectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceLinkerLocationConnectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Get");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Get");
             scope.Start();
             try
             {
-                var response = await _locationConnectorConnectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationConnectorConnectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocationConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceLinkerLocationConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocationConnectorResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ServiceLinkerLocationConnectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Get");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Get");
             scope.Start();
             try
             {
-                var response = _locationConnectorConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _serviceLinkerLocationConnectorConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocationConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceLinkerLocationConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Delete");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Delete");
             scope.Start();
             try
             {
-                var response = await _locationConnectorConnectorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation(_locationConnectorConnectorClientDiagnostics, Pipeline, _locationConnectorConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serviceLinkerLocationConnectorConnectorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation(_serviceLinkerLocationConnectorConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationConnectorConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Delete");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Delete");
             scope.Start();
             try
             {
-                var response = _locationConnectorConnectorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new ServiceLinkerArmOperation(_locationConnectorConnectorClientDiagnostics, Pipeline, _locationConnectorConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serviceLinkerLocationConnectorConnectorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var operation = new ServiceLinkerArmOperation(_serviceLinkerLocationConnectorConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationConnectorConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="patch"> Connector details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<LocationConnectorResource>> UpdateAsync(WaitUntil waitUntil, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceLinkerLocationConnectorResource>> UpdateAsync(WaitUntil waitUntil, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Update");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Update");
             scope.Start();
             try
             {
-                var response = await _locationConnectorConnectorRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LocationConnectorResource>(new LocationConnectorOperationSource(Client), _locationConnectorConnectorClientDiagnostics, Pipeline, _locationConnectorConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serviceLinkerLocationConnectorConnectorRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationConnectorResource>(new ServiceLinkerLocationConnectorOperationSource(Client), _serviceLinkerLocationConnectorConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationConnectorConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,16 +325,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="patch"> Connector details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<LocationConnectorResource> Update(WaitUntil waitUntil, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceLinkerLocationConnectorResource> Update(WaitUntil waitUntil, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Update");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Update");
             scope.Start();
             try
             {
-                var response = _locationConnectorConnectorRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LocationConnectorResource>(new LocationConnectorOperationSource(Client), _locationConnectorConnectorClientDiagnostics, Pipeline, _locationConnectorConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serviceLinkerLocationConnectorConnectorRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationConnectorResource>(new ServiceLinkerLocationConnectorOperationSource(Client), _serviceLinkerLocationConnectorConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationConnectorConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SourceConfigurationResult>> GenerateConfigurationsAsync(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.GenerateConfigurations");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.GenerateConfigurations");
             scope.Start();
             try
             {
-                var response = await _locationConnectorConnectorRestClient.GenerateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, info, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationConnectorConnectorRestClient.GenerateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,11 +410,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SourceConfigurationResult> GenerateConfigurations(LinkerConfigurationInfo info = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.GenerateConfigurations");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.GenerateConfigurations");
             scope.Start();
             try
             {
-                var response = _locationConnectorConnectorRestClient.GenerateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, info, cancellationToken);
+                var response = _serviceLinkerLocationConnectorConnectorRestClient.GenerateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, info, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,12 +449,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<LinkerValidateOperationResult>> ValidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Validate");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Validate");
             scope.Start();
             try
             {
-                var response = await _locationConnectorConnectorRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _locationConnectorConnectorClientDiagnostics, Pipeline, _locationConnectorConnectorRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceLinkerLocationConnectorConnectorRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _serviceLinkerLocationConnectorConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationConnectorConnectorRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LocationConnectorResource"/></description>
+        /// <description><see cref="ServiceLinkerLocationConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,12 +491,12 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<LinkerValidateOperationResult> Validate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _locationConnectorConnectorClientDiagnostics.CreateScope("LocationConnectorResource.Validate");
+            using var scope = _serviceLinkerLocationConnectorConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationConnectorResource.Validate");
             scope.Start();
             try
             {
-                var response = _locationConnectorConnectorRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _locationConnectorConnectorClientDiagnostics, Pipeline, _locationConnectorConnectorRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _serviceLinkerLocationConnectorConnectorRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _serviceLinkerLocationConnectorConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationConnectorConnectorRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

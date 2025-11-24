@@ -21,29 +21,29 @@ namespace Azure.ResourceManager.ServiceLinker
     /// <summary>
     /// A class representing a collection of <see cref="ServiceLinkerLocationDryrunResource"/> and their operations.
     /// Each <see cref="ServiceLinkerLocationDryrunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ServiceLinkerLocationDryrunResourceCollection"/> instance call the GetServiceLinkerLocationDryrunResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ServiceLinkerLocationDryrunCollection"/> instance call the GetServiceLinkerLocationDryruns method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ServiceLinkerLocationDryrunResourceCollection : ArmCollection, IEnumerable<ServiceLinkerLocationDryrunResource>, IAsyncEnumerable<ServiceLinkerLocationDryrunResource>
+    public partial class ServiceLinkerLocationDryrunCollection : ArmCollection, IEnumerable<ServiceLinkerLocationDryrunResource>, IAsyncEnumerable<ServiceLinkerLocationDryrunResource>
     {
-        private readonly ClientDiagnostics _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics;
-        private readonly ConnectorRestOperations _serviceLinkerLocationDryrunResourceConnectorRestClient;
+        private readonly ClientDiagnostics _serviceLinkerLocationDryrunConnectorClientDiagnostics;
+        private readonly ConnectorRestOperations _serviceLinkerLocationDryrunConnectorRestClient;
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationDryrunResourceCollection"/> class for mocking. </summary>
-        protected ServiceLinkerLocationDryrunResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationDryrunCollection"/> class for mocking. </summary>
+        protected ServiceLinkerLocationDryrunCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationDryrunResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceLinkerLocationDryrunCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> The name of Azure region. </param>
-        internal ServiceLinkerLocationDryrunResourceCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal ServiceLinkerLocationDryrunCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
-            _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ServiceLinkerLocationDryrunResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceLinkerLocationDryrunResource.ResourceType, out string serviceLinkerLocationDryrunResourceConnectorApiVersion);
-            _serviceLinkerLocationDryrunResourceConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerLocationDryrunResourceConnectorApiVersion);
+            _serviceLinkerLocationDryrunConnectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ServiceLinkerLocationDryrunResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceLinkerLocationDryrunResource.ResourceType, out string serviceLinkerLocationDryrunConnectorApiVersion);
+            _serviceLinkerLocationDryrunConnectorRestClient = new ConnectorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLinkerLocationDryrunConnectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.ServiceLinker
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.CreateOrUpdate");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunResourceOperationSource(Client), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.CreateDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunOperationSource(Client), _serviceLinkerLocationDryrunConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.ServiceLinker
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.CreateOrUpdate");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunResourceOperationSource(Client), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.CreateDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<ServiceLinkerLocationDryrunResource>(new ServiceLinkerLocationDryrunOperationSource(Client), _serviceLinkerLocationDryrunConnectorClientDiagnostics, Pipeline, _serviceLinkerLocationDryrunConnectorRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Get");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Get");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> An async collection of <see cref="ServiceLinkerLocationDryrunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceLinkerLocationDryrunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerLocationDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, "ServiceLinkerLocationDryrunResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerLocationDryrunConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerLocationDryrunConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerLocationDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerLocationDryrunConnectorClientDiagnostics, Pipeline, "ServiceLinkerLocationDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> A collection of <see cref="ServiceLinkerLocationDryrunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceLinkerLocationDryrunResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerLocationDryrunResourceConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerLocationDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics, Pipeline, "ServiceLinkerLocationDryrunResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLinkerLocationDryrunConnectorRestClient.CreateListDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLinkerLocationDryrunConnectorRestClient.CreateListDryrunNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceLinkerLocationDryrunResource(Client, ServiceLinkerDryrunData.DeserializeServiceLinkerDryrunData(e)), _serviceLinkerLocationDryrunConnectorClientDiagnostics, Pipeline, "ServiceLinkerLocationDryrunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Exists");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.Exists");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -418,11 +418,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.GetIfExists");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceLinkerLocationDryrunConnectorRestClient.GetDryrunAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ServiceLinkerLocationDryrunResource>(response.GetRawResponse());
                 return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());
@@ -463,11 +463,11 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
 
-            using var scope = _serviceLinkerLocationDryrunResourceConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunResourceCollection.GetIfExists");
+            using var scope = _serviceLinkerLocationDryrunConnectorClientDiagnostics.CreateScope("ServiceLinkerLocationDryrunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceLinkerLocationDryrunResourceConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
+                var response = _serviceLinkerLocationDryrunConnectorRestClient.GetDryrun(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_location), dryrunName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ServiceLinkerLocationDryrunResource>(response.GetRawResponse());
                 return Response.FromValue(new ServiceLinkerLocationDryrunResource(Client, response.Value), response.GetRawResponse());

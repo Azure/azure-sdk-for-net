@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             AzureLocation location = new AzureLocation("westus");
             string dryrunName = "dryrunName";
             ResourceIdentifier serviceLinkerLocationDryrunResourceId = ServiceLinkerLocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
-            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
+            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrun = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
-            ServiceLinkerLocationDryrunResource result = await serviceLinkerLocationDryrunResource.GetAsync();
+            ServiceLinkerLocationDryrunResource result = await serviceLinkerLocationDryrun.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             AzureLocation location = new AzureLocation("westus");
             string dryrunName = "dryrunName";
             ResourceIdentifier serviceLinkerLocationDryrunResourceId = ServiceLinkerLocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
-            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
+            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrun = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
-            await serviceLinkerLocationDryrunResource.DeleteAsync(WaitUntil.Completed);
+            await serviceLinkerLocationDryrun.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             AzureLocation location = new AzureLocation("westus");
             string dryrunName = "dryrunName";
             ResourceIdentifier serviceLinkerLocationDryrunResourceId = ServiceLinkerLocationDryrunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, location, dryrunName);
-            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrunResource = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
+            ServiceLinkerLocationDryrunResource serviceLinkerLocationDryrun = client.GetServiceLinkerLocationDryrunResource(serviceLinkerLocationDryrunResourceId);
 
             // invoke the operation
             ServiceLinkerDryrunPatch patch = new ServiceLinkerDryrunPatch
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
                     },
                 },
             };
-            ArmOperation<ServiceLinkerLocationDryrunResource> lro = await serviceLinkerLocationDryrunResource.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<ServiceLinkerLocationDryrunResource> lro = await serviceLinkerLocationDryrun.UpdateAsync(WaitUntil.Completed, patch);
             ServiceLinkerLocationDryrunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
