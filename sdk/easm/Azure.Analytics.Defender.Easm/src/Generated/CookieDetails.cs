@@ -13,37 +13,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> The CookieDetails. </summary>
     public partial class CookieDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CookieDetails"/>. </summary>
         internal CookieDetails()
@@ -58,8 +29,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="cookieExpiryDate"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CookieDetails(string cookieName, string cookieDomain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, DateTimeOffset? cookieExpiryDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CookieDetails(string cookieName, string cookieDomain, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, DateTimeOffset? cookieExpiryDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CookieName = cookieName;
             CookieDomain = cookieDomain;
@@ -68,22 +39,28 @@ namespace Azure.Analytics.Defender.Easm
             Count = count;
             Recent = recent;
             CookieExpiryDate = cookieExpiryDate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the cookie name. </summary>
+        /// <summary> Gets the CookieName. </summary>
         public string CookieName { get; }
-        /// <summary> Gets the cookie domain. </summary>
+
+        /// <summary> Gets the CookieDomain. </summary>
         public string CookieDomain { get; }
-        /// <summary> Gets the first seen. </summary>
+
+        /// <summary> Gets the FirstSeen. </summary>
         public DateTimeOffset? FirstSeen { get; }
-        /// <summary> Gets the last seen. </summary>
+
+        /// <summary> Gets the LastSeen. </summary>
         public DateTimeOffset? LastSeen { get; }
-        /// <summary> Gets the count. </summary>
+
+        /// <summary> Gets the Count. </summary>
         public long? Count { get; }
-        /// <summary> Gets the recent. </summary>
+
+        /// <summary> Gets the Recent. </summary>
         public bool? Recent { get; }
-        /// <summary> Gets the cookie expiry date. </summary>
+
+        /// <summary> Gets the CookieExpiryDate. </summary>
         public DateTimeOffset? CookieExpiryDate { get; }
     }
 }

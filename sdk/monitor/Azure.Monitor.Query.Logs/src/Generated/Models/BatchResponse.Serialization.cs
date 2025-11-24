@@ -141,7 +141,7 @@ namespace Azure.Monitor.Query.Logs.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBatchResponse(document.RootElement, options);
                     }
@@ -156,7 +156,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchResponse"/> from. </param>
         public static explicit operator BatchResponse(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

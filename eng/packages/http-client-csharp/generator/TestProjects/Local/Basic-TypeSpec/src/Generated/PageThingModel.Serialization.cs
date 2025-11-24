@@ -138,7 +138,7 @@ namespace BasicTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePageThingModel(document.RootElement, options);
                     }
@@ -153,7 +153,7 @@ namespace BasicTypeSpec
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PageThingModel"/> from. </param>
         public static explicit operator PageThingModel(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePageThingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

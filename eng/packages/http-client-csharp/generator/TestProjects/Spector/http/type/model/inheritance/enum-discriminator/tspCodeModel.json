@@ -1294,6 +1294,7 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator",
       "apiVersions": []

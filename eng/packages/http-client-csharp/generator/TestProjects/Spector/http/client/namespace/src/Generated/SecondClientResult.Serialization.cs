@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 
-namespace client.clientnamespace.second
+namespace Client.Clientnamespace.Second
 {
     public partial class SecondClientResult : IJsonModel<SecondClientResult>
     {

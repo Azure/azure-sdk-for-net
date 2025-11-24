@@ -16,8 +16,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
-            ResourceOperationKind methodKind)
-            : base(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind))
+            ResourceOperationKind methodKind,
+            bool forceLro = false)
+            : base(resource, contextualPath, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro)
         {
         }
 

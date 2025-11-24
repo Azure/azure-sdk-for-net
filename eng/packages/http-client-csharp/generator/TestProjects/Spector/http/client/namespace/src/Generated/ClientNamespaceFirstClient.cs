@@ -10,15 +10,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using client.clientnamespace.first;
+using Client.Clientnamespace.First;
 
-namespace client.clientnamespace
+namespace Client.Clientnamespace
 {
     public partial class ClientNamespaceFirstClient
     {
-        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientNamespaceClientOptions()) => throw null;
+        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
 
-        public ClientNamespaceFirstClient(Uri endpoint, ClientNamespaceClientOptions options) => throw null;
+        public ClientNamespaceFirstClient(Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

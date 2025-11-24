@@ -1041,6 +1041,7 @@
           "crossLanguageDefinitionId": "Client.Naming.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Naming",
       "apiVersions": [],
@@ -1310,6 +1311,7 @@
               "crossLanguageDefinitionId": "Client.Naming.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.Model",
           "apiVersions": [],
@@ -1578,6 +1580,7 @@
               "crossLanguageDefinitionId": "Client.Naming.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Naming.UnionEnum",
           "apiVersions": [],

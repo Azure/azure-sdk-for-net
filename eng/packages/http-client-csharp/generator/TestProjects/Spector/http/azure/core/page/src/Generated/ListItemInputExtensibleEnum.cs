@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace _Specs_.Azure.Core.Page
+namespace Specs.Azure.Core.Page
 {
     public enum ListItemInputExtensibleEnum
     {

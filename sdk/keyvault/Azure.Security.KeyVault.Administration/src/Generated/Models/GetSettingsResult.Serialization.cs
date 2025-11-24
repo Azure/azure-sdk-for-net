@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Administration
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGetSettingsResult(document.RootElement, options);
                     }
@@ -155,7 +155,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GetSettingsResult"/> from. </param>
         public static explicit operator GetSettingsResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGetSettingsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

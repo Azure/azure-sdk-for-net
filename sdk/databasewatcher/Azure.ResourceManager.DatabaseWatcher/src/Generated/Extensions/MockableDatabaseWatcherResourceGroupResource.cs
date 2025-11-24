@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DatabaseWatcher;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDatabaseWatcherResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDatabaseWatcherResourceGroupResource for mocking. </summary>
         protected MockableDatabaseWatcherResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDatabaseWatcherResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDatabaseWatcherResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DatabaseWatcherResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DatabaseWatcherResources and their operations over a DatabaseWatcherResource. </returns>
+        /// <summary> Gets a collection of DatabaseWatchers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DatabaseWatchers and their operations over a DatabaseWatcherResource. </returns>
         public virtual DatabaseWatcherCollection GetDatabaseWatchers()
         {
             return GetCachedClient(client => new DatabaseWatcherCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// Get a Watcher
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DatabaseWatcherResource>> GetDatabaseWatcherAsync(string watcherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+
             return await GetDatabaseWatchers().GetAsync(watcherName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         /// Get a Watcher
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
         [ForwardsClientCalls]
         public virtual Response<DatabaseWatcherResource> GetDatabaseWatcher(string watcherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+
             return GetDatabaseWatchers().Get(watcherName, cancellationToken);
         }
     }

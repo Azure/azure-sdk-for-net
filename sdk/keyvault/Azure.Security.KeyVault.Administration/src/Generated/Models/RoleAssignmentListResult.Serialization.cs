@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeRoleAssignmentListResult(document.RootElement, options);
                     }
@@ -166,7 +166,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoleAssignmentListResult"/> from. </param>
         public static explicit operator RoleAssignmentListResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRoleAssignmentListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

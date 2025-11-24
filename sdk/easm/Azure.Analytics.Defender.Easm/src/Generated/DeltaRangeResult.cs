@@ -14,37 +14,8 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> Contains added, removed, and difference values for the whole range either 7 or 30 days. </summary>
     public partial class DeltaRangeResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeltaRangeResult"/>. </summary>
         /// <param name="range"> The range of dates requested. </param>
@@ -52,11 +23,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="added"> The total amount of assets added over a date range. </param>
         /// <param name="difference"> The total amount of assets changed removed over a date range. </param>
         /// <param name="kindSummaries"> A list of summary changes per asset kind. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kindSummaries"/> is null. </exception>
         internal DeltaRangeResult(long range, long removed, long added, long difference, IEnumerable<DeltaTypeResult> kindSummaries)
         {
-            Argument.AssertNotNull(kindSummaries, nameof(kindSummaries));
-
             Range = range;
             Removed = removed;
             Added = added;
@@ -70,31 +38,30 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="added"> The total amount of assets added over a date range. </param>
         /// <param name="difference"> The total amount of assets changed removed over a date range. </param>
         /// <param name="kindSummaries"> A list of summary changes per asset kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaRangeResult(long range, long removed, long added, long difference, IReadOnlyList<DeltaTypeResult> kindSummaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeltaRangeResult(long range, long removed, long added, long difference, IList<DeltaTypeResult> kindSummaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Range = range;
             Removed = removed;
             Added = added;
             Difference = difference;
             KindSummaries = kindSummaries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeltaRangeResult"/> for deserialization. </summary>
-        internal DeltaRangeResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The range of dates requested. </summary>
         public long Range { get; }
+
         /// <summary> The total amount of assets removed over a date range. </summary>
         public long Removed { get; }
+
         /// <summary> The total amount of assets added over a date range. </summary>
         public long Added { get; }
+
         /// <summary> The total amount of assets changed removed over a date range. </summary>
         public long Difference { get; }
+
         /// <summary> A list of summary changes per asset kind. </summary>
-        public IReadOnlyList<DeltaTypeResult> KindSummaries { get; }
+        public IList<DeltaTypeResult> KindSummaries { get; }
     }
 }

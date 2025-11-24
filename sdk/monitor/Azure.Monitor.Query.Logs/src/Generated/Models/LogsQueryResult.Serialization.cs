@@ -172,7 +172,7 @@ namespace Azure.Monitor.Query.Logs.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeLogsQueryResult(document.RootElement, options);
                     }
@@ -187,7 +187,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LogsQueryResult"/> from. </param>
         public static explicit operator LogsQueryResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLogsQueryResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary>
     /// A class representing a collection of <see cref="WeightsAndBiasesInstanceResource"/> and their operations.
-    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of the parent resource.
+    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class WeightsAndBiasesInstanceCollection : ArmCollection, IEnumerable<WeightsAndBiasesInstanceResource>, IAsyncEnumerable<WeightsAndBiasesInstanceResource>
     {
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary> List InstanceResource resources by resource group. </summary>
+        /// <summary>
+        /// List InstanceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WeightsAndBiasesInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
-        /// <summary> List InstanceResource resources by resource group. </summary>
+        /// <summary>
+        /// List InstanceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WeightsAndBiasesInstanceResource> GetAll(CancellationToken cancellationToken = default)

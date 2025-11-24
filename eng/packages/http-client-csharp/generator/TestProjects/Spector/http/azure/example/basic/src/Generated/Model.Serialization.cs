@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace _Specs_.Azure.Example.Basic
+namespace Specs.Azure.Example.Basic
 {
     public partial class Model : IJsonModel<Model>
     {

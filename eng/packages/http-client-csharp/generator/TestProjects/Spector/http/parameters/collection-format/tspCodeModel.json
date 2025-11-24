@@ -44,6 +44,7 @@
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.CollectionFormat",
       "apiVersions": [],
@@ -397,6 +398,7 @@
               "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query",
           "apiVersions": [],
@@ -519,6 +521,7 @@
               "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header",
           "apiVersions": [],

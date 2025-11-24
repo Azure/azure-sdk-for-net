@@ -206,7 +206,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeRestoreDetailsInternal(document.RootElement, options);
                     }
@@ -221,7 +221,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestoreDetailsInternal"/> from. </param>
         public static explicit operator RestoreDetailsInternal(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -14,77 +14,122 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct DocumentFieldType : IEquatable<DocumentFieldType>
     {
         private readonly string _value;
+        /// <summary> Plain text. </summary>
+        private const string StringValue = "string";
+        /// <summary> Date, normalized to ISO 8601 (YYYY-MM-DD) format. </summary>
+        private const string DateValue = "date";
+        /// <summary> Time, normalized to ISO 8601 (hh:mm:ss) format. </summary>
+        private const string TimeValue = "time";
+        /// <summary> Phone number, normalized to E.164 (+{CountryCode}{SubscriberNumber}) format. </summary>
+        private const string PhoneNumberValue = "phoneNumber";
+        /// <summary> Floating point number, normalized to double precision floating point. </summary>
+        private const string DoubleValue = "number";
+        /// <summary> Integer number, normalized to 64-bit signed integer. </summary>
+        private const string Int64Value = "integer";
+        /// <summary> Is field selected?. </summary>
+        private const string SelectionMarkValue = "selectionMark";
+        /// <summary> Country/region, normalized to ISO 3166-1 alpha-3 format (ex. USA). </summary>
+        private const string CountryRegionValue = "countryRegion";
+        /// <summary> Is signature present?. </summary>
+        private const string SignatureValue = "signature";
+        /// <summary> List of subfields of the same type. </summary>
+        private const string ListValue = "array";
+        /// <summary> Named list of subfields of potentially different types. </summary>
+        private const string DictionaryValue = "object";
+        /// <summary> Currency amount with optional currency symbol and unit. </summary>
+        private const string CurrencyValue = "currency";
+        /// <summary> Parsed address. </summary>
+        private const string AddressValue = "address";
+        /// <summary> Boolean value, normalized to true or false. </summary>
+        private const string BooleanValue = "boolean";
+        /// <summary> Array of selected string values. </summary>
+        private const string SelectionGroupValue = "selectionGroup";
 
         /// <summary> Initializes a new instance of <see cref="DocumentFieldType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentFieldType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "string";
-        private const string DateValue = "date";
-        private const string TimeValue = "time";
-        private const string PhoneNumberValue = "phoneNumber";
-        private const string DoubleValue = "number";
-        private const string Int64Value = "integer";
-        private const string SelectionMarkValue = "selectionMark";
-        private const string CountryRegionValue = "countryRegion";
-        private const string SignatureValue = "signature";
-        private const string ListValue = "array";
-        private const string DictionaryValue = "object";
-        private const string CurrencyValue = "currency";
-        private const string AddressValue = "address";
-        private const string BooleanValue = "boolean";
-        private const string SelectionGroupValue = "selectionGroup";
+            _value = value;
+        }
 
         /// <summary> Plain text. </summary>
         public static DocumentFieldType String { get; } = new DocumentFieldType(StringValue);
+
         /// <summary> Date, normalized to ISO 8601 (YYYY-MM-DD) format. </summary>
         public static DocumentFieldType Date { get; } = new DocumentFieldType(DateValue);
+
         /// <summary> Time, normalized to ISO 8601 (hh:mm:ss) format. </summary>
         public static DocumentFieldType Time { get; } = new DocumentFieldType(TimeValue);
+
         /// <summary> Phone number, normalized to E.164 (+{CountryCode}{SubscriberNumber}) format. </summary>
         public static DocumentFieldType PhoneNumber { get; } = new DocumentFieldType(PhoneNumberValue);
+
         /// <summary> Floating point number, normalized to double precision floating point. </summary>
         public static DocumentFieldType Double { get; } = new DocumentFieldType(DoubleValue);
+
         /// <summary> Integer number, normalized to 64-bit signed integer. </summary>
         public static DocumentFieldType Int64 { get; } = new DocumentFieldType(Int64Value);
+
         /// <summary> Is field selected?. </summary>
         public static DocumentFieldType SelectionMark { get; } = new DocumentFieldType(SelectionMarkValue);
+
         /// <summary> Country/region, normalized to ISO 3166-1 alpha-3 format (ex. USA). </summary>
         public static DocumentFieldType CountryRegion { get; } = new DocumentFieldType(CountryRegionValue);
+
         /// <summary> Is signature present?. </summary>
         public static DocumentFieldType Signature { get; } = new DocumentFieldType(SignatureValue);
+
         /// <summary> List of subfields of the same type. </summary>
         public static DocumentFieldType List { get; } = new DocumentFieldType(ListValue);
+
         /// <summary> Named list of subfields of potentially different types. </summary>
         public static DocumentFieldType Dictionary { get; } = new DocumentFieldType(DictionaryValue);
+
         /// <summary> Currency amount with optional currency symbol and unit. </summary>
         public static DocumentFieldType Currency { get; } = new DocumentFieldType(CurrencyValue);
+
         /// <summary> Parsed address. </summary>
         public static DocumentFieldType Address { get; } = new DocumentFieldType(AddressValue);
+
         /// <summary> Boolean value, normalized to true or false. </summary>
         public static DocumentFieldType Boolean { get; } = new DocumentFieldType(BooleanValue);
+
         /// <summary> Array of selected string values. </summary>
         public static DocumentFieldType SelectionGroup { get; } = new DocumentFieldType(SelectionGroupValue);
+
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentFieldType left, DocumentFieldType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentFieldType left, DocumentFieldType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFieldType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentFieldType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentFieldType(string value) => new DocumentFieldType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentFieldType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentFieldType?(string value) => value == null ? null : new DocumentFieldType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentFieldType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentFieldType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
+namespace Specs.Azure.ClientGenerator.Core.FlattenProperty
 {
     public partial class FlattenPropertyClient
     {

@@ -153,7 +153,7 @@ namespace BasicTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeListWithNextLinkResponse(document.RootElement, options);
                     }
@@ -168,7 +168,7 @@ namespace BasicTypeSpec
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListWithNextLinkResponse"/> from. </param>
         public static explicit operator ListWithNextLinkResponse(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeListWithNextLinkResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -8,9 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 
-namespace _Specs_.Azure.Core.Lro.Standard
+namespace Specs.Azure.Core.Lro.Standard
 {
     public partial class ExportedUser : IJsonModel<ExportedUser>
     {
@@ -33,7 +32,5 @@ namespace _Specs_.Azure.Core.Lro.Standard
         protected virtual ExportedUser PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ExportedUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        public static explicit operator ExportedUser(Response response) => throw null;
     }
 }

@@ -251,7 +251,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeImageAnalysisResult(document.RootElement, options);
                     }
@@ -266,7 +266,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ImageAnalysisResult"/> from. </param>
         public static explicit operator ImageAnalysisResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeImageAnalysisResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

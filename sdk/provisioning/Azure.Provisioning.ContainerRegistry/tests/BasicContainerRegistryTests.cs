@@ -36,6 +36,7 @@ public class BasicContainerRegistryTests
 
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
+    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/53862")]
     public async Task CreateContainerRegistry()
     {
         await using Trycep test = CreateContainerRegistryTest();

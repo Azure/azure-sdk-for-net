@@ -323,41 +323,53 @@ namespace Azure.Generator.Management
         {
             var operationSources = new Dictionary<CSharpType, OperationSourceProvider>();
 
+            // Process resource methods
             foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
             {
                 foreach (var resourceMethod in metadata.Methods)
                 {
-                    if (resourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
-                    {
-                        var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
-                        if (returnType is InputModelType inputModelType)
-                        {
-                            var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
-                            if (returnCSharpType == null)
-                            {
-                                continue;
-                            }
+                    ProcessLroMethod(resourceMethod.InputMethod, operationSources);
+                }
+            }
 
-                            if (!operationSources.ContainsKey(returnCSharpType))
-                            {
-                                var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
-                                if (resourceProvider is not null)
-                                {
-                                    // This is a resource model - use the resource-based constructor
-                                    operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
-                                }
-                                else
-                                {
-                                    // This is a non-resource model - use the CSharpType-based constructor
-                                    operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                                }
-                            }
+            // Process non-resource methods
+            foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
+            {
+                ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
+            }
+
+            return operationSources;
+        }
+
+        private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
+        {
+            if (inputMethod is InputLongRunningServiceMethod lroMethod)
+            {
+                var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+                if (returnType is InputModelType inputModelType)
+                {
+                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                    if (returnCSharpType == null)
+                    {
+                        return;
+                    }
+
+                    if (!operationSources.ContainsKey(returnCSharpType))
+                    {
+                        var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
+                        if (resourceProvider is not null)
+                        {
+                            // This is a resource model - use the resource-based constructor
+                            operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
+                        }
+                        else
+                        {
+                            // This is a non-resource model - use the CSharpType-based constructor
+                            operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                         }
                     }
                 }
             }
-
-            return operationSources;
         }
 
         internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);

@@ -28,25 +28,6 @@ namespace Azure.Security.KeyVault.Administration
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultRestClient(Uri endpoint, TokenCredential credential, KeyVaultRestClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new KeyVaultRestClientOptions();
-
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
 

@@ -44,17 +44,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the deployment. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetDeployment(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult GetDeployment(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetDeploymentRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetDeploymentRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -67,47 +66,44 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the deployment. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetDeploymentAsync(string name, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetDeploymentAsync(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetDeploymentRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetDeploymentRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a deployed model. </summary>
         /// <param name="name"> Name of the deployment. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AIProjectDeployment> GetDeployment(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AIProjectDeployment> GetDeployment(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetDeployment(name, clientRequestId, cancellationToken.ToRequestOptions());
+            ClientResult result = GetDeployment(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
         }
 
         /// <summary> Get a deployed model. </summary>
         /// <param name="name"> Name of the deployment. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AIProjectDeployment>> GetDeploymentAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AIProjectDeployment>> GetDeploymentAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetDeploymentAsync(name, clientRequestId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetDeploymentAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectDeployment)result, result.GetRawResponse());
         }
 
@@ -122,19 +118,12 @@ namespace Azure.AI.Projects
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
-            return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResult(
-                this,
-                modelPublisher,
-                modelName,
-                deploymentType,
-                clientRequestId,
-                options);
+            return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResult(this, modelPublisher, modelName, deploymentType, options);
         }
 
         /// <summary>
@@ -148,55 +137,34 @@ namespace Azure.AI.Projects
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, RequestOptions options)
         {
-            return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResult(
-                this,
-                modelPublisher,
-                modelName,
-                deploymentType,
-                clientRequestId,
-                options);
+            return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResult(this, modelPublisher, modelName, deploymentType, options);
         }
 
         /// <summary> List all deployed models in the project. </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<AIProjectDeployment> GetDeployments(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<AIProjectDeployment> GetDeployments(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, CancellationToken cancellationToken = default)
         {
-            return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResultOfT(
-                this,
-                modelPublisher,
-                modelName,
-                deploymentType?.ToString(),
-                clientRequestId,
-                cancellationToken.ToRequestOptions());
+            return new AIProjectDeploymentsOperationsGetDeploymentsCollectionResultOfT(this, modelPublisher, modelName, deploymentType?.ToString(), cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all deployed models in the project. </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<AIProjectDeployment> GetDeploymentsAsync(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AIProjectDeployment> GetDeploymentsAsync(string modelPublisher = default, string modelName = default, AIProjectDeploymentType? deploymentType = default, CancellationToken cancellationToken = default)
         {
-            return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResultOfT(
-                this,
-                modelPublisher,
-                modelName,
-                deploymentType?.ToString(),
-                clientRequestId,
-                cancellationToken.ToRequestOptions());
+            return new AIProjectDeploymentsOperationsGetDeploymentsAsyncCollectionResultOfT(this, modelPublisher, modelName, deploymentType?.ToString(), cancellationToken.ToRequestOptions());
         }
     }
 }
