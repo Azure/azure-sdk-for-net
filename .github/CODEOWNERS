@@ -1007,10 +1007,7 @@
 # ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @apmehrotra
-
-# ServiceLabel: %HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @apmehrotra
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
