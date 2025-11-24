@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(document.RootElement, options);
                     }

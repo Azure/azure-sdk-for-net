@@ -43,6 +43,11 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeGb);
+            if (Optional.IsDefined(ManagedDisk))
+            {
+                writer.WritePropertyName("managedDisk"u8);
+                writer.WriteObjectValue(ManagedDisk, options);
+            }
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
@@ -88,6 +93,7 @@ namespace Azure.Compute.Batch
             int lun = default;
             CachingType? caching = default;
             int diskSizeGB = default;
+            ManagedDisk managedDisk = default;
             StorageAccountType? storageAccountType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -112,6 +118,15 @@ namespace Azure.Compute.Batch
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("managedDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -127,7 +142,13 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataDisk(lun, caching, diskSizeGB, storageAccountType, serializedAdditionalRawData);
+            return new DataDisk(
+                lun,
+                caching,
+                diskSizeGB,
+                managedDisk,
+                storageAccountType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataDisk>.Write(ModelReaderWriterOptions options)

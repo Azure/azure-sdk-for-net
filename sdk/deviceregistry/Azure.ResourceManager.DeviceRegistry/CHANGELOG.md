@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2025-11-19)
+
+### Features Added
+
+- Aligned resource types to Microsoft.DeviceRegistry API version `2025-11-01-preview`.
+- Added `Credentials` and `Policies` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2025-11-01-preview`.
 
 ## 1.1.0-beta.1 (2025-10-23)
 
