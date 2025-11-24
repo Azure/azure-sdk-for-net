@@ -9,7 +9,7 @@ using System.Threading;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Skus.Models;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Skus.Mocking
 {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Compute.Skus.Mocking
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetComputeResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSkusSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSkusSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Compute.Skus.Mocking
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetComputeResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeResourceSku> GetComputeResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId, filter, includeExtendedLocations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSkusSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeResourceSku.DeserializeComputeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableComputeSkusSubscriptionResource.GetComputeResourceSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

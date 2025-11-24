@@ -10,6 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    [CodeGenModel("ComputeResourceSkuLocationInfo")]
     [CodeGenSerialization(nameof(ExtendedLocationType), SerializationValueHook = nameof(WriteExtendedLocationType), DeserializationValueHook = nameof(ReadExtendedLocationType))]
     public partial class ComputeResourceSkuLocationInfo
     {

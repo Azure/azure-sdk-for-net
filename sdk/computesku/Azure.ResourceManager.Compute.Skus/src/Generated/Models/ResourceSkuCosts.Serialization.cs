@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Skus;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ResourceSkuCosts : IUtf8JsonSerializable, IJsonModel<ResourceSkuCosts>
     {
@@ -34,17 +35,17 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 throw new FormatException($"The model {nameof(ResourceSkuCosts)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(MeterID))
+            if (options.Format != "W" && Skus.Optional.IsDefined(MeterID))
             {
                 writer.WritePropertyName("meterID"u8);
                 writer.WriteStringValue(MeterID);
             }
-            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            if (options.Format != "W" && Skus.Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedUnit))
+            if (options.Format != "W" && Skus.Optional.IsDefined(ExtendedUnit))
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);

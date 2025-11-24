@@ -7,8 +7,8 @@
 
 using System;
 using System.Threading;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Skus.Mocking;
-using Azure.ResourceManager.Compute.Skus.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Skus
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Compute.Skus
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceSku> GetComputeResourceSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Compute.Skus
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceSku> GetComputeResourceSkus(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComputeResourceSku> GetComputeResourceSkus(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

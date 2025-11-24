@@ -10,14 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Skus;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuRestrictionInfo : IUtf8JsonSerializable, IJsonModel<ResourceSkuRestrictionInfo>
+    public partial class ComputeResourceSkuZoneDetails : IUtf8JsonSerializable, IJsonModel<ComputeResourceSkuZoneDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSkuRestrictionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeResourceSkuZoneDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceSkuRestrictionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeResourceSkuZoneDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,29 +29,29 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSkuRestrictionInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeResourceSkuZoneDetails)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && Skus.Optional.IsCollectionDefined(Name))
             {
-                writer.WritePropertyName("locations"u8);
+                writer.WritePropertyName("name"u8);
                 writer.WriteStartArray();
-                foreach (var item in Locations)
+                foreach (var item in Name)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && Skus.Optional.IsCollectionDefined(Capabilities))
             {
-                writer.WritePropertyName("zones"u8);
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
+                foreach (var item in Capabilities)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,19 +72,19 @@ namespace Azure.ResourceManager.Compute.Skus.Models
             }
         }
 
-        ResourceSkuRestrictionInfo IJsonModel<ResourceSkuRestrictionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeResourceSkuZoneDetails IJsonModel<ComputeResourceSkuZoneDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSkuRestrictionInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeResourceSkuZoneDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceSkuRestrictionInfo(document.RootElement, options);
+            return DeserializeComputeResourceSkuZoneDetails(document.RootElement, options);
         }
 
-        internal static ResourceSkuRestrictionInfo DeserializeResourceSkuRestrictionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeResourceSkuZoneDetails DeserializeComputeResourceSkuZoneDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,13 +92,13 @@ namespace Azure.ResourceManager.Compute.Skus.Models
             {
                 return null;
             }
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<string> zones = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<ComputeResourceSkuCapabilities> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locations"u8))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,21 +109,21 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                     {
                         array.Add(item.GetString());
                     }
-                    locations = array;
+                    name = array;
                     continue;
                 }
-                if (property.NameEquals("zones"u8))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ComputeResourceSkuCapabilities> array = new List<ComputeResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(ComputeResourceSkuCapabilities.DeserializeComputeResourceSkuCapabilities(item, options));
                     }
-                    zones = array;
+                    capabilities = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,38 +132,38 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceSkuRestrictionInfo(locations ?? new ChangeTrackingList<string>(), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ComputeResourceSkuZoneDetails(name ?? new Skus.ChangeTrackingList<string>(), capabilities ?? new Skus.ChangeTrackingList<ComputeResourceSkuCapabilities>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceSkuRestrictionInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeResourceSkuZoneDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeSkusContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSkuRestrictionInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeResourceSkuZoneDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceSkuRestrictionInfo IPersistableModel<ResourceSkuRestrictionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeResourceSkuZoneDetails IPersistableModel<ComputeResourceSkuZoneDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuZoneDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceSkuRestrictionInfo(document.RootElement, options);
+                        return DeserializeComputeResourceSkuZoneDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSkuRestrictionInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeResourceSkuZoneDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceSkuRestrictionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeResourceSkuZoneDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

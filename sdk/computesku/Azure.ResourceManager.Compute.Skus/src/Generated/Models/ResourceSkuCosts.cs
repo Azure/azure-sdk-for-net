@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes metadata for retrieving price info. </summary>
     public partial class ResourceSkuCosts

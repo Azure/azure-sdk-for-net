@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Skus;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes scaling information of a SKU. </summary>
-    public partial class ResourceSkuRestrictions
+    public partial class ComputeResourceSkuRestrictions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +46,19 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/>. </summary>
-        internal ResourceSkuRestrictions()
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictions"/>. </summary>
+        internal ComputeResourceSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourceSkuRestrictions(ComputeResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ComputeResourceSkuRestrictionInfo restrictionInfo, ComputeResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestrictionsType = restrictionsType;
             Values = values;
@@ -67,12 +68,12 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         }
 
         /// <summary> The type of restrictions. </summary>
-        public ResourceSkuRestrictionsType? RestrictionsType { get; }
+        public ComputeResourceSkuRestrictionsType? RestrictionsType { get; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
-        public ResourceSkuRestrictionInfo RestrictionInfo { get; }
+        public ComputeResourceSkuRestrictionInfo RestrictionInfo { get; }
         /// <summary> The reason for restriction. </summary>
-        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
+        public ComputeResourceSkuRestrictionsReasonCode? ReasonCode { get; }
     }
 }

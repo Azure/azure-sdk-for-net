@@ -15,12 +15,6 @@ title: ComputeManagementClient
 tag: split-package-2025-04-01-skus
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
-# sample-gen:
-#   output-folder: $(this-folder)/../tests/Generated
-#   clear-output-folder: true
-#   skipped-operations:
-#     - CommunityGalleries_Get
-#     - SharedGalleries_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -33,6 +27,15 @@ override-operation-name:
   ResourceSkus_List: GetComputeResourceSkus
 
 rename-mapping:
+  ResourceSku: ComputeResourceSku
+  ResourceSkuCapacity: ComputeResourceSkuCapacity
+  ResourceSkuCapacityScaleType: ComputeResourceSkuCapacityScaleType
+  ResourceSkuLocationInfo: ComputeResourceSkuLocationInfo
+  ResourceSkuRestrictionInfo: ComputeResourceSkuRestrictionInfo
+  ResourceSkuRestrictions: ComputeResourceSkuRestrictions
+  ResourceSkuRestrictionsReasonCode: ComputeResourceSkuRestrictionsReasonCode
+  ResourceSkuRestrictionsType: ComputeResourceSkuRestrictionsType
+  ResourceSkuZoneDetails: ComputeResourceSkuZoneDetails
   ResourceSkuCapabilities: ComputeResourceSkuCapabilities
 ```
 

@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Skus;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available Compute SKU Location Information. </summary>
-    public partial class ResourceSkuLocationInfo
+    public partial class ComputeResourceSkuLocationInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +47,22 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
-        internal ResourceSkuLocationInfo()
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
+        internal ComputeResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
-            ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
+            ZoneDetails = new ChangeTrackingList<ComputeResourceSkuZoneDetails>();
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
@@ -75,10 +77,8 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
-        public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        public IReadOnlyList<ComputeResourceSkuZoneDetails> ZoneDetails { get; }
         /// <summary> The names of extended locations. </summary>
         public IReadOnlyList<string> ExtendedLocations { get; }
-        /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? ExtendedLocationType { get; }
     }
 }

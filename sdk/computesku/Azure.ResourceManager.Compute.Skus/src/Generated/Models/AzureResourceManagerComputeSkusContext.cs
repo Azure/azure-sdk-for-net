@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Skus.Models;
 
 namespace Azure.ResourceManager.Compute.Skus
@@ -14,15 +15,15 @@ namespace Azure.ResourceManager.Compute.Skus
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ComputeResourceSku))]
     [ModelReaderWriterBuildable(typeof(ComputeResourceSkuCapabilities))]
-    [ModelReaderWriterBuildable(typeof(ResourceSku))]
-    [ModelReaderWriterBuildable(typeof(ResourceSkuCapacity))]
+    [ModelReaderWriterBuildable(typeof(ComputeResourceSkuCapacity))]
+    [ModelReaderWriterBuildable(typeof(ComputeResourceSkuLocationInfo))]
+    [ModelReaderWriterBuildable(typeof(ComputeResourceSkuRestrictionInfo))]
+    [ModelReaderWriterBuildable(typeof(ComputeResourceSkuRestrictions))]
+    [ModelReaderWriterBuildable(typeof(ComputeResourceSkuZoneDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuCosts))]
-    [ModelReaderWriterBuildable(typeof(ResourceSkuLocationInfo))]
-    [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictionInfo))]
-    [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(ResourceSkusResult))]
-    [ModelReaderWriterBuildable(typeof(ResourceSkuZoneDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureResourceManagerComputeSkusContext : ModelReaderWriterContext
     {

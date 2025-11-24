@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Skus;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSkuCapabilities : IUtf8JsonSerializable, IJsonModel<ComputeResourceSkuCapabilities>
     {
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 throw new FormatException($"The model {nameof(ComputeResourceSkuCapabilities)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Skus.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Skus.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

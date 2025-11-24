@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Skus.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Skus.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceSku> value = default;
+            IReadOnlyList<ComputeResourceSku> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.Compute.Skus.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ResourceSku> array = new List<ResourceSku>();
+                    List<ComputeResourceSku> array = new List<ComputeResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSku.DeserializeResourceSku(item, options));
+                        array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item, options));
                     }
                     value = array;
                     continue;

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.Skus;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
-    public partial class ResourceSkuZoneDetails
+    public partial class ComputeResourceSkuZoneDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +46,18 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/>. </summary>
-        internal ResourceSkuZoneDetails()
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuZoneDetails"/>. </summary>
+        internal ComputeResourceSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capabilities = capabilities;

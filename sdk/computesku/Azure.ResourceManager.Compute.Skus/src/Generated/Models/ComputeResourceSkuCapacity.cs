@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes an available Compute SKU Restriction Information. </summary>
-    public partial class ResourceSkuRestrictionInfo
+    /// <summary> Describes scaling information of a SKU. </summary>
+    public partial class ComputeResourceSkuCapacity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,33 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictionInfo"/>. </summary>
-        internal ResourceSkuRestrictionInfo()
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuCapacity"/>. </summary>
+        internal ComputeResourceSkuCapacity()
         {
-            Locations = new ChangeTrackingList<string>();
-            Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictionInfo"/>. </summary>
-        /// <param name="locations"> Locations where the SKU is restricted. </param>
-        /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuCapacity"/>. </summary>
+        /// <param name="minimum"> The minimum capacity. </param>
+        /// <param name="maximum"> The maximum capacity that can be set. </param>
+        /// <param name="default"> The default capacity. </param>
+        /// <param name="scaleType"> The scale type applicable to the sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuRestrictionInfo(IReadOnlyList<string> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourceSkuCapacity(long? minimum, long? maximum, long? @default, ComputeResourceSkuCapacityScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Locations = locations;
-            Zones = zones;
+            Minimum = minimum;
+            Maximum = maximum;
+            Default = @default;
+            ScaleType = scaleType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Locations where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Locations { get; }
-        /// <summary> List of availability zones where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Zones { get; }
+        /// <summary> The minimum capacity. </summary>
+        public long? Minimum { get; }
+        /// <summary> The maximum capacity that can be set. </summary>
+        public long? Maximum { get; }
+        /// <summary> The default capacity. </summary>
+        public long? Default { get; }
+        /// <summary> The scale type applicable to the sku. </summary>
+        public ComputeResourceSkuCapacityScaleType? ScaleType { get; }
     }
 }

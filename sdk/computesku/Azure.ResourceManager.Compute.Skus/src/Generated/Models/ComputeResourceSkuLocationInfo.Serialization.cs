@@ -10,14 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Skus;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Skus.Models
+namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuLocationInfo : IUtf8JsonSerializable, IJsonModel<ResourceSkuLocationInfo>
+    public partial class ComputeResourceSkuLocationInfo : IUtf8JsonSerializable, IJsonModel<ComputeResourceSkuLocationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSkuLocationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeResourceSkuLocationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeResourceSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,18 +30,18 @@ namespace Azure.ResourceManager.Compute.Skus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSkuLocationInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeResourceSkuLocationInfo)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Skus.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && Skus.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
+            if (options.Format != "W" && Skus.Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedLocations))
+            if (options.Format != "W" && Skus.Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -69,10 +71,10 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
+            if (options.Format != "W" && Skus.Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExtendedLocationType.Value.ToString());
+                WriteExtendedLocationType(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,19 +93,19 @@ namespace Azure.ResourceManager.Compute.Skus.Models
             }
         }
 
-        ResourceSkuLocationInfo IJsonModel<ResourceSkuLocationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeResourceSkuLocationInfo IJsonModel<ComputeResourceSkuLocationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSkuLocationInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeResourceSkuLocationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceSkuLocationInfo(document.RootElement, options);
+            return DeserializeComputeResourceSkuLocationInfo(document.RootElement, options);
         }
 
-        internal static ResourceSkuLocationInfo DeserializeResourceSkuLocationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeResourceSkuLocationInfo DeserializeComputeResourceSkuLocationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -113,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Skus.Models
             }
             string location = default;
             IReadOnlyList<string> zones = default;
-            IReadOnlyList<ResourceSkuZoneDetails> zoneDetails = default;
+            IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
             ExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,10 +147,10 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                     {
                         continue;
                     }
-                    List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
+                    List<ComputeResourceSkuZoneDetails> array = new List<ComputeResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuZoneDetails.DeserializeResourceSkuZoneDetails(item, options));
+                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -169,11 +171,7 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ExtendedLocationType(property.Value.GetString());
+                    ReadExtendedLocationType(property, ref type);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,44 +180,44 @@ namespace Azure.ResourceManager.Compute.Skus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceSkuLocationInfo(
+            return new ComputeResourceSkuLocationInfo(
                 location,
-                zones ?? new ChangeTrackingList<string>(),
-                zoneDetails ?? new ChangeTrackingList<ResourceSkuZoneDetails>(),
-                extendedLocations ?? new ChangeTrackingList<string>(),
+                zones ?? new Skus.ChangeTrackingList<string>(),
+                zoneDetails ?? new Skus.ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
+                extendedLocations ?? new Skus.ChangeTrackingList<string>(),
                 type,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceSkuLocationInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeResourceSkuLocationInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeSkusContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSkuLocationInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeResourceSkuLocationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceSkuLocationInfo IPersistableModel<ResourceSkuLocationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeResourceSkuLocationInfo IPersistableModel<ComputeResourceSkuLocationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceSkuLocationInfo(document.RootElement, options);
+                        return DeserializeComputeResourceSkuLocationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSkuLocationInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeResourceSkuLocationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceSkuLocationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeResourceSkuLocationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
