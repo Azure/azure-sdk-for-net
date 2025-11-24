@@ -278,11 +278,11 @@ if ($ArtifactList -and $ArtifactList.Count -gt 0)
         }
     }
 }
-elseif ($PackageInfoFiles -and @($PackageInfoFiles).Count -gt 0) {
+elseif ($PackageInfoFiles -and $PackageInfoFiles.Count -gt 0) {
     # Direct PackageInfoFiles (new method)
-    Write-Host "Using PackageInfoFiles parameter with $(@($PackageInfoFiles).Count) files"
+    Write-Host "Using PackageInfoFiles parameter with $($PackageInfoFiles.Count) files"
     # Filter out empty strings or whitespace-only entries
-    $ProcessedPackageInfoFiles = @($PackageInfoFiles) | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+    $ProcessedPackageInfoFiles = @($PackageInfoFiles | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
 }
 
 # Validate that we have package info files to process
