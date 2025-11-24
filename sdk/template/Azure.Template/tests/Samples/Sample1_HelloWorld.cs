@@ -11,15 +11,14 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
+    public partial class WidgetAnalyticsSamples : SamplesBase<TemplateClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
-        [Ignore("Template sample - update with actual client methods")]
-        public void ExampleOperation()
+        [Ignore("Widget Analytics service not available for live testing")]
+        public void GetWidgets()
         {
-            // TODO: Update this sample with actual client operations from your generated library
-            #region Snippet:Azure_Template_ExampleOperation
+            #region Snippet:Azure_Template_GetWidgets
 #if SNIPPET
             string endpoint = "https://your-service-endpoint";
             var credential = new DefaultAzureCredential();
@@ -27,13 +26,14 @@ namespace Azure.Template.Tests.Samples
             string endpoint = TestEnvironment.Endpoint;
             var credential = TestEnvironment.Credential;
 #endif
-            // TODO: Uncomment and update with your client
-            // var client = new TemplateClient(endpoint, credential);
+            var client = new WidgetAnalyticsClient(new Uri(endpoint), credential);
+            AzureWidgets widgetsClient = client.GetAzureWidgetsClient();
 
-            // TODO: Replace with actual client method calls
-            // Example:
-            // var response = client.YourMethod("parameter");
-            // Console.WriteLine(response.Value);
+            // List all widgets
+            foreach (WidgetSuite widget in widgetsClient.GetWidgets())
+            {
+                Console.WriteLine($"Widget: {widget.ManufacturerId}");
+            }
             #endregion
         }
     }

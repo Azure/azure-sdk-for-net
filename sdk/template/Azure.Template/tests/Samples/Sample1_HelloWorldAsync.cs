@@ -5,19 +5,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Template.Tests.Samples
 {
-    public partial class TemplateSamples: SamplesBase<TemplateClientTestEnvironment>
+    public partial class WidgetAnalyticsSamples : SamplesBase<TemplateClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
-        [Ignore("Template sample - update with actual client methods")]
-        public async Task ExampleOperationAsync()
+        [Ignore("Widget Analytics service not available for live testing")]
+        public async Task GetWidgetsAsync()
         {
-            // TODO: Update this sample with actual client operations from your generated library
-            #region Snippet:Azure_Template_ExampleOperationAsync
+            #region Snippet:Azure_Template_GetWidgetsAsync
 #if SNIPPET
             string endpoint = "https://your-service-endpoint";
             var credential = new DefaultAzureCredential();
@@ -25,16 +25,15 @@ namespace Azure.Template.Tests.Samples
             string endpoint = TestEnvironment.Endpoint;
             var credential = TestEnvironment.Credential;
 #endif
-            // TODO: Uncomment and update with your client
-            // var client = new TemplateClient(endpoint, credential);
+            var client = new WidgetAnalyticsClient(new Uri(endpoint), credential);
+            AzureWidgets widgetsClient = client.GetAzureWidgetsClient();
 
-            // TODO: Replace with actual client method calls
-            // Example:
-            // var response = await client.YourMethodAsync("parameter");
-            // Console.WriteLine(response.Value);
+            // List all widgets asynchronously
+            await foreach (WidgetSuite widget in widgetsClient.GetWidgetsAsync())
+            {
+                Console.WriteLine($"Widget: {widget.ManufacturerId}");
+            }
             #endregion
-
-            await Task.CompletedTask;
         }
     }
 }
