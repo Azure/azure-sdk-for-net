@@ -168,12 +168,10 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         bool GetSerializedOptionsContains(string value)
         {
             BinaryData serialized = ModelReaderWriter.Write(options);
-            Console.WriteLine(serialized);
             return serialized.ToString().Contains(value);
         }
         async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
         {
-            Console.WriteLine($"Old: {hasOldMaxTokens}, New: {hasNewMaxCompletionTokens}");
             _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
             Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
             Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));

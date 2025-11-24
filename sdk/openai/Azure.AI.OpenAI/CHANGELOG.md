@@ -2,7 +2,7 @@
 
 ## 2.7.0-beta.1 (2025-11-24)
 
-This updates restores compatibility with the latest `2.7.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13).
+This update restores compatibility with the latest `2.7.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13).
 
 ### Features Added
 
