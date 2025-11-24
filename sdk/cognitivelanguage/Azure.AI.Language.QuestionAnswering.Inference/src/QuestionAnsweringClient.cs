@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -17,6 +18,88 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     {
         private const string OTelProjectNameKey = "az.cognitivelanguage.project.name";
         private const string OTelDeploymentNameKey = "az.cognitivelanguage.deployment.name";
+        private QuestionAnsweringClientOptions ClientOptions { get; }
+
+        /// <summary>Initializes a new instance of <see cref="QuestionAnsweringClient"/> for shared key authentication.</summary>
+        /// <param name="endpoint">The Question Answering endpoint on which to operate.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> to use for authenticating requests.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public QuestionAnsweringClient(Uri endpoint, AzureKeyCredential credential)
+            : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        {
+        }
+
+        /// <summary>Initializes a new instance of <see cref="QuestionAnsweringClient"/> for shared key authentication.</summary>
+        /// <param name="endpoint">The Question Answering endpoint on which to operate.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> to use for authenticating requests.</param>
+        /// <param name="options">The client configuration to apply.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public QuestionAnsweringClient(
+            Uri endpoint,
+            AzureKeyCredential credential,
+            QuestionAnsweringClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new QuestionAnsweringClientOptions();
+
+            ClientOptions = options;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(
+                options,
+                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[]
+                {
+                    new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader)
+                },
+                new ResponseClassifier()
+            );
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary>Initializes a new instance of <see cref="QuestionAnsweringClient"/> for AAD authentication.</summary>
+        /// <param name="endpoint">The Question Answering endpoint on which to operate.</param>
+        /// <param name="credential">The <see cref="TokenCredential"/> to use for authenticating requests.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public QuestionAnsweringClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        {
+        }
+
+        /// <summary>Initializes a new instance of <see cref="QuestionAnsweringClient"/> for AAD authentication.</summary>
+        /// <param name="endpoint">The Question Answering endpoint on which to operate.</param>
+        /// <param name="credential">The <see cref="TokenCredential"/> to use for authenticating requests.</param>
+        /// <param name="options">The client configuration to apply.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
+        public QuestionAnsweringClient(
+            Uri endpoint,
+            TokenCredential credential,
+            QuestionAnsweringClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new QuestionAnsweringClientOptions();
+
+            var audience = options.Audience ?? QuestionAnsweringAudience.AzurePublicCloud;
+            var authorizationScope = $"{audience}/.default";
+
+            ClientOptions = options;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(
+                options,
+                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[]
+                {
+                    new BearerTokenAuthenticationPolicy(_tokenCredential, authorizationScope)
+                },
+                new ResponseClassifier()
+            );
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
 
         /// <summary>Get the service endpoint.</summary>
         public virtual Uri Endpoint => _endpoint;
@@ -123,7 +206,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="language">
         /// The language of the text documents.
         /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, the service default is used.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which falls back to the service default "en" when not configured.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="AnswersFromTextResult"/> containing answers to the question.</returns>
@@ -140,7 +223,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             return GetAnswersFromTextInternalAsync(
-                AnswersFromTextOptions.From(question, textDocuments, language),
+                AnswersFromTextOptions.From(question, textDocuments, ResolveLanguage(language)),
                 cancellationToken
             );
         }
@@ -153,7 +236,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="language">
         /// The language of the text documents.
         /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, the service default is used.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which falls back to the service default "en" when not configured.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="AnswersFromTextResult"/> containing answers to the question.</returns>
@@ -170,7 +253,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             return GetAnswersFromTextInternalAsync(
-                AnswersFromTextOptions.From(question, textDocuments, language),
+                AnswersFromTextOptions.From(question, textDocuments, ResolveLanguage(language)),
                 cancellationToken
             );
         }
@@ -183,7 +266,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="language">
         /// The language of the text documents.
         /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, the service default is used.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which falls back to the service default "en" when not configured.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="AnswersFromTextResult"/> containing answers to the question.</returns>
@@ -200,7 +283,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             return GetAnswersFromTextInternal(
-                AnswersFromTextOptions.From(question, textDocuments, language),
+                AnswersFromTextOptions.From(question, textDocuments, ResolveLanguage(language)),
                 cancellationToken
             );
         }
@@ -213,7 +296,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="language">
         /// The language of the text documents.
         /// This is the <see href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP-47</see> representation of a language. For example, use "en" for English, "es" for Spanish, etc.
-        /// If not set, the service default is used.
+        /// If not set, uses <see cref="QuestionAnsweringClientOptions.DefaultLanguage"/> as the default, which falls back to the service default "en" when not configured.
         /// </param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="AnswersFromTextResult"/> containing answers to the question.</returns>
@@ -230,7 +313,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             Argument.AssertNotNull(textDocuments, nameof(textDocuments));
 
             return GetAnswersFromTextInternal(
-                AnswersFromTextOptions.From(question, textDocuments, language),
+                AnswersFromTextOptions.From(question, textDocuments, ResolveLanguage(language)),
                 cancellationToken
             );
         }
@@ -316,6 +399,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
             try
             {
+                options = options.Clone(ClientOptions?.DefaultLanguage);
                 return await GetAnswersFromTextAsync(options, cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -340,6 +424,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
             try
             {
+                options = options.Clone(ClientOptions?.DefaultLanguage);
                 return GetAnswersFromText(options, cancellationToken);
             }
             catch (Exception ex)
@@ -348,5 +433,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 throw;
             }
         }
+
+        private string ResolveLanguage(string language) => language ?? ClientOptions?.DefaultLanguage;
     }
 }

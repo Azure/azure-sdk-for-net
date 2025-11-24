@@ -351,6 +351,25 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QuestionAnsweringAuthoringAudience : System.IEquatable<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QuestionAnsweringAuthoringAudience(string value) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience AzureChina { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience left, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience right) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience left, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class QuestionAnsweringAuthoringClient
     {
         protected QuestionAnsweringAuthoringClient() { }
@@ -443,6 +462,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringClientOptions : Azure.Core.ClientOptions
     {
         public QuestionAnsweringAuthoringClientOptions(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview) { }
+        public Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2023_04_01 = 1,
