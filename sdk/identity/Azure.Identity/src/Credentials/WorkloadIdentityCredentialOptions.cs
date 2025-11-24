@@ -40,10 +40,13 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get; set; }
 
         /// <summary>
-        /// Enables Azure Kubernetes token proxy mode to work around Entra's limit on federated identity credentials.
-        /// When enabled and proxy configuration environment variables are set, requests are sent to the AKS proxy instead of directly to Entra ID.
-        /// This feature is not supported when using DefaultAzureCredential.
+        /// This proxy feature is designed for apps that deploy to many clusters and clusters that host many apps. See
+        /// <see href="https://learn.microsoft.com/azure/aks/identity-bindings-concepts">AKS identity bindings</see>
+        /// for more information on when to set this property.
         /// </summary>
+        /// <remarks>
+        /// This feature isn't supported when using <see cref="DefaultAzureCredential"/>.
+        /// </remarks>
         public bool IsAzureProxyEnabled { get; set; }
 
         /// <summary>
