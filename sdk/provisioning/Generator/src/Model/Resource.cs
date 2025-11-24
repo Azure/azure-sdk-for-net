@@ -391,4 +391,17 @@ public class Resource(Specification spec, Type armType)
                 Spec!.SaveFile($"{Name}.cs", writer.ToString());
             });
     }
+
+    public override void GenerateSchema(IndentWriter writer)
+    {
+        ContextualException.WithContext(
+            $"Generating schema for resource {Namespace}.{Name}",
+            () =>
+            {
+                using (writer.Scope($"resource symbolicname '{ResourceType}@{DefaultResourceVersion}' = {{", "}"))
+                {
+                    WriteSchema(writer, new HashSet<TypeModel>());
+                }
+            });
+    }
 }

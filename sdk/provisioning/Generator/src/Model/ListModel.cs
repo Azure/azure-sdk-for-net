@@ -18,4 +18,12 @@ public class ListModel(ModelBase elementType)
 
     public override string GetTypeReference() =>
         $"IList<{ElementType.GetTypeReference()}>";
+
+    public override void GenerateSchema(IndentWriter writer)
+    {
+        using (writer.Scope("[", "]"))
+        {
+            ElementType.GenerateSchema(writer);
+        }
+    }
 }

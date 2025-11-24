@@ -143,6 +143,7 @@
     <PackageReference Update="Azure.ResourceManager.AppService" Version="1.4.1" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.4" />
     <PackageReference Update="Azure.ResourceManager.Batch" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager.Cdn" Version="1.5.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.Communication" Version="1.2.1" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0" />
