@@ -20,7 +20,7 @@ public static partial class AzureChatExtensions
         dataSources.Add(dataSource);
 
         using MemoryStream stream = new();
-        Utf8JsonWriter writer = new(stream);
+        using Utf8JsonWriter writer = new(stream);
 
         writer.WriteStartArray();
         foreach (ChatDataSource listedDataSource in dataSources)
