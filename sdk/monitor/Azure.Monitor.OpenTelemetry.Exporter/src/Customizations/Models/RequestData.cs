@@ -47,6 +47,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);
             }
 
+            // Add StatusDescription as a custom property if present
+            if (!string.IsNullOrEmpty(activity.StatusDescription))
+            {
+                TraceHelper.AddKvpToDictionary(Properties, "otel.status_description", activity.StatusDescription!);
+            }
+
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
         }
 
