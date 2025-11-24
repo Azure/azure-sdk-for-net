@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRoleDefinitionsRequest(nextLink, _scope, _filter, _context) : _client.CreateGetRoleDefinitionsRequest(_scope, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRoleDefinitionsRequest(nextLink, _scope, _context) : _client.CreateGetRoleDefinitionsRequest(_scope, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleDefinitions");
             scope.Start();
             try
