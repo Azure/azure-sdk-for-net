@@ -16,7 +16,7 @@ This configuration is **per Microsoft Foundry resource** and persists across ses
 
 To get started you'll need a **Microsoft Foundry resource**. See [README][README] for prerequisites and instructions.
 
-You also need to have deployed the following models in Azure AI Foundry:
+You also need to have deployed the following models in Microsoft Foundry:
 - GPT-4.1
 - GPT-4.1-mini
 - text-embedding-3-large
