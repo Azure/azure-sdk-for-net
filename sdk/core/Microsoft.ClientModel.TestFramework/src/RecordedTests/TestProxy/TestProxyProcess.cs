@@ -51,11 +51,6 @@ public class TestProxyProcess
     public int? ProxyPortHttps => _proxyPortHttps;
 
     /// <summary>
-    /// Did we restore the tool from a specific directory?
-    /// </summary>
-    private string? _toolDirectory;
-
-    /// <summary>
     /// Initializes static members of the <see cref="TestProxyProcess"/> class.
     /// Locates the .NET executable and configures debug logging settings.
     /// </summary>
@@ -100,8 +95,6 @@ public class TestProxyProcess
 
         ProcessStartInfo testProxyProcessInfo;
 
-        string? toolDirectory = null;
-
         if (proxyPath is not null)
         {
             testProxyProcessInfo = new ProcessStartInfo(
@@ -110,8 +103,7 @@ public class TestProxyProcess
         }
         else
         {
-            toolDirectory = TryRestoreLocalTools();
-            _toolDirectory = toolDirectory;
+            TryRestoreLocalTools();
 
             testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -121,11 +113,6 @@ public class TestProxyProcess
         testProxyProcessInfo.UseShellExecute = false;
         testProxyProcessInfo.RedirectStandardOutput = true;
         testProxyProcessInfo.RedirectStandardError = true;
-
-        if (toolDirectory != null)
-        {
-            testProxyProcessInfo.WorkingDirectory = toolDirectory;
-        }
 
         // Set environment variables
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
@@ -149,7 +136,7 @@ public class TestProxyProcess
             {
                 while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardError.EndOfStream)
                 {
-                    var error = _testProxyProcess.StandardError.ReadLine() + _testProxyProcess.StandardOutput.ReadLine();
+                    var error = _testProxyProcess.StandardError.ReadLine();
                     // output to console in case another error in the test causes the exception to not be propagated
                     TestContext.Progress.WriteLine(error);
                     _errorBuffer.AppendLine(error);
@@ -187,7 +174,7 @@ public class TestProxyProcess
             {
                 var error = _errorBuffer.ToString();
                 _errorBuffer.Clear();
-                throw new InvalidOperationException($"An error occurred in the test proxy: {error}. We ran in the context of the tool directory {_toolDirectory??"NULLED OUT"}");
+                throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
             }
 
             // if no errors, fallback to this exception
@@ -236,7 +223,7 @@ public class TestProxyProcess
         return false;
     }
 
-    private static string? TryRestoreLocalTools()
+    private static void TryRestoreLocalTools()
     {
         try
         {
@@ -263,7 +250,7 @@ public class TestProxyProcess
                     {
                         process.WaitForExit(30000);
                     }
-                    return currentDir;
+                    break;
                 }
 
                 var parentDir = Directory.GetParent(currentDir);
@@ -274,7 +261,6 @@ public class TestProxyProcess
         {
             // If restore fails, silently continue - the dotnet test-proxy command will handle it
         }
-        return null;
     }
 
     /// <summary>
