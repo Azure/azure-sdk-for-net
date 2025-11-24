@@ -205,7 +205,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    BinaryData.FromBytes(fileBytes));
+                    fileBytes);
 #else
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
@@ -214,7 +214,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    BinaryData.FromBytes(fileBytes));
+                    fileBytes);
 #endif
 
                 var analyzeResult = analyzeOperation.Value;
@@ -320,7 +320,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    BinaryData.FromBytes(fileBytes));
+                    fileBytes);
 #else
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
@@ -329,7 +329,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    BinaryData.FromBytes(fileBytes));
+                    fileBytes);
 #endif
 
                 var analyzeResult = analyzeOperation.Value;

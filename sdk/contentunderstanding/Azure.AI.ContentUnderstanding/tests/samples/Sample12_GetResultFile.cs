@@ -35,7 +35,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 inputs: new[] { new AnalyzeInput { Url = videoUrl } });
 
             // Get the operation ID from the operation (available after Started)
-            string operationId = analyzeOperation.GetOperationId() ?? throw new InvalidOperationException("Could not extract operation ID from operation");
+            string operationId = analyzeOperation.OperationId ?? throw new InvalidOperationException("Could not extract operation ID from operation");
             Console.WriteLine($"Operation ID: {operationId}");
 
             // Wait for completion
@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 inputs: new[] { new AnalyzeInput { Url = documentUrl } });
 
             // Get the operation ID from the operation (available after Started)
-            string operationId = analyzeOperation.GetOperationId() ?? throw new InvalidOperationException("Could not extract operation ID from operation");
+            string operationId = analyzeOperation.OperationId ?? throw new InvalidOperationException("Could not extract operation ID from operation");
             Console.WriteLine($"Operation ID: {operationId}");
 
             // Wait for completion
