@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 16 / 32 (50%)
+**Migration Status**: 16 / 33 (48.5%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -59,6 +59,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | monitor | Azure.Monitor.Query.Logs | ✅ |
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation |  |
+| openai | Azure.AI.OpenAI | ✅ |
 | purview | Azure.Analytics.Purview.DataMap |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | translation | Azure.AI.Translation.Document |  |
