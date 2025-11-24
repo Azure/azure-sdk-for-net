@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> The billing plan properties for the upgrade plan call. </summary>
-    public partial class UpgradePlanContent
+    public partial class DynatraceUpgradePlanContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePlanContent"/>. </summary>
-        public UpgradePlanContent()
+        /// <summary> Initializes a new instance of <see cref="DynatraceUpgradePlanContent"/>. </summary>
+        public DynatraceUpgradePlanContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePlanContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceUpgradePlanContent"/>. </summary>
         /// <param name="planData"> The new Billing plan information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradePlanContent(DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceUpgradePlanContent(DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlanData = planData;
             _serializedAdditionalRawData = serializedAdditionalRawData;

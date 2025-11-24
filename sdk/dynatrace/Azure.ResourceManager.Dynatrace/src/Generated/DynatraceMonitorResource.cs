@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Dynatrace
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a MonitoredSubscriptionPropertyResource along with the instance operations that can be performed on it in the DynatraceMonitor. </summary>
-        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
-        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionProperty()
+        /// <summary> Gets an object representing a DynatraceMonitoredSubscriptionPropertyResource along with the instance operations that can be performed on it in the DynatraceMonitor. </summary>
+        /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> object. </returns>
+        public virtual DynatraceMonitoredSubscriptionPropertyResource GetDynatraceMonitoredSubscriptionProperty()
         {
-            return new MonitoredSubscriptionPropertyResource(Client, Id.AppendChildResource("monitoredSubscriptions", "default"));
+            return new DynatraceMonitoredSubscriptionPropertyResource(Client, Id.AppendChildResource("monitoredSubscriptions", "default"));
         }
 
         /// <summary> Gets a collection of DynatraceTagRuleResources in the DynatraceMonitor. </summary>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> The details of the upgrade plan request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpgradePlanAsync(WaitUntil waitUntil, UpgradePlanContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpgradePlanAsync(WaitUntil waitUntil, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> The details of the upgrade plan request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpgradePlan(WaitUntil waitUntil, UpgradePlanContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpgradePlan(WaitUntil waitUntil, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

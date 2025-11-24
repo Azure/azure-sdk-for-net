@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Dynatrace.MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dynatrace.DynatraceMonitoredSubscriptionPropertyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </param>
-        /// <returns> A new <see cref="Dynatrace.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitoredSubscriptionList properties = null)
+        /// <returns> A new <see cref="Dynatrace.DynatraceMonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
+        public static DynatraceMonitoredSubscriptionPropertyData DynatraceMonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitoredSubscriptionList properties = null)
         {
-            return new MonitoredSubscriptionPropertyData(
+            return new DynatraceMonitoredSubscriptionPropertyData(
                 id,
                 name,
                 resourceType,

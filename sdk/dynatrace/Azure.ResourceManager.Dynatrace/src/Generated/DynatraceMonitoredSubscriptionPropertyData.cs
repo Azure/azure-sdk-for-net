@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
-    /// A class representing the MonitoredSubscriptionProperty data model.
+    /// A class representing the DynatraceMonitoredSubscriptionProperty data model.
     /// The request to update subscriptions needed to be monitored by the Dynatrace monitor resource.
     /// </summary>
-    public partial class MonitoredSubscriptionPropertyData : ResourceData
+    public partial class DynatraceMonitoredSubscriptionPropertyData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
-        public MonitoredSubscriptionPropertyData()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionPropertyData"/>. </summary>
+        public DynatraceMonitoredSubscriptionPropertyData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionPropertyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitoredSubscriptionList properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DynatraceMonitoredSubscriptionPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitoredSubscriptionList properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

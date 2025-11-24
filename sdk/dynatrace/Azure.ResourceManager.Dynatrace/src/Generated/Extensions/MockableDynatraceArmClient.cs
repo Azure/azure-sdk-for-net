@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynatraceMonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
-        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionPropertyResource"/> object. </returns>
+        public virtual DynatraceMonitoredSubscriptionPropertyResource GetDynatraceMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
         {
-            MonitoredSubscriptionPropertyResource.ValidateResourceId(id);
-            return new MonitoredSubscriptionPropertyResource(Client, id);
+            DynatraceMonitoredSubscriptionPropertyResource.ValidateResourceId(id);
+            return new DynatraceMonitoredSubscriptionPropertyResource(Client, id);
         }
 
         /// <summary>

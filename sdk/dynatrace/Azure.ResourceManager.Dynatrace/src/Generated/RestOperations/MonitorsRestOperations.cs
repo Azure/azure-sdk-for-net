@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
-        internal RequestUriBuilder CreateUpgradePlanRequestUri(string subscriptionId, string resourceGroupName, string monitorName, UpgradePlanContent content)
+        internal RequestUriBuilder CreateUpgradePlanRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DynatraceUpgradePlanContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.Dynatrace
             return uri;
         }
 
-        internal HttpMessage CreateUpgradePlanRequest(string subscriptionId, string resourceGroupName, string monitorName, UpgradePlanContent content)
+        internal HttpMessage CreateUpgradePlanRequest(string subscriptionId, string resourceGroupName, string monitorName, DynatraceUpgradePlanContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpgradePlanAsync(string subscriptionId, string resourceGroupName, string monitorName, UpgradePlanContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UpgradePlanAsync(string subscriptionId, string resourceGroupName, string monitorName, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpgradePlan(string subscriptionId, string resourceGroupName, string monitorName, UpgradePlanContent content, CancellationToken cancellationToken = default)
+        public Response UpgradePlan(string subscriptionId, string resourceGroupName, string monitorName, DynatraceUpgradePlanContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

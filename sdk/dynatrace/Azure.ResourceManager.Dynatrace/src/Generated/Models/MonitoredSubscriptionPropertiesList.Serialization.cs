@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            IReadOnlyList<MonitoredSubscriptionPropertyData> value = default;
+            IReadOnlyList<DynatraceMonitoredSubscriptionPropertyData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    List<MonitoredSubscriptionPropertyData> array = new List<MonitoredSubscriptionPropertyData>();
+                    List<DynatraceMonitoredSubscriptionPropertyData> array = new List<DynatraceMonitoredSubscriptionPropertyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoredSubscriptionPropertyData.DeserializeMonitoredSubscriptionPropertyData(item, options));
+                        array.Add(DynatraceMonitoredSubscriptionPropertyData.DeserializeDynatraceMonitoredSubscriptionPropertyData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitoredSubscriptionPropertiesList(value ?? new ChangeTrackingList<MonitoredSubscriptionPropertyData>(), nextLink, serializedAdditionalRawData);
+            return new MonitoredSubscriptionPropertiesList(value ?? new ChangeTrackingList<DynatraceMonitoredSubscriptionPropertyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoredSubscriptionPropertiesList>.Write(ModelReaderWriterOptions options)

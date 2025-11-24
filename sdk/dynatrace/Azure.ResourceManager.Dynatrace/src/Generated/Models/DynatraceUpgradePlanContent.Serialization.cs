@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class UpgradePlanContent : IUtf8JsonSerializable, IJsonModel<UpgradePlanContent>
+    public partial class DynatraceUpgradePlanContent : IUtf8JsonSerializable, IJsonModel<DynatraceUpgradePlanContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpgradePlanContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceUpgradePlanContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UpgradePlanContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DynatraceUpgradePlanContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceUpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradePlanContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceUpgradePlanContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PlanData))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        UpgradePlanContent IJsonModel<UpgradePlanContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DynatraceUpgradePlanContent IJsonModel<DynatraceUpgradePlanContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceUpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradePlanContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceUpgradePlanContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradePlanContent(document.RootElement, options);
+            return DeserializeDynatraceUpgradePlanContent(document.RootElement, options);
         }
 
-        internal static UpgradePlanContent DeserializeUpgradePlanContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DynatraceUpgradePlanContent DeserializeDynatraceUpgradePlanContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UpgradePlanContent(planData, serializedAdditionalRawData);
+            return new DynatraceUpgradePlanContent(planData, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UpgradePlanContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DynatraceUpgradePlanContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceUpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradePlanContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceUpgradePlanContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UpgradePlanContent IPersistableModel<UpgradePlanContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DynatraceUpgradePlanContent IPersistableModel<DynatraceUpgradePlanContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceUpgradePlanContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpgradePlanContent(document.RootElement, options);
+                        return DeserializeDynatraceUpgradePlanContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradePlanContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceUpgradePlanContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UpgradePlanContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DynatraceUpgradePlanContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
