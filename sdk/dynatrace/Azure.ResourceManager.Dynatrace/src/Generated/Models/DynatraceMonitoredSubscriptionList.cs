@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> The updatable properties of the TagRule. </summary>
-    public partial class DynatraceTagRulePatch
+    /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
+    public partial class DynatraceMonitoredSubscriptionList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,30 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
-        public DynatraceTagRulePatch()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionList"/>. </summary>
+        public DynatraceMonitoredSubscriptionList()
         {
+            MonitoredSubscriptionList = new ChangeTrackingList<DynatraceMonitoredSubscription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionList"/>. </summary>
+        /// <param name="operation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceTagRulePatch(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMonitoredSubscriptionList(DynatraceMonitoredSubscriptionListOperation? operation, IList<DynatraceMonitoredSubscription> monitoredSubscriptionList, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LogRules = logRules;
-            MetricRules = metricRules;
+            Operation = operation;
+            MonitoredSubscriptionList = monitoredSubscriptionList;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
-        public DynatraceMonitorResourceLogRules LogRules { get; set; }
-        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
-        internal DynatraceMonitorResourceMetricRules MetricRules { get; set; }
-        /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>
-        public IList<DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags
-        {
-            get
-            {
-                if (MetricRules is null)
-                    MetricRules = new DynatraceMonitorResourceMetricRules();
-                return MetricRules.FilteringTags;
-            }
-        }
+        /// <summary> The operation for the patch on the resource. </summary>
+        public DynatraceMonitoredSubscriptionListOperation? Operation { get; set; }
+        /// <summary> List of subscriptions and the state of the monitoring. </summary>
+        public IList<DynatraceMonitoredSubscription> MonitoredSubscriptionList { get; }
+        /// <summary> Provisioning State of the resource. </summary>
+        public DynatraceProvisioningState? ProvisioningState { get; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> Dynatrace account API Key. </summary>
-    public partial class DynatraceAccountCredentialsInfo
+    /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
+    public partial class MonitoringTagRulesProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceAccountCredentialsInfo"/>. </summary>
-        internal DynatraceAccountCredentialsInfo()
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
+        public MonitoringTagRulesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceAccountCredentialsInfo"/>. </summary>
-        /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
-        /// <param name="apiKey"> API Key of the user account. </param>
-        /// <param name="regionId"> Region in which the account is created. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceAccountCredentialsInfo(string accountId, string apiKey, string regionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoringTagRulesProperties(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AccountId = accountId;
-            ApiKey = apiKey;
-            RegionId = regionId;
+            LogRules = logRules;
+            MetricRules = metricRules;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Account Id of the account this environment is linked to. </summary>
-        public string AccountId { get; }
-        /// <summary> API Key of the user account. </summary>
-        public string ApiKey { get; }
-        /// <summary> Region in which the account is created. </summary>
-        public string RegionId { get; }
+        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        public DynatraceMonitorResourceLogRules LogRules { get; set; }
+        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        public DynatraceMonitorResourceMetricRules MetricRules { get; set; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public DynatraceProvisioningState? ProvisioningState { get; }
     }
 }
