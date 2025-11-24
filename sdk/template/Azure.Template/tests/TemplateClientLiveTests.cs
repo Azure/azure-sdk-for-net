@@ -20,17 +20,16 @@ namespace Azure.Template.Tests
         {
         }
 
-        private TemplateClient CreateClient()
-        {
-            // TODO: Update this method to create your client with appropriate parameters
-            // Example:
-            // return InstrumentClient(new TemplateClient(
-            //     TestEnvironment.Endpoint,
-            //     TestEnvironment.Credential,
-            //     InstrumentClientOptions(new TemplateClientOptions())
-            // ));
-            throw new NotImplementedException("Update CreateClient method for your generated client");
-        }
+        // TODO: Update this method to create your client with appropriate parameters
+        // Example:
+        // private TemplateClient CreateClient()
+        // {
+        //     return InstrumentClient(new TemplateClient(
+        //         TestEnvironment.Endpoint,
+        //         TestEnvironment.Credential,
+        //         InstrumentClientOptions(new TemplateClientOptions())
+        //     ));
+        // }
 
         [RecordedTest]
         [Ignore("Template test - update with actual client methods")]
@@ -42,7 +41,6 @@ namespace Azure.Template.Tests
             // var response = await client.YourMethodAsync("parameter");
             // Assert.IsNotNull(response);
             await Task.CompletedTask;
-            throw new NotImplementedException("Update this test with actual client methods");
         }
     }
 }

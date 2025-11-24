@@ -25,7 +25,8 @@ namespace Azure.Template.Tests.Samples
             string endpoint = TestEnvironment.Endpoint;
             var credential = TestEnvironment.Credential;
 #endif
-            var client = new TemplateClient(endpoint, credential);
+            // TODO: Uncomment and update with your client
+            // var client = new TemplateClient(endpoint, credential);
 
             // TODO: Replace with actual client method calls
             // Example:
@@ -33,8 +34,7 @@ namespace Azure.Template.Tests.Samples
             // Console.WriteLine(response.Value);
             #endregion
 
-            // Assert.NotNull(response);
-            await Task.CompletedTask; // Remove this line when adding actual async operations
+            await Task.CompletedTask;
         }
     }
 }
