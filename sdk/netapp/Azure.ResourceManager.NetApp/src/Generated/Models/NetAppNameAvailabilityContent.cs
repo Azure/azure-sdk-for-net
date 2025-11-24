@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Resource name availability request content.
-    /// Serialized Name: ResourceNameAvailabilityRequest
-    /// </summary>
+    /// <summary> Resource name availability request content. </summary>
     public partial class NetAppNameAvailabilityContent
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        /// Serialized Name: ResourceNameAvailabilityRequest.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type used for verification.
-        /// Serialized Name: ResourceNameAvailabilityRequest.type
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Resource group name.
-        /// Serialized Name: ResourceNameAvailabilityRequest.resourceGroup
-        /// </param>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="resourceGroup"> Resource group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceGroup"/> is null. </exception>
         public NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType resourceType, string resourceGroup)
         {
@@ -73,18 +61,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        /// Serialized Name: ResourceNameAvailabilityRequest.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type used for verification.
-        /// Serialized Name: ResourceNameAvailabilityRequest.type
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Resource group name.
-        /// Serialized Name: ResourceNameAvailabilityRequest.resourceGroup
-        /// </param>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType resourceType, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -99,20 +78,11 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// Resource name to verify.
-        /// Serialized Name: ResourceNameAvailabilityRequest.name
-        /// </summary>
+        /// <summary> Resource name to verify. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Resource type used for verification.
-        /// Serialized Name: ResourceNameAvailabilityRequest.type
-        /// </summary>
+        /// <summary> Resource type used for verification. </summary>
         public NetAppNameAvailabilityResourceType ResourceType { get; }
-        /// <summary>
-        /// Resource group name.
-        /// Serialized Name: ResourceNameAvailabilityRequest.resourceGroup
-        /// </summary>
+        /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }
     }
 }

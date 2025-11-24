@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Backup Vault information
-    /// Serialized Name: BackupVaultPatch
-    /// </summary>
+    /// <summary> Backup Vault information. </summary>
     public partial class NetAppBackupVaultPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultPatch"/>. </summary>
-        /// <param name="tags">
-        /// Resource tags
-        /// Serialized Name: BackupVaultPatch.tags
-        /// </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppBackupVaultPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: BackupVaultPatch.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

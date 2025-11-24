@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of regionInfo resources
-    /// Serialized Name: RegionInfosList
-    /// </summary>
+    /// <summary> List of regionInfo resources. </summary>
     internal partial class RegionInfosList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RegionInfosList"/>. </summary>
-        /// <param name="value">
-        /// The RegionInfoResource items on this page
-        /// Serialized Name: RegionInfosList.value
-        /// </param>
+        /// <param name="value"> The RegionInfoResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RegionInfosList(IEnumerable<RegionInfoResourceData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegionInfosList"/>. </summary>
-        /// <param name="value">
-        /// The RegionInfoResource items on this page
-        /// Serialized Name: RegionInfosList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: RegionInfosList.nextLink
-        /// </param>
+        /// <param name="value"> The RegionInfoResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegionInfosList(IReadOnlyList<RegionInfoResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The RegionInfoResource items on this page
-        /// Serialized Name: RegionInfosList.value
-        /// </summary>
+        /// <summary> The RegionInfoResource items on this page. </summary>
         public IReadOnlyList<RegionInfoResourceData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: RegionInfosList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

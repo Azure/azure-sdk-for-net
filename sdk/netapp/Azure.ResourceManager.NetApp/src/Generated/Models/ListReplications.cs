@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List Replications
-    /// Serialized Name: ListReplications
-    /// </summary>
+    /// <summary> List Replications. </summary>
     internal partial class ListReplications
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListReplications"/>. </summary>
-        /// <param name="value">
-        /// The Replication items on this page
-        /// Serialized Name: ListReplications.value
-        /// </param>
+        /// <param name="value"> The Replication items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListReplications(IEnumerable<NetAppVolumeReplication> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListReplications"/>. </summary>
-        /// <param name="value">
-        /// The Replication items on this page
-        /// Serialized Name: ListReplications.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ListReplications.nextLink
-        /// </param>
+        /// <param name="value"> The Replication items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ListReplications(IReadOnlyList<NetAppVolumeReplication> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The Replication items on this page
-        /// Serialized Name: ListReplications.value
-        /// </summary>
+        /// <summary> The Replication items on this page. </summary>
         public IReadOnlyList<NetAppVolumeReplication> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ListReplications.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

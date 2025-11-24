@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of Subvolumes
-    /// Serialized Name: SubvolumesList
-    /// </summary>
+    /// <summary> List of Subvolumes. </summary>
     internal partial class SubvolumesList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubvolumesList"/>. </summary>
-        /// <param name="value">
-        /// The SubvolumeInfo items on this page
-        /// Serialized Name: SubvolumesList.value
-        /// </param>
+        /// <param name="value"> The SubvolumeInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SubvolumesList(IEnumerable<NetAppSubvolumeInfoData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubvolumesList"/>. </summary>
-        /// <param name="value">
-        /// The SubvolumeInfo items on this page
-        /// Serialized Name: SubvolumesList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: SubvolumesList.nextLink
-        /// </param>
+        /// <param name="value"> The SubvolumeInfo items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubvolumesList(IReadOnlyList<NetAppSubvolumeInfoData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The SubvolumeInfo items on this page
-        /// Serialized Name: SubvolumesList.value
-        /// </summary>
+        /// <summary> The SubvolumeInfo items on this page. </summary>
         public IReadOnlyList<NetAppSubvolumeInfoData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: SubvolumesList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -20,8 +20,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug:
-  show-serialized-names: true
+# mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -282,6 +282,8 @@ rename-mapping:
   PoolPropertiesEncryptionType: CapacityPoolEncryptionType
   RestoreStatus.relationshipStatus: VolumeRestoreRelationshipStatus
   BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
+  ListReplicationsRequest.exclude: ExcludeReplicationsFilter
+  Exclude: ExcludeReplicationsFilter
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

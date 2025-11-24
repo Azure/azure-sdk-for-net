@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of Snapshots
-    /// Serialized Name: SnapshotsList
-    /// </summary>
+    /// <summary> List of Snapshots. </summary>
     internal partial class SnapshotsList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
-        /// <param name="value">
-        /// The Snapshot items on this page
-        /// Serialized Name: SnapshotsList.value
-        /// </param>
+        /// <param name="value"> The Snapshot items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SnapshotsList(IEnumerable<NetAppVolumeSnapshotData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
-        /// <param name="value">
-        /// The Snapshot items on this page
-        /// Serialized Name: SnapshotsList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: SnapshotsList.nextLink
-        /// </param>
+        /// <param name="value"> The Snapshot items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The Snapshot items on this page
-        /// Serialized Name: SnapshotsList.value
-        /// </summary>
+        /// <summary> The Snapshot items on this page. </summary>
         public IReadOnlyList<NetAppVolumeSnapshotData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: SnapshotsList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

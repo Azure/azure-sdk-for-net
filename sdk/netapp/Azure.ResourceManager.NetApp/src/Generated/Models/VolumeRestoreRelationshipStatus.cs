@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Status of the volume restore relationship
-    /// Serialized Name: VolumeRestoreRelationshipStatus
-    /// </summary>
+    /// <summary> Status of the volume restore relationship. </summary>
     public readonly partial struct VolumeRestoreRelationshipStatus : IEquatable<VolumeRestoreRelationshipStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string FailedValue = "Failed";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Idle
-        /// Serialized Name: VolumeRestoreRelationshipStatus.Idle
-        /// </summary>
+        /// <summary> Idle. </summary>
         public static VolumeRestoreRelationshipStatus Idle { get; } = new VolumeRestoreRelationshipStatus(IdleValue);
-        /// <summary>
-        /// Transferring
-        /// Serialized Name: VolumeRestoreRelationshipStatus.Transferring
-        /// </summary>
+        /// <summary> Transferring. </summary>
         public static VolumeRestoreRelationshipStatus Transferring { get; } = new VolumeRestoreRelationshipStatus(TransferringValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: VolumeRestoreRelationshipStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static VolumeRestoreRelationshipStatus Failed { get; } = new VolumeRestoreRelationshipStatus(FailedValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: VolumeRestoreRelationshipStatus.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static VolumeRestoreRelationshipStatus Unknown { get; } = new VolumeRestoreRelationshipStatus(UnknownValue);
         /// <summary> Determines if two <see cref="VolumeRestoreRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(VolumeRestoreRelationshipStatus left, VolumeRestoreRelationshipStatus right) => left.Equals(right);

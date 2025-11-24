@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Source Cluster properties for a cluster peer request
-    /// Serialized Name: PeerClusterForVolumeMigrationRequest
-    /// </summary>
+    /// <summary> Source Cluster properties for a cluster peer request. </summary>
     public partial class PeerClusterForVolumeMigrationContent
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PeerClusterForVolumeMigrationContent"/>. </summary>
-        /// <param name="peerIPAddresses">
-        /// A list of IC-LIF IPs that can be used to connect to the On-prem cluster
-        /// Serialized Name: PeerClusterForVolumeMigrationRequest.peerIpAddresses
-        /// </param>
+        /// <param name="peerIPAddresses"> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="peerIPAddresses"/> is null. </exception>
         public PeerClusterForVolumeMigrationContent(IEnumerable<string> peerIPAddresses)
         {
@@ -63,10 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PeerClusterForVolumeMigrationContent"/>. </summary>
-        /// <param name="peerIPAddresses">
-        /// A list of IC-LIF IPs that can be used to connect to the On-prem cluster
-        /// Serialized Name: PeerClusterForVolumeMigrationRequest.peerIpAddresses
-        /// </param>
+        /// <param name="peerIPAddresses"> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PeerClusterForVolumeMigrationContent(IList<string> peerIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// A list of IC-LIF IPs that can be used to connect to the On-prem cluster
-        /// Serialized Name: PeerClusterForVolumeMigrationRequest.peerIpAddresses
-        /// </summary>
+        /// <summary> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </summary>
         public IList<string> PeerIPAddresses { get; }
     }
 }

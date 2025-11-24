@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The service level of the file system
-    /// Serialized Name: ServiceLevel
-    /// </summary>
+    /// <summary> The service level of the file system. </summary>
     public readonly partial struct NetAppFileServiceLevel : IEquatable<NetAppFileServiceLevel>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string StandardZrsValue = "StandardZRS";
         private const string FlexibleValue = "Flexible";
 
-        /// <summary>
-        /// Standard service level
-        /// Serialized Name: ServiceLevel.Standard
-        /// </summary>
+        /// <summary> Standard service level. </summary>
         public static NetAppFileServiceLevel Standard { get; } = new NetAppFileServiceLevel(StandardValue);
-        /// <summary>
-        /// Premium service level
-        /// Serialized Name: ServiceLevel.Premium
-        /// </summary>
+        /// <summary> Premium service level. </summary>
         public static NetAppFileServiceLevel Premium { get; } = new NetAppFileServiceLevel(PremiumValue);
-        /// <summary>
-        /// Ultra service level
-        /// Serialized Name: ServiceLevel.Ultra
-        /// </summary>
+        /// <summary> Ultra service level. </summary>
         public static NetAppFileServiceLevel Ultra { get; } = new NetAppFileServiceLevel(UltraValue);
-        /// <summary>
-        /// Zone redundant storage service level. This will be deprecated soon.
-        /// Serialized Name: ServiceLevel.StandardZRS
-        /// </summary>
+        /// <summary> Zone redundant storage service level. This will be deprecated soon. </summary>
         public static NetAppFileServiceLevel StandardZrs { get; } = new NetAppFileServiceLevel(StandardZrsValue);
-        /// <summary>
-        /// Flexible service level
-        /// Serialized Name: ServiceLevel.Flexible
-        /// </summary>
+        /// <summary> Flexible service level. </summary>
         public static NetAppFileServiceLevel Flexible { get; } = new NetAppFileServiceLevel(FlexibleValue);
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are the same. </summary>
         public static bool operator ==(NetAppFileServiceLevel left, NetAppFileServiceLevel right) => left.Equals(right);

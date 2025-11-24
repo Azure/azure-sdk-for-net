@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Hourly Schedule properties
-    /// Serialized Name: HourlySchedule
-    /// </summary>
+    /// <summary> Hourly Schedule properties. </summary>
     public partial class SnapshotPolicyHourlySchedule
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
-        /// <param name="snapshotsToKeep">
-        /// Hourly snapshot count to keep
-        /// Serialized Name: HourlySchedule.snapshotsToKeep
-        /// </param>
-        /// <param name="minute">
-        /// Indicates which minute snapshot should be taken
-        /// Serialized Name: HourlySchedule.minute
-        /// </param>
-        /// <param name="usedBytes">
-        /// Resource size in bytes, current storage usage for the volume in bytes
-        /// Serialized Name: HourlySchedule.usedBytes
-        /// </param>
+        /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
+        /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
+        /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotPolicyHourlySchedule(int? snapshotsToKeep, int? minute, long? usedBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Hourly snapshot count to keep
-        /// Serialized Name: HourlySchedule.snapshotsToKeep
-        /// </summary>
+        /// <summary> Hourly snapshot count to keep. </summary>
         public int? SnapshotsToKeep { get; set; }
-        /// <summary>
-        /// Indicates which minute snapshot should be taken
-        /// Serialized Name: HourlySchedule.minute
-        /// </summary>
+        /// <summary> Indicates which minute snapshot should be taken. </summary>
         public int? Minute { get; set; }
-        /// <summary>
-        /// Resource size in bytes, current storage usage for the volume in bytes
-        /// Serialized Name: HourlySchedule.usedBytes
-        /// </summary>
+        /// <summary> Resource size in bytes, current storage usage for the volume in bytes. </summary>
         public long? UsedBytes { get; set; }
     }
 }

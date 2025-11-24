@@ -1306,21 +1306,21 @@ namespace Azure.ResourceManager.NetApp.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Exclude : System.IEquatable<Azure.ResourceManager.NetApp.Models.Exclude>
+    public readonly partial struct ExcludeReplicationsFilter : System.IEquatable<Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Exclude(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.Exclude Deleted { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.Exclude None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.Exclude other) { throw null; }
+        public ExcludeReplicationsFilter(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter Deleted { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.Exclude left, Azure.ResourceManager.NetApp.Models.Exclude right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.Exclude (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.Exclude left, Azure.ResourceManager.NetApp.Models.Exclude right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter left, Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter left, Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class GetGroupIdListForLdapUserContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserContent>
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class ListReplicationsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.ListReplicationsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.ListReplicationsContent>
     {
         public ListReplicationsContent() { }
-        public Azure.ResourceManager.NetApp.Models.Exclude? Exclude { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter? ExcludeReplicationsFilter { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetApp.Models.ListReplicationsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.ListReplicationsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.ListReplicationsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

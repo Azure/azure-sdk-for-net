@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose
-    /// Serialized Name: AvsDataStore
-    /// </summary>
+    /// <summary> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </summary>
     public readonly partial struct NetAppAvsDataStore : IEquatable<NetAppAvsDataStore>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// avsDataStore is enabled
-        /// Serialized Name: AvsDataStore.Enabled
-        /// </summary>
+        /// <summary> avsDataStore is enabled. </summary>
         public static NetAppAvsDataStore Enabled { get; } = new NetAppAvsDataStore(EnabledValue);
-        /// <summary>
-        /// avsDataStore is disabled
-        /// Serialized Name: AvsDataStore.Disabled
-        /// </summary>
+        /// <summary> avsDataStore is disabled. </summary>
         public static NetAppAvsDataStore Disabled { get; } = new NetAppAvsDataStore(DisabledValue);
         /// <summary> Determines if two <see cref="NetAppAvsDataStore"/> values are the same. </summary>
         public static bool operator ==(NetAppAvsDataStore left, NetAppAvsDataStore right) => left.Equals(right);

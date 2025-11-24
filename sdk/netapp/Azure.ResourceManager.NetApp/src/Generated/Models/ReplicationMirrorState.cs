@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The status of the replication
-    /// Serialized Name: ReplicationMirrorState
-    /// </summary>
+    /// <summary> The status of the replication. </summary>
     public readonly partial struct ReplicationMirrorState : IEquatable<ReplicationMirrorState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MirroredValue = "Mirrored";
         private const string BrokenValue = "Broken";
 
-        /// <summary>
-        /// Destination volume has not been initialized
-        /// Serialized Name: ReplicationMirrorState.Uninitialized
-        /// </summary>
+        /// <summary> Destination volume has not been initialized. </summary>
         public static ReplicationMirrorState Uninitialized { get; } = new ReplicationMirrorState(UninitializedValue);
-        /// <summary>
-        /// Destination volume has been initialized and is ready
-        /// Serialized Name: ReplicationMirrorState.Mirrored
-        /// </summary>
+        /// <summary> Destination volume has been initialized and is ready. </summary>
         public static ReplicationMirrorState Mirrored { get; } = new ReplicationMirrorState(MirroredValue);
-        /// <summary>
-        /// Destination volume is RW, replication relationship has been broken off
-        /// Serialized Name: ReplicationMirrorState.Broken
-        /// </summary>
+        /// <summary> Destination volume is RW, replication relationship has been broken off. </summary>
         public static ReplicationMirrorState Broken { get; } = new ReplicationMirrorState(BrokenValue);
         /// <summary> Determines if two <see cref="ReplicationMirrorState"/> values are the same. </summary>
         public static bool operator ==(ReplicationMirrorState left, ReplicationMirrorState right) => left.Equals(right);

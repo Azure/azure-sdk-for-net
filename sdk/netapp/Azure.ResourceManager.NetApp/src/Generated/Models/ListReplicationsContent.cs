@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Body for the list replications endpoint. If supplied, the body will be used as a filter for example to exclude deleted replications. If omitted, the endpoint returns all replications
-    /// Serialized Name: ListReplicationsRequest
-    /// </summary>
+    /// <summary> Body for the list replications endpoint. If supplied, the body will be used as a filter for example to exclude deleted replications. If omitted, the endpoint returns all replications. </summary>
     public partial class ListReplicationsContent
     {
         /// <summary>
@@ -54,21 +51,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListReplicationsContent"/>. </summary>
-        /// <param name="exclude">
-        /// Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'
-        /// Serialized Name: ListReplicationsRequest.exclude
-        /// </param>
+        /// <param name="excludeReplicationsFilter"> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListReplicationsContent(Exclude? exclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListReplicationsContent(ExcludeReplicationsFilter? excludeReplicationsFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Exclude = exclude;
+            ExcludeReplicationsFilter = excludeReplicationsFilter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'
-        /// Serialized Name: ListReplicationsRequest.exclude
-        /// </summary>
-        public Exclude? Exclude { get; set; }
+        /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
+        public ExcludeReplicationsFilter? ExcludeReplicationsFilter { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Status of the volume backup relationship
-    /// Serialized Name: VolumeBackupRelationshipStatus
-    /// </summary>
+    /// <summary> Status of the volume backup relationship. </summary>
     public readonly partial struct VolumeBackupRelationshipStatus : IEquatable<VolumeBackupRelationshipStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string FailedValue = "Failed";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Idle
-        /// Serialized Name: VolumeBackupRelationshipStatus.Idle
-        /// </summary>
+        /// <summary> Idle. </summary>
         public static VolumeBackupRelationshipStatus Idle { get; } = new VolumeBackupRelationshipStatus(IdleValue);
-        /// <summary>
-        /// Transferring
-        /// Serialized Name: VolumeBackupRelationshipStatus.Transferring
-        /// </summary>
+        /// <summary> Transferring. </summary>
         public static VolumeBackupRelationshipStatus Transferring { get; } = new VolumeBackupRelationshipStatus(TransferringValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: VolumeBackupRelationshipStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static VolumeBackupRelationshipStatus Failed { get; } = new VolumeBackupRelationshipStatus(FailedValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: VolumeBackupRelationshipStatus.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static VolumeBackupRelationshipStatus Unknown { get; } = new VolumeBackupRelationshipStatus(UnknownValue);
         /// <summary> Determines if two <see cref="VolumeBackupRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(VolumeBackupRelationshipStatus left, VolumeBackupRelationshipStatus right) => left.Equals(right);

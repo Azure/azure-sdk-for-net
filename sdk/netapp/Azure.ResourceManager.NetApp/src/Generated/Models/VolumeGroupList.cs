@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of volume group resources
-    /// Serialized Name: VolumeGroupList
-    /// </summary>
+    /// <summary> List of volume group resources. </summary>
     internal partial class VolumeGroupList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
-        /// <param name="value">
-        /// The VolumeGroup items on this page
-        /// Serialized Name: VolumeGroupList.value
-        /// </param>
+        /// <param name="value"> The VolumeGroup items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VolumeGroupList(IEnumerable<NetAppVolumeGroupResult> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
-        /// <param name="value">
-        /// The VolumeGroup items on this page
-        /// Serialized Name: VolumeGroupList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: VolumeGroupList.nextLink
-        /// </param>
+        /// <param name="value"> The VolumeGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The VolumeGroup items on this page
-        /// Serialized Name: VolumeGroupList.value
-        /// </summary>
+        /// <summary> The VolumeGroup items on this page. </summary>
         public IReadOnlyList<NetAppVolumeGroupResult> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: VolumeGroupList.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Migrate Backups Request
-    /// Serialized Name: BackupsMigrationRequest
-    /// </summary>
+    /// <summary> Migrate Backups Request. </summary>
     public partial class BackupsMigrationContent
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
-        /// <param name="backupVaultId">
-        /// The ResourceId of the Backup Vault
-        /// Serialized Name: BackupsMigrationRequest.backupVaultId
-        /// </param>
+        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultId"/> is null. </exception>
         public BackupsMigrationContent(string backupVaultId)
         {
@@ -62,10 +56,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
-        /// <param name="backupVaultId">
-        /// The ResourceId of the Backup Vault
-        /// Serialized Name: BackupsMigrationRequest.backupVaultId
-        /// </param>
+        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BackupsMigrationContent(string backupVaultId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,10 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// The ResourceId of the Backup Vault
-        /// Serialized Name: BackupsMigrationRequest.backupVaultId
-        /// </summary>
+        /// <summary> The ResourceId of the Backup Vault. </summary>
         public string BackupVaultId { get; }
     }
 }

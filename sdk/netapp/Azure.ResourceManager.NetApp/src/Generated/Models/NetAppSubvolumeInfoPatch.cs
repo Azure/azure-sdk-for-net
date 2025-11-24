@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Subvolume Patch Request properties
-    /// Serialized Name: SubvolumePatchRequest
-    /// </summary>
+    /// <summary> Subvolume Patch Request properties. </summary>
     public partial class NetAppSubvolumeInfoPatch
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoPatch"/>. </summary>
-        /// <param name="size">
-        /// Truncate subvolume to the provided size in bytes
-        /// Serialized Name: SubvolumePatchRequest.properties.size
-        /// </param>
-        /// <param name="path">
-        /// path to the subvolume
-        /// Serialized Name: SubvolumePatchRequest.properties.path
-        /// </param>
+        /// <param name="size"> Truncate subvolume to the provided size in bytes. </param>
+        /// <param name="path"> path to the subvolume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppSubvolumeInfoPatch(long? size, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Truncate subvolume to the provided size in bytes
-        /// Serialized Name: SubvolumePatchRequest.properties.size
-        /// </summary>
+        /// <summary> Truncate subvolume to the provided size in bytes. </summary>
         public long? Size { get; set; }
-        /// <summary>
-        /// path to the subvolume
-        /// Serialized Name: SubvolumePatchRequest.properties.path
-        /// </summary>
+        /// <summary> path to the subvolume. </summary>
         public string Path { get; set; }
     }
 }

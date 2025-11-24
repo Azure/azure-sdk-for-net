@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The qos type of the pool
-    /// Serialized Name: QosType
-    /// </summary>
+    /// <summary> The qos type of the pool. </summary>
     public readonly partial struct CapacityPoolQosType : IEquatable<CapacityPoolQosType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string AutoValue = "Auto";
         private const string ManualValue = "Manual";
 
-        /// <summary>
-        /// qos type Auto
-        /// Serialized Name: QosType.Auto
-        /// </summary>
+        /// <summary> qos type Auto. </summary>
         public static CapacityPoolQosType Auto { get; } = new CapacityPoolQosType(AutoValue);
-        /// <summary>
-        /// qos type Manual
-        /// Serialized Name: QosType.Manual
-        /// </summary>
+        /// <summary> qos type Manual. </summary>
         public static CapacityPoolQosType Manual { get; } = new CapacityPoolQosType(ManualValue);
         /// <summary> Determines if two <see cref="CapacityPoolQosType"/> values are the same. </summary>
         public static bool operator ==(CapacityPoolQosType left, CapacityPoolQosType right) => left.Equals(right);
