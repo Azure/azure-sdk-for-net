@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.AreEqual("Conversation", (string)conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Send", (string)conversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("SendEmail", (string)conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
             dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
