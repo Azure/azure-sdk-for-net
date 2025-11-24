@@ -22,6 +22,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const string CustomEventAttributeName = "microsoft.custom_event.name";
         private const string ClientIpAttributeName = "microsoft.client.ip";
+        private const string AvailabilityIdAttributeName = "microsoft.availability.id";
+        private const string AvailabilityNameAttributeName = "microsoft.availability.name";
+        private const string AvailabilityDurationAttributeName = "microsoft.availability.duration";
+        private const string AvailabilitySuccessAttributeName = "microsoft.availability.success";
+        private const string AvailabilityRunLocationAttributeName = "microsoft.availability.runLocation";
+        private const string AvailabilityMessageAttributeName = "microsoft.availability.message";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -61,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var properties = new ChangeTrackingDictionary<string, string>();
-                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? microsoftClientIp);
+                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? microsoftClientIp, out AvailabilityInfo? availabilityInfo);
 
                     if (logRecord.Exception is not null)
                     {
@@ -74,6 +80,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             }
                         };
                         telemetrySchemaTypeCounter._exceptionCount++;
+                    }
+                    else if (availabilityInfo is not null)
+                    {
+                        telemetryItem = new TelemetryItem("Availability", logRecord, resource, instrumentationKey, microsoftClientIp)
+                        {
+                            Data = new MonitorBase
+                            {
+                                BaseType = "AvailabilityData",
+                                BaseData = new AvailabilityData(Version, availabilityInfo.Value, properties, logRecord),
+                            }
+                        };
+                        telemetrySchemaTypeCounter._availabilityCount++;
                     }
                     else if (eventName is not null)
                     {
@@ -111,11 +129,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return (telemetryItems, telemetrySchemaTypeCounter);
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? microsoftClientIp)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? microsoftClientIp, out AvailabilityInfo? availabilityInfo)
         {
             eventName = null;
+            availabilityInfo = null;
             message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
             microsoftClientIp = null;
+            bool hasAvailabilityData = false;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
@@ -123,7 +143,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     eventName = item.Value?.ToString();
                 }
-
+                else if (item.Key == AvailabilityNameAttributeName)
+                {
+                    hasAvailabilityData = true;
+                }
                 else if (item.Key == ClientIpAttributeName)
                 {
                     microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
@@ -159,9 +182,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
+            // If we detected availability data, do a second pass to extract all availability attributes
+            if (hasAvailabilityData)
+            {
+                availabilityInfo = ExtractAvailabilityInfo(logRecord, message, out microsoftClientIp);
+            }
+
             logRecord.ForEachScope(s_processScope, properties);
 
-            if (eventName is null) // we will omit the following properties if we've detected a custom event.
+            if (eventName is null && availabilityInfo is null) // we will omit the following properties if we've detected a custom event or availability.
             {
                 var categoryName = logRecord.CategoryName;
                 if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
@@ -179,6 +208,66 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
                 }
             }
+        }
+
+        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, string? message, out string? microsoftClientIp)
+        {
+            string? availabilityId = null;
+            string? availabilityName = null;
+            string? availabilityDuration = null;
+            string? availabilitySuccess = null;
+            string? availabilityRunLocation = null;
+            string? availabilityMessage = null;
+            microsoftClientIp = null;
+
+            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
+            {
+                if (item.Key == AvailabilityIdAttributeName)
+                {
+                    availabilityId = item.Value?.ToString();
+                }
+                else if (item.Key == AvailabilityNameAttributeName)
+                {
+                    availabilityName = item.Value?.ToString();
+                }
+                else if (item.Key == AvailabilityDurationAttributeName)
+                {
+                    availabilityDuration = item.Value?.ToString();
+                }
+                else if (item.Key == AvailabilitySuccessAttributeName)
+                {
+                    availabilitySuccess = item.Value?.ToString();
+                }
+                else if (item.Key == AvailabilityRunLocationAttributeName)
+                {
+                    availabilityRunLocation = item.Value?.ToString();
+                }
+                else if (item.Key == AvailabilityMessageAttributeName)
+                {
+                    availabilityMessage = item.Value?.ToString();
+                }
+                else if (item.Key == ClientIpAttributeName)
+                {
+                    microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
+                }
+            }
+
+            // Construct availability info if we have required fields
+            if (!string.IsNullOrEmpty(availabilityId) && !string.IsNullOrEmpty(availabilityName) &&
+                !string.IsNullOrEmpty(availabilityDuration) && !string.IsNullOrEmpty(availabilitySuccess))
+            {
+                return new AvailabilityInfo
+                {
+                    Id = availabilityId!,
+                    Name = availabilityName!,
+                    Duration = availabilityDuration!,
+                    Success = bool.Parse(availabilitySuccess),
+                    RunLocation = availabilityRunLocation,
+                    Message = availabilityMessage ?? message
+                };
+            }
+
+            return null;
         }
 
         internal static string GetProblemId(Exception exception)
@@ -243,5 +332,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return SeverityLevel.Verbose;
             }
         }
+    }
+
+    /// <summary>
+    /// Struct to hold availability test information extracted from log attributes.
+    /// </summary>
+    internal struct AvailabilityInfo
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Duration { get; set; }
+        public bool Success { get; set; }
+        public string? RunLocation { get; set; }
+        public string? Message { get; set; }
     }
 }
