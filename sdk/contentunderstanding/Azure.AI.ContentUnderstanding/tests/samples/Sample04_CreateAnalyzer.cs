@@ -115,7 +115,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingCreateAnalyzer
-            TestHelpers.AssertOperationProperties(operation, "Create analyzer operation");
+            Assert.IsNotNull(operation, "Create analyzer operation should not be null");
+            Assert.IsNotNull(operation.GetRawResponse(), "Create analyzer operation should have a raw response");
+            TestContext.WriteLine("✅ Create analyzer operation properties verified");
             Assert.IsNotNull(result, "Analyzer result should not be null");
             Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
             Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
@@ -319,7 +321,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #endregion
 
                 #region Assertion:ContentUnderstandingUseCustomAnalyzer
-                TestHelpers.AssertOperationProperties(analyzeOperation, "Analyze operation");
+                Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
+                Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation should have a raw response");
+                TestContext.WriteLine("✅ Analyze operation properties verified");
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");

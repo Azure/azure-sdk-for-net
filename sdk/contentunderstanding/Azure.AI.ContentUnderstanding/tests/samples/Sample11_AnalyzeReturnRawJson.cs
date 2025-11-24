@@ -47,7 +47,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Assertion:ContentUnderstandingAnalyzeReturnRawJson
             Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
-            TestHelpers.AssertOperationProperties(operation, "Analysis operation");
+            Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
+            TestContext.WriteLine("✅ Analysis operation properties verified");
             Assert.IsNotNull(responseData, "Response data should not be null");
             Assert.IsTrue(responseData.ToMemory().Length > 0, "Response data should not be empty");
             #endregion

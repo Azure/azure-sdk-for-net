@@ -123,7 +123,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingCreateClassifier
-            TestHelpers.AssertOperationProperties(operation, "Create classifier operation");
+            Assert.IsNotNull(operation, "Create classifier operation should not be null");
+            Assert.IsNotNull(operation.GetRawResponse(), "Create classifier operation should have a raw response");
+            TestContext.WriteLine("✅ Create classifier operation properties verified");
             Assert.IsNotNull(result, "Classifier result should not be null");
             Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
             Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
@@ -236,7 +238,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 #region Assertion:ContentUnderstandingAnalyzeCategory
                 Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
-                TestHelpers.AssertOperationProperties(analyzeOperation, "Analyze operation");
+                Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
+                Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation should have a raw response");
+                TestContext.WriteLine("✅ Analyze operation properties verified");
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");
@@ -348,7 +352,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 #region Assertion:ContentUnderstandingAnalyzeCategoryWithSegments
                 Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
-                TestHelpers.AssertOperationProperties(analyzeOperation, "Analyze operation with segmentation");
+                Assert.IsNotNull(analyzeOperation, "Analyze operation with segmentation should not be null");
+                Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation with segmentation should have a raw response");
+                TestContext.WriteLine("✅ Analyze operation with segmentation properties verified");
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");

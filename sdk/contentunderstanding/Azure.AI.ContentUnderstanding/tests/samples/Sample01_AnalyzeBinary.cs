@@ -45,7 +45,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Assertion:ContentUnderstandingAnalyzeBinaryAsync
             Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
-            TestHelpers.AssertOperationProperties(operation, "Analysis operation");
+            Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
+            TestContext.WriteLine("✅ Analysis operation properties verified");
             Assert.IsNotNull(result, "Analysis result should not be null");
             #endregion
 

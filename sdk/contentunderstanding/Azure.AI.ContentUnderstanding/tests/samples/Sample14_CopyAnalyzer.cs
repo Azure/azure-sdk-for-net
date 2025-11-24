@@ -80,7 +80,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Source analyzer '{sourceAnalyzerId}' created successfully!");
 
             #region Assertion:ContentUnderstandingCreateSourceAnalyzer
-            TestHelpers.AssertOperationProperties(createOperation, "Create source analyzer operation");
+            Assert.IsNotNull(createOperation, "Create source analyzer operation should not be null");
+            Assert.IsNotNull(createOperation.GetRawResponse(), "Create source analyzer operation should have a raw response");
+            TestContext.WriteLine("✅ Create source analyzer operation properties verified");
             Assert.IsNotNull(sourceResult, "Source analyzer result should not be null");
             Assert.AreEqual("prebuilt-document", sourceResult.BaseAnalyzerId, "Base analyzer ID should match");
             Assert.AreEqual("Source analyzer for copying", sourceResult.Description, "Description should match");
