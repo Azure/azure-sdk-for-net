@@ -3,7 +3,10 @@
 
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
@@ -11,11 +14,134 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Partial class for ContentUnderstandingClient to customize generated methods.
-    /// This makes the UpdateDefaults protocol methods internal, so only the convenience
-    /// extension methods (UpdateDefaults/UpdateDefaultsAsync with IDictionary) are public.
     /// </summary>
+    // Suppress convenience methods with stringEncoding parameter - we'll implement custom versions without it
+    [CodeGenSuppress("AnalyzeAsync", typeof(WaitUntil), typeof(string), typeof(IEnumerable<AnalyzeInput>), typeof(IDictionary<string, string>), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
+    [CodeGenSuppress("Analyze", typeof(WaitUntil), typeof(string), typeof(IEnumerable<AnalyzeInput>), typeof(IDictionary<string, string>), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
+    [CodeGenSuppress("AnalyzeBinaryAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(ProcessingLocation?), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("AnalyzeBinary", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(ProcessingLocation?), typeof(string), typeof(CancellationToken))]
     public partial class ContentUnderstandingClient
     {
+        // CUSTOM CODE NOTE: we're suppressing the generation of the Analyze and AnalyzeBinary
+        // convenience methods and adding methods manually below for the following reasons:
+        //   - Hiding the stringEncoding parameter. We're making its value default to 'utf16' (appropriate for .NET).
+        //   - Exposing OperationId property on the returned Operation<AnalyzeResult> via AnalyzeResultOperation wrapper.
+
+        private const string DefaultStringEncoding = "utf16";
+
+        /// <summary> Extract content and fields from input. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        /// <param name="modelDeployments">
+        /// Override default mapping of model names to deployments.
+        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        public virtual async Task<AnalyzeResultOperation> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput>? inputs = default, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+
+            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), new ChangeTrackingDictionary<string, BinaryData>());
+            Operation<BinaryData> result = await AnalyzeAsync(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
+            return new AnalyzeResultOperation(converted);
+        }
+
+        /// <summary> Extract content and fields from input. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        /// <param name="modelDeployments">
+        /// Override default mapping of model names to deployments.
+        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        public virtual AnalyzeResultOperation Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput>? inputs = default, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+
+            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments ?? new ChangeTrackingDictionary<string, string>(), new ChangeTrackingDictionary<string, BinaryData>());
+            Operation<BinaryData> result = Analyze(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext());
+            Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.Analyze");
+            return new AnalyzeResultOperation(converted);
+        }
+
+        /// <summary> Extract content and fields from binary input. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="contentType"> Request content type. </param>
+        /// <param name="binaryInput"> The binary content of the document to analyze. </param>
+        /// <param name="stringEncoding"> This parameter is ignored. The SDK always uses "utf16" encoding for .NET. </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="inputRange"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="contentType"/> or <paramref name="binaryInput"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        /// <remarks>
+        /// This method takes <c>byte[]</c> instead of <c>BinaryData</c> to avoid ambiguity with the protocol method that takes <c>RequestContent</c>.
+        /// If you have a <c>BinaryData</c>, use <c>BinaryData.ToBytes()</c> to convert it to <c>byte[]</c>.
+        /// </remarks>
+        public virtual async Task<AnalyzeResultOperation> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string contentType, byte[] binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+            Argument.AssertNotNull(binaryInput, nameof(binaryInput));
+
+            // Ignore stringEncoding parameter - always use utf16 for .NET
+            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(BinaryData.FromBytes(binaryInput)), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
+            return new AnalyzeResultOperation(converted);
+        }
+
+        /// <summary> Extract content and fields from binary input. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="contentType"> Request content type. </param>
+        /// <param name="binaryInput"> The binary content of the document to analyze. </param>
+        /// <param name="stringEncoding"> This parameter is ignored. The SDK always uses "utf16" encoding for .NET. </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="inputRange"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="contentType"/> or <paramref name="binaryInput"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        /// <remarks>
+        /// This method takes <c>byte[]</c> instead of <c>BinaryData</c> to avoid ambiguity with the protocol method that takes <c>RequestContent</c>.
+        /// If you have a <c>BinaryData</c>, use <c>BinaryData.ToBytes()</c> to convert it to <c>byte[]</c>.
+        /// </remarks>
+        public virtual AnalyzeResultOperation AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string contentType, byte[] binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+            Argument.AssertNotNull(binaryInput, nameof(binaryInput));
+
+            // Ignore stringEncoding parameter - always use utf16 for .NET
+            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(BinaryData.FromBytes(binaryInput)), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext());
+            Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
+            return new AnalyzeResultOperation(converted);
+        }
+
+        // TODO: Uncomment these methods when ready to regenerate the SDK.
+        // These methods are currently commented out because the generated code has been manually
+        // edited to make UpdateDefaults methods internal. Once the SDK is regenerated with the
+        // proper configuration to generate them as internal, uncomment these to ensure they
+        // remain internal even after regeneration.
+        //
+        // According to autorest.csharp customization pattern (https://github.com/Azure/autorest.csharp#replace-any-generated-member),
+        // defining a partial class with the same method signature but different accessibility
+        // replaces the generated public method with this internal version.
+
+        /*
         // TODO: Uncomment these methods when ready to regenerate the SDK.
         // These methods are currently commented out because the generated code has been manually
         // edited to make UpdateDefaults methods internal. Once the SDK is regenerated with the
