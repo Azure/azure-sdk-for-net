@@ -22,12 +22,15 @@ Param (
 $configFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Submit-Request($filePath, $packageName, $packageType, $group)
+function Submit-Request($filePath, $packageInfo)
 {
+    $packageName = $packageInfo.ArtifactName ?? $packageInfo.Name
+    $packageType = $packageInfo.SdkType
+    
     # Construct full package name with groupId if available
     $fullPackageName = $packageName
-    if ($group) {
-        $fullPackageName = "${group}:$packageName"
+    if ($packageInfo.PSObject.Members.Name -contains "Group" -and $packageInfo.Group) {
+        $fullPackageName = "$($packageInfo.Group):$packageName"
     }
     $repoName = $RepoFullName
     if (!$repoName) {
@@ -170,7 +173,7 @@ foreach ($packageInfoFile in $packageInfoFiles)
         if ($isRequired -eq $True)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
-            $respCode = Submit-Request -filePath $filePath -packageName $pkgArtifactName -packageType $packageType -group $packageInfo.Group
+            $respCode = Submit-Request -filePath $filePath -packageInfo $packageInfo
             if ($respCode -ne '200')
             {
                 $responses[$pkgArtifactName] = $respCode
