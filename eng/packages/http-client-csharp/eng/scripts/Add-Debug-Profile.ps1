@@ -37,13 +37,13 @@ function Invoke-Command-Safe {
         [string]$Command,
         [string]$WorkingDirectory = $null
     )
-    
+
     try {
         $originalLocation = Get-Location
         if ($WorkingDirectory) {
             Set-Location $WorkingDirectory
         }
-        
+
         $result = Invoke-Expression $Command 2>&1
         if ($LASTEXITCODE -ne 0) {
             throw "Command failed with exit code $LASTEXITCODE : $result"
@@ -65,7 +65,7 @@ function Invoke-Command-Safe {
 # Helper function to check if a command exists
 function Test-CommandExists {
     param([string]$Command)
-    
+
     try {
         Get-Command $Command -ErrorAction Stop | Out-Null
         return $true
@@ -85,13 +85,13 @@ function Get-TspClientDirectory {
 # Ensure tsp-client dependencies are installed locally
 function Install-TspClient {
     $tspClientDir = Get-TspClientDirectory
-    
+
     Write-Host "Installing tsp-client dependencies in $tspClientDir..." -ForegroundColor Yellow
-    
+
     if (-not (Test-Path $tspClientDir)) {
         throw "tsp-client directory not found at $tspClientDir"
     }
-    
+
     Invoke-Command-Safe "npm ci" -WorkingDirectory $tspClientDir
     Write-Host "tsp-client dependencies installed successfully." -ForegroundColor Green
 }
@@ -99,7 +99,7 @@ function Install-TspClient {
 # Check if local tsp-client is available
 function Test-TspClientInstalled {
     $tspClientDir = Get-TspClientDirectory
-    
+
     try {
         Invoke-Command-Safe "npm exec --prefix `"$tspClientDir`" --no -- tsp-client --version" | Out-Null
         return $true
@@ -112,12 +112,12 @@ function Test-TspClientInstalled {
 # Run tsp-client commands in the target directory
 function Invoke-TspClientCommands {
     param([string]$SdkPath)
-    
+
     $tspClientDir = Get-TspClientDirectory
-    
+
     Write-Host "Running tsp-client commands in $SdkPath using local installation..." -ForegroundColor Cyan
     Write-Host "Using tsp-client from: $tspClientDir" -ForegroundColor Gray
-    
+
     try {
         Write-Host "Running tsp-client sync..." -ForegroundColor Yellow
         try {
@@ -127,10 +127,10 @@ function Invoke-TspClientCommands {
             Write-Warning "tsp-client sync failed. This might be expected if the directory is not a proper TypeSpec SDK directory."
             Write-Warning "Error: $($_.Exception.Message)"
         }
-        
+
         Write-Host "Running tsp-client generate --save-inputs..." -ForegroundColor Yellow
         Invoke-Command-Safe "npx --prefix `"$tspClientDir`" --no -- tsp-client generate --save-inputs --no-prompt" -WorkingDirectory $SdkPath
-        
+
         Write-Host "tsp-client commands completed." -ForegroundColor Green
     }
     catch {
@@ -164,7 +164,7 @@ function Get-LaunchSettings {
 # Generate a profile name from the SDK directory
 function Get-ProfileName {
     param([string]$SdkPath)
-    
+
     $dirName = Split-Path $SdkPath -Leaf
     # Replace invalid characters and make it a valid profile name
     return $dirName -replace '[^a-zA-Z0-9\-_.]', '-'
@@ -173,18 +173,18 @@ function Get-ProfileName {
 # Read and parse tsp-location.yaml to get emitter configuration
 function Get-EmitterFromTspLocation {
     param([string]$SdkPath)
-    
+
     $tspLocationPath = Join-Path $SdkPath "tsp-location.yaml"
-    
+
     if (-not (Test-Path $tspLocationPath)) {
         Write-Host "tsp-location.yaml not found at $tspLocationPath" -ForegroundColor Yellow
         return $null
     }
-    
+
     try {
         # Read the YAML file
         $content = Get-Content $tspLocationPath -Raw
-        
+
         # Parse emitterPackageJsonPath field to determine emitter type
         # Format: emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
         # or: emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
@@ -213,12 +213,12 @@ function Get-GeneratorConfig {
     param(
         [string]$EmitterPackage
     )
-    
+
     # EmitterPackage must be set
     if (-not $EmitterPackage) {
         throw "EmitterPackage must be specified. Could not find emitter configuration in tsp-location.yaml"
     }
-    
+
     # Map emitter package to generator configuration
     switch ($EmitterPackage) {
         "@azure-typespec/http-client-csharp-mgmt" {
@@ -251,16 +251,16 @@ function Build-LocalGeneratorSolution {
         [string]$PackageRoot,
         [bool]$IsMgmt = $false
     )
-    
+
     $solutionPath = Join-Path $PackageRoot "generator/Azure.Generator.sln"
-    
+
     if (-not (Test-Path $solutionPath)) {
         Write-Warning "Solution file not found at: $solutionPath"
         return $false
     }
-    
+
     Write-Host "Rebuilding local generator solution to ensure fresh DLLs..." -ForegroundColor Yellow
-    
+
     try {
         $result = & dotnet build $solutionPath --configuration Release 2>&1
         if ($LASTEXITCODE -ne 0) {
@@ -268,12 +268,12 @@ function Build-LocalGeneratorSolution {
             return $false
         }
         Write-Host "Azure.Generator build completed successfully." -ForegroundColor Green
-        
+
         # If this is a management library, also build the mgmt generator
         if ($IsMgmt) {
             $mgmtPackageRoot = Join-Path (Split-Path $PackageRoot -Parent) "http-client-csharp-mgmt"
             $mgmtSolutionPath = Join-Path $mgmtPackageRoot "generator/Azure.Generator.Management.sln"
-            
+
             if (Test-Path $mgmtSolutionPath) {
                 Write-Host "Rebuilding management generator solution..." -ForegroundColor Yellow
                 $result = & dotnet build $mgmtSolutionPath --configuration Release 2>&1
@@ -287,7 +287,7 @@ function Build-LocalGeneratorSolution {
                 Write-Warning "Management solution file not found at: $mgmtSolutionPath"
             }
         }
-        
+
         return $true
     }
     catch {
@@ -303,39 +303,42 @@ function Copy-LocalGeneratorDlls {
         [string]$PackageName,
         [string]$ScopeName
     )
-    
+
     $scriptDir = Split-Path $MyInvocation.PSCommandPath -Parent
     $packageRoot = Split-Path (Split-Path $scriptDir -Parent) -Parent
     $sourceDir = Join-Path $packageRoot "dist/generator"
-    
+
     $targetDir = Join-Path $SdkPath "TempTypeSpecFiles/node_modules/$ScopeName/$PackageName/dist/generator"
-    
+
     # Check if this is a management library
     $isMgmt = $PackageName -eq "http-client-csharp-mgmt"
-    
+
     # Rebuild the solution first to ensure fresh DLLs
     $buildSuccess = Build-LocalGeneratorSolution $packageRoot $isMgmt
     if (-not $buildSuccess) {
         Write-Warning "Build failed, but continuing with existing DLLs..."
     }
-    
+
     # Base DLLs to always copy
     $dllsToCopy = @(
-        "Azure.Generator.dll"
+        "Azure.Generator.dll",
+        "Microsoft.TypeSpec.Generator.dll",
+        "Microsoft.Typespec.Generator.ClientModel.dll",
+        "Microsoft.TypeSpec.Generator.Input.dll"
     )
-    
+
     # If this is a management library, also copy the management DLL and its dependencies
     if ($isMgmt) {
         $mgmtPackageRoot = Join-Path (Split-Path $packageRoot -Parent) "http-client-csharp-mgmt"
         $mgmtSourceDir = Join-Path $mgmtPackageRoot "dist/generator"
-        
+
         $dllsToCopy += "Azure.Generator.Management.dll"
-        
+
         Write-Host "Copying management generator DLLs from $mgmtSourceDir..." -ForegroundColor Yellow
     }
-    
+
     Write-Host "Copying local generator DLLs to $targetDir..." -ForegroundColor Yellow
-    
+
     foreach ($dll in $dllsToCopy) {
         # Determine source path based on DLL name
         if ($dll -eq "Azure.Generator.Management.dll" -and $isMgmt) {
@@ -346,9 +349,9 @@ function Copy-LocalGeneratorDlls {
         else {
             $sourcePath = Join-Path $sourceDir $dll
         }
-        
+
         $targetPath = Join-Path $targetDir $dll
-        
+
         if (Test-Path $sourcePath) {
             Copy-Item $sourcePath $targetPath -Force
             Write-Host "  Copied: $dll" -ForegroundColor Green
@@ -356,7 +359,7 @@ function Copy-LocalGeneratorDlls {
             Write-Warning "Source DLL not found: $sourcePath"
         }
     }
-    
+
     Write-Host "DLL copying completed." -ForegroundColor Green
 }
 
@@ -365,38 +368,38 @@ function Add-DebugProfile {
     param(
         [string]$SdkPath
     )
-    
+
     $launchSettings = Get-LaunchSettings
     $profileName = Get-ProfileName $SdkPath
     $resolvedSdkPath = Resolve-Path $SdkPath
 
     # Try to read emitter configuration from tsp-location.yaml
     $emitterPackage = Get-EmitterFromTspLocation $SdkPath
-    
+
     # Get generator configuration based on emitter package
     $generatorConfig = Get-GeneratorConfig $emitterPackage
     $packageName = $generatorConfig.PackageName
     $generatorName = $generatorConfig.GeneratorName
     $scopeName = $generatorConfig.ScopeName
-    
+
     # Copy local DLLs to the node_modules location
     Copy-LocalGeneratorDlls $resolvedSdkPath $packageName $scopeName
-    
+
     # Use the node_modules DLL path
     $dllPath = "`"$resolvedSdkPath/TempTypeSpecFiles/node_modules/$scopeName/$packageName/dist/generator/Microsoft.TypeSpec.Generator.dll`""
-    
+
     # Create the new profile
     $newProfile = @{
         commandLineArgs = "$dllPath `"$resolvedSdkPath`" -g $generatorName"
         commandName = "Executable"
         executablePath = "dotnet"
     }
-    
+
     # Add or update the profile
     $launchSettings.profiles | Add-Member -Name $profileName -Value $newProfile -MemberType NoteProperty -Force
-    
+
     Set-LaunchSettings $launchSettings
-    
+
     Write-Host "Added debug profile '$profileName' to launchSettings.json" -ForegroundColor Green
     Write-Host "Profile configuration:" -ForegroundColor Cyan
     Write-Host "  - Executable: dotnet" -ForegroundColor White
@@ -411,14 +414,14 @@ function Add-DebugProfile {
 try {
     # Check if SDK directory exists
     $sdkPath = Resolve-Path $SdkDirectory -ErrorAction Stop
-    
+
     # Check if npm is available
     if (-not (Test-CommandExists "npm")) {
         throw "npm is not installed or not in PATH"
     }
-    
+
     Write-Host "Setting up debug profile for Azure SDK..." -ForegroundColor Cyan
-    
+
     # Ensure tsp-client dependencies are installed locally
     if (-not (Test-TspClientInstalled)) {
         Write-Host "Local tsp-client is not available. Installing dependencies..." -ForegroundColor Yellow
@@ -434,17 +437,17 @@ try {
     else {
         Write-Host "Local tsp-client is already available." -ForegroundColor Green
     }
-    
+
     # Run tsp-client commands to set up the project
     $tspSuccess = Invoke-TspClientCommands -SdkPath $sdkPath -PackageName $packageName -ScopeName $scopeName
     if (-not $tspSuccess) {
         Write-Error "tsp-client commands failed. Cannot proceed with debug profile setup."
         throw "tsp-client generate did not complete successfully"
     }
-    
+
     # Add debug profile
         $profileName = Add-DebugProfile $sdkPath
-    
+
     Write-Host "`nSetup completed successfully!" -ForegroundColor Green
     Write-Host "You can now debug the '$profileName' profile in Visual Studio or VS Code." -ForegroundColor Cyan
 }
