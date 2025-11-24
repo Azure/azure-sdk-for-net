@@ -38,13 +38,19 @@ You can copy the [Azure.Template](https://github.com/Azure/azure-sdk-for-net/tre
 
 ### Option 2: Using tsp-client init
 
-You can use the `tsp-client init` command to initialize the TypeSpec configuration. This tool automatically sets up the correct emitter path for new services:
+You can use the `tsp-client init` command to initialize the TypeSpec configuration. This tool automatically sets up the correct emitter path for new services. You must pass the `--tsp-config` parameter pointing to the tspconfig.yaml in the spec repo:
 
 ```bash
-npx -y @azure-tools/typespec-client-generator-cli@latest init
+tsp-client init --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/<commit>/specification/<service>/<typespec-project-folder>/tspconfig.yaml
 ```
 
-This will guide you through an interactive process to set up your TypeSpec client configuration. After running this command, you'll still need to create the project structure and files manually.
+**Example:**
+
+```bash
+tsp-client init --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/c226a37cdb9a3f756aff9edb33435ba7c90a5b91/specification/ai/ContentUnderstanding/tspconfig.yaml
+```
+
+This will initialize the `tsp-location.yaml` file with the correct configuration. After running this command, you'll still need to create the project structure and files manually.
 
 ### Option 3: Manual Setup
 
