@@ -22,11 +22,8 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Initializes a new instance of <see cref="PutKeyValueRequestContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PutKeyValueRequestContentType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

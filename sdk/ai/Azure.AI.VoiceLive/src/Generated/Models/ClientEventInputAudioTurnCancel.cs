@@ -14,11 +14,8 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnCancel"/>. </summary>
         /// <param name="turnId"> The ID of the turn to cancel. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> is null. </exception>
         public ClientEventInputAudioTurnCancel(string turnId) : base(ClientEventType.InputAudioTurnCancel)
         {
-            Argument.AssertNotNull(turnId, nameof(turnId));
-
             TurnId = turnId;
         }
 
