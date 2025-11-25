@@ -6,7 +6,7 @@ maintaining backwards compatibility. This guide doesn't focus on data plane
 splits, however if that use case arises most of the concepts apply.
 
 For documentation on how to migrate to the new packages see
-[MigrationGuideForSplit.md](MigrationGuideForSplit.md).
+[MigrationGuideForSplit.md](./MigrationGuideForSplit.md).
 
 ## High-Level Goals
 - Preserve backwards compatbility between the original Package v1.0.0 and the new Package v1.1.0
