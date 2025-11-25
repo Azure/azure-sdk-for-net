@@ -41,7 +41,6 @@ var analyzeOperation = await client.AnalyzeAsync(
 // Get the operation ID from the operation (available after Started)
 string operationId = analyzeOperation.Id;
 Console.WriteLine($"Operation ID: {operationId}");
-Console.WriteLine($"Operation ID: {operationId}");
 
 // Wait for completion
 await analyzeOperation.WaitForCompletionAsync();
