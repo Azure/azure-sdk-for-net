@@ -6,11 +6,11 @@
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Compute.Skus;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    [CodeGenModel("ComputeResourceSkuLocationInfo")]
+    [CodeGenType("ComputeResourceSkuLocationInfo")]
     [CodeGenSerialization(nameof(ExtendedLocationType), SerializationValueHook = nameof(WriteExtendedLocationType), DeserializationValueHook = nameof(ReadExtendedLocationType))]
     public partial class ComputeResourceSkuLocationInfo
     {

@@ -15,47 +15,18 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an available Compute SKU. </summary>
     public partial class ComputeResourceSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSku"/>. </summary>
         internal ComputeResourceSku()
         {
-            Locations = new Skus.ChangeTrackingList<AzureLocation>();
-            LocationInfo = new Skus.ChangeTrackingList<ComputeResourceSkuLocationInfo>();
-            ApiVersions = new Skus.ChangeTrackingList<string>();
-            Costs = new Skus.ChangeTrackingList<ResourceSkuCosts>();
-            Capabilities = new Skus.ChangeTrackingList<ComputeResourceSkuCapabilities>();
-            Restrictions = new Skus.ChangeTrackingList<ComputeResourceSkuRestrictions>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            LocationInfo = new ChangeTrackingList<ComputeResourceSkuLocationInfo>();
+            ApiVersions = new ChangeTrackingList<string>();
+            Costs = new ChangeTrackingList<ResourceSkuCosts>();
+            Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
+            Restrictions = new ChangeTrackingList<ComputeResourceSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSku"/>. </summary>
@@ -72,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IReadOnlyList<ComputeResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IReadOnlyList<ComputeResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Name = name;
@@ -88,33 +59,45 @@ namespace Azure.ResourceManager.Compute.Models
             Costs = costs;
             Capabilities = capabilities;
             Restrictions = restrictions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
         public string ResourceType { get; }
+
         /// <summary> The name of SKU. </summary>
         public string Name { get; }
+
         /// <summary> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </summary>
         public string Tier { get; }
+
         /// <summary> The Size of the SKU. </summary>
         public string Size { get; }
+
         /// <summary> The Family of this particular SKU. </summary>
         public string Family { get; }
+
         /// <summary> The Kind of resources that are supported in this SKU. </summary>
         public string Kind { get; }
+
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         public ComputeResourceSkuCapacity Capacity { get; }
+
         /// <summary> The set of locations that the SKU is available. </summary>
         public IReadOnlyList<AzureLocation> Locations { get; }
+
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
         public IReadOnlyList<ComputeResourceSkuLocationInfo> LocationInfo { get; }
+
         /// <summary> The api versions that support this SKU. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
+
         /// <summary> Metadata for retrieving price info. </summary>
         public IReadOnlyList<ResourceSkuCosts> Costs { get; }
+
         /// <summary> A name value pair to describe the capability. </summary>
         public IReadOnlyList<ComputeResourceSkuCapabilities> Capabilities { get; }
+
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
         public IReadOnlyList<ComputeResourceSkuRestrictions> Restrictions { get; }
     }
