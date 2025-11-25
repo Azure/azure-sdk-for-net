@@ -62,7 +62,6 @@ namespace Azure.Generator.Management.Utilities
                     var methodParam = methodParameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
                     if (methodParam != null)
                     {
-                        Console.WriteLine($"@@@@@ parameter name {parameter.Name} parameter type {parameter.Type} method parameter {methodParam.Name} method parameter type {methodParam.Type}");
                         arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
                     }
                     else
