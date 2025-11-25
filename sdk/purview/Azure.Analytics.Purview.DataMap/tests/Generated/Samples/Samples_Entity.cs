@@ -23,7 +23,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -214,7 +214,7 @@ info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -267,7 +267,7 @@ info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -319,7 +319,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -371,7 +371,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -410,7 +410,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -449,7 +449,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -487,7 +487,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -525,7 +525,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -578,7 +578,7 @@ info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -631,7 +631,7 @@ info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -683,7 +683,7 @@ Info = "Example Owner Info",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
@@ -1293,7 +1293,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = client.GetEntity("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
+            Response response = client.Get("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1307,7 +1307,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response response = await client.GetEntityAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
+            Response response = await client.GetAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1321,7 +1321,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<AtlasEntityWithExtInfo> response = client.GetEntity("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+            Response<AtlasEntityWithExtInfo> response = client.Get("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]
@@ -1332,7 +1332,7 @@ Info = "Example Owner Info",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<AtlasEntityWithExtInfo> response = await client.GetEntityAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+            Response<AtlasEntityWithExtInfo> response = await client.GetAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
         }
 
         [Test]
@@ -2866,7 +2866,8 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             BusinessMetadataOptions body = null;
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
+            using RequestContent content = body?.ToRequestContent();
+            Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
         }
 
         [Test]
@@ -2878,7 +2879,8 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             BusinessMetadataOptions body = null;
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(body);
+            using RequestContent content = body?.ToRequestContent();
+            Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
         }
 
         [Test]
@@ -3231,7 +3233,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3253,7 +3255,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3275,7 +3277,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             MoveEntitiesConfig body = new MoveEntitiesConfig
             {
@@ -3290,7 +3292,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
+            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
             MoveEntitiesConfig body = new MoveEntitiesConfig
             {

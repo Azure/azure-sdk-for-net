@@ -23,7 +23,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -115,7 +115,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -207,7 +207,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -285,7 +285,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -363,7 +363,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -397,7 +397,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -431,7 +431,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -462,7 +462,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -493,7 +493,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -545,7 +545,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -597,7 +597,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -646,7 +646,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -695,7 +695,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -827,7 +827,7 @@ assetType = "Azure Synapse Analytics",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -959,7 +959,7 @@ assetType = "Azure Synapse Analytics",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1088,7 +1088,7 @@ assetType = "Azure Synapse Analytics",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1217,7 +1217,7 @@ assetType = "Azure Synapse Analytics",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1259,7 +1259,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1301,7 +1301,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1340,7 +1340,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1379,7 +1379,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1427,7 +1427,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1475,7 +1475,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1520,7 +1520,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1565,7 +1565,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1588,7 +1588,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1611,7 +1611,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1631,7 +1631,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1651,7 +1651,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1673,7 +1673,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1695,7 +1695,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1714,7 +1714,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1733,7 +1733,7 @@ new Dictionary<string, object>
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1778,7 +1778,7 @@ count = 10,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1823,7 +1823,7 @@ count = 10,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1859,7 +1859,7 @@ Facet = "label",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1895,7 +1895,7 @@ Facet = "label",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1923,7 +1923,7 @@ fileExtension = "txt",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1951,7 +1951,7 @@ fileExtension = "txt",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -1976,7 +1976,7 @@ fileExtension = "txt",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2001,7 +2001,7 @@ fileExtension = "txt",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2065,7 +2065,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2129,7 +2129,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2186,7 +2186,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2243,7 +2243,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2271,7 +2271,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2299,7 +2299,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2324,7 +2324,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2349,7 +2349,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2374,7 +2374,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2399,7 +2399,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2421,7 +2421,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2443,7 +2443,7 @@ id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2499,7 +2499,7 @@ objectType = "Tables",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2555,7 +2555,7 @@ objectType = "Tables",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2608,7 +2608,7 @@ objectType = "Tables",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2661,7 +2661,7 @@ objectType = "Tables",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2754,7 +2754,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2847,7 +2847,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -2926,7 +2926,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3005,7 +3005,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3097,7 +3097,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3189,7 +3189,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3267,7 +3267,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3345,7 +3345,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3438,7 +3438,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3531,7 +3531,7 @@ count = "desc",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3610,7 +3610,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3689,7 +3689,7 @@ Count = SearchSortOrder.Descend,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3725,7 +3725,7 @@ updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3761,7 +3761,7 @@ updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3794,7 +3794,7 @@ updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -3827,7 +3827,7 @@ updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3899,7 +3899,7 @@ classification = "MICROSOFT.SYSTEM.TEMP_FILE",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3971,7 +3971,7 @@ classification = "MICROSOFT.SYSTEM.TEMP_FILE",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -4037,7 +4037,7 @@ classification = "MICROSOFT.SYSTEM.TEMP_FILE",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -4103,7 +4103,7 @@ classification = "MICROSOFT.SYSTEM.TEMP_FILE",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4141,7 +4141,7 @@ termGuid = "<term guid>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4179,7 +4179,7 @@ termGuid = "<term guid>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -4214,7 +4214,7 @@ termGuid = "<term guid>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -4249,7 +4249,7 @@ termGuid = "<term guid>",
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4278,7 +4278,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4307,7 +4307,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -4333,7 +4333,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             QueryConfig body = new QueryConfig
             {
@@ -4359,7 +4359,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4389,7 +4389,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4419,7 +4419,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             SuggestConfig body = new SuggestConfig
             {
@@ -4446,7 +4446,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             SuggestConfig body = new SuggestConfig
             {
@@ -4473,7 +4473,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4503,7 +4503,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4533,7 +4533,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             AutoCompleteConfig body = new AutoCompleteConfig
             {
@@ -4560,7 +4560,7 @@ includeSubTypes = false,
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient();
 
             AutoCompleteConfig body = new AutoCompleteConfig
             {
