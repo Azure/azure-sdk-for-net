@@ -14,11 +14,8 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemDelete"/>. </summary>
         /// <param name="itemId"> The ID of the item to delete. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
         public ClientEventConversationItemDelete(string itemId) : base(ClientEventType.ConversationItemDelete)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
             ItemId = itemId;
         }
 

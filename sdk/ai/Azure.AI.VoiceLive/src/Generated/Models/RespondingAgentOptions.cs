@@ -19,13 +19,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> The name of the agent. </param>
         /// <param name="agentId"> The ID of the agent. </param>
         /// <param name="threadId"> The ID of the conversation thread. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="agentId"/> or <paramref name="threadId"/> is null. </exception>
         public RespondingAgentOptions(string name, string agentId, string threadId)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(agentId, nameof(agentId));
-            Argument.AssertNotNull(threadId, nameof(threadId));
-
             Name = name;
             AgentId = agentId;
             ThreadId = threadId;

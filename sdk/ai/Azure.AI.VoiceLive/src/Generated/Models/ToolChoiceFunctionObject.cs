@@ -14,11 +14,8 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ToolChoiceFunctionObject(string name) : base(ToolType.Function)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 

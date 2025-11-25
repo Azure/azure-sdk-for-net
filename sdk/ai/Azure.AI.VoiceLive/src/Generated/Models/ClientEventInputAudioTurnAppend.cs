@@ -15,12 +15,8 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnAppend"/>. </summary>
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>
         /// <param name="audio"> Base64-encoded audio chunk. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> or <paramref name="audio"/> is null. </exception>
         public ClientEventInputAudioTurnAppend(string turnId, string audio) : base(ClientEventType.InputAudioTurnAppend)
         {
-            Argument.AssertNotNull(turnId, nameof(turnId));
-            Argument.AssertNotNull(audio, nameof(audio));
-
             TurnId = turnId;
             Audio = audio;
         }

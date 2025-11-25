@@ -14,11 +14,8 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionUpdate"/>. </summary>
         /// <param name="session"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
         public ClientEventSessionUpdate(VoiceLiveSessionOptions session) : base(ClientEventType.SessionUpdate)
         {
-            Argument.AssertNotNull(session, nameof(session));
-
             Session = session;
         }
 
