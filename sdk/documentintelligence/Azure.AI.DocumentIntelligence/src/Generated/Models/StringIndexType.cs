@@ -28,11 +28,8 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="StringIndexType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StringIndexType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 
