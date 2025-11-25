@@ -186,7 +186,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // If we detected availability data, do a second pass to extract all availability attributes
             if (hasAvailabilityData)
             {
-                availabilityInfo = ExtractAvailabilityInfo(logRecord, message, out microsoftClientIp);
+                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out microsoftClientIp);
             }
 
             logRecord.ForEachScope(s_processScope, properties);
@@ -211,7 +211,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, string? message, out string? microsoftClientIp)
+        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out string? microsoftClientIp)
         {
             string? availabilityId = null;
             string? availabilityName = null;
@@ -249,7 +249,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 else if (item.Key == ClientIpAttributeName)
                 {
-                    microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
+                    microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.AvailabilityData_Properties_MaxValueLength);
+                }
+                else if (item.Key.Length <= SchemaConstants.AvailabilityData_Properties_MaxValueLength && item.Value != null && !properties.ContainsKey(item.Key))
+                {
+                    properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.AvailabilityData_Properties_MaxValueLength)!);
                 }
             }
 

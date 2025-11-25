@@ -740,7 +740,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("00:00:05", availabilityInfo.Value.Duration);
             Assert.False(availabilityInfo.Value.Success);
             Assert.Null(availabilityInfo.Value.RunLocation);
-            Assert.NotNull(availabilityInfo.Value.Message); // Should fallback to formatted message
+            Assert.Null(availabilityInfo.Value.Message); // Should fallback to formatted message if options.IncludeFormattedMessage = true;
             Assert.Null(eventName);
             Assert.Null(clientAddress);
         }
