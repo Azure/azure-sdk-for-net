@@ -35,7 +35,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
 
             writer.WritePropertyName("enable"u8);
-            writer.WriteBooleanValue(Enable);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);

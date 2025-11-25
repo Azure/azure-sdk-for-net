@@ -104,10 +104,10 @@ RequestContent updateSynonymsRequestContent = RequestContent.Create(
 Response updateSynonymsResponse = Client.UpdateSynonyms(testProjectName, updateSynonymsRequestContent);
 
 // Synonyms can be retrieved as follows
-Pageable<WordAlterations> synonyms = Client.GetSynonyms(testProjectName);
+Pageable<WordAlterationsGroup> synonyms = Client.GetSynonyms(testProjectName);
 
 Console.WriteLine("Synonyms: ");
-foreach (WordAlterations synonym in synonyms)
+foreach (WordAlterationsGroup synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }
@@ -222,10 +222,10 @@ RequestContent updateSynonymsRequestContent = RequestContent.Create(
 Response updateSynonymsResponse = await Client.UpdateSynonymsAsync(testProjectName, updateSynonymsRequestContent);
 
 // Synonyms can be retrieved as follows
-AsyncPageable<WordAlterations> synonyms = Client.GetSynonymsAsync(testProjectName);
+AsyncPageable<WordAlterationsGroup> synonyms = Client.GetSynonymsAsync(testProjectName);
 
 Console.WriteLine("Synonyms: ");
-await foreach (WordAlterations synonym in synonyms)
+await foreach (WordAlterationsGroup synonym in synonyms)
 {
     Console.WriteLine(synonym);
 }

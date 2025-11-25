@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    public partial class WordAlterations : IUtf8JsonSerializable, IJsonModel<WordAlterations>
+    public partial class WordAlterationsGroup : IUtf8JsonSerializable, IJsonModel<WordAlterationsGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WordAlterations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WordAlterationsGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<WordAlterations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WordAlterationsGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WordAlterations)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WordAlterationsGroup)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("alterations"u8);
@@ -58,19 +58,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        WordAlterations IJsonModel<WordAlterations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WordAlterationsGroup IJsonModel<WordAlterationsGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WordAlterations)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WordAlterationsGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWordAlterations(document.RootElement, options);
+            return DeserializeWordAlterationsGroup(document.RootElement, options);
         }
 
-        internal static WordAlterations DeserializeWordAlterations(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WordAlterationsGroup DeserializeWordAlterationsGroup(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,46 +99,46 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WordAlterations(alterations, serializedAdditionalRawData);
+            return new WordAlterationsGroup(alterations, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<WordAlterations>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WordAlterationsGroup>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroup>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WordAlterations)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WordAlterationsGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
-        WordAlterations IPersistableModel<WordAlterations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WordAlterationsGroup IPersistableModel<WordAlterationsGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WordAlterations>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WordAlterationsGroup>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWordAlterations(document.RootElement, options);
+                        return DeserializeWordAlterationsGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WordAlterations)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WordAlterationsGroup)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<WordAlterations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WordAlterationsGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static WordAlterations FromResponse(Response response)
+        internal static WordAlterationsGroup FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeWordAlterations(document.RootElement);
+            return DeserializeWordAlterationsGroup(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

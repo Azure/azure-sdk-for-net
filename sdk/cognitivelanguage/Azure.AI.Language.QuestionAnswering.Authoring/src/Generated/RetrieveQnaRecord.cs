@@ -52,7 +52,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Id = id;
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ActiveLearningSuggestions = new ChangeTrackingList<SuggestedQuestionsCluster>();
+            ActiveLearningSuggestionClusters = new ChangeTrackingList<SuggestedQuestionsCluster>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RetrieveQnaRecord"/>. </summary>
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// answers.
         /// </param>
         /// <param name="dialog"> Context of a QnA. </param>
-        /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
+        /// <param name="activeLearningSuggestionClusters"> List of Active Learning suggestions for the QnA. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetrieveQnaRecord(int id, string answer, string source, IReadOnlyList<string> questions, IReadOnlyDictionary<string, string> metadata, QnaDialog dialog, IReadOnlyList<SuggestedQuestionsCluster> activeLearningSuggestions, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RetrieveQnaRecord(int id, string answer, string source, IReadOnlyList<string> questions, IReadOnlyDictionary<string, string> metadata, QnaDialog dialog, IReadOnlyList<SuggestedQuestionsCluster> activeLearningSuggestionClusters, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Answer = answer;
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Questions = questions;
             Metadata = metadata;
             Dialog = dialog;
-            ActiveLearningSuggestions = activeLearningSuggestions;
+            ActiveLearningSuggestionClusters = activeLearningSuggestionClusters;
             LastUpdatedDateTime = lastUpdatedDateTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Context of a QnA. </summary>
         public QnaDialog Dialog { get; }
         /// <summary> List of Active Learning suggestions for the QnA. </summary>
-        public IReadOnlyList<SuggestedQuestionsCluster> ActiveLearningSuggestions { get; }
+        public IReadOnlyList<SuggestedQuestionsCluster> ActiveLearningSuggestionClusters { get; }
         /// <summary> Date-time when the QnA was last updated. </summary>
         public DateTimeOffset? LastUpdatedDateTime { get; }
     }

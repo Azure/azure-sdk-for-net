@@ -109,7 +109,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </summary>
         /// <param name="question">The question to ask of the knowledge base.</param>
         /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <param name="knowledgeBaseQueryOptions">Optional <see cref="AnswersOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base to the specified question.</returns>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
@@ -118,12 +118,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public virtual Task<Response<AnswersResult>> GetAnswersAsync(
             string question,
             QuestionAnsweringProject project,
-            AnswersOptions options = null,
+            AnswersOptions knowledgeBaseQueryOptions = null,
             CancellationToken cancellationToken = default
         ) =>
             GetAnswersInternalAsync(
                 project,
-                (options ?? new()).WithQuestion(question),
+                (knowledgeBaseQueryOptions ?? new()).WithQuestion(question),
                 cancellationToken
             );
 
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </summary>
         /// <param name="qnaId">The exact QnA ID to fetch from the knowledge base.</param>
         /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <param name="knowledgeBaseQueryOptions">Optional <see cref="AnswersOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="project"/> is null.</exception>
@@ -140,12 +140,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public virtual Task<Response<AnswersResult>> GetAnswersAsync(
             int qnaId,
             QuestionAnsweringProject project,
-            AnswersOptions options = null,
+            AnswersOptions knowledgeBaseQueryOptions = null,
             CancellationToken cancellationToken = default
         ) =>
             GetAnswersInternalAsync(
                 project,
-                (options ?? new()).WithQnaId(qnaId),
+                (knowledgeBaseQueryOptions ?? new()).WithQnaId(qnaId),
                 cancellationToken
             );
 
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </summary>
         /// <param name="question">The question to ask of the knowledge base.</param>
         /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <param name="knowledgeBaseQueryOptions">Optional <see cref="AnswersOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base to the specified question.</returns>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
@@ -163,12 +163,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public virtual Response<AnswersResult> GetAnswers(
             string question,
             QuestionAnsweringProject project,
-            AnswersOptions options = null,
+            AnswersOptions knowledgeBaseQueryOptions = null,
             CancellationToken cancellationToken = default
         ) =>
             GetAnswersInternal(
                 project,
-                (options ?? new()).WithQuestion(question),
+                (knowledgeBaseQueryOptions ?? new()).WithQuestion(question),
                 cancellationToken
             );
 
@@ -177,7 +177,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </summary>
         /// <param name="qnaId">The exact QnA ID to fetch from the knowledge base.</param>
         /// <param name="project">The <see cref="QuestionAnsweringProject"/> to query.</param>
-        /// <param name="options">Optional <see cref="AnswersOptions"/> with additional query options.</param>
+        /// <param name="knowledgeBaseQueryOptions">Optional <see cref="AnswersOptions"/> with additional query options.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns>An <see cref="AnswersResult"/> containing answers from the knowledge base.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="project"/> is null.</exception>
@@ -185,7 +185,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public virtual Response<AnswersResult> GetAnswers(
             int qnaId,
             QuestionAnsweringProject project,
-            AnswersOptions options = null,
+            AnswersOptions knowledgeBaseQueryOptions = null,
             CancellationToken cancellationToken = default
         )
         {
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
             return GetAnswersInternal(
                 project,
-                (options ?? new()).WithQnaId(qnaId),
+                (knowledgeBaseQueryOptions ?? new()).WithQnaId(qnaId),
                 cancellationToken
             );
         }
@@ -322,12 +322,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         private async Task<Response<AnswersResult>> GetAnswersInternalAsync(
             QuestionAnsweringProject project,
-            AnswersOptions options,
+            AnswersOptions knowledgeBaseQueryOptions,
             CancellationToken cancellationToken = default
         )
         {
             Argument.AssertNotNull(project, nameof(project));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(knowledgeBaseQueryOptions, nameof(knowledgeBaseQueryOptions));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 $"{nameof(QuestionAnsweringClient)}.{nameof(GetAnswers)}"
@@ -341,7 +341,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 return await GetAnswersAsync(
                         project.ProjectName,
                         project.DeploymentName,
-                        options,
+                        knowledgeBaseQueryOptions,
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -355,12 +355,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         private Response<AnswersResult> GetAnswersInternal(
             QuestionAnsweringProject project,
-            AnswersOptions options,
+            AnswersOptions knowledgeBaseQueryOptions,
             CancellationToken cancellationToken = default
         )
         {
             Argument.AssertNotNull(project, nameof(project));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(knowledgeBaseQueryOptions, nameof(knowledgeBaseQueryOptions));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 $"{nameof(QuestionAnsweringClient)}.{nameof(GetAnswers)}"
@@ -374,7 +374,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 return GetAnswers(
                     project.ProjectName,
                     project.DeploymentName,
-                    options,
+                    knowledgeBaseQueryOptions,
                     cancellationToken
                 );
             }

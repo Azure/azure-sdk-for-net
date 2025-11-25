@@ -47,18 +47,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringExportJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="lastUpdated"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultUrl"/> is null. </exception>
-        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status, string resultUrl)
+        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdated, QnaAuthoringJobStatus status, string resultUrl)
         {
             Argument.AssertNotNull(resultUrl, nameof(resultUrl));
 
             CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            LastUpdated = lastUpdated;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new ChangeTrackingList<ResponseError>();
             ResultUrl = resultUrl;
         }
 
@@ -66,17 +66,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="expirationDateTime"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="lastUpdated"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IReadOnlyList<Error> errors, string resultUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdated, QnaAuthoringJobStatus status, IReadOnlyList<ResponseError> errors, string resultUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
             JobId = jobId;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            LastUpdated = lastUpdated;
             Status = status;
             Errors = errors;
             ResultUrl = resultUrl;
@@ -95,11 +95,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> The job ID. </summary>
         public string JobId { get; }
         /// <summary> The last date time the job was updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; }
+        public DateTimeOffset LastUpdated { get; }
         /// <summary> Job Status. </summary>
-        public JobStatus Status { get; }
+        public QnaAuthoringJobStatus Status { get; }
         /// <summary> The errors encountered while executing the job. </summary>
-        public IReadOnlyList<Error> Errors { get; }
+        public IReadOnlyList<ResponseError> Errors { get; }
         /// <summary> URL to download the result of the Export Job. </summary>
         public string ResultUrl { get; }
     }

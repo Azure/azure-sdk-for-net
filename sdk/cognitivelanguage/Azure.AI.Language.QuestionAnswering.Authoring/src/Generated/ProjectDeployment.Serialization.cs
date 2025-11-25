@@ -39,10 +39,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsDefined(LastDeployedDateTime))
+            if (Optional.IsDefined(LastDeployed))
             {
                 writer.WritePropertyName("lastDeployedDateTime"u8);
-                writer.WriteStringValue(LastDeployedDateTime.Value, "O");
+                writer.WriteStringValue(LastDeployed.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

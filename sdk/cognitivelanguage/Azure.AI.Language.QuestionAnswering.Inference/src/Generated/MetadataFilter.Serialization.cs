@@ -34,11 +34,11 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 throw new FormatException($"The model {nameof(MetadataFilter)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(MetadataRecords))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (var item in Metadata)
+                foreach (var item in MetadataRecords)
                 {
                     writer.WriteObjectValue(item, options);
                 }

@@ -23,16 +23,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ShortAnswerOptions"/>. </summary>
-        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
+        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold">
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
         /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <returns> A new <see cref="Inference.ShortAnswerOptions"/> instance for mocking. </returns>
-        public static ShortAnswerOptions ShortAnswerOptions(bool enable = default, double? confidenceThreshold = null, int? size = null)
+        public static ShortAnswerOptions ShortAnswerOptions(bool isEnabled = default, double? confidenceThreshold = null, int? size = null)
         {
-            return new ShortAnswerOptions(enable, confidenceThreshold, size, serializedAdditionalRawData: null);
+            return new ShortAnswerOptions(isEnabled, confidenceThreshold, size, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.AnswersResult"/>. </summary>
@@ -92,12 +92,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <summary> Initializes a new instance of <see cref="Inference.KnowledgeBaseAnswerPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
+        /// <param name="id"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <returns> A new <see cref="Inference.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
+        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? id = null, string displayText = null)
         {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, id, displayText, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.AnswerSpan"/>. </summary>

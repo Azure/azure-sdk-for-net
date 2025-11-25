@@ -49,10 +49,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(MultilingualResource))
+            if (Optional.IsDefined(IsMultilingualResource))
             {
                 writer.WritePropertyName("multilingualResource"u8);
-                writer.WriteBooleanValue(MultilingualResource.Value);
+                writer.WriteBooleanValue(IsMultilingualResource.Value);
             }
             if (Optional.IsDefined(Settings))
             {
@@ -74,10 +74,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("lastDeployedDateTime"u8);
                 writer.WriteStringValue(LastDeployedDateTime.Value, "O");
             }
-            if (Optional.IsDefined(ConfigureSemanticRanking))
+            if (Optional.IsDefined(IsConfiguredSemanticRankingEnabled))
             {
                 writer.WritePropertyName("configureSemanticRanking"u8);
-                writer.WriteBooleanValue(ConfigureSemanticRanking.Value);
+                writer.WriteBooleanValue(IsConfiguredSemanticRankingEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

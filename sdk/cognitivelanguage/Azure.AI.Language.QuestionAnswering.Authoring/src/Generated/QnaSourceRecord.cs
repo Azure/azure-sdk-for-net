@@ -53,7 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="sourceUri"> URI location for the file or url. </param>
         /// <param name="sourceKind"> Supported source types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="sourceUri"/> is null. </exception>
-        internal QnaSourceRecord(string source, Uri sourceUri, SourceKind sourceKind)
+        internal QnaSourceRecord(string source, Uri sourceUri, KnowledgeBaseSourceKind sourceKind)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(sourceUri, nameof(sourceUri));
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentStructureKind"> Content structure type for sources. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QnaSourceRecord(string displayName, string source, Uri sourceUri, SourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QnaSourceRecord(string displayName, string source, Uri sourceUri, KnowledgeBaseSourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Source = source;
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> URI location for the file or url. </summary>
         public Uri SourceUri { get; }
         /// <summary> Supported source types. </summary>
-        public SourceKind SourceKind { get; }
+        public KnowledgeBaseSourceKind SourceKind { get; }
         /// <summary> Content structure type for sources. </summary>
         public SourceContentStructureKind? ContentStructureKind { get; }
         /// <summary> Date-time when the QnA was last updated. </summary>

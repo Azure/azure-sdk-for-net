@@ -49,12 +49,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
-        internal QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status)
+        internal QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, QnaAuthoringJobStatus status)
         {
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringProjectDeploymentJobState"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IReadOnlyList<Error> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, QnaAuthoringJobStatus status, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -90,8 +90,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> The last date time the job was updated. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
         /// <summary> Job Status. </summary>
-        public JobStatus Status { get; }
+        public QnaAuthoringJobStatus Status { get; }
         /// <summary> The errors encountered while executing the job. </summary>
-        public IReadOnlyList<Error> Errors { get; }
+        public IReadOnlyList<ResponseError> Errors { get; }
     }
 }

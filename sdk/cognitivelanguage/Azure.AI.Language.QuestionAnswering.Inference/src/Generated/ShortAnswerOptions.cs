@@ -46,23 +46,23 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
-        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
-        public ShortAnswerOptions(bool enable)
+        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
+        public ShortAnswerOptions(bool isEnabled)
         {
-            Enable = enable;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
-        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
+        /// <param name="isEnabled"> Enable or disable Answer Span prediction. </param>
         /// <param name="confidenceThreshold">
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.
         /// </param>
         /// <param name="size"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ShortAnswerOptions(bool enable, double? confidenceThreshold, int? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ShortAnswerOptions(bool isEnabled, double? confidenceThreshold, int? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enable = enable;
+            IsEnabled = isEnabled;
             ConfidenceThreshold = confidenceThreshold;
             Size = size;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> Enable or disable Answer Span prediction. </summary>
-        public bool Enable { get; }
+        public bool IsEnabled { get; }
         /// <summary>
         /// Minimum threshold score required to include an answer span, value ranges from 0
         /// to 1.

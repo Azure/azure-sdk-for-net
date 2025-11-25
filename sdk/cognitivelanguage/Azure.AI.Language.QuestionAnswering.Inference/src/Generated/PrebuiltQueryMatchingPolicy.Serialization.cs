@@ -45,10 +45,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableFullMatch))
+            if (Optional.IsDefined(IsFullMatchingDisabled))
             {
                 writer.WritePropertyName("disableFullMatch"u8);
-                writer.WriteBooleanValue(DisableFullMatch.Value);
+                writer.WriteBooleanValue(IsFullMatchingDisabled.Value);
             }
         }
 

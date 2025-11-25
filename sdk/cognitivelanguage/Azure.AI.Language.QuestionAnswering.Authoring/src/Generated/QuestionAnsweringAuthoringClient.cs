@@ -1357,14 +1357,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<WordAlterations> GetSynonymsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WordAlterationsGroup> GetSynonymsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WordAlterations.DeserializeWordAlterations(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WordAlterationsGroup.DeserializeWordAlterationsGroup(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Gets all the synonyms of a project. </summary>
@@ -1375,14 +1375,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<WordAlterations> GetSynonyms(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WordAlterationsGroup> GetSynonyms(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WordAlterations.DeserializeWordAlterations(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WordAlterationsGroup.DeserializeWordAlterationsGroup(e), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -1739,7 +1739,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, Format? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, FileFormat? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1755,7 +1755,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Export(WaitUntil waitUntil, string projectName, Format? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, FileFormat? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1773,7 +1773,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,Format?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,FileFormat?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1815,7 +1815,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Export(WaitUntil,string,Format?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Export(WaitUntil,string,FileFormat?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1856,7 +1856,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = null, Format? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ImportJobOptions body = null, FileFormat? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1874,7 +1874,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = null, Format? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ImportJobOptions body = null, FileFormat? format = null, AssetKind? assetKind = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1893,7 +1893,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportAsync(WaitUntil,string,ImportJobOptions,Format?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,string,ImportJobOptions,FileFormat?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1936,7 +1936,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Import(WaitUntil,string,ImportJobOptions,Format?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Import(WaitUntil,string,ImportJobOptions,FileFormat?,AssetKind?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

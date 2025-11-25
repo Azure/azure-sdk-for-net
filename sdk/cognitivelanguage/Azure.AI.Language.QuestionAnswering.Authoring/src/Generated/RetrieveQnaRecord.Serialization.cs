@@ -72,11 +72,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("dialog"u8);
                 writer.WriteObjectValue(Dialog, options);
             }
-            if (Optional.IsCollectionDefined(ActiveLearningSuggestions))
+            if (Optional.IsCollectionDefined(ActiveLearningSuggestionClusters))
             {
                 writer.WritePropertyName("activeLearningSuggestions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ActiveLearningSuggestions)
+                foreach (var item in ActiveLearningSuggestionClusters)
                 {
                     writer.WriteObjectValue(item, options);
                 }

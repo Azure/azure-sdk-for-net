@@ -95,7 +95,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             string displayName = default;
             string source = default;
             Uri sourceUri = default;
-            SourceKind sourceKind = default;
+            KnowledgeBaseSourceKind sourceKind = default;
             SourceContentStructureKind? contentStructureKind = default;
             DateTimeOffset? lastUpdatedDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (property.NameEquals("sourceKind"u8))
                 {
-                    sourceKind = new SourceKind(property.Value.GetString());
+                    sourceKind = new KnowledgeBaseSourceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("contentStructureKind"u8))

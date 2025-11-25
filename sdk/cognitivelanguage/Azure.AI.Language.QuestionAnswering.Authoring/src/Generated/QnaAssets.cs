@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    /// <summary> Collection of word alterations. </summary>
-    public partial class WordAlterations
+    /// <summary> All assets for this project. </summary>
+    public partial class QnaAssets
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,27 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterations"/>. </summary>
-        /// <param name="alterations"> Collection of word alterations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alterations"/> is null. </exception>
-        public WordAlterations(IEnumerable<string> alterations)
+        /// <summary> Initializes a new instance of <see cref="QnaAssets"/>. </summary>
+        public QnaAssets()
         {
-            Argument.AssertNotNull(alterations, nameof(alterations));
-
-            Alterations = alterations.ToList();
+            Synonyms = new ChangeTrackingList<WordAlterationsGroup>();
+            Qnas = new ChangeTrackingList<ImportQnaRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterations"/>. </summary>
-        /// <param name="alterations"> Collection of word alterations. </param>
+        /// <summary> Initializes a new instance of <see cref="QnaAssets"/>. </summary>
+        /// <param name="synonyms"> Collection of synonyms. </param>
+        /// <param name="qnas"> List of QnA records to import. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WordAlterations(IList<string> alterations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QnaAssets(IList<WordAlterationsGroup> synonyms, IList<ImportQnaRecord> qnas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Alterations = alterations;
+            Synonyms = synonyms;
+            Qnas = qnas;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterations"/> for deserialization. </summary>
-        internal WordAlterations()
-        {
-        }
-
-        /// <summary> Collection of word alterations. </summary>
-        public IList<string> Alterations { get; }
+        /// <summary> Collection of synonyms. </summary>
+        public IList<WordAlterationsGroup> Synonyms { get; }
+        /// <summary> List of QnA records to import. </summary>
+        public IList<ImportQnaRecord> Qnas { get; }
     }
 }

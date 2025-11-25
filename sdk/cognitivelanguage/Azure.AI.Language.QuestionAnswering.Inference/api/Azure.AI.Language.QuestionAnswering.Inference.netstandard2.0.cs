@@ -124,7 +124,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         internal KnowledgeBaseAnswerPrompt() { }
         public int? DisplayOrder { get { throw null; } }
         public string DisplayText { get { throw null; } }
-        public int? QnaId { get { throw null; } }
+        public int? Id { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -182,7 +182,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     {
         public MetadataFilter() { }
         public Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind? LogicalOperation { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord> Metadata { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord> MetadataRecords { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -205,8 +205,8 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class PrebuiltQueryMatchingPolicy : Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy>
     {
         public PrebuiltQueryMatchingPolicy() { }
-        public bool? DisableFullMatch { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType> Fields { get { throw null; } }
+        public bool? IsFullMatchingDisabled { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -267,12 +267,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public QuestionAnsweringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult> GetAnswers(int qnaId, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult> GetAnswers(string question, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult> GetAnswers(int qnaId, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions knowledgeBaseQueryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult> GetAnswers(string question, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions knowledgeBaseQueryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult> GetAnswers(string projectName, string deploymentName, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions knowledgeBaseQueryOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetAnswers(string projectName, string deploymentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>> GetAnswersAsync(int qnaId, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>> GetAnswersAsync(string question, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>> GetAnswersAsync(int qnaId, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions knowledgeBaseQueryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>> GetAnswersAsync(string question, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions knowledgeBaseQueryOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>> GetAnswersAsync(string projectName, string deploymentName, Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions knowledgeBaseQueryOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAnswersAsync(string projectName, string deploymentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult> GetAnswersFromText(Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextOptions textQueryOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -304,8 +304,8 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswer KnowledgeBaseAnswer(System.Collections.Generic.IEnumerable<string> questions = null, string answer = null, double? confidence = default(double?), int? qnaId = default(int?), string source = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerDialog dialog = null, Azure.AI.Language.QuestionAnswering.Inference.AnswerSpan shortAnswer = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = 0, string previousQuestion = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt> prompts = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default(int?), int? qnaId = default(int?), string displayText = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions ShortAnswerOptions(bool enable = false, double? confidenceThreshold = default(double?), int? size = default(int?)) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default(int?), int? id = default(int?), string displayText = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions ShortAnswerOptions(bool isEnabled = false, double? confidenceThreshold = default(double?), int? size = default(int?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.TextAnswer TextAnswer(string answer = null, double? confidence = default(double?), string id = null, Azure.AI.Language.QuestionAnswering.Inference.AnswerSpan shortAnswer = null, int? offset = default(int?), int? length = default(int?)) { throw null; }
     }
     public partial class QuestionAnsweringProject
@@ -353,9 +353,9 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     }
     public partial class ShortAnswerOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions>
     {
-        public ShortAnswerOptions(bool enable) { }
+        public ShortAnswerOptions(bool isEnabled) { }
         public double? ConfidenceThreshold { get { throw null; } set { } }
-        public bool Enable { get { throw null; } }
+        public bool IsEnabled { get { throw null; } }
         public int? Size { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

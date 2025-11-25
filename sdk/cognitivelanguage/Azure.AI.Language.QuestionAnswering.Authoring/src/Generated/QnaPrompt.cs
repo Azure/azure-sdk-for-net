@@ -53,14 +53,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
         /// <param name="displayOrder"> Index of the prompt. It is used for ordering of the prompts. </param>
         /// <param name="qnaId"> ID of the QnA corresponding to the prompt. </param>
-        /// <param name="qna"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
+        /// <param name="qnaRecord"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QnaPrompt(int? displayOrder, int? qnaId, QnaRecord qna, string displayText, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QnaPrompt(int? displayOrder, int? qnaId, QnaRecord qnaRecord, string displayText, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayOrder = displayOrder;
             QnaId = qnaId;
-            Qna = qna;
+            QnaRecord = qnaRecord;
             DisplayText = displayText;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> ID of the QnA corresponding to the prompt. </summary>
         public int? QnaId { get; set; }
         /// <summary> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </summary>
-        public QnaRecord Qna { get; set; }
+        public QnaRecord QnaRecord { get; set; }
         /// <summary> Text displayed to represent a follow up question prompt. </summary>
         public string DisplayText { get; set; }
     }

@@ -83,7 +83,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<WordAlterations> value = default;
+            IList<WordAlterationsGroup> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<WordAlterations> array = new List<WordAlterations>();
+                    List<WordAlterationsGroup> array = new List<WordAlterationsGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WordAlterations.DeserializeWordAlterations(item, options));
+                        array.Add(WordAlterationsGroup.DeserializeWordAlterationsGroup(item, options));
                     }
                     value = array;
                     continue;

@@ -44,10 +44,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("qnaId"u8);
                 writer.WriteNumberValue(QnaId.Value);
             }
-            if (Optional.IsDefined(Qna))
+            if (Optional.IsDefined(QnaRecord))
             {
                 writer.WritePropertyName("qna"u8);
-                writer.WriteObjectValue(Qna, options);
+                writer.WriteObjectValue(QnaRecord, options);
             }
             if (Optional.IsDefined(DisplayText))
             {

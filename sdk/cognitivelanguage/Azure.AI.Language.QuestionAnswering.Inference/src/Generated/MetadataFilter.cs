@@ -48,22 +48,22 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
         public MetadataFilter()
         {
-            Metadata = new ChangeTrackingList<MetadataRecord>();
+            MetadataRecords = new ChangeTrackingList<MetadataRecord>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
-        /// <param name="metadata"> Dictionary of string. </param>
+        /// <param name="metadataRecords"> Dictionary of string. </param>
         /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataFilter(IList<MetadataRecord> metadata, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetadataFilter(IList<MetadataRecord> metadataRecords, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Metadata = metadata;
+            MetadataRecords = metadataRecords;
             LogicalOperation = logicalOperation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of string. </summary>
-        public IList<MetadataRecord> Metadata { get; }
+        public IList<MetadataRecord> MetadataRecords { get; }
         /// <summary> Operation used to join metadata filters. </summary>
         public LogicalOperationKind? LogicalOperation { get; set; }
     }

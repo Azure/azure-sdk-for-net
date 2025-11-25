@@ -14,16 +14,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActiveLearningFeedback))]
-    [ModelReaderWriterBuildable(typeof(Assets))]
-    [ModelReaderWriterBuildable(typeof(Error))]
     [ModelReaderWriterBuildable(typeof(FeedbackRecord))]
     [ModelReaderWriterBuildable(typeof(File))]
     [ModelReaderWriterBuildable(typeof(ImportFiles))]
     [ModelReaderWriterBuildable(typeof(ImportJobOptions))]
     [ModelReaderWriterBuildable(typeof(ImportQnaRecord))]
-    [ModelReaderWriterBuildable(typeof(InnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(ProjectDeployment))]
     [ModelReaderWriterBuildable(typeof(ProjectSettings))]
+    [ModelReaderWriterBuildable(typeof(QnaAssets))]
     [ModelReaderWriterBuildable(typeof(QnaDialog))]
     [ModelReaderWriterBuildable(typeof(QnaPrompt))]
     [ModelReaderWriterBuildable(typeof(QnaRecord))]
@@ -35,11 +33,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringUpdateQnasJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringUpdateSourcesJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringProject))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetrieveQnaRecord))]
     [ModelReaderWriterBuildable(typeof(SuggestedQuestion))]
     [ModelReaderWriterBuildable(typeof(SuggestedQuestionsCluster))]
     [ModelReaderWriterBuildable(typeof(SynonymAssets))]
-    [ModelReaderWriterBuildable(typeof(WordAlterations))]
+    [ModelReaderWriterBuildable(typeof(WordAlterationsGroup))]
     public partial class AzureAILanguageQuestionAnsweringAuthoringContext : ModelReaderWriterContext
     {
     }

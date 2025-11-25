@@ -72,20 +72,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("dialog"u8);
                 writer.WriteObjectValue(Dialog, options);
             }
-            if (Optional.IsCollectionDefined(ActiveLearningSuggestions))
+            if (Optional.IsCollectionDefined(ActiveLearningSuggestionClusters))
             {
                 writer.WritePropertyName("activeLearningSuggestions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ActiveLearningSuggestions)
+                foreach (var item in ActiveLearningSuggestionClusters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedDateTime))
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
-                writer.WriteStringValue(LastUpdatedDateTime.Value, "O");
+                writer.WriteStringValue(LastUpdated.Value, "O");
             }
             if (Optional.IsDefined(SourceDisplayName))
             {

@@ -39,10 +39,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 writer.WritePropertyName("displayOrder"u8);
                 writer.WriteNumberValue(DisplayOrder.Value);
             }
-            if (Optional.IsDefined(QnaId))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("qnaId"u8);
-                writer.WriteNumberValue(QnaId.Value);
+                writer.WriteNumberValue(Id.Value);
             }
             if (Optional.IsDefined(DisplayText))
             {

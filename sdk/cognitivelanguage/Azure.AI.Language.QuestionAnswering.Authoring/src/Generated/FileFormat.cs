@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Knowledge base Import or Export format. </summary>
-    public readonly partial struct Format : IEquatable<Format>
+    public readonly partial struct FileFormat : IEquatable<FileFormat>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Format"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Format(string value)
+        public FileFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,29 +27,29 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private const string ExcelValue = "excel";
 
         /// <summary> Export or Import QnA assets in JSON format. </summary>
-        public static Format Json { get; } = new Format(JsonValue);
+        public static FileFormat Json { get; } = new FileFormat(JsonValue);
         /// <summary>
         /// Export or Import knowledge base replica including all assets and metadata in
         /// Excel format.
         /// </summary>
-        public static Format Tsv { get; } = new Format(TsvValue);
+        public static FileFormat Tsv { get; } = new FileFormat(TsvValue);
         /// <summary>
         /// Export or Import knowledge base replica including all assets and metadata in
         /// Tsv format.
         /// </summary>
-        public static Format Excel { get; } = new Format(ExcelValue);
-        /// <summary> Determines if two <see cref="Format"/> values are the same. </summary>
-        public static bool operator ==(Format left, Format right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Format"/> values are not the same. </summary>
-        public static bool operator !=(Format left, Format right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Format"/>. </summary>
-        public static implicit operator Format(string value) => new Format(value);
+        public static FileFormat Excel { get; } = new FileFormat(ExcelValue);
+        /// <summary> Determines if two <see cref="FileFormat"/> values are the same. </summary>
+        public static bool operator ==(FileFormat left, FileFormat right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="FileFormat"/> values are not the same. </summary>
+        public static bool operator !=(FileFormat left, FileFormat right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FileFormat"/>. </summary>
+        public static implicit operator FileFormat(string value) => new FileFormat(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Format other && Equals(other);
+        public override bool Equals(object obj) => obj is FileFormat other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Format other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FileFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

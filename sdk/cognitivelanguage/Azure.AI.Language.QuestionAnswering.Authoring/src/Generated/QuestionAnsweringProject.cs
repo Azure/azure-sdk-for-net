@@ -58,24 +58,24 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// example, use "en" for English; "es" for Spanish etc. If not set, use "en" for
         /// English as default.
         /// </param>
-        /// <param name="multilingualResource"> Resource enabled for multiple languages across projects or not. </param>
+        /// <param name="isMultilingualResource"> Resource enabled for multiple languages across projects or not. </param>
         /// <param name="settings"> Configurable settings of the Project. </param>
         /// <param name="createdDateTime"> Project creation date-time. </param>
         /// <param name="lastModifiedDateTime"> Represents the project last modified date-time. </param>
         /// <param name="lastDeployedDateTime"> Represents the project last deployment date-time. </param>
-        /// <param name="configureSemanticRanking"> Represents if semantic ranking is configured. </param>
+        /// <param name="isConfiguredSemanticRankingEnabled"> Represents if semantic ranking is configured. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringProject(string projectName, string description, string language, bool? multilingualResource, ProjectSettings settings, DateTimeOffset? createdDateTime, DateTimeOffset? lastModifiedDateTime, DateTimeOffset? lastDeployedDateTime, bool? configureSemanticRanking, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringProject(string projectName, string description, string language, bool? isMultilingualResource, ProjectSettings settings, DateTimeOffset? createdDateTime, DateTimeOffset? lastModifiedDateTime, DateTimeOffset? lastDeployedDateTime, bool? isConfiguredSemanticRankingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectName = projectName;
             Description = description;
             Language = language;
-            MultilingualResource = multilingualResource;
+            IsMultilingualResource = isMultilingualResource;
             Settings = settings;
             CreatedDateTime = createdDateTime;
             LastModifiedDateTime = lastModifiedDateTime;
             LastDeployedDateTime = lastDeployedDateTime;
-            ConfigureSemanticRanking = configureSemanticRanking;
+            IsConfiguredSemanticRankingEnabled = isConfiguredSemanticRankingEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         public string Language { get; set; }
         /// <summary> Resource enabled for multiple languages across projects or not. </summary>
-        public bool? MultilingualResource { get; set; }
+        public bool? IsMultilingualResource { get; set; }
         /// <summary> Configurable settings of the Project. </summary>
         public ProjectSettings Settings { get; set; }
         /// <summary> Project creation date-time. </summary>
@@ -100,6 +100,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Represents the project last deployment date-time. </summary>
         public DateTimeOffset? LastDeployedDateTime { get; }
         /// <summary> Represents if semantic ranking is configured. </summary>
-        public bool? ConfigureSemanticRanking { get; set; }
+        public bool? IsConfiguredSemanticRankingEnabled { get; set; }
     }
 }
