@@ -20,6 +20,8 @@ namespace Azure.AI.ContentUnderstanding
     [CodeGenSuppress("Analyze", typeof(WaitUntil), typeof(string), typeof(IEnumerable<AnalyzeInput>), typeof(IDictionary<string, string>), typeof(string), typeof(ProcessingLocation?), typeof(CancellationToken))]
     [CodeGenSuppress("AnalyzeBinaryAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(ProcessingLocation?), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("AnalyzeBinary", typeof(WaitUntil), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(ProcessingLocation?), typeof(string), typeof(CancellationToken))]
+    // SDK-FIX: Suppress CreateCopyAnalyzerRequest to fix copy endpoint path (emitter generates ":copyAnalyzer" instead of ":copy") and status code handling (service returns both 201 and 202)
+    [CodeGenSuppress("CreateCopyAnalyzerRequest", typeof(string), typeof(RequestContent), typeof(bool?), typeof(RequestContext))]
     public partial class ContentUnderstandingClient
     {
         // CUSTOM CODE NOTE: we're suppressing the generation of the Analyze and AnalyzeBinary
@@ -158,6 +160,41 @@ namespace Azure.AI.ContentUnderstanding
             }
 
             return null;
+        }
+
+        // SDK-FIX: Response classifier to accept both 201 and 202 status codes (service inconsistently returns both)
+        private static ResponseClassifier? _pipelineMessageClassifier201202;
+        private static ResponseClassifier PipelineMessageClassifier201202 =>
+            _pipelineMessageClassifier201202 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
+
+        /// <summary>
+        /// Creates the HTTP message for the copy analyzer request.
+        /// </summary>
+        /// <remarks>
+        /// SDK-FIX: Customized to fix copy endpoint path (emitter generates ":copyAnalyzer" instead of ":copy") 
+        /// and status code handling (service returns both 201 and 202 instead of just 202).
+        /// </remarks>
+        internal HttpMessage CreateCopyAnalyzerRequest(string analyzerId, RequestContent content, bool? allowReplace, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/contentunderstanding", false);
+            uri.AppendPath("/analyzers/", false);
+            uri.AppendPath(analyzerId, true);
+            uri.AppendPath(":copy", false);  // SDK-FIX Issue #1: Changed from ":copyAnalyzer" to ":copy"
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (allowReplace != null)
+            {
+                uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);  // SDK-FIX Issue #2: Changed from PipelineMessageClassifier202 to accept both 201 and 202
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
 
         // TODO: Uncomment these methods when ready to regenerate the SDK.

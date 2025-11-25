@@ -25,10 +25,6 @@ namespace Azure.AI.ContentUnderstanding
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        private static ResponseClassifier _pipelineMessageClassifier201202;
-
-        private static ResponseClassifier PipelineMessageClassifier201202 => _pipelineMessageClassifier201202 = new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
-
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateAnalyzeRequest(string analyzerId, RequestContent content, string stringEncoding, string processingLocation, RequestContext context)
@@ -84,29 +80,6 @@ namespace Azure.AI.ContentUnderstanding
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", contentType);
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCopyAnalyzerRequest(string analyzerId, RequestContent content, bool? allowReplace, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/contentunderstanding", false);
-            uri.AppendPath("/analyzers/", false);
-            uri.AppendPath(analyzerId, true);
-            uri.AppendPath(":copy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (allowReplace != null)
-            {
-                uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
