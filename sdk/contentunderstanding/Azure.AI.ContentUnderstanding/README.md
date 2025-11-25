@@ -10,13 +10,13 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs
 * **Classify documents** - Automatically categorize and organize documents by type or content
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentUnderstanding) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/ai-services/content-understanding/)
+[Source code][source_code] | [Package (NuGet)][package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
 ## Getting started
 
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/):
+Install the client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.AI.ContentUnderstanding --prerelease
@@ -24,7 +24,7 @@ dotnet add package Azure.AI.ContentUnderstanding --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and a **Microsoft Foundry resource**. To create a Microsoft Foundry resource, follow the steps in the [Azure Content Understanding quickstart](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
+> You must have an [Azure subscription][azure_subscription] and a **Microsoft Foundry resource**. To create a Microsoft Foundry resource, follow the steps in the [Azure Content Understanding quickstart][cu_quickstart]. In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK][dotnet_sdk] 3.0 or higher with a [language version][csharp_lang_version] of `latest`.
 
 ### ⚠️ IMPORTANT: Configure Model Deployments (One-Time Setup Per Resource)
 
@@ -38,9 +38,9 @@ Before using the Content Understanding SDK, you need to set up a Microsoft Found
 
 #### Step 1: Create Microsoft Foundry Resource
 
-1. Follow the steps in the [Azure Content Understanding quickstart](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument) to create a Microsoft Foundry resource in the Azure portal
+1. Follow the steps in the [Azure Content Understanding quickstart][cu_quickstart] to create a Microsoft Foundry resource in the Azure portal
 2. Get your Foundry resource's endpoint URL from Azure Portal:
-   - Go to [Azure Portal](https://portal.azure.com/)
+   - Go to [Azure Portal][azure_portal]
    - Navigate to your Microsoft Foundry resource
    - Go to **Resource Management** > **Keys and Endpoint**
    - Copy the **Endpoint** URL (typically `https://<your-resource-name>.services.ai.azure.com/`)
@@ -49,7 +49,7 @@ Before using the Content Understanding SDK, you need to set up a Microsoft Found
 
 After creating your Microsoft Foundry resource, you must grant yourself the **Cognitive Services User** role to enable API calls for setting default GPT deployments:
 
-1. Go to [Azure Portal](https://portal.azure.com/)
+1. Go to [Azure Portal][azure_portal]
 2. Navigate to your Microsoft Foundry resource
 3. Go to **Access Control (IAM)** in the left menu
 4. Click **Add** > **Add role assignment**
@@ -82,7 +82,7 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
    - Complete the deployment with your preferred settings
    - Note the deployment name (by convention, use `text-embedding-3-large`)
 
-For more information on deploying models, see [Create model deployments in Microsoft Foundry portal](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models-openai).
+For more information on deploying models, see [Create model deployments in Microsoft Foundry portal][deploy_models_docs].
 
 #### Step 3: Configure Model Deployments (Required for Prebuilt Analyzers)
 
@@ -117,12 +117,12 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 ```
 
 To get your API key:
-1. Go to [Azure Portal](https://portal.azure.com/)
+1. Go to [Azure Portal][azure_portal]
 2. Navigate to your Microsoft Foundry resource
 3. Go to **Resource Management** > **Keys and Endpoint**
 4. Copy one of the **Keys** (Key1 or Key2)
 
-For more information on authentication, see [Azure Identity client library](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+For more information on authentication, see [Azure Identity client library][azure_identity_readme].
 
 ## Key concepts
 
@@ -151,33 +151,32 @@ Content Understanding operations are asynchronous long-running operations. The w
 2. **Poll for Results** - Poll the operation location until the analysis completes
 3. **Process Results** - Extract and display the structured results
 
-The SDK provides `Operation<T>` types that handle polling automatically when using `WaitUntil.Completed`.
+The SDK provides `Operation<T>` types that handle polling automatically when using `WaitUntil.Completed`. For analysis operations, the SDK returns `AnalyzeResultOperation`, which extends `Operation<AnalyzeResult>` and provides access to the operation ID via the `Id` property. This operation ID can be used with `GetResultFile*` and `DeleteResult*` methods.
 
 ### Main Classes
 
 * **`ContentUnderstandingClient`** - The main client for analyzing content, as well as creating, managing, and configuring analyzers
 * **`AnalyzeResult`** - Contains the structured results of an analysis operation, including content elements, markdown, and metadata
-
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+* **`AnalyzeResultOperation`** - A long-running operation wrapper for analysis results that provides access to the operation ID
 
 ### Thread safety
 
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline][thread_safety_guideline]). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
-[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+[Client options][client_options] |
+[Accessing the response][accessing_response] |
+[Long-running operations][long_running_operations] |
+[Handling failures][handling_failures] |
+[Diagnostics][diagnostics] |
+[Mocking][mocking] |
+[Client lifetime][client_lifetime]
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples).
+You can familiarize yourself with different APIs using [Samples][samples_directory].
 
 The samples demonstrate:
 
@@ -187,7 +186,7 @@ The samples demonstrate:
 * **Custom Analyzers** - Create domain-specific analyzers for specialized extraction needs
 * **Document Classification** - Classify documents by type or content
 
-See the [samples directory](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples) for complete examples.
+See the [samples directory][samples_directory] for complete examples.
 
 ## Troubleshooting
 
@@ -219,22 +218,47 @@ using Azure.Core.Diagnostics;
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
-For more information, see [Diagnostics samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+For more information, see [Diagnostics samples][diagnostics].
 
 ## Next steps
 
-* Explore the [samples directory](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples) for complete code examples
-* Read the [Azure AI Content Understanding documentation](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/) for detailed service information
-* Check out the [API reference documentation](https://azure.github.io/azure-sdk-for-net) for detailed API documentation
+* Explore the [samples directory][samples_directory] for complete code examples
+* Read the [Azure AI Content Understanding documentation][product_docs] for detailed service information
+* Check out the [API reference documentation][api_reference] for detailed API documentation
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com](https://cla.microsoft.com).
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][opencode_email] with any additional questions or comments.
 
 <!-- LINKS -->
+[source_code]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/src
+[package]: https://www.nuget.org/packages/Azure.AI.ContentUnderstanding
+[api_reference]: https://azure.github.io/azure-sdk-for-net
+[product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[nuget]: https://www.nuget.org/
+[azure_subscription]: https://azure.microsoft.com/free/dotnet/
+[cu_quickstart]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
+[dotnet_sdk]: https://dotnet.microsoft.com/download
+[csharp_lang_version]: https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default
+[azure_portal]: https://portal.azure.com/
+[deploy_models_docs]: https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models-openai
+[azure_identity_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[thread_safety_guideline]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety
+[client_options]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions
+[accessing_response]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset
+[long_running_operations]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt
+[handling_failures]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception
+[diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[mocking]: https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking
+[client_lifetime]: https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/
+[samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[opencode_email]: mailto:opencode@microsoft.com
 [style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
