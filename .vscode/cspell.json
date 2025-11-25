@@ -482,7 +482,9 @@
       "filename": "**/sdk/contentunderstanding/**/*.cs",
       "words": [
         "upca",
-        "upce"
+        "upce",
+        "UPCA",
+        "UPCE"
       ]
     },
     {
