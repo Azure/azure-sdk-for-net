@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The value item of the search suggest. </summary>
     public partial class SuggestResultValue
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SuggestResultValue"/>. </summary>
         internal SuggestResultValue()
@@ -92,8 +63,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termStatus"> The status of the term. </param>
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestResultValue(float? searchScore, string searchText, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, IReadOnlyList<string> endorsement, string owner, IReadOnlyList<string> classification, IReadOnlyList<string> label, IReadOnlyList<TermSearchResultValue> term, IReadOnlyList<ContactSearchResultValue> contact, IReadOnlyList<string> assetType, string glossaryType, string glossary, string termStatus, IReadOnlyList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SuggestResultValue(float? searchScore, string searchText, string objectType, long? createTime, long? updateTime, string id, string name, string qualifiedName, string entityType, string description, IList<string> endorsement, string owner, IList<string> classification, IList<string> label, IList<TermSearchResultValue> term, IList<ContactSearchResultValue> contact, IList<string> assetType, string glossaryType, string glossary, string termStatus, IList<string> termTemplate, string longDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchScore = searchScore;
             SearchText = searchText;
@@ -117,7 +88,7 @@ namespace Azure.Analytics.Purview.DataMap
             TermStatus = termStatus;
             TermTemplate = termTemplate;
             LongDescription = longDescription;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -125,55 +96,76 @@ namespace Azure.Analytics.Purview.DataMap
         /// search score by default.
         /// </summary>
         public float? SearchScore { get; }
+
         /// <summary>
         /// The target text that contains the keyword as prefix. The keyword is wrapped
         /// with emphasis mark.
         /// </summary>
         public string SearchText { get; }
+
         /// <summary>
         /// The object type of the record. Object type is the top-level property to
         /// distinguish whether a record is an asset or a term.
         /// </summary>
         public string ObjectType { get; }
+
         /// <summary> The create time of the record. The Unix epoch format. </summary>
         public long? CreateTime { get; }
+
         /// <summary> The last update time of the record. The Unix epoch format. </summary>
         public long? UpdateTime { get; }
+
         /// <summary> The GUID of the record. </summary>
         public string Id { get; }
+
         /// <summary> The name of the record. </summary>
         public string Name { get; }
+
         /// <summary> The qualified name of the record. </summary>
         public string QualifiedName { get; }
+
         /// <summary> The type name of the asset. </summary>
         public string EntityType { get; }
+
         /// <summary> The description of the asset. </summary>
         public string Description { get; }
+
         /// <summary> The endorsement of the asset. </summary>
-        public IReadOnlyList<string> Endorsement { get; }
+        public IList<string> Endorsement { get; }
+
         /// <summary> The owner of the record. </summary>
         public string Owner { get; }
+
         /// <summary> The classifications of the record. </summary>
-        public IReadOnlyList<string> Classification { get; }
+        public IList<string> Classification { get; }
+
         /// <summary> The labels of the asset. </summary>
-        public IReadOnlyList<string> Label { get; }
+        public IList<string> Label { get; }
+
         /// <summary> The terms assigned to the asset. </summary>
-        public IReadOnlyList<TermSearchResultValue> Term { get; }
+        public IList<TermSearchResultValue> Term { get; }
+
         /// <summary> The contacts of the asset. </summary>
-        public IReadOnlyList<ContactSearchResultValue> Contact { get; }
+        public IList<ContactSearchResultValue> Contact { get; }
+
         /// <summary> The asset types of the asset. </summary>
-        public IReadOnlyList<string> AssetType { get; }
+        public IList<string> AssetType { get; }
+
         /// <summary>
         /// The type name of the term. Could be AtlasGlossary, AtlasGlossaryTerm or
         /// AtlasGlossaryCategory.
         /// </summary>
         public string GlossaryType { get; }
+
         /// <summary> The glossary name of the term. </summary>
         public string Glossary { get; }
+
         /// <summary> The status of the term. </summary>
         public string TermStatus { get; }
+
         /// <summary> The term template names used by the term. </summary>
-        public IReadOnlyList<string> TermTemplate { get; }
+        public IList<string> TermTemplate { get; }
+
         /// <summary> The definition of the term. </summary>
         public string LongDescription { get; }
     }

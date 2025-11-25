@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> Captures time-boundary details. </summary>
     public partial class TimeBoundary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TimeBoundary"/>. </summary>
         public TimeBoundary()
@@ -54,19 +25,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="endTime"> The end of the time boundary. </param>
         /// <param name="startTime"> The start of the time boundary. </param>
         /// <param name="timeZone"> The timezone of the time boundary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TimeBoundary(string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TimeBoundary(string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndTime = endTime;
             StartTime = startTime;
             TimeZone = timeZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The end of the time boundary. </summary>
         public string EndTime { get; set; }
+
         /// <summary> The start of the time boundary. </summary>
         public string StartTime { get; set; }
+
         /// <summary> The timezone of the time boundary. </summary>
         public string TimeZone { get; set; }
     }

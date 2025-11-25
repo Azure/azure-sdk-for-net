@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class SearchResultValue : IUtf8JsonSerializable, IJsonModel<SearchResultValue>
+    /// <summary> The value item of the search result. </summary>
+    public partial class SearchResultValue : IJsonModel<SearchResultValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchResultValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchResultValue)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SearchScore))
             {
                 writer.WritePropertyName("@search.score"u8);
@@ -88,8 +87,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("endorsement"u8);
                 writer.WriteStartArray();
-                foreach (var item in Endorsement)
+                foreach (string item in Endorsement)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -103,8 +107,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStartArray();
-                foreach (var item in Classification)
+                foreach (string item in Classification)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -113,8 +122,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStartArray();
-                foreach (var item in Label)
+                foreach (string item in Label)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -123,7 +137,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStartArray();
-                foreach (var item in Term)
+                foreach (TermSearchResultValue item in Term)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,7 +147,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteStartArray();
-                foreach (var item in Contact)
+                foreach (ContactSearchResultValue item in Contact)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,8 +157,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("assetType"u8);
                 writer.WriteStartArray();
-                foreach (var item in AssetType)
+                foreach (string item in AssetType)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -168,8 +187,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("termTemplate"u8);
                 writer.WriteStartArray();
-                foreach (var item in TermTemplate)
+                foreach (string item in TermTemplate)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -179,15 +203,15 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -196,22 +220,27 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        SearchResultValue IJsonModel<SearchResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchResultValue IJsonModel<SearchResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchResultValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchResultValue)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchResultValue(document.RootElement, options);
         }
 
-        internal static SearchResultValue DeserializeSearchResultValue(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchResultValue DeserializeSearchResultValue(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -226,217 +255,250 @@ namespace Azure.Analytics.Purview.DataMap
             string qualifiedName = default;
             string entityType = default;
             string description = default;
-            IReadOnlyList<string> endorsement = default;
+            IList<string> endorsement = default;
             string owner = default;
-            IReadOnlyList<string> classification = default;
-            IReadOnlyList<string> label = default;
-            IReadOnlyList<TermSearchResultValue> term = default;
-            IReadOnlyList<ContactSearchResultValue> contact = default;
-            IReadOnlyList<string> assetType = default;
+            IList<string> classification = default;
+            IList<string> label = default;
+            IList<TermSearchResultValue> term = default;
+            IList<ContactSearchResultValue> contact = default;
+            IList<string> assetType = default;
             string glossaryType = default;
             string glossary = default;
             string termStatus = default;
-            IReadOnlyList<string> termTemplate = default;
+            IList<string> termTemplate = default;
             string longDescription = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.score"u8))
+                if (prop.NameEquals("@search.score"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    searchScore = property.Value.GetSingle();
+                    searchScore = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("@search.highlights"u8))
+                if (prop.NameEquals("@search.highlights"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    searchHighlights = SearchHighlights.DeserializeSearchHighlights(property.Value, options);
+                    searchHighlights = SearchHighlights.DeserializeSearchHighlights(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    objectType = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createTime"u8))
+                if (prop.NameEquals("createTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createTime = property.Value.GetInt64();
+                    createTime = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("updateTime"u8))
+                if (prop.NameEquals("updateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updateTime = property.Value.GetInt64();
+                    updateTime = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qualifiedName"u8))
+                if (prop.NameEquals("qualifiedName"u8))
                 {
-                    qualifiedName = property.Value.GetString();
+                    qualifiedName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityType"u8))
+                if (prop.NameEquals("entityType"u8))
                 {
-                    entityType = property.Value.GetString();
+                    entityType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endorsement"u8))
+                if (prop.NameEquals("endorsement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     endorsement = array;
                     continue;
                 }
-                if (property.NameEquals("owner"u8))
+                if (prop.NameEquals("owner"u8))
                 {
-                    owner = property.Value.GetString();
+                    owner = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("classification"u8))
+                if (prop.NameEquals("classification"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     classification = array;
                     continue;
                 }
-                if (property.NameEquals("label"u8))
+                if (prop.NameEquals("label"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     label = array;
                     continue;
                 }
-                if (property.NameEquals("term"u8))
+                if (prop.NameEquals("term"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TermSearchResultValue> array = new List<TermSearchResultValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(TermSearchResultValue.DeserializeTermSearchResultValue(item, options));
                     }
                     term = array;
                     continue;
                 }
-                if (property.NameEquals("contact"u8))
+                if (prop.NameEquals("contact"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ContactSearchResultValue> array = new List<ContactSearchResultValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ContactSearchResultValue.DeserializeContactSearchResultValue(item, options));
                     }
                     contact = array;
                     continue;
                 }
-                if (property.NameEquals("assetType"u8))
+                if (prop.NameEquals("assetType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     assetType = array;
                     continue;
                 }
-                if (property.NameEquals("glossaryType"u8))
+                if (prop.NameEquals("glossaryType"u8))
                 {
-                    glossaryType = property.Value.GetString();
+                    glossaryType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("glossary"u8))
+                if (prop.NameEquals("glossary"u8))
                 {
-                    glossary = property.Value.GetString();
+                    glossary = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termStatus"u8))
+                if (prop.NameEquals("termStatus"u8))
                 {
-                    termStatus = property.Value.GetString();
+                    termStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termTemplate"u8))
+                if (prop.NameEquals("termTemplate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     termTemplate = array;
                     continue;
                 }
-                if (property.NameEquals("longDescription"u8))
+                if (prop.NameEquals("longDescription"u8))
                 {
-                    longDescription = property.Value.GetString();
+                    longDescription = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchResultValue(
                 searchScore,
                 searchHighlights,
@@ -460,13 +522,16 @@ namespace Azure.Analytics.Purview.DataMap
                 termStatus,
                 termTemplate ?? new ChangeTrackingList<string>(),
                 longDescription,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SearchResultValue>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchResultValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -476,15 +541,20 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        SearchResultValue IPersistableModel<SearchResultValue>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchResultValue IPersistableModel<SearchResultValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchResultValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchResultValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchResultValue(document.RootElement, options);
                     }
                 default:
@@ -492,22 +562,7 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchResultValue FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchResultValue(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

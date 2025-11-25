@@ -9,14 +9,18 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class SearchFacetResultValue : IUtf8JsonSerializable, IJsonModel<SearchFacetResultValue>
+    /// <summary>
+    /// A facet list that consists of index fields assetType ,classification,
+    /// contactId, and label. When the facet is specified in the request, the value of
+    /// the facet is returned as an element of @search.facets.
+    /// </summary>
+    public partial class SearchFacetResultValue : IJsonModel<SearchFacetResultValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchFacetResultValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchFacetResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +32,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchFacetResultValue)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStartArray();
-                foreach (var item in EntityType)
+                foreach (SearchFacetItemValue item in EntityType)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +51,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("assetType"u8);
                 writer.WriteStartArray();
-                foreach (var item in AssetType)
+                foreach (SearchFacetItemValue item in AssetType)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,7 +61,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStartArray();
-                foreach (var item in Classification)
+                foreach (SearchFacetItemValue item in Classification)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,7 +71,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStartArray();
-                foreach (var item in Term)
+                foreach (SearchFacetItemValue item in Term)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -78,7 +81,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("contactId"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContactId)
+                foreach (SearchFacetItemValue item in ContactId)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +91,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("contactType"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContactType)
+                foreach (SearchFacetItemValue item in ContactType)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +101,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStartArray();
-                foreach (var item in Label)
+                foreach (SearchFacetItemValue item in Label)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +111,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("glossaryType"u8);
                 writer.WriteStartArray();
-                foreach (var item in GlossaryType)
+                foreach (SearchFacetItemValue item in GlossaryType)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +121,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("termStatus"u8);
                 writer.WriteStartArray();
-                foreach (var item in TermStatus)
+                foreach (SearchFacetItemValue item in TermStatus)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,21 +131,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("termTemplate"u8);
                 writer.WriteStartArray();
-                foreach (var item in TermTemplate)
+                foreach (SearchFacetItemValue item in TermTemplate)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,174 +154,178 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        SearchFacetResultValue IJsonModel<SearchFacetResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchFacetResultValue IJsonModel<SearchFacetResultValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchFacetResultValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchFacetResultValue)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchFacetResultValue(document.RootElement, options);
         }
 
-        internal static SearchFacetResultValue DeserializeSearchFacetResultValue(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchFacetResultValue DeserializeSearchFacetResultValue(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<SearchFacetItemValue> entityType = default;
-            IReadOnlyList<SearchFacetItemValue> assetType = default;
-            IReadOnlyList<SearchFacetItemValue> classification = default;
-            IReadOnlyList<SearchFacetItemValue> term = default;
-            IReadOnlyList<SearchFacetItemValue> contactId = default;
-            IReadOnlyList<SearchFacetItemValue> contactType = default;
-            IReadOnlyList<SearchFacetItemValue> label = default;
-            IReadOnlyList<SearchFacetItemValue> glossaryType = default;
-            IReadOnlyList<SearchFacetItemValue> termStatus = default;
-            IReadOnlyList<SearchFacetItemValue> termTemplate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<SearchFacetItemValue> entityType = default;
+            IList<SearchFacetItemValue> assetType = default;
+            IList<SearchFacetItemValue> classification = default;
+            IList<SearchFacetItemValue> term = default;
+            IList<SearchFacetItemValue> contactId = default;
+            IList<SearchFacetItemValue> contactType = default;
+            IList<SearchFacetItemValue> label = default;
+            IList<SearchFacetItemValue> glossaryType = default;
+            IList<SearchFacetItemValue> termStatus = default;
+            IList<SearchFacetItemValue> termTemplate = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("entityType"u8))
+                if (prop.NameEquals("entityType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     entityType = array;
                     continue;
                 }
-                if (property.NameEquals("assetType"u8))
+                if (prop.NameEquals("assetType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     assetType = array;
                     continue;
                 }
-                if (property.NameEquals("classification"u8))
+                if (prop.NameEquals("classification"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     classification = array;
                     continue;
                 }
-                if (property.NameEquals("term"u8))
+                if (prop.NameEquals("term"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     term = array;
                     continue;
                 }
-                if (property.NameEquals("contactId"u8))
+                if (prop.NameEquals("contactId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     contactId = array;
                     continue;
                 }
-                if (property.NameEquals("contactType"u8))
+                if (prop.NameEquals("contactType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     contactType = array;
                     continue;
                 }
-                if (property.NameEquals("label"u8))
+                if (prop.NameEquals("label"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     label = array;
                     continue;
                 }
-                if (property.NameEquals("glossaryType"u8))
+                if (prop.NameEquals("glossaryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     glossaryType = array;
                     continue;
                 }
-                if (property.NameEquals("termStatus"u8))
+                if (prop.NameEquals("termStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     termStatus = array;
                     continue;
                 }
-                if (property.NameEquals("termTemplate"u8))
+                if (prop.NameEquals("termTemplate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
@@ -327,10 +334,9 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchFacetResultValue(
                 entityType ?? new ChangeTrackingList<SearchFacetItemValue>(),
                 assetType ?? new ChangeTrackingList<SearchFacetItemValue>(),
@@ -342,13 +348,16 @@ namespace Azure.Analytics.Purview.DataMap
                 glossaryType ?? new ChangeTrackingList<SearchFacetItemValue>(),
                 termStatus ?? new ChangeTrackingList<SearchFacetItemValue>(),
                 termTemplate ?? new ChangeTrackingList<SearchFacetItemValue>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SearchFacetResultValue>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchFacetResultValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -358,15 +367,20 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        SearchFacetResultValue IPersistableModel<SearchFacetResultValue>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchFacetResultValue IPersistableModel<SearchFacetResultValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchFacetResultValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchFacetResultValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchFacetResultValue(document.RootElement, options);
                     }
                 default:
@@ -374,22 +388,7 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchFacetResultValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchFacetResultValue FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchFacetResultValue(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

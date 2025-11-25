@@ -18,37 +18,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// </summary>
     public partial class AtlasRelationshipAttributeDef
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasRelationshipAttributeDef"/>. </summary>
         public AtlasRelationshipAttributeDef()
@@ -73,8 +44,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="valuesMinCount"> The minimum count of the values. </param>
         /// <param name="isLegacyAttribute"> Determines if it is a legacy attribute. </param>
         /// <param name="relationshipTypeName"> The name of the relationship type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationshipAttributeDef(CardinalityValue? cardinality, IList<AtlasConstraintDef> constraints, string defaultValue, string description, bool? includeInNotification, bool? isIndexable, bool? isOptional, bool? isUnique, string name, IDictionary<string, string> options, string typeName, int? valuesMaxCount, int? valuesMinCount, bool? isLegacyAttribute, string relationshipTypeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasRelationshipAttributeDef(CardinalityValue? cardinality, IList<AtlasConstraintDef> constraints, string defaultValue, string description, bool? includeInNotification, bool? isIndexable, bool? isOptional, bool? isUnique, string name, IDictionary<string, string> options, string typeName, int? valuesMaxCount, int? valuesMinCount, bool? isLegacyAttribute, string relationshipTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cardinality = cardinality;
             Constraints = constraints;
@@ -91,37 +62,51 @@ namespace Azure.Analytics.Purview.DataMap
             ValuesMinCount = valuesMinCount;
             IsLegacyAttribute = isLegacyAttribute;
             RelationshipTypeName = relationshipTypeName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> single-valued attribute or multi-valued attribute. </summary>
         public CardinalityValue? Cardinality { get; set; }
+
         /// <summary> An array of constraints. </summary>
         public IList<AtlasConstraintDef> Constraints { get; }
+
         /// <summary> The default value of the attribute. </summary>
         public string DefaultValue { get; set; }
+
         /// <summary> The description of the attribute. </summary>
         public string Description { get; set; }
+
         /// <summary> Determines if it is included in notification. </summary>
         public bool? IncludeInNotification { get; set; }
+
         /// <summary> Determines if it is indexable. </summary>
         public bool? IsIndexable { get; set; }
+
         /// <summary> Determines if it is optional. </summary>
         public bool? IsOptional { get; set; }
+
         /// <summary> Determines if it unique. </summary>
         public bool? IsUnique { get; set; }
+
         /// <summary> The name of the attribute. </summary>
         public string Name { get; set; }
+
         /// <summary> The options for the attribute. </summary>
         public IDictionary<string, string> Options { get; }
+
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }
+
         /// <summary> The maximum count of the values. </summary>
         public int? ValuesMaxCount { get; set; }
+
         /// <summary> The minimum count of the values. </summary>
         public int? ValuesMinCount { get; set; }
+
         /// <summary> Determines if it is a legacy attribute. </summary>
         public bool? IsLegacyAttribute { get; set; }
+
         /// <summary> The name of the relationship type. </summary>
         public string RelationshipTypeName { get; set; }
     }

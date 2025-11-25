@@ -14,56 +14,87 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct RoundingMode : IEquatable<RoundingMode>
     {
         private readonly string _value;
+        /// <summary> up. </summary>
+        private const string UpValue = "UP";
+        /// <summary> down. </summary>
+        private const string DownValue = "DOWN";
+        /// <summary> ceiling. </summary>
+        private const string CeilingValue = "CEILING";
+        /// <summary> floor. </summary>
+        private const string FloorValue = "FLOOR";
+        /// <summary> half up. </summary>
+        private const string HalfUpValue = "HALF_UP";
+        /// <summary> half down. </summary>
+        private const string HalfDownValue = "HALF_DOWN";
+        /// <summary> half even. </summary>
+        private const string HalfEvenValue = "HALF_EVEN";
+        /// <summary> unnecessary. </summary>
+        private const string UnnecessaryValue = "UNNECESSARY";
 
         /// <summary> Initializes a new instance of <see cref="RoundingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoundingMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpValue = "UP";
-        private const string DownValue = "DOWN";
-        private const string CeilingValue = "CEILING";
-        private const string FloorValue = "FLOOR";
-        private const string HalfUpValue = "HALF_UP";
-        private const string HalfDownValue = "HALF_DOWN";
-        private const string HalfEvenValue = "HALF_EVEN";
-        private const string UnnecessaryValue = "UNNECESSARY";
+            _value = value;
+        }
 
         /// <summary> up. </summary>
         public static RoundingMode Up { get; } = new RoundingMode(UpValue);
+
         /// <summary> down. </summary>
         public static RoundingMode Down { get; } = new RoundingMode(DownValue);
+
         /// <summary> ceiling. </summary>
         public static RoundingMode Ceiling { get; } = new RoundingMode(CeilingValue);
+
         /// <summary> floor. </summary>
         public static RoundingMode Floor { get; } = new RoundingMode(FloorValue);
+
         /// <summary> half up. </summary>
         public static RoundingMode HalfUp { get; } = new RoundingMode(HalfUpValue);
+
         /// <summary> half down. </summary>
         public static RoundingMode HalfDown { get; } = new RoundingMode(HalfDownValue);
+
         /// <summary> half even. </summary>
         public static RoundingMode HalfEven { get; } = new RoundingMode(HalfEvenValue);
+
         /// <summary> unnecessary. </summary>
         public static RoundingMode Unnecessary { get; } = new RoundingMode(UnnecessaryValue);
+
         /// <summary> Determines if two <see cref="RoundingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoundingMode left, RoundingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoundingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoundingMode left, RoundingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoundingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoundingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoundingMode(string value) => new RoundingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoundingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoundingMode?(string value) => value == null ? null : new RoundingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoundingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoundingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,41 +14,62 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct CardinalityValue : IEquatable<CardinalityValue>
     {
         private readonly string _value;
+        /// <summary> single. </summary>
+        private const string SingleValue = "SINGLE";
+        /// <summary> list. </summary>
+        private const string ListValue = "LIST";
+        /// <summary> set. </summary>
+        private const string SetValue = "SET";
 
         /// <summary> Initializes a new instance of <see cref="CardinalityValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CardinalityValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "SINGLE";
-        private const string ListValue = "LIST";
-        private const string SetValue = "SET";
+            _value = value;
+        }
 
         /// <summary> single. </summary>
         public static CardinalityValue Single { get; } = new CardinalityValue(SingleValue);
+
         /// <summary> list. </summary>
         public static CardinalityValue List { get; } = new CardinalityValue(ListValue);
+
         /// <summary> set. </summary>
         public static CardinalityValue Set { get; } = new CardinalityValue(SetValue);
+
         /// <summary> Determines if two <see cref="CardinalityValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CardinalityValue left, CardinalityValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CardinalityValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CardinalityValue left, CardinalityValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CardinalityValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CardinalityValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CardinalityValue(string value) => new CardinalityValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CardinalityValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CardinalityValue?(string value) => value == null ? null : new CardinalityValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CardinalityValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CardinalityValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AtlasGlossaryExtInfo : IUtf8JsonSerializable, IJsonModel<AtlasGlossaryExtInfo>
+    /// <summary> The extended information of glossary. </summary>
+    public partial class AtlasGlossaryExtInfo : IJsonModel<AtlasGlossaryExtInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasGlossaryExtInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasGlossaryExtInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasGlossaryExtInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Guid))
             {
                 writer.WritePropertyName("guid"u8);
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
-                foreach (var item in Classifications)
+                foreach (AtlasClassification item in Classifications)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
-                foreach (var item in Categories)
+                foreach (AtlasRelatedCategoryHeader item in Categories)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStartArray();
-                foreach (var item in Terms)
+                foreach (AtlasRelatedTermHeader item in Terms)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -146,15 +146,15 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -163,28 +163,33 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        AtlasGlossaryExtInfo IJsonModel<AtlasGlossaryExtInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasGlossaryExtInfo IJsonModel<AtlasGlossaryExtInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasGlossaryExtInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasGlossaryExtInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAtlasGlossaryExtInfo(document.RootElement, options);
         }
 
-        internal static AtlasGlossaryExtInfo DeserializeAtlasGlossaryExtInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AtlasGlossaryExtInfo DeserializeAtlasGlossaryExtInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string guid = default;
-            IReadOnlyList<AtlasClassification> classifications = default;
+            IList<AtlasClassification> classifications = default;
             string longDescription = default;
             string name = default;
             string qualifiedName = default;
@@ -194,160 +199,158 @@ namespace Azure.Analytics.Purview.DataMap
             string createdBy = default;
             long? updateTime = default;
             string updatedBy = default;
-            IReadOnlyList<AtlasRelatedCategoryHeader> categories = default;
+            IList<AtlasRelatedCategoryHeader> categories = default;
             string language = default;
-            IReadOnlyList<AtlasRelatedTermHeader> terms = default;
+            IList<AtlasRelatedTermHeader> terms = default;
             string usage = default;
-            IReadOnlyDictionary<string, AtlasGlossaryCategory> categoryInfo = default;
-            IReadOnlyDictionary<string, AtlasGlossaryTerm> termInfo = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, AtlasGlossaryCategory> categoryInfo = default;
+            IDictionary<string, AtlasGlossaryTerm> termInfo = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("guid"u8))
+                if (prop.NameEquals("guid"u8))
                 {
-                    guid = property.Value.GetString();
+                    guid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("classifications"u8))
+                if (prop.NameEquals("classifications"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AtlasClassification> array = new List<AtlasClassification>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
                 }
-                if (property.NameEquals("longDescription"u8))
+                if (prop.NameEquals("longDescription"u8))
                 {
-                    longDescription = property.Value.GetString();
+                    longDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qualifiedName"u8))
+                if (prop.NameEquals("qualifiedName"u8))
                 {
-                    qualifiedName = property.Value.GetString();
+                    qualifiedName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shortDescription"u8))
+                if (prop.NameEquals("shortDescription"u8))
                 {
-                    shortDescription = property.Value.GetString();
+                    shortDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTS"u8))
+                if (prop.NameEquals("lastModifiedTS"u8))
                 {
-                    lastModifiedTS = property.Value.GetString();
+                    lastModifiedTS = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createTime"u8))
+                if (prop.NameEquals("createTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createTime = property.Value.GetInt64();
+                    createTime = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("createdBy"u8))
+                if (prop.NameEquals("createdBy"u8))
                 {
-                    createdBy = property.Value.GetString();
+                    createdBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updateTime"u8))
+                if (prop.NameEquals("updateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updateTime = property.Value.GetInt64();
+                    updateTime = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("updatedBy"u8))
+                if (prop.NameEquals("updatedBy"u8))
                 {
-                    updatedBy = property.Value.GetString();
+                    updatedBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categories"u8))
+                if (prop.NameEquals("categories"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, options));
                     }
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("language"u8))
+                if (prop.NameEquals("language"u8))
                 {
-                    language = property.Value.GetString();
+                    language = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("terms"u8))
+                if (prop.NameEquals("terms"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     terms = array;
                     continue;
                 }
-                if (property.NameEquals("usage"u8))
+                if (prop.NameEquals("usage"u8))
                 {
-                    usage = property.Value.GetString();
+                    usage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("categoryInfo"u8))
+                if (prop.NameEquals("categoryInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, AtlasGlossaryCategory> dictionary = new Dictionary<string, AtlasGlossaryCategory>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(property0.Value, options));
+                        dictionary.Add(prop0.Name, AtlasGlossaryCategory.DeserializeAtlasGlossaryCategory(prop0.Value, options));
                     }
                     categoryInfo = dictionary;
                     continue;
                 }
-                if (property.NameEquals("termInfo"u8))
+                if (prop.NameEquals("termInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, AtlasGlossaryTerm> dictionary = new Dictionary<string, AtlasGlossaryTerm>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(property0.Value, options));
+                        dictionary.Add(prop0.Name, AtlasGlossaryTerm.DeserializeAtlasGlossaryTerm(prop0.Value, options));
                     }
                     termInfo = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AtlasGlossaryExtInfo(
                 guid,
                 classifications ?? new ChangeTrackingList<AtlasClassification>(),
@@ -366,13 +369,16 @@ namespace Azure.Analytics.Purview.DataMap
                 usage,
                 categoryInfo ?? new ChangeTrackingDictionary<string, AtlasGlossaryCategory>(),
                 termInfo ?? new ChangeTrackingDictionary<string, AtlasGlossaryTerm>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AtlasGlossaryExtInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasGlossaryExtInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -382,15 +388,20 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        AtlasGlossaryExtInfo IPersistableModel<AtlasGlossaryExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasGlossaryExtInfo IPersistableModel<AtlasGlossaryExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasGlossaryExtInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryExtInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAtlasGlossaryExtInfo(document.RootElement, options);
                     }
                 default:
@@ -398,22 +409,14 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasGlossaryExtInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AtlasGlossaryExtInfo FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryExtInfo"/> from. </param>
+        public static explicit operator AtlasGlossaryExtInfo(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasGlossaryExtInfo(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAtlasGlossaryExtInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

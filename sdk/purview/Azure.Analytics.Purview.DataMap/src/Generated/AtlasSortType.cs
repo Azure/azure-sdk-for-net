@@ -14,41 +14,62 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct AtlasSortType : IEquatable<AtlasSortType>
     {
         private readonly string _value;
+        /// <summary> No sorting order. </summary>
+        private const string NoneValue = "NONE";
+        /// <summary> Use ascending order for sorting. </summary>
+        private const string AscendValue = "ASC";
+        /// <summary> Use descending order for sorting. </summary>
+        private const string DescendValue = "DESC";
 
         /// <summary> Initializes a new instance of <see cref="AtlasSortType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AtlasSortType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "NONE";
-        private const string AscendValue = "ASC";
-        private const string DescendValue = "DESC";
+            _value = value;
+        }
 
         /// <summary> No sorting order. </summary>
         public static AtlasSortType None { get; } = new AtlasSortType(NoneValue);
+
         /// <summary> Use ascending order for sorting. </summary>
         public static AtlasSortType Ascend { get; } = new AtlasSortType(AscendValue);
+
         /// <summary> Use descending order for sorting. </summary>
         public static AtlasSortType Descend { get; } = new AtlasSortType(DescendValue);
+
         /// <summary> Determines if two <see cref="AtlasSortType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AtlasSortType left, AtlasSortType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AtlasSortType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AtlasSortType left, AtlasSortType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AtlasSortType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AtlasSortType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AtlasSortType(string value) => new AtlasSortType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AtlasSortType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AtlasSortType?(string value) => value == null ? null : new AtlasSortType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AtlasSortType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AtlasSortType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

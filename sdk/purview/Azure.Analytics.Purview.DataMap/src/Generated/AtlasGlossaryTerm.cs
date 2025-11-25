@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The glossary term. </summary>
     public partial class AtlasGlossaryTerm
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasGlossaryTerm"/>. </summary>
         public AtlasGlossaryTerm()
@@ -114,8 +86,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="usage"> The usage of the term. </param>
         /// <param name="validValues"> An array of related term headers as valid values. </param>
         /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryTerm(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, string abbreviation, IList<BinaryData> templateName, AtlasGlossaryHeader anchor, IList<AtlasRelatedTermHeader> antonyms, TermStatus? status, string nickName, IList<PurviewObjectId> hierarchyInfo, IList<ResourceLink> resources, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, IDictionary<string, BinaryData>> attributes, IList<AtlasRelatedObjectId> assignedEntities, IList<AtlasTermCategorizationHeader> categories, IList<AtlasRelatedTermHeader> classifies, IList<string> examples, IList<AtlasRelatedTermHeader> isA, IList<AtlasRelatedTermHeader> preferredTerms, IList<AtlasRelatedTermHeader> preferredToTerms, IList<AtlasRelatedTermHeader> replacedBy, IList<AtlasRelatedTermHeader> replacementTerms, IList<AtlasRelatedTermHeader> seeAlso, IList<AtlasRelatedTermHeader> synonyms, IList<AtlasRelatedTermHeader> translatedTerms, IList<AtlasRelatedTermHeader> translationTerms, string usage, IList<AtlasRelatedTermHeader> validValues, IList<AtlasRelatedTermHeader> validValuesFor, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasGlossaryTerm(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, string abbreviation, IList<BinaryData> templateName, AtlasGlossaryHeader anchor, IList<AtlasRelatedTermHeader> antonyms, TermStatus? status, string nickName, IList<PurviewObjectId> hierarchyInfo, IList<ResourceLink> resources, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, IDictionary<string, BinaryData>> attributes, IList<AtlasRelatedObjectId> assignedEntities, IList<AtlasTermCategorizationHeader> categories, IList<AtlasRelatedTermHeader> classifies, IList<string> examples, IList<AtlasRelatedTermHeader> isA, IList<AtlasRelatedTermHeader> preferredTerms, IList<AtlasRelatedTermHeader> preferredToTerms, IList<AtlasRelatedTermHeader> replacedBy, IList<AtlasRelatedTermHeader> replacementTerms, IList<AtlasRelatedTermHeader> seeAlso, IList<AtlasRelatedTermHeader> synonyms, IList<AtlasRelatedTermHeader> translatedTerms, IList<AtlasRelatedTermHeader> translationTerms, string usage, IList<AtlasRelatedTermHeader> validValues, IList<AtlasRelatedTermHeader> validValuesFor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             Classifications = classifications;
@@ -154,141 +126,169 @@ namespace Azure.Analytics.Purview.DataMap
             Usage = usage;
             ValidValues = validValues;
             ValidValuesFor = validValuesFor;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The GUID of the object. </summary>
         public string Guid { get; set; }
+
         /// <summary> An array of classifications. </summary>
         public IList<AtlasClassification> Classifications { get; }
+
         /// <summary> The long version description. </summary>
         public string LongDescription { get; set; }
+
         /// <summary> The name of the glossary object. </summary>
         public string Name { get; set; }
+
         /// <summary> The qualified name of the glossary object. </summary>
         public string QualifiedName { get; set; }
+
         /// <summary> The short version of description. </summary>
         public string ShortDescription { get; set; }
+
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
+
         /// <summary> The created time of the record. </summary>
         public long? CreateTime { get; set; }
+
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
+
         /// <summary> The update time of the record. </summary>
         public long? UpdateTime { get; set; }
+
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
+
         /// <summary> The abbreviation of the term. </summary>
         public string Abbreviation { get; set; }
+
         /// <summary>
         /// The name of the template.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IList<BinaryData> TemplateName { get; }
+
         /// <summary> The glossary header with basic information. </summary>
         public AtlasGlossaryHeader Anchor { get; set; }
+
         /// <summary> An array of related term headers as antonyms. </summary>
         public IList<AtlasRelatedTermHeader> Antonyms { get; }
+
         /// <summary> Status of the AtlasGlossaryTerm. </summary>
         public TermStatus? Status { get; set; }
+
         /// <summary> The nick name of the term. </summary>
         public string NickName { get; set; }
+
         /// <summary> The hierarchy information of the term. </summary>
         public IList<PurviewObjectId> HierarchyInfo { get; }
+
         /// <summary> An array of resource link for term. </summary>
         public IList<ResourceLink> Resources { get; }
+
         /// <summary> The dictionary of contacts for terms. Key could be Expert or Steward. </summary>
         public IDictionary<string, IList<ContactInfo>> Contacts { get; }
+
         /// <summary>
         /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
         /// The
         /// key of the first layer map is term template name.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, IDictionary<string, BinaryData>> Attributes { get; }
+
         /// <summary> An array of related object IDs. </summary>
         public IList<AtlasRelatedObjectId> AssignedEntities { get; }
+
         /// <summary> An array of term categorization headers. </summary>
         public IList<AtlasTermCategorizationHeader> Categories { get; }
+
         /// <summary> An array of related term headers. </summary>
         public IList<AtlasRelatedTermHeader> Classifies { get; }
+
         /// <summary> An array of examples. </summary>
         public IList<string> Examples { get; }
+
         /// <summary> An array of related term headers indicating the is-a relationship. </summary>
         public IList<AtlasRelatedTermHeader> IsA { get; }
+
         /// <summary> An array of preferred related term headers. </summary>
         public IList<AtlasRelatedTermHeader> PreferredTerms { get; }
+
         /// <summary> An array of related term headers that are preferred to. </summary>
         public IList<AtlasRelatedTermHeader> PreferredToTerms { get; }
+
         /// <summary> An array of related term headers that are replaced by. </summary>
         public IList<AtlasRelatedTermHeader> ReplacedBy { get; }
+
         /// <summary> An array of related term headers for replacement. </summary>
         public IList<AtlasRelatedTermHeader> ReplacementTerms { get; }
+
         /// <summary> An array of related term headers for see also. </summary>
         public IList<AtlasRelatedTermHeader> SeeAlso { get; }
+
         /// <summary> An array of related term headers as synonyms. </summary>
         public IList<AtlasRelatedTermHeader> Synonyms { get; }
+
         /// <summary> An array of translated related term headers. </summary>
         public IList<AtlasRelatedTermHeader> TranslatedTerms { get; }
+
         /// <summary> An array of related term headers for translation. </summary>
         public IList<AtlasRelatedTermHeader> TranslationTerms { get; }
+
         /// <summary> The usage of the term. </summary>
         public string Usage { get; set; }
+
         /// <summary> An array of related term headers as valid values. </summary>
         public IList<AtlasRelatedTermHeader> ValidValues { get; }
+
         /// <summary> An array of related term headers as valid values for other records. </summary>
         public IList<AtlasRelatedTermHeader> ValidValuesFor { get; }
     }

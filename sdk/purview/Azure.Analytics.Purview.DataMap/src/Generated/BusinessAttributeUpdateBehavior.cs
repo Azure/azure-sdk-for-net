@@ -14,41 +14,62 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct BusinessAttributeUpdateBehavior : IEquatable<BusinessAttributeUpdateBehavior>
     {
         private readonly string _value;
+        /// <summary> Ignore the business attribute payload for update. </summary>
+        private const string IgnoreValue = "ignore";
+        /// <summary> Replace all the business attributes using the payload. </summary>
+        private const string ReplaceValue = "replace";
+        /// <summary> Merge the business attributes. Business attributes will not be updated if not provided. </summary>
+        private const string MergeValue = "merge";
 
         /// <summary> Initializes a new instance of <see cref="BusinessAttributeUpdateBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BusinessAttributeUpdateBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IgnoreValue = "ignore";
-        private const string ReplaceValue = "replace";
-        private const string MergeValue = "merge";
+            _value = value;
+        }
 
         /// <summary> Ignore the business attribute payload for update. </summary>
         public static BusinessAttributeUpdateBehavior Ignore { get; } = new BusinessAttributeUpdateBehavior(IgnoreValue);
+
         /// <summary> Replace all the business attributes using the payload. </summary>
         public static BusinessAttributeUpdateBehavior Replace { get; } = new BusinessAttributeUpdateBehavior(ReplaceValue);
+
         /// <summary> Merge the business attributes. Business attributes will not be updated if not provided. </summary>
         public static BusinessAttributeUpdateBehavior Merge { get; } = new BusinessAttributeUpdateBehavior(MergeValue);
+
         /// <summary> Determines if two <see cref="BusinessAttributeUpdateBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BusinessAttributeUpdateBehavior left, BusinessAttributeUpdateBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BusinessAttributeUpdateBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BusinessAttributeUpdateBehavior left, BusinessAttributeUpdateBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BusinessAttributeUpdateBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BusinessAttributeUpdateBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BusinessAttributeUpdateBehavior(string value) => new BusinessAttributeUpdateBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BusinessAttributeUpdateBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BusinessAttributeUpdateBehavior?(string value) => value == null ? null : new BusinessAttributeUpdateBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BusinessAttributeUpdateBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BusinessAttributeUpdateBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

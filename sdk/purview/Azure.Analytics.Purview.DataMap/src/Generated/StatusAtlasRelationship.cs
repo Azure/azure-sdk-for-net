@@ -14,38 +14,57 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct StatusAtlasRelationship : IEquatable<StatusAtlasRelationship>
     {
         private readonly string _value;
+        /// <summary> active. </summary>
+        private const string ActiveValue = "ACTIVE";
+        /// <summary> deleted. </summary>
+        private const string DeletedValue = "DELETED";
 
         /// <summary> Initializes a new instance of <see cref="StatusAtlasRelationship"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StatusAtlasRelationship(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "ACTIVE";
-        private const string DeletedValue = "DELETED";
+            _value = value;
+        }
 
         /// <summary> active. </summary>
         public static StatusAtlasRelationship Active { get; } = new StatusAtlasRelationship(ActiveValue);
+
         /// <summary> deleted. </summary>
         public static StatusAtlasRelationship Deleted { get; } = new StatusAtlasRelationship(DeletedValue);
+
         /// <summary> Determines if two <see cref="StatusAtlasRelationship"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StatusAtlasRelationship left, StatusAtlasRelationship right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StatusAtlasRelationship"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StatusAtlasRelationship left, StatusAtlasRelationship right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StatusAtlasRelationship"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StatusAtlasRelationship"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StatusAtlasRelationship(string value) => new StatusAtlasRelationship(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StatusAtlasRelationship"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StatusAtlasRelationship?(string value) => value == null ? null : new StatusAtlasRelationship(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StatusAtlasRelationship other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StatusAtlasRelationship other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

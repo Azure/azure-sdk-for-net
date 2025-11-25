@@ -14,41 +14,62 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct LineageDirection : IEquatable<LineageDirection>
     {
         private readonly string _value;
+        /// <summary> input. </summary>
+        private const string InputValue = "INPUT";
+        /// <summary> output. </summary>
+        private const string OutputValue = "OUTPUT";
+        /// <summary> both. </summary>
+        private const string BothValue = "BOTH";
 
         /// <summary> Initializes a new instance of <see cref="LineageDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LineageDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InputValue = "INPUT";
-        private const string OutputValue = "OUTPUT";
-        private const string BothValue = "BOTH";
+            _value = value;
+        }
 
         /// <summary> input. </summary>
         public static LineageDirection Input { get; } = new LineageDirection(InputValue);
+
         /// <summary> output. </summary>
         public static LineageDirection Output { get; } = new LineageDirection(OutputValue);
+
         /// <summary> both. </summary>
         public static LineageDirection Both { get; } = new LineageDirection(BothValue);
+
         /// <summary> Determines if two <see cref="LineageDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LineageDirection left, LineageDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LineageDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LineageDirection left, LineageDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LineageDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LineageDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LineageDirection(string value) => new LineageDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LineageDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LineageDirection?(string value) => value == null ? null : new LineageDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LineageDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LineageDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

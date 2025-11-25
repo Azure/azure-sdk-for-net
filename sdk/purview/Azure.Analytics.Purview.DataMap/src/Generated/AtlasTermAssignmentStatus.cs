@@ -14,53 +14,82 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct AtlasTermAssignmentStatus : IEquatable<AtlasTermAssignmentStatus>
     {
         private readonly string _value;
+        /// <summary> The status is discovered. </summary>
+        private const string DiscoveredValue = "DISCOVERED";
+        /// <summary> The status is proposed. </summary>
+        private const string ProposedValue = "PROPOSED";
+        /// <summary> The status is imported. </summary>
+        private const string ImportedValue = "IMPORTED";
+        /// <summary> The status is validated. </summary>
+        private const string ValidatedValue = "VALIDATED";
+        /// <summary> The status is deprecated. </summary>
+        private const string DeprecatedValue = "DEPRECATED";
+        /// <summary> The status is obsolete. </summary>
+        private const string ObsoleteValue = "OBSOLETE";
+        /// <summary> Other status. </summary>
+        private const string OtherValue = "OTHER";
 
         /// <summary> Initializes a new instance of <see cref="AtlasTermAssignmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AtlasTermAssignmentStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DiscoveredValue = "DISCOVERED";
-        private const string ProposedValue = "PROPOSED";
-        private const string ImportedValue = "IMPORTED";
-        private const string ValidatedValue = "VALIDATED";
-        private const string DeprecatedValue = "DEPRECATED";
-        private const string ObsoleteValue = "OBSOLETE";
-        private const string OtherValue = "OTHER";
+            _value = value;
+        }
 
         /// <summary> The status is discovered. </summary>
         public static AtlasTermAssignmentStatus Discovered { get; } = new AtlasTermAssignmentStatus(DiscoveredValue);
+
         /// <summary> The status is proposed. </summary>
         public static AtlasTermAssignmentStatus Proposed { get; } = new AtlasTermAssignmentStatus(ProposedValue);
+
         /// <summary> The status is imported. </summary>
         public static AtlasTermAssignmentStatus Imported { get; } = new AtlasTermAssignmentStatus(ImportedValue);
+
         /// <summary> The status is validated. </summary>
         public static AtlasTermAssignmentStatus Validated { get; } = new AtlasTermAssignmentStatus(ValidatedValue);
+
         /// <summary> The status is deprecated. </summary>
         public static AtlasTermAssignmentStatus Deprecated { get; } = new AtlasTermAssignmentStatus(DeprecatedValue);
+
         /// <summary> The status is obsolete. </summary>
         public static AtlasTermAssignmentStatus Obsolete { get; } = new AtlasTermAssignmentStatus(ObsoleteValue);
+
         /// <summary> Other status. </summary>
         public static AtlasTermAssignmentStatus Other { get; } = new AtlasTermAssignmentStatus(OtherValue);
+
         /// <summary> Determines if two <see cref="AtlasTermAssignmentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AtlasTermAssignmentStatus left, AtlasTermAssignmentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AtlasTermAssignmentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AtlasTermAssignmentStatus left, AtlasTermAssignmentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AtlasTermAssignmentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AtlasTermAssignmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AtlasTermAssignmentStatus(string value) => new AtlasTermAssignmentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AtlasTermAssignmentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AtlasTermAssignmentStatus?(string value) => value == null ? null : new AtlasTermAssignmentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AtlasTermAssignmentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AtlasTermAssignmentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

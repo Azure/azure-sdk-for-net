@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The result of the search result. </summary>
     public partial class QueryResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         internal QueryResult()
@@ -64,15 +35,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// the facet is returned as an element of @search.facets.
         /// </param>
         /// <param name="value"> Search result value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryResult(int? searchCount, bool? searchCountApproximate, string continuationToken, SearchFacetResultValue searchFacets, IReadOnlyList<SearchResultValue> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueryResult(int? searchCount, bool? searchCountApproximate, string continuationToken, SearchFacetResultValue searchFacets, IList<SearchResultValue> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchCount = searchCount;
             SearchCountApproximate = searchCountApproximate;
             ContinuationToken = continuationToken;
             SearchFacets = searchFacets;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -80,17 +51,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// page).
         /// </summary>
         public int? SearchCount { get; }
+
         /// <summary> 'True' if the '@search.count' is an approximate value and vise versa. </summary>
         public bool? SearchCountApproximate { get; }
+
         /// <summary> The token used to get next batch of data. Absent if there's no more data. </summary>
         public string ContinuationToken { get; }
+
         /// <summary>
         /// A facet list that consists of index fields assetType ,classification,
         /// contactId, and label. When the facet is specified in the request, the value of
         /// the facet is returned as an element of @search.facets.
         /// </summary>
         public SearchFacetResultValue SearchFacets { get; }
+
         /// <summary> Search result value. </summary>
-        public IReadOnlyList<SearchResultValue> Value { get; }
+        public IList<SearchResultValue> Value { get; }
     }
 }

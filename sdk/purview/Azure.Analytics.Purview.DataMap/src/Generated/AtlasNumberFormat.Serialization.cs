@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AtlasNumberFormat : IUtf8JsonSerializable, IJsonModel<AtlasNumberFormat>
+    /// <summary> The number format. </summary>
+    public partial class AtlasNumberFormat : IJsonModel<AtlasNumberFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasNumberFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasNumberFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +28,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(AvailableLocales))
             {
                 writer.WritePropertyName("availableLocales"u8);
                 writer.WriteStartArray();
-                foreach (var item in AvailableLocales)
+                foreach (string item in AvailableLocales)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -109,15 +113,15 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WritePropertyName("roundingMode"u8);
                 writer.WriteStringValue(RoundingMode.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,22 +130,27 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        AtlasNumberFormat IJsonModel<AtlasNumberFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasNumberFormat IJsonModel<AtlasNumberFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasNumberFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAtlasNumberFormat(document.RootElement, options);
         }
 
-        internal static AtlasNumberFormat DeserializeAtlasNumberFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AtlasNumberFormat DeserializeAtlasNumberFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,143 +169,148 @@ namespace Azure.Analytics.Purview.DataMap
             bool? parseIntegerOnly = default;
             AtlasNumberFormat percentInstance = default;
             RoundingMode? roundingMode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("availableLocales"u8))
+                if (prop.NameEquals("availableLocales"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     availableLocales = array;
                     continue;
                 }
-                if (property.NameEquals("currency"u8))
+                if (prop.NameEquals("currency"u8))
                 {
-                    currency = property.Value.GetString();
+                    currency = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currencyInstance"u8))
+                if (prop.NameEquals("currencyInstance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currencyInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    currencyInstance = DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("groupingUsed"u8))
+                if (prop.NameEquals("groupingUsed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupingUsed = property.Value.GetBoolean();
+                    groupingUsed = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("instance"u8))
+                if (prop.NameEquals("instance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasNumberFormat(property.Value, options);
+                    instance = DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("integerInstance"u8))
+                if (prop.NameEquals("integerInstance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    integerInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    integerInstance = DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("maximumFractionDigits"u8))
+                if (prop.NameEquals("maximumFractionDigits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumFractionDigits = property.Value.GetInt32();
+                    maximumFractionDigits = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximumIntegerDigits"u8))
+                if (prop.NameEquals("maximumIntegerDigits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumIntegerDigits = property.Value.GetInt32();
+                    maximumIntegerDigits = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minimumFractionDigits"u8))
+                if (prop.NameEquals("minimumFractionDigits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimumFractionDigits = property.Value.GetInt32();
+                    minimumFractionDigits = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minimumIntegerDigits"u8))
+                if (prop.NameEquals("minimumIntegerDigits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimumIntegerDigits = property.Value.GetInt32();
+                    minimumIntegerDigits = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberInstance"u8))
+                if (prop.NameEquals("numberInstance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    numberInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    numberInstance = DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("parseIntegerOnly"u8))
+                if (prop.NameEquals("parseIntegerOnly"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parseIntegerOnly = property.Value.GetBoolean();
+                    parseIntegerOnly = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("percentInstance"u8))
+                if (prop.NameEquals("percentInstance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    percentInstance = DeserializeAtlasNumberFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("roundingMode"u8))
+                if (prop.NameEquals("roundingMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    roundingMode = new RoundingMode(property.Value.GetString());
+                    roundingMode = new RoundingMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AtlasNumberFormat(
                 availableLocales ?? new ChangeTrackingList<string>(),
                 currency,
@@ -312,13 +326,16 @@ namespace Azure.Analytics.Purview.DataMap
                 parseIntegerOnly,
                 percentInstance,
                 roundingMode,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AtlasNumberFormat>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasNumberFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -328,15 +345,20 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        AtlasNumberFormat IPersistableModel<AtlasNumberFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasNumberFormat IPersistableModel<AtlasNumberFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasNumberFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAtlasNumberFormat(document.RootElement, options);
                     }
                 default:
@@ -344,22 +366,7 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasNumberFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AtlasNumberFormat FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasNumberFormat(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

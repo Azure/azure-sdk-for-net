@@ -14,41 +14,62 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct RelationshipCategory : IEquatable<RelationshipCategory>
     {
         private readonly string _value;
+        /// <summary> association. </summary>
+        private const string AssociationValue = "ASSOCIATION";
+        /// <summary> aggregation. </summary>
+        private const string AggregationValue = "AGGREGATION";
+        /// <summary> composition. </summary>
+        private const string CompositionValue = "COMPOSITION";
 
         /// <summary> Initializes a new instance of <see cref="RelationshipCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RelationshipCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AssociationValue = "ASSOCIATION";
-        private const string AggregationValue = "AGGREGATION";
-        private const string CompositionValue = "COMPOSITION";
+            _value = value;
+        }
 
         /// <summary> association. </summary>
         public static RelationshipCategory Association { get; } = new RelationshipCategory(AssociationValue);
+
         /// <summary> aggregation. </summary>
         public static RelationshipCategory Aggregation { get; } = new RelationshipCategory(AggregationValue);
+
         /// <summary> composition. </summary>
         public static RelationshipCategory Composition { get; } = new RelationshipCategory(CompositionValue);
+
         /// <summary> Determines if two <see cref="RelationshipCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RelationshipCategory left, RelationshipCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RelationshipCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RelationshipCategory left, RelationshipCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RelationshipCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RelationshipCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RelationshipCategory(string value) => new RelationshipCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RelationshipCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RelationshipCategory?(string value) => value == null ? null : new RelationshipCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RelationshipCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RelationshipCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

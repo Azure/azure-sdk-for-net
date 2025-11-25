@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AtlasRelationshipAttributeDef : IUtf8JsonSerializable, IJsonModel<AtlasRelationshipAttributeDef>
+    /// <summary>
+    /// The relationshipEndDef represents an end of the relationship. The end of the
+    /// relationship is defined by a type, an
+    /// attribute name, cardinality and whether
+    /// it  is the container end of the relationship.
+    /// </summary>
+    public partial class AtlasRelationshipAttributeDef : IJsonModel<AtlasRelationshipAttributeDef>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasRelationshipAttributeDef>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AtlasRelationshipAttributeDef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasRelationshipAttributeDef)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Cardinality))
             {
                 writer.WritePropertyName("cardinality"u8);
@@ -43,7 +47,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 writer.WritePropertyName("constraints"u8);
                 writer.WriteStartArray();
-                foreach (var item in Constraints)
+                foreach (AtlasConstraintDef item in Constraints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -91,6 +95,11 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in Options)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -120,15 +129,15 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WritePropertyName("relationshipTypeName"u8);
                 writer.WriteStringValue(RelationshipTypeName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -137,22 +146,27 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        AtlasRelationshipAttributeDef IJsonModel<AtlasRelationshipAttributeDef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasRelationshipAttributeDef IJsonModel<AtlasRelationshipAttributeDef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasRelationshipAttributeDef JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AtlasRelationshipAttributeDef)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAtlasRelationshipAttributeDef(document.RootElement, options);
         }
 
-        internal static AtlasRelationshipAttributeDef DeserializeAtlasRelationshipAttributeDef(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AtlasRelationshipAttributeDef DeserializeAtlasRelationshipAttributeDef(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,141 +186,146 @@ namespace Azure.Analytics.Purview.DataMap
             int? valuesMinCount = default;
             bool? isLegacyAttribute = default;
             string relationshipTypeName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cardinality"u8))
+                if (prop.NameEquals("cardinality"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cardinality = new CardinalityValue(property.Value.GetString());
+                    cardinality = new CardinalityValue(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("constraints"u8))
+                if (prop.NameEquals("constraints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AtlasConstraintDef> array = new List<AtlasConstraintDef>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AtlasConstraintDef.DeserializeAtlasConstraintDef(item, options));
                     }
                     constraints = array;
                     continue;
                 }
-                if (property.NameEquals("defaultValue"u8))
+                if (prop.NameEquals("defaultValue"u8))
                 {
-                    defaultValue = property.Value.GetString();
+                    defaultValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includeInNotification"u8))
+                if (prop.NameEquals("includeInNotification"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeInNotification = property.Value.GetBoolean();
+                    includeInNotification = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isIndexable"u8))
+                if (prop.NameEquals("isIndexable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isIndexable = property.Value.GetBoolean();
+                    isIndexable = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOptional"u8))
+                if (prop.NameEquals("isOptional"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOptional = property.Value.GetBoolean();
+                    isOptional = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isUnique"u8))
+                if (prop.NameEquals("isUnique"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isUnique = property.Value.GetBoolean();
+                    isUnique = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("options"u8))
+                if (prop.NameEquals("options"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     options0 = dictionary;
                     continue;
                 }
-                if (property.NameEquals("typeName"u8))
+                if (prop.NameEquals("typeName"u8))
                 {
-                    typeName = property.Value.GetString();
+                    typeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valuesMaxCount"u8))
+                if (prop.NameEquals("valuesMaxCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valuesMaxCount = property.Value.GetInt32();
+                    valuesMaxCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("valuesMinCount"u8))
+                if (prop.NameEquals("valuesMinCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valuesMinCount = property.Value.GetInt32();
+                    valuesMinCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isLegacyAttribute"u8))
+                if (prop.NameEquals("isLegacyAttribute"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLegacyAttribute = property.Value.GetBoolean();
+                    isLegacyAttribute = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("relationshipTypeName"u8))
+                if (prop.NameEquals("relationshipTypeName"u8))
                 {
-                    relationshipTypeName = property.Value.GetString();
+                    relationshipTypeName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AtlasRelationshipAttributeDef(
                 cardinality,
                 constraints ?? new ChangeTrackingList<AtlasConstraintDef>(),
@@ -323,13 +342,16 @@ namespace Azure.Analytics.Purview.DataMap
                 valuesMinCount,
                 isLegacyAttribute,
                 relationshipTypeName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AtlasRelationshipAttributeDef>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasRelationshipAttributeDef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -339,15 +361,20 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        AtlasRelationshipAttributeDef IPersistableModel<AtlasRelationshipAttributeDef>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasRelationshipAttributeDef IPersistableModel<AtlasRelationshipAttributeDef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AtlasRelationshipAttributeDef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasRelationshipAttributeDef>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAtlasRelationshipAttributeDef(document.RootElement, options);
                     }
                 default:
@@ -355,22 +382,7 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AtlasRelationshipAttributeDef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AtlasRelationshipAttributeDef FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAtlasRelationshipAttributeDef(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

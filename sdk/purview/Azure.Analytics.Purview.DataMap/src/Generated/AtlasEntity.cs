@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
     public partial class AtlasEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasEntity"/>. </summary>
         public AtlasEntity()
@@ -84,8 +56,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="updatedBy"> The user who updated the record. </param>
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, EntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasEntity(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IDictionary<string, BinaryData> businessAttributes, IList<AtlasClassification> classifications, long? createTime, string createdBy, IDictionary<string, string> customAttributes, string guid, string homeId, string collectionId, bool? isIncomplete, IList<string> labels, IList<AtlasTermAssignmentHeader> meanings, int? provenanceType, bool? proxy, IDictionary<string, BinaryData> relationshipAttributes, EntityStatus? status, long? updateTime, string updatedBy, long? version, IDictionary<string, IList<ContactInfo>> contacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -109,141 +81,150 @@ namespace Azure.Analytics.Purview.DataMap
             UpdatedBy = updatedBy;
             Version = version;
             Contacts = contacts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// The attributes of the struct.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Attributes { get; }
+
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }
+
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
+
         /// <summary>
         /// Business attributes
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> BusinessAttributes { get; }
+
         /// <summary> An array of classifications. </summary>
         public IList<AtlasClassification> Classifications { get; }
+
         /// <summary> The created time of the record. </summary>
         public long? CreateTime { get; set; }
+
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
+
         /// <summary> Custom Attribute. </summary>
         public IDictionary<string, string> CustomAttributes { get; }
+
         /// <summary> The GUID of the entity. </summary>
         public string Guid { get; set; }
+
         /// <summary> The home ID of the entity. </summary>
         public string HomeId { get; set; }
+
         /// <summary> The collection ID of the entity. </summary>
         public string CollectionId { get; }
+
         /// <summary> Whether it is a shell entity. </summary>
         public bool? IsIncomplete { get; set; }
+
         /// <summary> labels. </summary>
         public IList<string> Labels { get; }
+
         /// <summary> An array of term assignment headers indicating the meanings of the entity. </summary>
         public IList<AtlasTermAssignmentHeader> Meanings { get; }
+
         /// <summary> Used to record the provenance of an instance of an entity or relationship. </summary>
         public int? ProvenanceType { get; set; }
+
         /// <summary> Determines if there's a proxy. </summary>
         public bool? Proxy { get; set; }
+
         /// <summary>
         /// The attributes of relationship.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> RelationshipAttributes { get; }
+
         /// <summary>
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </summary>
         public EntityStatus? Status { get; set; }
+
         /// <summary> The update time of the record. </summary>
         public long? UpdateTime { get; set; }
+
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
+
         /// <summary> The version of the entity. </summary>
         public long? Version { get; set; }
+
         /// <summary> The dictionary of contacts for entities. Key could be Expert or Owner. </summary>
         public IDictionary<string, IList<ContactInfo>> Contacts { get; }
     }

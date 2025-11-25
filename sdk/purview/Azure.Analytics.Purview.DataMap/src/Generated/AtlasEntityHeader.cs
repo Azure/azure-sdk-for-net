@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
     public partial class AtlasEntityHeader
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasEntityHeader"/>. </summary>
         public AtlasEntityHeader()
@@ -72,8 +44,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityHeader(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IList<string> classificationNames, IList<AtlasClassification> classifications, string displayText, string guid, bool? isIncomplete, IList<string> labels, IList<string> meaningNames, IList<AtlasTermAssignmentHeader> meanings, EntityStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasEntityHeader(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, IList<string> classificationNames, IList<AtlasClassification> classifications, string displayText, string guid, bool? isIncomplete, IList<string> labels, IList<string> meaningNames, IList<AtlasTermAssignmentHeader> meanings, EntityStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -87,60 +59,67 @@ namespace Azure.Analytics.Purview.DataMap
             MeaningNames = meaningNames;
             Meanings = meanings;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// The attributes of the struct.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Attributes { get; }
+
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }
+
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
+
         /// <summary> An array of classification names. </summary>
         public IList<string> ClassificationNames { get; }
+
         /// <summary> An array of classifications. </summary>
         public IList<AtlasClassification> Classifications { get; }
+
         /// <summary> The display text. </summary>
         public string DisplayText { get; set; }
+
         /// <summary> The GUID of the record. </summary>
         public string Guid { get; set; }
+
         /// <summary> Whether it is a shell entity. </summary>
         public bool? IsIncomplete { get; set; }
+
         /// <summary> labels. </summary>
         public IList<string> Labels { get; }
+
         /// <summary> An array of meanings. </summary>
         public IList<string> MeaningNames { get; }
+
         /// <summary> An array of term assignment headers. </summary>
         public IList<AtlasTermAssignmentHeader> Meanings { get; }
+
         /// <summary>
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.

@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> class that captures details of an enum-type. </summary>
     public partial class AtlasEnumDef
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasEnumDef"/>. </summary>
         public AtlasEnumDef()
@@ -69,8 +40,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
         /// <param name="defaultValue"> The default value. </param>
         /// <param name="elementDefs"> An array of enum element definitions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEnumDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, string defaultValue, IList<AtlasEnumElementDef> elementDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasEnumDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, string defaultValue, IList<AtlasEnumElementDef> elementDefs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             CreateTime = createTime;
@@ -88,39 +59,54 @@ namespace Azure.Analytics.Purview.DataMap
             LastModifiedTS = lastModifiedTS;
             DefaultValue = defaultValue;
             ElementDefs = elementDefs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The enum of type category. </summary>
         public TypeCategory? Category { get; set; }
+
         /// <summary> The created time of the record. </summary>
         public long? CreateTime { get; set; }
+
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
+
         /// <summary> The date format. </summary>
         public AtlasDateFormat DateFormatter { get; set; }
+
         /// <summary> The description of the type definition. </summary>
         public string Description { get; set; }
+
         /// <summary> The GUID of the type definition. </summary>
         public string Guid { get; set; }
+
         /// <summary> The name of the type definition. </summary>
         public string Name { get; set; }
+
         /// <summary> The options for the type definition. </summary>
         public IDictionary<string, string> Options { get; }
+
         /// <summary> The service type. </summary>
         public string ServiceType { get; set; }
+
         /// <summary> The version of the type. </summary>
         public string TypeVersion { get; set; }
+
         /// <summary> The update time of the record. </summary>
         public long? UpdateTime { get; set; }
+
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
+
         /// <summary> The version of the record. </summary>
         public long? Version { get; set; }
+
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
+
         /// <summary> The default value. </summary>
         public string DefaultValue { get; set; }
+
         /// <summary> An array of enum element definitions. </summary>
         public IList<AtlasEnumElementDef> ElementDefs { get; }
     }

@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The mutation response result of entity. </summary>
     public partial class EntityMutationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntityMutationResult"/>. </summary>
         internal EntityMutationResult()
@@ -57,20 +28,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guidAssignments"> A map of GUID assignments with entities. </param>
         /// <param name="mutatedEntities"> The entity headers of mutated entities. </param>
         /// <param name="partialUpdatedEntities"> An array of entity headers that partially updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityMutationResult(IReadOnlyDictionary<string, string> guidAssignments, IReadOnlyDictionary<string, IList<AtlasEntityHeader>> mutatedEntities, IReadOnlyList<AtlasEntityHeader> partialUpdatedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EntityMutationResult(IDictionary<string, string> guidAssignments, IDictionary<string, IList<AtlasEntityHeader>> mutatedEntities, IList<AtlasEntityHeader> partialUpdatedEntities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GuidAssignments = guidAssignments;
             MutatedEntities = mutatedEntities;
             PartialUpdatedEntities = partialUpdatedEntities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A map of GUID assignments with entities. </summary>
-        public IReadOnlyDictionary<string, string> GuidAssignments { get; }
+        public IDictionary<string, string> GuidAssignments { get; }
+
         /// <summary> The entity headers of mutated entities. </summary>
-        public IReadOnlyDictionary<string, IList<AtlasEntityHeader>> MutatedEntities { get; }
+        public IDictionary<string, IList<AtlasEntityHeader>> MutatedEntities { get; }
+
         /// <summary> An array of entity headers that partially updated. </summary>
-        public IReadOnlyList<AtlasEntityHeader> PartialUpdatedEntities { get; }
+        public IList<AtlasEntityHeader> PartialUpdatedEntities { get; }
     }
 }

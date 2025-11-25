@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The extended information of glossary. </summary>
     public partial class AtlasGlossaryExtInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasGlossaryExtInfo"/>. </summary>
         internal AtlasGlossaryExtInfo()
@@ -73,8 +44,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="categoryInfo"> The glossary category information. </param>
         /// <param name="termInfo"> The glossary term information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossaryExtInfo(string guid, IReadOnlyList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IReadOnlyList<AtlasRelatedCategoryHeader> categories, string language, IReadOnlyList<AtlasRelatedTermHeader> terms, string usage, IReadOnlyDictionary<string, AtlasGlossaryCategory> categoryInfo, IReadOnlyDictionary<string, AtlasGlossaryTerm> termInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasGlossaryExtInfo(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IList<AtlasRelatedCategoryHeader> categories, string language, IList<AtlasRelatedTermHeader> terms, string usage, IDictionary<string, AtlasGlossaryCategory> categoryInfo, IDictionary<string, AtlasGlossaryTerm> termInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             Classifications = classifications;
@@ -93,42 +64,58 @@ namespace Azure.Analytics.Purview.DataMap
             Usage = usage;
             CategoryInfo = categoryInfo;
             TermInfo = termInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The GUID of the object. </summary>
         public string Guid { get; }
+
         /// <summary> An array of classifications. </summary>
-        public IReadOnlyList<AtlasClassification> Classifications { get; }
+        public IList<AtlasClassification> Classifications { get; }
+
         /// <summary> The long version description. </summary>
         public string LongDescription { get; }
+
         /// <summary> The name of the glossary object. </summary>
         public string Name { get; }
+
         /// <summary> The qualified name of the glossary object. </summary>
         public string QualifiedName { get; }
+
         /// <summary> The short version of description. </summary>
         public string ShortDescription { get; }
+
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; }
+
         /// <summary> The created time of the record. </summary>
         public long? CreateTime { get; }
+
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; }
+
         /// <summary> The update time of the record. </summary>
         public long? UpdateTime { get; }
+
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; }
+
         /// <summary> An array of categories. </summary>
-        public IReadOnlyList<AtlasRelatedCategoryHeader> Categories { get; }
+        public IList<AtlasRelatedCategoryHeader> Categories { get; }
+
         /// <summary> The language of the glossary. </summary>
         public string Language { get; }
+
         /// <summary> An array of related term headers. </summary>
-        public IReadOnlyList<AtlasRelatedTermHeader> Terms { get; }
+        public IList<AtlasRelatedTermHeader> Terms { get; }
+
         /// <summary> The usage of the glossary. </summary>
         public string Usage { get; }
+
         /// <summary> The glossary category information. </summary>
-        public IReadOnlyDictionary<string, AtlasGlossaryCategory> CategoryInfo { get; }
+        public IDictionary<string, AtlasGlossaryCategory> CategoryInfo { get; }
+
         /// <summary> The glossary term information. </summary>
-        public IReadOnlyDictionary<string, AtlasGlossaryTerm> TermInfo { get; }
+        public IDictionary<string, AtlasGlossaryTerm> TermInfo { get; }
     }
 }

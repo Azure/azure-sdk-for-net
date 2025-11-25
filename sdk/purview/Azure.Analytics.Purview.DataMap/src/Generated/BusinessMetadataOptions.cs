@@ -7,70 +7,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Business metadata to send to the service. </summary>
     public partial class BusinessMetadataOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <param name="file"> InputStream of file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        public BusinessMetadataOptions(BinaryData @file)
+        {
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            File = @file;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <param name="file"> InputStream of file. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BusinessMetadataOptions(BinaryData @file, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            File = @file;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary>
-        /// Keeps track of any properties unknown to the library.
+        /// InputStream of file
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
-        /// <param name="file"> InputStream of file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public BusinessMetadataOptions(Stream file)
-        {
-            Argument.AssertNotNull(file, nameof(file));
-
-            File = file;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
-        /// <param name="file"> InputStream of file. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BusinessMetadataOptions(Stream file, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            File = file;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/> for deserialization. </summary>
-        internal BusinessMetadataOptions()
-        {
-        }
-
-        /// <summary> InputStream of file. </summary>
-        public Stream File { get; }
+        public BinaryData File { get; }
     }
 }

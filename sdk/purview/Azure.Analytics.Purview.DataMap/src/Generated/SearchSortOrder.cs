@@ -14,38 +14,57 @@ namespace Azure.Analytics.Purview.DataMap
     public readonly partial struct SearchSortOrder : IEquatable<SearchSortOrder>
     {
         private readonly string _value;
+        /// <summary> Use ascending order for sorting. </summary>
+        private const string AscendValue = "asc";
+        /// <summary> Use descending order for sorting. </summary>
+        private const string DescendValue = "desc";
 
         /// <summary> Initializes a new instance of <see cref="SearchSortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchSortOrder(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AscendValue = "asc";
-        private const string DescendValue = "desc";
+            _value = value;
+        }
 
         /// <summary> Use ascending order for sorting. </summary>
         public static SearchSortOrder Ascend { get; } = new SearchSortOrder(AscendValue);
+
         /// <summary> Use descending order for sorting. </summary>
         public static SearchSortOrder Descend { get; } = new SearchSortOrder(DescendValue);
+
         /// <summary> Determines if two <see cref="SearchSortOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchSortOrder left, SearchSortOrder right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchSortOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchSortOrder left, SearchSortOrder right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchSortOrder"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchSortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchSortOrder(string value) => new SearchSortOrder(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchSortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchSortOrder?(string value) => value == null ? null : new SearchSortOrder(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchSortOrder other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchSortOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

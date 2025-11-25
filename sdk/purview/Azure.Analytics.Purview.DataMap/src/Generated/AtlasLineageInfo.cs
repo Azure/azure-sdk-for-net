@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The lineage information. </summary>
     public partial class AtlasLineageInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasLineageInfo"/>. </summary>
         internal AtlasLineageInfo()
@@ -64,8 +36,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="lineageDirection"> The enum of lineage direction. </param>
         /// <param name="parentRelations"> An array of parentRelations relations. </param>
         /// <param name="relations"> An array of lineage relations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasLineageInfo(string baseEntityGuid, IReadOnlyDictionary<string, AtlasEntityHeader> guidEntityMap, IReadOnlyDictionary<string, IDictionary<string, BinaryData>> widthCounts, int? lineageDepth, int? lineageWidth, int? childrenCount, LineageDirection? lineageDirection, IReadOnlyList<ParentRelation> parentRelations, IReadOnlyList<LineageRelation> relations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasLineageInfo(string baseEntityGuid, IDictionary<string, AtlasEntityHeader> guidEntityMap, IDictionary<string, IDictionary<string, BinaryData>> widthCounts, int? lineageDepth, int? lineageWidth, int? childrenCount, LineageDirection? lineageDirection, IList<ParentRelation> parentRelations, IList<LineageRelation> relations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseEntityGuid = baseEntityGuid;
             GuidEntityMap = guidEntityMap;
@@ -76,55 +48,59 @@ namespace Azure.Analytics.Purview.DataMap
             LineageDirection = lineageDirection;
             ParentRelations = parentRelations;
             Relations = relations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The GUID of the base entity. </summary>
         public string BaseEntityGuid { get; }
+
         /// <summary> The GUID entity map. </summary>
-        public IReadOnlyDictionary<string, AtlasEntityHeader> GuidEntityMap { get; }
+        public IDictionary<string, AtlasEntityHeader> GuidEntityMap { get; }
+
         /// <summary>
         /// The entity count in specific direction.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, IDictionary<string, BinaryData>> WidthCounts { get; }
+        public IDictionary<string, IDictionary<string, BinaryData>> WidthCounts { get; }
+
         /// <summary> The depth of lineage. </summary>
         public int? LineageDepth { get; }
+
         /// <summary> The width of lineage. </summary>
         public int? LineageWidth { get; }
+
         /// <summary> The number of children node. </summary>
         public int? ChildrenCount { get; }
+
         /// <summary> The enum of lineage direction. </summary>
         public LineageDirection? LineageDirection { get; }
+
         /// <summary> An array of parentRelations relations. </summary>
-        public IReadOnlyList<ParentRelation> ParentRelations { get; }
+        public IList<ParentRelation> ParentRelations { get; }
+
         /// <summary> An array of lineage relations. </summary>
-        public IReadOnlyList<LineageRelation> Relations { get; }
+        public IList<LineageRelation> Relations { get; }
     }
 }

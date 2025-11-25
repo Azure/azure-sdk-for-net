@@ -17,37 +17,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// </summary>
     public partial class SearchFacetResultValue
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchFacetResultValue"/>. </summary>
         internal SearchFacetResultValue()
@@ -75,8 +46,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="glossaryType"> Glossary type. </param>
         /// <param name="termStatus"> Term status. </param>
         /// <param name="termTemplate"> Term template. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchFacetResultValue(IReadOnlyList<SearchFacetItemValue> entityType, IReadOnlyList<SearchFacetItemValue> assetType, IReadOnlyList<SearchFacetItemValue> classification, IReadOnlyList<SearchFacetItemValue> term, IReadOnlyList<SearchFacetItemValue> contactId, IReadOnlyList<SearchFacetItemValue> contactType, IReadOnlyList<SearchFacetItemValue> label, IReadOnlyList<SearchFacetItemValue> glossaryType, IReadOnlyList<SearchFacetItemValue> termStatus, IReadOnlyList<SearchFacetItemValue> termTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchFacetResultValue(IList<SearchFacetItemValue> entityType, IList<SearchFacetItemValue> assetType, IList<SearchFacetItemValue> classification, IList<SearchFacetItemValue> term, IList<SearchFacetItemValue> contactId, IList<SearchFacetItemValue> contactType, IList<SearchFacetItemValue> label, IList<SearchFacetItemValue> glossaryType, IList<SearchFacetItemValue> termStatus, IList<SearchFacetItemValue> termTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityType = entityType;
             AssetType = assetType;
@@ -88,28 +59,37 @@ namespace Azure.Analytics.Purview.DataMap
             GlossaryType = glossaryType;
             TermStatus = termStatus;
             TermTemplate = termTemplate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Entity type. </summary>
-        public IReadOnlyList<SearchFacetItemValue> EntityType { get; }
+        public IList<SearchFacetItemValue> EntityType { get; }
+
         /// <summary> Asset type. </summary>
-        public IReadOnlyList<SearchFacetItemValue> AssetType { get; }
+        public IList<SearchFacetItemValue> AssetType { get; }
+
         /// <summary> Classification. </summary>
-        public IReadOnlyList<SearchFacetItemValue> Classification { get; }
+        public IList<SearchFacetItemValue> Classification { get; }
+
         /// <summary> Term. </summary>
-        public IReadOnlyList<SearchFacetItemValue> Term { get; }
+        public IList<SearchFacetItemValue> Term { get; }
+
         /// <summary> Contact id. </summary>
-        public IReadOnlyList<SearchFacetItemValue> ContactId { get; }
+        public IList<SearchFacetItemValue> ContactId { get; }
+
         /// <summary> Contact type. </summary>
-        public IReadOnlyList<SearchFacetItemValue> ContactType { get; }
+        public IList<SearchFacetItemValue> ContactType { get; }
+
         /// <summary> Label. </summary>
-        public IReadOnlyList<SearchFacetItemValue> Label { get; }
+        public IList<SearchFacetItemValue> Label { get; }
+
         /// <summary> Glossary type. </summary>
-        public IReadOnlyList<SearchFacetItemValue> GlossaryType { get; }
+        public IList<SearchFacetItemValue> GlossaryType { get; }
+
         /// <summary> Term status. </summary>
-        public IReadOnlyList<SearchFacetItemValue> TermStatus { get; }
+        public IList<SearchFacetItemValue> TermStatus { get; }
+
         /// <summary> Term template. </summary>
-        public IReadOnlyList<SearchFacetItemValue> TermTemplate { get; }
+        public IList<SearchFacetItemValue> TermTemplate { get; }
     }
 }

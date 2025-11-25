@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The header for term assignment. </summary>
     public partial class AtlasTermAssignmentHeader
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasTermAssignmentHeader"/>. </summary>
         public AtlasTermAssignmentHeader()
@@ -60,8 +31,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="status"> The status of terms assignment. </param>
         /// <param name="steward"> The steward of the term. </param>
         /// <param name="termGuid"> The GUID of the term. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTermAssignmentHeader(int? confidence, string createdBy, string description, string displayText, string expression, Guid? relationGuid, AtlasTermAssignmentStatus? status, string steward, Guid? termGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasTermAssignmentHeader(int? confidence, string createdBy, string description, string displayText, string expression, Guid? relationGuid, AtlasTermAssignmentStatus? status, string steward, Guid? termGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Confidence = confidence;
             CreatedBy = createdBy;
@@ -72,25 +43,33 @@ namespace Azure.Analytics.Purview.DataMap
             Status = status;
             Steward = steward;
             TermGuid = termGuid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The confidence of the term assignment. </summary>
         public int? Confidence { get; set; }
+
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
+
         /// <summary> The description of the term assignment. </summary>
         public string Description { get; set; }
+
         /// <summary> The display text. </summary>
         public string DisplayText { get; set; }
+
         /// <summary> The expression of the term assignment. </summary>
         public string Expression { get; set; }
+
         /// <summary> The GUID of the relationship. </summary>
         public Guid? RelationGuid { get; set; }
+
         /// <summary> The status of terms assignment. </summary>
         public AtlasTermAssignmentStatus? Status { get; set; }
+
         /// <summary> The steward of the term. </summary>
         public string Steward { get; set; }
+
         /// <summary> The GUID of the term. </summary>
         public Guid? TermGuid { get; set; }
     }

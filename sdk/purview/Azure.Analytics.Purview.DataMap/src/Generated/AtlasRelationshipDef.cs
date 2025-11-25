@@ -21,9 +21,9 @@ namespace Azure.Analytics.Purview.DataMap
     /// whether the
     /// end is a container.
     /// RelationshipDefs can have AttributeDefs - though only
-    /// primitive types are allowed.
+    /// primitive types are allowed. 
     /// RelationshipDefs have a relationshipCategory
-    /// specifying the UML type of relationship required
+    /// specifying the UML type of relationship required 
     /// The way EntityDefs and
     /// RelationshipDefs are intended to be used is that EntityDefs will define
     /// AttributeDefs these AttributeDefs
@@ -32,19 +32,19 @@ namespace Azure.Analytics.Purview.DataMap
     /// RelationshipDefs introduce new attributes to the entity
     /// instances. For example
     /// EntityDef A might have attributes attr1,attr2,attr3
-    ///
-    /// EntityDef B might have attributes attr4,attr5,attr6
+    /// 
+    /// EntityDef B might have attributes attr4,attr5,attr6 
     /// RelationshipDef
-    /// AtoB might define 2 ends
-    ///
+    /// AtoB might define 2 ends 
+    /// 
     /// end1:  type A, name attr7
-    /// end2:  type B, name attr8
-    ///
+    /// end2:  type B, name attr8 
+    /// 
     /// When an instance of EntityDef A is created, it
-    /// will have attributes attr1,attr2,attr3,attr7
+    /// will have attributes attr1,attr2,attr3,attr7 
     /// When an instance of EntityDef
     /// B is created, it will have attributes attr4,attr5,attr6,attr8
-    ///
+    /// 
     /// In this way
     /// relationshipDefs can be authored separately from entityDefs and can inject
     /// relationship attributes into
@@ -52,37 +52,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// </summary>
     public partial class AtlasRelationshipDef
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasRelationshipDef"/>. </summary>
         public AtlasRelationshipDef()
@@ -123,15 +94,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// The Relationship category determines the style of relationship around
         /// containment and lifecycle.
         /// UML terminology is used for the values.
-        /// ASSOCIATION is a relationship with no containment.
+        /// ASSOCIATION is a relationship with no containment. 
         /// COMPOSITION and AGGREGATION are containment relationships.
-        /// The difference being in the lifecycles of the container and its children.
+        /// The difference being in the lifecycles of the container and its children. 
         /// In the COMPOSITION case, the children cannot exist without the container.
         /// For AGGREGATION, the life cycles of the container and children are totally independent.
         /// </param>
         /// <param name="relationshipLabel"> The label of the relationship. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationshipDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, AtlasRelationshipEndDef endDef1, AtlasRelationshipEndDef endDef2, RelationshipCategory? relationshipCategory, string relationshipLabel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasRelationshipDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, AtlasRelationshipEndDef endDef1, AtlasRelationshipEndDef endDef2, RelationshipCategory? relationshipCategory, string relationshipLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             CreateTime = createTime;
@@ -152,39 +123,54 @@ namespace Azure.Analytics.Purview.DataMap
             EndDef2 = endDef2;
             RelationshipCategory = relationshipCategory;
             RelationshipLabel = relationshipLabel;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The enum of type category. </summary>
         public TypeCategory? Category { get; set; }
+
         /// <summary> The created time of the record. </summary>
         public long? CreateTime { get; set; }
+
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
+
         /// <summary> The date format. </summary>
         public AtlasDateFormat DateFormatter { get; set; }
+
         /// <summary> The description of the type definition. </summary>
         public string Description { get; set; }
+
         /// <summary> The GUID of the type definition. </summary>
         public string Guid { get; set; }
+
         /// <summary> The name of the type definition. </summary>
         public string Name { get; set; }
+
         /// <summary> The options for the type definition. </summary>
         public IDictionary<string, string> Options { get; }
+
         /// <summary> The service type. </summary>
         public string ServiceType { get; set; }
+
         /// <summary> The version of the type. </summary>
         public string TypeVersion { get; set; }
+
         /// <summary> The update time of the record. </summary>
         public long? UpdateTime { get; set; }
+
         /// <summary> The user who updated the record. </summary>
         public string UpdatedBy { get; set; }
+
         /// <summary> The version of the record. </summary>
         public long? Version { get; set; }
+
         /// <summary> ETag for concurrency control. </summary>
         public string LastModifiedTS { get; set; }
+
         /// <summary> An array of attribute definitions. </summary>
         public IList<AtlasAttributeDef> AttributeDefs { get; }
+
         /// <summary>
         /// The relationshipEndDef represents an end of the relationship. The end of the
         /// relationship is defined by a type, an
@@ -192,6 +178,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// it  is the container end of the relationship.
         /// </summary>
         public AtlasRelationshipEndDef EndDef1 { get; set; }
+
         /// <summary>
         /// The relationshipEndDef represents an end of the relationship. The end of the
         /// relationship is defined by a type, an
@@ -199,17 +186,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// it  is the container end of the relationship.
         /// </summary>
         public AtlasRelationshipEndDef EndDef2 { get; set; }
+
         /// <summary>
         /// The Relationship category determines the style of relationship around
         /// containment and lifecycle.
         /// UML terminology is used for the values.
-        /// ASSOCIATION is a relationship with no containment.
+        /// ASSOCIATION is a relationship with no containment. 
         /// COMPOSITION and AGGREGATION are containment relationships.
-        /// The difference being in the lifecycles of the container and its children.
+        /// The difference being in the lifecycles of the container and its children. 
         /// In the COMPOSITION case, the children cannot exist without the container.
         /// For AGGREGATION, the life cycles of the container and children are totally independent.
         /// </summary>
         public RelationshipCategory? RelationshipCategory { get; set; }
+
         /// <summary> The label of the relationship. </summary>
         public string RelationshipLabel { get; set; }
     }

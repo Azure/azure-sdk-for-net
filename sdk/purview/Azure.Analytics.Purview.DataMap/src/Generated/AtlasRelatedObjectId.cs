@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Analytics.Purview.DataMap
 {
@@ -16,37 +17,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// </summary>
     public partial class AtlasRelatedObjectId
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasRelatedObjectId"/>. </summary>
         public AtlasRelatedObjectId()
@@ -70,8 +42,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="relationshipGuid"> The GUID of the relationship. </param>
         /// <param name="relationshipStatus"> The enum of relationship status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelatedObjectId(string guid, string typeName, IDictionary<string, BinaryData> uniqueAttributes, string displayText, EntityStatus? entityStatus, string relationshipType, AtlasStruct relationshipAttributes, Guid? relationshipGuid, StatusAtlasRelationship? relationshipStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasRelatedObjectId(string guid, string typeName, IDictionary<string, BinaryData> uniqueAttributes, string displayText, EntityStatus? entityStatus, string relationshipType, AtlasStruct relationshipAttributes, Guid? relationshipGuid, StatusAtlasRelationship? relationshipStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Guid = guid;
             TypeName = typeName;
@@ -82,60 +54,64 @@ namespace Azure.Analytics.Purview.DataMap
             RelationshipAttributes = relationshipAttributes;
             RelationshipGuid = relationshipGuid;
             RelationshipStatus = relationshipStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The GUID of the object. </summary>
         public string Guid { get; set; }
+
         /// <summary> The name of the type. </summary>
         public string TypeName { get; set; }
+
         /// <summary>
         /// The unique attributes of the object.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> UniqueAttributes { get; }
+
         /// <summary> The display text. </summary>
         public string DisplayText { get; set; }
+
         /// <summary>
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </summary>
         public EntityStatus? EntityStatus { get; set; }
+
         /// <summary> Relationship type. </summary>
         public string RelationshipType { get; set; }
+
         /// <summary>
         /// Captures details of struct contents. Not instantiated directly, used only via
         /// AtlasEntity, AtlasClassification.
         /// </summary>
         public AtlasStruct RelationshipAttributes { get; set; }
+
         /// <summary> The GUID of the relationship. </summary>
         public Guid? RelationshipGuid { get; set; }
+
         /// <summary> The enum of relationship status. </summary>
         public StatusAtlasRelationship? RelationshipStatus { get; set; }
     }

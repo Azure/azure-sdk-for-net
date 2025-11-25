@@ -13,37 +13,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> The date format. </summary>
     public partial class AtlasDateFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AtlasDateFormat"/>. </summary>
         public AtlasDateFormat()
@@ -61,8 +32,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="numberFormat"> The number format. </param>
         /// <param name="timeInstance"> The date format. </param>
         /// <param name="timeZone"> The timezone information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasDateFormat(IList<string> availableLocales, float? calendar, AtlasDateFormat dateInstance, AtlasDateFormat dateTimeInstance, AtlasDateFormat instance, bool? lenient, AtlasNumberFormat numberFormat, AtlasDateFormat timeInstance, AtlasTimeZone timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AtlasDateFormat(IList<string> availableLocales, float? calendar, AtlasDateFormat dateInstance, AtlasDateFormat dateTimeInstance, AtlasDateFormat instance, bool? lenient, AtlasNumberFormat numberFormat, AtlasDateFormat timeInstance, AtlasTimeZone timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailableLocales = availableLocales;
             Calendar = calendar;
@@ -73,25 +44,33 @@ namespace Azure.Analytics.Purview.DataMap
             NumberFormat = numberFormat;
             TimeInstance = timeInstance;
             TimeZone = timeZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of available locales. </summary>
         public IList<string> AvailableLocales { get; }
+
         /// <summary> Calendar. </summary>
         public float? Calendar { get; set; }
+
         /// <summary> The date format. </summary>
         public AtlasDateFormat DateInstance { get; set; }
+
         /// <summary> The date format. </summary>
         public AtlasDateFormat DateTimeInstance { get; set; }
+
         /// <summary> The date format. </summary>
         public AtlasDateFormat Instance { get; set; }
+
         /// <summary> Determines the leniency of the date format. </summary>
         public bool? Lenient { get; set; }
+
         /// <summary> The number format. </summary>
         public AtlasNumberFormat NumberFormat { get; set; }
+
         /// <summary> The date format. </summary>
         public AtlasDateFormat TimeInstance { get; set; }
+
         /// <summary> The timezone information. </summary>
         public AtlasTimeZone TimeZone { get; set; }
     }

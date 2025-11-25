@@ -18,37 +18,8 @@ namespace Azure.Analytics.Purview.DataMap
     /// </summary>
     public partial class SearchHighlights
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchHighlights"/>. </summary>
         internal SearchHighlights()
@@ -66,26 +37,30 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="name"> Name. </param>
         /// <param name="description"> Description. </param>
         /// <param name="entityType"> Entity type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchHighlights(IReadOnlyList<string> id, IReadOnlyList<string> qualifiedName, IReadOnlyList<string> name, IReadOnlyList<string> description, IReadOnlyList<string> entityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchHighlights(IList<string> id, IList<string> qualifiedName, IList<string> name, IList<string> description, IList<string> entityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             QualifiedName = qualifiedName;
             Name = name;
             Description = description;
             EntityType = entityType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id. </summary>
-        public IReadOnlyList<string> Id { get; }
+        public IList<string> Id { get; }
+
         /// <summary> Qualified name. </summary>
-        public IReadOnlyList<string> QualifiedName { get; }
+        public IList<string> QualifiedName { get; }
+
         /// <summary> Name. </summary>
-        public IReadOnlyList<string> Name { get; }
+        public IList<string> Name { get; }
+
         /// <summary> Description. </summary>
-        public IReadOnlyList<string> Description { get; }
+        public IList<string> Description { get; }
+
         /// <summary> Entity type. </summary>
-        public IReadOnlyList<string> EntityType { get; }
+        public IList<string> EntityType { get; }
     }
 }
