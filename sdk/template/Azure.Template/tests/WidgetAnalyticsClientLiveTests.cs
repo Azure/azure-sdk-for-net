@@ -5,15 +5,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Template.Models;
 
 namespace Azure.Template.Tests
 {
     // When necessary, use the [ClientTestFixture] to test multiple versions.
     // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#support-multi-service-version-testing.
-    public class TemplateClientLiveTests: RecordedTestBase<TemplateClientTestEnvironment>
+    public class WidgetAnalyticsClientLiveTests : RecordedTestBase<TemplateClientTestEnvironment>
     {
-        public TemplateClientLiveTests(bool isAsync)
+        public WidgetAnalyticsClientLiveTests(bool isAsync)
             // Delete null and the opening comment to re-record, or change to debug live tests.
             // You can also change eng/nunit.runsettings to set the TestMode parameter.
             // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#test-settings.
@@ -21,23 +20,27 @@ namespace Azure.Template.Tests
         {
         }
 
-        private TemplateClient CreateClient()
+        private WidgetAnalyticsClient CreateClient()
         {
-            return InstrumentClient(new TemplateClient(
-                TestEnvironment.KeyVaultUri,
+            return InstrumentClient(new WidgetAnalyticsClient(
+                new Uri(TestEnvironment.Endpoint),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new TemplateClientOptions())
+                InstrumentClientOptions(new WidgetAnalyticsClientOptions())
             ));
         }
 
         [RecordedTest]
-        public async Task CanGetSecret()
+        [Ignore("Widget Analytics service not available for live testing")]
+        public async Task GetWidgetsTest()
         {
-            TemplateClient client = CreateClient();
+            WidgetAnalyticsClient client = CreateClient();
+            AzureWidgets widgetsClient = client.GetAzureWidgetsClient();
 
-            Response<SecretBundle> secret = await client.GetSecretValueAsync("TestSecret");
-
-            Assert.AreEqual("Very secret value", secret.Value.Value);
+            var widgets = widgetsClient.GetWidgetsAsync();
+            await foreach (var widget in widgets)
+            {
+                Assert.IsNotNull(widget);
+            }
         }
     }
 }
