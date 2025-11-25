@@ -25,7 +25,7 @@ namespace Azure.AI.ContentUnderstanding
         // CUSTOM CODE NOTE: we're suppressing the generation of the Analyze and AnalyzeBinary
         // convenience methods and adding methods manually below for the following reasons:
         //   - Hiding the stringEncoding parameter. We're making its value default to 'utf16' (appropriate for .NET).
-        //   - Exposing OperationId property on the returned Operation<AnalyzeResult> via AnalyzeResultOperation wrapper.
+        //   - Exposing operation ID via the Id property on the returned Operation<AnalyzeResult> via AnalyzeResultOperation wrapper.
 
         private const string DefaultStringEncoding = "utf16";
 
@@ -41,7 +41,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with operation ID accessible via the <c>Id</c> property. </returns>
         public virtual async Task<AnalyzeResultOperation> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput>? inputs = default, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
@@ -50,7 +50,6 @@ namespace Azure.AI.ContentUnderstanding
             Operation<BinaryData> result = await AnalyzeAsync(waitUntil, analyzerId, spreadModel, DefaultStringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
             string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
-            Console.WriteLine($"DEBUG: AnalyzeAsync extracted operationId={operationId}");
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
             return new AnalyzeResultOperation(converted, operationId);
         }
@@ -67,7 +66,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with operation ID accessible via the <c>Id</c> property. </returns>
         public virtual AnalyzeResultOperation Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput>? inputs = default, IDictionary<string, string>? modelDeployments = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
@@ -91,7 +90,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="contentType"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with operation ID accessible via the <c>Id</c> property. </returns>
         /// <remarks>
         /// To avoid ambiguity with the protocol method, explicitly specify the return type as <c>AnalyzeResultOperation</c> when calling this method.
         /// </remarks>
@@ -120,7 +119,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="contentType"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
+        /// <returns> The <see cref="AnalyzeResultOperation"/> with operation ID accessible via the <c>Id</c> property. </returns>
         /// <remarks>
         /// To avoid ambiguity with the protocol method, explicitly specify the return type as <c>AnalyzeResultOperation</c> when calling this method.
         /// </remarks>

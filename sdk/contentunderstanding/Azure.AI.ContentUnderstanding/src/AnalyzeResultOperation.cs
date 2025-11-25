@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
-    /// Wrapper for <see cref="Operation{AnalyzeResult}"/> that exposes the <see cref="OperationId"/> property.
+    /// Wrapper for <see cref="Operation{AnalyzeResult}"/> that exposes the operation ID via the <see cref="Id"/> property.
     /// </summary>
     public class AnalyzeResultOperation : Operation<AnalyzeResult>
     {
@@ -37,13 +37,10 @@ namespace Azure.AI.ContentUnderstanding
             _operationId = operationId ?? ExtractOperationId(innerOperation);
         }
 
+        /// <inheritdoc/>
         /// <summary>
         /// Gets the operation ID from the Operation-Location header of the operation response.
-        /// Returns null if the operation ID is not available.
         /// </summary>
-        public string OperationId => Id;
-
-        /// <inheritdoc/>
         public override string Id => _operationId ?? throw new InvalidOperationException("The operation ID was not present in the service response.");
 
         /// <inheritdoc/>

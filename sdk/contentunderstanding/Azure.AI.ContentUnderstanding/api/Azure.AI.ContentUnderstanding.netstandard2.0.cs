@@ -40,11 +40,9 @@ namespace Azure.AI.ContentUnderstanding
     public partial class AnalyzeResultOperation : Azure.Operation<Azure.AI.ContentUnderstanding.AnalyzeResult>
     {
         protected AnalyzeResultOperation() { }
-        public AnalyzeResultOperation(Azure.Operation<Azure.AI.ContentUnderstanding.AnalyzeResult> innerOperation) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public string? OperationId { get { throw null; } }
         public override Azure.AI.ContentUnderstanding.AnalyzeResult Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -95,7 +93,6 @@ namespace Azure.AI.ContentUnderstanding
         public System.Collections.Generic.IList<long> CameraShotTimesMs { get { throw null; } }
         public long EndTimeMs { get { throw null; } }
         public int? Height { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("KeyFrameTimesMs")]
         public System.Collections.Generic.IList<long> KeyFrameTimesMs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> Segments { get { throw null; } }
         public long StartTimeMs { get { throw null; } }
