@@ -113,12 +113,12 @@ namespace Azure.Generator.Tests.TestHelpers
             return mockPluginInstance;
         }
 
-        public static void SetCustomCodeView(ModelProvider modelProvider, TypeProvider customCodeTypeProvider)
+        public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
-            modelProvider.GetType().BaseType!.GetField(
+            typeProvider.GetType().BaseType!.GetField(
                     "_customCodeView",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
-                .SetValue(modelProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    BindingFlags.NonPublic | BindingFlags.Instance)?
+                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
         }
     }
 }

@@ -59,9 +59,9 @@ public partial class AgentsTelemetryTests : AgentsTestBase
     }
 
     [TearDown]
-    public new void Cleanup()
+    public async new Task Cleanup()
     {
-        base.Cleanup();
+        await base.Cleanup();
         _tracerProvider.Dispose();
         _exporter.Clear();
         Environment.SetEnvironmentVariable(

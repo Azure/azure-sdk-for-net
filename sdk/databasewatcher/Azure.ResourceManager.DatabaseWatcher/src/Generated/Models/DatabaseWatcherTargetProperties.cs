@@ -12,51 +12,20 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary>
     /// The generic properties of a target.
-    /// Please note <see cref="DatabaseWatcherTargetProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SqlDBSingleDatabaseTargetProperties"/>, <see cref="SqlDBElasticPoolTargetProperties"/> and <see cref="SqlMITargetProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlDBSingleDatabaseTargetProperties"/>, <see cref="SqlDBElasticPoolTargetProperties"/>, and <see cref="SqlMITargetProperties"/>.
     /// </summary>
     public abstract partial class DatabaseWatcherTargetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseWatcherTargetProperties"/>. </summary>
+        /// <param name="targetType"> Discriminator property for DatabaseWatcherTargetProperties. </param>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionServerName"/> is null. </exception>
-        protected DatabaseWatcherTargetProperties(TargetAuthenticationType targetAuthenticationType, string connectionServerName)
+        private protected DatabaseWatcherTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, string connectionServerName)
         {
-            Argument.AssertNotNull(connectionServerName, nameof(connectionServerName));
-
+            TargetType = targetType;
             TargetAuthenticationType = targetAuthenticationType;
             ConnectionServerName = connectionServerName;
         }
@@ -67,30 +36,29 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
         /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, TargetAuthenticationVaultSecret targetVault, string connectionServerName, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseWatcherTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, TargetAuthenticationVaultSecret targetVault, string connectionServerName, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetType = targetType;
             TargetAuthenticationType = targetAuthenticationType;
             TargetVault = targetVault;
             ConnectionServerName = connectionServerName;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherTargetProperties"/> for deserialization. </summary>
-        internal DatabaseWatcherTargetProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Discriminator property for DatabaseWatcherTargetProperties. </summary>
         internal string TargetType { get; set; }
+
         /// <summary> The type of authentication to use when connecting to a target. </summary>
         public TargetAuthenticationType TargetAuthenticationType { get; set; }
+
         /// <summary> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </summary>
         public TargetAuthenticationVaultSecret TargetVault { get; set; }
+
         /// <summary> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </summary>
         public string ConnectionServerName { get; set; }
+
         /// <summary> The provisioning state of the resource. </summary>
         public DatabaseWatcherResourceProvisioningState? ProvisioningState { get; }
     }

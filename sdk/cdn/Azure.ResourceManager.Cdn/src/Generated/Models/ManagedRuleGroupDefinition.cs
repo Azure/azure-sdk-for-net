@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes a managed rule group.
-    /// Serialized Name: ManagedRuleGroupDefinition
-    /// </summary>
+    /// <summary> Describes a managed rule group. </summary>
     public partial class ManagedRuleGroupDefinition
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupDefinition"/>. </summary>
-        /// <param name="ruleGroupName">
-        /// Name of the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.ruleGroupName
-        /// </param>
-        /// <param name="description">
-        /// Description of the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.description
-        /// </param>
-        /// <param name="rules">
-        /// List of rules within the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.rules
-        /// </param>
+        /// <param name="ruleGroupName"> Name of the managed rule group. </param>
+        /// <param name="description"> Description of the managed rule group. </param>
+        /// <param name="rules"> List of rules within the managed rule group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleGroupDefinition(string ruleGroupName, string description, IReadOnlyList<ManagedRuleDefinition> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,14 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.ruleGroupName
-        /// </summary>
+        /// <summary> Name of the managed rule group. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; }
-        /// <summary>
-        /// Description of the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.description
-        /// </summary>
+        /// <summary> Description of the managed rule group. </summary>
+        [WirePath("description")]
         public string Description { get; }
-        /// <summary>
-        /// List of rules within the managed rule group.
-        /// Serialized Name: ManagedRuleGroupDefinition.rules
-        /// </summary>
+        /// <summary> List of rules within the managed rule group. </summary>
+        [WirePath("rules")]
         public IReadOnlyList<ManagedRuleDefinition> Rules { get; }
     }
 }

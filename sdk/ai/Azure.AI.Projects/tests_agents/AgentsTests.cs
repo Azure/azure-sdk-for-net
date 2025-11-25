@@ -12,6 +12,7 @@ using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
+using Azure.Core.Pipeline;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
@@ -539,23 +540,22 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("The service is not ready.")]
-    [TestCase(true)]
-    [TestCase(false)]
-    public async Task TestMemorySearch(bool useConversation)
+    public async Task TestMemorySearch()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        //try
-        //{
-        //    var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
-        //}
-        //catch { }
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
+        try
+        {
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        }
+        catch { }
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        memoryDefinitions.Options = new(true, true);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
-        string scope = "Test scope";
+        string scope = MEMORY_STORE_SCOPE;
         MemorySearchOptions opts = new(scope)
         {
-            Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
+            Items = { ResponseItem.CreateUserMessageItem("Name assistamt's favorite animal") },
             ResultOptions = new MemorySearchResultOptions()
             {
                 MaxMemories = 1,
@@ -569,24 +569,20 @@ public class AgentsTests : AgentsTestBase
         // Populate the scope and make sure, we can get the result.
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("What is your favorite animal?");
         ResponseItem agentItem = ResponseItem.CreateAssistantMessageItem("My favorite animal is Plagiarus praepotens.");
-
-        MemoryUpdateResult updateResult = await projectClient.MemoryStores.UpdateMemoriesAsync(
-            store.Name,
-            new MemoryUpdateOptions(scope)
+        int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
+        MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
+            memoryStoreName: store.Name,
+            options: new MemoryUpdateOptions(scope)
             {
-                Items = { userItem, agentItem }
-            });
-
-        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
-        {
-            if (Mode != RecordedTestMode.Playback)
-                await Task.Delay(TimeSpan.FromMilliseconds(500));
-            updateResult = await projectClient.MemoryStores.GetUpdateResultAsync(store.Name, updateResult.UpdateId);
-        }
+                Items = { userItem, agentItem },
+                UpdateDelay = 0,
+            },
+            pollingInterval: pollingInterval);
         Assert.That(updateResult.Status == MemoryStoreUpdateStatus.Completed, $"Unexpected status {updateResult.Status}");
+        Assert.That(updateResult.Details.MemoryOperations.Count, Is.GreaterThan(0));
         resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: store.Name,
-            options: new MemorySearchOptions(scope)
+            options: opts
         );
         Assert.That(resp.Memories.Count, Is.EqualTo(1), $"The number of found items is {resp.Memories.Count}, while expected 1.");
         Assert.That(resp.Memories[0].MemoryItem.Content.ToLower(), Does.Contain("plagiarus"));
@@ -597,6 +593,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.ImageGeneration)]
     [TestCase(ToolType.WebSearch)]
+    [TestCase(ToolType.Memory)]
+    [TestCase(ToolType.AzureAISearch)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -607,7 +605,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient(headers);
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
+            options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
         ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
@@ -635,16 +633,28 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(response.GetOutputText().ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
+        if (toolType == ToolType.AzureAISearch)
+        {
+            bool isUriCitationFound = false;
+            // Check Annotation for Azure AI Search tool.
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                isUriCitationFound |= ContainsAnnotation(item);
+            }
+            Assert.That(isUriCitationFound, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
+        }
     }
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
+    [TestCase(ToolType.Memory)]
+    [TestCase(ToolType.AzureAISearch)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(toolType, projectClient.OpenAI)));
+            options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         bool isStarted = false;
@@ -665,7 +675,7 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(textDoneUpdate.Text, Is.Not.Null.And.Not.Empty);
                 if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
                 {
-                    Assert.That(textDoneUpdate.Text, Does.Contain(expectedResponse), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
+                    Assert.That(textDoneUpdate.Text.ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
                 }
             }
             else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
@@ -681,6 +691,10 @@ public class AgentsTests : AgentsTestBase
                                 annotationMet |= annotation.GetType() == annotationType;
                             }
                         }
+                    }
+                    if (toolType == ToolType.AzureAISearch)
+                    {
+                        annotationMet = ContainsAnnotation(itemDoneUpdate.Item);
                     }
                 }
                 else
@@ -741,7 +755,7 @@ public async Task TestToolChoiceWorks()
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient.OpenAI))
+            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient))
         );
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new()
@@ -848,12 +862,14 @@ public async Task TestToolChoiceWorks()
         Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient.OpenAI, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
+            options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
         );
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
             agentVersion.Name);
-        ResponseCreationOptions responseOptions = new();
-        responseOptions.TruncationMode = ResponseTruncationMode.Auto;
+        ResponseCreationOptions responseOptions = new()
+        {
+            TruncationMode = ResponseTruncationMode.Auto
+        };
         ResponseItem request = ResponseItem.CreateUserMessageItem(
             [
                 ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
@@ -1095,6 +1111,32 @@ public async Task TestToolChoiceWorks()
             protocolRequestOptions);
 
         Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
+    }
+
+    private static bool ContainsAnnotation(ResponseItem item)
+    {
+        bool isUriCitationFound = false;
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        isUriCitationFound = true;
+                        Assert.That(uriAnnotation.Title, Does.Contain("product_info_7.md"), $"Wrong citation title {uriAnnotation.Title}, should be \"product_info_7.md\"");
+                        // The next check is disabled, because of an ADO issue 4836442.
+                        // Assert.That(uriAnnotation.Uri, Does.Contain("www.microsoft.com"), $"Wrong citation title {uriAnnotation.Uri}, should be \"www.microsoft.com\"");
+                    }
+                    else
+                    {
+                        Assert.Fail($"Found unexpected annotation {annotation}");
+                    }
+                }
+            }
+        }
+        return isUriCitationFound;
     }
 
     private static readonly string s_HelloWorkflowYaml = """

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGlobalRulestackFqdnData(document.RootElement, options);
                     }
@@ -184,11 +184,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GlobalRulestackFqdnData"/> from. </param>
-        internal static GlobalRulestackFqdnData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GlobalRulestackFqdnData"/> from. </param>
+        internal static GlobalRulestackFqdnData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGlobalRulestackFqdnData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

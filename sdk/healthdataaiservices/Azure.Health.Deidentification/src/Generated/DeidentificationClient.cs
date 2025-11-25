@@ -254,17 +254,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobsInternal(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
         }
 
         /// <summary>
@@ -282,17 +272,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobsInternalAsync(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -331,17 +311,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobDocumentsInternal(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
         }
 
         /// <summary>
@@ -360,17 +330,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
-            scope.Start();
-            try
-            {
-                return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
         }
 
         /// <summary> Resource list operation template. </summary>

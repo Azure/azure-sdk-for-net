@@ -38,5 +38,6 @@ namespace Azure.AI.Projects.Tests
         public string OPENAI_FILE_ID => GetRecordedVariable("OPENAI_FILE_ID");
         public string COMPUTER_SCREENSHOTS => GetRecordedVariable("COMPUTER_SCREENSHOTS");
         public string IMAGE_GENERATION_DEPLOYMENT_NAME => GetRecordedVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
+        public string AI_SEARCH_CONNECTION_NAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
     }
 }

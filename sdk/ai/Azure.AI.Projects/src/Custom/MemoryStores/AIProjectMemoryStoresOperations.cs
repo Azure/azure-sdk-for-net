@@ -141,4 +141,34 @@ public partial class AIProjectMemoryStoresOperations
         ClientResult protocolResult = UpdateMemories(memoryStoreName, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default)), cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((MemoryUpdateResult)protocolResult, protocolResult.GetRawResponse());
     }
+
+    /// <summary>
+    /// Wait for memories to update.
+    /// </summary>
+    /// <returns>The MemoryUpdateResult in final state</returns>
+    public async Task<MemoryUpdateResult> WaitForMemoriesUpdateAsync(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
+    {
+        MemoryUpdateResult updateResult = await UpdateMemoriesAsync(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken).ConfigureAwait(false);
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+        {
+            await Task.Delay(TimeSpan.FromMilliseconds(pollingInterval), cancellationToken: cancellationToken).ConfigureAwait(false);
+            updateResult = await GetUpdateResultAsync(name: memoryStoreName, updateId: updateResult.UpdateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+        return updateResult;
+    }
+
+    /// <summary>
+    /// Wait for memories to update.
+    /// </summary>
+    /// <returns>The MemoryUpdateResult in final state</returns>
+    public MemoryUpdateResult WaitForMemoriesUpdate(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
+    {
+        MemoryUpdateResult updateResult = UpdateMemories(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken);
+        while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
+        {
+            Thread.Sleep(TimeSpan.FromMilliseconds(pollingInterval));
+            updateResult = GetUpdateResult(name: memoryStoreName, updateId: updateResult.UpdateId, cancellationToken: cancellationToken);
+        }
+        return updateResult;
+    }
 }

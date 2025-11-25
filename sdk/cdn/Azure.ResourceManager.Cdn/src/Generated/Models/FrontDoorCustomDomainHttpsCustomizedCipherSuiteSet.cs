@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Customized cipher suite set object that will be used for Https when cipherSuiteSetType is Customized.
-    /// Serialized Name: AFDDomainHttpsCustomizedCipherSuiteSet
-    /// </summary>
+    /// <summary> Customized cipher suite set object that will be used for Https when cipherSuiteSetType is Customized. </summary>
     public partial class FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet"/>. </summary>
-        /// <param name="cipherSuiteSetForTls12">
-        /// Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2.
-        /// Serialized Name: AFDDomainHttpsCustomizedCipherSuiteSet.cipherSuiteSetForTls12
-        /// </param>
-        /// <param name="cipherSuiteSetForTls13">
-        /// Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3.
-        /// Serialized Name: AFDDomainHttpsCustomizedCipherSuiteSet.cipherSuiteSetForTls13
-        /// </param>
+        /// <param name="cipherSuiteSetForTls12"> Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2. </param>
+        /// <param name="cipherSuiteSetForTls13"> Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(IList<AfdCustomizedCipherSuiteForTls12> cipherSuiteSetForTls12, IList<AfdCustomizedCipherSuiteForTls13> cipherSuiteSetForTls13, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2.
-        /// Serialized Name: AFDDomainHttpsCustomizedCipherSuiteSet.cipherSuiteSetForTls12
-        /// </summary>
+        /// <summary> Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2. </summary>
+        [WirePath("cipherSuiteSetForTls12")]
         public IList<AfdCustomizedCipherSuiteForTls12> CipherSuiteSetForTls12 { get; }
-        /// <summary>
-        /// Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3.
-        /// Serialized Name: AFDDomainHttpsCustomizedCipherSuiteSet.cipherSuiteSetForTls13
-        /// </summary>
+        /// <summary> Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3. </summary>
+        [WirePath("cipherSuiteSetForTls13")]
         public IList<AfdCustomizedCipherSuiteForTls13> CipherSuiteSetForTls13 { get; }
     }
 }
