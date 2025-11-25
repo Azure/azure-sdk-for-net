@@ -796,10 +796,10 @@
 # ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Search
-/sdk/search/                                                       @Azure/azure-sdk-write-search @Azure/azsdk-search
+/sdk/search/                                                       @Azure/azure-sdk-write-search
 
 # ServiceLabel: %Search
-# ServiceOwners:                                                   @kuanlu95 @mattgotteiner
+# ServiceOwners:                                                   @efrainretana @kuanlu95 @mattgotteiner
 
 # ServiceLabel: %Security
 # ServiceOwners:                                                   @chlahav
