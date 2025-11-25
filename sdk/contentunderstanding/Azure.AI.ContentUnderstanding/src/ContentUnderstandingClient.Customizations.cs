@@ -93,17 +93,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
         /// <remarks>
-        /// This method takes <c>byte[]</c> instead of <c>BinaryData</c> to avoid ambiguity with the protocol method that takes <c>RequestContent</c>.
-        /// If you have a <c>BinaryData</c>, use <c>BinaryData.ToBytes()</c> to convert it to <c>byte[]</c>.
+        /// To avoid ambiguity with the protocol method, explicitly specify the return type as <c>AnalyzeResultOperation</c> when calling this method.
         /// </remarks>
-        public virtual async Task<AnalyzeResultOperation> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string contentType, byte[] binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeResultOperation> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string contentType, BinaryData binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
 
             // Ignore stringEncoding parameter - always use utf16 for .NET
-            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(BinaryData.FromBytes(binaryInput)), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
             string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
@@ -123,17 +122,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="AnalyzeResultOperation"/> with <see cref="AnalyzeResultOperation.OperationId"/> property exposed. </returns>
         /// <remarks>
-        /// This method takes <c>byte[]</c> instead of <c>BinaryData</c> to avoid ambiguity with the protocol method that takes <c>RequestContent</c>.
-        /// If you have a <c>BinaryData</c>, use <c>BinaryData.ToBytes()</c> to convert it to <c>byte[]</c>.
+        /// To avoid ambiguity with the protocol method, explicitly specify the return type as <c>AnalyzeResultOperation</c> when calling this method.
         /// </remarks>
-        public virtual AnalyzeResultOperation AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string contentType, byte[] binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeResultOperation AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string contentType, BinaryData binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
 
             // Ignore stringEncoding parameter - always use utf16 for .NET
-            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(BinaryData.FromBytes(binaryInput)), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext());
+            Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString(), inputRange, cancellationToken.ToRequestContext());
             // Extract operation ID from the original operation before conversion, as the converted operation might not preserve the Operation-Location header
             string? operationId = ExtractOperationIdFromBinaryDataOperation(result);
             Operation<AnalyzeResult> converted = ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
