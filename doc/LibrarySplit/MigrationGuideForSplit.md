@@ -60,7 +60,7 @@ will be backwards compatible.
 For example, you depend on a package called `Baz` which depends on `Foo` and you
 also use types that moved to `Bar`.
 
-In this scenario the simplest thing to do is to follow [the same steps here](#transitive-dependency-on-types-that-stayed).
+In this scenario the simplest thing to do is to follow [add a direct dependency to Foo v1.1.0](#transitive-dependency-on-types-that-stayed).
 The only reason to add a direct dependency to `Bar` instead of `Foo` would
 be if the size of your application is a concern and you want to avoid pulling in
 `Foo` entirely.

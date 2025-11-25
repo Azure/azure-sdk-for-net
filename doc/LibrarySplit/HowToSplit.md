@@ -9,8 +9,8 @@ For documentation on how to migrate to the new packages see
 [MigrationGuideForSplit.md](./MigrationGuideForSplit.md).
 
 ## High-Level Goals
-- Preserve backwards compatbility between the original Package v1.0.0 and the new Package v1.1.0
-- Move all related types
+- Preserve backwards compatibility between the original Package v1.0.0 and the new Package v1.1.0
+- Move all related types:
     - Resource
     - ResourceData
     - ResourceCollection
@@ -19,7 +19,7 @@ For documentation on how to migrate to the new packages see
     - Mocking helpers
 
 ---
-## High level scenario
+## High-Level Scenario
 
 For all sections in this doc we will use the same scenario where we start with
 a single package called Foo v1.0.0 containing three resources: Resource1,
@@ -58,12 +58,13 @@ for each new package that Foo is splitting into.
 
 In our example a new file called `TypesForwardedToBar.cs` should be added to
 Foo v1.1.0 and this will contain a list of all types that have been moved to Bar
-v1.0.0.  This is the only package we are splitting into so its the only file we
+v1.0.0.  This is the only package we are splitting into so it's the only file we
 need to add.
 
 `TypesForwardedToBar.cs` (in Foo v1.1.0):
 ```csharp
 using System.Runtime.CompilerServices;
+using Foo;
 
 [assembly: TypeForwardedTo(typeof(Resource1))]
 [assembly: TypeForwardedTo(typeof(ResourceData1))]
@@ -102,10 +103,13 @@ resource is moved to a new package we must also move the extension methods to th
 new package.  To maintain backwards compatibility we will need to change the
 extension methods in the original package by removing the `this` keyword and making
 it a static method that forwards to the new package.  We will also add EBN
-attributes to hide the forwarding methods from IntelliSense.
+attributes to hide the forwarding methods from IntelliSense.  It's also a requirement
+that we keep the same namespace between the new and old extension classes.
 
 `FooExtensions.cs` (in Foo v1.0.0):
 ```csharp
+namespace Foo;
+
 public static class FooExtensions
 {
     public static Resource1 GetResource1(this ResourceGroupResource group) { ... }
@@ -116,6 +120,8 @@ public static class FooExtensions
 
 `FooExtensions.cs` (in Foo v1.1.0):
 ```csharp
+namespace Foo;
+
 public static class FooExtensions
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -128,6 +134,8 @@ public static class FooExtensions
 
 `BarExtensions.cs` (in Bar v1.0.0):
 ```csharp
+namespace Foo;
+
 public static class BarExtensions
 {
     public static Resource1 GetResource1(this ResourceGroupResource group) { ... }
@@ -147,6 +155,8 @@ attributes to hide the forwarding methods from IntelliSense.
 
 `FooModelFactory.cs` (in Foo v1.0.0):
 ```csharp
+namespace Foo;
+
 public static class FooModelFactory
 {
     public static ResourceData1 ResourceData1(/* parameters */) { ... }
@@ -157,6 +167,8 @@ public static class FooModelFactory
 
 `FooModelFactory.cs` (in Foo v1.1.0):
 ```csharp
+namespace Foo;
+
 public static class FooModelFactory
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -169,6 +181,8 @@ public static class FooModelFactory
 
 `BarModelFactory.cs` (in Bar v1.0.0):
 ```csharp
+namespace Bar;
+
 public static class BarModelFactory
 {
     public static ResourceData1 ResourceData1(/* parameters */) { ... }
