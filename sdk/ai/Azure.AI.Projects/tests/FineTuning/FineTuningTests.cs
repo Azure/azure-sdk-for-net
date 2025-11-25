@@ -494,8 +494,8 @@ public class FineTuningTests : FineTuningTestsBase
         // Test inference with an existing fine-tuned model deployment, update this when re-recording
         string deploymentName = "ft-deployment-gpt-4.1-mini-2025-04-14-2025-11-25";
 
-        // Get project client and responses client with HTTP logging enabled
-        AIProjectClient projectClient = GetTestClient(enableHttpLogging: true);
+        // Get project client and responses client
+        AIProjectClient projectClient = GetTestClient();
         // Get responses client for the specific deployment (model)
         var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
 
