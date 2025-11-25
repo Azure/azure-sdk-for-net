@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    /// <summary> Prompt for an answer. </summary>
-    public partial class QnaPrompt
+    /// <summary> All assets for this project. </summary>
+    public partial class QuestionAnsweringAuthoringAssets
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,27 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
-        public QnaPrompt()
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringAssets"/>. </summary>
+        public QuestionAnsweringAuthoringAssets()
         {
+            Synonyms = new ChangeTrackingList<WordAlterationsGroup>();
+            Qnas = new ChangeTrackingList<ImportQnaRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QnaPrompt"/>. </summary>
-        /// <param name="displayOrder"> Index of the prompt. It is used for ordering of the prompts. </param>
-        /// <param name="qnaId"> ID of the QnA corresponding to the prompt. </param>
-        /// <param name="qnaRecord"> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </param>
-        /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringAssets"/>. </summary>
+        /// <param name="synonyms"> Collection of synonyms. </param>
+        /// <param name="qnas"> List of QnA records to import. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QnaPrompt(int? displayOrder, int? qnaId, QnaRecord qnaRecord, string displayText, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringAssets(IList<WordAlterationsGroup> synonyms, IList<ImportQnaRecord> qnas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DisplayOrder = displayOrder;
-            QnaId = qnaId;
-            QnaRecord = qnaRecord;
-            DisplayText = displayText;
+            Synonyms = synonyms;
+            Qnas = qnas;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Index of the prompt. It is used for ordering of the prompts. </summary>
-        public int? DisplayOrder { get; set; }
-        /// <summary> ID of the QnA corresponding to the prompt. </summary>
-        public int? QnaId { get; set; }
-        /// <summary> QnA record. Either QnAId or QnA record needs to be present in a Prompt. </summary>
-        public QnaRecord QnaRecord { get; set; }
-        /// <summary> Text displayed to represent a follow up question prompt. </summary>
-        public string DisplayText { get; set; }
+        /// <summary> Collection of synonyms. </summary>
+        public IList<WordAlterationsGroup> Synonyms { get; }
+        /// <summary> List of QnA records to import. </summary>
+        public IList<ImportQnaRecord> Qnas { get; }
     }
 }

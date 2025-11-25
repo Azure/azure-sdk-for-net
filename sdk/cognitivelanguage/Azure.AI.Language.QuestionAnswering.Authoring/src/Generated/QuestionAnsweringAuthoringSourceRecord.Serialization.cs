@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    public partial class QnaSourceRecord : IUtf8JsonSerializable, IJsonModel<QnaSourceRecord>
+    public partial class QuestionAnsweringAuthoringSourceRecord : IUtf8JsonSerializable, IJsonModel<QuestionAnsweringAuthoringSourceRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QnaSourceRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuestionAnsweringAuthoringSourceRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QnaSourceRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuestionAnsweringAuthoringSourceRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringSourceRecord)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DisplayName))
@@ -72,19 +72,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        QnaSourceRecord IJsonModel<QnaSourceRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuestionAnsweringAuthoringSourceRecord IJsonModel<QuestionAnsweringAuthoringSourceRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringSourceRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQnaSourceRecord(document.RootElement, options);
+            return DeserializeQuestionAnsweringAuthoringSourceRecord(document.RootElement, options);
         }
 
-        internal static QnaSourceRecord DeserializeQnaSourceRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuestionAnsweringAuthoringSourceRecord DeserializeQuestionAnsweringAuthoringSourceRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QnaSourceRecord(
+            return new QuestionAnsweringAuthoringSourceRecord(
                 displayName,
                 source,
                 sourceUri,
@@ -156,43 +156,43 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QnaSourceRecord>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuestionAnsweringAuthoringSourceRecord>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringSourceRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QnaSourceRecord IPersistableModel<QnaSourceRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuestionAnsweringAuthoringSourceRecord IPersistableModel<QuestionAnsweringAuthoringSourceRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringSourceRecord>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeQnaSourceRecord(document.RootElement, options);
+                        return DeserializeQuestionAnsweringAuthoringSourceRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QnaSourceRecord)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringSourceRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QnaSourceRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuestionAnsweringAuthoringSourceRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static QnaSourceRecord FromResponse(Response response)
+        internal static QuestionAnsweringAuthoringSourceRecord FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeQnaSourceRecord(document.RootElement);
+            return DeserializeQuestionAnsweringAuthoringSourceRecord(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

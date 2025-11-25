@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Dialog associated with QnA Record. </summary>
-    public partial class QnaDialog
+    public partial class QuestionAnsweringAuthoringDialog
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QnaDialog"/>. </summary>
-        public QnaDialog()
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringDialog"/>. </summary>
+        public QuestionAnsweringAuthoringDialog()
         {
-            Prompts = new ChangeTrackingList<QnaPrompt>();
+            Prompts = new ChangeTrackingList<QuestionAnsweringAuthoringPrompt>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QnaDialog"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringDialog"/>. </summary>
         /// <param name="isContextOnly">
         /// To mark if a prompt is relevant only with a previous question or not. If true,
         /// do not include this QnA as answer for queries without context; otherwise,
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QnaDialog(bool? isContextOnly, IList<QnaPrompt> prompts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringDialog(bool? isContextOnly, IList<QuestionAnsweringAuthoringPrompt> prompts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsContextOnly = isContextOnly;
             Prompts = prompts;
@@ -73,6 +73,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         public bool? IsContextOnly { get; set; }
         /// <summary> List of prompts associated with the answer. </summary>
-        public IList<QnaPrompt> Prompts { get; }
+        public IList<QuestionAnsweringAuthoringPrompt> Prompts { get; }
     }
 }

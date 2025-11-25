@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    public partial class QnaAssets : IUtf8JsonSerializable, IJsonModel<QnaAssets>
+    public partial class Error : IUtf8JsonSerializable, IJsonModel<Error>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QnaAssets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Error>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QnaAssets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Error>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,31 +28,35 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaAssets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QnaAssets)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Error)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Synonyms))
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code.ToString());
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("synonyms"u8);
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (var item in Synonyms)
+                foreach (var item in Details)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Qnas))
+            if (Optional.IsDefined(Innererror))
             {
-                writer.WritePropertyName("qnas"u8);
-                writer.WriteStartArray();
-                foreach (var item in Qnas)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue(Innererror, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,19 +75,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        QnaAssets IJsonModel<QnaAssets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Error IJsonModel<Error>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaAssets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QnaAssets)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Error)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQnaAssets(document.RootElement, options);
+            return DeserializeError(document.RootElement, options);
         }
 
-        internal static QnaAssets DeserializeQnaAssets(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Error DeserializeError(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,38 +95,51 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<WordAlterationsGroup> synonyms = default;
-            IList<ImportQnaRecord> qnas = default;
+            ErrorCode code = default;
+            string message = default;
+            string target = default;
+            IReadOnlyList<Error> details = default;
+            InnerErrorModel innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("synonyms"u8))
+                if (property.NameEquals("code"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WordAlterationsGroup> array = new List<WordAlterationsGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(WordAlterationsGroup.DeserializeWordAlterationsGroup(item, options));
-                    }
-                    synonyms = array;
+                    code = new ErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("qnas"u8))
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ImportQnaRecord> array = new List<ImportQnaRecord>();
+                    List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportQnaRecord.DeserializeImportQnaRecord(item, options));
+                        array.Add(DeserializeError(item, options));
                     }
-                    qnas = array;
+                    details = array;
+                    continue;
+                }
+                if (property.NameEquals("innererror"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,46 +148,52 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QnaAssets(synonyms ?? new ChangeTrackingList<WordAlterationsGroup>(), qnas ?? new ChangeTrackingList<ImportQnaRecord>(), serializedAdditionalRawData);
+            return new Error(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<Error>(),
+                innererror,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QnaAssets>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Error>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaAssets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QnaAssets)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Error)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QnaAssets IPersistableModel<QnaAssets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Error IPersistableModel<Error>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QnaAssets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeQnaAssets(document.RootElement, options);
+                        return DeserializeError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QnaAssets)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Error)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QnaAssets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Error>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static QnaAssets FromResponse(Response response)
+        internal static Error FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeQnaAssets(document.RootElement);
+            return DeserializeError(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

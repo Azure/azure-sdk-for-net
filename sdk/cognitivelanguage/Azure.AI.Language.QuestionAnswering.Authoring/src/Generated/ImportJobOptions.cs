@@ -55,7 +55,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="assets"> All assets for this project. </param>
         /// <param name="fileUri"> Import data File URI. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportJobOptions(QuestionAnsweringProject metadata, QnaAssets assets, string fileUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportJobOptions(QuestionAnsweringProject metadata, QuestionAnsweringAuthoringAssets assets, string fileUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metadata = metadata;
             Assets = assets;
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Parameters needed to create the project. </summary>
         public QuestionAnsweringProject Metadata { get; set; }
         /// <summary> All assets for this project. </summary>
-        public QnaAssets Assets { get; set; }
+        public QuestionAnsweringAuthoringAssets Assets { get; set; }
         /// <summary> Import data File URI. </summary>
         public string FileUri { get; set; }
     }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Custom source record with last updated date-time. </summary>
-    public partial class QnaSourceRecord
+    public partial class QuestionAnsweringAuthoringSourceRecord
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QnaSourceRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringSourceRecord"/>. </summary>
         /// <param name="source">
         /// Unique source identifier. Name of the file if it's a 'file' source; otherwise,
         /// the complete URL if it's a 'url' source.
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="sourceUri"> URI location for the file or url. </param>
         /// <param name="sourceKind"> Supported source types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="sourceUri"/> is null. </exception>
-        internal QnaSourceRecord(string source, Uri sourceUri, KnowledgeBaseSourceKind sourceKind)
+        internal QuestionAnsweringAuthoringSourceRecord(string source, Uri sourceUri, KnowledgeBaseSourceKind sourceKind)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(sourceUri, nameof(sourceUri));
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             SourceKind = sourceKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QnaSourceRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringSourceRecord"/>. </summary>
         /// <param name="displayName"> Friendly name of the Source. </param>
         /// <param name="source">
         /// Unique source identifier. Name of the file if it's a 'file' source; otherwise,
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentStructureKind"> Content structure type for sources. </param>
         /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QnaSourceRecord(string displayName, string source, Uri sourceUri, KnowledgeBaseSourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringSourceRecord(string displayName, string source, Uri sourceUri, KnowledgeBaseSourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Source = source;
@@ -85,8 +85,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QnaSourceRecord"/> for deserialization. </summary>
-        internal QnaSourceRecord()
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringSourceRecord"/> for deserialization. </summary>
+        internal QuestionAnsweringAuthoringSourceRecord()
         {
         }
 

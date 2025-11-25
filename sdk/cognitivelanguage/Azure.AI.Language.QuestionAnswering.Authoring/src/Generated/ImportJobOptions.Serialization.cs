@@ -87,7 +87,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 return null;
             }
             QuestionAnsweringProject metadata = default;
-            QnaAssets assets = default;
+            QuestionAnsweringAuthoringAssets assets = default;
             string fileUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    assets = QnaAssets.DeserializeQnaAssets(property.Value, options);
+                    assets = QuestionAnsweringAuthoringAssets.DeserializeQuestionAnsweringAuthoringAssets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fileUri"u8))

@@ -134,7 +134,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             string source = default;
             IList<string> questions = default;
             IDictionary<string, string> metadata = default;
-            QnaDialog dialog = default;
+            QuestionAnsweringAuthoringDialog dialog = default;
             IList<SuggestedQuestionsCluster> activeLearningSuggestions = default;
             DateTimeOffset? lastUpdatedDateTime = default;
             string sourceDisplayName = default;
@@ -191,7 +191,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    dialog = QnaDialog.DeserializeQnaDialog(property.Value, options);
+                    dialog = QuestionAnsweringAuthoringDialog.DeserializeQuestionAnsweringAuthoringDialog(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeLearningSuggestions"u8))

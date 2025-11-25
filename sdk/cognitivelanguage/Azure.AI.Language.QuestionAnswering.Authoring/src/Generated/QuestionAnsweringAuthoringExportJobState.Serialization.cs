@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -57,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,8 +103,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             DateTimeOffset? expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            QnaAuthoringJobStatus status = default;
-            IReadOnlyList<ResponseError> errors = default;
+            QuestionAnsweringAuthoringJobStatus status = default;
+            IReadOnlyList<Error> errors = default;
             string resultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +136,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new QnaAuthoringJobStatus(property.Value.GetString());
+                    status = new QuestionAnsweringAuthoringJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -146,10 +145,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<Error> array = new List<Error>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureAILanguageQuestionAnsweringAuthoringContext.Default));
+                        array.Add(Error.DeserializeError(item, options));
                     }
                     errors = array;
                     continue;
@@ -171,7 +170,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 jobId,
                 lastUpdatedDateTime,
                 status,
-                errors ?? new ChangeTrackingList<ResponseError>(),
+                errors ?? new ChangeTrackingList<Error>(),
                 resultUrl,
                 serializedAdditionalRawData);
         }

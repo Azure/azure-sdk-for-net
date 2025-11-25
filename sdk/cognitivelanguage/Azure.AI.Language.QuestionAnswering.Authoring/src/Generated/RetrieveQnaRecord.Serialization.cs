@@ -129,7 +129,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             string source = default;
             IReadOnlyList<string> questions = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            QnaDialog dialog = default;
+            QuestionAnsweringAuthoringDialog dialog = default;
             IReadOnlyList<SuggestedQuestionsCluster> activeLearningSuggestions = default;
             DateTimeOffset? lastUpdatedDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -185,7 +185,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    dialog = QnaDialog.DeserializeQnaDialog(property.Value, options);
+                    dialog = QuestionAnsweringAuthoringDialog.DeserializeQuestionAnsweringAuthoringDialog(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeLearningSuggestions"u8))
