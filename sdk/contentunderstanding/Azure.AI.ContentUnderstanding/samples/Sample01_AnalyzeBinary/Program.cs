@@ -78,7 +78,7 @@ class Program
         }
         byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
         BinaryData bytesSource = BinaryData.FromBytes(fileBytes);
-        Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+        AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
             WaitUntil.Completed,
             "prebuilt-documentSearch",
             "application/pdf",

@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             AnalyzeResult result = operation.Value;
             #endregion
 
-            #region Snippet:ContentUnderstandingExtractMarkdown
+            #region Snippet:ContentUnderstandingExtractMarkdownFromUrl
             // A PDF file has only one content element even if it contains multiple pages
             MediaContent? content = null;
             if (result.Contents == null || result.Contents.Count == 0)
@@ -70,7 +70,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
             #endregion
 
-            #region Snippet:ContentUnderstandingAccessDocumentProperties
+            #region Snippet:ContentUnderstandingAccessDocumentPropertiesFromUrl
             // Check if this is document content to access document-specific properties
             if (content is DocumentContent documentContent)
             {

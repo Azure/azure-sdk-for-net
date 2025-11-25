@@ -143,7 +143,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Models.Count >= 1, "Should have at least 1 model mapping");
             #endregion
 
-            #region Snippet:ContentUnderstandingDeleteAnalyzer
+            #region Snippet:ContentUnderstandingDeleteClassifier
             // Clean up: delete the classifier (for testing purposes only)
             // In production, classifiers are typically kept and reused
 #if SNIPPET
@@ -201,20 +201,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #region Snippet:ContentUnderstandingAnalyzeCategory
 #if SNIPPET
                 // Analyze a document (EnableSegment=false means entire document is one category)
-                var analyzeOperation = await client.AnalyzeBinaryAsync(
+                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    fileBytes);
+                    BinaryData.FromBytes(fileBytes));
 #else
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
                 var fileBytes = await File.ReadAllBytesAsync(filePath);
-                var analyzeOperation = await client.AnalyzeBinaryAsync(
+                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    fileBytes);
+                    BinaryData.FromBytes(fileBytes));
 #endif
 
                 var analyzeResult = analyzeOperation.Value;
@@ -316,20 +316,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #region Snippet:ContentUnderstandingAnalyzeCategoryWithSegments
 #if SNIPPET
                 // Analyze a document (EnableSegment=true automatically segments by category)
-                var analyzeOperation = await client.AnalyzeBinaryAsync(
+                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    fileBytes);
+                    BinaryData.FromBytes(fileBytes));
 #else
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
                 var fileBytes = await File.ReadAllBytesAsync(filePath);
-                var analyzeOperation = await client.AnalyzeBinaryAsync(
+                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
-                    fileBytes);
+                    BinaryData.FromBytes(fileBytes));
 #endif
 
                 var analyzeResult = analyzeOperation.Value;

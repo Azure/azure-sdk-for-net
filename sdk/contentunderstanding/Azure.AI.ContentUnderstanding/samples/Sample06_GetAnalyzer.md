@@ -37,12 +37,12 @@ var response = await client.GetAnalyzerAsync("prebuilt-documentSearch");
 ContentAnalyzer analyzer = response.Value;
 
 // Display full analyzer JSON
-var jsonOptions = new System.Text.Json.JsonSerializerOptions
+var jsonOptions = new JsonSerializerOptions
 {
     WriteIndented = true,
     DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
 };
-string analyzerJson = System.Text.Json.JsonSerializer.Serialize(analyzer, jsonOptions);
+string analyzerJson = JsonSerializer.Serialize(analyzer, jsonOptions);
 Console.WriteLine("Prebuilt-documentSearch Analyzer:");
 Console.WriteLine(analyzerJson);
 ```
@@ -55,12 +55,12 @@ var invoiceResponse = await client.GetAnalyzerAsync("prebuilt-invoice");
 ContentAnalyzer invoiceAnalyzer = invoiceResponse.Value;
 
 // Display full analyzer JSON
-var jsonOptions = new System.Text.Json.JsonSerializerOptions
+var jsonOptions = new JsonSerializerOptions
 {
     WriteIndented = true,
     DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
 };
-string invoiceAnalyzerJson = System.Text.Json.JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
+string invoiceAnalyzerJson = JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
 Console.WriteLine("Prebuilt-invoice Analyzer:");
 Console.WriteLine(invoiceAnalyzerJson);
 ```
@@ -108,28 +108,19 @@ await client.CreateAnalyzerAsync(
     analyzerId,
     analyzer);
 
-try
-{
-    // Get information about the custom analyzer
-    var response = await client.GetAnalyzerAsync(analyzerId);
-    ContentAnalyzer retrievedAnalyzer = response.Value;
+// Get information about the custom analyzer
+var response = await client.GetAnalyzerAsync(analyzerId);
+ContentAnalyzer retrievedAnalyzer = response.Value;
 
-    // Display full analyzer JSON
-    var jsonOptions = new System.Text.Json.JsonSerializerOptions
-    {
-        WriteIndented = true,
-        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-    };
-    string analyzerJson = System.Text.Json.JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
-    Console.WriteLine("Custom Analyzer:");
-    Console.WriteLine(analyzerJson);
-}
-finally
+// Display full analyzer JSON
+var jsonOptions = new JsonSerializerOptions
 {
-    // Clean up: delete the analyzer
-    await client.DeleteAnalyzerAsync(analyzerId);
-    Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
-}
+    WriteIndented = true,
+    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+};
+string analyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
+Console.WriteLine("Custom Analyzer:");
+Console.WriteLine(analyzerJson);
 ```
 
 ## Next Steps

@@ -32,6 +32,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_document_features.pdf");
 #endif
             byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+            BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
             // These configs enable extraction of charts, annotations, hyperlinks, and formulas
@@ -39,7 +40,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 "application/pdf",
-                fileBytes);
+                binaryData);
 
             AnalyzeResult result = operation.Value;
             #endregion

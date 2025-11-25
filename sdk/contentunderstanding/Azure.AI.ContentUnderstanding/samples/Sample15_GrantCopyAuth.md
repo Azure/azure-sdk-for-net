@@ -54,17 +54,28 @@ See [Sample 01][sample01] for authentication examples using `DefaultAzureCredent
 Create a source analyzer, grant copy authorization, and copy it to a target resource:
 
 ```C# Snippet:ContentUnderstandingGrantCopyAuth
+// Get source endpoint from configuration
+// Note: configuration is already loaded in Main method
+string sourceEndpoint = configuration["AZURE_CONTENT_UNDERSTANDING_ENDPOINT"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_ENDPOINT is required");
+string? sourceKey = configuration["AZURE_CONTENT_UNDERSTANDING_KEY"];
+
+// Create source client
+var sourceClientOptions = new ContentUnderstandingClientOptions();
+ContentUnderstandingClient sourceClient = !string.IsNullOrEmpty(sourceKey)
+    ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey), sourceClientOptions)
+    : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential(), sourceClientOptions);
+
 // Generate unique analyzer IDs
 string sourceAnalyzerId = $"my_analyzer_source_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 string targetAnalyzerId = $"my_analyzer_target_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 
 // Get source and target resource information from configuration
-string sourceResourceId = Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID") ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID is required");
-string sourceRegion = Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION") ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION is required");
-string targetEndpoint = Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT") ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT is required");
-string targetResourceId = Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID") ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID is required");
-string targetRegion = Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION") ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION is required");
-string? targetKey = Environment.GetEnvironmentVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_KEY");
+string sourceResourceId = configuration["AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID is required");
+string sourceRegion = configuration["AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION is required");
+string targetEndpoint = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT is required");
+string targetResourceId = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID is required");
+string targetRegion = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_REGION"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION is required");
+string? targetKey = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_KEY"];
 
 // Create target client
 var targetClientOptions = new ContentUnderstandingClientOptions();

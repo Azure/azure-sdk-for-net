@@ -240,7 +240,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             finally
             {
                 // Clean up: delete both analyzers
-                #region Snippet:ContentUnderstandingDeleteAnalyzer
+                #region Snippet:ContentUnderstandingDeleteCopiedAnalyzers
 #if SNIPPET
                 try
                 {

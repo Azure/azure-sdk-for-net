@@ -217,8 +217,9 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
 
 If you need to delete an analyzer (for example, in test cleanup), you can do so as follows:
 
-```C# Snippet:ContentUnderstandingDeleteAnalyzer
-// Delete the analyzer (for testing/cleanup purposes)
+```C# Snippet:ContentUnderstandingDeleteCreatedAnalyzer
+// Clean up: delete the analyzer (for testing purposes only)
+// In production, analyzers are typically kept and reused
 await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 ```

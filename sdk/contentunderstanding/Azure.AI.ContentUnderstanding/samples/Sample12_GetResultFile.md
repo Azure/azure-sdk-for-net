@@ -31,20 +31,20 @@ Analyze a video to generate result files:
 
 ```C# Snippet:ContentUnderstandingAnalyzeVideoForResultFiles
 Uri videoUrl = new Uri("<videoUrl>");
-
-// Analyze a video to generate result files (keyframes)
-// Note: Video analysis may take several minutes to complete
+// Start the analysis operation
 var analyzeOperation = await client.AnalyzeAsync(
-    WaitUntil.Completed,
+    WaitUntil.Started,
     "prebuilt-videoSearch",
     inputs: new[] { new AnalyzeInput { Url = videoUrl } });
 
-AnalyzeResult result = analyzeOperation.Value;
-
-// Get the operation ID from the operation
-// The operation ID is needed to retrieve result files
-string operationId = analyzeOperation.GetOperationId() ?? throw new InvalidOperationException("Could not extract operation ID from operation");
+// Get the operation ID from the operation (available after Started)
+string operationId = analyzeOperation.OperationId ?? throw new InvalidOperationException("Could not extract operation ID from operation");
 Console.WriteLine($"Operation ID: {operationId}");
+
+// Wait for completion
+await analyzeOperation.WaitForCompletionAsync();
+
+AnalyzeResult result = analyzeOperation.Value;
 ```
 
 ## Get result file
@@ -52,13 +52,27 @@ Console.WriteLine($"Operation ID: {operationId}");
 Retrieve a result file (keyframe image) using the operation ID and file path:
 
 ```C# Snippet:ContentUnderstandingGetResultFile
-// Find keyframes in the analysis result
+// GetResultFile is used to retrieve result files (like keyframe images) from video analysis
+// The path format is: "keyframes/{frameTimeMs}" where frameTimeMs is the timestamp in milliseconds
+
+// Example: Get a keyframe image (if available)
+// Note: This example demonstrates the API pattern. In production, you would:
+// 1. Analyze a video to get keyframe timestamps
+// 2. Use those timestamps to construct paths like "keyframes/1000" for the frame at 1000ms
+// 3. Call GetResultFileAsync with the operation ID and path
+
+// For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
 var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
 if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
 {
+    // Print keyframe information
+    int totalKeyframes = videoContent.KeyFrameTimesMs.Count;
+    long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+    Console.WriteLine($"Total keyframes: {totalKeyframes}");
+    Console.WriteLine($"First keyframe time: {firstFrameTimeMs} ms");
+
     // Get the first keyframe as an example
-    long frameTimeMs = videoContent.KeyFrameTimesMs[0];
-    string framePath = $"keyframes/{frameTimeMs}";
+    string framePath = $"keyframes/{firstFrameTimeMs}";
 
     Console.WriteLine($"Getting result file: {framePath}");
 
@@ -70,14 +84,24 @@ if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count 
     byte[] imageBytes = fileResponse.Value.ToArray();
     Console.WriteLine($"Retrieved keyframe image ({imageBytes.Length:N0} bytes)");
 
-    // The image bytes can be saved to a file or processed as needed
-    // Example: await File.WriteAllBytesAsync("keyframe.jpg", imageBytes);
+    // Save the keyframe image to sample_output directory
+    string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
+    Directory.CreateDirectory(outputDir);
+    string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
+    string outputPath = Path.Combine(outputDir, outputFileName);
+    await File.WriteAllBytesAsync(outputPath, imageBytes);
+
+    Console.WriteLine($"Keyframe image saved to: {outputPath}");
 }
 else
 {
-    Console.WriteLine("No keyframes found in the analysis result.");
-    Console.WriteLine("Note: Keyframes may not be generated for all video analyses.");
-    Console.WriteLine("      This sample demonstrates the GetResultFile API usage.");
+    Console.WriteLine("Note: This sample demonstrates GetResultFile API usage.");
+    Console.WriteLine("      For video analysis with keyframes, use prebuilt-videoSearch analyzer.");
+    Console.WriteLine("      Keyframes are available in AudioVisualContent.KeyFrameTimesMs.");
+    Console.WriteLine();
+    Console.WriteLine($"Example usage with operation ID '{operationId}':");
+    Console.WriteLine("  Response<BinaryData> fileResponse = await client.GetResultFileAsync(");
+    Console.WriteLine("      operationId, \"keyframes/1000\");");
 }
 ```
 

@@ -50,7 +50,6 @@ Analyze an invoice from a URL using the `prebuilt-invoice` analyzer:
 
 ```C# Snippet:ContentUnderstandingAnalyzeInvoice
 Uri invoiceUrl = new Uri("<invoiceUrl>");
-
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-invoice",
@@ -73,7 +72,7 @@ if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
     Console.WriteLine($"Pages: {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
     Console.WriteLine();
 
-    // Extract simple string fields with confidence and source information
+    // Extract simple string fields
     var customerNameField = documentContent["CustomerName"];
     var invoiceDateField = documentContent["InvoiceDate"];
 
@@ -83,13 +82,11 @@ if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
     Console.WriteLine($"Customer Name: {customerName ?? "(None)"}");
     if (customerNameField != null)
     {
-        // Confidence score indicates how certain the analyzer is about the extracted value (0.0 to 1.0)
         Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
         // Source is an encoded identifier containing bounding box coordinates
         // Format: D(pageNumber, x1, y1, x2, y2, x3, y3, x4, y4)
         // Coordinates are in the document's unit (e.g., inches for US documents)
         Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
-        // Spans indicate the position of the field value in the markdown content
         if (customerNameField.Spans != null && customerNameField.Spans.Count > 0)
         {
             var span = customerNameField.Spans[0];

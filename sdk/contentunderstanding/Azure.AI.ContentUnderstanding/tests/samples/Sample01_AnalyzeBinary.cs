@@ -32,12 +32,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
 #endif
             byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+            BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 "application/pdf",
-                fileBytes);
+                binaryData);
 
             AnalyzeResult result = operation.Value;
             #endregion

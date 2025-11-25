@@ -42,8 +42,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ```C# Snippet:CreateContentUnderstandingClientApiKey
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
-var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 > **⚠️ Security Warning**: API key authentication is not secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
@@ -61,7 +60,6 @@ var modelDeployments = new Dictionary<string, string>
     ["text-embedding-3-large"] = "<your-text-embedding-3-large-deployment-name>"
 };
 
-// Update defaults using the extension method
 var response = await client.UpdateDefaultsAsync(modelDeployments);
 ContentUnderstandingDefaults updatedDefaults = response.Value;
 
@@ -77,8 +75,8 @@ foreach (var kvp in updatedDefaults.ModelDeployments)
 You can retrieve the current default model deployment configuration:
 
 ```C# Snippet:ContentUnderstandingGetDefaults
-var response = await client.GetDefaultsAsync();
-ContentUnderstandingDefaults defaults = response.Value;
+var getResponse = await client.GetDefaultsAsync();
+ContentUnderstandingDefaults defaults = getResponse.Value;
 
 Console.WriteLine("Current model deployment mappings:");
 if (defaults.ModelDeployments != null && defaults.ModelDeployments.Count > 0)
@@ -91,7 +89,6 @@ if (defaults.ModelDeployments != null && defaults.ModelDeployments.Count > 0)
 else
 {
     Console.WriteLine("  No model deployments configured yet.");
-    Console.WriteLine("  Run UpdateDefaults to configure model deployments.");
 }
 ```
 

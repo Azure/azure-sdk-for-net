@@ -67,8 +67,17 @@ string prettyJson = JsonSerializer.Serialize(
     jsonDocument.RootElement,
     new JsonSerializerOptions { WriteIndented = true });
 
-Console.WriteLine("Raw JSON response:");
-Console.WriteLine(prettyJson);
+// Create output directory if it doesn't exist
+string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
+Directory.CreateDirectory(outputDir);
+
+// Save to file
+string outputFileName = $"analyze_result_{DateTime.UtcNow:yyyyMMdd_HHmmss}.json";
+string outputPath = Path.Combine(outputDir, outputFileName);
+await File.WriteAllTextAsync(outputPath, prettyJson);
+
+Console.WriteLine($"Raw JSON response saved to: {outputPath}");
+Console.WriteLine($"File size: {prettyJson.Length:N0} characters");
 ```
 
 ## Comparing approaches: Raw JSON vs Object Model

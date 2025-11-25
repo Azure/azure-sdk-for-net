@@ -32,6 +32,11 @@ Update an analyzer's description and tags:
 // First, get the current analyzer to preserve base analyzer ID
 var currentAnalyzer = await client.GetAnalyzerAsync(analyzerId);
 
+// Display current analyzer information
+Console.WriteLine("Current analyzer information:");
+Console.WriteLine($"  Description: {currentAnalyzer.Value.Description}");
+Console.WriteLine($"  Tags: {string.Join(", ", currentAnalyzer.Value.Tags.Select(kvp => $"{kvp.Key}={kvp.Value}"))}");
+
 // Create an updated analyzer with new description and tags
 var updatedAnalyzer = new ContentAnalyzer
 {

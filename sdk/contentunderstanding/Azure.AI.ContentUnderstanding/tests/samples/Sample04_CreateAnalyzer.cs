@@ -133,7 +133,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Models.Count >= 2, "Should have at least 2 model mappings");
             #endregion
 
-            #region Snippet:ContentUnderstandingDeleteAnalyzer
+            #region Snippet:ContentUnderstandingDeleteCreatedAnalyzer
             // Clean up: delete the analyzer (for testing purposes only)
             // In production, analyzers are typically kept and reused
 #if SNIPPET
@@ -405,7 +405,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
                 #endregion
 
-                #region Snippet:ContentUnderstandingDeleteAnalyzer
+                #region Snippet:ContentUnderstandingDeleteAnalyzerCleanup
                 // Clean up: delete the analyzer (for testing purposes only)
                 // In production, analyzers are typically kept and reused
 #if SNIPPET

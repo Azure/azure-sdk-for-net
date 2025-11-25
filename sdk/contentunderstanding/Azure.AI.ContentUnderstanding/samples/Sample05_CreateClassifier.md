@@ -91,7 +91,7 @@ With `EnableSegment = false`, the entire 4-page document will be classified as o
 
 ```C# Snippet:ContentUnderstandingAnalyzeCategory
 // Analyze a document (EnableSegment=false means entire document is one category)
-var analyzeOperation = await client.AnalyzeBinaryAsync(
+AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
     "application/pdf",
@@ -105,7 +105,6 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
     Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
 
     // With EnableSegment=false, the document is classified as a single unit
-    // For mixed_financial_docs.pdf (4 pages), this returns one category for all pages
     if (docContent.Segments != null && docContent.Segments.Count > 0)
     {
         foreach (var segment in docContent.Segments)
@@ -131,7 +130,7 @@ With `EnableSegment = true`, the analyzer will segment the document and return c
 
 ```C# Snippet:ContentUnderstandingAnalyzeCategoryWithSegments
 // Analyze a document (EnableSegment=true automatically segments by category)
-var analyzeOperation = await client.AnalyzeBinaryAsync(
+AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
     "application/pdf",
@@ -177,8 +176,9 @@ The `EnableSegment` property controls how multi-document files are processed:
 
 If you need to delete a classifier (for example, in test cleanup), you can do so as follows:
 
-```C# Snippet:ContentUnderstandingDeleteAnalyzer
-// Delete the classifier (for testing/cleanup purposes)
+```C# Snippet:ContentUnderstandingDeleteClassifier
+// Clean up: delete the classifier (for testing purposes only)
+// In production, classifiers are typically kept and reused
 await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 ```

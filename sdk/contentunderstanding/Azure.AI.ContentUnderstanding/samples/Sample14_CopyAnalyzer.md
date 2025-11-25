@@ -31,8 +31,6 @@ See [Sample 01][sample01] for authentication examples using `DefaultAzureCredent
 Create a source analyzer and copy it to a target. First, create the source analyzer (see [Sample 04][sample04] for details on creating analyzers), then copy it:
 
 ```C# Snippet:ContentUnderstandingCopyAnalyzer
-// Copy the source analyzer to target
-// Note: This copies within the same resource. For cross-resource copying, use GrantCopyAuth sample.
 await client.CopyAnalyzerAsync(
     WaitUntil.Completed,
     targetAnalyzerId,
@@ -42,10 +40,9 @@ await client.CopyAnalyzerAsync(
 After copying, get the target analyzer, update it with a production tag, and verify the update:
 
 ```C# Snippet:ContentUnderstandingUpdateAndVerifyAnalyzer
-// Get the target analyzer and verify it was copied correctly
+// Get the target analyzer first to get its BaseAnalyzerId
 var targetResponse = await client.GetAnalyzerAsync(targetAnalyzerId);
 ContentAnalyzer targetAnalyzer = targetResponse.Value;
-Console.WriteLine($"Target analyzer description: {targetAnalyzer.Description}");
 
 // Update the target analyzer with a production tag
 var updatedAnalyzer = new ContentAnalyzer
@@ -65,7 +62,7 @@ Console.WriteLine($"Updated target analyzer tag: {updatedTargetAnalyzer.Tags["mo
 
 Finally, clean up by deleting both analyzers:
 
-```C# Snippet:ContentUnderstandingDeleteAnalyzer
+```C# Snippet:ContentUnderstandingDeleteCopiedAnalyzers
 try
 {
     await client.DeleteAnalyzerAsync(sourceAnalyzerId);
