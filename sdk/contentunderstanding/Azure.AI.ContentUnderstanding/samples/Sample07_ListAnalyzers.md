@@ -81,7 +81,7 @@ foreach (var analyzer in analyzers)
 [sample06]: Sample06_GetAnalyzer.md
 [sample08]: Sample08_UpdateAnalyzer.md
 [sample09]: Sample09_DeleteAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[prebuilt-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/prebuilt-analyzer
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[prebuilt-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 
 

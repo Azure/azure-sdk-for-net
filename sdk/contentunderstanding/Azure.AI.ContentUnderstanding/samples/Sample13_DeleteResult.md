@@ -14,7 +14,7 @@ Analysis results are stored temporarily and can be deleted using the `DeleteResu
 
 - **Immediate deletion**: Results are marked for deletion and permanently removed
 - **Automatic deletion**: Results are automatically deleted after 24 hours if not manually deleted
-- **Operation ID required**: You need the operation ID from the analysis operation to delete the result
+- **Operation ID required**: You need the operation ID from the analysis operation to delete the resulthttps://learn.microsoft.com/azure/ai-services/content-understanding/concepts/operations
 
 **Important**: Once deleted, results cannot be recovered. Make sure you have saved any data you need before deleting.
 
@@ -81,12 +81,9 @@ Delete results when you need to:
 ## Learn More
 
 - [Content Understanding Documentation][cu-docs]
-- [Operation Management][operation-docs] - Learn about managing analysis operations
 
 [sample00]: Sample00_ConfigureDefaults.md
 [sample01]: Sample01_AnalyzeBinary.md
 [sample12]: Sample12_GetResultFile.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[operation-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/operations
-
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 

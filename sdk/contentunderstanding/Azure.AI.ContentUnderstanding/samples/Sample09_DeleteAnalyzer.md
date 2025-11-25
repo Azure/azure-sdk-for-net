@@ -82,5 +82,5 @@ You've completed the analyzer management samples! Consider exploring:
 [sample03]: Sample03_AnalyzeInvoice.md
 [sample04]: Sample04_CreateAnalyzer.md
 [sample08]: Sample08_UpdateAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 

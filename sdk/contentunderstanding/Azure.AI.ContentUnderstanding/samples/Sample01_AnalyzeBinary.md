@@ -122,7 +122,7 @@ For more information about the markdown format, see [Document Markdown][cu-docum
 
 ## Access Document Properties with Type-Safe APIs
 
-The SDK provides type-safe access to extraction results. Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides strongly-typed access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For complete API reference, see the [.NET API documentation][api-docs]. For detailed information about all available document elements and properties, see [Document Elements][cu-document-elements].
+The SDK provides type-safe access to extraction results. Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides strongly-typed access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document Elements][cu-document-elements].
 
 ```C# Snippet:ContentUnderstandingAccessDocumentProperties
 // Check if this is document content to access document-specific properties
@@ -177,13 +177,11 @@ if (content is DocumentContent documentContent)
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding#getting-started
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample02-analyze-url]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
-[cu-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview
-[cu-whats-new]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/whats-new
-[cu-document-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview
-[cu-document-markdown]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/markdown
-[cu-document-elements]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/elements
-[cu-audio-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/audio/overview
-[cu-video-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview
-[cu-image-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/image/overview
-[api-docs]: https://learn.microsoft.com/dotnet/api/azure.ai.contentunderstanding
-
+[cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
+[cu-whats-new]: https://learn.microsoft.com/azure/ai-services/content-understanding/whats-new
+[cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview
+[cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
+[cu-document-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
+[cu-audio-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/audio/overview
+[cu-video-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/video/overview
+[cu-image-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/image/overview
