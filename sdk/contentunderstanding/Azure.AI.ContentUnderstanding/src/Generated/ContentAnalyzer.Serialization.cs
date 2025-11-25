@@ -448,7 +448,18 @@ namespace Azure.AI.ContentUnderstanding
         internal static ContentAnalyzer FromLroResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContentAnalyzer(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+            JsonElement rootElement = document.RootElement;
+
+            // Check if the response has a "result" property, otherwise use the root element directly
+            if (rootElement.TryGetProperty("result", out JsonElement resultElement))
+            {
+                return DeserializeContentAnalyzer(resultElement, ModelSerializationExtensions.WireOptions);
+            }
+            else
+            {
+                // The response might be the ContentAnalyzer directly
+                return DeserializeContentAnalyzer(rootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

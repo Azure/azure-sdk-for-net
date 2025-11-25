@@ -224,18 +224,23 @@ namespace Azure.AI.ContentUnderstanding
                     cameraShotTimesMs = array;
                     continue;
                 }
-                if (prop.NameEquals("keyFrameTimesMs"u8))
+                // Handle both "keyFrameTimesMs" (correct) and "KeyFrameTimesMs" (service bug - capital K)
+                if (prop.NameEquals("keyFrameTimesMs"u8) || prop.NameEquals("KeyFrameTimesMs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<long> array = new List<long>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    // Only set if not already set (handle case where both are present)
+                    if (keyFrameTimesMs == null)
                     {
-                        array.Add(item.GetInt64());
+                        List<long> array = new List<long>();
+                        foreach (var item in prop.Value.EnumerateArray())
+                        {
+                            array.Add(item.GetInt64());
+                        }
+                        keyFrameTimesMs = array;
                     }
-                    keyFrameTimesMs = array;
                     continue;
                 }
                 if (prop.NameEquals("transcriptPhrases"u8))
