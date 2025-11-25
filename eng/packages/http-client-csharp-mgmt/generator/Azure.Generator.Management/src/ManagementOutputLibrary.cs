@@ -152,10 +152,19 @@ namespace Azure.Generator.Management
 
             _mockableResourcesByScopeDict = mockableResources;
             // Only include mockable resources that have methods
-            _mockableResources = [
-                ..((mockableArmClientResource.Methods.Count > 0) ? [mockableArmClientResource] : Array.Empty<MockableResourceProvider>()),
-                ..mockableResources.Values.Where(m => m.Methods.Count > 0)
-            ];
+            var allMockableResources = new List<MockableResourceProvider>();
+            if (mockableArmClientResource.Methods.Count > 0)
+            {
+                allMockableResources.Add(mockableArmClientResource);
+            }
+            foreach (var mockableResource in mockableResources.Values)
+            {
+                if (mockableResource.Methods.Count > 0)
+                {
+                    allMockableResources.Add(mockableResource);
+                }
+            }
+            _mockableResources = allMockableResources;
             _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
