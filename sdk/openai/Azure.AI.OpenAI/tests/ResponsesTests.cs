@@ -83,10 +83,12 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
         Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
 
-        await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
-        {
-            Console.WriteLine(ModelReaderWriter.Write(inputItem).ToString());
-        }
+        // The AzureOpenAI endpoint does not serve the path for
+        // https://{Azure OpenAI endpoint}/responses/{response.Id}/input_items
+        //await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
+        //{
+        //    Console.WriteLine(ModelReaderWriter.Write(inputItem).ToString());
+        //}
     }
 
     [RecordedTest]
@@ -516,32 +518,33 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         {
             Assert.That(retrievedResponse?.Instructions, Is.EqualTo(instructions));
         }
+        // The AzureOpenAI endpoint does not serve the path for
+        // https://{Azure OpenAI endpoint}/responses/{response.Id}/input_items
+        //List<ResponseItem> listedItems = [];
+        //await foreach (ResponseItem item in client.GetResponseInputItemsAsync(response?.Id))
+        //{
+        //    listedItems.Add(item);
+        //}
 
-        List<ResponseItem> listedItems = [];
-        await foreach (ResponseItem item in client.GetResponseInputItemsAsync(response?.Id))
-        {
-            listedItems.Add(item);
-        }
-
-        if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
-        {
-            Assert.That(listedItems, Has.Count.EqualTo(1));
-            Assert.That((listedItems[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
-        }
-        else
-        {
-            Assert.That(listedItems, Has.Count.EqualTo(2));
-            MessageResponseItem? systemOrDeveloperMessage = listedItems?[1] as MessageResponseItem;
-            Assert.That(systemOrDeveloperMessage, Is.Not.Null);
-            Assert.That(systemOrDeveloperMessage?.Role, Is.EqualTo(instructionMethod switch
-            {
-                ResponsesTestInstructionMethod.DeveloperMessage => MessageRole.Developer,
-                ResponsesTestInstructionMethod.SystemMessage => MessageRole.System,
-                _ => throw new ArgumentException()
-            }));
-            Assert.That(systemOrDeveloperMessage?.Content?.FirstOrDefault()?.Text, Is.EqualTo(instructions));
-            Assert.That((listedItems?[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
-        }
+        //if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
+        //{
+        //    Assert.That(listedItems, Has.Count.EqualTo(1));
+        //    Assert.That((listedItems[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+        //}
+        //else
+        //{
+        //    Assert.That(listedItems, Has.Count.EqualTo(2));
+        //    MessageResponseItem? systemOrDeveloperMessage = listedItems?[1] as MessageResponseItem;
+        //    Assert.That(systemOrDeveloperMessage, Is.Not.Null);
+        //    Assert.That(systemOrDeveloperMessage?.Role, Is.EqualTo(instructionMethod switch
+        //    {
+        //        ResponsesTestInstructionMethod.DeveloperMessage => MessageRole.Developer,
+        //        ResponsesTestInstructionMethod.SystemMessage => MessageRole.System,
+        //        _ => throw new ArgumentException()
+        //    }));
+        //    Assert.That(systemOrDeveloperMessage?.Content?.FirstOrDefault()?.Text, Is.EqualTo(instructions));
+        //    Assert.That((listedItems?[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+        //}
     }
 
     [RecordedTest]
@@ -783,7 +786,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         }
 
         AssertSerializationRoundTrip<MessageResponseItem>(
-            @"{""type"":""message"",""potato_details"":{""cultivar"":""russet""},""role"":""potato""}",
+            @"{""type"":""message"",""role"":""potato"",""potato_details"":{""cultivar"":""russet""}}",
             potatoMessage =>
             {
                 Assert.That(potatoMessage.Role, Is.EqualTo(MessageRole.Unknown));

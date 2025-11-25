@@ -1,19 +1,33 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0-beta.4 (2025-11-17)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue preventing telemetry from being logged.
 
-## 1.1.0 (2025-11-03)
+## 1.2.0-beta.3 (2025-11-15)
+
+### Bugs Fixed
+
+- Addressed an issue that caused paginated responses like conversation items to never terminate when large numbers of items are fetched
+
+## 1.2.0-beta.2 (2025-11-14)
+
+### Bugs Fixed
+
+- Addressed an issue with memory store creation failing when not providing `metadata`
+
+## 1.2.0-beta.1 (2025-11-14)
 
 ### Features Added
 
+This major update brings feature support for Microsoft Foundry Agents Service, integration with the new `Azure.AI.Projects.OpenAI` package, expanded evaluations capabilities, insights, red teaming, schedules, and more.
+
+## 1.1.0 (2025-11-03)
+
+### Other Changes
+* Added `files` samples for operations create, delete, list, retrieve and download.
 - Remove `clientRequestId` parameter from `AIProjectConnectionsOperations` and `AIProjectDeploymentsOperations` methods as this value is controlled transparently by `System.ClientModel`.
 - Remove `type` parameter from `AzureAIProjectsModelFactory.BlobReferenceSasCredential` as this is a hardcoded value.
 - Remove `pendingUploadType` parameter from `AzureAIProjectsModelFactory.PendingUploadRequest` and `AzureAIProjectsModelFactory.PendingUploadConfiguration` as this is a hardcoded value.
