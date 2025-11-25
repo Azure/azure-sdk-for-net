@@ -75,7 +75,7 @@ namespace Azure.Template
         public Azure.Template.OperationState Status { get { throw null; } }
         protected virtual Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError (Azure.Response response) { throw null; }
         protected virtual Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError System.ClientModel.Primitives.IJsonModel<Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -114,7 +114,7 @@ namespace Azure.Template
         public Azure.Template.FakedSharedModel SharedModel { get { throw null; } set { } }
         protected virtual Azure.Template.WidgetSuite JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Template.WidgetSuite (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Template.WidgetSuite (Azure.Response response) { throw null; }
         protected virtual Azure.Template.WidgetSuite PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Template.WidgetSuite System.ClientModel.Primitives.IJsonModel<Azure.Template.WidgetSuite>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
