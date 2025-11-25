@@ -31,7 +31,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #else
             string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_document_features.pdf");
 #endif
-            byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+            byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
@@ -87,7 +87,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var docContentCharts = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(docContentCharts, "Content should be DocumentContent");
 
-            // Charts are optional - validate structure if present
+            // Charts are optional - GPT sometimes does not detect them
+            // Issue a warning but do not fail in that case for testing only
             if (docContentCharts!.Figures != null && docContentCharts.Figures.Count > 0)
             {
                 var chartFiguresAssert = docContentCharts.Figures
@@ -95,15 +96,26 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     .Cast<DocumentChartFigure>()
                     .ToList();
 
-                foreach (var chart in chartFiguresAssert)
+                if (chartFiguresAssert.Count == 0)
                 {
-                    Assert.IsNotNull(chart.Id, "Chart ID should not be null");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(chart.Id), "Chart ID should not be empty");
-
-                    // Description and Caption are optional, no assertion needed
+                    TestContext.WriteLine("⚠️ Warning: No charts detected in sample_document_features.pdf. GPT sometimes does not detect charts.");
                 }
+                else
+                {
+                    foreach (var chart in chartFiguresAssert)
+                    {
+                        Assert.IsNotNull(chart.Id, "Chart ID should not be null");
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(chart.Id), "Chart ID should not be empty");
 
-                Console.WriteLine($"✓ Verified {chartFiguresAssert.Count} chart(s)");
+                        // Description and Caption are optional, no assertion needed
+                    }
+
+                    Console.WriteLine($"✓ Verified {chartFiguresAssert.Count} chart(s)");
+                }
+            }
+            else
+            {
+                TestContext.WriteLine("⚠️ Warning: No charts detected in sample_document_features.pdf. GPT sometimes does not detect charts.");
             }
             #endregion
 
@@ -127,20 +139,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var docContentHyperlinks = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(docContentHyperlinks, "Content should be DocumentContent");
 
-            // Hyperlinks are optional - validate structure if present
-            if (docContentHyperlinks!.Hyperlinks != null && docContentHyperlinks.Hyperlinks.Count > 0)
+            // Hyperlinks should not be empty for sample_document_features.pdf
+            Assert.IsNotNull(docContentHyperlinks!.Hyperlinks, "Hyperlinks should not be null");
+            Assert.IsTrue(docContentHyperlinks.Hyperlinks.Count > 0, "sample_document_features.pdf should contain hyperlinks");
+
+            foreach (var hyperlink in docContentHyperlinks.Hyperlinks)
             {
-                foreach (var hyperlink in docContentHyperlinks.Hyperlinks)
-                {
-                    Assert.IsNotNull(hyperlink, "Hyperlink should not be null");
+                Assert.IsNotNull(hyperlink, "Hyperlink should not be null");
 
-                    // At least one of URL or Content should be present
-                    Assert.IsTrue(!string.IsNullOrEmpty(hyperlink.Url) || !string.IsNullOrEmpty(hyperlink.Content),
-                        "Hyperlink should have either URL or Content");
-                }
-
-                Console.WriteLine($"✓ Verified {docContentHyperlinks.Hyperlinks.Count} hyperlink(s)");
+                // At least one of URL or Content should be present
+                Assert.IsTrue(!string.IsNullOrEmpty(hyperlink.Url) || !string.IsNullOrEmpty(hyperlink.Content),
+                    "Hyperlink should have either URL or Content");
             }
+
+            Console.WriteLine($"✓ Verified {docContentHyperlinks.Hyperlinks.Count} hyperlink(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractFormulas
@@ -179,42 +191,39 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var docContentFormulas = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(docContentFormulas, "Content should be DocumentContent");
 
-            // Formulas are optional - validate structure if present
+            // Formulas should not be empty for sample_document_features.pdf
             var allFormulasAssert = new System.Collections.Generic.List<DocumentFormula>();
-            if (docContentFormulas!.Pages != null)
+            Assert.IsNotNull(docContentFormulas!.Pages, "Pages should not be null");
+            foreach (var page in docContentFormulas.Pages)
             {
-                foreach (var page in docContentFormulas.Pages)
+                if (page.Formulas != null)
                 {
-                    if (page.Formulas != null)
-                    {
-                        allFormulasAssert.AddRange(page.Formulas);
-                    }
+                    allFormulasAssert.AddRange(page.Formulas);
                 }
             }
 
-            if (allFormulasAssert.Count > 0)
+            Assert.IsTrue(allFormulasAssert.Count > 0, "sample_document_features.pdf should contain formulas");
+
+            foreach (var formula in allFormulasAssert)
             {
-                foreach (var formula in allFormulasAssert)
+                Assert.IsNotNull(formula, "Formula should not be null");
+                Assert.IsNotNull(formula.Kind, "Formula kind should not be null");
+
+                // Value (LaTeX) is optional but should be validated if present
+                if (!string.IsNullOrEmpty(formula.Value))
                 {
-                    Assert.IsNotNull(formula, "Formula should not be null");
-                    Assert.IsNotNull(formula.Kind, "Formula kind should not be null");
-
-                    // Value (LaTeX) is optional but should be validated if present
-                    if (!string.IsNullOrEmpty(formula.Value))
-                    {
-                        Assert.IsTrue(formula.Value.Length > 0, "Formula value should not be empty");
-                    }
-
-                    // Confidence is optional but should be in valid range if present
-                    if (formula.Confidence.HasValue)
-                    {
-                        Assert.IsTrue(formula.Confidence.Value >= 0 && formula.Confidence.Value <= 1,
-                            "Formula confidence should be between 0 and 1");
-                    }
+                    Assert.IsTrue(formula.Value.Length > 0, "Formula value should not be empty");
                 }
 
-                Console.WriteLine($"✓ Verified {allFormulasAssert.Count} formula(s)");
+                // Confidence is optional but should be in valid range if present
+                if (formula.Confidence.HasValue)
+                {
+                    Assert.IsTrue(formula.Confidence.Value >= 0 && formula.Confidence.Value <= 1,
+                        "Formula confidence should be between 0 and 1");
+                }
             }
+
+            Console.WriteLine($"✓ Verified {allFormulasAssert.Count} formula(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractAnnotations
@@ -249,32 +258,32 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var docContentAnnotations = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(docContentAnnotations, "Content should be DocumentContent");
 
-            // Annotations are optional - validate structure if present
-            if (docContentAnnotations!.Annotations != null && docContentAnnotations.Annotations.Count > 0)
+            // Annotations should not be empty for sample_document_features.pdf
+            Assert.IsNotNull(docContentAnnotations!.Annotations, "Annotations should not be null");
+            Assert.IsTrue(docContentAnnotations.Annotations.Count > 0, "sample_document_features.pdf should contain annotations");
+
+            foreach (var annotation in docContentAnnotations.Annotations)
             {
-                foreach (var annotation in docContentAnnotations.Annotations)
+                Assert.IsNotNull(annotation, "Annotation should not be null");
+                Assert.IsNotNull(annotation.Id, "Annotation ID should not be null");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(annotation.Id),
+                    "Annotation ID should not be empty");
+                Assert.IsNotNull(annotation.Kind, "Annotation kind should not be null");
+
+                // Author is optional, no assertion needed
+
+                // Validate comments structure if present
+                if (annotation.Comments != null && annotation.Comments.Count > 0)
                 {
-                    Assert.IsNotNull(annotation, "Annotation should not be null");
-                    Assert.IsNotNull(annotation.Id, "Annotation ID should not be null");
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(annotation.Id),
-                        "Annotation ID should not be empty");
-                    Assert.IsNotNull(annotation.Kind, "Annotation kind should not be null");
-
-                    // Author is optional, no assertion needed
-
-                    // Validate comments structure if present
-                    if (annotation.Comments != null && annotation.Comments.Count > 0)
+                    foreach (var comment in annotation.Comments)
                     {
-                        foreach (var comment in annotation.Comments)
-                        {
-                            Assert.IsNotNull(comment, "Comment should not be null");
-                            Assert.IsNotNull(comment.Message, "Comment message should not be null");
-                        }
+                        Assert.IsNotNull(comment, "Comment should not be null");
+                        Assert.IsNotNull(comment.Message, "Comment message should not be null");
                     }
                 }
-
-                Console.WriteLine($"✓ Verified {docContentAnnotations.Annotations.Count} annotation(s)");
             }
+
+            Console.WriteLine($"✓ Verified {docContentAnnotations.Annotations.Count} annotation(s)");
             #endregion
         }
     }

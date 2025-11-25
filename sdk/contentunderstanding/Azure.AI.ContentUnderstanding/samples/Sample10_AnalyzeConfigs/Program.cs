@@ -12,7 +12,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to extract additional features from documents such as charts, hyperlinks, formulas, and annotations.
+/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
 ///
 /// Prerequisites:
 ///     - Azure subscription
@@ -76,15 +76,15 @@ class Program
             Console.Error.WriteLine("Please ensure the sample file is copied to the output directory.");
             Environment.Exit(1);
         }
-        byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
-        BinaryData bytesSource = BinaryData.FromBytes(fileBytes);
+        byte[] fileBytes = File.ReadAllBytes(filePath);
+        BinaryData binaryData = BinaryData.FromBytes(fileBytes);
         // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
         // These configs enable extraction of charts, annotations, hyperlinks, and formulas
         AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
             WaitUntil.Completed,
             "prebuilt-documentSearch",
             "application/pdf",
-            bytesSource);
+            binaryData);
         AnalyzeResult result = operation.Value;
 
         // Extract charts from document content

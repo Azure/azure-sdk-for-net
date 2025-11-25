@@ -12,7 +12,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to analyze a PDF file from disk using the prebuilt-documentSearch analyzer.
+/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
 ///
 /// Prerequisites:
 ///     - Azure subscription
@@ -76,13 +76,13 @@ class Program
             Console.Error.WriteLine("Please ensure the sample file is copied to the output directory.");
             Environment.Exit(1);
         }
-        byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
-        BinaryData bytesSource = BinaryData.FromBytes(fileBytes);
+        byte[] fileBytes = File.ReadAllBytes(filePath);
+        BinaryData binaryData = BinaryData.FromBytes(fileBytes);
         AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
             WaitUntil.Completed,
             "prebuilt-documentSearch",
             "application/pdf",
-            bytesSource);
+            binaryData);
         AnalyzeResult result = operation.Value;
 
         // A PDF file has only one content element even if it contains multiple pages

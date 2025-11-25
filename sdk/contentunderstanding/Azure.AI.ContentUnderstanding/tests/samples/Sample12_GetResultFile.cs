@@ -116,7 +116,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Directory.CreateDirectory(outputDir);
                 string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
                 string outputPath = Path.Combine(outputDir, outputFileName);
-                await File.WriteAllBytesAsync(outputPath, imageBytes);
+                File.WriteAllBytes(outputPath, imageBytes);
 
                 Console.WriteLine($"Keyframe image saved to: {outputPath}");
             }

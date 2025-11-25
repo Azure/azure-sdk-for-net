@@ -13,7 +13,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to access the raw JSON response from analysis operations using protocol methods.
+/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
 ///
 /// Prerequisites:
 ///     - Azure subscription
@@ -77,7 +77,7 @@ class Program
             Console.Error.WriteLine("Please ensure the sample file is copied to the output directory.");
             Environment.Exit(1);
         }
-        byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+        byte[] fileBytes = File.ReadAllBytes(filePath);
         // Use protocol method to get raw JSON response
         // Note: For production use, prefer the object model approach (AnalyzeBinaryAsync with BinaryData)
         // which returns AnalyzeResult objects that are easier to work with
@@ -100,7 +100,7 @@ class Program
         // Save to file
         string outputFileName = $"analyze_result_{DateTime.UtcNow:yyyyMMdd_HHmmss}.json";
         string outputPath = Path.Combine(outputDir, outputFileName);
-        await File.WriteAllTextAsync(outputPath, prettyJson);
+        File.WriteAllText(outputPath, prettyJson);
         Console.WriteLine($"Raw JSON response saved to: {outputPath}");
         Console.WriteLine($"File size: {prettyJson.Length:N0} characters");
 

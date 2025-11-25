@@ -1,7 +1,7 @@
 # Sample12_GetResultFile
 
-This sample demonstrates how to retrieve result files (such as keyframe images) from a video analysis operation.
-For detailed documentation, see [Sample12_GetResultFile.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample12_GetResultFile.md).
+This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+For detailed documentation, see [Sample12_GetResultFile.md](../Sample12_GetResultFile.md).
 
 ## Prerequisites
 

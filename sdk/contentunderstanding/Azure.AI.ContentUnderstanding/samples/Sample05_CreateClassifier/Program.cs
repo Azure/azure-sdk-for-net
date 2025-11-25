@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
@@ -12,7 +13,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to create a classifier analyzer to categorize documents and use it to analyze documents with and without automatic segmentation.
+/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
 ///
 /// Prerequisites:
 ///     - Azure subscription
@@ -68,107 +69,109 @@ class Program
             client = new ContentUnderstandingClient(endpointUri, credential);
         }
 
-        try
+        // === EXTRACTED SNIPPET CODE ===
+        // Define content categories for classification
+        var categories = new Dictionary<string, ContentCategory>
         {
-            // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            ["Loan_Application"] = new ContentCategory
             {
-                ["Loan_Application"] = new ContentCategory
-                {
-                    Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
-                },
-                ["Invoice"] = new ContentCategory
-                {
-                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
-                },
-                ["Bank_Statement"] = new ContentCategory
-                {
-                    Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
-                }
-            };
-
-            // Create analyzer configuration
-            var config = new ContentAnalyzerConfig
+                Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
+            },
+            ["Invoice"] = new ContentCategory
             {
-                ReturnDetails = true,
-                EnableSegment = true // Enable automatic segmentation by category
-            };
-
-            // Add categories to config
-            foreach (var kvp in categories)
+                Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
+            },
+            ["Bank_Statement"] = new ContentCategory
             {
-                config.ContentCategories.Add(kvp.Key, kvp.Value);
+                Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
             }
-
-            // Create the classifier analyzer
-            var classifier = new ContentAnalyzer
-            {
-                BaseAnalyzerId = "prebuilt-document",
-                Description = "Custom classifier for financial document categorization",
-                Config = config
-            };
-            classifier.Models.Add("completion", "gpt-4.1");
-
-            // Create the classifier
-            string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
-            var operation = await client.CreateAnalyzerAsync(
-                WaitUntil.Completed,
-                analyzerId,
-                classifier);
-
-            ContentAnalyzer result = operation.Value;
-            Console.WriteLine($"Classifier '{analyzerId}' created successfully!");
-
-            // Example: Analyze a document with the classifier using a URL
-            // This example uses mixed_financial_docs.pdf which contains:
-            // - Invoice: page 1
-            // - Bank Statement: pages 2-3
-            // - Loan Application: page 4
-            var documentUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/mixed_financial_docs.pdf");
-
-            Console.WriteLine("\nAnalyzing document with classifier (EnableSegment=true)...");
-            var analyzeOperation = await client.AnalyzeAsync(
-                WaitUntil.Completed,
-                analyzerId,
-                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
-
-            var analyzeResult = analyzeOperation.Value;
-
-            // Display classification results with automatic segmentation
-            if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
-            {
-                if (docContent.Segments != null && docContent.Segments.Count > 0)
-                {
-                    Console.WriteLine($"Found {docContent.Segments.Count} segment(s):");
-                    foreach (var segment in docContent.Segments)
-                    {
-                        Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
-                        Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No segments found in the document.");
-                }
-            }
-
-            // Clean up: delete the classifier (for testing purposes only)
-            // In production, classifiers are typically kept and reused
-            Console.WriteLine($"\nCleaning up: Deleting classifier '{analyzerId}'...");
-            await client.DeleteAnalyzerAsync(analyzerId);
-            Console.WriteLine($"Classifier '{analyzerId}' deleted successfully!");
+        };
+        // Create analyzer configuration
+        var config = new ContentAnalyzerConfig
+        {
+            ReturnDetails = true,
+            EnableSegment = true // Enable automatic segmentation by category
+        };
+        // Add categories to config
+        foreach (var kvp in categories)
+        {
+            config.ContentCategories.Add(kvp.Key, kvp.Value);
         }
-        catch (RequestFailedException ex)
+        // Create the classifier analyzer
+        var classifier = new ContentAnalyzer
         {
-            Console.Error.WriteLine($"Error: {ex.Message}");
-            Console.Error.WriteLine($"Status: {ex.Status}");
-            Console.Error.WriteLine($"Error Code: {ex.ErrorCode}");
+            BaseAnalyzerId = "prebuilt-document",
+            Description = "Custom classifier for financial document categorization",
+            Config = config
+        };
+        classifier.Models.Add("completion", "gpt-4.1");
+        // Create the classifier
+        string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+        var operation = await client.CreateAnalyzerAsync(
+            WaitUntil.Completed,
+            analyzerId,
+            classifier);
+        ContentAnalyzer result = operation.Value;
+        Console.WriteLine($"Classifier '{analyzerId}' created successfully!");
+
+        // Read the sample file
+        string filePath = Path.Combine(AppContext.BaseDirectory, "sample_files", "sample_invoice.pdf");
+        if (!File.Exists(filePath))
+        {
+            Console.Error.WriteLine($"Error: Sample file not found at {filePath}");
+            Console.Error.WriteLine("Please ensure the sample file is copied to the output directory.");
             Environment.Exit(1);
         }
-        catch (Exception ex)
+        byte[] fileBytes = File.ReadAllBytes(filePath);
+
+        // Analyze a document (EnableSegment=false means entire document is one category)
+        AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+            WaitUntil.Completed,
+            analyzerId,
+            "application/pdf",
+            BinaryData.FromBytes(fileBytes));
+        var analyzeResult = analyzeOperation.Value;
+        // Display classification results
+        if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
         {
-            Console.Error.WriteLine($"Error: {ex.Message}");
-            Environment.Exit(1);
+            Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
+            // With EnableSegment=false, the document is classified as a single unit
+            if (docContent.Segments != null && docContent.Segments.Count > 0)
+            {
+                foreach (var segment in docContent.Segments)
+                {
+                    Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
+                    Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
+                }
+            }
         }
+
+        // Analyze a document (EnableSegment=true automatically segments by category)
+        AnalyzeResultOperation analyzeOperation2 = await client.AnalyzeBinaryAsync(
+            WaitUntil.Completed,
+            analyzerId,
+            "application/pdf",
+            BinaryData.FromBytes(fileBytes));
+        var analyzeResult2 = analyzeOperation2.Value;
+        // Display classification results with automatic segmentation
+        if (analyzeResult2.Contents?.FirstOrDefault() is DocumentContent docContent2)
+        {
+            if (docContent2.Segments != null && docContent2.Segments.Count > 0)
+            {
+                Console.WriteLine($"Found {docContent2.Segments.Count} segment(s):");
+                foreach (var segment in docContent2.Segments)
+                {
+                    Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
+                    Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
+                    Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
+                }
+            }
+        }
+
+        // Clean up: delete the classifier (for testing purposes only)
+        // In production, classifiers are typically kept and reused
+        await client.DeleteAnalyzerAsync(analyzerId);
+        Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
+        // === END SNIPPET ===
     }
 }

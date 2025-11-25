@@ -12,7 +12,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to retrieve result files (such as keyframe images) from a video analysis operation.
+/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
 ///
 /// Prerequisites:
 ///     - Azure subscription
@@ -112,7 +112,7 @@ class Program
             Directory.CreateDirectory(outputDir);
             string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
             string outputPath = Path.Combine(outputDir, outputFileName);
-            await File.WriteAllBytesAsync(outputPath, imageBytes);
+            File.WriteAllBytes(outputPath, imageBytes);
             Console.WriteLine($"Keyframe image saved to: {outputPath}");
         }
         else

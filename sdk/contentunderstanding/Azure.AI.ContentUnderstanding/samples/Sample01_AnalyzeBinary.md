@@ -72,7 +72,7 @@ To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The
 
 ```C# Snippet:ContentUnderstandingAnalyzeBinaryAsync
 string filePath = "<filePath>";
-byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+byte[] fileBytes = File.ReadAllBytes(filePath);
 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
 AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(

@@ -40,7 +40,7 @@ Use the protocol method to get raw JSON response:
 
 ```C# Snippet:ContentUnderstandingAnalyzeReturnRawJson
 string filePath = "<filePath>";
-byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+byte[] fileBytes = File.ReadAllBytes(filePath);
 
 // Use protocol method to get raw JSON response
 // Note: For production use, prefer the object model approach (AnalyzeBinaryAsync with BinaryData)
@@ -74,7 +74,7 @@ Directory.CreateDirectory(outputDir);
 // Save to file
 string outputFileName = $"analyze_result_{DateTime.UtcNow:yyyyMMdd_HHmmss}.json";
 string outputPath = Path.Combine(outputDir, outputFileName);
-await File.WriteAllTextAsync(outputPath, prettyJson);
+File.WriteAllText(outputPath, prettyJson);
 
 Console.WriteLine($"Raw JSON response saved to: {outputPath}");
 Console.WriteLine($"File size: {prettyJson.Length:N0} characters");

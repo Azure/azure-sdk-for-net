@@ -51,9 +51,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 var modelDeployments = new Dictionary<string, string>
                 {
-                    ["gpt-4.1"] = gpt41Deployment,
-                    ["gpt-4.1-mini"] = gpt41MiniDeployment,
-                    ["text-embedding-3-large"] = textEmbeddingDeployment
+                    ["gpt-4.1"] = gpt41Deployment!,
+                    ["gpt-4.1-mini"] = gpt41MiniDeployment!,
+                    ["text-embedding-3-large"] = textEmbeddingDeployment!
                 };
 
                 var response = await client.UpdateDefaultsAsync(modelDeployments);

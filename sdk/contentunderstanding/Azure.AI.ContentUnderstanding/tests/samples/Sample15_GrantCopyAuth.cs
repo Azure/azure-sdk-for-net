@@ -75,7 +75,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create target client
             var targetClientOptions = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             ContentUnderstandingClient targetClient = !string.IsNullOrEmpty(targetKey)
-                ? InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey), targetClientOptions))
+                ? InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey!), targetClientOptions))
                 : InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), TestEnvironment.Credential, targetClientOptions));
 #endif
 

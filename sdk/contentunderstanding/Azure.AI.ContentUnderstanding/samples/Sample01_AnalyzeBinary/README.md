@@ -1,7 +1,7 @@
 # Sample01_AnalyzeBinary
 
 This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
-For detailed documentation, see [Sample01_AnalyzeBinary.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md).
+For detailed documentation, see [Sample01_AnalyzeBinary.md](../Sample01_AnalyzeBinary.md).
 
 ## Prerequisites
 

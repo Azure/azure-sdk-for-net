@@ -36,7 +36,7 @@ Analyze a document using `prebuilt-documentSearch` which has formulas, layout, a
 
 ```C# Snippet:ContentUnderstandingAnalyzeWithConfigs
 string filePath = "<filePath>";
-byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+byte[] fileBytes = File.ReadAllBytes(filePath);
 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
 // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
