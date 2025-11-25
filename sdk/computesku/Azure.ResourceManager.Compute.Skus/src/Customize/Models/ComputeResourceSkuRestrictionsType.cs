@@ -5,6 +5,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    /// <summary> The type of restrictions. </summary>
     [CodeGenModel("ComputeResourceSkuRestrictionsType")]
-    public readonly partial struct ComputeResourceSkuRestrictionsType {}
+    public enum ComputeResourceSkuRestrictionsType
+    {
+        /// <summary> Location. </summary>
+        Location,
+        /// <summary> Zone. </summary>
+        Zone
+    }
 }

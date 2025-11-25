@@ -5,6 +5,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    /// <summary> The scale type applicable to the sku. </summary>
     [CodeGenModel("ComputeResourceSkuCapacityScaleType")]
-    public readonly partial struct ComputeResourceSkuCapacityScaleType {}
+    public enum ComputeResourceSkuCapacityScaleType
+    {
+        /// <summary> None. </summary>
+        None,
+        /// <summary> Automatic. </summary>
+        Automatic,
+        /// <summary> Manual. </summary>
+        Manual
+    }
 }

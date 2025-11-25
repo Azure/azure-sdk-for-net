@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
             string family = default;
             string kind = default;
             ComputeResourceSkuCapacity capacity = default;
-            IReadOnlyList<string> locations = default;
+            IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo = default;
             IReadOnlyList<string> apiVersions = default;
             IReadOnlyList<ResourceSkuCosts> costs = default;
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute.Models
                 family,
                 kind,
                 capacity,
-                locations ?? new Skus.ChangeTrackingList<string>(),
+                locations ?? new Skus.ChangeTrackingList<AzureLocation>(),
                 locationInfo ?? new Skus.ChangeTrackingList<ComputeResourceSkuLocationInfo>(),
                 apiVersions ?? new Skus.ChangeTrackingList<string>(),
                 costs ?? new Skus.ChangeTrackingList<ResourceSkuCosts>(),

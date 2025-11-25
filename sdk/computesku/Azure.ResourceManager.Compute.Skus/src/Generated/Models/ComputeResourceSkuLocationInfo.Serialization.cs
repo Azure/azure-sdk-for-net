@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Skus.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Skus.Optional.IsCollectionDefined(Zones))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
@@ -124,7 +124,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

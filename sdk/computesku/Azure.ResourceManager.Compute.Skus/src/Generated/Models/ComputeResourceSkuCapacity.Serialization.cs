@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Skus.Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
-                writer.WriteStringValue(ScaleType.Value.ToString());
+                writer.WriteStringValue(ScaleType.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scaleType = new ComputeResourceSkuCapacityScaleType(property.Value.GetString());
+                    scaleType = property.Value.GetString().ToComputeResourceSkuCapacityScaleType();
                     continue;
                 }
                 if (options.Format != "W")

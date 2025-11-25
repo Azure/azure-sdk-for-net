@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Skus;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -49,12 +50,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSku"/>. </summary>
         internal ComputeResourceSku()
         {
-            Locations = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<ComputeResourceSkuLocationInfo>();
-            ApiVersions = new ChangeTrackingList<string>();
-            Costs = new ChangeTrackingList<ResourceSkuCosts>();
-            Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
-            Restrictions = new ChangeTrackingList<ComputeResourceSkuRestrictions>();
+            Locations = new Skus.ChangeTrackingList<AzureLocation>();
+            LocationInfo = new Skus.ChangeTrackingList<ComputeResourceSkuLocationInfo>();
+            ApiVersions = new Skus.ChangeTrackingList<string>();
+            Costs = new Skus.ChangeTrackingList<ResourceSkuCosts>();
+            Capabilities = new Skus.ChangeTrackingList<ComputeResourceSkuCapabilities>();
+            Restrictions = new Skus.ChangeTrackingList<ComputeResourceSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSku"/>. </summary>
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IReadOnlyList<ComputeResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities, IReadOnlyList<ComputeResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         public ComputeResourceSkuCapacity Capacity { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
         public IReadOnlyList<ComputeResourceSkuLocationInfo> LocationInfo { get; }
         /// <summary> The api versions that support this SKU. </summary>

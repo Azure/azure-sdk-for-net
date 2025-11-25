@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceSkuCosts(string meterId, long? quantity, string extendedUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MeterID = meterId;
+            MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used for querying price from commerce. </summary>
-        public string MeterID { get; }
+        public string MeterId { get; }
         /// <summary> The multiplier is needed to extend the base metered cost. </summary>
         public long? Quantity { get; }
         /// <summary> An invariant to show the extended unit. </summary>

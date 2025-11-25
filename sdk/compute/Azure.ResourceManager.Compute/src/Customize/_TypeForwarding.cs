@@ -10,6 +10,7 @@ using Azure.ResourceManager.Compute.Models;
 [assembly: TypeForwardedTo(typeof(ComputeResourceSkuCapacityScaleType))]
 [assembly: TypeForwardedTo(typeof(ComputeResourceSkuRestrictionInfo))]
 [assembly: TypeForwardedTo(typeof(ComputeResourceSkuRestrictions))]
+[assembly: TypeForwardedTo(typeof(ComputeResourceSkuLocationInfo))]
 [assembly: TypeForwardedTo(typeof(ComputeResourceSkuRestrictionsReasonCode))]
 [assembly: TypeForwardedTo(typeof(ComputeResourceSkuRestrictionsType))]
 [assembly: TypeForwardedTo(typeof(ComputeResourceSkuZoneDetails))]

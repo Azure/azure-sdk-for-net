@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Skus;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -49,15 +50,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictionInfo"/>. </summary>
         internal ComputeResourceSkuRestrictionInfo()
         {
-            Locations = new ChangeTrackingList<string>();
-            Zones = new ChangeTrackingList<string>();
+            Locations = new Skus.ChangeTrackingList<AzureLocation>();
+            Zones = new Skus.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourceSkuRestrictionInfo(IReadOnlyList<string> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourceSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locations = locations;
             Zones = zones;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> List of availability zones where the SKU is restricted. </summary>
         public IReadOnlyList<string> Zones { get; }
     }

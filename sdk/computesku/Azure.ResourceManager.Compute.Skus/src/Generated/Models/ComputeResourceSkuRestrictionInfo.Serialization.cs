@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IReadOnlyList<string> locations = default;
+            IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeResourceSkuRestrictionInfo(locations ?? new Skus.ChangeTrackingList<string>(), zones ?? new Skus.ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ComputeResourceSkuRestrictionInfo(locations ?? new Skus.ChangeTrackingList<AzureLocation>(), zones ?? new Skus.ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuRestrictionInfo>.Write(ModelReaderWriterOptions options)

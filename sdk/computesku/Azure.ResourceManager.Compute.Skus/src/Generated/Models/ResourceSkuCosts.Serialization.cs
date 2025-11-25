@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(ResourceSkuCosts)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Skus.Optional.IsDefined(MeterID))
+            if (options.Format != "W" && Skus.Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterID"u8);
-                writer.WriteStringValue(MeterID);
+                writer.WriteStringValue(MeterId);
             }
             if (options.Format != "W" && Skus.Optional.IsDefined(Quantity))
             {

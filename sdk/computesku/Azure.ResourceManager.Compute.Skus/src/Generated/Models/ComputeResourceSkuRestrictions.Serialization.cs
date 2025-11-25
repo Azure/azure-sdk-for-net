@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Skus.Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RestrictionsType.Value.ToString());
+                writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
             }
             if (options.Format != "W" && Skus.Optional.IsCollectionDefined(Values))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Skus.Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
-                writer.WriteStringValue(ReasonCode.Value.ToString());
+                writer.WriteStringValue(ReasonCode.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    type = new ComputeResourceSkuRestrictionsType(property.Value.GetString());
+                    type = property.Value.GetString().ToComputeResourceSkuRestrictionsType();
                     continue;
                 }
                 if (property.NameEquals("values"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    reasonCode = new ComputeResourceSkuRestrictionsReasonCode(property.Value.GetString());
+                    reasonCode = property.Value.GetString().ToComputeResourceSkuRestrictionsReasonCode();
                     continue;
                 }
                 if (options.Format != "W")

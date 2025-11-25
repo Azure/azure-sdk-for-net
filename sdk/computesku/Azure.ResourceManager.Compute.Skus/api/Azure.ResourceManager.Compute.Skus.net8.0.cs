@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Family { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuLocationInfo> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictions> Restrictions { get { throw null; } }
@@ -49,31 +49,18 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeResourceSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType>
+    public enum ComputeResourceSkuCapacityScaleType
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeResourceSkuCapacityScaleType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType Automatic { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType Manual { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType left, Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType left, Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacityScaleType right) { throw null; }
-        public override string ToString() { throw null; }
+        None = 0,
+        Automatic = 1,
+        Manual = 2,
     }
     public partial class ComputeResourceSkuLocationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuLocationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuLocationInfo>
     {
         internal ComputeResourceSkuLocationInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -86,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputeResourceSkuRestrictionInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionInfo>
     {
         internal ComputeResourceSkuRestrictionInfo() { }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -109,41 +96,15 @@ namespace Azure.ResourceManager.Compute.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeResourceSkuRestrictionsReasonCode : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode>
+    public enum ComputeResourceSkuRestrictionsReasonCode
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeResourceSkuRestrictionsReasonCode(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode QuotaId { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsReasonCode right) { throw null; }
-        public override string ToString() { throw null; }
+        QuotaId = 0,
+        NotAvailableForSubscription = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeResourceSkuRestrictionsType : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType>
+    public enum ComputeResourceSkuRestrictionsType
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeResourceSkuRestrictionsType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType Location { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType Zone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType left, Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType left, Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionsType right) { throw null; }
-        public override string ToString() { throw null; }
+        Location = 0,
+        Zone = 1,
     }
     public partial class ComputeResourceSkuZoneDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuZoneDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSkuZoneDetails>
     {
@@ -161,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ResourceSkuCosts() { }
         public string ExtendedUnit { get { throw null; } }
-        public string MeterID { get { throw null; } }
+        public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.ResourceSkuCosts System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ResourceSkuCosts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
