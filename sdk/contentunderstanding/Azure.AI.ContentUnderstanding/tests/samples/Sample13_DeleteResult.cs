@@ -36,11 +36,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 WaitUntil.Started,
                 "prebuilt-invoice",
                 inputs: new[] { new AnalyzeInput { Url = documentUrl } });
-            Console.WriteLine($"DEBUG: AnalyzeAsync returned operation={analyzeOperation}");
-            Console.WriteLine($"DEBUG: AnalyzeAsync returned operationId={analyzeOperation.OperationId}");
-
             // Get the operation ID from the operation (available after Started)
-            string operationId = analyzeOperation.OperationId ?? throw new InvalidOperationException("Could not extract operation ID from operation");
+            string operationId = analyzeOperation.Id;
             Console.WriteLine($"Operation ID: {operationId}");
 
             // Wait for completion

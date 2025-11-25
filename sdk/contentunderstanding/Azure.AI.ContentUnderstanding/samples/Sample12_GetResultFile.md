@@ -38,7 +38,7 @@ var analyzeOperation = await client.AnalyzeAsync(
     inputs: new[] { new AnalyzeInput { Url = videoUrl } });
 
 // Get the operation ID from the operation (available after Started)
-string operationId = analyzeOperation.OperationId ?? throw new InvalidOperationException("Could not extract operation ID from operation");
+string operationId = analyzeOperation.Id;
 Console.WriteLine($"Operation ID: {operationId}");
 
 // Wait for completion
