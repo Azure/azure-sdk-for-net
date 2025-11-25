@@ -81,18 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         };
                         telemetrySchemaTypeCounter._exceptionCount++;
                     }
-                    else if (availabilityInfo is not null)
-                    {
-                        telemetryItem = new TelemetryItem("Availability", logRecord, resource, instrumentationKey, microsoftClientIp)
-                        {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "AvailabilityData",
-                                BaseData = new AvailabilityData(Version, availabilityInfo.Value, properties, logRecord),
-                            }
-                        };
-                        telemetrySchemaTypeCounter._availabilityCount++;
-                    }
                     else if (eventName is not null)
                     {
                         telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, microsoftClientIp)
@@ -104,6 +92,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             }
                         };
                         telemetrySchemaTypeCounter._eventCount++;
+                    }
+                    else if (availabilityInfo is not null)
+                    {
+                        telemetryItem = new TelemetryItem("Availability", logRecord, resource, instrumentationKey, microsoftClientIp)
+                        {
+                            Data = new MonitorBase
+                            {
+                                BaseType = "AvailabilityData",
+                                BaseData = new AvailabilityData(Version, availabilityInfo.Value, properties, logRecord),
+                            }
+                        };
+                        telemetrySchemaTypeCounter._availabilityCount++;
                     }
                     else
                     {
@@ -146,6 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 else if (item.Key == AvailabilityNameAttributeName)
                 {
                     hasAvailabilityData = true;
+                    break;
                 }
                 else if (item.Key == ClientIpAttributeName)
                 {
@@ -261,7 +262,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     Id = availabilityId!,
                     Name = availabilityName!,
                     Duration = availabilityDuration!,
-                    Success = bool.Parse(availabilitySuccess),
+                    Success = bool.TryParse(availabilitySuccess, out var success) ? success : false,
                     RunLocation = availabilityRunLocation,
                     Message = availabilityMessage ?? message
                 };
