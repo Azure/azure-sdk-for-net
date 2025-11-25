@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel.Primitives;
+using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
 using Azure.Identity;
@@ -225,8 +226,9 @@ public class AgentsSmokeTests : AgentsTestBase
     }
 
     [TearDown]
-    public override void Cleanup()
+    public async override Task Cleanup()
     {
+        await Task.Delay(0);
         // Nothing here
     }
 }

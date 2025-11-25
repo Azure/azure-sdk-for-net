@@ -37,6 +37,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         ImageGeneration,
         WebSearch,
         AzureAISearch,
+        Memory,
         AzureFunction,
         BingGrounding,
         MCP,
@@ -56,6 +57,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
         {ToolType.ImageGeneration, "Generate an image of Microsoft logo."},
         {ToolType.WebSearch, "What is special about this place?"},
+        {ToolType.Memory, "What is user's favorite animal?"},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.OpenAPI, "What's the weather in Seattle?"},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
@@ -83,6 +85,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.BingGrounding, "You are helpful agent."},
         {ToolType.ImageGeneration, "Generate images based on user prompts"},
         {ToolType.WebSearch, "You are a helpful assistant that can search the web"},
+        {ToolType.Memory, "You are a prompt agent capable to access memorized conversation."},
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
         {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
                                "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see." },
@@ -105,6 +108,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FileSearch, "673457"},
         {ToolType.FunctionCall, "emerald"},
         {ToolType.WebSearch, "centralia" },
+        {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
     };
 
@@ -125,9 +129,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
-    private readonly List<string> _memoryStoreIDs = [];
+    private readonly List<string> _memoryStoreNames = [];
     private ProjectConversationsClient _conversations = null;
     private AIProjectMemoryStoresOperations _stores = null;
+    protected readonly string MEMORY_STORE_SCOPE = "user_123";
 
     private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
         {
@@ -269,6 +274,31 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         _ => throw new NotImplementedException(),
     };
 
+    private async Task<MemoryStore> CreateMemoryStore(AIProjectClient projectClient)
+    {
+        try
+        {
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+        }
+        catch { }
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        memoryDefinitions.Options = new(true, true);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
+        ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
+        int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
+        MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
+            memoryStoreName: store.Name,
+            options: new MemoryUpdateOptions(MEMORY_STORE_SCOPE)
+            {
+                Items = { userItem },
+                UpdateDelay = 0,
+            },
+            pollingInterval: pollingInterval);
+        Assert.That(updateResult.Status, Is.EqualTo(MemoryStoreUpdateStatus.Completed), $"Unexpected memory store update status: {updateResult.Status}, error details: {updateResult.ErrorDetails}.");
+        _memoryStoreNames.Add(store.Name);
+        return store;
+    }
+
     private AzureAISearchToolIndex GetAISearchIndex(AIProjectClient projectClient)
     {
         AzureAISearchToolIndex index = new()
@@ -337,6 +367,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 size: ImageGenerationToolSize.W1024xH1024
             ),
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
+            ToolType.Memory => new MemorySearchTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex(projectClient)])),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
@@ -349,7 +380,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     #endregion
     #region Cleanup
     [TearDown]
-    public virtual void Cleanup()
+    public async virtual Task Cleanup()
     {
         if (Mode == RecordedTestMode.Playback)
             return;
@@ -363,7 +394,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             {
                 try
                 {
-                    _conversations.DeleteConversation(conversationId: id);
+                    await _conversations.DeleteConversationAsync(conversationId: id);
                 }
                 catch (RequestFailedException ex)
                 {
@@ -375,11 +406,11 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
         if (_stores != null)
         {
-            foreach (string name in _memoryStoreIDs)
+            foreach (string name in _memoryStoreNames)
             {
                 try
                 {
-                    _stores.DeleteMemoryStore(name: name);
+                    await _stores.DeleteMemoryStoreAsync(name: name);
                 }
                 catch (RequestFailedException ex)
                 {
