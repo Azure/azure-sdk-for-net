@@ -15,8 +15,8 @@ public partial class BusinessMetadataOptions
 
     internal virtual RequestContent ToRequestContent()
     {
-        MultipartFormDataContent content = new MultipartFormDataContent();
-        content.Add(MultipartContent.Create(File), "file", "file.csv", null);
+        MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+        content.Add(File, "file", "file.csv", "text/csv");
         return content;
     }
 }
