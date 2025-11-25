@@ -224,8 +224,7 @@ namespace Azure.AI.ContentUnderstanding
                     cameraShotTimesMs = array;
                     continue;
                 }
-                // Handle both "keyFrameTimesMs" (correct) and "KeyFrameTimesMs" (service bug - capital K)
-                if (prop.NameEquals("keyFrameTimesMs"u8) || prop.NameEquals("KeyFrameTimesMs"u8))
+                if (prop.NameEquals("keyFrameTimesMs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

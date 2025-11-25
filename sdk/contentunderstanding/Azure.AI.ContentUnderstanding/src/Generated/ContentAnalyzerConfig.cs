@@ -20,7 +20,7 @@ namespace Azure.AI.ContentUnderstanding
         public ContentAnalyzerConfig()
         {
             Locales = new ChangeTrackingList<string>();
-            ContentCategories = new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
+            ContentCategories = new ChangeTrackingDictionary<string, ContentCategory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentAnalyzerConfig"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.AI.ContentUnderstanding
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzerConfig(bool? returnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? omitContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzerConfig(bool? returnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategory> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? omitContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReturnDetails = returnDetails;
             Locales = locales;
@@ -102,7 +102,7 @@ namespace Azure.AI.ContentUnderstanding
         public bool? EstimateFieldSourceAndConfidence { get; set; }
 
         /// <summary> Map of categories to classify the input content(s) against. </summary>
-        public IDictionary<string, ContentCategoryDefinition> ContentCategories { get; }
+        public IDictionary<string, ContentCategory> ContentCategories { get; }
 
         /// <summary> Enable segmentation of the input by contentCategories. </summary>
         public bool? EnableSegment { get; set; }

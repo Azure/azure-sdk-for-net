@@ -16,15 +16,12 @@ namespace Azure.AI.ContentUnderstanding
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200201;
-        private static ResponseClassifier _pipelineMessageClassifier201202;
         private static ResponseClassifier _pipelineMessageClassifier202;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 = new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-
-        private static ResponseClassifier PipelineMessageClassifier201202 => _pipelineMessageClassifier201202 = new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
@@ -95,13 +92,13 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendPath(":copy", false);
+            uri.AppendPath(":copyAnalyzer", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (allowReplace != null)
             {
                 uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;

@@ -5,9 +5,8 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.AI.ContentUnderstanding</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <!-- Suppress AZC0034: Naming conflicts with FormRecognizer are expected in this new version -->
-    <!-- Suppress AZC0031: ContentCategoryDefinition name comes from service specification -->
-    <NoWarn>$(NoWarn);AZC0034;AZC0031</NoWarn>
+    <!-- Suppress AZC0034: Naming conflicts with FormRecognizer and Document Intelligence are expected in this new version -->
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

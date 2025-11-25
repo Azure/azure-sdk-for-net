@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Content category definition. </summary>
-    public partial class ContentCategoryDefinition
+    public partial class ContentCategory
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContentCategoryDefinition"/>. </summary>
-        public ContentCategoryDefinition()
+        /// <summary> Initializes a new instance of <see cref="ContentCategory"/>. </summary>
+        public ContentCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentCategoryDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentCategory"/>. </summary>
         /// <param name="description"> The description of the category. </param>
         /// <param name="analyzerId"> Optional analyzer used to process the content. </param>
         /// <param name="analyzer"> Optional inline definition of analyzer used to process the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentCategoryDefinition(string description, string analyzerId, ContentAnalyzer analyzer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentCategory(string description, string analyzerId, ContentAnalyzer analyzer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AnalyzerId = analyzerId;
