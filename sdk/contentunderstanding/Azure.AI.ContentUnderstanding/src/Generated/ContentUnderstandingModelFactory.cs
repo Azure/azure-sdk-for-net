@@ -996,12 +996,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="completion"> Chat completion models supported by the analyzer. </param>
         /// <param name="embedding"> Embedding models supported by the analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.SupportedModels"/> instance for mocking. </returns>
-        public static SupportedModels SupportedModels(IDictionary<string, string> completion = default, IDictionary<string, string> embedding = default)
+        public static SupportedModels SupportedModels(IEnumerable<string> completion = default, IEnumerable<string> embedding = default)
         {
-            completion ??= new ChangeTrackingDictionary<string, string>();
-            embedding ??= new ChangeTrackingDictionary<string, string>();
+            completion ??= new ChangeTrackingList<string>();
+            embedding ??= new ChangeTrackingList<string>();
 
-            return new SupportedModels(completion, embedding, additionalBinaryDataProperties: null);
+            return new SupportedModels(completion.ToList(), embedding.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> default settings for this Content Understanding resource. </summary>

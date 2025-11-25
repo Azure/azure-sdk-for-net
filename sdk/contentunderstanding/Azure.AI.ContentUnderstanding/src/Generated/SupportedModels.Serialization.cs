@@ -39,31 +39,29 @@ namespace Azure.AI.ContentUnderstanding
                 throw new FormatException($"The model {nameof(SupportedModels)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("completion"u8);
-            writer.WriteStartObject();
-            foreach (var item in Completion)
+            writer.WriteStartArray();
+            foreach (string item in Completion)
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if (item == null)
                 {
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteStringValue(item);
             }
-            writer.WriteEndObject();
+            writer.WriteEndArray();
             writer.WritePropertyName("embedding"u8);
-            writer.WriteStartObject();
-            foreach (var item in Embedding)
+            writer.WriteStartArray();
+            foreach (string item in Embedding)
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if (item == null)
                 {
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteStringValue(item);
             }
-            writer.WriteEndObject();
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -106,43 +104,43 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            IDictionary<string, string> completion = default;
-            IDictionary<string, string> embedding = default;
+            IList<string> completion = default;
+            IList<string> embedding = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("completion"u8))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            array.Add(null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                            array.Add(item.GetString());
                         }
                     }
-                    completion = dictionary;
+                    completion = array;
                     continue;
                 }
                 if (prop.NameEquals("embedding"u8))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            array.Add(null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                            array.Add(item.GetString());
                         }
                     }
-                    embedding = dictionary;
+                    embedding = array;
                     continue;
                 }
                 if (options.Format != "W")

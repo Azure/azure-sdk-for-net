@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -19,17 +20,17 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
         /// <param name="completion"> Chat completion models supported by the analyzer. </param>
         /// <param name="embedding"> Embedding models supported by the analyzer. </param>
-        internal SupportedModels(IDictionary<string, string> completion, IDictionary<string, string> embedding)
+        internal SupportedModels(IEnumerable<string> completion, IEnumerable<string> embedding)
         {
-            Completion = completion;
-            Embedding = embedding;
+            Completion = completion.ToList();
+            Embedding = embedding.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedModels"/>. </summary>
         /// <param name="completion"> Chat completion models supported by the analyzer. </param>
         /// <param name="embedding"> Embedding models supported by the analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedModels(IDictionary<string, string> completion, IDictionary<string, string> embedding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedModels(IList<string> completion, IList<string> embedding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Completion = completion;
             Embedding = embedding;
@@ -37,9 +38,9 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Chat completion models supported by the analyzer. </summary>
-        public IDictionary<string, string> Completion { get; }
+        public IList<string> Completion { get; }
 
         /// <summary> Embedding models supported by the analyzer. </summary>
-        public IDictionary<string, string> Embedding { get; }
+        public IList<string> Embedding { get; }
     }
 }
