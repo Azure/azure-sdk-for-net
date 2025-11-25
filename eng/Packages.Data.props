@@ -242,6 +242,10 @@
     <PackageReference Update="Humanizer.Core" Version="2.14.1" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Generator'))">
+    <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.5.2" />
+  </ItemGroup>
+
   <!--
     Dependency versions for Track 2, Microsoft.* libraries.
     These are dependencies for Track 2 integration packages
