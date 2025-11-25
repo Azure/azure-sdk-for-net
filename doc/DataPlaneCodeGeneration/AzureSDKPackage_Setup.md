@@ -20,23 +20,7 @@ sdk\<service name>\<package name>\<package name>.sln
 
 You have several options to create the initial project skeleton for SDKs generated from TypeSpec:
 
-### Option 1: Copy the Azure.Template project (Recommended for complete setup)
-
-You can copy the [Azure.Template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template) project as a starting point. This template includes the complete project structure with:
-
-- Project files (`.csproj`, `.sln`)
-- TypeSpec configuration (`tsp-location.yaml`)
-- Test infrastructure
-- Sample structure
-- CI/CD configuration
-
-**Steps:**
-1. Copy the `sdk/template/Azure.Template` directory to your new location `sdk/<service name>/<package name>/`
-2. Rename the project files and namespaces to match your service
-3. Update the `tsp-location.yaml` file to point to your TypeSpec specification
-4. Update the package name, version, and other metadata in the `.csproj` file
-
-### Option 2: Using tsp-client init
+### Option 1: Using tsp-client init (Recommended)
 
 You can use the `tsp-client init` command to initialize the TypeSpec configuration. This tool automatically sets up the correct emitter path for new services. You must pass the `--tsp-config` parameter pointing to the tspconfig.yaml in the spec repo:
 
@@ -51,6 +35,22 @@ tsp-client init --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/
 ```
 
 This will initialize the `tsp-location.yaml` file with the correct configuration. After running this command, you'll still need to create the project structure and files manually.
+
+### Option 2: Copy the Azure.Template project
+
+You can copy the [Azure.Template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template) project as a starting point. This template includes the complete project structure with:
+
+- Project files (`.csproj`, `.sln`)
+- TypeSpec configuration (`tsp-location.yaml`)
+- Test infrastructure
+- Sample structure
+- CI/CD configuration
+
+**Steps:**
+1. Copy the `sdk/template/Azure.Template` directory to your new location `sdk/<service name>/<package name>/`
+2. Rename the project files and namespaces to match your service
+3. Update the `tsp-location.yaml` file to point to your TypeSpec specification
+4. Update the package name, version, and other metadata in the `.csproj` file
 
 ### Option 3: Manual Setup
 
