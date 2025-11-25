@@ -6,37 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Template
 {
-    internal partial class AzureWidgetsGetWidgetsCollectionResult : Pageable<BinaryData>
+    internal partial class AzureWidgetsGetWidgetsAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly AzureWidgets _client;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of AzureWidgetsGetWidgetsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AzureWidgetsGetWidgetsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AzureWidgets client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AzureWidgetsGetWidgetsCollectionResult(AzureWidgets client, RequestContext context) : base(context?.CancellationToken ?? default)
+        public AzureWidgetsGetWidgetsAsyncCollectionResult(AzureWidgets client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
         }
 
-        /// <summary> Gets the pages of AzureWidgetsGetWidgetsCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AzureWidgetsGetWidgetsAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AzureWidgetsGetWidgetsCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of AzureWidgetsGetWidgetsAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -45,7 +47,7 @@ namespace Azure.Template
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(BinaryData.FromObjectAsJson(item));
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureTemplateContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
@@ -59,14 +61,14 @@ namespace Azure.Template
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetWidgetsRequest(nextLink, _context) : _client.CreateGetWidgetsRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AzureWidgets.GetWidgets");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

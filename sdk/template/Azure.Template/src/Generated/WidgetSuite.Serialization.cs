@@ -154,7 +154,7 @@ namespace Azure.Template
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeWidgetSuite(document.RootElement, options);
                     }
@@ -166,11 +166,18 @@ namespace Azure.Template
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WidgetSuite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="WidgetSuite"/> from. </param>
-        public static explicit operator WidgetSuite(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WidgetSuite"/> from. </param>
+        public static explicit operator WidgetSuite(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeWidgetSuite(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <summary> Converts a response to a WidgetSuite using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static WidgetSuite FromLroResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWidgetSuite(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
         }
     }

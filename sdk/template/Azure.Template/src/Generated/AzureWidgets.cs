@@ -118,7 +118,7 @@ namespace Azure.Template
         {
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Response result = GetWidget(widgetName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetWidget(widgetName, cancellationToken.ToRequestContext());
             return Response.FromValue((WidgetSuite)result, result);
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Template
         {
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Response result = await GetWidgetAsync(widgetName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetWidgetAsync(widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WidgetSuite)result, result);
         }
 
@@ -216,7 +216,7 @@ namespace Azure.Template
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = GetWidgetOperationStatus(widgetName, operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetWidgetOperationStatus(widgetName, operationId, cancellationToken.ToRequestContext());
             return Response.FromValue((ResourceOperationStatusWidgetSuiteWidgetSuiteError)result, result);
         }
 
@@ -232,7 +232,7 @@ namespace Azure.Template
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = await GetWidgetOperationStatusAsync(widgetName, operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetWidgetOperationStatusAsync(widgetName, operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ResourceOperationStatusWidgetSuiteWidgetSuiteError)result, result);
         }
 
@@ -350,8 +350,8 @@ namespace Azure.Template
         {
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Operation<BinaryData> result = DeleteWidget(waitUntil, widgetName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (WidgetSuite)response, ClientDiagnostics, "AzureWidgets.DeleteWidget");
+            Operation<BinaryData> result = DeleteWidget(waitUntil, widgetName, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidget");
         }
 
         /// <summary> Delete a Widget asynchronously. </summary>
@@ -364,8 +364,8 @@ namespace Azure.Template
         {
             Argument.AssertNotNullOrEmpty(widgetName, nameof(widgetName));
 
-            Operation<BinaryData> result = await DeleteWidgetAsync(waitUntil, widgetName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (WidgetSuite)response, ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync");
+            Operation<BinaryData> result = await DeleteWidgetAsync(waitUntil, widgetName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => WidgetSuite.FromLroResponse(response), ClientDiagnostics, "AzureWidgets.DeleteWidgetAsync");
         }
 
         /// <summary>
@@ -381,17 +381,7 @@ namespace Azure.Template
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWidgets(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.GetWidgets");
-            scope.Start();
-            try
-            {
-                return new AzureWidgetsGetWidgetsCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new AzureWidgetsGetWidgetsCollectionResult(this, context);
         }
 
         /// <summary>
@@ -407,17 +397,7 @@ namespace Azure.Template
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWidgetsAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureWidgets.GetWidgets");
-            scope.Start();
-            try
-            {
-                return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context);
         }
 
         /// <summary> List Widget resources. </summary>
@@ -425,7 +405,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<WidgetSuite> GetWidgets(CancellationToken cancellationToken = default)
         {
-            return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List Widget resources. </summary>
@@ -433,7 +413,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<WidgetSuite> GetWidgetsAsync(CancellationToken cancellationToken = default)
         {
-            return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
     }
 }
