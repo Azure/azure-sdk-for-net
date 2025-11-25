@@ -31,7 +31,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </summary>
         /// <param name="innerOperation">The inner operation to wrap.</param>
         /// <param name="operationId">Optional operation ID. If not provided, will be extracted from the operation's raw response.</param>
-        public AnalyzeResultOperation(Operation<AnalyzeResult> innerOperation, string? operationId = null)
+        internal AnalyzeResultOperation(Operation<AnalyzeResult> innerOperation, string? operationId = null)
         {
             _innerOperation = innerOperation ?? throw new ArgumentNullException(nameof(innerOperation));
             _operationId = operationId ?? ExtractOperationId(innerOperation);
