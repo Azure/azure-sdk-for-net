@@ -1,35 +1,53 @@
 # Sample using Supervised Fine-Tuning (SFT) in Azure.AI.Projects
 
-This sample demonstrates how to create and manage supervised fine-tuning jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. Supervised fine-tuning allows you to customize models for specific tasks using labeled training data.
+This sample demonstrates how to create and manage supervised fine-tuning jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. The file operations are accessed via the ProjectOpenAIClient `GetFineTuningClient` method. Supervised fine-tuning allows you to customize models for specific tasks using labeled training data.
 
 ## Supported Models
-Supported OpenAI models: GPT 4o, 4o-mini, 4.1, 4.1-mini
+Supported OpenAI models: gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
-- For deployment and inference samples, also install:
-  - `Azure.AI.OpenAI` - For inference with deployed models
+- For deployment samples, also install:
   - `Azure.ResourceManager.CognitiveServices` - For model deployment via Azure Resource Manager
-
-> **Important:** Ensure you use compatible versions of `Azure.AI.Projects` and `Azure.AI.OpenAI`. 
-> Refer to the [package release notes](https://github.com/Azure/azure-sdk-for-net/releases) for compatible version combinations.
 
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
+  - `MODEL_DEPLOYMENT_NAME`: The name of the model deployment to use for fine-tuning.
 
-## Asynchronous Sample
+## Create Clients
 
-```C# Snippet:AI_Projects_FineTuning_SupervisedAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_CreateClientsAsync
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
 
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_CreateClients
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
+
+## Upload Files
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_UploadFilesAsync
 // Upload training file
 Console.WriteLine("Uploading training file...");
-using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl");
+string trainingFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl";
+using FileStream trainStream = File.OpenRead(trainingFilePath);
 OpenAIFile trainFile = await fileClient.UploadFileAsync(
     trainStream,
     "sft_training_set.jsonl",
@@ -38,7 +56,8 @@ Console.WriteLine($"Uploaded training file with ID: {trainFile.Id}");
 
 // Upload validation file
 Console.WriteLine("Uploading validation file...");
-using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl");
+string validationFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl";
+using FileStream validationStream = File.OpenRead(validationFilePath);
 OpenAIFile validationFile = await fileClient.UploadFileAsync(
     validationStream,
     "sft_validation_set.jsonl",
@@ -49,128 +68,15 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 Console.WriteLine("Waiting for files to complete processing...");
 await WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
 await WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
-
-// Create supervised fine-tuning job
-// Note: The default training type passed here is "Standard".
-// If you need to pass training type explicitly (e.g., "GlobalStandard"),
-// see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
-Console.WriteLine("Creating supervised fine-tuning job...");
-FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
-    "gpt-4.1",
-    trainFile.Id,
-    waitUntilCompleted: false,
-    new()
-    {
-        TrainingMethod = FineTuningTrainingMethod.CreateSupervised(
-            epochCount: 3,
-            batchSize: 1,
-            learningRate: 1.0),
-        ValidationFile = validationFile.Id
-    });
-Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
-Console.WriteLine($"Status: {fineTuningJob.Status}");
-Console.WriteLine($"Model: {fineTuningJob.Model}");
-
-// Retrieve job details
-Console.WriteLine($"Getting fine-tuning job with ID: {fineTuningJob.JobId}");
-FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-Console.WriteLine($"Retrieved job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
-
-// List all fine-tuning jobs
-Console.WriteLine("Listing all fine-tuning jobs:");
-await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync())
-{
-    Console.WriteLine($"Job: {job.JobId}, Model: {job.Model}, Status: {job.Status}");
-}
-
-// Pause the fine-tuning job
-Console.WriteLine($"Pausing fine-tuning job with ID: {fineTuningJob.JobId}");
-await fineTuningClient.PauseFineTuningJobAsync(fineTuningJob.JobId, options: null);
-FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
-
-// Resume the fine-tuning job
-Console.WriteLine($"Resuming fine-tuning job with ID: {fineTuningJob.JobId}");
-await fineTuningClient.ResumeFineTuningJobAsync(fineTuningJob.JobId, options: null);
-FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
-Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
-
-// List events for the job
-Console.WriteLine($"Listing events of fine-tuning job: {fineTuningJob.JobId}");
-await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions()))
-{
-    Console.WriteLine($"Event: {evt.Level} - {evt.Message} at {evt.CreatedAt}");
-}
-
-// List checkpoints (job needs to be in terminal state)
-Console.WriteLine($"Listing checkpoints of fine-tuning job: {fineTuningJob.JobId}");
-await foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpointsAsync(new GetCheckpointsOptions()))
-{
-    Console.WriteLine($"Checkpoint: {checkpoint.Id} at step {checkpoint.StepNumber}");
-}
-
-// Cancel the fine-tuning job
-Console.WriteLine($"Cancelling fine-tuning job with ID: {retrievedJob.JobId}");
-await retrievedJob.CancelAndUpdateAsync();
-Console.WriteLine($"Successfully cancelled fine-tuning job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
-
-// Clean up files
-ClientResult<FileDeletionResult> trainDeleteResult = await fileClient.DeleteFileAsync(trainFile.Id);
-Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDeleteResult.Value.Deleted})");
-
-ClientResult<FileDeletionResult> validationDeleteResult = await fileClient.DeleteFileAsync(validationFile.Id);
-Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
-
-// Helper method to wait for file processing
-async Task<OpenAIFile> WaitForFileProcessingAsync(
-    OpenAIFileClient fileClient,
-    string fileId,
-    int pollIntervalSeconds = 5,
-    int maxWaitSeconds = 1800)
-{
-    var start = DateTimeOffset.Now;
-    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
-    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
-
-    OpenAIFile file = await fileClient.GetFileAsync(fileId);
-    Console.WriteLine($"File {fileId} initial status: {file.Status}");
-
-    while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
-    {
-        if (DateTimeOffset.Now - start > timeout)
-        {
-            throw new TimeoutException(
-                $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
-        }
-
-        await Task.Delay(pollInterval);
-        file = await fileClient.GetFileAsync(fileId);
-        Console.WriteLine($"File {fileId} status: {file.Status}");
-    }
-
-    if (file.Status == FileStatus.Error)
-    {
-        throw new InvalidOperationException(
-            $"File {fileId} processing failed: {file.StatusDetails}");
-    }
-
-    Console.WriteLine($"File {fileId} processing completed successfully");
-    return file;
-}
 ```
 
-## Synchronous Sample
+### Synchronous
 
-```C# Snippet:AI_Projects_FineTuning_Supervised
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
-OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
-FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
-
+```C# Snippet:AI_Projects_FineTuning_UploadFiles
 // Upload training file
 Console.WriteLine("Uploading training file...");
-using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl");
+string trainingFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl";
+using FileStream trainStream = File.OpenRead(trainingFilePath);
 OpenAIFile trainFile = fileClient.UploadFile(
     trainStream,
     "sft_training_set.jsonl",
@@ -179,7 +85,8 @@ Console.WriteLine($"Uploaded training file with ID: {trainFile.Id}");
 
 // Upload validation file
 Console.WriteLine("Uploading validation file...");
-using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl");
+string validationFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl";
+using FileStream validationStream = File.OpenRead(validationFilePath);
 OpenAIFile validationFile = fileClient.UploadFile(
     validationStream,
     "sft_validation_set.jsonl",
@@ -190,14 +97,17 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 Console.WriteLine("Waiting for files to complete processing...");
 WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
 WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
+```
 
+## Create Fine-Tuning Job
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_CreateJobAsync
 // Create supervised fine-tuning job
-// Note: The default training type passed here is "Standard".
-// If you need to pass training type explicitly (e.g., "GlobalStandard"),
-// see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
 Console.WriteLine("Creating supervised fine-tuning job...");
-FineTuningJob fineTuningJob = fineTuningClient.FineTune(
-    "gpt-4.1",
+FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
+    modelDeploymentName,
     trainFile.Id,
     waitUntilCompleted: false,
     new()
@@ -210,124 +120,260 @@ FineTuningJob fineTuningJob = fineTuningClient.FineTune(
     });
 Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
-Console.WriteLine($"Model: {fineTuningJob.Model}");
+```
 
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_CreateJob
+// Create supervised fine-tuning job
+Console.WriteLine("Creating supervised fine-tuning job...");
+FineTuningJob fineTuningJob = fineTuningClient.FineTune(
+    modelDeploymentName,
+    trainFile.Id,
+    waitUntilCompleted: false,
+    new()
+    {
+        TrainingMethod = FineTuningTrainingMethod.CreateSupervised(
+            epochCount: 3,
+            batchSize: 1,
+            learningRate: 1.0),
+        ValidationFile = validationFile.Id
+    });
+Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Status: {fineTuningJob.Status}");
+```
+
+## Retrieve Job
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_RetrieveJobAsync
+// Retrieve job details
+Console.WriteLine($"Getting fine-tuning job with ID: {fineTuningJob.JobId}");
+FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
+Console.WriteLine($"Retrieved job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_RetrieveJob
 // Retrieve job details
 Console.WriteLine($"Getting fine-tuning job with ID: {fineTuningJob.JobId}");
 FineTuningJob retrievedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
 Console.WriteLine($"Retrieved job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
+```
 
+## List Jobs
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_ListJobsAsync
+// List all fine-tuning jobs
+Console.WriteLine("Listing all fine-tuning jobs:");
+await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync())
+{
+    Console.WriteLine($"Job: {job.JobId}, Status: {job.Status}");
+}
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_ListJobs
 // List all fine-tuning jobs
 Console.WriteLine("Listing all fine-tuning jobs:");
 foreach (FineTuningJob job in fineTuningClient.GetJobs())
 {
-    Console.WriteLine($"Job: {job.JobId}, Model: {job.Model}, Status: {job.Status}");
+    Console.WriteLine($"Job: {job.JobId}, Status: {job.Status}");
 }
+```
 
+## Pause Job
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_PauseJobAsync
+// Pause the fine-tuning job
+Console.WriteLine($"Pausing fine-tuning job with ID: {fineTuningJob.JobId}");
+await fineTuningClient.PauseFineTuningJobAsync(fineTuningJob.JobId, options: null);
+FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
+Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_PauseJob
 // Pause the fine-tuning job
 Console.WriteLine($"Pausing fine-tuning job with ID: {fineTuningJob.JobId}");
 fineTuningClient.PauseFineTuningJob(fineTuningJob.JobId, options: null);
 FineTuningJob pausedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
 Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
+```
 
+## Resume Job
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_ResumeJobAsync
+// Resume the fine-tuning job
+Console.WriteLine($"Resuming fine-tuning job with ID: {fineTuningJob.JobId}");
+await fineTuningClient.ResumeFineTuningJobAsync(fineTuningJob.JobId, options: null);
+FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(fineTuningJob.JobId);
+Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_ResumeJob
 // Resume the fine-tuning job
 Console.WriteLine($"Resuming fine-tuning job with ID: {fineTuningJob.JobId}");
 fineTuningClient.ResumeFineTuningJob(fineTuningJob.JobId, options: null);
 FineTuningJob resumedJob = fineTuningClient.GetJob(fineTuningJob.JobId);
 Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
+```
 
+## List Events
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_ListEventsAsync
+// List events for the job
+Console.WriteLine($"Listing events of fine-tuning job: {fineTuningJob.JobId}");
+await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions()))
+{
+    Console.WriteLine($"Event: {evt.Level} - {evt.Message} at {evt.CreatedAt}");
+}
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_ListEvents
 // List events for the job
 Console.WriteLine($"Listing events of fine-tuning job: {fineTuningJob.JobId}");
 foreach (FineTuningEvent evt in retrievedJob.GetEvents(new GetEventsOptions()))
 {
     Console.WriteLine($"Event: {evt.Level} - {evt.Message} at {evt.CreatedAt}");
 }
+```
 
+## Wait for Terminal State
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_WaitForTerminalStateAsync
+// Wait for job to reach terminal state (succeeded, failed, or cancelled)
+Console.WriteLine($"Waiting for job {fineTuningJob.JobId} to reach terminal state...");
+FineTuningJob finalJob = await WaitForJobTerminalStateAsync(fineTuningClient, fineTuningJob.JobId);
+Console.WriteLine($"Job reached terminal state: {finalJob.Status}");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_WaitForTerminalState
+// Wait for job to reach terminal state (succeeded, failed, or cancelled)
+Console.WriteLine($"Waiting for job {fineTuningJob.JobId} to reach terminal state...");
+FineTuningJob finalJob = WaitForJobTerminalState(fineTuningClient, fineTuningJob.JobId);
+Console.WriteLine($"Job reached terminal state: {finalJob.Status}");
+```
+
+## List Checkpoints
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_ListCheckpointsAsync
 // List checkpoints (job needs to be in terminal state)
 Console.WriteLine($"Listing checkpoints of fine-tuning job: {fineTuningJob.JobId}");
-foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpoints(new GetCheckpointsOptions()))
+await foreach (FineTuningCheckpoint checkpoint in finalJob.GetCheckpointsAsync(new GetCheckpointsOptions()))
 {
     Console.WriteLine($"Checkpoint: {checkpoint.Id} at step {checkpoint.StepNumber}");
 }
+```
 
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_ListCheckpoints
+// List checkpoints (job needs to be in terminal state)
+Console.WriteLine($"Listing checkpoints of fine-tuning job: {fineTuningJob.JobId}");
+foreach (FineTuningCheckpoint checkpoint in finalJob.GetCheckpoints(new GetCheckpointsOptions()))
+{
+    Console.WriteLine($"Checkpoint: {checkpoint.Id} at step {checkpoint.StepNumber}");
+}
+```
+
+## Cancel Job
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_CancelJobAsync
+// Cancel the fine-tuning job
+Console.WriteLine($"Cancelling fine-tuning job with ID: {retrievedJob.JobId}");
+await retrievedJob.CancelAndUpdateAsync();
+Console.WriteLine($"Successfully cancelled fine-tuning job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_CancelJob
 // Cancel the fine-tuning job
 Console.WriteLine($"Cancelling fine-tuning job with ID: {retrievedJob.JobId}");
 retrievedJob.CancelAndUpdate();
 Console.WriteLine($"Successfully cancelled fine-tuning job: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
+```
 
+## Cleanup Files
+
+### Asynchronous
+
+```C# Snippet:AI_Projects_FineTuning_CleanupFilesAsync
+// Clean up files
+ClientResult<FileDeletionResult> trainDeleteResult = await fileClient.DeleteFileAsync(trainFile.Id);
+Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDeleteResult.Value.Deleted})");
+
+ClientResult<FileDeletionResult> validationDeleteResult = await fileClient.DeleteFileAsync(validationFile.Id);
+Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
+```
+
+### Synchronous
+
+```C# Snippet:AI_Projects_FineTuning_CleanupFiles
 // Clean up files
 ClientResult<FileDeletionResult> trainDeleteResult = fileClient.DeleteFile(trainFile.Id);
 Console.WriteLine($"Deleted training file: {trainFile.Id} (deleted: {trainDeleteResult.Value.Deleted})");
 
 ClientResult<FileDeletionResult> validationDeleteResult = fileClient.DeleteFile(validationFile.Id);
 Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {validationDeleteResult.Value.Deleted})");
-
-// Helper method to wait for file processing
-OpenAIFile WaitForFileProcessing(
-    OpenAIFileClient fileClient,
-    string fileId,
-    int pollIntervalSeconds = 5,
-    int maxWaitSeconds = 1800)
-{
-    var start = DateTimeOffset.Now;
-    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
-    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
-
-    OpenAIFile file = fileClient.GetFile(fileId);
-    Console.WriteLine($"File {fileId} initial status: {file.Status}");
-
-    while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
-    {
-        if (DateTimeOffset.Now - start > timeout)
-        {
-            throw new TimeoutException(
-                $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
-        }
-
-        System.Threading.Thread.Sleep(pollInterval);
-        file = fileClient.GetFile(fileId);
-        Console.WriteLine($"File {fileId} status: {file.Status}");
-    }
-
-    if (file.Status == FileStatus.Error)
-    {
-        throw new InvalidOperationException(
-            $"File {fileId} processing failed: {file.StatusDetails}");
-    }
-
-    Console.WriteLine($"File {fileId} processing completed successfully");
-    return file;
-}
 ```
 
-## Deploying a Fine-Tuned Model
+## Deploy Model
 
-Once your fine-tuning job completes, you can deploy the model using Azure Resource Manager.
+### Asynchronous
 
-### Asynchronous Deployment
-
-```csharp
-using Azure.ResourceManager;
-using Azure.ResourceManager.CognitiveServices;
-using Azure.ResourceManager.CognitiveServices.Models;
-using Azure.Identity;
-
+```C# Snippet:AI_Projects_FineTuning_DeployModelAsync
 // Get the completed fine-tuning job
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
+
 FineTuningJob completedJob = await fineTuningClient.GetJobAsync("your-completed-job-id");
 
 // Configure deployment
-string deploymentName = $"ft-deployment-{completedJob.BaseModel}";
-string fineTunedModelName = completedJob.Value;
+string deploymentName = $"ft-deployment-{completedJob.BaseModel}-{DateTimeOffset.UtcNow:yyyy-MM-dd}";
+string fineTunedModelName = completedJob.Value; // The fine-tuned model identifier
+
+Console.WriteLine($"Deploying model '{fineTunedModelName}' as '{deploymentName}'...");
 
 // Create ARM client
 var credential = new DefaultAzureCredential();
 var armClient = new ArmClient(credential);
 
 // Get Cognitive Services account
+string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
+string resourceGroupName = Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP");
+string accountName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT_NAME");
+
 var resourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(
-    "your-subscription-id",
-    "your-resource-group",
-    "your-account-name");
+    subscriptionId,
+    resourceGroupName,
+    accountName);
 var accountResource = armClient.GetCognitiveServicesAccountResource(resourceId);
 
 // Deploy the model
@@ -348,33 +394,38 @@ var deploymentData = new CognitiveServicesAccountDeploymentData
 var deploymentOperation = await accountResource.GetCognitiveServicesAccountDeployments()
     .CreateOrUpdateAsync(Azure.WaitUntil.Completed, deploymentName, deploymentData);
 
-Console.WriteLine($"Deployment {deploymentName} completed successfully");
+Console.WriteLine($"Deployment '{deploymentName}' completed successfully");
 ```
 
-### Synchronous Deployment
+### Synchronous
 
-```csharp
-using Azure.ResourceManager;
-using Azure.ResourceManager.CognitiveServices;
-using Azure.ResourceManager.CognitiveServices.Models;
-using Azure.Identity;
-
+```C# Snippet:AI_Projects_FineTuning_DeployModel
 // Get the completed fine-tuning job
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+FineTuningClient fineTuningClient = projectClient.OpenAI.GetFineTuningClient();
+
 FineTuningJob completedJob = fineTuningClient.GetJob("your-completed-job-id");
 
 // Configure deployment
-string deploymentName = $"ft-deployment-{completedJob.BaseModel}";
-string fineTunedModelName = completedJob.JobId;  // Job ID is the model identifier
+string deploymentName = $"ft-deployment-{completedJob.BaseModel}-{DateTimeOffset.UtcNow:yyyy-MM-dd}";
+string fineTunedModelName = completedJob.Value; // The fine-tuned model identifier
+
+Console.WriteLine($"Deploying model '{fineTunedModelName}' as '{deploymentName}'...");
 
 // Create ARM client
 var credential = new DefaultAzureCredential();
 var armClient = new ArmClient(credential);
 
 // Get Cognitive Services account
+string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
+string resourceGroupName = Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP");
+string accountName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT_NAME");
+
 var resourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(
-    "your-subscription-id",
-    "your-resource-group",
-    "your-account-name");
+    subscriptionId,
+    resourceGroupName,
+    accountName);
 var accountResource = armClient.GetCognitiveServicesAccountResource(resourceId);
 
 // Deploy the model
@@ -395,57 +446,219 @@ var deploymentData = new CognitiveServicesAccountDeploymentData
 var deploymentOperation = accountResource.GetCognitiveServicesAccountDeployments()
     .CreateOrUpdate(Azure.WaitUntil.Completed, deploymentName, deploymentData);
 
-Console.WriteLine($"Deployment {deploymentName} completed successfully");
+Console.WriteLine($"Deployment '{deploymentName}' completed successfully");
 ```
 
-## Inference with Deployed Fine-Tuned Model
+## Inference with Fine-Tuned Model
 
-Perform inference with your deployed fine-tuned model using Azure OpenAI client.
+### Asynchronous
 
-### Asynchronous Inference
-
-```csharp
-using Azure.AI.OpenAI;
-using Azure.Identity;
-using OpenAI.Chat;
-
-string accountName = "your-account-name";
+```C# Snippet:AI_Projects_FineTuning_InferenceAsync
+// Get the deployed fine-tuned model
 string deploymentName = "your-deployment-name";
 
-// Create Azure OpenAI client
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri($"https://{accountName}.openai.azure.com/");
-var azureOpenAIClient = new AzureOpenAIClient(endpoint, credential);
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
-// Get chat client for the deployment
-var chatClient = azureOpenAIClient.GetChatClient(deploymentName);
+// Get responses client for the specific deployment
+var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
 
 // Perform inference
-ChatCompletion result = await chatClient.CompleteChatAsync("Your prompt here");
+string prompt = "What is the capital of France?";
+Console.WriteLine($"Sending prompt: {prompt}");
 
-Console.WriteLine($"Response: {result.Content[0].Text}");
+ClientResult<OpenAIResponse> result = await responsesClient.CreateResponseAsync(prompt);
+
+// Get the response message
+var messageItem = result.Value.OutputItems
+    .OfType<MessageResponseItem>()
+    .LastOrDefault();
+
+Console.WriteLine($"Response: {messageItem.Content[0].Text}");
 ```
 
-### Synchronous Inference
+### Synchronous
 
-```csharp
-using Azure.AI.OpenAI;
-using Azure.Identity;
-using OpenAI.Chat;
-
-string accountName = "your-account-name";
+```C# Snippet:AI_Projects_FineTuning_Inference
+// Get the deployed fine-tuned model
 string deploymentName = "your-deployment-name";
 
-// Create Azure OpenAI client
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri($"https://{accountName}.openai.azure.com/");
-var azureOpenAIClient = new AzureOpenAIClient(endpoint, credential);
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
-// Get chat client for the deployment
-var chatClient = azureOpenAIClient.GetChatClient(deploymentName);
+// Get responses client for the specific deployment
+var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
 
 // Perform inference
-ChatCompletion result = chatClient.CompleteChat("Your prompt here");
+string prompt = "What is the capital of France?";
+Console.WriteLine($"Sending prompt: {prompt}");
 
-Console.WriteLine($"Response: {result.Content[0].Text}");
+ClientResult<OpenAIResponse> result = responsesClient.CreateResponse(prompt);
+
+// Get the response message
+var messageItem = result.Value.OutputItems
+    .OfType<MessageResponseItem>()
+    .LastOrDefault();
+
+Console.WriteLine($"Response: {messageItem.Content[0].Text}");
+```
+
+## Helper Methods
+
+### Wait for File Processing
+
+```C# Snippet:AI_Projects_FineTuning_WaitForFileProcessingHelper
+#pragma warning disable CS0618 // Type or member is obsolete
+    // Helper method to wait for file processing (async)
+    private static async Task<OpenAIFile> WaitForFileProcessingAsync(
+        OpenAIFileClient fileClient,
+        string fileId,
+        int pollIntervalSeconds = 5,
+        int maxWaitSeconds = 1800)
+    {
+        var start = DateTimeOffset.Now;
+        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+        OpenAIFile file = await fileClient.GetFileAsync(fileId);
+        Console.WriteLine($"File {fileId} initial status: {file.Status}");
+
+        while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
+        {
+            if (DateTimeOffset.Now - start > timeout)
+            {
+                throw new TimeoutException(
+                    $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+            }
+
+            await Task.Delay(pollInterval);
+            file = await fileClient.GetFileAsync(fileId);
+            Console.WriteLine($"File {fileId} status: {file.Status}");
+        }
+
+        if (file.Status == FileStatus.Error)
+        {
+            throw new InvalidOperationException(
+                $"File {fileId} processing failed: {file.StatusDetails}");
+        }
+
+        Console.WriteLine($"File {fileId} processing completed successfully");
+        return file;
+    }
+
+    // Helper method to wait for file processing (sync)
+    private static OpenAIFile WaitForFileProcessing(
+        OpenAIFileClient fileClient,
+        string fileId,
+        int pollIntervalSeconds = 5,
+        int maxWaitSeconds = 1800)
+    {
+        var start = DateTimeOffset.Now;
+        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+        OpenAIFile file = fileClient.GetFile(fileId);
+        Console.WriteLine($"File {fileId} initial status: {file.Status}");
+
+        while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
+        {
+            if (DateTimeOffset.Now - start > timeout)
+            {
+                throw new TimeoutException(
+                    $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+            }
+
+            System.Threading.Thread.Sleep(pollInterval);
+            file = fileClient.GetFile(fileId);
+            Console.WriteLine($"File {fileId} status: {file.Status}");
+        }
+
+        if (file.Status == FileStatus.Error)
+        {
+            throw new InvalidOperationException(
+                $"File {fileId} processing failed: {file.StatusDetails}");
+        }
+
+        Console.WriteLine($"File {fileId} processing completed successfully");
+        return file;
+    }
+#pragma warning restore CS0618 // Type or member is obsolete
+```
+
+### Wait for Terminal State
+
+```C# Snippet:AI_Projects_FineTuning_WaitForTerminalStateHelper
+// Helper method to wait for job to reach terminal state (async)
+private static async Task<FineTuningJob> WaitForJobTerminalStateAsync(
+    FineTuningClient fineTuningClient,
+    string jobId,
+    int pollIntervalSeconds = 10,
+    int maxWaitSeconds = 3600)
+{
+    var start = DateTimeOffset.Now;
+    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+    FineTuningJob job = await fineTuningClient.GetJobAsync(jobId);
+    Console.WriteLine($"Job {jobId} initial status: {job.Status}");
+
+    while (!IsTerminalState(job.Status))
+    {
+        if (DateTimeOffset.Now - start > timeout)
+        {
+            throw new TimeoutException(
+                $"Job {jobId} did not reach terminal state after {maxWaitSeconds} seconds. Current status: {job.Status}");
+        }
+
+        await Task.Delay(pollInterval);
+        job = await fineTuningClient.GetJobAsync(jobId);
+        Console.WriteLine($"Job {jobId} status: {job.Status}");
+    }
+
+    Console.WriteLine($"Job {jobId} reached terminal state: {job.Status}");
+    return job;
+}
+
+// Helper method to wait for job to reach terminal state (sync)
+private static FineTuningJob WaitForJobTerminalState(
+    FineTuningClient fineTuningClient,
+    string jobId,
+    int pollIntervalSeconds = 10,
+    int maxWaitSeconds = 3600)
+{
+    var start = DateTimeOffset.Now;
+    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+    FineTuningJob job = fineTuningClient.GetJob(jobId);
+    Console.WriteLine($"Job {jobId} initial status: {job.Status}");
+
+    while (!IsTerminalState(job.Status))
+    {
+        if (DateTimeOffset.Now - start > timeout)
+        {
+            throw new TimeoutException(
+                $"Job {jobId} did not reach terminal state after {maxWaitSeconds} seconds. Current status: {job.Status}");
+        }
+
+        System.Threading.Thread.Sleep(pollInterval);
+        job = fineTuningClient.GetJob(jobId);
+        Console.WriteLine($"Job {jobId} status: {job.Status}");
+    }
+
+    Console.WriteLine($"Job {jobId} reached terminal state: {job.Status}");
+    return job;
+}
+
+// Helper method to check if job status is terminal
+private static bool IsTerminalState(FineTuningStatus status)
+{
+    return status.ToString().ToLowerInvariant() switch
+    {
+        "succeeded" => true,
+        "failed" => true,
+        "cancelled" => true,
+        _ => false
+    };
+}
 ```

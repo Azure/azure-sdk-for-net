@@ -1,26 +1,48 @@
-# Sample using Direct Preference Optimization (DPO) Fine-Tuning in Azure.AI.Projects
+# Direct Preference Optimization (DPO) Fine-Tuning
 
-This sample demonstrates how to create and manage Direct Preference Optimization (DPO) fine-tuning jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. DPO is a technique that directly optimizes model preferences by learning from paired examples of preferred and non-preferred outputs.
+This sample demonstrates how to create a Direct Preference Optimization (DPO) fine-tuning job using the Azure AI Projects SDK.
 
 ## Supported Models
-Supported OpenAI models: GPT-4o, GPT-4.1, GPT-4.1-mini, GPT-4.1-nano, and GPT-4o-mini.
 
+Supported OpenAI models: gpt-4o, gpt-4o-mini
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
+
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
+  - `MODEL_DEPLOYMENT_NAME`: The name of the model deployment to use for fine-tuning.
 
-## Asynchronous Sample
+## Create Clients
 
-```C# Snippet:AI_Projects_FineTuning_DPOAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+### Async
+
+```C# Snippet:AI_Projects_FineTuning_DPO_CreateClientsAsync
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
 
+### Sync
+
+```C# Snippet:AI_Projects_FineTuning_DPO_CreateClients
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
+
+## Upload Training and Validation Files
+
+### Async
+
+```C# Snippet:AI_Projects_FineTuning_DPO_UploadFilesAsync
 // Upload training file
 Console.WriteLine("Uploading training file...");
 using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/dpo_training_set.jsonl");
@@ -41,38 +63,11 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
 // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
 // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessingAsync helper method.
-
-// Create DPO fine-tuning job
-// Note: The default training type passed here is "Standard".
-// If you need to pass training type explicitly (e.g., "GlobalStandard"),
-// see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
-Console.WriteLine("Creating DPO fine-tuning job...");
-FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
-    "gpt-4o-mini-2024-07-18",
-    trainFile.Id,
-    waitUntilCompleted: false,
-    new()
-    {
-        TrainingMethod = FineTuningTrainingMethod.CreateDirectPreferenceOptimization(
-            epochCount: 1,
-            batchSize: 4,
-            learningRate: 0.0001),
-        ValidationFile = validationFile.Id
-    });
-Console.WriteLine($"Created DPO fine-tuning job: {fineTuningJob.JobId}");
-Console.WriteLine($"Status: {fineTuningJob.Status}");
-Console.WriteLine($"Model: {fineTuningJob.Model}");
 ```
 
-## Synchronous Sample
+### Sync
 
-```C# Snippet:AI_Projects_FineTuning_DPO
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
-OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
-FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
-
+```C# Snippet:AI_Projects_FineTuning_DPO_UploadFiles
 // Upload training file
 Console.WriteLine("Uploading training file...");
 using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/dpo_training_set.jsonl");
@@ -93,11 +88,20 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
 // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
 // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessing helper method.
+```
 
+## Create DPO Fine-Tuning Job
+
+### Async
+
+```C# Snippet:AI_Projects_FineTuning_DPO_CreateJobAsync
 // Create DPO fine-tuning job
+// Note: The default training type passed here is "Standard".
+// If you need to pass training type explicitly (e.g., "GlobalStandard"),
+// see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
 Console.WriteLine("Creating DPO fine-tuning job...");
 FineTuningJob fineTuningJob = fineTuningClient.FineTune(
-    "gpt-4o-mini-2024-07-18",
+    modelDeploymentName,
     trainFile.Id,
     waitUntilCompleted: false,
     new()
@@ -110,5 +114,25 @@ FineTuningJob fineTuningJob = fineTuningClient.FineTune(
     });
 Console.WriteLine($"Created DPO fine-tuning job: {fineTuningJob.JobId}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
-Console.WriteLine($"Model: {fineTuningJob.Model}");
+```
+
+### Sync
+
+```C# Snippet:AI_Projects_FineTuning_DPO_CreateJob
+// Create DPO fine-tuning job
+Console.WriteLine("Creating DPO fine-tuning job...");
+FineTuningJob fineTuningJob = fineTuningClient.FineTune(
+    modelDeploymentName,
+    trainFile.Id,
+    waitUntilCompleted: false,
+    new()
+    {
+        TrainingMethod = FineTuningTrainingMethod.CreateDirectPreferenceOptimization(
+            epochCount: 1,
+            batchSize: 4,
+            learningRate: 0.0001),
+        ValidationFile = validationFile.Id
+    });
+Console.WriteLine($"Created DPO fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Status: {fineTuningJob.Status}");
 ```

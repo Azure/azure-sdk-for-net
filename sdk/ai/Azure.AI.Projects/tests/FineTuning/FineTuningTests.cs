@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Tests.Utils;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
@@ -22,6 +23,7 @@ using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Files;
 using OpenAI.FineTuning;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -484,5 +486,104 @@ public class FineTuningTests : FineTuningTestsBase
         Assert.That(checkpointsList.Count, Is.GreaterThan(0));
         Assert.That(checkpointsList[0].Id, Is.Not.Null);
         Assert.That(checkpointsList[0].StepNumber, Is.GreaterThan(0));
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_Inference_With_Existing_Deployment()
+    {
+        // Test inference with an existing fine-tuned model deployment, update this when re-recording
+        string deploymentName = "ft-deployment-gpt-4.1-mini-2025-04-14-2025-11-25";
+
+        // Get project client and responses client with HTTP logging enabled
+        AIProjectClient projectClient = GetTestClient(enableHttpLogging: true);
+        // Get responses client for the specific deployment (model)
+        var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+
+        // Perform inference
+        string prompt = "What is the capital of France?";
+        Console.WriteLine($"Sending prompt: {prompt}");
+
+        ClientResult<OpenAIResponse> result = await responsesClient.CreateResponseAsync(prompt);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Value, Is.Not.Null);
+        Assert.That(result.Value.OutputItems, Is.Not.Null.And.Not.Empty);
+
+        // Get the last message item (which should be the response)
+        var messageItem = result.Value.OutputItems
+            .OfType<MessageResponseItem>()
+            .LastOrDefault();
+
+        Assert.That(messageItem, Is.Not.Null);
+        Assert.That(messageItem.Content, Has.Count.GreaterThan(0));
+        Assert.That(messageItem.Content[0].Text, Is.Not.Null.And.Not.Empty);
+
+        Console.WriteLine($"Response: {messageItem.Content[0].Text}");
+    }
+
+    [RecordedTest]
+    public async Task Test_FineTuning_Deploy_Model()
+    {
+        // This test demonstrates deploying a fine-tuned model using Azure Resource Manager.
+        // It requires a completed fine-tuning job and takes approximately 30 minutes to complete.
+
+        // Override the default 10 second timeout for this long-running deployment test
+        TestTimeoutInSeconds = 300; // 5 minutes for deployment operations in playback mode
+
+        // Pre-completed job ID - update this when re-recording
+        string completedJobId = "ftjob-4cb599f9e32d411dba27960ef42cea09";
+
+        // Azure Resource Manager configuration - update these values for your environment
+        string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? "your-subscription-id";
+        string resourceGroupName = Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP") ?? "your-resource-group";
+        string accountName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT_NAME") ?? "your-account-name";
+
+        var (_, fineTuningClient) = GetClients();
+
+        // Get the completed fine-tuning job
+        FineTuningJob completedJob = await fineTuningClient.GetJobAsync(completedJobId);
+        Console.WriteLine($"Retrieved completed job: {completedJob.JobId}");
+        Console.WriteLine($"Status: {completedJob.Status}");
+        Console.WriteLine($"Fine-tuned model: {completedJob.Value}");
+
+        // Configure deployment
+        string deploymentName = $"ft-deployment-{completedJob.BaseModel}-{DateTimeOffset.UtcNow:yyyy-MM-dd}";
+        string fineTunedModelName = completedJob.Value; // The fine-tuned model identifier
+
+        Console.WriteLine($"Deploying model '{fineTunedModelName}' as '{deploymentName}'...");
+
+        // Create ARM client
+        var credential = new DefaultAzureCredential();
+        var armClient = new ArmClient(credential);
+
+        // Get Cognitive Services account
+        var resourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(
+            subscriptionId,
+            resourceGroupName,
+            accountName);
+        var accountResource = armClient.GetCognitiveServicesAccountResource(resourceId);
+
+        // Deploy the model
+        var deploymentData = new CognitiveServicesAccountDeploymentData
+        {
+            Properties = new CognitiveServicesAccountDeploymentProperties
+            {
+                Model = new CognitiveServicesAccountDeploymentModel
+                {
+                    Format = "OpenAI",
+                    Name = fineTunedModelName,
+                    Version = "1"
+                }
+            },
+            Sku = new CognitiveServicesSku("GlobalStandard") { Capacity = 50 }
+        };
+
+        var deploymentOperation = await accountResource.GetCognitiveServicesAccountDeployments()
+            .CreateOrUpdateAsync(Azure.WaitUntil.Completed, deploymentName, deploymentData);
+
+        Console.WriteLine($"Deployment '{deploymentName}' completed successfully");
+        Assert.That(deploymentOperation, Is.Not.Null);
+        Assert.That(deploymentOperation.Value, Is.Not.Null);
+        Assert.That(deploymentOperation.Value.Data.Name, Is.EqualTo(deploymentName));
     }
 }

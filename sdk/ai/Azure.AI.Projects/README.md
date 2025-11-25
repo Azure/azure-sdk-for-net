@@ -33,6 +33,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Dataset operations](#dataset-operations)
   - [Indexes operations](#indexes-operations)
   - [Files operations](#files-operations)
+  - [Fine-Tuning operations](#fine-tuning-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -107,7 +108,7 @@ PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
 // Intermission: listing messages will retrieve the message just added
 
 List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
-Assert.AreEqual(message.Id, messagesList[0].Id);
+Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
 
 // Step 4: Run the agent
 ThreadRun run = agentsClient.Runs.CreateRun(
@@ -121,9 +122,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
+Assert.That(
     RunStatus.Completed,
-    run.Status,
+    Is.EqualTo(run.Status),
     run.LastError?.Message);
 
 Pageable<PersistentThreadMessage> messages
@@ -447,42 +448,97 @@ projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 
 ### Files operations
 
-The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the AgentsClient's GetOpenAIClient() method. Full samples can be found under the "Files" folder in the [package samples][samples].
+The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the ProjectOpenAIClient. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
 
-**Note:** File upload via OpenAIClient from AgentsClient.GetOpenAIClient() is not currently supported.
+```C# Snippet:AI_Projects_Files_CreateClients
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
 
-```C# Snippet:AI_Projects_FileOperationsAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ProjectFilesClient fileClient = projectClient.OpenAI.Files;
+```C# Snippet:AI_Projects_Files_UploadFile
+var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+OpenAIFile uploadedFile = fileClient.UploadFile(
+    BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+fileId = uploadedFile.Id;
+```
 
-// Upload file
-var dataDirectory = GetDataDirectory();
-var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
-OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-        testFilePath,
-        FileUploadPurpose.FineTune);
+```C# Snippet:AI_Projects_Files_GetFile
+OpenAIFile retrievedFile = fileClient.GetFile(fileId);
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
 
-string fileId = uploadedFile.Id;
+```C# Snippet:AI_Projects_Files_ListFiles
+ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
 
-// Retrieve file metadata
-OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
-Console.WriteLine($"File ID: {retrievedFile.Id}, Filename: {retrievedFile.Filename}");
+```C# Snippet:AI_Projects_Files_DeleteFile
+ClientResult<FileDeletionResult> deleteResult = fileClient.DeleteFile(fileId);
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
+```
 
-// Download file content
-BinaryData fileContent = await fileClient.DownloadFileAsync(fileId);
-Console.WriteLine($"Content size: {fileContent.ToMemory().Length} bytes");
+### Fine-Tuning operations
 
-// List all files
-ClientResult<OpenAIFileCollection> filesResult = await fileClient.GetFilesAsync();
-foreach (OpenAIFile file in filesResult.Value)
-{
-    Console.WriteLine($"File: {file.Filename} (ID: {file.Id})");
-}
+The code below shows how to create a supervised fine-tuning job using the OpenAI Fine-Tuning API through the ProjectOpenAIClient. Fine-tuning allows you to customize models for specific tasks using your own training data. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
 
-// Delete file
-ClientResult<FileDeletionResult> deleteResult = await fileClient.DeleteFileAsync(fileId);
-Console.WriteLine($"File deleted: {deleteResult.Value.Deleted}");
+```C# Snippet:AI_Projects_FineTuning_CreateClients
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
+```
+
+```C# Snippet:AI_Projects_FineTuning_UploadFiles
+// Upload training file
+Console.WriteLine("Uploading training file...");
+string trainingFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl";
+using FileStream trainStream = File.OpenRead(trainingFilePath);
+OpenAIFile trainFile = fileClient.UploadFile(
+    trainStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded training file with ID: {trainFile.Id}");
+
+// Upload validation file
+Console.WriteLine("Uploading validation file...");
+string validationFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl";
+using FileStream validationStream = File.OpenRead(validationFilePath);
+OpenAIFile validationFile = fileClient.UploadFile(
+    validationStream,
+    "sft_validation_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
+
+// Wait for files to complete processing
+Console.WriteLine("Waiting for files to complete processing...");
+WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
+```
+
+```C# Snippet:AI_Projects_FineTuning_CreateJob
+// Create supervised fine-tuning job
+Console.WriteLine("Creating supervised fine-tuning job...");
+FineTuningJob fineTuningJob = fineTuningClient.FineTune(
+    modelDeploymentName,
+    trainFile.Id,
+    waitUntilCompleted: false,
+    new()
+    {
+        TrainingMethod = FineTuningTrainingMethod.CreateSupervised(
+            epochCount: 3,
+            batchSize: 1,
+            learningRate: 1.0),
+        ValidationFile = validationFile.Id
+    });
+Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
+Console.WriteLine($"Status: {fineTuningJob.Status}");
 ```
 
 ## Troubleshooting

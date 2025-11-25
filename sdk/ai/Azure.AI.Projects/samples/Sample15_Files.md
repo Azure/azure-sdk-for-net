@@ -1,4 +1,4 @@
-# Sample using Files in Azure.AI.Projects
+# File Operations with OpenAI Files API
 
 This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK.
 
@@ -8,39 +8,112 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
 
-## Asynchronous Sample
+## Create Clients
 
-```C# Snippet:AI_Projects_FileOperationsAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+### Async
+
+```C# Snippet:AI_Projects_Files_CreateClientsAsync
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
 
-// Upload file
-var dataDirectory = GetDataDirectory();
-var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
+### Sync
+
+```C# Snippet:AI_Projects_Files_CreateClients
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
+
+## Upload File
+
+### Async
+
+```C# Snippet:AI_Projects_Files_UploadFileAsync
+var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-        testFilePath,
-        FileUploadPurpose.FineTune);
+    BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+fileId = uploadedFile.Id;
+```
 
-string fileId = uploadedFile.Id;
+### Sync
 
-// Retrieve file metadata
+```C# Snippet:AI_Projects_Files_UploadFile
+var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+OpenAIFile uploadedFile = fileClient.UploadFile(
+    BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+fileId = uploadedFile.Id;
+```
+
+## Get File Metadata
+
+### Async
+
+```C# Snippet:AI_Projects_Files_GetFileAsync
 OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
-Console.WriteLine($"File ID: {retrievedFile.Id}, Filename: {retrievedFile.Filename}");
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
 
-// Download file content
+### Sync
+
+```C# Snippet:AI_Projects_Files_GetFile
+OpenAIFile retrievedFile = fileClient.GetFile(fileId);
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
+
+## Download File Content
+
+### Async
+
+```C# Snippet:AI_Projects_Files_DownloadFileAsync
 BinaryData fileContent = await fileClient.DownloadFileAsync(fileId);
-Console.WriteLine($"Content size: {fileContent.ToMemory().Length} bytes");
+Console.WriteLine($"Downloaded file content: {fileContent.ToMemory().Length} bytes");
+```
 
-// List all files
+### Sync
+
+```C# Snippet:AI_Projects_Files_DownloadFile
+BinaryData fileContent = fileClient.DownloadFile(fileId);
+Console.WriteLine($"Downloaded file content: {fileContent.ToMemory().Length} bytes");
+```
+
+## List Files
+
+### Async
+
+```C# Snippet:AI_Projects_Files_ListFilesAsync
 ClientResult<OpenAIFileCollection> filesResult = await fileClient.GetFilesAsync();
-foreach (OpenAIFile file in filesResult.Value)
-{
-    Console.WriteLine($"File: {file.Filename} (ID: {file.Id})");
-}
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
 
-// Delete file
+### Sync
+
+```C# Snippet:AI_Projects_Files_ListFiles
+ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
+
+## Delete File
+
+### Async
+
+```C# Snippet:AI_Projects_Files_DeleteFileAsync
 ClientResult<FileDeletionResult> deleteResult = await fileClient.DeleteFileAsync(fileId);
-Console.WriteLine($"File deleted: {deleteResult.Value.Deleted}");
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
+```
+
+### Sync
+
+```C# Snippet:AI_Projects_Files_DeleteFile
+ClientResult<FileDeletionResult> deleteResult = fileClient.DeleteFile(fileId);
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
 ```

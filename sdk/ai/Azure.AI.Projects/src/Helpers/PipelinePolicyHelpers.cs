@@ -186,7 +186,7 @@ internal static partial class PipelinePolicyHelpers
 
                         // When processing the message to send the request (no response yet), perform a fixup to ensure a multipart/form-data Content-Type is
                         // provided for the "file" content part (non-parity limitation) - only for file operations
-                        if (isFileOperation && message?.Request?.Method == "POST" && message?.Request is not null && message?.Response is null)
+                        if (isFileOperation && message?.Request?.Method == "POST" && message?.Response is null)
                         {
                             using MemoryStream requestStream = new();
                             message.Request.Content.WriteTo(requestStream);

@@ -64,9 +64,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
+Assert.That(
     RunStatus.Completed,
-    run.Status,
+    Is.EqualTo(run.Status),
     run.LastError?.Message);
 ```
 
@@ -132,7 +132,7 @@ PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
 // Intermission: listing messages will retrieve the message just added
 
 List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
-Assert.AreEqual(message.Id, messagesList[0].Id);
+Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
 
 // Step 4: Run the agent
 ThreadRun run = agentsClient.Runs.CreateRun(
@@ -146,9 +146,9 @@ do
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
+Assert.That(
     RunStatus.Completed,
-    run.Status,
+    Is.EqualTo(run.Status),
     run.LastError?.Message);
 
 Pageable<PersistentThreadMessage> messages
