@@ -5,46 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Specs.Azure.Versioning.PreviewVersion
 {
-    /// <summary> A simple model for testing. </summary>
     public partial class Widget
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public string Id => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Widget"/>. </summary>
-        /// <param name="id"> Widget identifier. </param>
-        /// <param name="name"> Widget name. </param>
-        internal Widget(string id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        public string Name => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Widget"/>. </summary>
-        /// <param name="id"> Widget identifier. </param>
-        /// <param name="name"> Widget name. </param>
-        /// <param name="color"> Widget color, only available in preview version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Widget(string id, string name, string color, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            Name = name;
-            Color = color;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Widget identifier. </summary>
-        public string Id { get; }
-
-        /// <summary> Widget name. </summary>
-        public string Name { get; }
-
-        /// <summary> Widget color, only available in preview version. </summary>
-        public string Color { get; }
+        public string Color => throw null;
     }
 }

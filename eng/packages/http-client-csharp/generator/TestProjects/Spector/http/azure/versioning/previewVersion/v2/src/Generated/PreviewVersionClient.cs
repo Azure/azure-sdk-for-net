@@ -11,281 +11,35 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Versioning.PreviewVersion.V2;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
-    /// <summary> The PreviewVersionClient. </summary>
     public partial class PreviewVersionClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        public PreviewVersionClient() : this(new Uri("http://localhost:3000"), new PreviewVersionClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of PreviewVersionClient. </summary>
-        public PreviewVersionClient() : this(new Uri("http://localhost:3000"), new PreviewVersionClientOptions())
-        {
-        }
+        public PreviewVersionClient(Uri endpoint, PreviewVersionClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of PreviewVersionClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public PreviewVersionClient(Uri endpoint, PreviewVersionClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new PreviewVersionClientOptions();
+        public virtual Response GetWidget(string id, RequestContext context) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Response> GetWidgetAsync(string id, RequestContext context) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response<Widget> GetWidget(string id, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Task<Response<Widget>> GetWidgetAsync(string id, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Get widget by id (available in all versions)
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetWidget(string id, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PreviewVersionClient.GetWidget");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+        public virtual Response UpdateWidgetColor(string id, RequestContent content, RequestContext context = null) => throw null;
 
-                using HttpMessage message = CreateGetWidgetRequest(id, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> UpdateWidgetColorAsync(string id, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Get widget by id (available in all versions)
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWidgetAsync(string id, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PreviewVersionClient.GetWidget");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
+        public virtual Response GetWidgets(string name, string color, RequestContext context) => throw null;
 
-                using HttpMessage message = CreateGetWidgetRequest(id, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> GetWidgetsAsync(string name, string color, RequestContext context) => throw null;
 
-        /// <summary> Get widget by id (available in all versions). </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Widget> GetWidget(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+        public virtual Response<ListWidgetsResponse> GetWidgets(string name = default, string color = default, CancellationToken cancellationToken = default) => throw null;
 
-            Response result = GetWidget(id, cancellationToken.ToRequestContext());
-            return Response.FromValue((Widget)result, result);
-        }
-
-        /// <summary> Get widget by id (available in all versions). </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Widget>> GetWidgetAsync(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            Response result = await GetWidgetAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Widget)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update widget color (preview only)
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateWidgetColor(string id, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PreviewVersionClient.UpdateWidgetColor");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateWidgetColorRequest(id, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update widget color (preview only)
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateWidgetColorAsync(string id, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PreviewVersionClient.UpdateWidgetColor");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateWidgetColorRequest(id, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] List widgets with optional color filtering
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="color"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetWidgets(string name, string color, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PreviewVersionClient.GetWidgets");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetWidgetsRequest(name, color, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] List widgets with optional color filtering
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="color"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWidgetsAsync(string name, string color, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PreviewVersionClient.GetWidgets");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetWidgetsRequest(name, color, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List widgets with optional color filtering. </summary>
-        /// <param name="name"></param>
-        /// <param name="color"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListWidgetsResponse> GetWidgets(string name = default, string color = default, CancellationToken cancellationToken = default)
-        {
-            Response result = GetWidgets(name, color, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListWidgetsResponse)result, result);
-        }
-
-        /// <summary> List widgets with optional color filtering. </summary>
-        /// <param name="name"></param>
-        /// <param name="color"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListWidgetsResponse>> GetWidgetsAsync(string name = default, string color = default, CancellationToken cancellationToken = default)
-        {
-            Response result = await GetWidgetsAsync(name, color, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListWidgetsResponse)result, result);
-        }
+        public virtual Task<Response<ListWidgetsResponse>> GetWidgetsAsync(string name = default, string color = default, CancellationToken cancellationToken = default) => throw null;
     }
 }
