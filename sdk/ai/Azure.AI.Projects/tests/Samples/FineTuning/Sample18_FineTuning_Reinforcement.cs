@@ -28,6 +28,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
         #region Snippet:AI_Projects_FineTuning_Reinforcement_CreateClientsAsync
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -101,6 +102,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
         #region Snippet:AI_Projects_FineTuning_Reinforcement_CreateClients
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -147,7 +149,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
                     ["grader"] = new Dictionary<string, object>
                     {
                         ["type"] = "score_model",
-                        ["model"] = "o3-mini"
+                        ["model"] = graderModelDeploymentName
                     }
                 },
                 ["hyperparameters"] = new Dictionary<string, object>

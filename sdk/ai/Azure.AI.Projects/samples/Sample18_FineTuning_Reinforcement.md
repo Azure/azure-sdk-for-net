@@ -13,6 +13,7 @@ Supported OpenAI models: o1, o3, o4 (with grader models: o1-mini, o3-mini)
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `MODEL_DEPLOYMENT_NAME`: The name of the model deployment to use for fine-tuning.
+  - `GRADER_MODEL_DEPLOYMENT_NAME`: The name of the grader model deployment (e.g., o3-mini).
 
 ## Create Clients
 
@@ -21,6 +22,7 @@ Supported OpenAI models: o1, o3, o4 (with grader models: o1-mini, o3-mini)
 ```C# Snippet:AI_Projects_FineTuning_Reinforcement_CreateClientsAsync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -32,6 +34,7 @@ FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```C# Snippet:AI_Projects_FineTuning_Reinforcement_CreateClients
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -150,7 +153,7 @@ string jsonBody = JsonSerializer.Serialize(new Dictionary<string, object>
             ["grader"] = new Dictionary<string, object>
             {
                 ["type"] = "score_model",
-                ["model"] = "o3-mini"
+                ["model"] = graderModelDeploymentName
             }
         },
         ["hyperparameters"] = new Dictionary<string, object>
