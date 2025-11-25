@@ -4,7 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-ai-services
+- azure-cognitive-services
 name: Azure.AI.ContentUnderstanding samples for .NET
 description: Samples for the Azure.AI.ContentUnderstanding client library.
 ---
