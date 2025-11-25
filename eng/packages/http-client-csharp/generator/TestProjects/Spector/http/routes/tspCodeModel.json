@@ -82,6 +82,7 @@
           "crossLanguageDefinitionId": "Routes.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Routes",
       "apiVersions": [],
@@ -374,6 +375,7 @@
               "crossLanguageDefinitionId": "Routes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.PathParameters",
           "apiVersions": [],
@@ -586,6 +588,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion",
               "apiVersions": [],
@@ -631,6 +634,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion",
               "apiVersions": [],
@@ -937,6 +941,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard",
                   "apiVersions": [],
@@ -1216,6 +1221,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode",
                   "apiVersions": [],
@@ -1263,6 +1269,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion",
               "apiVersions": [],
@@ -1542,6 +1549,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard",
                   "apiVersions": [],
@@ -1821,6 +1829,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode",
                   "apiVersions": [],
@@ -1868,6 +1877,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion",
               "apiVersions": [],
@@ -2147,6 +2157,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard",
                   "apiVersions": [],
@@ -2426,6 +2437,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode",
                   "apiVersions": [],
@@ -2473,6 +2485,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion",
               "apiVersions": [],
@@ -2752,6 +2765,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard",
                   "apiVersions": [],
@@ -3031,6 +3045,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode",
                   "apiVersions": [],
@@ -3321,6 +3336,7 @@
               "crossLanguageDefinitionId": "Routes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.QueryParameters",
           "apiVersions": [],
@@ -3366,6 +3382,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion",
               "apiVersions": [],
@@ -3636,6 +3653,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard",
                   "apiVersions": [],
@@ -3906,6 +3924,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode",
                   "apiVersions": [],
@@ -3953,6 +3972,7 @@
                   "crossLanguageDefinitionId": "Routes.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation",
               "apiVersions": [],
@@ -4223,6 +4243,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard",
                   "apiVersions": [],
@@ -4493,6 +4514,7 @@
                       "crossLanguageDefinitionId": "Routes.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode",
                   "apiVersions": [],
@@ -4580,6 +4602,7 @@
               "crossLanguageDefinitionId": "Routes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Routes.InInterface",
           "apiVersions": [],

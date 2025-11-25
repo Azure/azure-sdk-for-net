@@ -14,38 +14,57 @@ namespace Azure.Analytics.Defender.Easm
     public readonly partial struct ObservationRemediationState : IEquatable<ObservationRemediationState>
     {
         private readonly string _value;
+        /// <summary> active. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> nonApplicable. </summary>
+        private const string NonApplicableValue = "nonApplicable";
 
         /// <summary> Initializes a new instance of <see cref="ObservationRemediationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ObservationRemediationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string NonApplicableValue = "nonApplicable";
+            _value = value;
+        }
 
         /// <summary> active. </summary>
         public static ObservationRemediationState Active { get; } = new ObservationRemediationState(ActiveValue);
+
         /// <summary> nonApplicable. </summary>
         public static ObservationRemediationState NonApplicable { get; } = new ObservationRemediationState(NonApplicableValue);
+
         /// <summary> Determines if two <see cref="ObservationRemediationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ObservationRemediationState left, ObservationRemediationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ObservationRemediationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ObservationRemediationState left, ObservationRemediationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ObservationRemediationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ObservationRemediationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ObservationRemediationState(string value) => new ObservationRemediationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ObservationRemediationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ObservationRemediationState?(string value) => value == null ? null : new ObservationRemediationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ObservationRemediationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ObservationRemediationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
@@ -17,6 +18,7 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
     - sdk/provisioning/Azure.Provisioning.Deployment
+    - sdk/provisioning/Azure.Provisioning.Dns
     - sdk/provisioning/Azure.Provisioning.EventGrid
     - sdk/provisioning/Azure.Provisioning.Kubernetes
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
@@ -35,6 +37,7 @@ pr:
   paths:
     include:
     - sdk/provisioning/ci.compute.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppContainers
     - sdk/provisioning/Azure.Provisioning.ApplicationInsights
@@ -43,6 +46,7 @@ pr:
     - sdk/provisioning/Azure.Provisioning.ContainerRegistry
     - sdk/provisioning/Azure.Provisioning.ContainerService
     - sdk/provisioning/Azure.Provisioning.Deployment
+    - sdk/provisioning/Azure.Provisioning.Dns
     - sdk/provisioning/Azure.Provisioning.EventGrid
     - sdk/provisioning/Azure.Provisioning.Kubernetes
     - sdk/provisioning/Azure.Provisioning.KubernetesConfiguration
@@ -74,6 +78,8 @@ extends:
       safeName: AzureProvisioningContainerService
     - name: Azure.Provisioning.Deployment
       safeName: AzureProvisioningDeployment
+    - name: Azure.Provisioning.Dns
+      safeName: AzureProvisioningDns
     - name: Azure.Provisioning.EventGrid
       safeName: AzureProvisioningEventGrid
     - name: Azure.Provisioning.Kubernetes

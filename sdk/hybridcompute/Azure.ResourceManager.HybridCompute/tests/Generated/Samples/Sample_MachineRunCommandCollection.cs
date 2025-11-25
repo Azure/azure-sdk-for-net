@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_CreateOrUpdate.json
             // this example is just showing the usage of "MachineRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
             // this example is just showing the usage of "MachineRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GETAllMachineRunCommands()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_List.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_List.json
             // this example is just showing the usage of "MachineRunCommands_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
             // this example is just showing the usage of "MachineRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetARunCommand()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/runCommand/RunCommands_Get.json
             // this example is just showing the usage of "MachineRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

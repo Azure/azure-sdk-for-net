@@ -4,14 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -46,6 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, trunkedNetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
 
@@ -72,6 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudTrunkedNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, trunkedNetworkName, data, null, null, cancellationToken);
 
@@ -98,6 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetAllAsync(CancellationToken cancellationToken)
 			=> GetAllAsync(null, null, cancellationToken);
 
@@ -124,6 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetAll(CancellationToken cancellationToken)
 			=> GetAll(null, null, cancellationToken);
     }

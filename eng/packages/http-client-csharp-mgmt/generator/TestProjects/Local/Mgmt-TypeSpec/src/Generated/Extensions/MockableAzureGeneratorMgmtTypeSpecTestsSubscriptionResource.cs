@@ -66,7 +66,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
         }
 
-        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <summary>
+        /// Get subscription-level location-based Playwright quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -76,7 +92,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <summary>
+        /// Get subscription-level location-based Playwright quota resource by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightQuotas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,7 +118,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
         }
 
-        /// <summary> List Foo resources by subscription ID. </summary>
+        /// <summary>
+        /// List Foo resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/foos. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FooResource> GetFoosAsync(CancellationToken cancellationToken = default)
@@ -98,7 +146,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionAsyncCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FooResource(Client, data));
         }
 
-        /// <summary> List Foo resources by subscription ID. </summary>
+        /// <summary>
+        /// List Foo resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/foos. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FooResource> GetFoos(CancellationToken cancellationToken = default)
@@ -110,7 +174,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new PageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FooResource(Client, data));
         }
 
-        /// <summary> List Baz resources by subscription ID. </summary>
+        /// <summary>
+        /// List Baz resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/bazs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BazResource> GetBazsAsync(CancellationToken cancellationToken = default)
@@ -122,7 +202,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionAsyncCollectionResultOfT(BazsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new BazResource(Client, data));
         }
 
-        /// <summary> List Baz resources by subscription ID. </summary>
+        /// <summary>
+        /// List Baz resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/bazs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BazResource> GetBazs(CancellationToken cancellationToken = default)
@@ -134,7 +230,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new PageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionCollectionResultOfT(BazsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new BazResource(Client, data));
         }
 
-        /// <summary> List Zoo resources by subscription ID. </summary>
+        /// <summary>
+        /// List Zoo resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/zoos. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Zoos_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ZooResource> GetZoosAsync(CancellationToken cancellationToken = default)
@@ -146,7 +258,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionAsyncCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
         }
 
-        /// <summary> List Zoo resources by subscription ID. </summary>
+        /// <summary>
+        /// List Zoo resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/zoos. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Zoos_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ZooResource> GetZoos(CancellationToken cancellationToken = default)
@@ -158,7 +286,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new PageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
         }
 
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/previewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MgmtTypeSpec_PreviewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,7 +335,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             }
         }
 
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/previewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MgmtTypeSpec_PreviewActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

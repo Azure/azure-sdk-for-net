@@ -1,5 +1,19 @@
 # Release History
 
+## 1.2.0-beta.8 (Unreleased)
+
+### Features Added
+- Added support for Computer usage.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+### Sample updates
+- Added sample for Computer usage.
+
 ## 1.2.0-beta.7 (2025-10-28)
 
 ### Breaking Changes

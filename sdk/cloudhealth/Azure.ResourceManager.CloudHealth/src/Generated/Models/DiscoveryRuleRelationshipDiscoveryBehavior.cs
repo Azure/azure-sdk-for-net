@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct DiscoveryRuleRelationshipDiscoveryBehavior : IEquatable<DiscoveryRuleRelationshipDiscoveryBehavior>
     {
         private readonly string _value;
+        /// <summary> Automatically attempt to discover relationships. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Do not automatically attempt to discover relationships. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryRuleRelationshipDiscoveryBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiscoveryRuleRelationshipDiscoveryBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Automatically attempt to discover relationships. </summary>
         public static DiscoveryRuleRelationshipDiscoveryBehavior Enabled { get; } = new DiscoveryRuleRelationshipDiscoveryBehavior(EnabledValue);
+
         /// <summary> Do not automatically attempt to discover relationships. </summary>
         public static DiscoveryRuleRelationshipDiscoveryBehavior Disabled { get; } = new DiscoveryRuleRelationshipDiscoveryBehavior(DisabledValue);
+
         /// <summary> Determines if two <see cref="DiscoveryRuleRelationshipDiscoveryBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiscoveryRuleRelationshipDiscoveryBehavior left, DiscoveryRuleRelationshipDiscoveryBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiscoveryRuleRelationshipDiscoveryBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiscoveryRuleRelationshipDiscoveryBehavior left, DiscoveryRuleRelationshipDiscoveryBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiscoveryRuleRelationshipDiscoveryBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiscoveryRuleRelationshipDiscoveryBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiscoveryRuleRelationshipDiscoveryBehavior(string value) => new DiscoveryRuleRelationshipDiscoveryBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiscoveryRuleRelationshipDiscoveryBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiscoveryRuleRelationshipDiscoveryBehavior?(string value) => value == null ? null : new DiscoveryRuleRelationshipDiscoveryBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiscoveryRuleRelationshipDiscoveryBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiscoveryRuleRelationshipDiscoveryBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

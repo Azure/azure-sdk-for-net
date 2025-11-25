@@ -24,19 +24,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
         {
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
+            Argument.AssertNotNull(middleProp2, nameof(middleProp2));
+            Argument.AssertNotNull(prop1, nameof(prop1));
 
             StringArray = new ChangeTrackingList<string>();
-            PropertyLeft = propertyLeft;
-            AnotherPropertyLeft = anotherPropertyLeft;
-            InnerProp2 = innerProp2;
-            MiddleProp1 = middleProp1;
-            Prop2 = prop2;
+            Property = propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value);
+            AnotherProperty = anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value);
+            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
         }
 

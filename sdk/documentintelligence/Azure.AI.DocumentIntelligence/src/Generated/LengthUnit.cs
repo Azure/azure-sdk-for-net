@@ -14,38 +14,57 @@ namespace Azure.AI.DocumentIntelligence
     public readonly partial struct LengthUnit : IEquatable<LengthUnit>
     {
         private readonly string _value;
+        /// <summary> Length unit for image files. </summary>
+        private const string PixelValue = "pixel";
+        /// <summary> Length unit for PDF files. </summary>
+        private const string InchValue = "inch";
 
         /// <summary> Initializes a new instance of <see cref="LengthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LengthUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PixelValue = "pixel";
-        private const string InchValue = "inch";
+            _value = value;
+        }
 
         /// <summary> Length unit for image files. </summary>
         public static LengthUnit Pixel { get; } = new LengthUnit(PixelValue);
+
         /// <summary> Length unit for PDF files. </summary>
         public static LengthUnit Inch { get; } = new LengthUnit(InchValue);
+
         /// <summary> Determines if two <see cref="LengthUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LengthUnit left, LengthUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LengthUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LengthUnit left, LengthUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LengthUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LengthUnit(string value) => new LengthUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LengthUnit?(string value) => value == null ? null : new LengthUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LengthUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LengthUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

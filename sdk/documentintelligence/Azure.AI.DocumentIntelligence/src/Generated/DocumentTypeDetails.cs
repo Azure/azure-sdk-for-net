@@ -13,37 +13,8 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Document type info. </summary>
     public partial class DocumentTypeDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
         public DocumentTypeDetails()
@@ -64,8 +35,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="features"> List of optional analysis features. </param>
         /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="maxDocumentsToAnalyze"> Maximum number of documents of specified type to analyze.  Default=all. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IDictionary<string, DocumentFieldSchema> fieldSchema, IDictionary<string, float> fieldConfidence, string modelId, float? confidenceThreshold, IList<DocumentAnalysisFeature> features, IList<string> queryFields, int? maxDocumentsToAnalyze, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTypeDetails(string description, DocumentBuildMode? buildMode, IDictionary<string, DocumentFieldSchema> fieldSchema, IDictionary<string, float> fieldConfidence, string modelId, float? confidenceThreshold, IList<DocumentAnalysisFeature> features, IList<string> queryFields, int? maxDocumentsToAnalyze, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             BuildMode = buildMode;
@@ -76,25 +47,33 @@ namespace Azure.AI.DocumentIntelligence
             Features = features;
             QueryFields = queryFields;
             MaxDocumentsToAnalyze = maxDocumentsToAnalyze;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Document model description. </summary>
         public string Description { get; set; }
+
         /// <summary> Custom document model build mode. </summary>
         public DocumentBuildMode? BuildMode { get; set; }
+
         /// <summary> Description of the document semantic schema using a JSON Schema style syntax. </summary>
         public IDictionary<string, DocumentFieldSchema> FieldSchema { get; }
+
         /// <summary> Estimated confidence for each field. </summary>
         public IDictionary<string, float> FieldConfidence { get; }
+
         /// <summary> Document model to use for analyzing documents with specified type. </summary>
         public string ModelId { get; set; }
+
         /// <summary> Only perform analysis if docType confidence is above threshold. </summary>
         public float? ConfidenceThreshold { get; set; }
+
         /// <summary> List of optional analysis features. </summary>
         public IList<DocumentAnalysisFeature> Features { get; }
+
         /// <summary> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </summary>
         public IList<string> QueryFields { get; }
+
         /// <summary> Maximum number of documents of specified type to analyze.  Default=all. </summary>
         public int? MaxDocumentsToAnalyze { get; set; }
     }

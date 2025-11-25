@@ -138,6 +138,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup",
       "apiVersions": [],
@@ -301,6 +302,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group1",
           "apiVersions": [],
@@ -467,6 +469,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.TwoOperationGroup.Group2",
           "apiVersions": [],

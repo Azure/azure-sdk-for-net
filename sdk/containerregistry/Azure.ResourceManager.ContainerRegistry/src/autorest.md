@@ -7,7 +7,10 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0aec760d4e28712c3a4ae0/specification/containerregistry/resource-manager/readme.md
+# Temporarily releasing the SDK from the Swagger specification; this will be updated once support for generating SDKs from multiple TypeSpec sources is available.
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/aaea49a20b10e8ab526495309e14fdfdcd23bb7e/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/containerregistry.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/aaea49a20b10e8ab526495309e14fdfdcd23bb7e/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/containerregistry_build.json
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -69,8 +72,6 @@ prepend-rp-prefix:
   - AgentPoolListResult
   - AgentPoolQueueStatus
   - AgentProperties
-  - Archive
-  - ArchiveVersion
   - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
@@ -78,15 +79,14 @@ prepend-rp-prefix:
   - BaseImageTriggerType
   - CacheRule
   - CertificateType
-  - CredentialName
   - CredentialHealth
   - CredentialHealthStatus
+  - CredentialName
   - Credentials
   - CredentialSet
   - DockerBuildStep
   - EncodedTaskStep
   - EncryptionStatus
-  - ExportPipeline
   - ExportPolicy
   - ExportPolicyStatus
   - FileTaskStep
@@ -95,22 +95,13 @@ prepend-rp-prefix:
   - ImageUpdateTrigger
   - ImportImageParameters
   - ImportMode
-  - ImportPipeline
   - ImportSource
   - ImportSourceCredentials
   - IPRule
   - KeyVaultProperties
-  - MetadataSearch
   - NetworkRuleSet
   - OverrideTaskStepProperties
   - PasswordName
-  - PipelineOptions
-  - PipelineRun
-  - PipelineRunSourceProperties
-  - PipelineRunSourceType
-  - PipelineRunTargetProperties
-  - PipelineRunTargetType
-  - PipelineSourceType
   - PlatformProperties
   - Policies
   - PolicyStatus
@@ -127,7 +118,6 @@ prepend-rp-prefix:
   - RunType
   - SecretObject
   - SecretObjectType
-  - SoftDeletePolicy
   - SourceTrigger
   - SourceTriggerDescriptor
   - SourceTriggerEvent
@@ -161,112 +151,109 @@ prepend-rp-prefix:
   - ZoneRedundancy
 
 rename-mapping:
-  OS: ContainerRegistryOS
-  KeyVaultProperties.keyRotationEnabled: IsKeyRotationEnabled
-  RegistryNameStatus: ContainerRegistryNameAvailableResult
-  RegistryNameStatus.nameAvailable: IsNameAvailable
-  RegistryUpdateParameters: ContainerRegistryPatch
-  RegistryUpdateParameters.properties.anonymousPullEnabled: IsAnonymousPullEnabled
-  RegistryUpdateParameters.properties.adminUserEnabled: IsAdminUserEnabled
-  Registry.properties.adminUserEnabled: IsAdminUserEnabled
-  RegistryUpdateParameters.properties.dataEndpointEnabled: IsDataEndpointEnabled
-  Registry.properties.dataEndpointEnabled: IsDataEndpointEnabled
-  Registry.properties.anonymousPullEnabled: IsAnonymousPullEnabled
-  ReplicationUpdateParameters.properties.regionEndpointEnabled: IsRegionEndpointEnabled
-  Replication.properties.regionEndpointEnabled: IsRegionEndpointEnabled
-  Registry: ContainerRegistry
-  AuthInfo.expiresIn: ExpireInSeconds
-  TaskStepUpdateParameters: ContainerRegistryTaskStepUpdateContent
-  DockerBuildStepUpdateParameters: ContainerRegistryDockerBuildStepUpdateContent
-  EncodedTaskStepUpdateParameters: ContainerRegistryEncodedTaskStepUpdateContent
-  FileTaskStepUpdateParameters: ContainerRegistryFileTaskStepUpdateContent
-  TaskRunRequest: ContainerRegistryTaskRunContent
-  RunRequest: ContainerRegistryRunContent
-  DockerBuildRequest: ContainerRegistryDockerBuildContent
-  EncodedTaskRunRequest: ContainerRegistryEncodedTaskRunContent
-  FileTaskRunRequest: ContainerRegistryFileTaskRunContent
-  TriggerUpdateParameters: ContainerRegistryTriggerUpdateContent
-  TimerTriggerUpdateParameters: ContainerRegistryTimerTriggerUpdateContent
-  SourceTriggerUpdateParameters: ContainerRegistrySourceTriggerUpdateContent
-  BaseImageTriggerUpdateParameters: ContainerRegistryBaseImageTriggerUpdateContent
-  Run.properties.createTime: CreatedOn
   Action: ContainerRegistryIPRuleAction
+  ActivationProperties: ConnectedRegistryActivation
+  ActivationStatus: ConnectedRegistryActivationStatus
+  Actor: ContainerRegistryWebhookEventActor
   ActionsRequired: ActionsRequiredForPrivateLinkServiceConsumer
   Architecture: ContainerRegistryOSArchitecture
   Argument: ContainerRegistryRunArgument
-  SourceProperties: SourceCodeRepoProperties
-  AuthInfo: SourceCodeRepoAuthInfo
-  AuthInfoUpdateParameters: SourceCodeRepoAuthInfoUpdateContent
-  TokenType: SourceCodeRepoAuthTokenType
-  CallbackConfig: ContainerRegistryWebhookCallbackConfig
-  Event: ContainerRegistryWebhookEvent
-  EventInfo: ContainerRegistryWebhookEventInfo
-  EventRequestMessage: ContainerRegistryWebhookEventRequestMessage
-  EventContent: ContainerRegistryWebhookEventContent
-  EventListResult: ContainerRegistryWebhookEventListResult
-  EventResponseMessage: ContainerRegistryWebhookEventResponseMessage
-  Target: ContainerRegistryWebhookEventTarget
-  Source: ContainerRegistryWebhookEventSource
-  Request: ContainerRegistryWebhookEventRequestContent
-  ConnectionStatus: ContainerRegistryPrivateLinkServiceConnectionStatus
-  DefaultAction: ContainerRegistryNetworkRuleDefaultAction
-  EncodedTaskRunRequest.timeout: TimeoutInSeconds
-  FileTaskRunRequest.timeout: TimeoutInSeconds
-  TaskUpdateParameters.properties.timeout: TimeoutInSeconds
-  Task.properties.timeout: TimeoutInSeconds
-  DockerBuildRequest.timeout: TimeoutInSeconds
-  EncryptionProperty: ContainerRegistryEncryption
-  RegenerateCredentialParameters: ContainerRegistryCredentialRegenerateContent
-  RegistryListCredentialsResult: ContainerRegistryListCredentialsResult
-  RegistryNameCheckRequest: ContainerRegistryNameAvailabilityContent
-  RegistryPassword: ContainerRegistryPassword
-  RegistryUsage: ContainerRegistryUsage
-  RegistryUsageUnit: ContainerRegistryUsageUnit
-  SetValue: ContainerRegistryTaskOverridableValue
-  SourceUpdateParameters: SourceCodeRepoUpdateContent
-  Status: ContainerRegistryResourceStatus
-  Variant: ContainerRegistryCpuVariant
-  Actor: ContainerRegistryWebhookEventActor
-  NetworkRuleBypassOptions: ContainerRegistryNetworkRuleBypassOption
-  PlatformUpdateParameters: ContainerRegistryPlatformUpdateContent
-  RegistryListResult: ContainerRegistryListResult
-  RegistryUsageListResult: ContainerRegistryUsageListResult
-  StepType: ContainerRegistryTaskStepType
-  TaskStepProperties.type: ContainerRegistryTaskStepType
-  ImageUpdateTrigger.id: -|uuid
-  SourceTriggerDescriptor.id: -|uuid
-  EventContent.id: -|uuid
-  EventInfo.id: -|uuid
-  Request.id: -|uuid
-  ActivationProperties: ConnectedRegistryActivation
-  ActivationStatus: ConnectedRegistryActivationStatus
-  ConnectionState: ConnectedRegistryConnectionState
-  ParentProperties: ConnectedRegistryParent
-  ParentProperties.id: -|arm-id
-  LoginServerProperties: ConnectedRegistryLoginServer
-  LoggingProperties: ConnectedRegistryLogging
-  StatusDetailProperties: ConnectedRegistryStatusDetail
-  StatusDetailProperties.type: StatusDetailType
-  StatusDetailProperties.correlationId: -|uuid
   AuditLogStatus: ConnectedRegistryAuditLogStatus
-  GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
-  LogLevel: ConnectedRegistryLogLevel
-  PipelineRunRequest: ConnectedRegistryPipelineRunContent
-  PipelineRunResponse: PipelineRunResult
-  ProgressProperties: PipelineProgress
-  SyncProperties: ConnectedRegistrySyncProperties
-  SyncUpdateProperties: ConnectedRegistrySyncUpdateProperties
-  TokenUpdateParameters: ContainerRegistryTokenPatch
-  ScopeMap.properties.type: ScopeMapType
-  ExportPipelineTargetProperties.type: PipelineTargetType
-  TlsCertificateProperties.location: CertificateLocation
-  TokenCredentialsProperties: ContainerRegistryTokenCredentials
-  ImportSource.registryUri: RegistryAddress
+  AuthInfo: SourceCodeRepoAuthInfo
+  AuthInfo.expiresIn: ExpireInSeconds
+  AuthInfoUpdateParameters: SourceCodeRepoAuthInfoUpdateContent
   AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
-  PackageSourceType: ArchivePackageSourceType
-  RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
+  BaseImageTriggerUpdateParameters: ContainerRegistryBaseImageTriggerUpdateContent
+  CallbackConfig: ContainerRegistryWebhookCallbackConfig
+  ConnectionState: ConnectedRegistryConnectionState
+  ConnectionStatus: ContainerRegistryPrivateLinkServiceConnectionStatus
   ConnectedRegistry.properties.clientTokenIds: -|arm-id
   ConnectedRegistryUpdateParameters.properties.clientTokenIds: -|arm-id
+  DefaultAction: ContainerRegistryNetworkRuleDefaultAction
+  DockerBuildRequest: ContainerRegistryDockerBuildContent
+  DockerBuildRequest.timeout: TimeoutInSeconds
+  DockerBuildStepUpdateParameters: ContainerRegistryDockerBuildStepUpdateContent
+  EncodedTaskRunRequest: ContainerRegistryEncodedTaskRunContent
+  EncodedTaskRunRequest.timeout: TimeoutInSeconds
+  EncodedTaskStepUpdateParameters: ContainerRegistryEncodedTaskStepUpdateContent
+  EncryptionProperty: ContainerRegistryEncryption
+  Event: ContainerRegistryWebhookEvent
+  EventContent: ContainerRegistryWebhookEventContent
+  EventContent.id: -|uuid
+  EventInfo: ContainerRegistryWebhookEventInfo
+  EventInfo.id: -|uuid
+  EventListResult: ContainerRegistryWebhookEventListResult
+  EventRequestMessage: ContainerRegistryWebhookEventRequestMessage
+  EventResponseMessage: ContainerRegistryWebhookEventResponseMessage
+  FileTaskRunRequest: ContainerRegistryFileTaskRunContent
+  FileTaskRunRequest.timeout: TimeoutInSeconds
+  FileTaskStepUpdateParameters: ContainerRegistryFileTaskStepUpdateContent
+  GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
+  ImageUpdateTrigger.id: -|uuid
+  ImportSource.registryUri: RegistryAddress
+  KeyVaultProperties.keyRotationEnabled: IsKeyRotationEnabled
+  LogLevel: ConnectedRegistryLogLevel
+  LoggingProperties: ConnectedRegistryLogging
+  LoginServerProperties: ConnectedRegistryLoginServer
+  NetworkRuleBypassOptions: ContainerRegistryNetworkRuleBypassOption
+  OS: ContainerRegistryOS
+  ParentProperties: ConnectedRegistryParent
+  ParentProperties.id: -|arm-id
+  PlatformUpdateParameters: ContainerRegistryPlatformUpdateContent
+  RegenerateCredentialParameters: ContainerRegistryCredentialRegenerateContent
+  Registry: ContainerRegistry
+  Registry.properties.adminUserEnabled: IsAdminUserEnabled
+  Registry.properties.anonymousPullEnabled: IsAnonymousPullEnabled
+  Registry.properties.dataEndpointEnabled: IsDataEndpointEnabled
+  Registry.properties.networkRuleBypassAllowedForTasks: IsNetworkRuleBypassAllowedForTasks
+  RegistryListCredentialsResult: ContainerRegistryListCredentialsResult
+  RegistryListResult: ContainerRegistryListResult
+  RegistryNameCheckRequest: ContainerRegistryNameAvailabilityContent
+  RegistryNameStatus: ContainerRegistryNameAvailableResult
+  RegistryNameStatus.nameAvailable: IsNameAvailable
+  RegistryPassword: ContainerRegistryPassword
+  RegistryUpdateParameters: ContainerRegistryPatch
+  RegistryUpdateParameters.properties.adminUserEnabled: IsAdminUserEnabled
+  RegistryUpdateParameters.properties.anonymousPullEnabled: IsAnonymousPullEnabled
+  RegistryUpdateParameters.properties.dataEndpointEnabled: IsDataEndpointEnabled
+  RegistryUpdateParameters.properties.networkRuleBypassAllowedForTasks: IsNetworkRuleBypassAllowedForTasks
+  RegistryUsage: ContainerRegistryUsage
+  RegistryUsageListResult: ContainerRegistryUsageListResult
+  RegistryUsageUnit: ContainerRegistryUsageUnit
+  Replication.properties.regionEndpointEnabled: IsRegionEndpointEnabled
+  ReplicationUpdateParameters.properties.regionEndpointEnabled: IsRegionEndpointEnabled
+  Request: ContainerRegistryWebhookEventRequestContent
+  Request.id: -|uuid
+  RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
+  Run.properties.createTime: CreatedOn
+  RunRequest: ContainerRegistryRunContent
+  ScopeMap.properties.type: ScopeMapType
+  SetValue: ContainerRegistryTaskOverridableValue
+  Source: ContainerRegistryWebhookEventSource
+  SourceProperties: SourceCodeRepoProperties
+  SourceTriggerDescriptor.id: -|uuid
+  SourceTriggerUpdateParameters: ContainerRegistrySourceTriggerUpdateContent
+  SourceUpdateParameters: SourceCodeRepoUpdateContent
+  Status: ContainerRegistryResourceStatus
+  StatusDetailProperties: ConnectedRegistryStatusDetail
+  StatusDetailProperties.correlationId: -|uuid
+  StatusDetailProperties.type: StatusDetailType
+  StepType: ContainerRegistryTaskStepType
+  SyncProperties: ConnectedRegistrySyncProperties
+  SyncUpdateProperties: ConnectedRegistrySyncUpdateProperties
+  Target: ContainerRegistryWebhookEventTarget
+  Task.properties.timeout: TimeoutInSeconds
+  TaskRunRequest: ContainerRegistryTaskRunContent
+  TaskStepProperties.type: ContainerRegistryTaskStepType
+  TaskStepUpdateParameters: ContainerRegistryTaskStepUpdateContent
+  TaskUpdateParameters.properties.timeout: TimeoutInSeconds
+  TimerTriggerUpdateParameters: ContainerRegistryTimerTriggerUpdateContent
+  TlsCertificateProperties.location: CertificateLocation
+  TokenCredentialsProperties: ContainerRegistryTokenCredentials
+  TokenType: SourceCodeRepoAuthTokenType
+  TokenUpdateParameters: ContainerRegistryTokenPatch
+  TriggerUpdateParameters: ContainerRegistryTriggerUpdateContent
+  Variant: ContainerRegistryCpuVariant
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -120,6 +122,67 @@ namespace Azure.ResourceManager.Cdn.Models
             return new RankingsResponseTablesItem(ranking, data ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ranking), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ranking: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Ranking))
+                {
+                    builder.Append("  ranking: ");
+                    if (Ranking.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Ranking}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Ranking}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  data: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Data))
+                {
+                    if (Data.Any())
+                    {
+                        builder.Append("  data: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Data)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  data: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RankingsResponseTablesItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -128,6 +191,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support writing '{options.Format}' format.");
             }

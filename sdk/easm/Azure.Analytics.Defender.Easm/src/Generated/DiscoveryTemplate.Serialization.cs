@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DiscoveryTemplate : IUtf8JsonSerializable, IJsonModel<DiscoveryTemplate>
+    /// <summary> The items in the current page of results. </summary>
+    public partial class DiscoveryTemplate : IJsonModel<DiscoveryTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiscoveryTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiscoveryTemplate)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
-                foreach (var item in Seeds)
+                foreach (DiscoverySource item in Seeds)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,21 +88,26 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
-                foreach (var item in Names)
+                foreach (string item in Names)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,22 +116,27 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DiscoveryTemplate IJsonModel<DiscoveryTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiscoveryTemplate IJsonModel<DiscoveryTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DiscoveryTemplate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiscoveryTemplate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiscoveryTemplate(document.RootElement, options);
         }
 
-        internal static DiscoveryTemplate DeserializeDiscoveryTemplate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DiscoveryTemplate DeserializeDiscoveryTemplate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,86 +149,91 @@ namespace Azure.Analytics.Defender.Easm
             string countryCode = default;
             string stateCode = default;
             string city = default;
-            IReadOnlyList<DiscoverySource> seeds = default;
-            IReadOnlyList<string> names = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<DiscoverySource> seeds = default;
+            IList<string> names = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("industry"u8))
+                if (prop.NameEquals("industry"u8))
                 {
-                    industry = property.Value.GetString();
+                    industry = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"u8))
+                if (prop.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    region = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"u8))
+                if (prop.NameEquals("countryCode"u8))
                 {
-                    countryCode = property.Value.GetString();
+                    countryCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateCode"u8))
+                if (prop.NameEquals("stateCode"u8))
                 {
-                    stateCode = property.Value.GetString();
+                    stateCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"u8))
+                if (prop.NameEquals("city"u8))
                 {
-                    city = property.Value.GetString();
+                    city = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seeds"u8))
+                if (prop.NameEquals("seeds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiscoverySource> array = new List<DiscoverySource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     seeds = array;
                     continue;
                 }
-                if (property.NameEquals("names"u8))
+                if (prop.NameEquals("names"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     names = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DiscoveryTemplate(
                 id,
                 name,
@@ -230,13 +245,16 @@ namespace Azure.Analytics.Defender.Easm
                 city,
                 seeds ?? new ChangeTrackingList<DiscoverySource>(),
                 names ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DiscoveryTemplate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiscoveryTemplate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -246,15 +264,20 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DiscoveryTemplate IPersistableModel<DiscoveryTemplate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiscoveryTemplate IPersistableModel<DiscoveryTemplate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DiscoveryTemplate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryTemplate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiscoveryTemplate(document.RootElement, options);
                     }
                 default:
@@ -262,22 +285,14 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DiscoveryTemplate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DiscoveryTemplate FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiscoveryTemplate"/> from. </param>
+        public static explicit operator DiscoveryTemplate(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiscoveryTemplate(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDiscoveryTemplate(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

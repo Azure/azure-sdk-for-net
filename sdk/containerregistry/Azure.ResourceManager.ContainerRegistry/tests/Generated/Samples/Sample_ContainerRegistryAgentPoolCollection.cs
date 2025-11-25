@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AgentPoolsCreate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/AgentPoolsCreate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/examples/AgentPoolsCreate.json
             // this example is just showing the usage of "AgentPools_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AgentPoolsGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/AgentPoolsGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/examples/AgentPoolsGet.json
             // this example is just showing the usage of "AgentPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AgentPoolsList()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/AgentPoolsList.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/examples/AgentPoolsList.json
             // this example is just showing the usage of "AgentPools_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AgentPoolsGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/AgentPoolsGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/examples/AgentPoolsGet.json
             // this example is just showing the usage of "AgentPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AgentPoolsGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/AgentPoolsGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/examples/AgentPoolsGet.json
             // this example is just showing the usage of "AgentPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

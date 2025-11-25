@@ -7,7 +7,7 @@
 
 using System;
 
-namespace _Specs_.Azure.Core.Model
+namespace Specs.Azure.Core.Model
 {
     public partial class AzureEmbeddingModel
     {

@@ -34,6 +34,6 @@ namespace _Type.Property.Nullable
 
         string IPersistableModel<DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        public static explicit operator DurationProperty(Response result) => throw null;
+        public static explicit operator DurationProperty(Response response) => throw null;
     }
 }

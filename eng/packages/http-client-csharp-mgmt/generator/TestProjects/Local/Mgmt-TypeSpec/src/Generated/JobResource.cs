@@ -102,7 +102,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> JobResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> JobResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -200,7 +200,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> JobResources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -259,7 +259,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> JobResources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -346,7 +346,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -394,7 +394,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -437,7 +437,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     JobResourcePatch patch = new JobResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -480,7 +480,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     JobResourcePatch patch = new JobResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -526,7 +526,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -572,7 +572,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

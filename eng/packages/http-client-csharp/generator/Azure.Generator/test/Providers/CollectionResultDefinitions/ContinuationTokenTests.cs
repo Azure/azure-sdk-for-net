@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -125,21 +126,58 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
 
-        private static void CreatePagingOperation(InputResponseLocation responseLocation)
+        [Test]
+        public void MaxPageSizePassedToNextRequest()
+        {
+            CreatePagingOperation(InputResponseLocation.Body, includeMaxPageSize: true);
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
+        public void MaxPageSizeRequiredPassedToNextRequest()
+        {
+            CreatePagingOperation(InputResponseLocation.Body, includeMaxPageSize: true, maxPageSizeRequired: true);
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        private static void CreatePagingOperation(InputResponseLocation responseLocation, bool includeMaxPageSize = false, bool maxPageSizeRequired = false)
         {
             var inputModel = InputFactory.Model("cat", properties:
             [
                 InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
             ]);
             var parameter = InputFactory.QueryParameter("myToken", InputPrimitiveType.String, isRequired: true);
-            var paging = InputFactory.ContinuationTokenPagingMetadata(parameter, "cats", "nextPage", responseLocation);
+            IReadOnlyList<string>? pageSizeParameterSegments = includeMaxPageSize ? ["maxpagesize"] : null;
+            var paging = InputFactory.ContinuationTokenPagingMetadata(parameter, "cats", "nextPage", responseLocation, pageSizeParameterSegments);
             var response = InputFactory.OperationResponse(
                 [200],
                 InputFactory.Model(
                     "page",
                     properties: [InputFactory.Property("cats", InputFactory.Array(inputModel)), InputFactory.Property("nextPage", InputPrimitiveType.Url)]));
-            var operation = InputFactory.Operation("getCats", parameters: [parameter], responses: [response]);
-            var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: paging);
+
+            IReadOnlyList<InputQueryParameter> queryParameters = includeMaxPageSize
+                ? [parameter, InputFactory.QueryParameter("maxpagesize", InputPrimitiveType.Int32, isRequired: maxPageSizeRequired)]
+                : [parameter];
+            IReadOnlyList<InputMethodParameter>? methodParameters = includeMaxPageSize
+                ? [InputFactory.MethodParameter("maxpagesize", InputPrimitiveType.Int32, isRequired: maxPageSizeRequired, location: InputRequestLocation.Query)]
+                : null;
+
+            var operation = InputFactory.Operation("getCats", parameters: queryParameters, responses: [response]);
+            var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: paging, parameters: methodParameters);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
 
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);

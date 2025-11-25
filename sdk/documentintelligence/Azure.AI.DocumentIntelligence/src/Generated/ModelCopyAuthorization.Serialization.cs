@@ -9,14 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class ModelCopyAuthorization : IUtf8JsonSerializable, IJsonModel<ModelCopyAuthorization>
+    /// <summary>
+    /// Authorization to copy a document model to the specified target resource and
+    /// modelId.
+    /// </summary>
+    public partial class ModelCopyAuthorization : IJsonModel<ModelCopyAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelCopyAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ModelCopyAuthorization"/> for deserialization. </summary>
+        internal ModelCopyAuthorization()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ModelCopyAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +38,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelCopyAuthorization)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
             writer.WritePropertyName("targetResourceRegion"u8);
@@ -46,15 +55,15 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expirationDateTime"u8);
             writer.WriteStringValue(ExpiresOn, "O");
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +72,27 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        ModelCopyAuthorization IJsonModel<ModelCopyAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelCopyAuthorization IJsonModel<ModelCopyAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ModelCopyAuthorization JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelCopyAuthorization)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeModelCopyAuthorization(document.RootElement, options);
         }
 
-        internal static ModelCopyAuthorization DeserializeModelCopyAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ModelCopyAuthorization DeserializeModelCopyAuthorization(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,61 +102,62 @@ namespace Azure.AI.DocumentIntelligence
             string targetModelId = default;
             Uri targetModelLocation = default;
             string accessToken = default;
-            DateTimeOffset expirationDateTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset expiresOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("targetResourceId"u8))
+                if (prop.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    targetResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceRegion"u8))
+                if (prop.NameEquals("targetResourceRegion"u8))
                 {
-                    targetResourceRegion = property.Value.GetString();
+                    targetResourceRegion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetModelId"u8))
+                if (prop.NameEquals("targetModelId"u8))
                 {
-                    targetModelId = property.Value.GetString();
+                    targetModelId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetModelLocation"u8))
+                if (prop.NameEquals("targetModelLocation"u8))
                 {
-                    targetModelLocation = new Uri(property.Value.GetString());
+                    targetModelLocation = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessToken"u8))
+                if (prop.NameEquals("accessToken"u8))
                 {
-                    accessToken = property.Value.GetString();
+                    accessToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDateTime"u8))
+                if (prop.NameEquals("expirationDateTime"u8))
                 {
-                    expirationDateTime = property.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ModelCopyAuthorization(
                 targetResourceId,
                 targetResourceRegion,
                 targetModelId,
                 targetModelLocation,
                 accessToken,
-                expirationDateTime,
-                serializedAdditionalRawData);
+                expiresOn,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ModelCopyAuthorization>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ModelCopyAuthorization>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -152,15 +167,20 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
-        ModelCopyAuthorization IPersistableModel<ModelCopyAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelCopyAuthorization IPersistableModel<ModelCopyAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ModelCopyAuthorization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCopyAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeModelCopyAuthorization(document.RootElement, options);
                     }
                 default:
@@ -168,22 +188,26 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ModelCopyAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ModelCopyAuthorization FromResponse(Response response)
+        /// <param name="modelCopyAuthorization"> The <see cref="ModelCopyAuthorization"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ModelCopyAuthorization modelCopyAuthorization)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeModelCopyAuthorization(document.RootElement);
+            if (modelCopyAuthorization == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(modelCopyAuthorization, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ModelCopyAuthorization"/> from. </param>
+        public static explicit operator ModelCopyAuthorization(Response response)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeModelCopyAuthorization(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

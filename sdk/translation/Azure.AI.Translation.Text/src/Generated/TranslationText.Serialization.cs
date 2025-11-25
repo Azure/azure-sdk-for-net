@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TranslationText : IUtf8JsonSerializable, IJsonModel<TranslationText>
+    /// <summary> Translation result. </summary>
+    public partial class TranslationText : IJsonModel<TranslationText>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslationText>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TranslationText"/> for deserialization. </summary>
+        internal TranslationText()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranslationText>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,40 +33,49 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslationText)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("to"u8);
-            writer.WriteStringValue(TargetLanguage);
+            writer.WritePropertyName("language"u8);
+            writer.WriteStringValue(Language);
+            if (Optional.IsDefined(SourceCharacters))
+            {
+                writer.WritePropertyName("sourceCharacters"u8);
+                writer.WriteNumberValue(SourceCharacters.Value);
+            }
+            if (Optional.IsDefined(InstructionTokens))
+            {
+                writer.WritePropertyName("instructionTokens"u8);
+                writer.WriteNumberValue(InstructionTokens.Value);
+            }
+            if (Optional.IsDefined(SourceTokens))
+            {
+                writer.WritePropertyName("sourceTokens"u8);
+                writer.WriteNumberValue(SourceTokens.Value);
+            }
+            if (Optional.IsDefined(ResponseTokens))
+            {
+                writer.WritePropertyName("responseTokens"u8);
+                writer.WriteNumberValue(ResponseTokens.Value);
+            }
+            if (Optional.IsDefined(TargetTokens))
+            {
+                writer.WritePropertyName("targetTokens"u8);
+                writer.WriteNumberValue(TargetTokens.Value);
+            }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(Transliteration))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue(Transliteration, options);
-            }
-            if (Optional.IsDefined(Alignment))
-            {
-                writer.WritePropertyName("alignment"u8);
-                writer.WriteObjectValue(Alignment, options);
-            }
-            if (Optional.IsDefined(SentenceBoundaries))
-            {
-                writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue(SentenceBoundaries, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -70,91 +84,119 @@ namespace Azure.AI.Translation.Text
             }
         }
 
-        TranslationText IJsonModel<TranslationText>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranslationText IJsonModel<TranslationText>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TranslationText JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslationText)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTranslationText(document.RootElement, options);
         }
 
-        internal static TranslationText DeserializeTranslationText(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TranslationText DeserializeTranslationText(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string to = default;
+            string language = default;
+            int? sourceCharacters = default;
+            int? instructionTokens = default;
+            int? sourceTokens = default;
+            int? responseTokens = default;
+            int? targetTokens = default;
             string text = default;
-            TransliteratedText transliteration = default;
-            TranslatedTextAlignment alignment = default;
-            SentenceBoundaries sentLen = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("to"u8))
+                if (prop.NameEquals("language"u8))
                 {
-                    to = property.Value.GetString();
+                    language = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("text"u8))
+                if (prop.NameEquals("sourceCharacters"u8))
                 {
-                    text = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("transliteration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value, options);
+                    sourceCharacters = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("alignment"u8))
+                if (prop.NameEquals("instructionTokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value, options);
+                    instructionTokens = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sentLen"u8))
+                if (prop.NameEquals("sourceTokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sentLen = SentenceBoundaries.DeserializeSentenceBoundaries(property.Value, options);
+                    sourceTokens = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("responseTokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseTokens = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("targetTokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetTokens = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("text"u8))
+                {
+                    text = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TranslationText(
-                to,
+                language,
+                sourceCharacters,
+                instructionTokens,
+                sourceTokens,
+                responseTokens,
+                targetTokens,
                 text,
-                transliteration,
-                alignment,
-                sentLen,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TranslationText>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TranslationText>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -164,15 +206,20 @@ namespace Azure.AI.Translation.Text
             }
         }
 
-        TranslationText IPersistableModel<TranslationText>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranslationText IPersistableModel<TranslationText>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TranslationText PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranslationText>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTranslationText(document.RootElement, options);
                     }
                 default:
@@ -180,22 +227,7 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TranslationText>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranslationText FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTranslationText(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

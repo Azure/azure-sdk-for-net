@@ -24,18 +24,19 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"></param>
         /// <param name="sources"></param>
-        internal ObservedLong(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> serializedAdditionalRawData, long? value, IReadOnlyList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent, serializedAdditionalRawData)
+        internal ObservedLong(DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? value, IList<SourceDetails> sources) : base(firstSeen, lastSeen, count, recent, additionalBinaryDataProperties)
         {
             Value = value;
             Sources = sources;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Gets the Value. </summary>
         public long? Value { get; }
-        /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<SourceDetails> Sources { get; }
+
+        /// <summary> Gets the Sources. </summary>
+        public IList<SourceDetails> Sources { get; }
     }
 }
