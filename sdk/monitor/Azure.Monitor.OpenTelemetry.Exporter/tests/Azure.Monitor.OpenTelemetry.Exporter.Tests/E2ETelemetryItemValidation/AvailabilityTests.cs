@@ -268,5 +268,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             Assert.True(availabilityData.Properties.ContainsKey("customProp2"));
             Assert.Equal("value2", availabilityData.Properties["customProp2"]);
         }
+
+        [Fact]
+        public void VerifyIncompleteAvailabilityDataFallsBackToMessage()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, LogLevel.Information)
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT - Log with only 3 of the 4 required fields (missing 'id')
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation("{microsoft.availability.name} {microsoft.availability.duration} {microsoft.availability.success}",
+                "TestName", "00:00:01", true);
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+
+            // Should be Message telemetry, not Availability
+            Assert.DoesNotContain(telemetryItems!, x => x.Name == "Availability");
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Message").Single();
+            Assert.NotNull(telemetryItem);
+        }
     }
 }
