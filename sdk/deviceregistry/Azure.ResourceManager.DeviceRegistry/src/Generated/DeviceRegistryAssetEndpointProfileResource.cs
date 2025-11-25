@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryAssetEndpointProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DeviceRegistryAssetEndpointProfilePatch patch = new DeviceRegistryAssetEndpointProfilePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryAssetEndpointProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DeviceRegistryAssetEndpointProfilePatch patch = new DeviceRegistryAssetEndpointProfilePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryAssetEndpointProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -24,6 +24,7 @@ steps:
         azureSubscription: opensource-api-connection
         scriptType: pscore
         scriptLocation: inlineScript
+        # PackageInfoFiles example: @('a/file1.json','a/file2.json')
         inlineScript: |
           $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1 `
             -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name) `
