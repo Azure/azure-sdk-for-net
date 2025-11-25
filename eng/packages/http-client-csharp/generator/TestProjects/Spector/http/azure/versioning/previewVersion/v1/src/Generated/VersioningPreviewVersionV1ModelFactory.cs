@@ -6,14 +6,32 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Specs.Azure.Versioning.PreviewVersion;
 
 namespace Versioning.PreviewVersion.V1
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VersioningPreviewVersionV1ModelFactory
     {
-        public static Widget Widget(string id = default, string name = default, string color = default) => throw null;
+        /// <summary> A simple model for testing. </summary>
+        /// <param name="id"> Widget identifier. </param>
+        /// <param name="name"> Widget name. </param>
+        /// <param name="color"> Widget color, only available in preview version. </param>
+        /// <returns> A new <see cref="Specs.Azure.Versioning.PreviewVersion.Widget"/> instance for mocking. </returns>
+        public static Widget Widget(string id = default, string name = default, string color = default)
+        {
+            return new Widget(id, name, color, additionalBinaryDataProperties: null);
+        }
 
-        public static ListWidgetsResponse ListWidgetsResponse(IEnumerable<Widget> widgets = default) => throw null;
+        /// <summary> The ListWidgetsResponse. </summary>
+        /// <param name="widgets"></param>
+        /// <returns> A new <see cref="Specs.Azure.Versioning.PreviewVersion.ListWidgetsResponse"/> instance for mocking. </returns>
+        public static ListWidgetsResponse ListWidgetsResponse(IEnumerable<Widget> widgets = default)
+        {
+            widgets ??= new ChangeTrackingList<Widget>();
+
+            return new ListWidgetsResponse(widgets.ToList(), additionalBinaryDataProperties: null);
+        }
     }
 }

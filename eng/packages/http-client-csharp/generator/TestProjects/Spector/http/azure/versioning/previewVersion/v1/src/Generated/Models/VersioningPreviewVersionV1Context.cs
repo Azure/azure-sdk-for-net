@@ -10,6 +10,10 @@ using Specs.Azure.Versioning.PreviewVersion;
 
 namespace Versioning.PreviewVersion.V1
 {
+    /// <summary>
+    /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// </summary>
     [ModelReaderWriterBuildable(typeof(ListWidgetsResponse))]
     [ModelReaderWriterBuildable(typeof(Widget))]
     public partial class VersioningPreviewVersionV1Context : ModelReaderWriterContext

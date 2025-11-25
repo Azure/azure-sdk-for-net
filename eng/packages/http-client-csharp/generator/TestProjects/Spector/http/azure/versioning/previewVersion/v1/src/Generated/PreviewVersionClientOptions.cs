@@ -5,16 +5,33 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
+    /// <summary> Client options for <see cref="PreviewVersionClient"/>. </summary>
     public partial class PreviewVersionClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_01_Preview;
 
-        public PreviewVersionClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        /// <summary> Initializes a new instance of PreviewVersionClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
+        public PreviewVersionClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2024_01_01 => "2024-01-01",
+                ServiceVersion.V2024_06_01 => "2024-06-01",
+                ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
+                _ => throw new NotSupportedException()
+            };
+        }
 
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Api version 2024-01-01. </summary>

@@ -5,12 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
+    /// <summary> The ListWidgetsResponse. </summary>
     public partial class ListWidgetsResponse
     {
-        public IList<Widget> Widgets => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="ListWidgetsResponse"/>. </summary>
+        /// <param name="widgets"></param>
+        internal ListWidgetsResponse(IEnumerable<Widget> widgets)
+        {
+            Widgets = widgets.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListWidgetsResponse"/>. </summary>
+        /// <param name="widgets"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListWidgetsResponse(IList<Widget> widgets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Widgets = widgets;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the Widgets. </summary>
+        public IList<Widget> Widgets { get; }
     }
 }
