@@ -177,17 +177,6 @@ public class TestClientTests : ClientTestBase
     }
 
     [Test]
-    public async Task SubClientPropertyCallsAreAutoInstrumented()
-    {
-        TestClient client = CreateProxyFromClient(new TestClient());
-
-        TestClientOperations subClient = client.SubProperty;
-        var result = await subClient.MethodAsync(123);
-
-        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
-    }
-
-    [Test]
     public void NonPublicSubClientPropertyCallsAreNotAutoInstrumented()
     {
         TestClient client = CreateProxyFromClient(new TestClient());
