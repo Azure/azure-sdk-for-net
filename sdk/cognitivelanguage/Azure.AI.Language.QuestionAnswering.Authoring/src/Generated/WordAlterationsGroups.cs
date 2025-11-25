@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Collection of word alterations. </summary>
-    public partial class WordAlterationsGroup
+    public partial class WordAlterationsGroups
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroups"/>. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alterations"/> is null. </exception>
-        public WordAlterationsGroup(IEnumerable<string> alterations)
+        public WordAlterationsGroups(IEnumerable<string> alterations)
         {
             Argument.AssertNotNull(alterations, nameof(alterations));
 
             Alterations = alterations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroups"/>. </summary>
         /// <param name="alterations"> Collection of word alterations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WordAlterationsGroup(IList<string> alterations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WordAlterationsGroups(IList<string> alterations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Alterations = alterations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroup"/> for deserialization. </summary>
-        internal WordAlterationsGroup()
+        /// <summary> Initializes a new instance of <see cref="WordAlterationsGroups"/> for deserialization. </summary>
+        internal WordAlterationsGroups()
         {
         }
 

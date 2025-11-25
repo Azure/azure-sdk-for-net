@@ -63,18 +63,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror">
+        /// <param name="innerError">
         /// An object containing more specific information than the current object about
         /// the error.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
-            Innererror = innererror;
+            InnerError = innerError;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,6 +95,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// An object containing more specific information than the current object about
         /// the error.
         /// </summary>
-        public InnerErrorModel Innererror { get; }
+        public InnerErrorModel InnerError { get; }
     }
 }

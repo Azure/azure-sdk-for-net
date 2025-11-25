@@ -39,7 +39,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     [ModelReaderWriterBuildable(typeof(SuggestedQuestion))]
     [ModelReaderWriterBuildable(typeof(SuggestedQuestionsCluster))]
     [ModelReaderWriterBuildable(typeof(SynonymAssets))]
-    [ModelReaderWriterBuildable(typeof(WordAlterationsGroup))]
+    [ModelReaderWriterBuildable(typeof(WordAlterationsGroups))]
     public partial class AzureAILanguageQuestionAnsweringAuthoringContext : ModelReaderWriterContext
     {
     }

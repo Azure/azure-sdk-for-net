@@ -48,7 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringAssets"/>. </summary>
         public QuestionAnsweringAuthoringAssets()
         {
-            Synonyms = new ChangeTrackingList<WordAlterationsGroup>();
+            Synonyms = new ChangeTrackingList<WordAlterationsGroups>();
             Qnas = new ChangeTrackingList<ImportQnaRecord>();
         }
 
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="synonyms"> Collection of synonyms. </param>
         /// <param name="qnas"> List of QnA records to import. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringAssets(IList<WordAlterationsGroup> synonyms, IList<ImportQnaRecord> qnas, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringAssets(IList<WordAlterationsGroups> synonyms, IList<ImportQnaRecord> qnas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Synonyms = synonyms;
             Qnas = qnas;
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Collection of synonyms. </summary>
-        public IList<WordAlterationsGroup> Synonyms { get; }
+        public IList<WordAlterationsGroups> Synonyms { get; }
         /// <summary> List of QnA records to import. </summary>
         public IList<ImportQnaRecord> Qnas { get; }
     }

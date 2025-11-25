@@ -49,12 +49,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror">
+        /// <param name="innerError">
         /// An object containing more specific information than the current object about
         /// the error.
         /// </param>
         /// <returns> A new <see cref="Authoring.Error"/> instance for mocking. </returns>
-        public static Error Error(ErrorCode code = default, string message = null, string target = null, IEnumerable<Error> details = null, InnerErrorModel innererror = null)
+        public static Error Error(ErrorCode code = default, string message = null, string target = null, IEnumerable<Error> details = null, InnerErrorModel innerError = null)
         {
             details ??= new List<Error>();
 
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 message,
                 target,
                 details?.ToList(),
-                innererror,
+                innerError,
                 serializedAdditionalRawData: null);
         }
 

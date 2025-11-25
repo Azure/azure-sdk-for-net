@@ -91,7 +91,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<WordAlterationsGroup> synonyms = default;
+            IList<WordAlterationsGroups> synonyms = default;
             IList<ImportQnaRecord> qnas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -103,10 +103,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    List<WordAlterationsGroup> array = new List<WordAlterationsGroup>();
+                    List<WordAlterationsGroups> array = new List<WordAlterationsGroups>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WordAlterationsGroup.DeserializeWordAlterationsGroup(item, options));
+                        array.Add(WordAlterationsGroups.DeserializeWordAlterationsGroups(item, options));
                     }
                     synonyms = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QuestionAnsweringAuthoringAssets(synonyms ?? new ChangeTrackingList<WordAlterationsGroup>(), qnas ?? new ChangeTrackingList<ImportQnaRecord>(), serializedAdditionalRawData);
+            return new QuestionAnsweringAuthoringAssets(synonyms ?? new ChangeTrackingList<WordAlterationsGroups>(), qnas ?? new ChangeTrackingList<ImportQnaRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuestionAnsweringAuthoringAssets>.Write(ModelReaderWriterOptions options)
