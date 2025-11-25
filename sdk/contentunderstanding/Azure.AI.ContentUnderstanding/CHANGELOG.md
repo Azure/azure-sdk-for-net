@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1
+## 1.0.0-beta.1 (Unreleased)
 
 ### Features Added
 - Initial release of Azure AI Content Understanding client library for .NET
