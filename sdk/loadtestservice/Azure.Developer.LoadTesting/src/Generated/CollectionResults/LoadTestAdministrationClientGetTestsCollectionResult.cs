@@ -84,7 +84,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTestsRequest(nextLink, _orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context) : _client.CreateGetTestsRequest(_orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTestsRequest(nextLink, pageSize, _context) : _client.CreateGetTestsRequest(_orderby, _search, _lastModifiedStartTime, _lastModifiedEndTime, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTests");
             scope.Start();
             try

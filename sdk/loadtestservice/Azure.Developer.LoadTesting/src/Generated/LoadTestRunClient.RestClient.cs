@@ -327,10 +327,14 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetTestRunsRequest(Uri nextPage, string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
+        internal HttpMessage CreateNextGetTestRunsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
