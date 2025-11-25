@@ -161,9 +161,10 @@ public class TestProxyProcess
                 _errorBuffer.Clear();
                 if (error.Contains("dotnet tool restore"))
                 {
-                    throw new InvalidOperationException("An error occurred in the test proxy. You may need to install the test-proxy tool globally " +
-                        "using 'dotnet tool install -g Azure.Sdk.Tools.TestProxy' or ensure TestEnvironment.RepositoryRoot is set correctly so the " +
-                        $"test framework can restore local tools from the dotnet-tools.json manifest. The full error is: {error}");
+                    throw new InvalidOperationException("An error occurred in the test proxy. You may need to install the test-proxy tool with the correct source " +
+                        "using 'dotnet tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json' or ensure " +
+                        "TestEnvironment.RepositoryRoot is set correctly so the test framework can restore local tools from the dotnet-tools.json manifest. " +
+                        $"The full error is: {error}");
                 }
                 throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
             }
@@ -288,7 +289,7 @@ public class TestProxyProcess
                     var processInfo = new ProcessStartInfo
                     {
                         FileName = s_dotNetExe,
-                        Arguments = "tool restore",
+                        Arguments = "tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
                         WorkingDirectory = repoRoot,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
