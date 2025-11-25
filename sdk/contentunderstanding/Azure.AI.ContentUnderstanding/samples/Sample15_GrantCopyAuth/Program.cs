@@ -13,7 +13,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
+/// This sample demonstrates how to grant copy authorization and copy an analyzer from a source resource to a target resource.
 ///
 /// Prerequisites:
 ///     - Azure subscription

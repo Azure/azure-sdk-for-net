@@ -1,6 +1,6 @@
 # Sample15_GrantCopyAuth
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to grant copy authorization and copy an analyzer from a source resource to a target resource.
 For detailed documentation, see [Sample15_GrantCopyAuth.md](../Sample15_GrantCopyAuth.md).
 
 ## Prerequisites

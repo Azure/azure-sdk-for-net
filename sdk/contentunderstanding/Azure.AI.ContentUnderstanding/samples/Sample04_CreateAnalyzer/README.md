@@ -1,6 +1,6 @@
 # Sample04_CreateAnalyzer
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents.
 For detailed documentation, see [Sample04_CreateAnalyzer.md](../Sample04_CreateAnalyzer.md).
 
 ## Prerequisites

@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 ///     - Azure subscription
 ///     - Microsoft Foundry resource
 ///     - .NET 8.0 SDK or later
-///     - Deployed GPT-4.1, GPT-4.1-mini, and text-embedding-3-large models in Azure AI Foundry
+///     - Deployed GPT-4.1, GPT-4.1-mini, and text-embedding-3-large models in Microsoft Foundry
 ///
 /// Setup:
 ///     Set the following environment variables or add them to appsettings.json:

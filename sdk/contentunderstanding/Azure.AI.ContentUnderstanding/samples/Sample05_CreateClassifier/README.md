@@ -1,6 +1,6 @@
 # Sample05_CreateClassifier
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to create a classifier analyzer to categorize documents.
 For detailed documentation, see [Sample05_CreateClassifier.md](../Sample05_CreateClassifier.md).
 
 ## Prerequisites

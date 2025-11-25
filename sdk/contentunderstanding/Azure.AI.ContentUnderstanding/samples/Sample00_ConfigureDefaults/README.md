@@ -1,6 +1,6 @@
 # Sample00_ConfigureDefaults
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to configure and retrieve default model deployment settings for your Microsoft Foundry resource.
 For detailed documentation, see [Sample00_ConfigureDefaults.md](../Sample00_ConfigureDefaults.md).
 
 ## Prerequisites

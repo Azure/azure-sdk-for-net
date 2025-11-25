@@ -28,6 +28,7 @@ These samples demonstrate how to use the Azure AI Content Understanding SDK for 
 3. Create the resource and note the **endpoint** from the "Keys and Endpoint" section
 
 ### 2. Configure Authentication
+**Reminder:** Environment variables will take precedence over values in `appsettings.json`. If both are set, the sample will use the environment variable value.
 
 **Recommended**: Copy `appsettings.json.sample` to `appsettings.json` in the samples root directory. This allows you to configure your endpoint and authentication settings once, and all samples will automatically use them when you run `dotnet run` from any sample directory.
 
@@ -254,7 +255,7 @@ This allows you to:
 
 **Solutions**:
 - Run [Sample 00: Configure model deployment defaults][sample00] first
-- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in your Azure AI Foundry resource
+- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in your Microsoft Foundry resource
 - Verify the deployment names match what you configured in Sample 00
 
 ### Build Errors

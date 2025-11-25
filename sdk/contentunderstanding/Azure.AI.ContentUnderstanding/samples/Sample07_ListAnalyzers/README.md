@@ -1,6 +1,6 @@
 # Sample07_ListAnalyzers
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to list all available analyzers in your Microsoft Foundry resource.
 For detailed documentation, see [Sample07_ListAnalyzers.md](../Sample07_ListAnalyzers.md).
 
 ## Prerequisites

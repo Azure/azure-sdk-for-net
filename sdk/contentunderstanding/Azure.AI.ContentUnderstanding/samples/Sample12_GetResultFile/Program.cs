@@ -12,7 +12,7 @@ using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// This sample demonstrates how to analyze a document using the prebuilt-documentSearch analyzer.
+/// This sample demonstrates how to retrieve result files (such as keyframe images) from a video analysis operation.
 ///
 /// Prerequisites:
 ///     - Azure subscription

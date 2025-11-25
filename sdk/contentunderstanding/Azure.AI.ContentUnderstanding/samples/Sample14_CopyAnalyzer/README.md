@@ -1,6 +1,6 @@
 # Sample14_CopyAnalyzer
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to copy an analyzer from source to target within the same resource.
 For detailed documentation, see [Sample14_CopyAnalyzer.md](../Sample14_CopyAnalyzer.md).
 
 ## Prerequisites

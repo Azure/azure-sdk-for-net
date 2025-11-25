@@ -1,6 +1,6 @@
 # Sample12_GetResultFile
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to retrieve result files (such as keyframe images) from a video analysis operation.
 For detailed documentation, see [Sample12_GetResultFile.md](../Sample12_GetResultFile.md).
 
 ## Prerequisites

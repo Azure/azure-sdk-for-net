@@ -1,6 +1,6 @@
 # Sample13_DeleteResult
 
-This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
+This sample demonstrates how to delete analysis results.
 For detailed documentation, see [Sample13_DeleteResult.md](../Sample13_DeleteResult.md).
 
 ## Prerequisites
