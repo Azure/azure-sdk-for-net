@@ -204,6 +204,12 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Projects'))">
+    <PackageReference Update="OpenAI" Version="[2.7.0,3.0)" />
+    <!-- Foundry libs depend on OpenAI; float SCM with upstream version -->
+    <PackageReference Update="System.ClientModel" Version="*" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
     <PackageReference Update="Azure.AI.Projects" Version="1.1.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0"/>
@@ -213,7 +219,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.5.0" />
+    <PackageReference Update="OpenAI" Version="2.6.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
@@ -371,8 +377,13 @@
     <PackageReference Update="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageReference Update="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
-    <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.*" />
+    <PackageReference Update="Microsoft.AspNetCore" Version="2.3.0" />
+
+    <!-- The AspNetCore.Mvc.Testing package has a hard association on a specific target framework -->
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0"/>
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.11" Condition="'$(TargetFramework)' == 'net9.0'"/>
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.22" Condition="'$(TargetFramework)' == 'net8.0'"/>
+
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
@@ -407,6 +418,7 @@
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="5.0.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
+    <PackageReference Update="Microsoft.ClientModel.TestFramework" Version="1.0.0-alpha.20251110.1" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.CognitiveServices.Speech"  Version="1.47.0"/>
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
@@ -475,8 +487,13 @@
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))">
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and (
+      $(MSBuildProjectName.StartsWith('Microsoft.ClientModel.TestFramework'))
+      or $(MSBuildProjectName.StartsWith('Azure.AI.Projects.OpenAI.Tests'))
+      or $(MSBuildProjectName.StartsWith('Azure.AI.Projects.Agents.Tests'))
+    )">
     <PackageReference Update="NUnit" Version="4.4.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="5.1.0" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
   </ItemGroup>
 

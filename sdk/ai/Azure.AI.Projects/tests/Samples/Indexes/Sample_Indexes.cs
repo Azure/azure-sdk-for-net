@@ -65,10 +65,10 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var indexName = TestEnvironment.INDEXNAME ?? "my-index";
-            var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
-            var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
-            var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+            var indexName = TestEnvironment.INDEX_NAME ?? "my-index";
+            var indexVersion = TestEnvironment.INDEX_VERSION ?? "1.0";
+            var aiSearchConnectionName = TestEnvironment.AI_SEARCH_CONNECTION_NAME ?? "my-ai-search-connection-name";
+            var aiSearchIndexName = TestEnvironment.AI_SEARCH_INDEX_NAME ?? "my-ai-search-index-name";
 
             AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
@@ -122,10 +122,10 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var indexName = TestEnvironment.INDEXNAME ?? "my-index";
-            var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
-            var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
-            var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+            var indexName = TestEnvironment.INDEX_NAME ?? "my-index";
+            var indexVersion = TestEnvironment.INDEX_VERSION ?? "1.0";
+            var aiSearchConnectionName = TestEnvironment.AI_SEARCH_CONNECTION_NAME ?? "my-ai-search-connection-name";
+            var aiSearchIndexName = TestEnvironment.AI_SEARCH_INDEX_NAME ?? "my-ai-search-index-name";
 
             AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif

@@ -5,15 +5,13 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Version>1.0.0-beta.1</Version>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <Nullable>enable</Nullable>
-    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-  
 </Project>

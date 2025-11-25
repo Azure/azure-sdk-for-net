@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// A base class for connection credentials
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="NoAuthenticationCredentials"/>, and <see cref="AgenticIdentityCredentials"/>.
     /// </summary>
     public abstract partial class AIProjectConnectionBaseCredential
     {
