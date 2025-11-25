@@ -25,12 +25,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
         /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         public LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(LoadTestAdministrationClient client, string testId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
-
             _client = client;
             _testId = testId;
             _context = context;

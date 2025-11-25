@@ -18,9 +18,9 @@
   - New Emitter (TypeSpec): 25
   - Old TypeSpec: 41
 - Data Plane (DPG): 169
-  - Autorest/Swagger: 87
-  - New Emitter (TypeSpec): 16
-  - Old TypeSpec: 17
+  - Autorest/Swagger: 86
+  - New Emitter (TypeSpec): 18
+  - Old TypeSpec: 16
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 16 / 33 (48.5%)
+**Migration Status**: 18 / 34 (52.9%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -54,7 +54,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | ✅ |
 | healthdataaiservices | Azure.Health.Deidentification | ✅ |
 | keyvault | Azure.Security.KeyVault.Administration | ✅ |
-| loadtestservice | Azure.Developer.LoadTesting |  |
+| loadtestservice | Azure.Developer.LoadTesting | ✅ |
 | monitor | Azure.Monitor.Ingestion | ✅ |
 | monitor | Azure.Monitor.Query.Logs | ✅ |
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
@@ -62,6 +62,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | openai | Azure.AI.OpenAI | ✅ |
 | purview | Azure.Analytics.Purview.DataMap |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
+| template | Azure.Template | ✅ |
 | translation | Azure.AI.Translation.Document |  |
 | translation | Azure.AI.Translation.Text | ✅ |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |
@@ -69,7 +70,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 | Service | Library |
 | ------- | ------- |
@@ -154,7 +155,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 | synapse | Azure.Analytics.Synapse.Monitoring |
 | synapse | Azure.Analytics.Synapse.Spark |
 | tables | Azure.Data.Tables |
-| template | Azure.Template |
 | textanalytics | Azure.AI.TextAnalytics |
 | textanalytics | Azure.AI.TextAnalytics.Legacy.Shared |
 | timeseriesinsights | Azure.IoT.TimeSeriesInsights |

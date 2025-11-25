@@ -37,16 +37,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         public LoadTestRunClientGetMetricDimensionValuesCollectionResult(LoadTestRunClient client, string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
-
             _client = client;
             _testRunId = testRunId;
             _name = name;

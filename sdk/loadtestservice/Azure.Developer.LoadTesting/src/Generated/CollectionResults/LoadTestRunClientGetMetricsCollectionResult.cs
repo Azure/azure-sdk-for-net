@@ -39,16 +39,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/>, <paramref name="timespan"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
         public LoadTestRunClientGetMetricsCollectionResult(LoadTestRunClient client, string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricname, nameof(metricname));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
-            Argument.AssertNotNull(content, nameof(content));
-
             _client = client;
             _testRunId = testRunId;
             _metricname = metricname;
