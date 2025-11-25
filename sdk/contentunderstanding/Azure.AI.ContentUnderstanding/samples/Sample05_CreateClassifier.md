@@ -194,13 +194,13 @@ Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 - [Content Understanding Documentation][cu-docs]
 - [Classifiers Documentation][classifier-docs]
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample04]: Sample04_CreateAnalyzer.md
-[sample06]: Sample06_GetAnalyzer.md
-[sample07]: Sample07_ListAnalyzers.md
-[sample08]: Sample08_UpdateAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[classifier-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/classifier
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
+[sample07]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample07_ListAnalyzers.md
+[sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[classifier-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/classifier
 [mixed-docs-example]: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/blob/main/ContentUnderstanding.Common/data/mixed_financial_docs.pdf
 

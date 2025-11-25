@@ -201,11 +201,11 @@ Use cross-resource copying when you need to:
 - [Content Understanding Documentation][cu-docs]
 - [Analyzer Management][analyzer-docs] - Learn about managing analyzers
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample04]: Sample04_CreateAnalyzer.md
-[sample09]: Sample09_DeleteAnalyzer.md
-[sample14]: Sample14_CopyAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[analyzer-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample09]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
+[sample14]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample14_CopyAnalyzer.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[analyzer-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference
 

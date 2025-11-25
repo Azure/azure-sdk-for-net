@@ -66,11 +66,11 @@ Console.WriteLine($"Tags: {string.Join(", ", updated.Value.Tags.Select(kvp => $"
 
 - [Content Understanding Documentation][cu-docs]
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample04]: Sample04_CreateAnalyzer.md
-[sample06]: Sample06_GetAnalyzer.md
-[sample09]: Sample09_DeleteAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
+[sample09]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 
 

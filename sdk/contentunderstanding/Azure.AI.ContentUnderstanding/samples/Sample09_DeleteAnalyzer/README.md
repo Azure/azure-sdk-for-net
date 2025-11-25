@@ -1,7 +1,7 @@
 # Sample09_DeleteAnalyzer
 
 This sample demonstrates how to delete a custom analyzer.
-For detailed documentation, see [Sample09_DeleteAnalyzer.md](../Sample09_DeleteAnalyzer.md).
+For detailed documentation, see [Sample09_DeleteAnalyzer.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md).
 
 ## Prerequisites
 

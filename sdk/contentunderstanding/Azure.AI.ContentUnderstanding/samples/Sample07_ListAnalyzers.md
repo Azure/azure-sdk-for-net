@@ -75,12 +75,12 @@ foreach (var analyzer in analyzers)
 - [Content Understanding Documentation][cu-docs]
 - [Prebuilt Analyzers Documentation][prebuilt-docs]
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample04]: Sample04_CreateAnalyzer.md
-[sample06]: Sample06_GetAnalyzer.md
-[sample08]: Sample08_UpdateAnalyzer.md
-[sample09]: Sample09_DeleteAnalyzer.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
+[sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
+[sample09]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [prebuilt-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 

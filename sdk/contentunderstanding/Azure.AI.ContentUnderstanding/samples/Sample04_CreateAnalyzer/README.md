@@ -1,7 +1,7 @@
 # Sample04_CreateAnalyzer
 
 This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents.
-For detailed documentation, see [Sample04_CreateAnalyzer.md](../Sample04_CreateAnalyzer.md).
+For detailed documentation, see [Sample04_CreateAnalyzer.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md).
 
 ## Prerequisites
 

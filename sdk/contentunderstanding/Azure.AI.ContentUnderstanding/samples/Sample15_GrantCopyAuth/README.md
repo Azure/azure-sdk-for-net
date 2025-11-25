@@ -1,7 +1,7 @@
 # Sample15_GrantCopyAuth
 
 This sample demonstrates how to grant copy authorization and copy an analyzer from a source resource to a target resource.
-For detailed documentation, see [Sample15_GrantCopyAuth.md](../Sample15_GrantCopyAuth.md).
+For detailed documentation, see [Sample15_GrantCopyAuth.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample15_GrantCopyAuth.md).
 
 ## Prerequisites
 

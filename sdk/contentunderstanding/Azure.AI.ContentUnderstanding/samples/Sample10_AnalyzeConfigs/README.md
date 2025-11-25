@@ -1,7 +1,7 @@
 # Sample10_AnalyzeConfigs
 
 This sample demonstrates how to extract additional features from documents such as charts, hyperlinks, formulas, and annotations.
-For detailed documentation, see [Sample10_AnalyzeConfigs.md](../Sample10_AnalyzeConfigs.md).
+For detailed documentation, see [Sample10_AnalyzeConfigs.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md).
 
 ## Prerequisites
 

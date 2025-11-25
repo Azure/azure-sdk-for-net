@@ -1,7 +1,7 @@
 # Sample03_AnalyzeInvoice
 
 This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer.
-For detailed documentation, see [Sample03_AnalyzeInvoice.md](../Sample03_AnalyzeInvoice.md).
+For detailed documentation, see [Sample03_AnalyzeInvoice.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md).
 
 ## Prerequisites
 

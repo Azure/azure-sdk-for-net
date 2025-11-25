@@ -1,7 +1,7 @@
 # Sample14_CopyAnalyzer
 
 This sample demonstrates how to copy an analyzer from source to target within the same resource.
-For detailed documentation, see [Sample14_CopyAnalyzer.md](../Sample14_CopyAnalyzer.md).
+For detailed documentation, see [Sample14_CopyAnalyzer.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample14_CopyAnalyzer.md).
 
 ## Prerequisites
 

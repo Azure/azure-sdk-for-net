@@ -180,9 +180,9 @@ if (result.Contents?.FirstOrDefault() is DocumentContent document)
 - [Content Understanding Documentation][cu-docs]
 - [Document Elements Documentation][document-elements-docs] - Detailed information about document elements (pages, figures, annotations, etc.)
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample04]: Sample04_CreateAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[document-elements-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/elements
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[document-elements-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
 

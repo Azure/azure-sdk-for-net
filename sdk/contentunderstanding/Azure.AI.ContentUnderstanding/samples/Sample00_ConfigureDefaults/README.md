@@ -1,7 +1,7 @@
 # Sample00_ConfigureDefaults
 
 This sample demonstrates how to configure and retrieve default model deployment settings for your Microsoft Foundry resource.
-For detailed documentation, see [Sample00_ConfigureDefaults.md](../Sample00_ConfigureDefaults.md).
+For detailed documentation, see [Sample00_ConfigureDefaults.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md).
 
 ## Prerequisites
 

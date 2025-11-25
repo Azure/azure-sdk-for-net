@@ -1,7 +1,7 @@
 # Sample08_UpdateAnalyzer
 
 This sample demonstrates how to update an existing custom analyzer, including updating its description and tags.
-For detailed documentation, see [Sample08_UpdateAnalyzer.md](../Sample08_UpdateAnalyzer.md).
+For detailed documentation, see [Sample08_UpdateAnalyzer.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md).
 
 ## Prerequisites
 

@@ -103,9 +103,9 @@ After configuring model deployments, you can use prebuilt analyzers. See:
 - [Content Understanding Documentation][cu-docs]
 - [Model Deployment Configuration][model-deployment-docs]
 
-[README]: ../README.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample02]: Sample02_AnalyzeUrl.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[model-deployment-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
+[README]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/README.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[model-deployment-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
 

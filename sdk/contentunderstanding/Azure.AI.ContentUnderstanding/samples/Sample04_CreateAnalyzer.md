@@ -239,15 +239,15 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 - [method][method-docs] - Learn about extraction methods (extract, generate, classify)
 - [estimateSourceAndConfidence][estimate-source-confidence-docs] - Learn about source location and confidence score tracking for extracted fields
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample06]: Sample06_GetAnalyzer.md
-[sample07]: Sample07_ListAnalyzers.md
-[sample08]: Sample08_UpdateAnalyzer.md
-[sample09]: Sample09_DeleteAnalyzer.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[analyzer-reference-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference
-[baseanalyzerid-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
-[method-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference#method
-[estimate-source-confidence-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/analyzer-reference#estimatesourceandconfidence
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
+[sample07]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample07_ListAnalyzers.md
+[sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
+[sample09]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference
+[baseanalyzerid-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
+[method-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#method
+[estimate-source-confidence-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#estimatesourceandconfidence
 

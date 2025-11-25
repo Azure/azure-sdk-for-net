@@ -48,7 +48,7 @@ The generated sample includes code for extracting markdown and accessing documen
 
 [sample01-analyze-binary]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
-[cu-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview
-[cu-document-overview]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview
-[cu-document-markdown]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/markdown
-[cu-document-elements]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/elements
+[cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
+[cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview
+[cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
+[cu-document-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements

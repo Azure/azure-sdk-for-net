@@ -1,7 +1,7 @@
 # Sample13_DeleteResult
 
 This sample demonstrates how to delete analysis results.
-For detailed documentation, see [Sample13_DeleteResult.md](../Sample13_DeleteResult.md).
+For detailed documentation, see [Sample13_DeleteResult.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample13_DeleteResult.md).
 
 ## Prerequisites
 

@@ -183,14 +183,14 @@ For more details about `DocumentContent` and all available document elements (pa
 - [Prebuilt Analyzers Documentation][prebuilt-analyzers-docs] - Complete list of 70+ prebuilt analyzers
 - [Financial Documents][financial-docs] - Overview of financial document analyzers
 
-[sample00]: Sample00_ConfigureDefaults.md
-[sample01]: Sample01_AnalyzeBinary.md
-[sample02]: Sample02_AnalyzeUrl.md
-[sample04]: Sample04_CreateAnalyzer.md
-[sample05]: Sample05_CreateClassifier.md
-[cu-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/
-[document-elements-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/elements
-[prebuilt-analyzers-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
-[financial-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/concepts/prebuilt-analyzers#financial-documents
-[source-docs]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/elements#source
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
+[sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample05]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample05_CreateClassifier.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[document-elements-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
+[prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
+[financial-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers#financial-documents
+[source-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements#source
 

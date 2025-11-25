@@ -1,7 +1,7 @@
 # Sample02_AnalyzeUrl
 
 This sample demonstrates how to analyze a document from a URL using the `prebuilt-documentSearch` analyzer.
-For detailed documentation, see [Sample02_AnalyzeUrl.md](../Sample02_AnalyzeUrl.md).
+For detailed documentation, see [Sample02_AnalyzeUrl.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md).
 
 ## Prerequisites
 

@@ -284,7 +284,7 @@ This allows you to:
 
 ## Additional Resources
 
-- [Azure AI Content Understanding Documentation](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/)
+- [Azure AI Content Understanding Documentation](https://learn.microsoft.com/azure/ai-services/content-understanding/)
 - [Azure SDK for .NET Documentation](https://learn.microsoft.com/dotnet/azure/)
 - [Azure.Identity Documentation](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme)
 - [DefaultAzureCredential Documentation](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential)
@@ -295,19 +295,19 @@ If you encounter issues or have suggestions:
 - [File an issue](https://github.com/Azure/azure-sdk-for-net/issues)
 
 <!-- Sample links -->
-[sample00]: ./Sample00_ConfigureDefaults.md
-[sample01]: ./Sample01_AnalyzeBinary.md
-[sample02]: ./Sample02_AnalyzeUrl.md
-[sample03]: ./Sample03_AnalyzeInvoice.md
-[sample04]: ./Sample04_CreateAnalyzer.md
-[sample05]: ./Sample05_CreateClassifier.md
-[sample06]: ./Sample06_GetAnalyzer.md
-[sample07]: ./Sample07_ListAnalyzers.md
-[sample08]: ./Sample08_UpdateAnalyzer.md
-[sample09]: ./Sample09_DeleteAnalyzer.md
-[sample10]: ./Sample10_AnalyzeConfigs.md
-[sample11]: ./Sample11_AnalyzeReturnRawJson.md
-[sample12]: ./Sample12_GetResultFile.md
-[sample13]: ./Sample13_DeleteResult.md
-[sample14]: ./Sample14_CopyAnalyzer.md
-[sample15]: ./Sample15_GrantCopyAuth.md
+[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample02]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
+[sample03]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md
+[sample04]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample05]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample05_CreateClassifier.md
+[sample06]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
+[sample07]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample07_ListAnalyzers.md
+[sample08]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
+[sample09]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
+[sample10]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md
+[sample11]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample11_AnalyzeReturnRawJson.md
+[sample12]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample12_GetResultFile.md
+[sample13]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample13_DeleteResult.md
+[sample14]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample14_CopyAnalyzer.md
+[sample15]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample15_GrantCopyAuth.md
