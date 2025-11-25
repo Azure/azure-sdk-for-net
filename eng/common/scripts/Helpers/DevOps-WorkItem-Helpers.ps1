@@ -551,6 +551,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     if ($pkgNewLibrary -ne $existingItem.fields["Custom.PackageTypeNewLibrary"]) { $changedField = "Custom.PackageTypeNewLibrary" }
     if ($pkgRepoPath -ne $existingItem.fields["Custom.PackageRepoPath"]) { $changedField = "Custom.PackageRepoPath" }
     if ($serviceName -ne $existingItem.fields["Custom.ServiceName"]) { $changedField = "Custom.ServiceName" }
+    if ($title -ne $existingItem.fields["System.Title"]) { $changedField = "System.Title" }
 
     if ($changedField) {
       Write-Host "At least field $changedField ($($existingItem.fields[$changedField])) changed so updating."
