@@ -14,7 +14,7 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary>
     /// Partial class for AnalyzeResult to customize LRO response handling.
     /// </summary>
-    // SDK-FIX Issue #5: Suppress FromLroResponse to fix service response format inconsistency (with/without "result" wrapper)
+    // SDK-FIX: Suppress FromLroResponse to fix service response format inconsistency (service sometimes wraps AnalyzeResult in "result" property, sometimes returns it directly)
     [CodeGenSuppress("FromLroResponse", typeof(Response))]
     public partial class AnalyzeResult
     {
@@ -22,9 +22,8 @@ namespace Azure.AI.ContentUnderstanding
         /// Converts a response to an AnalyzeResult using the LRO result path.
         /// </summary>
         /// <remarks>
-        /// SDK-FIX Issue #5: This method is customized to handle service response format inconsistency.
-        /// The service sometimes wraps AnalyzeResult in a "result" property, and sometimes returns it directly.
-        /// This workaround uses TryGetProperty to handle both formats until the service is fixed.
+        /// SDK-FIX: Customized to handle service response format inconsistency. The service sometimes wraps AnalyzeResult
+        /// in a "result" property, and sometimes returns it directly. This workaround uses TryGetProperty to handle both formats.
         /// </remarks>
         /// <param name="response"> The response from the service. </param>
         internal static AnalyzeResult FromLroResponse(Response response)
@@ -32,7 +31,7 @@ namespace Azure.AI.ContentUnderstanding
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement rootElement = document.RootElement;
 
-            // SDK-FIX Issue #5: Check if the response has a "result" property, otherwise use the root element directly
+            // SDK-FIX: Check if the response has a "result" property, otherwise use the root element directly (handles both response formats)
             if (rootElement.TryGetProperty("result", out JsonElement resultElement))
             {
                 return DeserializeAnalyzeResult(resultElement, ModelSerializationExtensions.WireOptions);

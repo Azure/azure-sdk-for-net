@@ -171,7 +171,7 @@ namespace Azure.AI.ContentUnderstanding
         /// Creates the HTTP message for the copy analyzer request.
         /// </summary>
         /// <remarks>
-        /// SDK-FIX: Customized to fix copy endpoint path (emitter generates ":copyAnalyzer" instead of ":copy") 
+        /// SDK-FIX: Customized to fix copy endpoint path (emitter generates ":copyAnalyzer" instead of ":copy")
         /// and status code handling (service returns both 201 and 202 instead of just 202).
         /// </remarks>
         internal HttpMessage CreateCopyAnalyzerRequest(string analyzerId, RequestContent content, bool? allowReplace, RequestContext context)
@@ -181,13 +181,13 @@ namespace Azure.AI.ContentUnderstanding
             uri.AppendPath("/contentunderstanding", false);
             uri.AppendPath("/analyzers/", false);
             uri.AppendPath(analyzerId, true);
-            uri.AppendPath(":copy", false);  // SDK-FIX Issue #1: Changed from ":copyAnalyzer" to ":copy"
+            uri.AppendPath(":copy", false);  // SDK-FIX: Changed from ":copyAnalyzer" to ":copy" (emitter generates wrong endpoint path)
             uri.AppendQuery("api-version", _apiVersion, true);
             if (allowReplace != null)
             {
                 uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);  // SDK-FIX Issue #2: Changed from PipelineMessageClassifier202 to accept both 201 and 202
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);  // SDK-FIX: Changed from PipelineMessageClassifier202 to accept both 201 and 202 (service inconsistently returns both status codes)
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;

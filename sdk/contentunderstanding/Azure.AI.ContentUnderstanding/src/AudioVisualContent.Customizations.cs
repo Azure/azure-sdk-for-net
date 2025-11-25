@@ -56,7 +56,7 @@ namespace Azure.AI.ContentUnderstanding
             }
             if (Optional.IsCollectionDefined(KeyFrameTimesMs))
             {
-                // SDK-FIX Issue #3: Serialize as "KeyFrameTimesMs" (capital K) to match service response format
+                // SDK-FIX: Serialize as "KeyFrameTimesMs" (capital K) to match service response format instead of "keyFrameTimesMs"
                 writer.WritePropertyName("KeyFrameTimesMs"u8);
                 writer.WriteStartArray();
                 foreach (long item in KeyFrameTimesMs)
@@ -87,7 +87,7 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
-        // SDK-FIX Issue #3: Reimplement deserialization to handle both "keyFrameTimesMs" and "KeyFrameTimesMs"
+        // SDK-FIX: Reimplement deserialization to handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format)
         internal static AudioVisualContent DeserializeAudioVisualContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
