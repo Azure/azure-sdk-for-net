@@ -36,7 +36,6 @@ public class TestProxyProcess
     /// <summary>
     /// The IP address used for the test proxy. Uses 127.0.0.1 instead of localhost to avoid SSL callback slowness.
     /// </summary>
-    // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
     public const string IpAddress = "127.0.0.1";
 
     /// <summary>
@@ -323,6 +322,20 @@ public class TestProxyProcess
                             }
                         }
                     }
+
+                    var processInfo2 = new ProcessStartInfo
+                    {
+                        FileName = s_dotNetExe,
+                        Arguments = "tool list --local",
+                        WorkingDirectory = repoRoot,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+                    using var process2 = Process.Start(processInfo2);
+                    var standardOutput2 = process2!.StandardOutput.ReadToEnd();
+                    Console.WriteLine($"dotnet tool list --local output:\n{standardOutput2}");
                 }
             }
         }

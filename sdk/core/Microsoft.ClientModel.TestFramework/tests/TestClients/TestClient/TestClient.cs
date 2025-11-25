@@ -82,7 +82,6 @@ internal class TestClient
     {
         return new TestClient();
     }
-    public virtual TestClientOperations SubProperty => new TestClientOperations();
 
     public virtual AnotherType SubClientProperty => new AnotherType();
 
