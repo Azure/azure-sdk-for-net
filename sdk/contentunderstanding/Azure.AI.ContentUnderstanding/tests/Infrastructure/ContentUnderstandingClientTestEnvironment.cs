@@ -69,7 +69,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the target endpoint for cross-resource copying (optional).
         /// </summary>
-        public string? TargetEndpoint => GetRecordedOptionalVariable("TARGET_ENDPOINT", options => options.IsSecret());
+        public string TargetEndpoint => GetRecordedVariable("TARGET_ENDPOINT", options => options.IsSecret("https://sanitized.services.ai.azure.com/"));
 
         /// <summary>
         /// Gets the target resource ID for cross-resource copying (optional).

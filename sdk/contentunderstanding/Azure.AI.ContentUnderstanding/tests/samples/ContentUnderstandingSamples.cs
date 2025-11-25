@@ -30,6 +30,35 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Regex = @"https://[a-zA-Z0-9\-]+\.services\.ai\.azure\.com",
                 Value = "https://sanitized.services.ai.azure.com"
             });
+
+            // Sanitize resource IDs and regions in request bodies (for GrantCopyAuthorization and CopyAnalyzer)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""targetAzureResourceId""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""targetAzureResourceId"":""Sanitized"""
+            });
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""targetRegion""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""targetRegion"":""Sanitized"""
+            });
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""sourceAzureResourceId""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""sourceAzureResourceId"":""Sanitized"""
+            });
+
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""sourceRegion""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""sourceRegion"":""Sanitized"""
+            });
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
-        [Ignore("Test skipped")]
         public async Task GrantCopyAuthAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -68,7 +67,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // In production, these would be different resources
             string sourceResourceId = TestEnvironment.SourceResourceId ?? throw new InvalidOperationException("SOURCE_RESOURCE_ID is required");
             string sourceRegion = TestEnvironment.SourceRegion ?? throw new InvalidOperationException("SOURCE_REGION is required");
-            string targetEndpoint = TestEnvironment.TargetEndpoint ?? throw new InvalidOperationException("TARGET_ENDPOINT is required");
+            string targetEndpoint = TestEnvironment.TargetEndpoint;
             string targetResourceId = TestEnvironment.TargetResourceId ?? throw new InvalidOperationException("TARGET_RESOURCE_ID is required");
             string targetRegion = TestEnvironment.TargetRegion ?? throw new InvalidOperationException("TARGET_REGION is required");
             string? targetKey = TestEnvironment.TargetKey;
