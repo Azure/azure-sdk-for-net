@@ -10,7 +10,7 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs
 * **Classify documents** - Automatically categorize and organize documents by type or content
 
-[Source code][source_code] | [Package (NuGet)][package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
+[Source code][source_code] | [Package (NuGet)] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -26,17 +26,13 @@ dotnet add package Azure.AI.ContentUnderstanding --prerelease
 
 > You must have an [Azure subscription][azure_subscription] and a **Microsoft Foundry resource**. To create a Microsoft Foundry resource, follow the steps in the [Azure Content Understanding quickstart][cu_quickstart]. In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK][dotnet_sdk] 3.0 or higher with a [language version][csharp_lang_version] of `latest`.
 
-### ⚠️ IMPORTANT: Configure Model Deployments (One-Time Setup Per Resource)
-
-> **Before using prebuilt analyzers, you MUST configure model deployments for your Microsoft Foundry resource.** This is a **one-time setup per resource** that maps your deployed models to the prebuilt analyzers. This configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names).
-
-See the [Configure Model Deployments](#step-3-configure-model-deployments-required-for-prebuilt-analyzers) section below for detailed instructions.
-
 ### Configuring Microsoft Foundry Resource
 
 Before using the Content Understanding SDK, you need to set up a Microsoft Foundry resource and deploy the required GPT models.
 
 #### Step 1: Create Microsoft Foundry Resource
+
+> **Important:** You must create your Microsoft Foundry resource in a region that supports Content Understanding. For a list of available regions, see [Azure Content Understanding region and language support][cu_region_support].
 
 1. Follow the steps in the [Azure Content Understanding quickstart][cu_quickstart] to create a Microsoft Foundry resource in the Azure portal
 2. Get your Foundry resource's endpoint URL from Azure Portal:
@@ -236,16 +232,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/src
-[package]: https://www.nuget.org/packages/Azure.AI.ContentUnderstanding
 [api_reference]: https://azure.github.io/azure-sdk-for-net
 [product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [nuget]: https://www.nuget.org/
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
-[cu_quickstart]: https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
+[cu_quickstart]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
+[cu_region_support]: https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support
 [dotnet_sdk]: https://dotnet.microsoft.com/download
 [csharp_lang_version]: https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default
 [azure_portal]: https://portal.azure.com/
-[deploy_models_docs]: https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models-openai
+[deploy_models_docs]: https://learn.microsoft.com/azure/ai-studio/how-to/deploy-models-openai
 [azure_identity_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [thread_safety_guideline]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety
 [client_options]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions
