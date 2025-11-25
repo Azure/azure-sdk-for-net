@@ -1,3 +1,11 @@
+namespace Azure.ResourceManager.Compute
+{
+    public static partial class ComputeSkusExtensions
+    {
+        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetComputeResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetComputeResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.ComputeResourceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.ComputeResourceSku>
@@ -163,11 +171,6 @@ namespace Azure.ResourceManager.Compute.Skus
         internal AzureResourceManagerComputeSkusContext() { }
         public static Azure.ResourceManager.Compute.Skus.AzureResourceManagerComputeSkusContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
-    public static partial class ComputeSkusExtensions
-    {
-        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetComputeResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetComputeResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Compute.Skus.Mocking
