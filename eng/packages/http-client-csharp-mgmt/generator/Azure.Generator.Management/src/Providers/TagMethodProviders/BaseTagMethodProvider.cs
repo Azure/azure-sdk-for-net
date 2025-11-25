@@ -203,7 +203,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             parameters.Add(dataVar);
-            parameters.Add(cancellationTokenParam);
+            parameters.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
 
             return Declare(
                 "result",
