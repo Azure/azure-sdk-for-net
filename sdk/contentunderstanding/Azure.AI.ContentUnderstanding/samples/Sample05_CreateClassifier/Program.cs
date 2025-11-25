@@ -71,17 +71,17 @@ class Program
         try
         {
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategoryDefinition>
+            var categories = new Dictionary<string, ContentCategory>
             {
-                ["Loan_Application"] = new ContentCategoryDefinition
+                ["Loan_Application"] = new ContentCategory
                 {
                     Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
                 },
-                ["Invoice"] = new ContentCategoryDefinition
+                ["Invoice"] = new ContentCategory
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
                 },
-                ["Bank_Statement"] = new ContentCategoryDefinition
+                ["Bank_Statement"] = new ContentCategory
                 {
                     Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
                 }
