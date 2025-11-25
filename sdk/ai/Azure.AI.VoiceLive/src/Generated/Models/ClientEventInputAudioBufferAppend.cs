@@ -17,11 +17,8 @@ namespace Azure.AI.VoiceLive
         /// Base64-encoded audio. This must be in the format specified by the
         /// `input_audio_format` field in the session configuration.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
         public ClientEventInputAudioBufferAppend(string audio) : base(ClientEventType.InputAudioBufferAppend)
         {
-            Argument.AssertNotNull(audio, nameof(audio));
-
             Audio = audio;
         }
 
