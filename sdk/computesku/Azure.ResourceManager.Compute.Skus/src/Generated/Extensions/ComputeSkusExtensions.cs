@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Compute.Skus;
 using Azure.ResourceManager.Compute.Skus.Mocking;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Compute.Skus
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.Compute.Skus. </summary>
     public static partial class ComputeSkusExtensions
