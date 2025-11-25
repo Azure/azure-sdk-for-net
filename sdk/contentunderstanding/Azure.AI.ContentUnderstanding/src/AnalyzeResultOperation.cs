@@ -37,9 +37,12 @@ namespace Azure.AI.ContentUnderstanding
             _operationId = operationId ?? ExtractOperationId(innerOperation);
         }
 
-        /// <inheritdoc/>
         /// <summary>
         /// Gets the operation ID from the Operation-Location header of the operation response.
+        /// This operation ID can be used with <see cref="ContentUnderstandingClient.GetResultFileAsync(string, string, CancellationToken)"/>,
+        /// <see cref="ContentUnderstandingClient.GetResultFile(string, string, CancellationToken)"/>,
+        /// <see cref="ContentUnderstandingClient.DeleteResultAsync(string, CancellationToken)"/>,
+        /// and <see cref="ContentUnderstandingClient.DeleteResult(string, CancellationToken)"/> methods.
         /// </summary>
         public override string Id => _operationId ?? throw new InvalidOperationException("The operation ID was not present in the service response.");
 
