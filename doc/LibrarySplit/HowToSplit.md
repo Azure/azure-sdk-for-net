@@ -6,7 +6,7 @@ maintaining backwards compatibility. This guide doesn't focus on data plane
 splits, however if that use case arises most of the concepts apply.
 
 For documentation on how to migrate to the new packages see
-[MigrationGuideForSplit.md](https://github.com/Azure/azure-sdk-for-net/blob/94d6dba246e815a00ed81fc1cf7edc25ed226de7/doc/LibrarySplit/MigrationGuideForSplit.md).
+[MigrationGuideForSplit.md](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/LibrarySplit/MigrationGuideForSplit.md).
 
 ## High-Level Goals
 - Preserve backwards compatibility between the original Package v1.0.0 and the new Package v1.1.0
