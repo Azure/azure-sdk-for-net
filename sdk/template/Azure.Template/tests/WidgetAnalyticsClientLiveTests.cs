@@ -36,13 +36,11 @@ namespace Azure.Template.Tests
             WidgetAnalyticsClient client = CreateClient();
             AzureWidgets widgetsClient = client.GetAzureWidgetsClient();
 
-            // Uncomment to test when service is available:
-            // var widgets = widgetsClient.GetWidgetsAsync();
-            // await foreach (var widget in widgets)
-            // {
-            //     Assert.IsNotNull(widget);
-            // }
-            await Task.CompletedTask;
+            var widgets = widgetsClient.GetWidgetsAsync();
+            await foreach (var widget in widgets)
+            {
+                Assert.IsNotNull(widget);
+            }
         }
     }
 }
