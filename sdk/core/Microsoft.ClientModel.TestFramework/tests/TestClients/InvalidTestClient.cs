@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 
-internal class InvalidClient
+internal class InvalidTestClient
 {
     public Task<string> MethodAsync(int i)
     {

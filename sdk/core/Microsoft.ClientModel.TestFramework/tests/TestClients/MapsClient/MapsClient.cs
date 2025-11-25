@@ -15,7 +15,6 @@ public class MapsClient
     private readonly Uri _endpoint;
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
-    private readonly string _apiVersion;
 
     public MapsClient()
     {
@@ -23,28 +22,15 @@ public class MapsClient
 
     public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions options = default)
     {
-        if (endpoint is null)
-            throw new ArgumentNullException(nameof(endpoint));
-        if (credential is null)
-            throw new ArgumentNullException(nameof(credential));
-
         options ??= new MapsClientOptions();
-
         _endpoint = endpoint;
         _credential = credential;
-        _apiVersion = options.Version;
-
         var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "subscription-key");
-        _pipeline = ClientPipeline.Create(options,
-            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
-            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+        _pipeline = ClientPipeline.Create(options, [], [authenticationPolicy], []);
     }
 
     public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
-
         ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
 
         PipelineResponse response = result.GetRawResponse();
@@ -55,8 +41,6 @@ public class MapsClient
 
     public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions options = null)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
-
         options ??= new RequestOptions();
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
@@ -75,8 +59,6 @@ public class MapsClient
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
-
         ClientResult result = GetCountryCode(ipAddress.ToString());
 
         PipelineResponse response = result.GetRawResponse();
@@ -87,8 +69,6 @@ public class MapsClient
 
     public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions options = null)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
-
         options ??= new RequestOptions();
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
@@ -108,38 +88,28 @@ public class MapsClient
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
 
         PipelineRequest request = message.Request;
         request.Method = "GET";
-
         UriBuilder uriBuilder = new(_endpoint.ToString());
-
         StringBuilder path = new();
         path.Append("geolocation/ip");
         path.Append("/json");
         uriBuilder.Path += path.ToString();
-
         StringBuilder query = new();
-        query.Append("api-version=");
-        query.Append(Uri.EscapeDataString(_apiVersion));
         query.Append("&ip=");
         query.Append(Uri.EscapeDataString(ipAddress));
         uriBuilder.Query = query.ToString();
-
         request.Uri = uriBuilder.Uri;
-
         request.Headers.Add("Accept", "application/json");
 
         message.Apply(options);
-
         return message;
     }
 
     public virtual async Task<ClientResult<CountryRegion>> AddCountryCodeAsync(CountryRegion country)
     {
-        if (country is null) throw new ArgumentNullException(nameof(country));
-
         BinaryContent content = BinaryContent.Create(country);
 
         ClientResult result = await AddCountryCodeAsync(content).ConfigureAwait(false);
@@ -152,8 +122,6 @@ public class MapsClient
 
     public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent country, RequestOptions options = null)
     {
-        if (country is null) throw new ArgumentNullException(nameof(country));
-
         options ??= new RequestOptions();
 
         using PipelineMessage message = CreateAddCountryCodeRequest(country, options);
@@ -172,31 +140,19 @@ public class MapsClient
     private PipelineMessage CreateAddCountryCodeRequest(BinaryContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
 
         PipelineRequest request = message.Request;
-
         request.Method = "PATCH";
-
         UriBuilder uriBuilder = new(_endpoint.ToString());
-
         StringBuilder path = new();
         path.Append("countries");
         uriBuilder.Path += path.ToString();
-
-        StringBuilder query = new();
-        query.Append("api-version=");
-        query.Append(Uri.EscapeDataString(_apiVersion));
-        uriBuilder.Query = query.ToString();
-
         request.Uri = uriBuilder.Uri;
-
         request.Headers.Add("Accept", "application/json");
-
         request.Content = content;
 
         message.Apply(options);
-
         return message;
     }
 }

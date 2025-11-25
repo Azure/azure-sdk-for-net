@@ -11,43 +11,6 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 public class TestProxyProcessTests
 {
     [Test]
-    public void ConstructorUsesDebugModeEnvironmentVariable()
-    {
-        // and sets proxy port accordingly
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorStartsProcessUsingProxyPath()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorRestoresLocalTools()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorStartsTestProxyUsingTool()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorThrowsWhenTestProxyCannotBeStarted()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void ConstructorProcessPortProperly()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
     public void TryParsePortParsesHttpPortCorrectly()
     {
         var result = TestProxyProcess.TryParsePort("Now listening on: http://127.0.0.1:5000", "http", out var port);
@@ -92,46 +55,5 @@ public class TestProxyProcessTests
             Assert.That(result, Is.False, "Should return false for wrong scheme");
             Assert.That(port, Is.Null, "Port should remain null");
         }
-    }
-
-    [Test]
-    public void TryRestoreLocalToolsFindsConfigFile()
-    {
-        TestProxyProcess.TryRestoreLocalTools();
-    }
-
-    [Test]
-    public void TryRestoreLocalToolsDoesNotLookOutsideRepo()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void TryRestoreLocalToolsHandlesMissingConfig()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void StartSharesProcess()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void StartStartsNewProcessWhenNoneExists()
-    {
-    }
-
-    [Test]
-    public void StartWithDebugWorks()
-    {
-        //throw new NotImplementedException();
-    }
-
-    [Test]
-    public void TestProxyExePathWorks()
-    {
-        //throw new NotImplementedException();
     }
 }

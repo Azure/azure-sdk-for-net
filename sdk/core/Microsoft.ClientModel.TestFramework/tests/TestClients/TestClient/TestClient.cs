@@ -51,22 +51,19 @@ internal class TestClient
         return "Hello";
     }
 
-    // These four follow the new pattern for custom users schemas
     public virtual Task<ClientResult<T>> GetDataAsync<T>() =>
-        Task.FromResult(ClientResult.FromValue(default(T), new MockPipelineResponse(200, "async - static")));
+        Task.FromResult(ClientResult.FromOptionalValue(default(T), new MockPipelineResponse(200, "async - static")));
     public virtual ClientResult<T> GetData<T>(T arg) =>
-        ClientResult.FromValue(default(T), new MockPipelineResponse(200, $"sync - static {arg}"));
+        ClientResult.FromOptionalValue(default(T), new MockPipelineResponse(200, $"sync - static {arg}"));
     public virtual Task<ClientResult<T>> GetDataAsync<T>(T arg) =>
-        Task.FromResult(ClientResult.FromValue(default(T), new MockPipelineResponse(200, $"async - static {arg}")));
+        Task.FromResult(ClientResult.FromOptionalValue(default(T), new MockPipelineResponse(200, $"async - static {arg}")));
     public virtual ClientResult<T> GetData<T>() =>
-        ClientResult.FromValue(default(T), new MockPipelineResponse(200, "sync - static"));
+        ClientResult.FromOptionalValue(default(T), new MockPipelineResponse(200, "sync - static"));
     public virtual Task<ClientResult<object>> GetDataAsync() =>
-        Task.FromResult(ClientResult.FromValue((object)null, new MockPipelineResponse(200, "async - dynamic")));
+        Task.FromResult(ClientResult.FromOptionalValue((object)null, new MockPipelineResponse(200, "async - dynamic")));
     public virtual ClientResult<object> GetData() =>
-        ClientResult.FromValue((object)null, new MockPipelineResponse(200, "sync - dynamic"));
+        ClientResult.FromOptionalValue((object)null, new MockPipelineResponse(200, "sync - dynamic"));
 
-    // These four follow the new pattern for custom users schemas and
-    // throw exceptions
     public virtual Task<ClientResult<T>> GetFailureAsync<T>() =>
         throw new InvalidOperationException("async - static");
     public virtual ClientResult<T> GetFailure<T>() =>
