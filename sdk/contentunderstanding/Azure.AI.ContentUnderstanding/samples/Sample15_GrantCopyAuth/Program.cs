@@ -75,13 +75,13 @@ class Program
         string sourceEndpoint = configuration["AZURE_CONTENT_UNDERSTANDING_ENDPOINT"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_ENDPOINT is required");
         string? sourceKey = configuration["AZURE_CONTENT_UNDERSTANDING_KEY"];
         // Create source client
-        var sourceClientOptions = new ContentUnderstandingClientOptions();
         ContentUnderstandingClient sourceClient = !string.IsNullOrEmpty(sourceKey)
-            ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey), sourceClientOptions)
-            : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential(), sourceClientOptions);
-        // Generate unique analyzer IDs
-        string sourceAnalyzerId = $"my_analyzer_source_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
-        string targetAnalyzerId = $"my_analyzer_target_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+            ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey))
+            : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
+        // Source analyzer ID (must already exist in the source resource)
+        string sourceAnalyzerId = "my_source_analyzer_id_in_the_source_resource";
+        // Target analyzer ID (will be created during copy)
+        string targetAnalyzerId = "my_target_analyzer_id_in_the_target_resource";
         // Get source and target resource information from configuration
         string sourceResourceId = configuration["AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID is required");
         string sourceRegion = configuration["AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION is required");
@@ -90,10 +90,9 @@ class Program
         string targetRegion = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_REGION"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION is required");
         string? targetKey = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_KEY"];
         // Create target client
-        var targetClientOptions = new ContentUnderstandingClientOptions();
         ContentUnderstandingClient targetClient = !string.IsNullOrEmpty(targetKey)
-            ? new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey), targetClientOptions)
-            : new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential(), targetClientOptions);
+            ? new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey))
+            : new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential());
         // Step 1: Create the source analyzer
         var sourceConfig = new ContentAnalyzerConfig
         {

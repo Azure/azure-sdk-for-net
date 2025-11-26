@@ -232,6 +232,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 #region Snippet:ContentUnderstandingUseCustomAnalyzer
 #if SNIPPET
+                var documentUrl = new Uri("<document_url>");
                 // Analyze a document using the custom analyzer
                 var analyzeOperation = await client.AnalyzeAsync(
                     WaitUntil.Completed,

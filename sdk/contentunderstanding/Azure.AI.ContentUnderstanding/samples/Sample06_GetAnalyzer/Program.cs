@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -69,94 +70,76 @@ class Program
             client = new ContentUnderstandingClient(endpointUri, credential);
         }
 
+        // === EXTRACTED SNIPPET CODE ===
+        // Get information about a prebuilt analyzer
+        var response = await client.GetAnalyzerAsync("prebuilt-documentSearch");
+        ContentAnalyzer analyzer = response.Value;
+        // Display full analyzer JSON
         var jsonOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
             DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
         };
+        string analyzerJson = JsonSerializer.Serialize(analyzer, jsonOptions);
+        Console.WriteLine("Prebuilt-documentSearch Analyzer:");
+        Console.WriteLine(analyzerJson);
 
+        // Get information about prebuilt-invoice analyzer
+        var invoiceResponse = await client.GetAnalyzerAsync("prebuilt-invoice");
+        ContentAnalyzer invoiceAnalyzer = invoiceResponse.Value;
+        string invoiceAnalyzerJson = JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
+        Console.WriteLine("Prebuilt-invoice Analyzer:");
+        Console.WriteLine(invoiceAnalyzerJson);
+        Console.WriteLine();
+
+        // Create a custom analyzer and get its information
+        Console.WriteLine("Creating a custom analyzer...");
+        // Generate a unique analyzer ID
+        string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+        // Define field schema with custom fields
+        var fieldSchema = new ContentFieldSchema(
+            new Dictionary<string, ContentFieldDefinition>
+            {
+                ["company_name"] = new ContentFieldDefinition
+                {
+                    Type = ContentFieldType.String,
+                    Method = GenerationMethod.Extract,
+                    Description = "Name of the company"
+                }
+            })
+        {
+            Name = "test_schema",
+            Description = "Test schema for GetAnalyzer sample"
+        };
+        // Create analyzer configuration
+        var config = new ContentAnalyzerConfig
+        {
+            ReturnDetails = true
+        };
+        // Create the custom analyzer
+        var customAnalyzer = new ContentAnalyzer
+        {
+            BaseAnalyzerId = "prebuilt-document",
+            Description = "Test analyzer for GetAnalyzer sample",
+            Config = config,
+            FieldSchema = fieldSchema
+        };
+        customAnalyzer.Models.Add("completion", "gpt-4.1");
+        // Create the analyzer
+        await client.CreateAnalyzerAsync(
+            WaitUntil.Completed,
+            analyzerId,
+            customAnalyzer);
         try
         {
-            // Get information about prebuilt-documentSearch analyzer
-            Console.WriteLine("Getting information about prebuilt-documentSearch analyzer...");
-            var documentSearchResponse = await client.GetAnalyzerAsync("prebuilt-documentSearch");
-            ContentAnalyzer documentSearchAnalyzer = documentSearchResponse.Value;
-            string documentSearchJson = JsonSerializer.Serialize(documentSearchAnalyzer, jsonOptions);
-            Console.WriteLine("Prebuilt-documentSearch Analyzer:");
-            Console.WriteLine(documentSearchJson);
-            Console.WriteLine();
-
-            // Get information about prebuilt-invoice analyzer
-            Console.WriteLine("Getting information about prebuilt-invoice analyzer...");
-            var invoiceResponse = await client.GetAnalyzerAsync("prebuilt-invoice");
-            ContentAnalyzer invoiceAnalyzer = invoiceResponse.Value;
-            string invoiceJson = JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
-            Console.WriteLine("Prebuilt-invoice Analyzer:");
-            Console.WriteLine(invoiceJson);
-            Console.WriteLine();
-
-            // Create a custom analyzer and get its information
-            Console.WriteLine("Creating a custom analyzer...");
-            string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
-
-            var fieldSchema = new ContentFieldSchema(
-                new Dictionary<string, ContentFieldDefinition>
-                {
-                    ["company_name"] = new ContentFieldDefinition
-                    {
-                        Type = ContentFieldType.String,
-                        Method = GenerationMethod.Extract,
-                        Description = "Name of the company"
-                    }
-                })
-            {
-                Name = "test_schema",
-                Description = "Test schema for GetAnalyzer sample"
-            };
-
-            var config = new ContentAnalyzerConfig
-            {
-                ReturnDetails = true
-            };
-
-            var customAnalyzer = new ContentAnalyzer
-            {
-                BaseAnalyzerId = "prebuilt-document",
-                Description = "Test analyzer for GetAnalyzer sample",
-                Config = config,
-                FieldSchema = fieldSchema
-            };
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-
-            // Create the analyzer
-            await client.CreateAnalyzerAsync(
-                WaitUntil.Completed,
-                analyzerId,
-                customAnalyzer);
-
-            Console.WriteLine($"Custom analyzer '{analyzerId}' created successfully.");
-            Console.WriteLine();
-
             // Get information about the custom analyzer
-            Console.WriteLine($"Getting information about custom analyzer '{analyzerId}'...");
             var customResponse = await client.GetAnalyzerAsync(analyzerId);
             ContentAnalyzer retrievedAnalyzer = customResponse.Value;
+            // Display full analyzer JSON
             string customAnalyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
             Console.WriteLine("Custom Analyzer:");
             Console.WriteLine(customAnalyzerJson);
-            Console.WriteLine();
-
-            // Clean up: delete the analyzer
-            Console.WriteLine($"Cleaning up: Deleting analyzer '{analyzerId}'...");
-            await client.DeleteAnalyzerAsync(analyzerId);
-            Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
-        }
-        catch (RequestFailedException ex)
-        {
-            Console.Error.WriteLine($"Error: {ex.Message}");
-            Console.Error.WriteLine($"Status: {ex.Status}");
-            Console.Error.WriteLine($"Error Code: {ex.ErrorCode}");
-            Environment.Exit(1);
+            // === END SNIPPET ===
         }
         catch (Exception ex)
         {

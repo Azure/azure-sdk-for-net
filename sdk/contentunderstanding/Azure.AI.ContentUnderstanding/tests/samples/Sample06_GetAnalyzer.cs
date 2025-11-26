@@ -13,6 +13,7 @@ using Azure.AI.ContentUnderstanding;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
@@ -110,6 +111,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
         [RecordedTest]
         public async Task GetCustomAnalyzerAsync()
         {
+            #region Snippet:ContentUnderstandingGetCustomAnalyzer
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>"; // Set to null to use DefaultAzureCredential
+            var client = !string.IsNullOrEmpty(apiKey)
+                ? new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey))
+                : new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
+
+            // Generate a unique analyzer ID
+            string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+#else
             string endpoint = TestEnvironment.Endpoint;
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
@@ -117,7 +129,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // First, create a custom analyzer
             string defaultId = $"test_custom_analyzer_{Recording.Random.NewGuid().ToString("N")}";
             string analyzerId = Recording.GetVariable("analyzerId", defaultId) ?? defaultId;
+#endif
 
+            // Define field schema with custom fields
             var fieldSchema = new ContentFieldSchema(
                 new Dictionary<string, ContentFieldDefinition>
                 {
@@ -133,11 +147,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Test schema for GetAnalyzer sample"
             };
 
+            // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
                 ReturnDetails = true
             };
 
+            // Create the custom analyzer
             var analyzer = new ContentAnalyzer
             {
                 BaseAnalyzerId = "prebuilt-document",
@@ -147,6 +163,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             };
             analyzer.Models.Add("completion", "gpt-4.1");
 
+            // Create the analyzer
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
                 analyzerId,
@@ -154,49 +171,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             try
             {
-                #region Snippet:ContentUnderstandingGetCustomAnalyzer
-#if SNIPPET
-                // First, create a custom analyzer (see Sample 04 for details)
-                string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
-
-                var fieldSchema = new ContentFieldSchema(
-                    new Dictionary<string, ContentFieldDefinition>
-                    {
-                        ["company_name"] = new ContentFieldDefinition
-                        {
-                            Type = ContentFieldType.String,
-                            Method = GenerationMethod.Extract,
-                            Description = "Name of the company"
-                        }
-                    })
-                {
-                    Name = "test_schema",
-                    Description = "Test schema for GetAnalyzer sample"
-                };
-
-                var config = new ContentAnalyzerConfig
-                {
-                    ReturnDetails = true
-                };
-
-                var analyzer = new ContentAnalyzer
-                {
-                    BaseAnalyzerId = "prebuilt-document",
-                    Description = "Test analyzer for GetAnalyzer sample",
-                    Config = config,
-                    FieldSchema = fieldSchema
-                };
-                analyzer.Models.Add("completion", "gpt-4.1");
-
-                // Create the analyzer
-                await client.CreateAnalyzerAsync(
-                    WaitUntil.Completed,
-                    analyzerId,
-                    analyzer);
-#else
-                // Analyzer already created above
-#endif
-
                 // Get information about the custom analyzer
                 var response = await client.GetAnalyzerAsync(analyzerId);
                 ContentAnalyzer retrievedAnalyzer = response.Value;

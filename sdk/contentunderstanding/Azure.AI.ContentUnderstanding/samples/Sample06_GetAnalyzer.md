@@ -70,9 +70,16 @@ Console.WriteLine(invoiceAnalyzerJson);
 Create a custom analyzer, retrieve its information, and display the full JSON:
 
 ```C# Snippet:ContentUnderstandingGetCustomAnalyzer
-// First, create a custom analyzer (see Sample 04 for details)
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>"; // Set to null to use DefaultAzureCredential
+var client = !string.IsNullOrEmpty(apiKey)
+    ? new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey))
+    : new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
+
+// Generate a unique analyzer ID
 string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 
+// Define field schema with custom fields
 var fieldSchema = new ContentFieldSchema(
     new Dictionary<string, ContentFieldDefinition>
     {
@@ -88,11 +95,13 @@ var fieldSchema = new ContentFieldSchema(
     Description = "Test schema for GetAnalyzer sample"
 };
 
+// Create analyzer configuration
 var config = new ContentAnalyzerConfig
 {
     ReturnDetails = true
 };
 
+// Create the custom analyzer
 var analyzer = new ContentAnalyzer
 {
     BaseAnalyzerId = "prebuilt-document",
@@ -108,19 +117,21 @@ await client.CreateAnalyzerAsync(
     analyzerId,
     analyzer);
 
-// Get information about the custom analyzer
-var response = await client.GetAnalyzerAsync(analyzerId);
-ContentAnalyzer retrievedAnalyzer = response.Value;
-
-// Display full analyzer JSON
-var jsonOptions = new JsonSerializerOptions
+try
 {
-    WriteIndented = true,
-    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-};
-string analyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
-Console.WriteLine("Custom Analyzer:");
-Console.WriteLine(analyzerJson);
+    // Get information about the custom analyzer
+    var response = await client.GetAnalyzerAsync(analyzerId);
+    ContentAnalyzer retrievedAnalyzer = response.Value;
+
+    // Display full analyzer JSON
+    var jsonOptions = new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+    };
+    string analyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
+    Console.WriteLine("Custom Analyzer:");
+    Console.WriteLine(analyzerJson);
 ```
 
 ## Next Steps

@@ -91,6 +91,8 @@ With `EnableSegment = false`, the entire 4-page document will be classified as o
 
 ```C# Snippet:ContentUnderstandingAnalyzeCategory
 // Analyze a document (EnableSegment=false means entire document is one category)
+string filePath = "<file_path>";
+byte[] fileBytes = File.ReadAllBytes(filePath);
 AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
@@ -130,6 +132,8 @@ With `EnableSegment = true`, the analyzer will segment the document and return c
 
 ```C# Snippet:ContentUnderstandingAnalyzeCategoryWithSegments
 // Analyze a document (EnableSegment=true automatically segments by category)
+string filePath = "<file_path>";
+byte[] fileBytes = File.ReadAllBytes(filePath);
 AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,

@@ -128,6 +128,7 @@ Console.WriteLine($"Analyzer '{analyzerId}' created successfully!");
 After creating the analyzer, you can use it to analyze documents. **In production applications, analyzers are typically created once and reused for multiple document analyses.** They persist in your Content Understanding resource until explicitly deleted.
 
 ```C# Snippet:ContentUnderstandingUseCustomAnalyzer
+var documentUrl = new Uri("<document_url>");
 // Analyze a document using the custom analyzer
 var analyzeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,

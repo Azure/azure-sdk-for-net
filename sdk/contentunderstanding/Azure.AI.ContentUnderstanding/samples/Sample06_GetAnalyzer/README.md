@@ -1,7 +1,7 @@
 # Sample06_GetAnalyzer
 
 This sample demonstrates how to retrieve information about analyzers, including prebuilt analyzers and custom analyzers.
-For detailed documentation, see [Sample06_GetAnalyzer.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md).
+For detailed documentation, see [Sample06_GetAnalyzer.md](../Sample06_GetAnalyzer.md).
 
 ## Prerequisites
 
