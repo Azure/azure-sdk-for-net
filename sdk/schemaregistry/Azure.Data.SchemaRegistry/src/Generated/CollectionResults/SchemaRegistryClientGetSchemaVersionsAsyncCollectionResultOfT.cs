@@ -27,13 +27,8 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public SchemaRegistryClientGetSchemaVersionsAsyncCollectionResultOfT(SchemaRegistryClient client, string groupName, string schemaName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
             _client = client;
             _groupName = groupName;
             _schemaName = schemaName;

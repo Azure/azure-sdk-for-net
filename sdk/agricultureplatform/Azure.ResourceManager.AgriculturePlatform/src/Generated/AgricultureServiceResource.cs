@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<AgricultureServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AgricultureServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<AgricultureServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<AgricultureServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     AgricultureServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     AgricultureServicePatch patch = new AgricultureServicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<AgricultureServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AgricultureServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     AgricultureServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     AgricultureServicePatch patch = new AgricultureServicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<AgricultureServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<AgricultureServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<AgricultureServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AgricultureServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<AgricultureServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<AgricultureServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
