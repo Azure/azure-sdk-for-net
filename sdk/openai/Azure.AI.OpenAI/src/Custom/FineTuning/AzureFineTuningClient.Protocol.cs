@@ -83,14 +83,13 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithOptions(options)
             .Build();
 
-    //internal static new PipelineMessage GetJobPipelineMessage(ClientPipeline clientPipeline, Uri endpoint, string fineTuningJobId, RequestOptions options)
-    //    => new AzureOpenAIPipelineMessageBuilder(clientPipeline, endpoint, _apiVersion)
-    //        .WithMethod("GET")
-    //        .WithPath("fine_tuning", "jobs", fineTuningJobId)
-    //        .WithAccept("application/json")
-    //        .WithOptions(options)
-    //        .Build();
-
+    internal PipelineMessage GetJobPipelineMessage(string fineTuningJobId, RequestOptions options)
+        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
+            .WithMethod("GET")
+            .WithPath("fine_tuning", "jobs", fineTuningJobId)
+            .WithAccept("application/json")
+            .WithOptions(options)
+            .Build();
     private static bool TryGetLastId(ClientResult previous, out string lastId)
     {
         Argument.AssertNotNull(previous, nameof(previous));
