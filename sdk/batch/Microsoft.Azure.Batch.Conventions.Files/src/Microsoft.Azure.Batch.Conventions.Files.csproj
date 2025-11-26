@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.13.0" />
-    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Microsoft.Azure.Batch" />
   </ItemGroup>
 
