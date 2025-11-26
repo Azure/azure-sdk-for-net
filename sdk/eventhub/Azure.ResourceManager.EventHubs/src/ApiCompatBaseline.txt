@@ -1,3 +1,0 @@
-# Deprecated
-MembersMustExist : Member 'public Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource> Azure.ResourceManager.EventHubs.EventHubsNamespaceResource.Update(Azure.ResourceManager.EventHubs.EventHubsNamespaceData, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource>> Azure.ResourceManager.EventHubs.EventHubsNamespaceResource.UpdateAsync(Azure.ResourceManager.EventHubs.EventHubsNamespaceData, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
