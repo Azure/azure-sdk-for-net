@@ -370,7 +370,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             int testScanBlobLimitPerPoll = 6;
 
             // we'll introduce multiple errors to make sure we take the earliest timestamp
-            DateTime earliestErrorTime = DateTime.UtcNow;
+            DateTimeOffset earliestErrorTime = DateTimeOffset.UtcNow.AddHours(-1);
 
             var container = _blobContainerMock.Object;
 

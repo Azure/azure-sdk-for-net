@@ -217,9 +217,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             string continuationToken = containerScanInfo.ContinuationToken;
             Page<BlobItem> page;
 
-            // if starting the cycle, reset the sweep time
+            // if starting the cycle, reset the sweep time and set start time
             if (continuationToken == null)
             {
+                containerScanInfo.PollingStartTime = DateTimeOffset.UtcNow;
                 containerScanInfo.CurrentSweepCycleLatestModified = DateTime.MinValue;
             }
 
@@ -266,14 +267,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 var properties = currentBlob.Properties;
                 DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
 
-                if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified)
+                if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified &&
+                    lastModifiedTimestamp <= containerScanInfo.PollingStartTime)
                 {
                     containerScanInfo.CurrentSweepCycleLatestModified = lastModifiedTimestamp;
                 }
 
                 // Blob timestamps are rounded to the nearest second, so make sure we continue to check
                 // the previous timestamp to catch any blobs that came in slightly after our previous poll.
-                if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified)
+                if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified &&
+                    lastModifiedTimestamp <= containerScanInfo.PollingStartTime)
                 {
                     newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                 }
