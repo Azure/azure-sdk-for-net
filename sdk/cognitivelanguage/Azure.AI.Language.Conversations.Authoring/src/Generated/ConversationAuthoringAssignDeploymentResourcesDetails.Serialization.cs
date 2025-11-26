@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 throw new FormatException($"The model {nameof(ConversationAuthoringAssignDeploymentResourcesDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourcesMetadata"u8);
+            writer.WritePropertyName("projectResources"u8);
             writer.WriteStartArray();
             foreach (var item in Metadata)
             {
@@ -78,19 +78,19 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            IList<ConversationAuthoringResourceMetadata> resourcesMetadata = default;
+            IList<ConversationAuthoringResourceMetadata> projectResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourcesMetadata"u8))
+                if (property.NameEquals("projectResources"u8))
                 {
                     List<ConversationAuthoringResourceMetadata> array = new List<ConversationAuthoringResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ConversationAuthoringResourceMetadata.DeserializeConversationAuthoringResourceMetadata(item, options));
                     }
-                    resourcesMetadata = array;
+                    projectResources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationAuthoringAssignDeploymentResourcesDetails(resourcesMetadata, serializedAdditionalRawData);
+            return new ConversationAuthoringAssignDeploymentResourcesDetails(projectResources, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>.Write(ModelReaderWriterOptions options)

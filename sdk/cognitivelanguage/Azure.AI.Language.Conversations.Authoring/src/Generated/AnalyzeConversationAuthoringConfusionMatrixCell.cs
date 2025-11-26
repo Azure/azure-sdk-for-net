@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the options to unassign Azure resources from a project. </summary>
-    public partial class ConversationAuthoringUnassignDeploymentResourcesDetails
+    /// <summary> Represents a cell in a confusion matrix. </summary>
+    public partial class AnalyzeConversationAuthoringConfusionMatrixCell
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,34 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringUnassignDeploymentResourcesDetails"/>. </summary>
-        /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignedResourceIds"/> is null. </exception>
-        public ConversationAuthoringUnassignDeploymentResourcesDetails(IEnumerable<string> assignedResourceIds)
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringConfusionMatrixCell"/>. </summary>
+        /// <param name="normalizedValue"> Represents normalized value in percentages. </param>
+        /// <param name="rawValue"> Represents raw value. </param>
+        internal AnalyzeConversationAuthoringConfusionMatrixCell(float normalizedValue, float rawValue)
         {
-            Argument.AssertNotNull(assignedResourceIds, nameof(assignedResourceIds));
-
-            AssignedResourceIds = assignedResourceIds.ToList();
+            NormalizedValue = normalizedValue;
+            RawValue = rawValue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringUnassignDeploymentResourcesDetails"/>. </summary>
-        /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringConfusionMatrixCell"/>. </summary>
+        /// <param name="normalizedValue"> Represents normalized value in percentages. </param>
+        /// <param name="rawValue"> Represents raw value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringUnassignDeploymentResourcesDetails(IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationAuthoringConfusionMatrixCell(float normalizedValue, float rawValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AssignedResourceIds = assignedResourceIds;
+            NormalizedValue = normalizedValue;
+            RawValue = rawValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringUnassignDeploymentResourcesDetails"/> for deserialization. </summary>
-        internal ConversationAuthoringUnassignDeploymentResourcesDetails()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringConfusionMatrixCell"/> for deserialization. </summary>
+        internal AnalyzeConversationAuthoringConfusionMatrixCell()
         {
         }
 
-        /// <summary> Represents the assigned resource IDs to be unassigned. </summary>
-        public IList<string> AssignedResourceIds { get; }
+        /// <summary> Represents normalized value in percentages. </summary>
+        public float NormalizedValue { get; }
+        /// <summary> Represents raw value. </summary>
+        public float RawValue { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the options for assigning Azure resources to a project. </summary>
+    /// <summary> Represents the payload for assigning Azure resources to a project. </summary>
     public partial class ConversationAuthoringAssignDeploymentResourcesDetails
     {
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignDeploymentResourcesDetails"/>. </summary>
-        /// <param name="metadata"> Represents the metadata for the resources to be assigned. </param>
+        /// <param name="metadata"> Represents the metadata for the project resources to be assigned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
         public ConversationAuthoringAssignDeploymentResourcesDetails(IEnumerable<ConversationAuthoringResourceMetadata> metadata)
         {
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignDeploymentResourcesDetails"/>. </summary>
-        /// <param name="metadata"> Represents the metadata for the resources to be assigned. </param>
+        /// <param name="metadata"> Represents the metadata for the project resources to be assigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConversationAuthoringAssignDeploymentResourcesDetails(IList<ConversationAuthoringResourceMetadata> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
         }
 
-        /// <summary> Represents the metadata for the resources to be assigned. </summary>
+        /// <summary> Represents the metadata for the project resources to be assigned. </summary>
         public IList<ConversationAuthoringResourceMetadata> Metadata { get; }
     }
 }

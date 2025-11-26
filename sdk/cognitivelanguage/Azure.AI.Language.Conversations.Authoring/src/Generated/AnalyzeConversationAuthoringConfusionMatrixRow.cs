@@ -10,18 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> The ConversationAuthoringConfusionMatrixRow. </summary>
-    public partial class ConversationAuthoringConfusionMatrixRow
+    /// <summary> The AnalyzeConversationAuthoringConfusionMatrixRow. </summary>
+    public partial class AnalyzeConversationAuthoringConfusionMatrixRow
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringConfusionMatrixRow"/>. </summary>
-        internal ConversationAuthoringConfusionMatrixRow()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringConfusionMatrixRow"/>. </summary>
+        internal AnalyzeConversationAuthoringConfusionMatrixRow()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringConfusionMatrixRow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringConfusionMatrixRow"/>. </summary>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ConversationAuthoringConfusionMatrixRow(IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal AnalyzeConversationAuthoringConfusionMatrixRow(IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             AdditionalProperties = additionalProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description><see cref="ConversationAuthoringConfusionMatrixCell"/></description>
+        /// <description><see cref="AnalyzeConversationAuthoringConfusionMatrixCell"/></description>
         /// </item>
         /// </list>
         /// </remarks>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the options for deleting a project deployment. </summary>
+    /// <summary> Represents the payload for deleting a project deployment. </summary>
     public partial class ConversationAuthoringDeleteDeploymentDetails
     {
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeleteDeploymentDetails"/>. </summary>
-        /// <param name="assignedResourceIds"> Represents the resource IDs to delete the deployment from. If not provided, the deployment will be rolled out from all the resources it is deployed to. If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest. </param>
+        /// <param name="assignedResourceIds"> Represents the Language or AIService resource IDs to unassign from the project or delete the deployment from. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConversationAuthoringDeleteDeploymentDetails(IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Represents the resource IDs to delete the deployment from. If not provided, the deployment will be rolled out from all the resources it is deployed to. If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest. </summary>
+        /// <summary> Represents the Language or AIService resource IDs to unassign from the project or delete the deployment from. </summary>
         public IList<string> AssignedResourceIds { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the state of a deployment resources job. </summary>
+    /// <summary> Represents the state of a project resources job. </summary>
     public partial class ConversationAuthoringDeploymentResourcesState
     {
         /// <summary>

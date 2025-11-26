@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the comparison between the expected and predicted entities for an utterance. </summary>
-    public partial class UtteranceEntitiesEvaluationResult
+    public partial class AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntitiesEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expectedEntities"/> or <paramref name="predictedEntities"/> is null. </exception>
-        internal UtteranceEntitiesEvaluationResult(IEnumerable<UtteranceEntityEvaluationResult> expectedEntities, IEnumerable<UtteranceEntityEvaluationResult> predictedEntities)
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities, IEnumerable<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities)
         {
             Argument.AssertNotNull(expectedEntities, nameof(expectedEntities));
             Argument.AssertNotNull(predictedEntities, nameof(predictedEntities));
@@ -59,25 +59,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             PredictedEntities = predictedEntities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntitiesEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UtteranceEntitiesEvaluationResult(IReadOnlyList<UtteranceEntityEvaluationResult> expectedEntities, IReadOnlyList<UtteranceEntityEvaluationResult> predictedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities, IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpectedEntities = expectedEntities;
             PredictedEntities = predictedEntities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntitiesEvaluationResult"/> for deserialization. </summary>
-        internal UtteranceEntitiesEvaluationResult()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/> for deserialization. </summary>
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult()
         {
         }
 
         /// <summary> Represents the expected entity labels. </summary>
-        public IReadOnlyList<UtteranceEntityEvaluationResult> ExpectedEntities { get; }
+        public IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> ExpectedEntities { get; }
         /// <summary> Represents the predicted entity labels. </summary>
-        public IReadOnlyList<UtteranceEntityEvaluationResult> PredictedEntities { get; }
+        public IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> PredictedEntities { get; }
     }
 }

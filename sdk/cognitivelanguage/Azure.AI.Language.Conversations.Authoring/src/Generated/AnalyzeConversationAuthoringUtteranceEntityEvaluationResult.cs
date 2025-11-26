@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the evaluation output of an entity label or prediction. </summary>
-    public partial class UtteranceEntityEvaluationResult
+    public partial class AnalyzeConversationAuthoringUtteranceEntityEvaluationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntityEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntityEvaluationResult"/>. </summary>
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
-        internal UtteranceEntityEvaluationResult(string category, int offset, int length)
+        internal AnalyzeConversationAuthoringUtteranceEntityEvaluationResult(string category, int offset, int length)
         {
             Argument.AssertNotNull(category, nameof(category));
 
@@ -59,12 +59,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             Length = length;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntityEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntityEvaluationResult"/>. </summary>
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UtteranceEntityEvaluationResult(string category, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationAuthoringUtteranceEntityEvaluationResult(string category, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Offset = offset;
@@ -72,8 +72,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UtteranceEntityEvaluationResult"/> for deserialization. </summary>
-        internal UtteranceEntityEvaluationResult()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEntityEvaluationResult"/> for deserialization. </summary>
+        internal AnalyzeConversationAuthoringUtteranceEntityEvaluationResult()
         {
         }
 

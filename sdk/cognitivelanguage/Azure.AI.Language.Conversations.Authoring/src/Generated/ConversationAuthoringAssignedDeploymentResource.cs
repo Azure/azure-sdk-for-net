@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the assigned deployment resource. </summary>
+    /// <summary> Represents the assigned project resource. </summary>
     public partial class ConversationAuthoringAssignedDeploymentResource
     {
         /// <summary>
@@ -47,15 +47,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/>. </summary>
-        /// <param name="region"> The resource region. </param>
+        /// <param name="region"> The Azure resource region. </param>
         internal ConversationAuthoringAssignedDeploymentResource(AzureLocation region)
         {
             Region = region;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/>. </summary>
-        /// <param name="resourceId"> The resource ID. </param>
-        /// <param name="region"> The resource region. </param>
+        /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
+        /// <param name="region"> The Azure resource region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConversationAuthoringAssignedDeploymentResource(ResourceIdentifier resourceId, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

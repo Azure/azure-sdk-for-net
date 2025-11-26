@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    public partial class ConversationAuthoringConfusionMatrixRow : IUtf8JsonSerializable, IJsonModel<ConversationAuthoringConfusionMatrixRow>
+    public partial class AnalyzeConversationAuthoringConfusionMatrixRow : IUtf8JsonSerializable, IJsonModel<AnalyzeConversationAuthoringConfusionMatrixRow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationAuthoringConfusionMatrixRow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeConversationAuthoringConfusionMatrixRow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConversationAuthoringConfusionMatrixRow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AnalyzeConversationAuthoringConfusionMatrixRow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringConfusionMatrixRow)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringConfusionMatrixRow)} does not support writing '{format}' format.");
             }
 
             foreach (var item in AdditionalProperties)
@@ -48,19 +48,19 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        ConversationAuthoringConfusionMatrixRow IJsonModel<ConversationAuthoringConfusionMatrixRow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AnalyzeConversationAuthoringConfusionMatrixRow IJsonModel<AnalyzeConversationAuthoringConfusionMatrixRow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringConfusionMatrixRow)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringConfusionMatrixRow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationAuthoringConfusionMatrixRow(document.RootElement, options);
+            return DeserializeAnalyzeConversationAuthoringConfusionMatrixRow(document.RootElement, options);
         }
 
-        internal static ConversationAuthoringConfusionMatrixRow DeserializeConversationAuthoringConfusionMatrixRow(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AnalyzeConversationAuthoringConfusionMatrixRow DeserializeAnalyzeConversationAuthoringConfusionMatrixRow(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,46 +75,46 @@ namespace Azure.AI.Language.Conversations.Authoring
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ConversationAuthoringConfusionMatrixRow(additionalProperties);
+            return new AnalyzeConversationAuthoringConfusionMatrixRow(additionalProperties);
         }
 
-        BinaryData IPersistableModel<ConversationAuthoringConfusionMatrixRow>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringConfusionMatrixRow)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringConfusionMatrixRow)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConversationAuthoringConfusionMatrixRow IPersistableModel<ConversationAuthoringConfusionMatrixRow>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AnalyzeConversationAuthoringConfusionMatrixRow IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConversationAuthoringConfusionMatrixRow(document.RootElement, options);
+                        return DeserializeAnalyzeConversationAuthoringConfusionMatrixRow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringConfusionMatrixRow)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeConversationAuthoringConfusionMatrixRow)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConversationAuthoringConfusionMatrixRow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AnalyzeConversationAuthoringConfusionMatrixRow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConversationAuthoringConfusionMatrixRow FromResponse(Response response)
+        internal static AnalyzeConversationAuthoringConfusionMatrixRow FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConversationAuthoringConfusionMatrixRow(document.RootElement);
+            return DeserializeAnalyzeConversationAuthoringConfusionMatrixRow(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,44 +72,40 @@ namespace Azure.AI.Language.Conversations.Authoring
             _apiVersion = options.Version;
         }
 
-        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <summary> Gets the status of an existing assign project resources job. </summary>
         /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<ConversationAuthoringProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringDeploymentResourcesState>> GetAssignProjectResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectDeployment.DeserializeConversationAuthoringProjectDeployment(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAssignProjectResourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
-        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <summary> Gets the status of an existing assign project resources job. </summary>
         /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<ConversationAuthoringProjectDeployment> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringDeploymentResourcesState> GetAssignProjectResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectDeployment.DeserializeConversationAuthoringProjectDeployment(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAssignProjectResourcesStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the deployments belonging to a project.
+        /// [Protocol Method] Gets the status of an existing assign project resources job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -115,31 +114,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDeploymentsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetAssignProjectResourcesStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAssignProjectResourcesStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetAssignProjectResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAssignProjectResourcesStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the deployments belonging to a project.
+        /// [Protocol Method] Gets the status of an existing assign project resources job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -148,27 +155,2261 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDeployments(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetAssignProjectResourcesStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAssignProjectResourcesStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetAssignProjectResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAssignProjectResourcesStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing unassign project resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringDeploymentResourcesState>> GetUnassignProjectResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUnassignProjectResourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing unassign project resources job. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringDeploymentResourcesState> GetUnassignProjectResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUnassignProjectResourcesStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing unassign project resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUnassignProjectResourcesStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetUnassignProjectResourcesStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetUnassignProjectResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetUnassignProjectResourcesStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing unassign project resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUnassignProjectResourcesStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetUnassignProjectResourcesStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetUnassignProjectResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetUnassignProjectResourcesStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing swap deployment job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringSwapDeploymentsState>> GetSwapDeploymentsStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetSwapDeploymentsStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringSwapDeploymentsState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing swap deployment job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringSwapDeploymentsState> GetSwapDeploymentsStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSwapDeploymentsStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringSwapDeploymentsState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing swap deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSwapDeploymentsStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSwapDeploymentsStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetSwapDeploymentsStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing swap deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSwapDeploymentsStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSwapDeploymentsStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetSwapDeploymentsStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSwapDeploymentsStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the details of a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringProjectMetadata>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetProjectAsync(projectName, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringProjectMetadata.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the details of a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringProjectMetadata> GetProject(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetProject(projectName, context);
+            return Response.FromValue(ConversationAuthoringProjectMetadata.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetProjectRequest(projectName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProject(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProject(string projectName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetProjectRequest(projectName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new project or updates an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CreateProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new project or updates an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CreateProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for a project deletion job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringProjectDeletionState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetProjectDeletionStatusAsync(jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringProjectDeletionState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status for a project deletion job. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringProjectDeletionState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetProjectDeletionStatus(jobId, context);
+            return Response.FromValue(ConversationAuthoringProjectDeletionState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for a project deletion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectDeletionStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetProjectDeletionStatusAsync(string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetProjectDeletionStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for a project deletion job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetProjectDeletionStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProjectDeletionStatus(string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetProjectDeletionStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetProjectDeletionStatusRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringExportProjectState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetExportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringExportProjectState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringExportProjectState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetExportStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringExportProjectState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetExportStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetExportStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetExportStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for an import. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringImportProjectState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetImportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringImportProjectState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status for an import. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringImportProjectState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetImportStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringImportProjectState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for an import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetImportStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetImportStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for an import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetImportStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetImportStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetImportStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="storageInputContainerName"> The name of the storage container. </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringCopyProjectDetails>> AuthorizeProjectCopyAsync(string projectName, ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AuthorizeProjectCopyAsync(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringCopyProjectDetails.FromResponse(response), response);
+        }
+
+        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="storageInputContainerName"> The name of the storage container. </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringCopyProjectDetails> AuthorizeProjectCopy(string projectName, ConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AuthorizeProjectCopy(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
+            return Response.FromValue(ConversationAuthoringCopyProjectDetails.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeProjectCopyAsync(string,ConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AuthorizeProjectCopyAsync(string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.AuthorizeProjectCopy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAuthorizeProjectCopyRequest(projectName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeProjectCopy(string,ConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AuthorizeProjectCopy(string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.AuthorizeProjectCopy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAuthorizeProjectCopyRequest(projectName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing copy project job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringCopyProjectState>> GetCopyProjectStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetCopyProjectStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringCopyProjectState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing copy project job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringCopyProjectState> GetCopyProjectStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetCopyProjectStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringCopyProjectState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing copy project job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCopyProjectStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCopyProjectStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetCopyProjectStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCopyProjectStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing copy project job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCopyProjectStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCopyProjectStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetCopyProjectStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCopyProjectStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for a training job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringTrainingState>> GetTrainingStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetTrainingStatusAsync(projectName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringTrainingState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status for a training job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringTrainingState> GetTrainingStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetTrainingStatus(projectName, jobId, context);
+            return Response.FromValue(ConversationAuthoringTrainingState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for a training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTrainingStatusAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTrainingStatusAsync(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetTrainingStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTrainingStatusRequest(projectName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for a training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTrainingStatus(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTrainingStatus(string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetTrainingStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTrainingStatusRequest(projectName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the details of a deployment. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringProjectDeployment>> GetDeploymentAsync(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeploymentAsync(projectName, deploymentName, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringProjectDeployment.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the details of a deployment. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringProjectDeployment> GetDeployment(string projectName, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeployment(projectName, deploymentName, context);
+            return Response.FromValue(ConversationAuthoringProjectDeployment.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeployment(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentRequest(projectName, deploymentName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringDeploymentDeleteFromResourcesState>> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing delete deployment from specific resources job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringDeploymentDeleteFromResourcesState> GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId, context);
+            return Response.FromValue(ConversationAuthoringDeploymentDeleteFromResourcesState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing delete deployment from specific resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDeploymentDeleteFromResourcesStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetDeploymentDeleteFromResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing delete deployment from specific resources job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentDeleteFromResourcesStatus(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDeploymentDeleteFromResourcesStatus(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetDeploymentDeleteFromResourcesStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentDeleteFromResourcesStatusRequest(projectName, deploymentName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status of an existing deployment job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringDeploymentState>> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDeploymentStatusAsync(projectName, deploymentName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringDeploymentState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an existing deployment job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringDeploymentState> GetDeploymentStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDeploymentStatus(projectName, deploymentName, jobId, context);
+            return Response.FromValue(ConversationAuthoringDeploymentState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentStatusAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetDeploymentStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetDeploymentStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status of an existing deployment job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentStatus(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetDeploymentStatus(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetDeploymentStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDeploymentStatusRequest(projectName, deploymentName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the details of an exported model. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringExportedTrainedModel>> GetExportedModelAsync(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetExportedModelAsync(projectName, exportedModelName, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringExportedTrainedModel.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the details of an exported model. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringExportedTrainedModel> GetExportedModel(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetExportedModel(projectName, exportedModelName, context);
+            return Response.FromValue(ConversationAuthoringExportedTrainedModel.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of an exported model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportedModelAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetExportedModelAsync(string projectName, string exportedModelName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetExportedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetExportedModelRequest(projectName, exportedModelName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of an exported model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportedModel(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetExportedModel(string projectName, string exportedModelName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetExportedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetExportedModelRequest(projectName, exportedModelName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringExportedModelState>> GetExportedModelJobStatusAsync(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetExportedModelJobStatusAsync(projectName, exportedModelName, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringExportedModelState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status for an existing job to create or update an exported model. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringExportedModelState> GetExportedModelJobStatus(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetExportedModelJobStatus(projectName, exportedModelName, jobId, context);
+            return Response.FromValue(ConversationAuthoringExportedModelState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for an existing job to create or update an exported model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportedModelJobStatusAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetExportedModelJobStatusAsync(string projectName, string exportedModelName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetExportedModelJobStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetExportedModelJobStatusRequest(projectName, exportedModelName, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for an existing job to create or update an exported model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetExportedModelJobStatus(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetExportedModelJobStatus(string projectName, string exportedModelName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetExportedModelJobStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetExportedModelJobStatusRequest(projectName, exportedModelName, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the details of a trained model. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringProjectTrainedModel>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetTrainedModelAsync(projectName, trainedModelLabel, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringProjectTrainedModel.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the details of a trained model. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringProjectTrainedModel> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetTrainedModel(projectName, trainedModelLabel, context);
+            return Response.FromValue(ConversationAuthoringProjectTrainedModel.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTrainedModelAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetTrainedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTrainedModelRequest(projectName, trainedModelLabel, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the details of a trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTrainedModel(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetTrainedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTrainedModelRequest(projectName, trainedModelLabel, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes an existing trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteTrainedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteTrainedModelRequest(projectName, trainedModelLabel, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes an existing trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteTrainedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteTrainedModelRequest(projectName, trainedModelLabel, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for an evaluation job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringEvaluationState>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetEvaluationStatusAsync(projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringEvaluationState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status for an evaluation job. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringEvaluationState> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetEvaluationStatus(projectName, trainedModelLabel, jobId, context);
+            return Response.FromValue(ConversationAuthoringEvaluationState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for an evaluation job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEvaluationStatusAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetEvaluationStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEvaluationStatusRequest(projectName, trainedModelLabel, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for an evaluation job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEvaluationStatus(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetEvaluationStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEvaluationStatusRequest(projectName, trainedModelLabel, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringEvalSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetModelEvaluationSummaryAsync(projectName, trainedModelLabel, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringEvalSummary.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringEvalSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetModelEvaluationSummary(projectName, trainedModelLabel, context);
+            return Response.FromValue(ConversationAuthoringEvalSummary.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationSummaryAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetModelEvaluationSummary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationSummary(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetModelEvaluationSummary");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status for loading a snapshot. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConversationAuthoringLoadSnapshotState>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetLoadSnapshotStatusAsync(projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
+            return Response.FromValue(ConversationAuthoringLoadSnapshotState.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status for loading a snapshot. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConversationAuthoringLoadSnapshotState> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetLoadSnapshotStatus(projectName, trainedModelLabel, jobId, context);
+            return Response.FromValue(ConversationAuthoringLoadSnapshotState.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for loading a snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLoadSnapshotStatusAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetLoadSnapshotStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status for loading a snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLoadSnapshotStatus(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.GetLoadSnapshotStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -427,108 +2668,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
-        /// <summary> Lists the deployments resources assigned to the project. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<ConversationAuthoringAssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Lists the deployments resources assigned to the project. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<ConversationAuthoringAssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists the deployments resources assigned to the project.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists the deployments resources assigned to the project.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetDeploymentResources(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
-        }
-
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
@@ -711,6 +2850,108 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
+        /// <summary> Lists the trained models belonging to a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<ConversationAuthoringProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectTrainedModel.DeserializeConversationAuthoringProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the trained models belonging to a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<ConversationAuthoringProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectTrainedModel.DeserializeConversationAuthoringProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the trained models belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the trained models belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTrainedModels(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+        }
+
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
@@ -813,7 +3054,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainingJobs", "value", "nextLink", maxpagesize, context);
         }
 
-        /// <summary> Lists the trained models belonging to a project. </summary>
+        /// <summary> Lists the Language or AIService resources assigned to the project. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
@@ -821,17 +3062,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<ConversationAuthoringProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConversationAuthoringAssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectTrainedModel.DeserializeConversationAuthoringProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
-        /// <summary> Lists the trained models belonging to a project. </summary>
+        /// <summary> Lists the Language or AIService resources assigned to the project. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
@@ -839,18 +3080,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<ConversationAuthoringProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConversationAuthoringAssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectTrainedModel.DeserializeConversationAuthoringProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the trained models belonging to a project.
+        /// [Protocol Method] Lists the Language or AIService resources assigned to the project.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -859,7 +3100,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -873,17 +3114,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the trained models belonging to a project.
+        /// [Protocol Method] Lists the Language or AIService resources assigned to the project.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -892,7 +3133,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTrainedModels(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDeploymentResources(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -906,13 +3147,115 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<ConversationAuthoringProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectDeployment.DeserializeConversationAuthoringProjectDeployment(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<ConversationAuthoringProjectDeployment> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringProjectDeployment.DeserializeConversationAuthoringProjectDeployment(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the deployments belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeploymentsAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the deployments belonging to a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDeployments(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -1017,33 +3360,1884 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/deployments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeConversationAuthoringUtteranceEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeConversationAuthoringUtteranceEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationResultsAsync(string,string,StringIndexType,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelEvaluationResults(string,string,StringIndexType,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Assign new Language or AIService Azure resources to a project to allowing deployment to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The new project resources to be assigned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> AssignProjectResourcesAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringAssignDeploymentResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await AssignProjectResourcesAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Assign new Language or AIService Azure resources to a project to allowing deployment to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The new project resources to be assigned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation AssignProjectResources(WaitUntil waitUntil, string projectName, ConversationAuthoringAssignDeploymentResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return AssignProjectResources(waitUntil, projectName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Assign new Language or AIService Azure resources to a project to allowing deployment to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AssignProjectResourcesAsync(WaitUntil,string,ConversationAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> AssignProjectResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.AssignProjectResources");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                using HttpMessage message = CreateAssignProjectResourcesRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.AssignProjectResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
-            if (skip != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("skip", skip.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            if (maxpagesize != null)
+        }
+
+        /// <summary>
+        /// [Protocol Method] Assign new Language or AIService Azure resources to a project to allowing deployment to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AssignProjectResources(WaitUntil,string,ConversationAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation AssignProjectResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.AssignProjectResources");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                using HttpMessage message = CreateAssignProjectResourcesRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.AssignProjectResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deployment to these resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The list of Language or AIService Azure resource IDs to be unassigned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> UnassignProjectResourcesAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await UnassignProjectResourcesAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Unassign resources from a project. This disallows deployment to these resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The list of Language or AIService Azure resource IDs to be unassigned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation UnassignProjectResources(WaitUntil waitUntil, string projectName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return UnassignProjectResources(waitUntil, projectName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Unassign resources from a project. This disallows deployment to these resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UnassignProjectResourcesAsync(WaitUntil,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> UnassignProjectResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.UnassignProjectResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUnassignProjectResourcesRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.UnassignProjectResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Unassign resources from a project. This disallows deployment to these resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UnassignProjectResources(WaitUntil,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation UnassignProjectResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.UnassignProjectResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUnassignProjectResourcesRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.UnassignProjectResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The job object to swap two deployments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringSwapDeploymentsDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await SwapDeploymentsAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Swaps two existing deployments with each other. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The job object to swap two deployments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, ConversationAuthoringSwapDeploymentsDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return SwapDeployments(waitUntil, projectName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Swaps two existing deployments with each other.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,string,ConversationAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.SwapDeployments");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Swaps two existing deployments with each other.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,string,ConversationAuthoringSwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.SwapDeployments");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, StringIndexType stringIndexType, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ExportAsync(waitUntil, projectName, stringIndexType.ToString(), exportedProjectFormat?.ToString(), assetKind, trainedModelLabel, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, StringIndexType stringIndexType, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Export(waitUntil, projectName, stringIndexType.ToString(), exportedProjectFormat?.ToString(), assetKind, trainedModelLabel, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a job to export a project's data.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,StringIndexType,ConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.Export");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a job to export a project's data.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Export(WaitUntil,string,StringIndexType,ConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit" | "Utf8CodeUnit" | "Utf32CodeUnit". </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.Export");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedProject"> The project data to import. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(exportedProject, nameof(exportedProject));
+
+            using RequestContent content = exportedProject.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ImportAsync(waitUntil, projectName, content, exportedProjectFormat?.ToString(), context).ConfigureAwait(false);
+        }
+
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedProject"> The project data to import. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(exportedProject, nameof(exportedProject));
+
+            using RequestContent content = exportedProject.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Import(waitUntil, projectName, content, exportedProjectFormat?.ToString(), context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,string,ConversationAuthoringExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.Import");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportRequest(projectName, content, exportedProjectFormat, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Import(WaitUntil,string,ConversationAuthoringExportedProject,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.Import");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportRequest(projectName, content, exportedProjectFormat, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Copies an existing project to another Azure resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The copy project info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await CopyProjectAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Copies an existing project to another Azure resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The copy project info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, ConversationAuthoringCopyProjectDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return CopyProject(waitUntil, projectName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Copies an existing project to another Azure resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,string,ConversationAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CopyProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Copies an existing project to another Azure resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CopyProject(WaitUntil,string,ConversationAuthoringCopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CopyProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a training job for a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The training input parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<ConversationAuthoringTrainingJobResult>> TrainAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringTrainingJobDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await TrainAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Train");
+        }
+
+        /// <summary> Triggers a training job for a project. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="details"> The training input parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<ConversationAuthoringTrainingJobResult> Train(WaitUntil waitUntil, string projectName, ConversationAuthoringTrainingJobDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = Train(waitUntil, projectName, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Train");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a training job for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="TrainAsync(WaitUntil,string,ConversationAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.Train");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTrainRequest(projectName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a training job for a project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Train(WaitUntil,string,ConversationAuthoringTrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation<BinaryData> Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.Train");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTrainRequest(projectName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.Train", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<ConversationAuthoringTrainingJobResult>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await CancelTrainingJobAsync(waitUntil, projectName, jobId, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CancelTrainingJob");
+        }
+
+        /// <summary> Triggers a cancellation for a running training job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<ConversationAuthoringTrainingJobResult> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = CancelTrainingJob(waitUntil, projectName, jobId, context);
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CancelTrainingJob");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a cancellation for a running training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelTrainingJobAsync(WaitUntil,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CancelTrainingJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers a cancellation for a running training job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelTrainingJob(WaitUntil,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CancelTrainingJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringCreateDeploymentDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await DeployProjectAsync(waitUntil, projectName, deploymentName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates a new deployment or replaces an existing one. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringCreateDeploymentDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return DeployProject(waitUntil, projectName, deploymentName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new deployment or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,string,string,ConversationAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeployProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new deployment or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeployProject(WaitUntil,string,string,ConversationAuthoringCreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeployProject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes a project deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteDeployment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentRequest(projectName, deploymentName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteDeployment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a deployment from the specified project-assigned resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="details"> The Language or AIService resource list for deleting the deployment.\r\n            The deployment will only be deleted from the specified resources, and will remain for the rest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await DeleteDeploymentFromResourcesAsync(waitUntil, projectName, deploymentName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Deletes a deployment from the specified project-assigned resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="details"> The Language or AIService resource list for deleting the deployment.\r\n            The deployment will only be deleted from the specified resources, and will remain for the rest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return DeleteDeploymentFromResources(waitUntil, projectName, deploymentName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a deployment from the specified project-assigned resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteDeploymentFromResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a deployment from the specified project-assigned resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,string,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteDeploymentFromResources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteDeploymentFromResourcesRequest(projectName, deploymentName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteDeploymentFromResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes an existing exported model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> DeleteExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteExportedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes an existing exported model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation DeleteExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.DeleteExportedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a new exported model or replaces an existing one. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="details"> The exported model info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, ConversationAuthoringExportedModelDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await CreateOrUpdateExportedModelAsync(waitUntil, projectName, exportedModelName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates a new exported model or replaces an existing one. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="details"> The exported model info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation CreateOrUpdateExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, ConversationAuthoringExportedModelDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return CreateOrUpdateExportedModel(waitUntil, projectName, exportedModelName, content, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new exported model or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ConversationAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CreateOrUpdateExportedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(projectName, exportedModelName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new exported model or replaces an existing one.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,string,string,ConversationAuthoringExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation CreateOrUpdateExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.CreateOrUpdateExportedModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(projectName, exportedModelName, content, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Triggers evaluation operation on a trained model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="details"> The training input parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<ConversationAuthoringEvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, ConversationAuthoringEvaluationDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringEvaluationJobResultFromConversationAuthoringEvaluationState, ClientDiagnostics, "ConversationAnalysisAuthoringClient.EvaluateModel");
+        }
+
+        /// <summary> Triggers evaluation operation on a trained model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="details"> The training input parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<ConversationAuthoringEvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, ConversationAuthoringEvaluationDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = EvaluateModel(waitUntil, projectName, trainedModelLabel, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchConversationAuthoringEvaluationJobResultFromConversationAuthoringEvaluationState, ClientDiagnostics, "ConversationAnalysisAuthoringClient.EvaluateModel");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers evaluation operation on a trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,string,string,ConversationAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation<BinaryData>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.EvaluateModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Triggers evaluation operation on a trained model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,string,string,ConversationAuthoringEvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation<BinaryData> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.EvaluateModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Restores the snapshot of this trained model to be the current working directory of the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.LoadSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Restores the snapshot of this trained model to be the current working directory of the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="trainedModelLabel"> The trained model label. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisAuthoringClient.LoadSnapshot");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisAuthoringClient.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1128,35 +5322,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentResourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/resources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetSupportedPrebuiltEntitiesRequest(int? maxCount, int? skip, int? maxpagesize, string language, string multilingual, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1220,6 +5385,35 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
+        internal HttpMessage CreateGetTrainedModelsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetTrainingJobsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1249,7 +5443,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainedModelsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentResourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1259,7 +5453,36 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendPath("/models", false);
+            uri.AppendPath("/resources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
@@ -1307,7 +5530,43 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateAssignProjectResourcesRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/:assign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUnassignProjectResourcesRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/:unassign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssignProjectResourcesStatusRequest(string projectName, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1315,7 +5574,678 @@ namespace Azure.AI.Language.Conversations.Authoring
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/assign/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetUnassignProjectResourcesStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/resources/unassign/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateSwapDeploymentsRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/:swap", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSwapDeploymentsStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/swap/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetProjectRequest(string projectName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateGetProjectDeletionStatusRequest(string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/global/deletion-jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateExportRequest(string projectName, string stringIndexType, string exportedProjectFormat, string assetKind, string trainedModelLabel, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:export", false);
+            uri.AppendQuery("stringIndexType", stringIndexType, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (exportedProjectFormat != null)
+            {
+                uri.AppendQuery("format", exportedProjectFormat, true);
+            }
+            if (assetKind != null)
+            {
+                uri.AppendQuery("assetKind", assetKind, true);
+            }
+            if (trainedModelLabel != null)
+            {
+                uri.AppendQuery("trainedModelLabel", trainedModelLabel, true);
+            }
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string exportedProjectFormat, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (exportedProjectFormat != null)
+            {
+                uri.AppendQuery("format", exportedProjectFormat, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetExportStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/export/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetImportStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/import/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateAuthorizeProjectCopyRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:authorize-copy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCopyProjectRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:copy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetCopyProjectStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/copy/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateTrainRequest(string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:train", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetTrainingStatusRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/train/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCancelTrainingJobRequest(string projectName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/train/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/:cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentRequest(string projectName, string deploymentName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteDeploymentRequest(string projectName, string deploymentName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteDeploymentFromResourcesRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/:delete-from-resources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentDeleteFromResourcesStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/delete-from-resources/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetExportedModelRequest(string projectName, string exportedModelName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/exported-models/", false);
+            uri.AppendPath(exportedModelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteExportedModelRequest(string projectName, string exportedModelName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/exported-models/", false);
+            uri.AppendPath(exportedModelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateExportedModelRequest(string projectName, string exportedModelName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/exported-models/", false);
+            uri.AppendPath(exportedModelName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetExportedModelJobStatusRequest(string projectName, string exportedModelName, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/exported-models/", false);
+            uri.AppendPath(exportedModelName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTrainedModelRequest(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteTrainedModelRequest(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateEvaluateModelRequest(string projectName, string trainedModelLabel, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/:evaluate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateLoadSnapshotRequest(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/:load-snapshot", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateGetEvaluationStatusRequest(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/evaluate/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetModelEvaluationResultsRequest(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/evaluation/result", false);
+            uri.AppendQuery("stringIndexType", stringIndexType, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetModelEvaluationSummaryRequest(string projectName, string trainedModelLabel, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/evaluation/summary-result", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetLoadSnapshotStatusRequest(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(trainedModelLabel, true);
+            uri.AppendPath("/load-snapshot/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1363,20 +6293,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentResourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetSupportedPrebuiltEntitiesNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, string language, string multilingual, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1405,6 +6321,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
+        internal HttpMessage CreateGetTrainedModelsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetTrainingJobsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1419,7 +6349,21 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainedModelsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentResourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1447,6 +6391,20 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
+        internal HttpMessage CreateGetModelEvaluationResultsNextPageRequest(string nextLink, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static RequestContext DefaultRequestContext = new RequestContext();
         internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
@@ -1460,5 +6418,23 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+
+        private ConversationAuthoringTrainingJobResult FetchConversationAuthoringTrainingJobResultFromConversationAuthoringTrainingState(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return ConversationAuthoringTrainingJobResult.DeserializeConversationAuthoringTrainingJobResult(resultJsonElement);
+        }
+
+        private ConversationAuthoringEvaluationJobResult FetchConversationAuthoringEvaluationJobResultFromConversationAuthoringEvaluationState(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return ConversationAuthoringEvaluationJobResult.DeserializeConversationAuthoringEvaluationJobResult(resultJsonElement);
+        }
     }
 }

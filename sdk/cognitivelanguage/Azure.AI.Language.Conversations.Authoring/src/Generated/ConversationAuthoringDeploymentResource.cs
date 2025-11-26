@@ -77,9 +77,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Represents the Azure resource Id. </summary>
-        public string ResourceId { get; set; }
+        public string ResourceId { get; }
         /// <summary> Represents the resource region. </summary>
-        public string Region { get; set; }
+        public string Region { get; }
         /// <summary> Represents the AOAI resource assigned for data generation. </summary>
         public AnalyzeConversationAuthoringDataGenerationConnectionInfo AssignedAoaiResource { get; set; }
     }
