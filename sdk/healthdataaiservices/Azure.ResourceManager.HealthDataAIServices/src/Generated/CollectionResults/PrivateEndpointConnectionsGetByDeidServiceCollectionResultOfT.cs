@@ -28,13 +28,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deidServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="deidServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(PrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string deidServiceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
