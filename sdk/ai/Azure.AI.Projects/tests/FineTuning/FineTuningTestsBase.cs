@@ -155,7 +155,11 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
                     $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
             }
 
-            System.Threading.Thread.Sleep(pollInterval);
+            // Skip delay in Playback mode since responses are pre-recorded
+            if (Mode != RecordedTestMode.Playback)
+            {
+                System.Threading.Thread.Sleep(pollInterval);
+            }
             file = fileClient.GetFile(fileId);
             Console.WriteLine($"File {fileId} status: {file.Status}");
         }
@@ -201,7 +205,11 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
                     $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
             }
 
-            await System.Threading.Tasks.Task.Delay(pollInterval);
+            // Skip delay in Playback mode since responses are pre-recorded
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await System.Threading.Tasks.Task.Delay(pollInterval);
+            }
             file = await fileClient.GetFileAsync(fileId);
             Console.WriteLine($"File {fileId} status: {file.Status}");
         }
