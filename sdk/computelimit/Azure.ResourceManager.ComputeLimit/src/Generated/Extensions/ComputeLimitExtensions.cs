@@ -31,7 +31,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return subscriptionResource.GetCachedClient(client => new MockableComputeLimitSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeLimitGuestSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputeLimitGuestSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetComputeLimitGuestSubscriptionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -43,7 +49,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetMockableComputeLimitArmClient(client).GetComputeLimitGuestSubscriptionResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeLimitSharedLimitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputeLimitSharedLimitResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetComputeLimitSharedLimitResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -55,7 +67,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetMockableComputeLimitArmClient(client).GetComputeLimitSharedLimitResource(id);
         }
 
-        /// <summary> Gets a collection of ComputeLimitGuestSubscriptions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of ComputeLimitGuestSubscriptions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitGuestSubscriptions(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -67,7 +85,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitGuestSubscriptions(location);
         }
 
-        /// <summary> Gets the properties of a guest subscription. </summary>
+        /// <summary>
+        /// Gets the properties of a guest subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitGuestSubscriptionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="guestSubscriptionId"> The name of the GuestSubscription. </param>
@@ -81,7 +105,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitGuestSubscriptionAsync(location, guestSubscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the properties of a guest subscription. </summary>
+        /// <summary>
+        /// Gets the properties of a guest subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitGuestSubscription(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="guestSubscriptionId"> The name of the GuestSubscription. </param>
@@ -95,7 +125,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitGuestSubscription(location, guestSubscriptionId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ComputeLimitSharedLimits in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of ComputeLimitSharedLimits in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitSharedLimits(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -107,7 +143,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitSharedLimits(location);
         }
 
-        /// <summary> Gets the properties of a compute limit shared by the host subscription with its guest subscriptions. </summary>
+        /// <summary>
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitSharedLimitAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="name"> The name of the SharedLimit. </param>
@@ -121,7 +163,13 @@ namespace Azure.ResourceManager.ComputeLimit
             return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitSharedLimitAsync(location, name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets the properties of a compute limit shared by the host subscription with its guest subscriptions. </summary>
+        /// <summary>
+        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetComputeLimitSharedLimit(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="name"> The name of the SharedLimit. </param>

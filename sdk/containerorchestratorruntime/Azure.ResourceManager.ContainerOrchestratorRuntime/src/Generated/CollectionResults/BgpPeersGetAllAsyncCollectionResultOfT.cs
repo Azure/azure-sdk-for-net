@@ -25,12 +25,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="client"> The BgpPeers client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceUri"/> is an empty string, and was expected to be non-empty. </exception>
         public BgpPeersGetAllAsyncCollectionResultOfT(BgpPeers client, string resourceUri, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceUri, nameof(resourceUri));
-
             _client = client;
             _resourceUri = resourceUri;
             _context = context;
