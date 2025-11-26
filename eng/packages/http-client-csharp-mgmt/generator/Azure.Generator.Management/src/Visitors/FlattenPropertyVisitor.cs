@@ -305,7 +305,7 @@ namespace Azure.Generator.Management.Visitors
             var isFlattenProperty = false;
             var isSafeFlatten = false;
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
-            foreach (var internalProperty in model.Properties)
+            foreach (var internalProperty in model.Properties.Concat(model.CustomCodeView?.Properties ?? []))
             {
                 // we need to flatten the inner property type first
                 var propertyType = internalProperty.Type;
@@ -315,16 +315,24 @@ namespace Azure.Generator.Management.Visitors
                     FlattenModel(propertyModel);
                 }
 
+                if (!(ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(internalProperty.Type, out var typeProvider)
+                    && typeProvider is ModelProvider modelProvider))
+                {
+                    continue;
+                }
+
+                var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
+
                 // handle `@flattenProperty`
                 if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Contains(internalProperty))
                 {
-                    isFlattenProperty = PropertyFlatten(model, propertyMap, internalProperty);
+                    isFlattenProperty = true;
+                    PropertyFlatten(model, modelProvider, innerProperties, propertyMap, internalProperty);
                     continue;
                 }
                 // safe flatten single property
-                else if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(internalProperty.Type, out var typeProvider) && typeProvider is ModelProvider modelProvider)
+                else
                 {
-                    var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
                     // only safe flatten single property
                     if (innerProperties.Count != 1)
                     {
@@ -344,7 +352,7 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    isSafeFlatten = SafeFlatten(model, propertyMap, internalProperty, modelProvider);
+                    isSafeFlatten = SafeFlatten(model, innerProperties, propertyMap, internalProperty, modelProvider);
                 }
             }
 
@@ -364,61 +372,53 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private bool PropertyFlatten(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
+        private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
         {
-            var isFlattened = false;
             var flattenedProperties = new List<(bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
-            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(internalProperty.Type, out var typeProvider)
-                && typeProvider is ModelProvider modelProvider)
+
+            foreach (var innerProperty in innerProperties)
             {
-                isFlattened = true;
-
-                foreach (var innerProperty in PropertyHelpers.GetAllProperties(modelProvider))
+                if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
                 {
-                    if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                    {
-                        continue;
-                    }
-                    UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
-                    // flatten the property to public and associate it with the internal property
-                    var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
-                    var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
-                    var flattenPropertyBody = new MethodPropertyBody(
-                        PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                        !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(modelProvider, internalProperty, innerProperty)
-                    );
-
-                    // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
-                    var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
-                    var flattenedProperty =
-                        new FlattenedPropertyProvider(
-                            innerProperty.Description,
-                            innerProperty.Modifiers,
-                            innerProperty.Type,
-                            flattenPropertyName,
-                            flattenPropertyBody,
-                            model,
-                            internalProperty,
-                            innerProperty,
-                            innerProperty.ExplicitInterface,
-                            ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
-                            innerProperty.IsRef,
-                            innerProperty.Attributes);
-
-                    if (propertyMap.TryGetValue(internalProperty, out var value))
-                    {
-                        value.Add(new(flattenedProperty, internalProperty));
-                    }
-                    else
-                    {
-                        propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(flattenedProperty, internalProperty) });
-                    }
+                    continue;
                 }
-                // make the internalized properties internal
-                internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
-            }
+                UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
+                // flatten the property to public and associate it with the internal property
+                var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
+                var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
+                var flattenPropertyBody = new MethodPropertyBody(
+                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty),
+                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty)
+                );
 
-            return isFlattened;
+                // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
+                var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
+                var flattenedProperty =
+                    new FlattenedPropertyProvider(
+                        innerProperty.Description,
+                        innerProperty.Modifiers,
+                        innerProperty.Type,
+                        flattenPropertyName,
+                        flattenPropertyBody,
+                        model,
+                        internalProperty,
+                        innerProperty,
+                        innerProperty.ExplicitInterface,
+                        ConstructFlattenPropertyWireInfo(internalProperty, innerProperty),
+                        innerProperty.IsRef,
+                        innerProperty.Attributes);
+
+                if (propertyMap.TryGetValue(internalProperty, out var value))
+                {
+                    value.Add(new(flattenedProperty, internalProperty));
+                }
+                else
+                {
+                    propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(flattenedProperty, internalProperty) });
+                }
+            }
+            // make the internalized properties internal
+            internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
         }
 
         private static PropertyWireInformation? ConstructFlattenPropertyWireInfo(PropertyProvider internalProperty, PropertyProvider innerProperty)
@@ -438,10 +438,10 @@ namespace Azure.Generator.Management.Visitors
                 innerPropertyWireInfo.IsHttpMetadata);
         }
 
-        private bool SafeFlatten(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
+        private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            var innerProperty = modelProvider.Properties.Single();
+            var innerProperty = innerProperties.Single();
             isFlattened = true;
 
             // flatten the single property to public and associate it with the internal property

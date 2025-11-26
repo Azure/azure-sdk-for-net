@@ -30,14 +30,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
         public EmployeesGetEmployeesCollectionResultOfT(Employees client, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -76,7 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEmployeesRequest(nextLink, _subscriptionId, _resourceGroupName, _fooName, _barName, _context) : _client.CreateGetEmployeesRequest(_subscriptionId, _resourceGroupName, _fooName, _barName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BarResource.GetEmployees");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Employees.GetEmployees");
             scope.Start();
             try
             {

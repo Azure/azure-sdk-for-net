@@ -4,14 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -45,6 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, featureName, data, null, null, cancellationToken).ConfigureAwait(false);
 
@@ -71,6 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, featureName, data, null, null, cancellationToken);
 
@@ -97,6 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudKubernetesClusterFeatureResource> GetAllAsync(CancellationToken cancellationToken)
        		=> GetAllAsync(null, null, cancellationToken);
 
@@ -123,6 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudKubernetesClusterFeatureResource> GetAll(CancellationToken cancellationToken)
 			=> GetAll(null, null, cancellationToken);
     }

@@ -50,7 +50,15 @@ public class BicepList<T> :
         {
             // in this case, the list is initialized as a literal list
             _kind = BicepValueKind.Literal;
-            _values = [.. values]; // Shallow clone their list
+            _values = new List<BicepValue<T>>(values.Count);
+            // assign values from input into our own list
+            for (int i = 0; i < values.Count; i++)
+            {
+                var item = new BicepValue<T>((BicepValueReference?)null);
+                SetSelfForItem(item, i);
+                item.Assign(values[i]);
+                _values.Add(item);
+            }
         }
     }
 
@@ -128,9 +136,7 @@ public class BicepList<T> :
             {
                 _kind = BicepValueKind.Literal;
             }
-            _values[index] = value;
-            // update the _self pointing the new item
-            SetSelfForItem(value, index);
+            _values[index].Assign(value);
         }
     }
 
@@ -160,11 +166,17 @@ public class BicepList<T> :
         {
             _kind = BicepValueKind.Literal;
         }
-        _values.Insert(index, item);
+        var insertedItem = new BicepValue<T>((BicepValueReference?)null);
+        _values.Insert(index, insertedItem);
+        insertedItem.Assign(item);
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
         {
-            SetSelfForItem(_values[i], i);
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
         }
     }
 
@@ -178,9 +190,11 @@ public class BicepList<T> :
         {
             _kind = BicepValueKind.Literal;
         }
-        _values.Add(item);
+        var addedItem = new BicepValue<T>((BicepValueReference?)null);
+        addedItem.Assign(item);
+        _values.Add(addedItem);
         // update the _self pointing the new item
-        SetSelfForItem(item, _values.Count - 1);
+        SetSelfForItem(addedItem, _values.Count - 1);
     }
 
     public void RemoveAt(int index)
@@ -197,9 +211,14 @@ public class BicepList<T> :
         _values.RemoveAt(index);
         // maintain the self reference for the removed item and remaining items
         RemoveSelfForItem(removed);
+        // update the _self for all items after the removed item
         for (int i = index; i < _values.Count; i++)
         {
-            SetSelfForItem(_values[i], i);
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
         }
     }
 
