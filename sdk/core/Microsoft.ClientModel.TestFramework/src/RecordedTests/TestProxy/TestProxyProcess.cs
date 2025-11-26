@@ -164,7 +164,6 @@ public class TestProxyProcess
                     {
                         FileName = s_dotNetExe,
                         Arguments = "tool list --local",
-                        WorkingDirectory = TestEnvironment.RepositoryRoot,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
@@ -174,10 +173,8 @@ public class TestProxyProcess
                     var standardOutput2 = process2!.StandardOutput.ReadToEnd();
                     Console.WriteLine($"dotnet tool list --local output:\n{standardOutput2}");
 
-                    throw new InvalidOperationException("An error occurred in the test proxy. You may need to install the test-proxy tool with the correct source " +
-                        "using 'dotnet tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json' or ensure " +
-                        "TestEnvironment.RepositoryRoot is set correctly so the test framework can restore local tools from the dotnet-tools.json manifest. " +
-                        $"The full error is: {error}" + Environment.NewLine +
+                    throw new InvalidOperationException("An error occurred in the test proxy. " +
+                        $"The full error is: {error} | The wd is {TestEnvironment.RepositoryRoot}" + Environment.NewLine +
                         $"list tool output: {standardOutput2}");
                 }
                 throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
@@ -293,49 +290,39 @@ public class TestProxyProcess
     {
         try
         {
-            var repoRoot = TestEnvironment.RepositoryRoot;
-            if (repoRoot != null)
+            var processInfo = new ProcessStartInfo
             {
-                var toolsJsonPath = Path.Combine(repoRoot, ".config", "dotnet-tools.json");
+                FileName = s_dotNetExe,
+                Arguments = "tool restore",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
 
-                if (File.Exists(toolsJsonPath))
+            using var process = Process.Start(processInfo);
+            if (process != null)
+            {
+                var completed = process.WaitForExit(6000);
+
+                if (!completed)
                 {
-                    var processInfo = new ProcessStartInfo
+                    try
+                    { process.Kill(); }
+                    catch { }
+                }
+                else if (process.ExitCode != 0)
+                {
+                    var errorOutput = process.StandardError.ReadToEnd();
+                    var standardOutput = process.StandardOutput.ReadToEnd();
+
+                    if (!string.IsNullOrEmpty(errorOutput) || !string.IsNullOrEmpty(standardOutput))
                     {
-                        FileName = s_dotNetExe,
-                        Arguments = "tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
-                        WorkingDirectory = repoRoot,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
-
-                    using var process = Process.Start(processInfo);
-                    if (process != null)
-                    {
-                        var completed = process.WaitForExit(6000);
-
-                        if (!completed)
-                        {
-                            try
-                            { process.Kill(); }
-                            catch { }
-                        }
-                        else if (process.ExitCode != 0)
-                        {
-                            var errorOutput = process.StandardError.ReadToEnd();
-                            var standardOutput = process.StandardOutput.ReadToEnd();
-
-                            if (!string.IsNullOrEmpty(errorOutput) || !string.IsNullOrEmpty(standardOutput))
-                            {
-                                TestContext.Progress.WriteLine($"dotnet tool restore failed (exit code {process.ExitCode}):");
-                                if (!string.IsNullOrEmpty(standardOutput))
-                                    TestContext.Progress.WriteLine($"stdout: {standardOutput}");
-                                if (!string.IsNullOrEmpty(errorOutput))
-                                    TestContext.Progress.WriteLine($"stderr: {errorOutput}");
-                            }
-                        }
+                        TestContext.Progress.WriteLine($"dotnet tool restore failed (exit code {process.ExitCode}):");
+                        if (!string.IsNullOrEmpty(standardOutput))
+                            TestContext.Progress.WriteLine($"stdout: {standardOutput}");
+                        if (!string.IsNullOrEmpty(errorOutput))
+                            TestContext.Progress.WriteLine($"stderr: {errorOutput}");
                     }
                 }
             }
