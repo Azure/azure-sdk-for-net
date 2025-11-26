@@ -29,13 +29,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="deidServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="deidServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public PrivateLinksGetPrivateLinksAsyncCollectionResultOfT(PrivateLinks client, Guid subscriptionId, string resourceGroupName, string deidServiceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinksRequest(nextLink, _subscriptionId, _resourceGroupName, _deidServiceName, _context) : _client.CreateGetPrivateLinksRequest(_subscriptionId, _resourceGroupName, _deidServiceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidServiceResource.GetPrivateLinks");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateLinks.GetPrivateLinks");
             scope.Start();
             try
             {
