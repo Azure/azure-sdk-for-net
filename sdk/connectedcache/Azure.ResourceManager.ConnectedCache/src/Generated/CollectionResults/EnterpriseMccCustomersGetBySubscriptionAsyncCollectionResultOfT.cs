@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConnectedCache
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EnterpriseMccCustomers.GetBySubscription");
             scope.Start();
             try
             {
