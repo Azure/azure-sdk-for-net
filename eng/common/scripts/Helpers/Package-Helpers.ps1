@@ -281,9 +281,9 @@ function Get-FullPackageName {
         $groupId = $PackageInfo.Group
         if ($groupId) {
             if ($UseColonSeparator) {
-                return "${groupId}:$($PackageInfo.ArtifactName)"
+                return "${groupId}:$($PackageInfo.Name)"
             }
-            return "${groupId}+$($PackageInfo.ArtifactName)"
+            return "${groupId}+$($PackageInfo.Name)"
         }
     }
     return $PackageInfo.Name

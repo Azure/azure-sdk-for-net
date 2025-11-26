@@ -230,6 +230,8 @@ function Get-PkgProperties {
         [string]$GroupId
     )
 
+    Write-Host "Get-PkgProperties called with PackageName: [$PackageName], ServiceDirectory: [$ServiceDirectory], GroupId: [$GroupId]"
+
     $allPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
     
     if ([string]::IsNullOrEmpty($GroupId)) {
@@ -238,8 +240,7 @@ function Get-PkgProperties {
     else {
         $pkgProps = $allPkgProps.Where({ 
             ($_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName) -and 
-            $_.PSObject.Properties.Name -contains "Group" -and 
-            $_.Group -eq $GroupId 
+            ($_.PSObject.Properties.Name -contains "Group" -and $_.Group -eq $GroupId)
         });
     }
 
@@ -250,7 +251,12 @@ function Get-PkgProperties {
         return $pkgProps[0]
     }
 
-    LogError "Failed to retrieve Properties for [$PackageName]"
+    if ([string]::IsNullOrEmpty($GroupId)) {
+        LogError "Failed to retrieve Properties for [$PackageName]"
+    }
+    else {
+        LogError "Failed to retrieve Properties for [$PackageName] with GroupId [$GroupId]. Ensure the package has a Group property matching the specified GroupId."
+    }
     return $null
 }
 
