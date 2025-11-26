@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Quota Report for volume. </summary>
-    public partial class NetAppVolumeQuotaReportListResult
+    /// <summary> Body for the list replications endpoint. If supplied, the body will be used as a filter for example to exclude deleted replications. If omitted, the endpoint returns all replications. </summary>
+    public partial class ListReplicationsContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,21 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        internal NetAppVolumeQuotaReportListResult()
+        /// <summary> Initializes a new instance of <see cref="ListReplicationsContent"/>. </summary>
+        public ListReplicationsContent()
         {
-            Value = new ChangeTrackingList<NetAppVolumeQuotaReport>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
-        /// <param name="value"> List of volume quota report records. </param>
+        /// <summary> Initializes a new instance of <see cref="ListReplicationsContent"/>. </summary>
+        /// <param name="excludeReplicationsFilter"> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListReplicationsContent(ExcludeReplicationsFilter? excludeReplicationsFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            ExcludeReplicationsFilter = excludeReplicationsFilter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume quota report records. </summary>
-        public IReadOnlyList<NetAppVolumeQuotaReport> Value { get; }
+        /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
+        public ExcludeReplicationsFilter? ExcludeReplicationsFilter { get; set; }
     }
 }
