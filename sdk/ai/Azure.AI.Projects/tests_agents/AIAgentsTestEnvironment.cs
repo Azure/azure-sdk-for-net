@@ -39,5 +39,8 @@ namespace Azure.AI.Projects.Tests
         public string COMPUTER_SCREENSHOTS => GetRecordedVariable("COMPUTER_SCREENSHOTS");
         public string IMAGE_GENERATION_DEPLOYMENT_NAME => GetRecordedVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
         public string AI_SEARCH_CONNECTION_NAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
+        public string BING_CONNECTION_NAME => GetRecordedVariable("BING_CONNECTION_NAME");
+        public string CUSTOM_BING_CONNECTION_NAME => GetRecordedVariable("CUSTOM_BING_CONNECTION_NAME");
+        public string BING_CUSTOM_SEARCH_INSTANCE_NAME => GetRecordedVariable("BING_CUSTOM_SEARCH_INSTANCE_NAME");
     }
 }
