@@ -47,6 +47,9 @@ interface JobResources {
     JobResource,
     PatchModel = JobResourceUpdateParameter,
     Parameters = {
+      /**
+       * Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value.
+       */
       @header("If-Match")
       `If-Match`?: string;
     }

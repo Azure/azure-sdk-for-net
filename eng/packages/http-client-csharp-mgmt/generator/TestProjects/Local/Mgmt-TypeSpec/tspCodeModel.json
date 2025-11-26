@@ -23507,6 +23507,7 @@
                     "kind": "header",
                     "name": "If-Match",
                     "serializedName": "If-Match",
+                    "doc": "Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value.",
                     "type": {
                       "$id": "1714",
                       "kind": "string",
@@ -23690,6 +23691,7 @@
                   "kind": "method",
                   "name": "If-Match",
                   "serializedName": "If-Match",
+                  "doc": "Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value.",
                   "type": {
                     "$id": "1725",
                     "kind": "string",
