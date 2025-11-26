@@ -24,17 +24,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="something"> something. </param>
         /// <param name="prop1"></param>
         /// <param name="nestedProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedProperty"/> is null. </exception>
-        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, NestedFooModel nestedProperty)
+        /// <param name="error"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/>, <paramref name="nestedProperty"/> or <paramref name="error"/> is null. </exception>
+        public FooProperties(ManagedServiceIdentity something, IEnumerable<string> prop1, NestedFooModel nestedProperty, ResponseError error)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(nestedProperty, nameof(nestedProperty));
+            Argument.AssertNotNull(error, nameof(error));
 
             Something = something;
             Prop1 = prop1.ToList();
             Prop2 = new ChangeTrackingList<int>();
             NestedProperty = nestedProperty;
+            Error = error;
         }
 
         /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
@@ -48,8 +51,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="nestedProperty"></param>
         /// <param name="optionalProperty"></param>
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
+        /// <param name="error"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, ETag? eTag, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             Something = something;
@@ -61,6 +65,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             NestedProperty = nestedProperty;
             OptionalProperty = optionalProperty;
             ETag = eTag;
+            Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -103,6 +108,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> ETag property for testing etag parameter name generation. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
+
+        /// <summary> Gets or sets the Error. </summary>
+        [WirePath("error")]
+        public ResponseError Error { get; set; }
 
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("nestedProperty.properties")]

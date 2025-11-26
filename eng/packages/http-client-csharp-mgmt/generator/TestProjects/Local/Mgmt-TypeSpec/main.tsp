@@ -14,6 +14,7 @@ import "./hcivm.tsp";
 import "./quota.tsp";
 import "./networkaction.tsp";
 import "./joo.tsp";
+import "./cloudError.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -24,21 +25,26 @@ using Azure.ResourceManager;
 })
 @versioned(Versions)
 @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
-namespace MgmtTypeSpec;
+namespace MgmtTypeSpec {
+  interface Operations extends Azure.ResourceManager.Operations {}
 
-interface Operations extends Azure.ResourceManager.Operations {}
+  /** The available API versions. */
+  enum Versions {
+    v2024_05_01: "2024-05-01",
+  }
 
-/** The available API versions. */
-enum Versions {
-  v2024_05_01: "2024-05-01",
+  @@clientLocation(Bars.get, "Bar");
+  @@clientLocation(Bars.update, "Bar");
+
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
+
+  @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
+  @@clientName(Employees.listByParent, "GetEmployees", "csharp");
+
+  @@alternateType(FooProperties.error, Azure.Generator.Management.ResponseErrorAlike, "csharp");
 }
-
-@@clientLocation(Bars.get, "Bar");
-@@clientLocation(Bars.update, "Bar");
-
-#suppress "deprecated"
-@@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
-@@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
-
-@@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
-@@clientName(Employees.listByParent, "GetEmployees", "csharp");
+namespace Azure.Generator.Management {
+  scalar ResponseErrorAlike;
+}

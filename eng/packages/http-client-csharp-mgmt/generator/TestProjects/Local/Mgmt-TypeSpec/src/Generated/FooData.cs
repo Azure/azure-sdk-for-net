@@ -25,15 +25,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="something"> something. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="error"> Gets or sets the Error. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
-        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/>, <paramref name="error"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, ResponseError error, FooProperties nestedPropertyProperties) : base(location)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(error, nameof(error));
             Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
-            Properties = new FooProperties(something, prop1, new NestedFooModel(nestedPropertyProperties, null));
+            Properties = new FooProperties(something, prop1, new NestedFooModel(nestedPropertyProperties, null), error);
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -200,6 +202,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new FooProperties();
                 }
                 Properties.ETag = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the Error. </summary>
+        [WirePath("properties.error")]
+        public ResponseError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.Error = value;
             }
         }
 

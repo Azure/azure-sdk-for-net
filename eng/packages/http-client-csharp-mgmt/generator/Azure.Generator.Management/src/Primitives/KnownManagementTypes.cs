@@ -54,6 +54,7 @@ namespace Azure.Generator.Management.Primitives
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
         {
             ["Azure.Core.armResourceType"] = typeof(ResourceType),
+            ["Azure.Generator.Management.ResponseErrorAlike"] = typeof(ResponseError),
         };
 
         public static bool TryGetPrimitiveType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType primitiveType)

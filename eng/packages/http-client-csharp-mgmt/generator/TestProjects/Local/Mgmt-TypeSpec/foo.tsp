@@ -1,6 +1,7 @@
 import "@azure-tools/typespec-client-generator-core";
 import "@azure-tools/typespec-liftr-base";
 import "@azure-tools/typespec-azure-core";
+import "./cloudError.tsp";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
@@ -47,6 +48,8 @@ model FooProperties {
 
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
+
+  error: CloudError;
 }
 
 model NestedFooModel {

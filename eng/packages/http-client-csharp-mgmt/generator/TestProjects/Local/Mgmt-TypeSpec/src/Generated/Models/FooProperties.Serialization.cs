@@ -100,6 +100,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            writer.WritePropertyName("error"u8);
+            ((IJsonModel<ResponseError>)Error).Write(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             NestedFooModel nestedProperty = default;
             SafeFlattenModel optionalProperty = default;
             ETag? eTag = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -250,6 +253,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("error"u8))
+                {
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -266,6 +274,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 nestedProperty,
                 optionalProperty,
                 eTag,
+                error,
                 additionalBinaryDataProperties);
         }
 
