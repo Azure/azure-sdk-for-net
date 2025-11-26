@@ -668,10 +668,6 @@ public abstract class RecordedTestBase : ClientTestBase
         {
             await Recording.DisposeAsync(save).ConfigureAwait(false);
 
-            if (Mode == RecordedTestMode.Record && save)
-            {
-                AssertTestProxyToolIsInstalled();
-            }
         }
 
         if (_proxy != null)
@@ -759,72 +755,6 @@ public abstract class RecordedTestBase : ClientTestBase
             return Task.Delay(playbackDelayMilliseconds.Value);
         }
         return Task.CompletedTask;
-    }
-
-    private void AssertTestProxyToolIsInstalled()
-    {
-        if (s_ranTestProxyValidation ||
-            !TestEnvironment.IsWindows ||
-            AssetsJsonPath == null)
-        {
-            return;
-        }
-
-        lock (s_syncLock)
-        {
-            if (s_ranTestProxyValidation)
-            {
-                return;
-            }
-
-            s_ranTestProxyValidation = true;
-
-            try
-            {
-                if (IsTestProxyToolInstalled())
-                {
-                    return;
-                }
-
-                string path = Path.Combine(
-                    TestEnvironment.RepositoryRoot ?? throw new InvalidOperationException("TestEnvironment.RepositoryRoot is null"),
-                    "eng",
-                    "scripts",
-                    "Install-TestProxyTool.ps1");
-
-                var processInfo = new ProcessStartInfo("pwsh.exe", path)
-                {
-                    UseShellExecute = true
-                };
-
-                var process = Process.Start(processInfo);
-
-                if (process != null)
-                {
-                    process.WaitForExit();
-                }
-            }
-            catch (Exception)
-            {
-                // Ignore
-            }
-        }
-    }
-
-    private bool IsTestProxyToolInstalled()
-    {
-        var processInfo = new ProcessStartInfo("dotnet.exe", "tool list --global")
-        {
-            RedirectStandardOutput = true,
-            UseShellExecute = false
-        };
-
-        var process = Process.Start(processInfo);
-        var output = process?.StandardOutput.ReadToEnd();
-
-        process?.WaitForExit();
-
-        return output != null && output.Contains("azure.sdk.tools.testproxy");
     }
 
     /// <summary>
