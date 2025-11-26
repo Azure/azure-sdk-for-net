@@ -42,14 +42,14 @@ internal partial class AzureChatClient : ChatClient
     /// <inheritdoc/>
     public override Task<ClientResult<ChatCompletion>> CompleteChatAsync(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
-        PostfixSwapMaxTokens(ref options);
+        RefreshMaxTokenSerialization(ref options);
         return base.CompleteChatAsync(messages, options, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override ClientResult<ChatCompletion> CompleteChat(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
-        PostfixSwapMaxTokens(ref options);
+        RefreshMaxTokenSerialization(ref options);
         return base.CompleteChat(messages, options, cancellationToken);
     }
 
@@ -65,7 +65,7 @@ internal partial class AzureChatClient : ChatClient
     public override AsyncCollectionResult<StreamingChatCompletionUpdate> CompleteChatStreamingAsync(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
         PostfixClearStreamOptions(messages, ref options);
-        PostfixSwapMaxTokens(ref options);
+        RefreshMaxTokenSerialization(ref options);
         return base.CompleteChatStreamingAsync(messages, options, cancellationToken);
     }
 
@@ -73,7 +73,7 @@ internal partial class AzureChatClient : ChatClient
     public override CollectionResult<StreamingChatCompletionUpdate> CompleteChatStreaming(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
         PostfixClearStreamOptions(messages, ref options);
-        PostfixSwapMaxTokens(ref options);
+        RefreshMaxTokenSerialization(ref options);
         return base.CompleteChatStreaming(messages, options, cancellationToken);
     }
 
@@ -86,16 +86,14 @@ internal partial class AzureChatClient : ChatClient
      */
     private static void PostfixClearStreamOptions(IEnumerable<ChatMessage> messages, ref ChatCompletionOptions options)
     {
-        if (AdditionalPropertyHelpers
-                .GetAdditionalPropertyAsListOfChatDataSource(options?.SerializedAdditionalRawData, "data_sources")?.Count > 0
+        if (options?.Patch.GetBytesOrDefaultEx("$.data_sources"u8) is not null
             || messages?.Any(
                 message => message?.Content?.Any(
                     contentPart => contentPart?.Kind == ChatMessageContentPartKind.Image) == true)
                 == true)
         {
             options ??= new();
-            options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-            AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "stream_options");
+            options.Patch.Remove("$.stream_options"u8);
         }
     }
 
@@ -110,56 +108,9 @@ internal partial class AzureChatClient : ChatClient
      *   - Otherwise, serialization of max_completion_tokens is blocked and an override serialization of the
      *     corresponding max_tokens value is established
      */
-    private static void PostfixSwapMaxTokens(ref ChatCompletionOptions options)
+    private static void RefreshMaxTokenSerialization(ref ChatCompletionOptions options)
     {
         options ??= new();
-        bool valueIsSet = options.MaxOutputTokenCount is not null;
-        bool oldPropertyBlocked = AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens");
-
-        if (valueIsSet)
-        {
-            if (!oldPropertyBlocked)
-            {
-                options.SerializedAdditionalRawData ??= new ChangeTrackingDictionary<string, BinaryData>();
-                AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_completion_tokens");
-
-                using MemoryStream stream = new();
-                using Utf8JsonWriter writer = new(stream);
-
-                if (options.MaxOutputTokenCount != null)
-                {
-                    writer.WriteNumberValue(options.MaxOutputTokenCount.Value);
-                }
-                else
-                {
-                    writer.WriteNullValue();
-                }
-
-                writer.Flush();
-
-                options.SerializedAdditionalRawData["max_tokens"] = BinaryData.FromBytes(stream.ToArray());
-            }
-            else
-            {
-                // Allow standard serialization to the new property to occur; remove overrides
-                if (options.SerializedAdditionalRawData.ContainsKey("max_completion_tokens"))
-                {
-                    options.SerializedAdditionalRawData.Remove("max_completion_tokens");
-                }
-            }
-        }
-        else
-        {
-            if (!AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens")
-                && options.SerializedAdditionalRawData?.ContainsKey("max_tokens") == true)
-            {
-                options.SerializedAdditionalRawData.Remove("max_tokens");
-            }
-            if (!AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.SerializedAdditionalRawData, "max_completion_tokens")
-                && options.SerializedAdditionalRawData?.ContainsKey("max_completion_tokens") == true)
-            {
-                options.SerializedAdditionalRawData.Remove("max_completion_tokens");
-            }
-        }
+        options.SetMaxTokenPatchValues();
     }
 }
