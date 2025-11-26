@@ -7,6 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    [CodeGenType("InnerErrorCode")]
+    [CodeGenModel("InnerErrorCode")]
     public readonly partial struct QuestionAnsweringAuthoringInnerErrorCode{}
 }
