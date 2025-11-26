@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppKeyVaultStatus : IEquatable<NetAppKeyVaultStatus>
     {
         private readonly string _value;
+        /// <summary> KeyVault connection created but not in use. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> KeyVault connection in use by SMB Volume. </summary>
+        private const string InUseValue = "InUse";
+        /// <summary> KeyVault connection Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Error with the KeyVault connection. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> KeyVault connection Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppKeyVaultStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedValue = "Created";
-        private const string InUseValue = "InUse";
-        private const string DeletedValue = "Deleted";
-        private const string ErrorValue = "Error";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> KeyVault connection created but not in use. </summary>
         public static NetAppKeyVaultStatus Created { get; } = new NetAppKeyVaultStatus(CreatedValue);
+
         /// <summary> KeyVault connection in use by SMB Volume. </summary>
         public static NetAppKeyVaultStatus InUse { get; } = new NetAppKeyVaultStatus(InUseValue);
+
         /// <summary> KeyVault connection Deleted. </summary>
         public static NetAppKeyVaultStatus Deleted { get; } = new NetAppKeyVaultStatus(DeletedValue);
+
         /// <summary> Error with the KeyVault connection. </summary>
         public static NetAppKeyVaultStatus Error { get; } = new NetAppKeyVaultStatus(ErrorValue);
+
         /// <summary> KeyVault connection Updating. </summary>
         public static NetAppKeyVaultStatus Updating { get; } = new NetAppKeyVaultStatus(UpdatingValue);
+
         /// <summary> Determines if two <see cref="NetAppKeyVaultStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppKeyVaultStatus left, NetAppKeyVaultStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppKeyVaultStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppKeyVaultStatus left, NetAppKeyVaultStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppKeyVaultStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppKeyVaultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppKeyVaultStatus(string value) => new NetAppKeyVaultStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppKeyVaultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppKeyVaultStatus?(string value) => value == null ? null : new NetAppKeyVaultStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppKeyVaultStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppKeyVaultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppApplicationType : IEquatable<NetAppApplicationType>
     {
         private readonly string _value;
+        private const string SAPHANAValue = "SAP-HANA";
+        private const string ORACLEValue = "ORACLE";
 
         /// <summary> Initializes a new instance of <see cref="NetAppApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppApplicationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SapHanaValue = "SAP-HANA";
-        private const string OracleValue = "ORACLE";
+        /// <summary> Gets the SAPHANA. </summary>
+        public static NetAppApplicationType SAPHANA { get; } = new NetAppApplicationType(SAPHANAValue);
 
-        /// <summary> SAP-HANA. </summary>
-        public static NetAppApplicationType SapHana { get; } = new NetAppApplicationType(SapHanaValue);
-        /// <summary> ORACLE. </summary>
-        public static NetAppApplicationType Oracle { get; } = new NetAppApplicationType(OracleValue);
+        /// <summary> Gets the ORACLE. </summary>
+        public static NetAppApplicationType ORACLE { get; } = new NetAppApplicationType(ORACLEValue);
+
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppApplicationType left, NetAppApplicationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppApplicationType left, NetAppApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppApplicationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppApplicationType(string value) => new NetAppApplicationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppApplicationType?(string value) => value == null ? null : new NetAppApplicationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppApplicationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppApplicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

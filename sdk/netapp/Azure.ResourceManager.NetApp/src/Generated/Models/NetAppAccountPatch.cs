@@ -7,102 +7,154 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> NetApp account patch resource. </summary>
-    public partial class NetAppAccountPatch : TrackedResourceData
+    public partial class NetAppAccountPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NetAppAccountPatch(AzureLocation location) : base(location)
+        public NetAppAccountPatch()
         {
-            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> NetApp Account properties. </param>
         /// <param name="identity"> The identity used for the resource. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
-        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppAccountPatch(string location, string id, string name, string @type, IDictionary<string, string> tags, AccountProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Location = location;
+            Id = id;
+            Name = name;
+            Type = @type;
+            Tags = tags;
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            ActiveDirectories = activeDirectories;
-            Encryption = encryption;
-            DisableShowmount = disableShowmount;
-            NfsV4IdDomain = nfsV4IdDomain;
-            MultiAdStatus = multiAdStatus;
-            LdapConfiguration = ldapConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/> for deserialization. </summary>
-        internal NetAppAccountPatch()
-        {
-        }
+        /// <summary> Resource location. </summary>
+        public string Location { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Resource name. </summary>
+        public string Name { get; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> NetApp Account properties. </summary>
+        internal AccountProperties Properties { get; set; }
 
         /// <summary> The identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Active Directories. </summary>
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
+        public IList<ActiveDirectory> ActiveDirectories
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                return Properties.ActiveDirectories;
+            }
+        }
+
         /// <summary> Encryption settings. </summary>
-        public NetAppAccountEncryption Encryption { get; set; }
+        public AccountEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
-        public bool? DisableShowmount { get; }
+        public bool? DisableShowmount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableShowmount;
+            }
+        }
+
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        public string NfsV4IdDomain { get; set; }
+        public string NfsV4IDDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NfsV4IDDomain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.NfsV4IDDomain = value;
+            }
+        }
+
         /// <summary> MultiAD Status for the account. </summary>
-        public MultiAdStatus? MultiAdStatus { get; }
+        public MultiAdStatus? MultiAdStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MultiAdStatus;
+            }
+        }
+
         /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfiguration LdapConfiguration { get; set; }
+        public LdapConfiguration LdapConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LdapConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.LdapConfiguration = value;
+            }
+        }
     }
 }

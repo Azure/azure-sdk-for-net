@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppAccountResource : IJsonModel<NetAppAccountData>
+    /// <summary></summary>
+    public partial class NetAppAccountResource : ArmResource, IJsonModel<NetAppAccountData>
     {
-        private static NetAppAccountData s_dataDeserializationInstance;
-        private static NetAppAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetAppAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppAccountData>)Data).Write(writer, options);
 
-        NetAppAccountData IJsonModel<NetAppAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppAccountData IJsonModel<NetAppAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppAccountData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppAccountData IPersistableModel<NetAppAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppAccountData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         internal NetAppRestoreStatus()
@@ -51,34 +22,39 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
-        /// <param name="isHealthy"> Restore health status. </param>
+        /// <param name="healthy"> Restore health status. </param>
         /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
-        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="mirrorState"> The status of the restore. </param>
         /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppRestoreStatus(bool? healthy, VolumeRestoreRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsHealthy = isHealthy;
+            Healthy = healthy;
             RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             UnhealthyReason = unhealthyReason;
             ErrorMessage = errorMessage;
             TotalTransferBytes = totalTransferBytes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Restore health status. </summary>
-        public bool? IsHealthy { get; }
+        public bool? Healthy { get; }
+
         /// <summary> Status of the restore SnapMirror relationship. </summary>
-        public NetAppRelationshipStatus? RelationshipStatus { get; }
-        /// <summary> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
+        public VolumeRestoreRelationshipStatus? RelationshipStatus { get; }
+
+        /// <summary> The status of the restore. </summary>
         public NetAppMirrorState? MirrorState { get; }
+
         /// <summary> Reason for the unhealthy restore relationship. </summary>
         public string UnhealthyReason { get; }
+
         /// <summary> Displays error message if the restore is in an error state. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> Displays the total bytes transferred. </summary>
         public long? TotalTransferBytes { get; }
     }
