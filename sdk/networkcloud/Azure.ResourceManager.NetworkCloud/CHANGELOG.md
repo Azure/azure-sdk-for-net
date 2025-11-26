@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2025-07-01-preview' to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ccd751d5bf9d1457426de7fe6d857a4cfe890cd5/specification/networkcloud/resource-manager/readme.md
 
 ## 1.3.0-beta.1 (2025-11-18)
 
