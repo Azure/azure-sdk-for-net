@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ public class BasicContainerRegistryTests
                 ContainerRegistryService registry =
                     new(nameof(registry), ContainerRegistryService.ResourceVersions.V2023_07_01)
                     {
+                        Name = BicepFunction.Take(BicepFunction.Interpolate($"registry{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}"), 50),
                         Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
                         IsAdminUserEnabled = false,
                         Tags = { { "displayName", "ContainerRegistry" } }
@@ -36,7 +38,6 @@ public class BasicContainerRegistryTests
 
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.containerregistry/container-registry/main.bicep")]
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/53862")]
     public async Task CreateContainerRegistry()
     {
         await using Trycep test = CreateContainerRegistryTest();
