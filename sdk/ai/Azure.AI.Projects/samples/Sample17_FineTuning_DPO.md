@@ -44,6 +44,8 @@ FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 
 ## Upload Training and Validation Files
 
+To fine-tune a model, we need to upload training and validation datasets. In the code below, we use the `UploadFile` method of `OpenAIFileClient`. This method returns an `OpenAIFile` object containing the file ID and `Status`, which indicates whether the file was successfully uploaded to the cloud. We use these to monitor the upload process in the `WaitForFileProcessing` and `WaitForFileProcessingAsync` helper methods.
+
 ### Async
 
 ```C# Snippet:AI_Projects_FineTuning_DPO_UploadFilesAsync
@@ -93,6 +95,8 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 In production, you should wait for files to complete processing before creating a fine-tuning job. See the helper methods in [Sample16_FineTuning_Supervised.md](Sample16_FineTuning_Supervised.md#wait-for-file-processing-helper) for `WaitForFileProcessingAsync` and `WaitForFileProcessing` implementations.
 
 ## Create DPO Fine-Tuning Job
+
+Once the files are processed, we can create a DPO fine-tuning job. DPO (Direct Preference Optimization) is a training method that learns from preference data, where each example contains a prompt with both preferred and non-preferred responses. The `FineTune` method accepts the model name, training file ID, and DPO-specific hyperparameters.
 
 > **Note:** If you need to pass additional parameters like `trainingType` (e.g., for OSS models), use the JSON construction approach with `BinaryContent` instead of the strongly-typed API. Recommended approach is to set trainingType. See [Sample19_FineTuning_OSS.md](Sample19_FineTuning_OSS.md) for an example.
 

@@ -32,6 +32,8 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 
 ## Upload File
 
+The `UploadFile` method uploads a file to the OpenAI Files API. This method returns an `OpenAIFile` object containing the file ID and `Status`, which indicates whether the file was successfully uploaded to the cloud. The `FileUploadPurpose` parameter specifies how the file will be used (e.g., `FineTune` for training data).
+
 ### Async
 
 ```C# Snippet:AI_Projects_Files_UploadFileAsync
@@ -56,6 +58,8 @@ Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
 
 ## Get File Metadata
 
+The `GetFile` method retrieves metadata about an uploaded file, including its filename, size, status, and creation timestamp. This is useful for checking the processing status of uploaded files before using them in fine-tuning jobs.
+
 ### Async
 
 ```C# Snippet:AI_Projects_Files_GetFileAsync
@@ -71,6 +75,8 @@ Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.Siz
 ```
 
 ## Download File Content
+
+The `DownloadFile` method downloads the content of an uploaded file as `BinaryData`. This can be used to retrieve and verify the contents of files stored in the OpenAI Files API.
 
 ### Async
 
@@ -88,6 +94,8 @@ Console.WriteLine($"Downloaded file content: {fileContent.ToMemory().Length} byt
 
 ## List Files
 
+The `GetFiles` method returns a collection of all files that have been uploaded to the OpenAI Files API. This is useful for managing and auditing your uploaded files.
+
 ### Async
 
 ```C# Snippet:AI_Projects_Files_ListFilesAsync
@@ -103,6 +111,8 @@ Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
 ```
 
 ## Delete File
+
+The `DeleteFile` method removes an uploaded file from the OpenAI Files API. It's good practice to clean up files after fine-tuning jobs complete to manage storage and costs.
 
 ### Async
 

@@ -17,6 +17,8 @@ Supported OpenAI models: gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini
 
 ## Create Clients
 
+To work with fine-tuning, we need to create several clients. The `AIProjectClient` is the main entry point, which provides access to `ProjectOpenAIClient`. From there, we obtain `OpenAIFileClient` for file operations and `FineTuningClient` for managing fine-tuning jobs.
+
 ### Asynchronous
 
 ```C# Snippet:AI_Projects_FineTuning_CreateClientsAsync
@@ -44,6 +46,8 @@ FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```
 
 ## Upload Files
+
+To fine-tune a model, we need to upload training and validation datasets. In the code below, we use the `UploadFile` method of `OpenAIFileClient`. This method returns an `OpenAIFile` object containing the file ID and `Status`, which indicates whether the file was successfully uploaded to the cloud. We use these to monitor the upload process in the `WaitForFileProcessing` and `WaitForFileProcessingAsync` helper methods.
 
 ### Asynchronous
 
@@ -91,7 +95,7 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
 ## Wait for File Processing Helper
 
-In production, you should wait for files to complete processing before creating a fine-tuning job. Here's a helper method you can use:
+After uploading files, they need to be processed before they can be used for fine-tuning. In production, you should wait for files to complete processing before creating a fine-tuning job. The helper methods below poll the file status until it reaches `Processed` or `Error` state. This ensures your training data is ready before starting the fine-tuning job.
 
 ```C# Snippet:AI_Projects_FineTuning_WaitForFileProcessingHelper
 /// <summary>
@@ -175,6 +179,8 @@ public static OpenAIFile WaitForFileProcessing(
 
 ## Create Fine-Tuning Job
 
+Once the files are processed, we can create a fine-tuning job. The `FineTune` method accepts the model name, training file ID, and optional parameters like hyperparameters and validation file. Setting `waitUntilCompleted: false` returns immediately after job creation, allowing you to monitor progress asynchronously.
+
 > **Note:** If you need to pass additional parameters like `trainingType` (e.g., for OSS models), use the JSON construction approach with `BinaryContent` instead of the strongly-typed API. Recommended approach is to set trainingType. See [Sample19_FineTuning_OSS.md](Sample19_FineTuning_OSS.md) for an example.
 
 ### Asynchronous
@@ -222,6 +228,8 @@ Console.WriteLine($"Status: {fineTuningJob.Status}");
 
 ## Retrieve Job
 
+After creating a fine-tuning job, you can retrieve its current status and details using the `GetJob` method. This returns a `FineTuningJob` object with information about the job's progress, including status, base model, training file, and timestamps.
+
 ### Asynchronous
 
 ```C# Snippet:AI_Projects_FineTuning_RetrieveJobAsync
@@ -241,6 +249,8 @@ Console.WriteLine($"Retrieved job: {retrievedJob.JobId}, Status: {retrievedJob.S
 ```
 
 ## List Jobs
+
+The `GetJobs` method returns a paginated list of all fine-tuning jobs in your project. This is useful for monitoring multiple jobs or finding a specific job by its properties.
 
 ### Asynchronous
 
@@ -266,6 +276,8 @@ foreach (FineTuningJob job in fineTuningClient.GetJobs())
 
 ## Pause Job
 
+You can pause a running fine-tuning job using `PauseFineTuningJob`. This temporarily stops the training process while preserving progress. Pausing is useful when you need to manage compute resources or review intermediate results before continuing.
+
 ### Asynchronous
 
 ```C# Snippet:AI_Projects_FineTuning_PauseJobAsync
@@ -288,6 +300,8 @@ Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
 
 ## Resume Job
 
+After pausing a job, you can resume it using `ResumeFineTuningJob`. The training will continue from where it left off, preserving all previous progress and checkpoints.
+
 ### Asynchronous
 
 ```C# Snippet:AI_Projects_FineTuning_ResumeJobAsync
@@ -309,6 +323,8 @@ Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}
 ```
 
 ## List Events
+
+The `GetEvents` method returns a stream of events for a fine-tuning job. Events include training progress updates, validation metrics, and any errors or warnings. This is useful for monitoring job progress and debugging issues.
 
 ### Asynchronous
 
@@ -333,6 +349,8 @@ foreach (FineTuningEvent evt in retrievedJob.GetEvents(new GetEventsOptions()))
 ```
 
 ## Wait for Terminal State
+
+Fine-tuning jobs run asynchronously and may take significant time to complete. The helper methods below poll the job status until it reaches a terminal state: `succeeded`, `failed`, or `cancelled`. This is essential for automation workflows that need to wait for job completion before proceeding.
 
 ### Asynchronous
 
@@ -440,6 +458,8 @@ public static bool IsTerminalState(FineTuningStatus status)
 
 ## List Checkpoints
 
+During training, the fine-tuning process saves checkpoints at regular intervals. The `GetCheckpoints` method returns these checkpoints, which can be used for model selection or rollback. Each checkpoint includes training metrics and the step number at which it was saved.
+
 ### Asynchronous
 
 ```C# Snippet:AI_Projects_FineTuning_ListCheckpointsAsync
@@ -464,6 +484,8 @@ foreach (FineTuningCheckpoint checkpoint in finalJob.GetCheckpoints(new GetCheck
 
 ## Cancel Job
 
+The `CancelAndUpdate` method cancels a running or paused fine-tuning job. Once cancelled, the job cannot be resumed. Any checkpoints created before cancellation are still available for use.
+
 ### Asynchronous
 
 ```C# Snippet:AI_Projects_FineTuning_CancelJobAsync
@@ -483,6 +505,8 @@ Console.WriteLine($"Successfully cancelled fine-tuning job: {retrievedJob.JobId}
 ```
 
 ## Cleanup Files
+
+After fine-tuning is complete, you can delete the training and validation files using `DeleteFile`. This helps manage storage costs and keeps your file list organized. Note that deleting files does not affect any fine-tuned models that were created using those files.
 
 ### Asynchronous
 
@@ -507,6 +531,8 @@ Console.WriteLine($"Deleted validation file: {validationFile.Id} (deleted: {vali
 ```
 
 ## Deploy Model
+
+Once a fine-tuning job succeeds, you need to deploy the resulting model before it can be used for inference. Deployment is done through Azure Resource Manager using the `Azure.ResourceManager.CognitiveServices` package. The deployment creates an endpoint where you can send inference requests to your fine-tuned model.
 
 ### Asynchronous
 
@@ -613,6 +639,8 @@ Console.WriteLine($"Deployment '{deploymentName}' completed successfully");
 ```
 
 ## Inference with Fine-Tuned Model
+
+After deploying your fine-tuned model, you can use it for inference. The `GetProjectResponsesClientForModel` method creates a client configured for your specific deployment. You can then send prompts and receive responses from your customized model, which should reflect the patterns learned from your training data.
 
 ### Asynchronous
 
