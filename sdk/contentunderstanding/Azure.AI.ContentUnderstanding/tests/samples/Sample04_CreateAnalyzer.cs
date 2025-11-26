@@ -115,22 +115,102 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingCreateAnalyzer
+            Assert.IsNotNull(analyzerId, "Analyzer ID should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(analyzerId), "Analyzer ID should not be empty");
+            Assert.IsNotNull(fieldSchema, "Field schema should not be null");
+            Assert.IsNotNull(customAnalyzer, "Custom analyzer should not be null");
             Assert.IsNotNull(operation, "Create analyzer operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
             Assert.IsNotNull(operation.GetRawResponse(), "Create analyzer operation should have a raw response");
-            TestContext.WriteLine("✅ Create analyzer operation properties verified");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+            Console.WriteLine("✅ Create analyzer operation properties verified");
+
             Assert.IsNotNull(result, "Analyzer result should not be null");
+            Console.WriteLine($"✅ Analyzer '{analyzerId}' created successfully");
+
+            // Verify base analyzer
             Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
             Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
+            Console.WriteLine($"✅ Base analyzer ID verified: {result.BaseAnalyzerId}");
+
+            // Verify analyzer config
             Assert.IsNotNull(result.Config, "Analyzer config should not be null");
+            Assert.IsTrue(result.Config.EnableFormula, "EnableFormula should be true");
+            Assert.IsTrue(result.Config.EnableLayout, "EnableLayout should be true");
+            Assert.IsTrue(result.Config.EnableOcr, "EnableOcr should be true");
+            Assert.IsTrue(result.Config.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
+            Assert.IsTrue(result.Config.ReturnDetails, "ReturnDetails should be true");
+            Console.WriteLine("✅ Analyzer config verified");
+
+            // Verify field schema
             Assert.IsNotNull(result.FieldSchema, "Field schema should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result.FieldSchema.Name), "Field schema name should not be empty");
+            Assert.AreEqual("company_schema", result.FieldSchema.Name, "Field schema name should match");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(result.FieldSchema.Description), "Field schema description should not be empty");
+            Console.WriteLine($"✅ Field schema verified: {result.FieldSchema.Name}");
+
+            // Verify field schema fields
             Assert.IsNotNull(result.FieldSchema.Fields, "Field schema fields should not be null");
             Assert.AreEqual(4, result.FieldSchema.Fields.Count, "Should have 4 custom fields");
+            Console.WriteLine($"✅ Field schema contains {result.FieldSchema.Fields.Count} fields");
+
+            // Verify company_name field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("company_name"), "Should contain company_name field");
+            var companyNameDef = result.FieldSchema.Fields["company_name"];
+            Assert.AreEqual(ContentFieldType.String, companyNameDef.Type, "company_name should be String type");
+            Assert.AreEqual(GenerationMethod.Extract, companyNameDef.Method, "company_name should use Extract method");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(companyNameDef.Description), "company_name should have description");
+            Console.WriteLine("  ✅ company_name field verified (String, Extract)");
+
+            // Verify total_amount field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("total_amount"), "Should contain total_amount field");
+            var totalAmountDef = result.FieldSchema.Fields["total_amount"];
+            Assert.AreEqual(ContentFieldType.Number, totalAmountDef.Type, "total_amount should be Number type");
+            Assert.AreEqual(GenerationMethod.Extract, totalAmountDef.Method, "total_amount should use Extract method");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(totalAmountDef.Description), "total_amount should have description");
+            Console.WriteLine("  ✅ total_amount field verified (Number, Extract)");
+
+            // Verify document_summary field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("document_summary"), "Should contain document_summary field");
+            var summaryDef = result.FieldSchema.Fields["document_summary"];
+            Assert.AreEqual(ContentFieldType.String, summaryDef.Type, "document_summary should be String type");
+            Assert.AreEqual(GenerationMethod.Generate, summaryDef.Method, "document_summary should use Generate method");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(summaryDef.Description), "document_summary should have description");
+            Console.WriteLine("  ✅ document_summary field verified (String, Generate)");
+
+            // Verify document_type field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("document_type"), "Should contain document_type field");
+            var documentTypeDef = result.FieldSchema.Fields["document_type"];
+            Assert.AreEqual(ContentFieldType.String, documentTypeDef.Type, "document_type should be String type");
+            Assert.AreEqual(GenerationMethod.Classify, documentTypeDef.Method, "document_type should use Classify method");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(documentTypeDef.Description), "document_type should have description");
+            Assert.IsNotNull(documentTypeDef.Enum, "document_type should have enum values");
+            Assert.AreEqual(5, documentTypeDef.Enum.Count, "document_type should have 5 enum values");
+            Assert.IsTrue(documentTypeDef.Enum.Contains("invoice"), "document_type enum should contain 'invoice'");
+            Assert.IsTrue(documentTypeDef.Enum.Contains("receipt"), "document_type enum should contain 'receipt'");
+            Assert.IsTrue(documentTypeDef.Enum.Contains("contract"), "document_type enum should contain 'contract'");
+            Assert.IsTrue(documentTypeDef.Enum.Contains("report"), "document_type enum should contain 'report'");
+            Assert.IsTrue(documentTypeDef.Enum.Contains("other"), "document_type enum should contain 'other'");
+            Console.WriteLine("  ✅ document_type field verified (String, Classify, 5 enum values)");
+
+            // Verify models
             Assert.IsNotNull(result.Models, "Models should not be null");
             Assert.IsTrue(result.Models.Count >= 2, "Should have at least 2 model mappings");
+            Assert.IsTrue(result.Models.ContainsKey("completion"), "Should contain 'completion' model mapping");
+            Assert.IsTrue(result.Models.ContainsKey("embedding"), "Should contain 'embedding' model mapping");
+            Assert.AreEqual("gpt-4.1", result.Models["completion"], "Completion model should be 'gpt-4.1'");
+            Assert.AreEqual("text-embedding-3-large", result.Models["embedding"], "Embedding model should be 'text-embedding-3-large'");
+            Console.WriteLine($"✅ Model mappings verified: {result.Models.Count} model(s)");
+
+            // Verify description
+            if (!string.IsNullOrWhiteSpace(result.Description))
+            {
+                Console.WriteLine($"✅ Analyzer description: {result.Description}");
+            }
+
+            Console.WriteLine("✅ All analyzer creation properties validated successfully");
             #endregion
 
             #region Snippet:ContentUnderstandingDeleteCreatedAnalyzer
@@ -321,88 +401,174 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #endregion
 
                 #region Assertion:ContentUnderstandingUseCustomAnalyzer
+                Assert.IsNotNull(documentUrl, "Document URL should not be null");
+                Assert.IsTrue(documentUrl.IsAbsoluteUri, "Document URL should be absolute");
                 Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
+                Assert.IsTrue(analyzeOperation.HasCompleted, "Operation should be completed");
+                Assert.IsTrue(analyzeOperation.HasValue, "Operation should have a value");
                 Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation should have a raw response");
-                TestContext.WriteLine("✅ Analyze operation properties verified");
+                Assert.IsTrue(analyzeOperation.GetRawResponse().Status >= 200 && analyzeOperation.GetRawResponse().Status < 300,
+                    $"Response status should be successful, but was {analyzeOperation.GetRawResponse().Status}");
+                Console.WriteLine("✅ Analyze operation properties verified");
+
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");
+                Assert.AreEqual(1, analyzeResult.Contents.Count, "Result should have exactly one content element");
+                Console.WriteLine($"✅ Analysis result contains {analyzeResult.Contents.Count} content(s)");
 
                 var documentContent = analyzeResult.Contents?.FirstOrDefault() as DocumentContent;
                 Assert.IsNotNull(documentContent, "Content should be DocumentContent");
                 Assert.IsNotNull(documentContent!.Fields, "Document content should have fields");
+                Console.WriteLine($"✅ Document content has {documentContent.Fields.Count} field(s)");
 
-                // Verify field extraction - fields may or may not have values depending on the document
+                // Verify company_name field (Extract method)
                 if (documentContent.Fields.TryGetValue("company_name", out var companyNameFieldAssert))
                 {
+                    Console.WriteLine("✅ company_name field found");
                     Assert.IsTrue(companyNameFieldAssert is StringField, "company_name should be a StringField");
+
+                    if (companyNameFieldAssert is StringField cnf && !string.IsNullOrWhiteSpace(cnf.ValueString))
+                    {
+                        Console.WriteLine($"  Value: {cnf.ValueString}");
+                    }
+
                     if (companyNameFieldAssert.Confidence.HasValue)
                     {
                         Assert.IsTrue(companyNameFieldAssert.Confidence.Value >= 0 && companyNameFieldAssert.Confidence.Value <= 1,
-                            "company_name confidence should be between 0 and 1");
+                            $"company_name confidence should be between 0 and 1, but was {companyNameFieldAssert.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {companyNameFieldAssert.Confidence.Value:F2}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(companyNameFieldAssert.Source))
+                    {
+                        Assert.IsTrue(companyNameFieldAssert.Source.StartsWith("D("),
+                            "Source should start with 'D(' for extracted fields");
+                        Console.WriteLine($"  Source: {companyNameFieldAssert.Source}");
                     }
 
                     if (companyNameFieldAssert.Spans != null && companyNameFieldAssert.Spans.Count > 0)
                     {
+                        Assert.IsTrue(companyNameFieldAssert.Spans.Count > 0, "Spans should not be empty when not null");
                         foreach (var span in companyNameFieldAssert.Spans)
                         {
-                            Assert.IsTrue(span.Offset >= 0, "Span offset should be >= 0");
-                            Assert.IsTrue(span.Length > 0, "Span length should be > 0");
+                            Assert.IsTrue(span.Offset >= 0, $"Span offset should be >= 0, but was {span.Offset}");
+                            Assert.IsTrue(span.Length > 0, $"Span length should be > 0, but was {span.Length}");
                         }
+                        Console.WriteLine($"  Spans: {companyNameFieldAssert.Spans.Count} span(s)");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ company_name field not found");
+                }
 
+                // Verify total_amount field (Extract method)
                 if (documentContent.Fields.TryGetValue("total_amount", out var totalAmountFieldAssert))
                 {
+                    Console.WriteLine("✅ total_amount field found");
                     Assert.IsTrue(totalAmountFieldAssert is NumberField, "total_amount should be a NumberField");
-                    if (totalAmountFieldAssert.Confidence.HasValue)
-                    {
-                        Assert.IsTrue(totalAmountFieldAssert.Confidence.Value >= 0 && totalAmountFieldAssert.Confidence.Value <= 1,
-                            "total_amount confidence should be between 0 and 1");
-                    }
 
                     if (totalAmountFieldAssert is NumberField nfAssert && nfAssert.ValueNumber.HasValue)
                     {
-                        Assert.IsTrue(nfAssert.ValueNumber.Value >= 0, "total_amount should be >= 0");
+                        Assert.IsTrue(nfAssert.ValueNumber.Value >= 0, $"total_amount should be >= 0, but was {nfAssert.ValueNumber.Value}");
+                        Console.WriteLine($"  Value: {nfAssert.ValueNumber.Value:F2}");
+                    }
+
+                    if (totalAmountFieldAssert.Confidence.HasValue)
+                    {
+                        Assert.IsTrue(totalAmountFieldAssert.Confidence.Value >= 0 && totalAmountFieldAssert.Confidence.Value <= 1,
+                            $"total_amount confidence should be between 0 and 1, but was {totalAmountFieldAssert.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {totalAmountFieldAssert.Confidence.Value:F2}");
+                    }
+
+                    if (!string.IsNullOrEmpty(totalAmountFieldAssert.Source))
+                    {
+                        Assert.IsTrue(totalAmountFieldAssert.Source.StartsWith("D("),
+                            "Source should start with 'D(' for extracted fields");
+                        Console.WriteLine($"  Source: {totalAmountFieldAssert.Source}");
                     }
 
                     if (totalAmountFieldAssert.Spans != null && totalAmountFieldAssert.Spans.Count > 0)
                     {
+                        Assert.IsTrue(totalAmountFieldAssert.Spans.Count > 0, "Spans should not be empty when not null");
                         foreach (var span in totalAmountFieldAssert.Spans)
                         {
-                            Assert.IsTrue(span.Offset >= 0, "Span offset should be >= 0");
-                            Assert.IsTrue(span.Length > 0, "Span length should be > 0");
+                            Assert.IsTrue(span.Offset >= 0, $"Span offset should be >= 0, but was {span.Offset}");
+                            Assert.IsTrue(span.Length > 0, $"Span length should be > 0, but was {span.Length}");
                         }
+                        Console.WriteLine($"  Spans: {totalAmountFieldAssert.Spans.Count} span(s)");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ total_amount field not found");
+                }
 
+                // Verify document_summary field (Generate method)
                 if (documentContent.Fields.TryGetValue("document_summary", out var summaryFieldAssert))
                 {
+                    Console.WriteLine("✅ document_summary field found");
                     Assert.IsTrue(summaryFieldAssert is StringField, "document_summary should be a StringField");
+
+                    if (summaryFieldAssert is StringField dsf && !string.IsNullOrWhiteSpace(dsf.ValueString))
+                    {
+                        Assert.IsTrue(dsf.ValueString.Length > 0, "document_summary should not be empty when present");
+                        Console.WriteLine($"  Value: {dsf.ValueString.Substring(0, Math.Min(100, dsf.ValueString.Length))}...");
+                    }
+
                     if (summaryFieldAssert.Confidence.HasValue)
                     {
                         Assert.IsTrue(summaryFieldAssert.Confidence.Value >= 0 && summaryFieldAssert.Confidence.Value <= 1,
-                            "document_summary confidence should be between 0 and 1");
+                            $"document_summary confidence should be between 0 and 1, but was {summaryFieldAssert.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {summaryFieldAssert.Confidence.Value:F2}");
+                    }
+
+                    // Note: Generated fields may not have source or spans
+                    if (!string.IsNullOrEmpty(summaryFieldAssert.Source))
+                    {
+                        Console.WriteLine($"  Source: {summaryFieldAssert.Source}");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ document_summary field not found");
+                }
 
+                // Verify document_type field (Classify method)
                 if (documentContent.Fields.TryGetValue("document_type", out var documentTypeFieldAssert))
                 {
+                    Console.WriteLine("✅ document_type field found");
                     Assert.IsTrue(documentTypeFieldAssert is StringField, "document_type should be a StringField");
+
                     if (documentTypeFieldAssert.Confidence.HasValue)
                     {
                         Assert.IsTrue(documentTypeFieldAssert.Confidence.Value >= 0 && documentTypeFieldAssert.Confidence.Value <= 1,
-                            "document_type confidence should be between 0 and 1");
+                            $"document_type confidence should be between 0 and 1, but was {documentTypeFieldAssert.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {documentTypeFieldAssert.Confidence.Value:F2}");
                     }
 
                     // Verify the classified value is one of the predefined enum values if present
-                    if (documentTypeFieldAssert is StringField sfAssert && !string.IsNullOrEmpty(sfAssert.ValueString))
+                    if (documentTypeFieldAssert is StringField sfAssert && !string.IsNullOrWhiteSpace(sfAssert.ValueString))
                     {
                         var validTypes = new[] { "invoice", "receipt", "contract", "report", "other" };
                         Assert.IsTrue(validTypes.Contains(sfAssert.ValueString),
                             $"document_type should be one of the predefined values, but got: {sfAssert.ValueString}");
+                        Console.WriteLine($"  Value: {sfAssert.ValueString}");
+                    }
+
+                    // Note: Classified fields may not have source or spans
+                    if (!string.IsNullOrEmpty(documentTypeFieldAssert.Source))
+                    {
+                        Console.WriteLine($"  Source: {documentTypeFieldAssert.Source}");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ document_type field not found");
+                }
+
+                Console.WriteLine("✅ All custom analyzer usage properties validated successfully");
                 #endregion
 
                 #region Snippet:ContentUnderstandingDeleteAnalyzerCleanup

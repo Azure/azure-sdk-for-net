@@ -111,59 +111,185 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 #endregion
 
                 #region Assertion:ContentUnderstandingUpdateAnalyzer
-                // Verify initial analyzer was retrieved successfully
+                // ========== Verify Initial Analyzer Retrieval ==========
                 Assert.IsNotNull(currentAnalyzer, "Current analyzer response should not be null");
+                Assert.IsTrue(currentAnalyzer.HasValue, "Current analyzer response should have a value");
                 Assert.IsNotNull(currentAnalyzer.Value, "Current analyzer value should not be null");
+                Console.WriteLine("✅ Initial analyzer retrieved successfully");
+
+                // Verify raw response
+                var currentRawResponse = currentAnalyzer.GetRawResponse();
+                Assert.IsNotNull(currentRawResponse, "Current analyzer raw response should not be null");
+                Assert.AreEqual(200, currentRawResponse.Status, "Response status should be 200");
+                Console.WriteLine($"✅ Get current analyzer response status: {currentRawResponse.Status}");
+
+                // Verify initial description
+                Assert.IsNotNull(currentAnalyzer.Value.Description, "Initial description should not be null");
                 Assert.AreEqual("Initial description", currentAnalyzer.Value.Description,
                     "Initial description should match");
+                Console.WriteLine($"✅ Initial description verified: '{currentAnalyzer.Value.Description}'");
+
+                // Verify initial base analyzer ID
+                Assert.IsNotNull(currentAnalyzer.Value.BaseAnalyzerId, "Base analyzer ID should not be null");
+                Assert.AreEqual("prebuilt-document", currentAnalyzer.Value.BaseAnalyzerId,
+                    "Base analyzer ID should match");
+                Console.WriteLine($"✅ Base analyzer ID verified: {currentAnalyzer.Value.BaseAnalyzerId}");
+
+                // Verify initial tags
                 Assert.IsNotNull(currentAnalyzer.Value.Tags, "Initial tags should not be null");
+                Assert.AreEqual(2, currentAnalyzer.Value.Tags.Count,
+                    "Should have 2 initial tags");
+                Console.WriteLine($"✅ Initial tags count: {currentAnalyzer.Value.Tags.Count}");
+
                 Assert.IsTrue(currentAnalyzer.Value.Tags.ContainsKey("tag1"),
                     "Should contain tag1");
-                Assert.IsTrue(currentAnalyzer.Value.Tags.ContainsKey("tag2"),
-                    "Should contain tag2");
                 Assert.AreEqual("tag1_initial_value", currentAnalyzer.Value.Tags["tag1"],
                     "tag1 initial value should match");
+                Console.WriteLine($"  ✅ tag1 = '{currentAnalyzer.Value.Tags["tag1"]}'");
+
+                Assert.IsTrue(currentAnalyzer.Value.Tags.ContainsKey("tag2"),
+                    "Should contain tag2");
                 Assert.AreEqual("tag2_initial_value", currentAnalyzer.Value.Tags["tag2"],
                     "tag2 initial value should match");
+                Console.WriteLine($"  ✅ tag2 = '{currentAnalyzer.Value.Tags["tag2"]}'");
 
-                // Verify the updated analyzer was retrieved successfully
+                // ========== Verify Update Operation ==========
+                Assert.IsNotNull(updatedAnalyzer, "Updated analyzer object should not be null");
+                Assert.AreEqual(currentAnalyzer.Value.BaseAnalyzerId, updatedAnalyzer.BaseAnalyzerId,
+                    "Updated analyzer should preserve base analyzer ID");
+                Assert.AreEqual("Updated description", updatedAnalyzer.Description,
+                    "Updated analyzer should have new description");
+                Console.WriteLine("✅ Update analyzer object created with correct properties");
+
+                // ========== Verify Updated Analyzer Retrieval ==========
                 Assert.IsNotNull(updated, "Updated analyzer response should not be null");
+                Assert.IsTrue(updated.HasValue, "Updated analyzer response should have a value");
                 Assert.IsNotNull(updated.Value, "Updated analyzer value should not be null");
+                Console.WriteLine("✅ Updated analyzer retrieved successfully");
 
-                // Verify description was updated
+                // Verify raw response
+                var updatedRawResponse = updated.GetRawResponse();
+                Assert.IsNotNull(updatedRawResponse, "Updated analyzer raw response should not be null");
+                Assert.AreEqual(200, updatedRawResponse.Status, "Response status should be 200");
+                Console.WriteLine($"✅ Get updated analyzer response status: {updatedRawResponse.Status}");
+
+                // ========== Verify Description Update ==========
+                Assert.IsNotNull(updated.Value.Description, "Updated description should not be null");
                 Assert.AreEqual("Updated description", updated.Value.Description,
                     "Description should be updated");
+                Assert.AreNotEqual(currentAnalyzer.Value.Description, updated.Value.Description,
+                    "Description should be different from initial value");
+                Console.WriteLine($"✅ Description updated: '{currentAnalyzer.Value.Description}' → '{updated.Value.Description}'");
 
-                // Verify tags were updated correctly
+                // ========== Verify Base Analyzer ID Preserved ==========
+                Assert.IsNotNull(updated.Value.BaseAnalyzerId, "Base analyzer ID should not be null");
+                Assert.AreEqual("prebuilt-document", updated.Value.BaseAnalyzerId,
+                    "Base analyzer ID should be preserved");
+                Assert.AreEqual(currentAnalyzer.Value.BaseAnalyzerId, updated.Value.BaseAnalyzerId,
+                    "Base analyzer ID should remain unchanged");
+                Console.WriteLine($"✅ Base analyzer ID preserved: {updated.Value.BaseAnalyzerId}");
+
+                // ========== Verify Tags Update ==========
                 Assert.IsNotNull(updated.Value.Tags, "Updated tags should not be null");
+                Console.WriteLine($"✅ Updated tags count: {updated.Value.Tags.Count}");
 
-                // tag1 should be updated
+                // Verify tag1 was updated
                 Assert.IsTrue(updated.Value.Tags.ContainsKey("tag1"),
                     "Should still contain tag1");
                 Assert.AreEqual("tag1_updated_value", updated.Value.Tags["tag1"],
                     "tag1 should have updated value");
-
-                // tag2 should still exist but with empty string value
-                // Note: Setting a tag to empty string does not remove it, it just sets the value to empty
+                Assert.AreNotEqual(currentAnalyzer.Value.Tags["tag1"], updated.Value.Tags["tag1"],
+                    "tag1 value should be different from initial value");
+                Console.WriteLine($"  ✅ tag1 updated: '{currentAnalyzer.Value.Tags["tag1"]}' → '{updated.Value.Tags["tag1"]}'");
+                // Verify tag2 behavior (empty string value)
                 Assert.IsTrue(updated.Value.Tags.ContainsKey("tag2"),
                     "tag2 should still exist (empty string doesn't remove tags)");
+                Assert.IsNotNull(updated.Value.Tags["tag2"], "tag2 value should not be null");
                 Assert.AreEqual("", updated.Value.Tags["tag2"],
                     "tag2 should have empty string value");
-
-                // tag3 should be added
+                Assert.AreNotEqual(currentAnalyzer.Value.Tags["tag2"], updated.Value.Tags["tag2"],
+                    "tag2 value should be different from initial value");
+                Console.WriteLine($"  ✅ tag2 set to empty: '{currentAnalyzer.Value.Tags["tag2"]}' → '' (empty string)");
+                // Verify tag3 was added
                 Assert.IsTrue(updated.Value.Tags.ContainsKey("tag3"),
                     "Should contain new tag3");
                 Assert.AreEqual("tag3_value", updated.Value.Tags["tag3"],
                     "tag3 should have correct value");
+                Assert.IsFalse(currentAnalyzer.Value.Tags.ContainsKey("tag3"),
+                    "tag3 should not exist in initial analyzer");
+                Console.WriteLine($"  ✅ tag3 added: (new) → '{updated.Value.Tags["tag3"]}'");
 
-                // Verify base analyzer ID is preserved
-                Assert.AreEqual("prebuilt-document", updated.Value.BaseAnalyzerId,
-                    "Base analyzer ID should be preserved");
+                // Verify tag count (should be 3: tag1, tag2 with empty string, tag3)
+                Assert.AreEqual(3, updated.Value.Tags.Count,
+                    "Should have 3 tags after update (tag1 updated, tag2 set to empty, tag3 added)");
 
-                Console.WriteLine("\n✓ Update verification completed:");
-                Console.WriteLine($"  Description updated: Initial description → Updated description");
-                Console.WriteLine($"  Tags before: tag1={currentAnalyzer.Value.Tags["tag1"]}, tag2={currentAnalyzer.Value.Tags["tag2"]}");
-                Console.WriteLine($"  Tags after: tag1={updated.Value.Tags["tag1"]}, tag3={updated.Value.Tags["tag3"]} (tag2 removed)");
+                // ========== Verify Config Preservation ==========
+                if (currentAnalyzer.Value.Config != null)
+                {
+                    if (updated.Value.Config != null)
+                    {
+                        // Config properties should be preserved if not explicitly updated
+                        Console.WriteLine("✅ Config exists in updated analyzer");
+
+                        if (currentAnalyzer.Value.Config.ReturnDetails.HasValue &&
+                            updated.Value.Config.ReturnDetails.HasValue)
+                        {
+                            Console.WriteLine($"  ReturnDetails: {updated.Value.Config.ReturnDetails.Value}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("⚠️ Config not present in updated analyzer (may have been reset)");
+                    }
+                }
+
+                // ========== Verify Models Preservation ==========
+                if (currentAnalyzer.Value.Models != null && currentAnalyzer.Value.Models.Count > 0)
+                {
+                    if (updated.Value.Models != null)
+                    {
+                        Console.WriteLine($"✅ Models exist in updated analyzer: {updated.Value.Models.Count} model(s)");
+
+                        if (currentAnalyzer.Value.Models.ContainsKey("completion") &&
+                            updated.Value.Models.ContainsKey("completion"))
+                        {
+                            Assert.AreEqual(currentAnalyzer.Value.Models["completion"],
+                                updated.Value.Models["completion"],
+                                "Completion model should be preserved");
+                            Console.WriteLine($"  completion: {updated.Value.Models["completion"]}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("⚠️ Models not present in updated analyzer (may have been reset)");
+                    }
+                }
+
+                // ========== Summary ==========
+                Console.WriteLine("\n✅ Update verification completed successfully:");
+                Console.WriteLine($"  Analyzer ID: {analyzerId}");
+                Console.WriteLine($"  Description: '{currentAnalyzer.Value.Description}' → '{updated.Value.Description}'");
+                Console.WriteLine($"  Base Analyzer: {updated.Value.BaseAnalyzerId} (preserved)");
+                Console.WriteLine($"  Tags before update: {currentAnalyzer.Value.Tags.Count} tag(s)");
+                Console.WriteLine($"    - tag1: '{currentAnalyzer.Value.Tags["tag1"]}'");
+                Console.WriteLine($"    - tag2: '{currentAnalyzer.Value.Tags["tag2"]}'");
+                Console.WriteLine($"  Tags after update: {updated.Value.Tags.Count} tag(s)");
+                Console.WriteLine($"    - tag1: '{updated.Value.Tags["tag1"]}' (updated)");
+                Console.WriteLine($"    - tag2: '' (set to empty)");
+                Console.WriteLine($"    - tag3: '{updated.Value.Tags["tag3"]}' (added)");
+
+                // ========== Verify Changes Summary ==========
+                var changedProperties = new List<string>();
+                if (currentAnalyzer.Value.Description != updated.Value.Description)
+                    changedProperties.Add("Description");
+                if (currentAnalyzer.Value.Tags.Count != updated.Value.Tags.Count ||
+                    !currentAnalyzer.Value.Tags.SequenceEqual(updated.Value.Tags))
+                    changedProperties.Add("Tags");
+
+                Console.WriteLine($"  Properties changed: {string.Join(", ", changedProperties)}");
+                Console.WriteLine($"  Properties preserved: BaseAnalyzerId" +
+                    (updated.Value.Config != null ? ", Config" : "") +
+                    (updated.Value.Models != null && updated.Value.Models.Count > 0 ? ", Models" : ""));
                 #endregion
             }
             finally
