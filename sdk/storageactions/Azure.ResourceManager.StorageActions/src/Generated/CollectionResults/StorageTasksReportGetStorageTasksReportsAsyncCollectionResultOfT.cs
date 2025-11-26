@@ -33,13 +33,8 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="storageTaskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
         public StorageTasksReportGetStorageTasksReportsAsyncCollectionResultOfT(StorageTasksReport client, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -79,7 +74,7 @@ namespace Azure.ResourceManager.StorageActions
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTasksReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _filter, _context) : _client.CreateGetStorageTasksReportsRequest(_subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTasksReports");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasksReport.GetStorageTasksReports");
             scope.Start();
             try
             {
