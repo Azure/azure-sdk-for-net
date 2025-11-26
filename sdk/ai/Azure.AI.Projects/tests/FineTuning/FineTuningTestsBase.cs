@@ -46,8 +46,8 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
         return Path.Combine(testDirectory!, "sdk", "ai", "Azure.AI.Projects", "tests", "FineTuning", "data");
     }
 
-    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true)
-        => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
+    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, bool enableHttpLogging = false)
+        => GetConfiguredOptions(new AIProjectClientOptions(), instrument, enableHttpLogging);
 
     protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
     => GetConfiguredOptions(
@@ -58,7 +58,7 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
         },
         instrument);
 
-    private T GetConfiguredOptions<T>(T options, bool instrument)
+    private T GetConfiguredOptions<T>(T options, bool instrument, bool enableHttpLogging = false)
         where T : ClientPipelineOptions
     {
         options.AddPolicy(
@@ -71,6 +71,11 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
                 }
             }),
             PipelinePosition.PerCall);
+
+        if (enableHttpLogging)
+        {
+            options.AddPolicy(new Utils.HttpLoggingPolicy(), PipelinePosition.PerCall);
+        }
 
         return instrument ? InstrumentClientOptions(options) : options;
     }
@@ -88,9 +93,9 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
         return TestEnvironment.Credential;
     }
 
-    protected AIProjectClient GetTestClient()
+    protected AIProjectClient GetTestClient(bool enableHttpLogging = false)
     {
-        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions();
+        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(enableHttpLogging: enableHttpLogging);
         AuthenticationTokenProvider provider = TestEnvironment.Credential;
         return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECTENDPOINT), GetTestTokenProvider(), projectClientOptions));
     }
@@ -155,7 +160,11 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
                     $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
             }
 
-            System.Threading.Thread.Sleep(pollInterval);
+            // Skip delay in Playback mode since responses are pre-recorded
+            if (Mode != RecordedTestMode.Playback)
+            {
+                System.Threading.Thread.Sleep(pollInterval);
+            }
             file = fileClient.GetFile(fileId);
             Console.WriteLine($"File {fileId} status: {file.Status}");
         }
@@ -201,7 +210,11 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
                     $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
             }
 
-            await System.Threading.Tasks.Task.Delay(pollInterval);
+            // Skip delay in Playback mode since responses are pre-recorded
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await System.Threading.Tasks.Task.Delay(pollInterval);
+            }
             file = await fileClient.GetFileAsync(fileId);
             Console.WriteLine($"File {fileId} status: {file.Status}");
         }
