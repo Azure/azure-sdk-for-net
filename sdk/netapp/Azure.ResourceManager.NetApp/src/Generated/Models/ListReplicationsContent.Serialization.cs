@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppBucketCredentialsExpiry : IUtf8JsonSerializable, IJsonModel<NetAppBucketCredentialsExpiry>
+    public partial class ListReplicationsContent : IUtf8JsonSerializable, IJsonModel<ListReplicationsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBucketCredentialsExpiry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListReplicationsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetAppBucketCredentialsExpiry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListReplicationsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(KeyPairExpiryDays))
+            if (Optional.IsDefined(ExcludeReplicationsFilter))
             {
-                writer.WritePropertyName("keyPairExpiryDays"u8);
-                writer.WriteNumberValue(KeyPairExpiryDays.Value);
+                writer.WritePropertyName("exclude"u8);
+                writer.WriteStringValue(ExcludeReplicationsFilter.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        NetAppBucketCredentialsExpiry IJsonModel<NetAppBucketCredentialsExpiry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ListReplicationsContent IJsonModel<ListReplicationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppBucketCredentialsExpiry(document.RootElement, options);
+            return DeserializeListReplicationsContent(document.RootElement, options);
         }
 
-        internal static NetAppBucketCredentialsExpiry DeserializeNetAppBucketCredentialsExpiry(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ListReplicationsContent DeserializeListReplicationsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            int? keyPairExpiryDays = default;
+            ExcludeReplicationsFilter? exclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyPairExpiryDays"u8))
+                if (property.NameEquals("exclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyPairExpiryDays = property.Value.GetInt32();
+                    exclude = new ExcludeReplicationsFilter(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppBucketCredentialsExpiry(keyPairExpiryDays, serializedAdditionalRawData);
+            return new ListReplicationsContent(exclude, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetAppBucketCredentialsExpiry>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ListReplicationsContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetAppBucketCredentialsExpiry IPersistableModel<NetAppBucketCredentialsExpiry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ListReplicationsContent IPersistableModel<ListReplicationsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketCredentialsExpiry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListReplicationsContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetAppBucketCredentialsExpiry(document.RootElement, options);
+                        return DeserializeListReplicationsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBucketCredentialsExpiry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListReplicationsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetAppBucketCredentialsExpiry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListReplicationsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
