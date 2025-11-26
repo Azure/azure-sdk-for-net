@@ -30,12 +30,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public EasmClientGetDiscoveryGroupRunsCollectionResult(EasmClient client, string groupName, string filter, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-
             _client = client;
             _groupName = groupName;
             _filter = filter;

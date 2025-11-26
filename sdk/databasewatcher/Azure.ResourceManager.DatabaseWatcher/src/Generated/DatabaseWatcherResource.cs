@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DatabaseWatcherResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DatabaseWatcherResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DatabaseWatcherResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DatabaseWatcherResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                     DatabaseWatcherData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DatabaseWatcherPatch patch = new DatabaseWatcherPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DatabaseWatcherResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DatabaseWatcherResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                     DatabaseWatcherData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DatabaseWatcherPatch patch = new DatabaseWatcherPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DatabaseWatcherResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DatabaseWatcherResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DatabaseWatcherResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DatabaseWatcherResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DatabaseWatcherResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DatabaseWatcherResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

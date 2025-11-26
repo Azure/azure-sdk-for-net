@@ -105,6 +105,8 @@
     <ProjectReference Include="..\Spector\http\versioning\returnTypeChangedFrom\v2\src\Versioning.ReturnTypeChangedFrom.V2.csproj" Aliases="ReturnTypeChangedFromV2" />
     <ProjectReference Include="..\Spector\http\versioning\typeChangedFrom\v1\src\Versioning.TypeChangedFrom.V1.csproj" Aliases="TypeChangedFromV1" />
     <ProjectReference Include="..\Spector\http\versioning\typeChangedFrom\v2\src\Versioning.TypeChangedFrom.V2.csproj" Aliases="TypeChangedFromV2" />
+    <ProjectReference Include="..\Spector\http\azure\versioning\previewVersion\v1\src\Versioning.PreviewVersion.V1.csproj" Aliases="PreviewVersionV1" />
+    <ProjectReference Include="..\Spector\http\azure\versioning\previewVersion\v2\src\Versioning.PreviewVersion.V2.csproj" Aliases="PreviewVersionV2" />
   </ItemGroup>
 
   <ItemGroup>
