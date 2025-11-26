@@ -187,7 +187,6 @@ Once the files are processed, we can create a fine-tuning job. The `FineTune` me
 
 ```C# Snippet:AI_Projects_FineTuning_CreateJobAsync
 // Create supervised fine-tuning job
-
 Console.WriteLine("Creating supervised fine-tuning job...");
 FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(
     modelDeploymentName,
