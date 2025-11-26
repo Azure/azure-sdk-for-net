@@ -12,6 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Compute.Skus" VersionOverride="1.0.0-alpha.20251125.1" />
+    <PackageReference Include="Azure.ResourceManager.Compute.Skus" VersionOverride="1.0.0-alpha.20251125.4" />
   </ItemGroup>
 </Project>
