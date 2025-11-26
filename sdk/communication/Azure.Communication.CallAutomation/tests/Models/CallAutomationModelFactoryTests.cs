@@ -58,37 +58,23 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var text = "Hello World";
             var format = "display";
             var confidence = 0.95;
-            var offset = 1000L;
-            var duration = 2000L;
-            var words = new List<WordData> { CallAutomationModelFactory.WordData("Hello", 1000, 500) };
+            ulong offset = 1000;
+            ulong duration = 2000;
+            var words = new List<WordData> { new WordData { Text = "Hello", Offset = 1000, Duration = 500 } };
             var participantRawID = "participant123";
-            var resultState = TranscriptionResultState.Final;
+            var resultState = "final";
 
             var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format, confidence, offset, duration, words, participantRawID, resultState);
 
             Assert.AreEqual(text, transcriptionData.Text);
             Assert.AreEqual(format, transcriptionData.Format);
             Assert.AreEqual(confidence, transcriptionData.Confidence);
-            Assert.AreEqual(TimeSpan.FromTicks(offset), transcriptionData.Offset);
-            Assert.AreEqual(TimeSpan.FromTicks(duration), transcriptionData.Duration);
+            Assert.AreEqual(offset, transcriptionData.Offset);
+            Assert.AreEqual(duration, transcriptionData.Duration);
             Assert.AreEqual(CommunicationIdentifier.FromRawId(participantRawID), transcriptionData.Participant);
-            Assert.AreEqual(resultState, transcriptionData.ResultState);
+            Assert.AreEqual(resultState, transcriptionData.ResultStatus);
             Assert.IsNotNull(transcriptionData.Words);
             Assert.AreEqual(1, transcriptionData.Words.Count());
-        }
-
-        [Test]
-        public void CallAutomationModelFactoryCanInstantiateWordData()
-        {
-            var text = "Hello";
-            var offset = 1000L;
-            var duration = 500L;
-
-            var wordData = CallAutomationModelFactory.WordData(text, offset, duration);
-
-            Assert.AreEqual(text, wordData.Text);
-            Assert.AreEqual(TimeSpan.FromTicks(offset), wordData.Offset);
-            Assert.AreEqual(TimeSpan.FromTicks(duration), wordData.Duration);
         }
 
         [Test]
@@ -384,17 +370,15 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var correlationId = "correlation123";
             var operationContext = "testContext";
             var resultInformation = CallAutomationModelFactory.ResultInformation(400, 1, "Failed");
-            var failedPlaySourceIndex = 0;
 
             var eventResult = CallAutomationModelFactory.PlayFailed(
-                callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
+                callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
             Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
             Assert.AreEqual(serverCallId, eventResult.ServerCallId);
             Assert.AreEqual(correlationId, eventResult.CorrelationId);
             Assert.AreEqual(operationContext, eventResult.OperationContext);
             Assert.AreEqual(resultInformation, eventResult.ResultInformation);
-            Assert.AreEqual(failedPlaySourceIndex, eventResult.FailedPlaySourceIndex);
         }
 
         [Test]
@@ -409,7 +393,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var operationContext = "testContext";
 
             var eventResult = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(
-                sequenceId, tone, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
+                resultInformation, sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
 
             Assert.AreEqual(sequenceId, eventResult.SequenceId);
             Assert.AreEqual(tone, eventResult.Tone);
@@ -427,13 +411,14 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var serverCallId = "server123";
             var correlationId = "correlation123";
             var recordingId = "recording123";
+            var operationContext = "testContext";
             var state = RecordingState.Active;
             var startDateTime = DateTimeOffset.UtcNow;
             var recordingKind = RecordingKind.AzureCommunicationServices;
             var resultInformation = CallAutomationModelFactory.ResultInformation(200, 0, "Success");
 
-            var eventResult = CallAutomationModelFactory.RecordingStateChanged(
-                callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime, recordingKind, resultInformation);
+            var eventResult = CallAutomationModelFactory.RecordingStateChanged(recordingId,
+                state, startDateTime, recordingKind, operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
 
             Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
             Assert.AreEqual(serverCallId, eventResult.ServerCallId);

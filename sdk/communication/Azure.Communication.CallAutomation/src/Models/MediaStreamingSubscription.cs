@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +12,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="id"> Gets or Sets subscription Id. </param>
         /// <param name="state"> Gets or Sets media streaming subscription state. </param>
         /// <param name="subscribedContentTypes"> Gets or Sets the subscribed media streaming content types. </param>
-        internal MediaStreamingSubscription(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes)
+        public MediaStreamingSubscription(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes)
         {
             Id = id;
             State = state;

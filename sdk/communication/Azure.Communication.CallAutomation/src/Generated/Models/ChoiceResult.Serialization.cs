@@ -19,7 +19,6 @@ namespace Azure.Communication.CallAutomation
             }
             string label = default;
             string recognizedPhrase = default;
-            double? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -32,17 +31,8 @@ namespace Azure.Communication.CallAutomation
                     recognizedPhrase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidence"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    confidence = property.Value.GetDouble();
-                    continue;
-                }
             }
-            return new ChoiceResult(label, recognizedPhrase, confidence);
+            return new ChoiceResult(label, recognizedPhrase);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

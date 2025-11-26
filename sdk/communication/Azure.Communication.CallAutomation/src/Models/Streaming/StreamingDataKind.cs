@@ -30,6 +30,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Dtmf data type
         /// </summary>
-        DtmfData,
+        DtmfData
     }
 }
