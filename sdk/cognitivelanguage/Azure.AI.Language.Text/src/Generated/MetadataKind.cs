@@ -39,6 +39,7 @@ namespace Azure.AI.Language.Text
         private const string CurrencyMetadataValue = "CurrencyMetadata";
         private const string NumericRangeMetadataValue = "NumericRangeMetadata";
         private const string TemporalSpanMetadataValue = "TemporalSpanMetadata";
+        private const string AddressMetadataValue = "AddressMetadata";
 
         /// <summary> Metadata for date-related values. </summary>
         public static MetadataKind DateMetadata { get; } = new MetadataKind(DateMetadataValue);
@@ -74,6 +75,8 @@ namespace Azure.AI.Language.Text
         public static MetadataKind NumericRangeMetadata { get; } = new MetadataKind(NumericRangeMetadataValue);
         /// <summary> Metadata for temporal span values. </summary>
         public static MetadataKind TemporalSpanMetadata { get; } = new MetadataKind(TemporalSpanMetadataValue);
+        /// <summary> Metadata for address-related values. </summary>
+        public static MetadataKind AddressMetadata { get; } = new MetadataKind(AddressMetadataValue);
         /// <summary> Determines if two <see cref="MetadataKind"/> values are the same. </summary>
         public static bool operator ==(MetadataKind left, MetadataKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetadataKind"/> values are not the same. </summary>
