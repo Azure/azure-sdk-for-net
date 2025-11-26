@@ -576,3 +576,25 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath) {
 
     return $projectProps
 }
+
+# Get the full package name based on packageInfo properties
+# Returns Group+ArtifactName if Group exists and has a value, otherwise returns Name
+# If UseColonSeparator switch is enabled, returns Group:ArtifactName format (colon separator)
+function Get-FullPackageName {
+    param (
+        [Parameter(Mandatory=$true)]
+        [PSCustomObject]$PackageInfo,
+        [switch]$UseColonSeparator
+    )
+    
+    if ($PackageInfo.PSObject.Members.Name -contains "Group") {
+        $groupId = $PackageInfo.Group
+        if ($groupId) {
+            if ($UseColonSeparator) {
+                return "${groupId}:$($PackageInfo.Name)"
+            }
+            return "${groupId}+$($PackageInfo.Name)"
+        }
+    }
+    return $PackageInfo.Name
+}
