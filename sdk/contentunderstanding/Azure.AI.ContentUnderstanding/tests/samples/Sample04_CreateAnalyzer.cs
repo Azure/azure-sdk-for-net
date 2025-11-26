@@ -405,7 +405,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
                 #endregion
 
-                #region Snippet:ContentUnderstandingDeleteAnalyzerCleanup
                 // Clean up: delete the analyzer (for testing purposes only)
                 // In production, analyzers are typically kept and reused
 #if SNIPPET
@@ -422,7 +421,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Ignore cleanup errors in tests
                 }
 #endif
-                #endregion
             }
             finally
             {
