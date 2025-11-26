@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     yield break;
                 }
-                VMHostsListResponse result = VMHostsListResponse.FromResponse(response);
+                VmHostsListResult result = VmHostsListResult.FromResponse(response);
                 yield return Page<DynatraceMonitorVmInfo>.FromValues((IReadOnlyList<DynatraceMonitorVmInfo>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

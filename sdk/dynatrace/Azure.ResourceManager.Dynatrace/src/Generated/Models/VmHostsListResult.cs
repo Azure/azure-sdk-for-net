@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Response of a list VM Host Operation. </summary>
-    internal partial class VMHostsListResponse
+    internal partial class VmHostsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VMHostsListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResult"/>. </summary>
         /// <param name="value"> The VMInfo items on this page. </param>
-        internal VMHostsListResponse(IEnumerable<DynatraceMonitorVmInfo> value)
+        internal VmHostsListResult(IEnumerable<DynatraceMonitorVmInfo> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMHostsListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResult"/>. </summary>
         /// <param name="value"> The VMInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMHostsListResponse(IList<DynatraceMonitorVmInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmHostsListResult(IList<DynatraceMonitorVmInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

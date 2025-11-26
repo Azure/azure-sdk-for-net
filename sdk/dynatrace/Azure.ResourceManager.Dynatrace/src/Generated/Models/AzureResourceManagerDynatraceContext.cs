@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VMHostsListResponse))]
+    [ModelReaderWriterBuildable(typeof(VmHostsListResult))]
     public partial class AzureResourceManagerDynatraceContext : ModelReaderWriterContext
     {
     }

@@ -15,16 +15,16 @@ using Azure.ResourceManager.Dynatrace;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Response of a list VM Host Operation. </summary>
-    internal partial class VMHostsListResponse : IJsonModel<VMHostsListResponse>
+    internal partial class VmHostsListResult : IJsonModel<VmHostsListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="VMHostsListResponse"/> for deserialization. </summary>
-        internal VMHostsListResponse()
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResult"/> for deserialization. </summary>
+        internal VmHostsListResult()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMHostsListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VmHostsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmHostsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VmHostsListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -71,24 +71,24 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMHostsListResponse IJsonModel<VMHostsListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VmHostsListResult IJsonModel<VmHostsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMHostsListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VmHostsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmHostsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VmHostsListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMHostsListResponse(document.RootElement, options);
+            return DeserializeVmHostsListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMHostsListResponse DeserializeVMHostsListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static VmHostsListResult DeserializeVmHostsListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,54 +123,54 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMHostsListResponse(value, nextLink, additionalBinaryDataProperties);
+            return new VmHostsListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMHostsListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VmHostsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmHostsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmHostsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMHostsListResponse IPersistableModel<VMHostsListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VmHostsListResult IPersistableModel<VmHostsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VMHostsListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VmHostsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMHostsListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmHostsListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMHostsListResponse(document.RootElement, options);
+                        return DeserializeVmHostsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMHostsListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmHostsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMHostsListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VmHostsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VMHostsListResponse"/> from. </param>
-        internal static VMHostsListResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VmHostsListResult"/> from. </param>
+        internal static VmHostsListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVMHostsListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeVmHostsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
