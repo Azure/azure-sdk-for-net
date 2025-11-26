@@ -14,7 +14,7 @@ param (
   [string]$PackageName,
   [string]$ServiceDirectory,
   [boolean]$ForRelease = $False,
-  [String]$GroupId
+  [String]$PackageInfoFilePath
 )
 Set-StrictMode -Version 3
 
@@ -27,6 +27,15 @@ if ($ChangeLogLocation -and $VersionString)
 }
 else
 {
+  # Load package info to extract GroupId if available
+  $GroupId = $null
+  if ($PackageInfoFilePath -and (Test-Path $PackageInfoFilePath)) {
+    $packageInfoJson = Get-Content $PackageInfoFilePath | ConvertFrom-Json
+    if ($packageInfoJson.PSObject.Properties.Name -contains "Group") {
+      $GroupId = $packageInfoJson.Group
+    }
+  }
+  
   $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory -GroupId $GroupId
   $validChangeLog = Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $ForRelease
 }
