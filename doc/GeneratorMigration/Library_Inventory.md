@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 395
-- Management Plane (MPG): 226
-  - Autorest/Swagger: 160
+- Total libraries: 394
+- Management Plane (MPG): 225
+  - Autorest/Swagger: 159
   - New Emitter (TypeSpec): 24
   - Old TypeSpec: 42
 - Data Plane (DPG): 169
   - Autorest/Swagger: 87
-  - New Emitter (TypeSpec): 16
-  - Old TypeSpec: 17
+  - New Emitter (TypeSpec): 17
+  - Old TypeSpec: 16
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 16 / 33 (48.5%)
+**Migration Status**: 17 / 33 (51.5%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -60,7 +60,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation |  |
 | openai | Azure.AI.OpenAI | ✅ |
-| purview | Azure.Analytics.Purview.DataMap |  |
+| purview | Azure.Analytics.Purview.DataMap | ✅ |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | translation | Azure.AI.Translation.Document |  |
 | translation | Azure.AI.Translation.Text | ✅ |
@@ -240,7 +240,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 160
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 159
 
 | Service | Library |
 | ------- | ------- |
@@ -313,7 +313,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 16
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
-| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers |
 | healthbot | Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
