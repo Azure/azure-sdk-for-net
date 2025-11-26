@@ -138,32 +138,27 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = new MockableArmClientProvider(_resources);
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (scope != ResourceScope.Extension &&
-                    (resourcesInScope.Count > 0 || resourceMethods.Count > 0 || nonResourceMethods.Count > 0))
+                if (scope != ResourceScope.Extension)
                 {
-                    var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
-                    mockableResources.Add(scope, mockableExtension);
+                    var mockableExtension = MockableResourceProvider.TryCreate(scope, resourcesInScope, resourceMethods, nonResourceMethods);
+                    if (mockableExtension != null)
+                    {
+                        mockableResources.Add(scope, mockableExtension);
+                    }
                 }
             }
 
             _mockableResourcesByScopeDict = mockableResources;
-            // Only include mockable resources that have methods
             var allMockableResources = new List<MockableResourceProvider>();
-            if (mockableArmClientResource.Methods.Count > 0)
+            if (mockableArmClientResource != null)
             {
                 allMockableResources.Add(mockableArmClientResource);
             }
-            foreach (var mockableResource in mockableResources.Values)
-            {
-                if (mockableResource.Methods.Count > 0)
-                {
-                    allMockableResources.Add(mockableResource);
-                }
-            }
+            allMockableResources.AddRange(mockableResources.Values);
             _mockableResources = allMockableResources;
             _extensionProvider = new ExtensionProvider(_mockableResources);
 
