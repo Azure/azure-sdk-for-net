@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
-    /// <summary> Unknown version of StorageClassTypeProperties. </summary>
     internal partial class UnknownStorageClassTypeProperties : StorageClassTypeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageClassTypeProperties"/>. </summary>
         /// <param name="type"> Type of the storage class. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageClassTypeProperties"/> for deserialization. </summary>
-        internal UnknownStorageClassTypeProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownStorageClassTypeProperties(StorageClassType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

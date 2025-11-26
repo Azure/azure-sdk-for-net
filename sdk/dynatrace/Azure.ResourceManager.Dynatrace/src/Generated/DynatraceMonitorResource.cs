@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.Dynatrace
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<DynatraceMonitorResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<DynatraceMonitorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.Dynatrace
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<DynatraceMonitorResource> result = Update(patch, cancellationToken);
+                    Response<DynatraceMonitorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.Dynatrace
                     DynatraceMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DynatraceMonitorPatch patch = new DynatraceMonitorPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<DynatraceMonitorResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<DynatraceMonitorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.Dynatrace
                     DynatraceMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DynatraceMonitorPatch patch = new DynatraceMonitorPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<DynatraceMonitorResource> result = Update(patch, cancellationToken);
+                    Response<DynatraceMonitorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.Dynatrace
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<DynatraceMonitorResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<DynatraceMonitorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Dynatrace
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<DynatraceMonitorResource> result = Update(patch, cancellationToken);
+                    Response<DynatraceMonitorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

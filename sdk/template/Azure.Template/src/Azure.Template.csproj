@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Template client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation Template for Azure Data Plane</AssemblyTitle>
+    <Description>Azure Widget Analytics client library for .NET.</Description>
+    <AssemblyTitle>Azure Widget Analytics client library for .NET</AssemblyTitle>
     <Version>1.0.3-beta.20</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

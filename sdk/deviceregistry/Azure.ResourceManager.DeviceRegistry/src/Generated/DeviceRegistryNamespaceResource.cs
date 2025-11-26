@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DeviceRegistryNamespacePatch patch = new DeviceRegistryNamespacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DeviceRegistryNamespacePatch patch = new DeviceRegistryNamespacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

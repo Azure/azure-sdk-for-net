@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.Dynatrace
             return subscriptionResource.GetCachedClient(client => new MockableDynatraceSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="DynatraceMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DynatraceMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceArmClient.GetDynatraceMonitoredSubscriptionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -50,7 +56,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceArmClient(client).GetDynatraceMonitoredSubscriptionResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DynatraceTagRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DynatraceTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceArmClient.GetDynatraceTagRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -62,7 +74,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceArmClient(client).GetDynatraceTagRuleResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DynatraceMonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DynatraceMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceArmClient.GetDynatraceMonitorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -74,7 +92,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceArmClient(client).GetDynatraceMonitorResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DynatraceSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DynatraceSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceArmClient.GetDynatraceSingleSignOnResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -86,7 +110,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceArmClient(client).GetDynatraceSingleSignOnResource(id);
         }
 
-        /// <summary> Gets a collection of DynatraceMonitors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of DynatraceMonitors in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetDynatraceMonitors()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DynatraceMonitors and their operations over a DynatraceMonitorResource. </returns>
@@ -97,7 +127,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetDynatraceMonitors();
         }
 
-        /// <summary> Get a MonitorResource. </summary>
+        /// <summary>
+        /// Get a MonitorResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetDynatraceMonitorAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,7 +146,13 @@ namespace Azure.ResourceManager.Dynatrace
             return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetDynatraceMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a MonitorResource. </summary>
+        /// <summary>
+        /// Get a MonitorResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceResourceGroupResource.GetDynatraceMonitor(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,7 +165,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetDynatraceMonitor(monitorName, cancellationToken);
         }
 
-        /// <summary> List all MonitorResource by subscriptionId. </summary>
+        /// <summary>
+        /// List all MonitorResource by subscriptionId
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetDynatraceMonitorsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -135,7 +183,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceSubscriptionResource(subscriptionResource).GetDynatraceMonitorsAsync(cancellationToken);
         }
 
-        /// <summary> List all MonitorResource by subscriptionId. </summary>
+        /// <summary>
+        /// List all MonitorResource by subscriptionId
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetDynatraceMonitors(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -147,7 +201,13 @@ namespace Azure.ResourceManager.Dynatrace
             return GetMockableDynatraceSubscriptionResource(subscriptionResource).GetDynatraceMonitors(cancellationToken);
         }
 
-        /// <summary> Get Marketplace SaaS resource details. </summary>
+        /// <summary>
+        /// Get Marketplace SaaS resource details
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsResultAsync(MarketplaceSaaSResourceDetailsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,7 +219,13 @@ namespace Azure.ResourceManager.Dynatrace
             return await GetMockableDynatraceSubscriptionResource(subscriptionResource).GetMarketplaceSaaSResourceDetailsResultAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get Marketplace SaaS resource details. </summary>
+        /// <summary>
+        /// Get Marketplace SaaS resource details
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDynatraceSubscriptionResource.GetMarketplaceSaaSResourceDetailsResult(MarketplaceSaaSResourceDetailsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
