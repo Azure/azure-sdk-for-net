@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="error"> The reason of not monitoring the subscription. </param>
         /// <param name="tagRules"> Properties for the Tag rules resource of a Monitor account. </param>
         /// <returns> A new <see cref="Models.DynatraceMonitoredSubscriptionStatus"/> instance for mocking. </returns>
-        public static DynatraceMonitoredSubscriptionStatus DynatraceMonitoredSubscriptionStatus(Guid subscriptionId = default, DynatraceMonitoringState? status = default, string error = default, MonitoringTagRulesProperties tagRules = default)
+        public static DynatraceMonitoredSubscriptionStatus DynatraceMonitoredSubscriptionStatus(Guid subscriptionId = default, DynatraceMonitoringState? status = default, string error = default, DynatraceTagRuleProperties tagRules = default)
         {
             return new DynatraceMonitoredSubscriptionStatus(subscriptionId, status, error, tagRules, additionalBinaryDataProperties: null);
         }
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
-        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(DynatraceMonitorResourceLogRules logRules = default, DynatraceMonitorResourceMetricRules metricRules = default, DynatraceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.DynatraceTagRuleProperties"/> instance for mocking. </returns>
+        public static DynatraceTagRuleProperties DynatraceTagRuleProperties(DynatraceMonitorResourceLogRules logRules = default, DynatraceMonitorResourceMetricRules metricRules = default, DynatraceProvisioningState? provisioningState = default)
         {
-            return new MonitoringTagRulesProperties(logRules, metricRules, provisioningState, additionalBinaryDataProperties: null);
+            return new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                logRules is null && metricRules is null && provisioningState is null ? default : new MonitoringTagRulesProperties(logRules, metricRules, provisioningState, null));
+                logRules is null && metricRules is null && provisioningState is null ? default : new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new MonitorProperties(
+                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new DynatraceMonitorProperties(
                     monitoringStatus,
                     marketplaceSubscriptionStatus,
                     marketplaceSaasAutoRenew,
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Request for getting log status for given monitored resource Ids. </summary>
         /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the log status. </param>
-        /// <returns> A new <see cref="Models.DynatraceMetricStatusContent"/> instance for mocking. </returns>
-        public static DynatraceMetricStatusContent DynatraceMetricStatusContent(IEnumerable<string> monitoredResourceIds = default)
+        /// <returns> A new <see cref="Models.DynatraceMonitoredResourceContent"/> instance for mocking. </returns>
+        public static DynatraceMonitoredResourceContent DynatraceMonitoredResourceContent(IEnumerable<string> monitoredResourceIds = default)
         {
             monitoredResourceIds ??= new ChangeTrackingList<string>();
 
-            return new DynatraceMetricStatusContent(monitoredResourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMonitoredResourceContent(monitoredResourceIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details of resource being monitored by Dynatrace monitor resource. </summary>
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Request for getting metric status for given monitored resource Ids. </summary>
         /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the metric status. </param>
-        /// <returns> A new <see cref="Models.MetricStatusContent"/> instance for mocking. </returns>
-        public static MetricStatusContent MetricStatusContent(IEnumerable<string> monitoredResourceIds = default)
+        /// <returns> A new <see cref="Models.DynatraceMetricStatusContent"/> instance for mocking. </returns>
+        public static DynatraceMetricStatusContent DynatraceMetricStatusContent(IEnumerable<string> monitoredResourceIds = default)
         {
             monitoredResourceIds ??= new ChangeTrackingList<string>();
 
-            return new MetricStatusContent(monitoredResourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMetricStatusContent(monitoredResourceIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response of get metrics status operation. </summary>

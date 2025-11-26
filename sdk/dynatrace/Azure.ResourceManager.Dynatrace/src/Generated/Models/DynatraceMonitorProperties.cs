@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Properties specific to the monitor resource. </summary>
-    internal partial class MonitorProperties
+    internal partial class DynatraceMonitorProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
-        public MonitorProperties()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorProperties"/>. </summary>
+        public DynatraceMonitorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorProperties"/>. </summary>
         /// <param name="monitoringStatus"> Status of the monitor. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="marketplaceSaasAutoRenew"> Marketplace resource autorenew flag. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorProperties(DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DynatraceMonitorProperties(DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringStatus = monitoringStatus;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;

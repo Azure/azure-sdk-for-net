@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MonitoringTagRulesProperties properties) : base(id, name, resourceType, systemData)
+        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DynatraceTagRuleProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal MonitoringTagRulesProperties Properties { get; set; }
+        internal DynatraceTagRuleProperties Properties { get; set; }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         public DynatraceMonitorResourceLogRules LogRules
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitoringTagRulesProperties();
+                    Properties = new DynatraceTagRuleProperties();
                 }
                 Properties.LogRules = value;
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitoringTagRulesProperties();
+                    Properties = new DynatraceTagRuleProperties();
                 }
                 Properties.MetricRules = value;
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="error"> The reason of not monitoring the subscription. </param>
         /// <param name="tagRules"> Properties for the Tag rules resource of a Monitor account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceMonitoredSubscriptionStatus(Guid subscriptionId, DynatraceMonitoringState? status, string error, MonitoringTagRulesProperties tagRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DynatraceMonitoredSubscriptionStatus(Guid subscriptionId, DynatraceMonitoringState? status, string error, DynatraceTagRuleProperties tagRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             Status = status;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public string Error { get; }
 
         /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
-        public MonitoringTagRulesProperties TagRules { get; }
+        public DynatraceTagRuleProperties TagRules { get; }
     }
 }

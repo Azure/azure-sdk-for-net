@@ -11,28 +11,28 @@ using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> Request for getting metric status for given monitored resource Ids. </summary>
-    public partial class MetricStatusContent
+    /// <summary> Request for getting log status for given monitored resource Ids. </summary>
+    public partial class DynatraceMonitoredResourceContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricStatusContent"/>. </summary>
-        public MetricStatusContent()
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredResourceContent"/>. </summary>
+        public DynatraceMonitoredResourceContent()
         {
             MonitoredResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricStatusContent"/>. </summary>
-        /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the metric status. </param>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredResourceContent"/>. </summary>
+        /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the log status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricStatusContent(IList<string> monitoredResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DynatraceMonitoredResourceContent(IList<string> monitoredResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoredResourceIds = monitoredResourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of azure resource Id of monitored resources for which we get the metric status. </summary>
+        /// <summary> List of azure resource Id of monitored resources for which we get the log status. </summary>
         public IList<string> MonitoredResourceIds { get; }
     }
 }

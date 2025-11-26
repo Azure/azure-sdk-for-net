@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
-    public partial class MonitoringTagRulesProperties
+    public partial class DynatraceTagRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
-        public MonitoringTagRulesProperties()
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleProperties"/>. </summary>
+        public DynatraceTagRuleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleProperties"/>. </summary>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesProperties(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DynatraceTagRuleProperties(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogRules = logRules;
             MetricRules = metricRules;

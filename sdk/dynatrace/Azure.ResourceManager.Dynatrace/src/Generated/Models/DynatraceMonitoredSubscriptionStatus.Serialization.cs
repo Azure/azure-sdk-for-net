@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Guid subscriptionId = default;
             DynatraceMonitoringState? status = default;
             string error = default;
-            MonitoringTagRulesProperties tagRules = default;
+            DynatraceTagRuleProperties tagRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    tagRules = MonitoringTagRulesProperties.DeserializeMonitoringTagRulesProperties(prop.Value, options);
+                    tagRules = DynatraceTagRuleProperties.DeserializeDynatraceTagRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

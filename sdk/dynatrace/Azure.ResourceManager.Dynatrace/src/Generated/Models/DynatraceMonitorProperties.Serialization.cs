@@ -14,11 +14,11 @@ using Azure.ResourceManager.Dynatrace;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Properties specific to the monitor resource. </summary>
-    internal partial class MonitorProperties : IJsonModel<MonitorProperties>
+    internal partial class DynatraceMonitorProperties : IJsonModel<DynatraceMonitorProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DynatraceMonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(MonitoringStatus))
             {
@@ -98,24 +98,24 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorProperties IJsonModel<MonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DynatraceMonitorProperties IJsonModel<DynatraceMonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitorProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DynatraceMonitorProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitorProperties(document.RootElement, options);
+            return DeserializeDynatraceMonitorProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DynatraceMonitorProperties DeserializeDynatraceMonitorProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitorProperties(
+            return new DynatraceMonitorProperties(
                 monitoringStatus,
                 marketplaceSubscriptionStatus,
                 marketplaceSaasAutoRenew,
@@ -233,43 +233,43 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DynatraceMonitorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorProperties IPersistableModel<MonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DynatraceMonitorProperties IPersistableModel<DynatraceMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DynatraceMonitorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitorProperties(document.RootElement, options);
+                        return DeserializeDynatraceMonitorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DynatraceMonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

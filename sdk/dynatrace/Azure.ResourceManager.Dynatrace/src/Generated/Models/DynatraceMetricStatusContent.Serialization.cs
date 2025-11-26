@@ -14,7 +14,7 @@ using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> Request for getting log status for given monitored resource Ids. </summary>
+    /// <summary> Request for getting metric status for given monitored resource Ids. </summary>
     public partial class DynatraceMetricStatusContent : IJsonModel<DynatraceMetricStatusContent>
     {
         /// <param name="writer"> The JSON writer. </param>

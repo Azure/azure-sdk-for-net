@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MonitoringTagRulesProperties properties = default;
+            DynatraceTagRuleProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = MonitoringTagRulesProperties.DeserializeMonitoringTagRulesProperties(prop.Value, options);
+                    properties = DynatraceTagRuleProperties.DeserializeDynatraceTagRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

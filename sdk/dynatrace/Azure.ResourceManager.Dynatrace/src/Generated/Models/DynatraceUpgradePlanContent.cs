@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> The billing plan properties for the upgrade plan call. </summary>
-    public partial class UpgradePlanContent
+    public partial class DynatraceUpgradePlanContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePlanContent"/>. </summary>
-        public UpgradePlanContent()
+        /// <summary> Initializes a new instance of <see cref="DynatraceUpgradePlanContent"/>. </summary>
+        public DynatraceUpgradePlanContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePlanContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceUpgradePlanContent"/>. </summary>
         /// <param name="planData"> The new Billing plan information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradePlanContent(DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DynatraceUpgradePlanContent(DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlanData = planData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

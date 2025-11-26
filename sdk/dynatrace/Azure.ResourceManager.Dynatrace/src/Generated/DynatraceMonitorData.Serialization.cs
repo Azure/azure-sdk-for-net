@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Dynatrace
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            MonitorProperties properties = default;
+            DynatraceMonitorProperties properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Dynatrace
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = MonitorProperties.DeserializeMonitorProperties(prop.Value, options);
+                    properties = DynatraceMonitorProperties.DeserializeDynatraceMonitorProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

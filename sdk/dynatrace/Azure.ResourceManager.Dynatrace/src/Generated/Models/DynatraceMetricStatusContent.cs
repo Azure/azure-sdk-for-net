@@ -11,7 +11,7 @@ using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    /// <summary> Request for getting log status for given monitored resource Ids. </summary>
+    /// <summary> Request for getting metric status for given monitored resource Ids. </summary>
     public partial class DynatraceMetricStatusContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMetricStatusContent"/>. </summary>
-        /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the log status. </param>
+        /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the metric status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DynatraceMetricStatusContent(IList<string> monitoredResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of azure resource Id of monitored resources for which we get the log status. </summary>
+        /// <summary> List of azure resource Id of monitored resources for which we get the metric status. </summary>
         public IList<string> MonitoredResourceIds { get; }
     }
 }

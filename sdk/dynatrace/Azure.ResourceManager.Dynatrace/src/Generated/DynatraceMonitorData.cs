@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal DynatraceMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, MonitorProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DynatraceMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DynatraceMonitorProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal MonitorProperties Properties { get; set; }
+        internal DynatraceMonitorProperties Properties { get; set; }
 
         /// <summary> Status of the monitor. </summary>
         public DynatraceMonitoringStatus? MonitoringStatus
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitorProperties();
+                    Properties = new DynatraceMonitorProperties();
                 }
                 Properties.MonitoringStatus = value.Value;
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitorProperties();
+                    Properties = new DynatraceMonitorProperties();
                 }
                 Properties.MarketplaceSubscriptionStatus = value.Value;
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitorProperties();
+                    Properties = new DynatraceMonitorProperties();
                 }
                 Properties.MarketplaceSaasAutoRenew = value.Value;
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitorProperties();
+                    Properties = new DynatraceMonitorProperties();
                 }
                 Properties.DynatraceEnvironmentProperties = value;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitorProperties();
+                    Properties = new DynatraceMonitorProperties();
                 }
                 Properties.UserInfo = value;
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 if (Properties is null)
                 {
-                    Properties = new MonitorProperties();
+                    Properties = new DynatraceMonitorProperties();
                 }
                 Properties.PlanData = value;
             }
