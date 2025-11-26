@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.TrustedSigning
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableTrustedSigningSubscriptionResource.GetTrustedSigningAccounts");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CodeSigningAccounts.GetBySubscription");
             scope.Start();
             try
             {

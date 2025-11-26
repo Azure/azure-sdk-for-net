@@ -32,13 +32,8 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="storageTaskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
         public StorageTaskAssignmentGetStorageTaskAssignmentsAsyncCollectionResultOfT(StorageTaskAssignment client, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -77,7 +72,7 @@ namespace Azure.ResourceManager.StorageActions
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTaskAssignmentsRequest(nextLink, _subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _context) : _client.CreateGetStorageTaskAssignmentsRequest(_subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTaskAssignments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskAssignment.GetStorageTaskAssignments");
             scope.Start();
             try
             {
