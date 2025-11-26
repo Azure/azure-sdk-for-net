@@ -37,14 +37,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="skip"></param>
         /// <param name="top"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public LocalRulestacksGetAppIdsAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -87,7 +81,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAppIdsRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _top, _context) : _client.CreateGetAppIdsRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestackResource.GetAppIds");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestacks.GetAppIds");
             scope.Start();
             try
             {

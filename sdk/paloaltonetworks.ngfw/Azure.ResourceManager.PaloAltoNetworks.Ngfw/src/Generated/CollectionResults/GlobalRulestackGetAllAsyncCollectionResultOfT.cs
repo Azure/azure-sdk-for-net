@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _context) : _client.CreateGetAllRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GlobalRulestackCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GlobalRulestack.GetAll");
             scope.Start();
             try
             {
