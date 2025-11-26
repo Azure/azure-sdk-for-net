@@ -35,10 +35,10 @@ namespace Azure.AI.Language.Text
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ActionContent))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(ActionContent, options);
+                writer.WriteObjectValue(Parameters, options);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Generator.Extensions;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
@@ -48,7 +50,7 @@ namespace Azure.Generator.Visitors
 
         protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
         {
-            if (ShouldSkip(constructor.EnclosingType))
+            if (ShouldSkipType(constructor.EnclosingType))
             {
                 return base.VisitConstructor(constructor);
             }
@@ -101,12 +103,12 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkip(method.EnclosingType))
+            if (ShouldSkipType(method.EnclosingType) || ShouldSkipMethod(method))
             {
                 return base.VisitMethod(method);
             }
 
-            if (method.IsProtocolMethod)
+            if (method.Kind == ScmMethodKind.Protocol)
             {
                 UpdateProtocolMethodsWithDistributedTracing(method);
             }
@@ -265,11 +267,18 @@ namespace Azure.Generator.Visitors
             return true;
         }
 
-        private static bool ShouldSkip(TypeProvider typeProvider)
+        private static bool ShouldSkipType(TypeProvider typeProvider)
         {
             return typeProvider is not ClientProvider ||
                 !typeProvider.CanonicalView.Properties
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+        }
+
+        private static bool ShouldSkipMethod(ScmMethodProvider method)
+        {
+            // Skip instrumentation for methods returning paging collection types
+            // as they have built-in instrumentation
+            return IsPagingMethod(method);
         }
 
         private static bool IsSubClientFactoryMethod(ScmMethodProvider method)
@@ -279,6 +288,19 @@ namespace Azure.Generator.Visitors
 
             return methodReturnType != null &&
                 clientProvider.SubClients.Any(subClient => methodReturnType.Equals(subClient.Type));
+        }
+
+        private static bool IsPagingMethod(ScmMethodProvider method)
+        {
+            var returnType = method.Signature.ReturnType;
+            if (returnType == null || !returnType.IsFrameworkType)
+            {
+                return false;
+            }
+
+            // Check if the return type is Pageable<T> or AsyncPageable<T>
+            return returnType.FrameworkType == typeof(Pageable<>) ||
+                   returnType.FrameworkType == typeof(AsyncPageable<>);
         }
     }
 }

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Dynatrace
 namespace: Azure.ResourceManager.Dynatrace
-require: https://github.com/Azure/azure-rest-api-specs/blob/df6a22e29f0eca5b4a89372eb66db94cb1659c0c/specification/dynatrace/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7eb817d513e6b2364a823d1f56db45d25fdca7b7/specification/dynatrace/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -54,7 +54,6 @@ rename-mapping:
   ProvisioningState: DynatraceProvisioningState
   SingleSignOnStates: DynatraceSingleSignOnState
   MonitorResource: DynatraceMonitor
-  AccountInfoSecure: DynatraceAccountCredentialsInfo
   AppServiceInfo: DynatraceOneAgentEnabledAppServiceInfo
   AppServiceInfo.resourceId: -|arm-id
   VMInfo: DynatraceMonitorVmInfo
@@ -93,5 +92,33 @@ rename-mapping:
   SendActivityLogsStatus: ActivityLogsSendingStatus
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
+  MetricsStatusResponse: DynatraceMetricsStatusResult
+  LogStatusRequest: DynatraceMetricStatusContent
+  MarketplaceSaaSResourceDetailsResponse: MarketplaceSaaSResourceDetailsResult
+  MarketplaceSaaSResourceDetailsResponse.marketplaceSaaSResourceId : -|arm-id
+  ConnectedResourcesCountResponse: ConnectedResourcesCountResult
+  Action: DynatraceAgentAction
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSubscriptionIdRequest.marketplaceSubscriptionId: -|uuid
+  MonitoredSubscription: DynatraceMonitoredSubscription
+  MonitoredSubscription.subscriptionId: -|uuid
+  Status: DynatraceMonitoringState
+  SubscriptionList: DynatraceMonitoredSubscriptionList
+  SubscriptionListOperation: DynatraceMonitoredSubscriptionListOperation
+  MonitoredSubscriptionProperties: DynatraceMonitoredSubscriptionProperty
+  UpgradePlanRequest: DynatraceUpgradePlanContent
 
+override-operation-name:
+  Monitors_GetMarketplaceSaaSResourceDetails: GetMarketplaceSaaSResourceDetailsResult
+
+# Removing below operations as these are not currently supported in the backend
+
+directive:
+  - remove-operation: CreationSupported_List
+  - remove-operation: CreationSupported_Get
+  - remove-operation: Monitors_GetAllConnectedResourcesCount
+  - remove-operation: MonitoredSubscriptions_Update
+  - from: swagger-document
+    where: $.definitions.MonitorResourceUpdate
+    transform: $.properties.properties["x-ms-client-flatten"] = true;
 ```

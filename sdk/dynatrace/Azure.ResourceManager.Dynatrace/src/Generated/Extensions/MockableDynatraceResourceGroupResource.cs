@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
+        /// <description>2024-04-24</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

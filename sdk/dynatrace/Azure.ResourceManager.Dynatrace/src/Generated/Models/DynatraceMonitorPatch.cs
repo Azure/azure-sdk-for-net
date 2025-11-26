@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -53,34 +54,30 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitorPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="monitoringStatus"> Status of the monitor. </param>
-        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
-        /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
-        /// <param name="userInfo"> User info. </param>
-        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="planData"> The new Billing plan information. </param>
+        /// <param name="userInfo"></param>
+        /// <param name="monitoringStatus"></param>
+        /// <param name="marketplaceSubscriptionStatus"></param>
+        /// <param name="dynatraceEnvironmentProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceMonitorPatch(IDictionary<string, string> tags, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, DynatraceMonitorUserInfo userInfo, DynatraceBillingPlanInfo planData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DynatraceMonitorPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DynatraceBillingPlanInfo planData, DynatraceMonitorUserInfo userInfo, DynatraceMonitoringStatus? monitoringStatus, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Identity = identity;
+            PlanData = planData;
+            UserInfo = userInfo;
             MonitoringStatus = monitoringStatus;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
             DynatraceEnvironmentProperties = dynatraceEnvironmentProperties;
-            UserInfo = userInfo;
-            PlanData = planData;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Status of the monitor. </summary>
-        public DynatraceMonitoringStatus? MonitoringStatus { get; set; }
-        /// <summary> Marketplace subscription status. </summary>
-        public DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; set; }
-        /// <summary> Properties of the Dynatrace environment. </summary>
-        public DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get; set; }
-        /// <summary> User info. </summary>
-        public DynatraceMonitorUserInfo UserInfo { get; set; }
-        /// <summary> Billing plan information. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The new Billing plan information. </summary>
         public DynatraceBillingPlanInfo PlanData { get; set; }
     }
 }

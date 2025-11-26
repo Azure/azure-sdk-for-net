@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
-    public partial class SmbStorageClassTypeProperties : IUtf8JsonSerializable, IJsonModel<SmbStorageClassTypeProperties>
+    /// <summary> The properties of SMB StorageClass. </summary>
+    public partial class SmbStorageClassTypeProperties : StorageClassTypeProperties, IJsonModel<SmbStorageClassTypeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbStorageClassTypeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SmbStorageClassTypeProperties"/> for deserialization. </summary>
+        internal SmbStorageClassTypeProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SmbStorageClassTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SmbStorageClassTypeProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
@@ -59,75 +64,78 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
         }
 
-        SmbStorageClassTypeProperties IJsonModel<SmbStorageClassTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SmbStorageClassTypeProperties IJsonModel<SmbStorageClassTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SmbStorageClassTypeProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StorageClassTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SmbStorageClassTypeProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSmbStorageClassTypeProperties(document.RootElement, options);
         }
 
-        internal static SmbStorageClassTypeProperties DeserializeSmbStorageClassTypeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SmbStorageClassTypeProperties DeserializeSmbStorageClassTypeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            StorageClassType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string source = default;
             string subDir = default;
             string username = default;
             string password = default;
             string domain = default;
-            StorageClassType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    source = property.Value.GetString();
+                    @type = new StorageClassType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subDir"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    subDir = property.Value.GetString();
+                    source = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"u8))
+                if (prop.NameEquals("subDir"u8))
                 {
-                    username = property.Value.GetString();
+                    subDir = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"u8))
+                if (prop.NameEquals("username"u8))
                 {
-                    password = property.Value.GetString();
+                    username = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domain"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    domain = property.Value.GetString();
+                    password = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("domain"u8))
                 {
-                    type = new StorageClassType(property.Value.GetString());
+                    domain = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SmbStorageClassTypeProperties(
-                type,
-                serializedAdditionalRawData,
+                @type,
+                additionalBinaryDataProperties,
                 source,
                 subDir,
                 username,
@@ -135,10 +143,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 domain);
         }
 
-        BinaryData IPersistableModel<SmbStorageClassTypeProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SmbStorageClassTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -148,15 +159,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
         }
 
-        SmbStorageClassTypeProperties IPersistableModel<SmbStorageClassTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SmbStorageClassTypeProperties IPersistableModel<SmbStorageClassTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SmbStorageClassTypeProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StorageClassTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SmbStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSmbStorageClassTypeProperties(document.RootElement, options);
                     }
                 default:
@@ -164,6 +180,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SmbStorageClassTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

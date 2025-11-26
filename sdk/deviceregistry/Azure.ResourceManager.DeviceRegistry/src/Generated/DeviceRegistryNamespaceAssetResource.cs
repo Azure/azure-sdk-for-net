@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceAssetApiVersion);
             _namespaceAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2025-10-01");
+            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -190,7 +190,27 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Update a NamespaceAsset. </summary>
+        /// <summary>
+        /// Update a NamespaceAsset
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/assets/{assetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamespaceAssets_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceRegistryNamespaceAssetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,7 +249,27 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Update a NamespaceAsset. </summary>
+        /// <summary>
+        /// Update a NamespaceAsset
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/assets/{assetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamespaceAssets_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeviceRegistryNamespaceAssetResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -277,11 +317,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> NamespaceAssets_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,11 +366,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> NamespaceAssets_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -403,7 +443,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -451,7 +491,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -494,7 +534,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryNamespaceAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DeviceRegistryNamespaceAssetPatch patch = new DeviceRegistryNamespaceAssetPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -537,7 +577,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryNamespaceAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DeviceRegistryNamespaceAssetPatch patch = new DeviceRegistryNamespaceAssetPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -583,7 +623,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -629,7 +669,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

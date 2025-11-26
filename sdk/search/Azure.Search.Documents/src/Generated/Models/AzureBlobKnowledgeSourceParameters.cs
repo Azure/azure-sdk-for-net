@@ -60,39 +60,21 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
-        /// <param name="identity">
-        /// An explicit identity to use for this knowledge source.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
         /// <param name="containerName"> The name of the blob storage container. </param>
         /// <param name="folderPath"> Optional folder path within the container. </param>
-        /// <param name="embeddingModel">
-        /// Optional vectorizer configuration for vectorizing content.
-        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
-        /// </param>
-        /// <param name="chatCompletionModel">
-        /// Optional chat completion model for image verbalization or context extraction.
-        /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
-        /// </param>
-        /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
+        /// <param name="isAdlsGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
-        /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobKnowledgeSourceParameters(SearchIndexerDataIdentity identity, string connectionString, string containerName, string folderPath, VectorSearchVectorizer embeddingModel, KnowledgeAgentModel chatCompletionModel, IndexingSchedule ingestionSchedule, IReadOnlyDictionary<string, string> createdResources, bool? disableImageVerbalization, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isAdlsGen2, KnowledgeSourceIngestionParameters ingestionParameters, IReadOnlyDictionary<string, string> createdResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Identity = identity;
             ConnectionString = connectionString;
             ContainerName = containerName;
             FolderPath = folderPath;
-            EmbeddingModel = embeddingModel;
-            ChatCompletionModel = chatCompletionModel;
-            IngestionSchedule = ingestionSchedule;
+            IsAdlsGen2 = isAdlsGen2;
+            IngestionParameters = ingestionParameters;
             CreatedResources = createdResources;
-            DisableImageVerbalization = disableImageVerbalization;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,35 +83,17 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
-        /// <summary>
-        /// An explicit identity to use for this knowledge source.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
         /// <summary> Key-based connection string or the ResourceId format if using a managed identity. </summary>
         public string ConnectionString { get; set; }
         /// <summary> The name of the blob storage container. </summary>
         public string ContainerName { get; set; }
         /// <summary> Optional folder path within the container. </summary>
         public string FolderPath { get; set; }
-        /// <summary>
-        /// Optional vectorizer configuration for vectorizing content.
-        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
-        /// </summary>
-        public VectorSearchVectorizer EmbeddingModel { get; set; }
-        /// <summary>
-        /// Optional chat completion model for image verbalization or context extraction.
-        /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
-        /// </summary>
-        public KnowledgeAgentModel ChatCompletionModel { get; set; }
-        /// <summary> Optional schedule for data ingestion. </summary>
-        public IndexingSchedule IngestionSchedule { get; set; }
+        /// <summary> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </summary>
+        public bool? IsAdlsGen2 { get; set; }
+        /// <summary> Consolidates all general ingestion settings. </summary>
+        public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
         /// <summary> Resources created by the knowledge source. </summary>
         public IReadOnlyDictionary<string, string> CreatedResources { get; }
-        /// <summary> Indicates whether image verbalization should be disabled. </summary>
-        public bool? DisableImageVerbalization { get; set; }
     }
 }

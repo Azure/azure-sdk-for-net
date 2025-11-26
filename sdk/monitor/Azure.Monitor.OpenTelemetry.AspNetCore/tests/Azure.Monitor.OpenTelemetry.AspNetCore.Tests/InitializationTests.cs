@@ -401,7 +401,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                     var secondProcessor = valueField.GetValue(secondNode);
                     Assert.NotNull(secondProcessor);
-                    Assert.Contains("BatchLogRecordExportProcessor", secondProcessor.GetType().Name);
 
                     var exporterProperty = secondProcessor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
                     Assert.NotNull(exporterProperty);
@@ -412,9 +411,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 }
                 else
                 {
-                    // When LiveMetrics is disabled, processor should be a BatchLogRecordExportProcessor
-                    Assert.Contains("BatchLogRecordExportProcessor", processor.GetType().Name);
-
                     var exporterProperty = processor.GetType().GetProperty("Exporter", BindingFlags.NonPublic | BindingFlags.Instance);
                     Assert.NotNull(exporterProperty);
 

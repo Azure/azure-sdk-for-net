@@ -149,7 +149,7 @@ public partial class WebSiteSourceControl : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSourceControl.</param>
     public WebSiteSourceControl(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/sourcecontrols", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/sourcecontrols", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -158,6 +158,7 @@ public partial class WebSiteSourceControl : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _branch = DefineProperty<string>("Branch", ["properties", "branch"]);
         _gitHubActionConfiguration = DefineModelProperty<GitHubActionConfiguration>("GitHubActionConfiguration", ["properties", "gitHubActionConfiguration"]);
@@ -177,6 +178,11 @@ public partial class WebSiteSourceControl : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>
