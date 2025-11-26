@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.4 (2025-11-20)
 
 This version of the client library defaults to the service API version `2025-11-15-preview`.
@@ -8,7 +18,7 @@ This version of the client library defaults to the service API version `2025-11-
 
 - Added support for **multiple redaction policies** in a single request.
 - Added **synthetic replacement redaction**, enabling selected PII types (e.g., Person, Email) to be replaced with realistic synthetic values rather than masked.
-- Added **confidence score thresholding**, allowing customers to define minimum confidence levels—globally or per-entity—so that only entities meeting the required confidence are returned.
+- Added **confidence score thresholding**, allowing customers to define minimum confidence levelsï¿½globally or per-entityï¿½so that only entities meeting the required confidence are returned.
 - Added **entity validation control** with the `disableEntityValidation` parameter, allowing users to bypass entity validation when needed.
 
 ## 1.0.0-beta.3 (2025-06-23)
