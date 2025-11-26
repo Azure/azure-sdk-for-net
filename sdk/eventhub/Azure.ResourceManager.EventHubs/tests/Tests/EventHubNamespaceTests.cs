@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var updateNamespaceParameter = eventHubNamespace.Data;
             updateNamespaceParameter.Tags.Add("key1", "value1");
             updateNamespaceParameter.Tags.Add("key2", "value2");
-            eventHubNamespace = await eventHubNamespace.UpdateAsync(updateNamespaceParameter);
+            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(WaitUntil.Completed, updateNamespaceParameter);
 
             //validate
-            Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
-            Assert.AreEqual("value1", eventHubNamespace.Data.Tags["key1"]);
-            Assert.AreEqual("value2", eventHubNamespace.Data.Tags["key2"]);
+            Assert.AreEqual(eventHubNamespace2.Value.Data.Tags.Count, 2);
+            Assert.AreEqual("value1", eventHubNamespace2.Value.Data.Tags["key1"]);
+            Assert.AreEqual("value2", eventHubNamespace2.Value.Data.Tags["key2"]);
 
             //wait until provision state is succeeded
             await GetSucceededNamespace(eventHubNamespace);
