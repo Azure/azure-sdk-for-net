@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
@@ -595,6 +596,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.WebSearch)]
     [TestCase(ToolType.Memory)]
     [TestCase(ToolType.AzureAISearch)]
+    [TestCase(ToolType.BingGrounding)]
+    [TestCase(ToolType.BingGroundingCustom)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -630,16 +633,16 @@ public class AgentsTests : AgentsTestBase
             Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
             if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
             {
-                Assert.That(response.GetOutputText().ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
+                Assert.That(Regex.Match(response.GetOutputText().ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
-        if (toolType == ToolType.AzureAISearch)
+        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom)
         {
             bool isUriCitationFound = false;
             // Check Annotation for Azure AI Search tool.
             foreach (ResponseItem item in response.OutputItems)
             {
-                isUriCitationFound |= ContainsAnnotation(item);
+                isUriCitationFound |= ContainsAnnotation(item, toolType);
             }
             Assert.That(isUriCitationFound, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
         }
@@ -649,6 +652,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.Memory)]
     [TestCase(ToolType.AzureAISearch)]
+    [TestCase(ToolType.BingGrounding)]
+    [TestCase(ToolType.BingGroundingCustom)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -675,7 +680,7 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(textDoneUpdate.Text, Is.Not.Null.And.Not.Empty);
                 if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
                 {
-                    Assert.That(textDoneUpdate.Text.ToLower(), Does.Contain(expectedResponse.ToLower()), $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
+                    Assert.That(Regex.Match(textDoneUpdate.Text.ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
                 }
             }
             else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
@@ -692,9 +697,9 @@ public class AgentsTests : AgentsTestBase
                             }
                         }
                     }
-                    if (toolType == ToolType.AzureAISearch)
+                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom)
                     {
-                        annotationMet = ContainsAnnotation(itemDoneUpdate.Item);
+                        annotationMet = ContainsAnnotation(itemDoneUpdate.Item, toolType);
                     }
                 }
                 else
@@ -1113,7 +1118,7 @@ public async Task TestToolChoiceWorks()
         Assert.That(userAgentValue, Is.EqualTo("DotnetTestMyProtocolUserAgent"));
     }
 
-    private static bool ContainsAnnotation(ResponseItem item)
+    private bool ContainsAnnotation(ResponseItem item, ToolType type)
     {
         bool isUriCitationFound = false;
         if (item is MessageResponseItem messageItem)
@@ -1125,7 +1130,7 @@ public async Task TestToolChoiceWorks()
                     if (annotation is UriCitationMessageAnnotation uriAnnotation)
                     {
                         isUriCitationFound = true;
-                        Assert.That(uriAnnotation.Title, Does.Contain("product_info_7.md"), $"Wrong citation title {uriAnnotation.Title}, should be \"product_info_7.md\"");
+                        Assert.That(uriAnnotation.Title, Does.Contain(ExpectedAnnotationTitle[type]), $"Wrong citation title {uriAnnotation.Title}, should be \"product_info_7.md\"");
                         // The next check is disabled, because of an ADO issue 4836442.
                         // Assert.That(uriAnnotation.Uri, Does.Contain("www.microsoft.com"), $"Wrong citation title {uriAnnotation.Uri}, should be \"www.microsoft.com\"");
                     }
