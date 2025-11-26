@@ -64,7 +64,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PlaywrightQuotaCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PlaywrightQuotas.GetBySubscription");
             scope.Start();
             try
             {
