@@ -71,7 +71,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetEmployeesRequest(nextLink, _subscriptionId, _resourceGroupName, _fooName, _barName, _context) : _client.CreateGetEmployeesRequest(_subscriptionId, _resourceGroupName, _fooName, _barName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Employees.GetEmployees");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BarResource.GetEmployees");
             scope.Start();
             try
             {
