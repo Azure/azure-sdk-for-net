@@ -744,7 +744,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         // NOTE: The following samples are commented out because the new code generator
         // doesn't generate a GetTypeDefinition method with these signatures.
         // These will need to be regenerated when sample generation is added to the new generator.
-        
+
         /*
         [Test]
         [Ignore("Only validating compilation of examples")]
