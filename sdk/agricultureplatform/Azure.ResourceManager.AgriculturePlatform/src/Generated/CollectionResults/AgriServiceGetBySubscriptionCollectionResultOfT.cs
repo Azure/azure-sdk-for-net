@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgriService.GetBySubscription");
             scope.Start();
             try
             {

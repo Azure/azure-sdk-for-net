@@ -31,13 +31,8 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="healthModelName"> Name of health model resource. </param>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="healthModelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="healthModelName"/> is an empty string, and was expected to be non-empty. </exception>
         public DiscoveryRulesGetByHealthModelAsyncCollectionResultOfT(DiscoveryRules client, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(healthModelName, nameof(healthModelName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -76,7 +71,7 @@ namespace Azure.ResourceManager.CloudHealth
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByHealthModelRequest(nextLink, _subscriptionId, _resourceGroupName, _healthModelName, _timestamp, _context) : _client.CreateGetByHealthModelRequest(_subscriptionId, _resourceGroupName, _healthModelName, _timestamp, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DiscoveryRules.GetByHealthModel");
             scope.Start();
             try
             {
