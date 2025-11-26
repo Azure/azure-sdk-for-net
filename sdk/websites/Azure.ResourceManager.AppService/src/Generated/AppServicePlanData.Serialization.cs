@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
@@ -205,6 +210,56 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("asyncScalingEnabled"u8);
                 writer.WriteBooleanValue(IsAsyncScalingEnabled.Value);
             }
+            if (Optional.IsDefined(PlanDefaultIdentity))
+            {
+                writer.WritePropertyName("planDefaultIdentity"u8);
+                writer.WriteObjectValue(PlanDefaultIdentity, options);
+            }
+            if (Optional.IsDefined(IsCustomMode))
+            {
+                writer.WritePropertyName("isCustomMode"u8);
+                writer.WriteBooleanValue(IsCustomMode.Value);
+            }
+            if (Optional.IsCollectionDefined(RegistryAdapters))
+            {
+                writer.WritePropertyName("registryAdapters"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegistryAdapters)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(InstallScripts))
+            {
+                writer.WritePropertyName("installScripts"u8);
+                writer.WriteStartArray();
+                foreach (var item in InstallScripts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteObjectValue(Network, options);
+            }
+            if (Optional.IsCollectionDefined(StorageMounts))
+            {
+                writer.WritePropertyName("storageMounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in StorageMounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RdpEnabled))
+            {
+                writer.WritePropertyName("rdpEnabled"u8);
+                writer.WriteBooleanValue(RdpEnabled.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -229,6 +284,7 @@ namespace Azure.ResourceManager.AppService
                 return null;
             }
             AppServiceSkuDescription sku = default;
+            ManagedServiceIdentity identity = default;
             ExtendedLocation extendedLocation = default;
             string kind = default;
             IDictionary<string, string> tags = default;
@@ -261,6 +317,13 @@ namespace Azure.ResourceManager.AppService
             KubeEnvironmentProfile kubeEnvironmentProfile = default;
             bool? zoneRedundant = default;
             bool? asyncScalingEnabled = default;
+            DefaultIdentity planDefaultIdentity = default;
+            bool? isCustomMode = default;
+            IList<RegistryAdapter> registryAdapters = default;
+            IList<InstallScript> installScripts = default;
+            ServerFarmNetworkSettings network = default;
+            IList<StorageMount> storageMounts = default;
+            bool? rdpEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,6 +335,15 @@ namespace Azure.ResourceManager.AppService
                         continue;
                     }
                     sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -544,6 +616,84 @@ namespace Azure.ResourceManager.AppService
                             asyncScalingEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("planDefaultIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            planDefaultIdentity = DefaultIdentity.DeserializeDefaultIdentity(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("isCustomMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isCustomMode = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("registryAdapters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<RegistryAdapter> array = new List<RegistryAdapter>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(RegistryAdapter.DeserializeRegistryAdapter(item, options));
+                            }
+                            registryAdapters = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("installScripts"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<InstallScript> array = new List<InstallScript>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(InstallScript.DeserializeInstallScript(item, options));
+                            }
+                            installScripts = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("network"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            network = ServerFarmNetworkSettings.DeserializeServerFarmNetworkSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("storageMounts"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<StorageMount> array = new List<StorageMount>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StorageMount.DeserializeStorageMount(item, options));
+                            }
+                            storageMounts = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("rdpEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rdpEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -561,6 +711,7 @@ namespace Azure.ResourceManager.AppService
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
+                identity,
                 extendedLocation,
                 workerTierName,
                 status,
@@ -586,6 +737,13 @@ namespace Azure.ResourceManager.AppService
                 kubeEnvironmentProfile,
                 zoneRedundant,
                 asyncScalingEnabled,
+                planDefaultIdentity,
+                isCustomMode,
+                registryAdapters ?? new ChangeTrackingList<RegistryAdapter>(),
+                installScripts ?? new ChangeTrackingList<InstallScript>(),
+                network,
+                storageMounts ?? new ChangeTrackingList<StorageMount>(),
+                rdpEnabled,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -685,6 +843,21 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("  sku: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -1156,6 +1329,142 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("    asyncScalingEnabled: ");
                     var boolValue = IsAsyncScalingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlanDefaultIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    planDefaultIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlanDefaultIdentity))
+                {
+                    builder.Append("    planDefaultIdentity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PlanDefaultIdentity, options, 4, false, "    planDefaultIdentity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCustomMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isCustomMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsCustomMode))
+                {
+                    builder.Append("    isCustomMode: ");
+                    var boolValue = IsCustomMode.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryAdapters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    registryAdapters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RegistryAdapters))
+                {
+                    if (RegistryAdapters.Any())
+                    {
+                        builder.Append("    registryAdapters: ");
+                        builder.AppendLine("[");
+                        foreach (var item in RegistryAdapters)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    registryAdapters: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstallScripts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    installScripts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(InstallScripts))
+                {
+                    if (InstallScripts.Any())
+                    {
+                        builder.Append("    installScripts: ");
+                        builder.AppendLine("[");
+                        foreach (var item in InstallScripts)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    installScripts: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VirtualNetworkSubnetId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    network: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      network: {");
+                builder.Append("        virtualNetworkSubnetId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Network))
+                {
+                    builder.Append("    network: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Network, options, 4, false, "    network: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageMounts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageMounts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StorageMounts))
+                {
+                    if (StorageMounts.Any())
+                    {
+                        builder.Append("    storageMounts: ");
+                        builder.AppendLine("[");
+                        foreach (var item in StorageMounts)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    storageMounts: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdpEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rdpEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdpEnabled))
+                {
+                    builder.Append("    rdpEnabled: ");
+                    var boolValue = RdpEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_GetStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/DeleteStaticSiteBuild.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/DeleteStaticSiteBuild.json
             // this example is just showing the usage of "StaticSites_DeleteStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateAppSettings_CreatesOrUpdatesTheFunctionAppSettingsOfAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/CreateOrUpdateStaticSiteBuildAppSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/CreateOrUpdateStaticSiteBuildAppSettings.json
             // this example is just showing the usage of "StaticSites_CreateOrUpdateStaticSiteBuildAppSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateFunctionAppSettings_CreatesOrUpdatesTheFunctionAppSettingsOfAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/CreateOrUpdateStaticSiteBuildFunctionAppSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/CreateOrUpdateStaticSiteBuildFunctionAppSettings.json
             // this example is just showing the usage of "StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFunctions_GetsTheFunctionsOfAParticularStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListStaticSiteBuildFunctions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListStaticSiteBuildFunctions.json
             // this example is just showing the usage of "StaticSites_ListStaticSiteBuildFunctions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStaticSiteBuildAppSettings_GetAppSettingsOfAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListStaticSiteBuildAppSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListStaticSiteBuildAppSettings.json
             // this example is just showing the usage of "StaticSites_ListStaticSiteBuildAppSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFunctionAppSettings_GetFunctionAppSettingsOfAStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListStaticSiteBuildFunctionAppSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/ListStaticSiteBuildFunctionAppSettings.json
             // this example is just showing the usage of "StaticSites_ListStaticSiteBuildFunctionAppSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBuildDatabaseConnectionsWithDetails_ListFullDetailsOfDatabaseConnectionsForTheStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetStaticSiteBuildDatabaseConnectionsWithDetails.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/GetStaticSiteBuildDatabaseConnectionsWithDetails.json
             // this example is just showing the usage of "StaticSites_GetBuildDatabaseConnectionsWithDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateZipDeployment_DeployASiteFromAZippedPackageToAParticularStaticSiteBuild()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StaticSiteBuildZipDeploy.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/AppService/stable/2025-03-01/examples/StaticSiteBuildZipDeploy.json
             // this example is just showing the usage of "StaticSites_CreateZipDeploymentForStaticSiteBuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
