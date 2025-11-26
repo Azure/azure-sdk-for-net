@@ -22,6 +22,13 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
     public async Task DpoFineTuningAsync()
     {
         #region Snippet:AI_Projects_FineTuning_DPO_CreateClientsAsync
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/dpo_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/dpo_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -33,7 +40,7 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
         #region Snippet:AI_Projects_FineTuning_DPO_UploadFilesAsync
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/dpo_training_set.jsonl");
+        using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = await fileClient.UploadFileAsync(
             trainStream,
             "dpo_training_set.jsonl",
@@ -42,22 +49,21 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/dpo_validation_set.jsonl");
+        using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = await fileClient.UploadFileAsync(
             validationStream,
             "dpo_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-        // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
-        // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessingAsync helper method.
         #endregion
+
+        // Wait for files to complete processing
+        Console.WriteLine("Waiting for files to complete processing...");
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_DPO_CreateJobAsync
         // Create DPO fine-tuning job
-        // Note: The default training type passed here is "Standard".
-        // If you need to pass training type explicitly (e.g., "GlobalStandard"),
-        // see Sample19_FineTuning_OSS.md for the manual JSON construction approach.
         Console.WriteLine("Creating DPO fine-tuning job...");
         FineTuningJob fineTuningJob = fineTuningClient.FineTune(
             modelDeploymentName,
@@ -80,6 +86,13 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
     public void DpoFineTuningSync()
     {
         #region Snippet:AI_Projects_FineTuning_DPO_CreateClients
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/dpo_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/dpo_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -91,7 +104,7 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
         #region Snippet:AI_Projects_FineTuning_DPO_UploadFiles
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/dpo_training_set.jsonl");
+        using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = fileClient.UploadFile(
             trainStream,
             "dpo_training_set.jsonl",
@@ -100,16 +113,18 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/dpo_validation_set.jsonl");
+        using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = fileClient.UploadFile(
             validationStream,
             "dpo_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-        // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
-        // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessing helper method.
         #endregion
+
+        // Wait for files to complete processing
+        Console.WriteLine("Waiting for files to complete processing...");
+        FineTuningHelpers.WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        FineTuningHelpers.WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_DPO_CreateJob
         // Create DPO fine-tuning job

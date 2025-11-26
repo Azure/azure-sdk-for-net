@@ -6,7 +6,6 @@
 
 using System;
 using System.ClientModel;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -26,6 +25,13 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
     public async Task OssFineTuningAsync()
     {
         #region Snippet:AI_Projects_FineTuning_OSS_CreateClientsAsync
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -37,7 +43,7 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
         #region Snippet:AI_Projects_FineTuning_OSS_UploadFilesAsync
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl");
+        using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = await fileClient.UploadFileAsync(
             trainStream,
             "sft_training_set.jsonl",
@@ -46,40 +52,42 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl");
+        using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = await fileClient.UploadFileAsync(
             validationStream,
             "sft_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-        // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
-        // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessingAsync helper method.
         #endregion
+
+        // Wait for files to complete processing
+        Console.WriteLine("Waiting for files to complete processing...");
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_OSS_CreateJobAsync
         // Create OSS fine-tuning job with GlobalStandard training type
-        // Note: OSS models like Ministral-3B require explicit trainingType="GlobalStandard" parameter
-        // which is not supported by the standard FineTuningClient API, so we use manual JSON construction
         Console.WriteLine("Creating OSS fine-tuning job...");
 
-        string jsonBody = JsonSerializer.Serialize(new Dictionary<string, object>
+        var requestJson = new
         {
-            ["model"] = modelDeploymentName,
-            ["training_file"] = trainFile.Id,
-            ["validation_file"] = validationFile.Id,
-            ["trainingType"] = "GlobalStandard",
-            ["method"] = new Dictionary<string, object>
+            model = modelDeploymentName,
+            training_file = trainFile.Id,
+            validation_file = validationFile.Id,
+            trainingType = "GlobalStandard",
+            method = new
             {
-                ["type"] = "supervised",
-                ["hyperparameters"] = new Dictionary<string, object>
+                type = "supervised",
+                hyperparameters = new
                 {
-                    ["n_epochs"] = 1,
-                    ["batch_size"] = 4,
-                    ["learning_rate_multiplier"] = 0.0001
+                    n_epochs = 1,
+                    batch_size = 4,
+                    learning_rate_multiplier = 0.0001
                 }
             }
-        });
+        };
+
+        string jsonBody = JsonSerializer.Serialize(requestJson);
 
         BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonBody));
         FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
@@ -93,6 +101,13 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
     public void OssFineTuningSync()
     {
         #region Snippet:AI_Projects_FineTuning_OSS_CreateClients
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -104,7 +119,7 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
         #region Snippet:AI_Projects_FineTuning_OSS_UploadFiles
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl");
+        using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = fileClient.UploadFile(
             trainStream,
             "sft_training_set.jsonl",
@@ -113,38 +128,42 @@ public partial class Sample19_FineTuning_OSS : SamplesBase<AIProjectsTestEnviron
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl");
+        using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = fileClient.UploadFile(
             validationStream,
             "sft_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-        // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
-        // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessing helper method.
         #endregion
+
+        // Wait for files to complete processing
+        Console.WriteLine("Waiting for files to complete processing...");
+        FineTuningHelpers.WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        FineTuningHelpers.WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_OSS_CreateJob
         // Create OSS fine-tuning job with GlobalStandard training type
         Console.WriteLine("Creating OSS fine-tuning job...");
 
-        string jsonBody = JsonSerializer.Serialize(new Dictionary<string, object>
+        var requestJson = new
         {
-            ["model"] = modelDeploymentName,
-            ["training_file"] = trainFile.Id,
-            ["validation_file"] = validationFile.Id,
-            ["trainingType"] = "GlobalStandard",
-            ["method"] = new Dictionary<string, object>
+            model = modelDeploymentName,
+            training_file = trainFile.Id,
+            validation_file = validationFile.Id,
+            trainingType = "GlobalStandard",
+            method = new
             {
-                ["type"] = "supervised",
-                ["hyperparameters"] = new Dictionary<string, object>
+                type = "supervised",
+                hyperparameters = new
                 {
-                    ["n_epochs"] = 1,
-                    ["batch_size"] = 4,
-                    ["learning_rate_multiplier"] = 0.0001
+                    n_epochs = 1,
+                    batch_size = 4,
+                    learning_rate_multiplier = 0.0001
                 }
             }
-        });
+        };
+
+        string jsonBody = JsonSerializer.Serialize(requestJson);
 
         BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonBody));
         FineTuningJob fineTuningJob = fineTuningClient.FineTune(content, waitUntilCompleted: false, options: null);

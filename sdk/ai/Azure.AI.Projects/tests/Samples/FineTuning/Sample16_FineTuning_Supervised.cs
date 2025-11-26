@@ -28,6 +28,13 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
     public async Task SupervisedFineTuningAsync()
     {
         #region Snippet:AI_Projects_FineTuning_CreateClientsAsync
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -39,7 +46,6 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
         #region Snippet:AI_Projects_FineTuning_UploadFilesAsync
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        string trainingFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl";
         using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = await fileClient.UploadFileAsync(
             trainStream,
@@ -49,19 +55,18 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        string validationFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl";
         using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = await fileClient.UploadFileAsync(
             validationStream,
             "sft_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
+        #endregion
 
         // Wait for files to complete processing
         Console.WriteLine("Waiting for files to complete processing...");
-        await WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
-        await WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
-        #endregion
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_CreateJobAsync
         // Create supervised fine-tuning job
@@ -126,7 +131,7 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
         #region Snippet:AI_Projects_FineTuning_WaitForTerminalStateAsync
         // Wait for job to reach terminal state (succeeded, failed, or cancelled)
         Console.WriteLine($"Waiting for job {fineTuningJob.JobId} to reach terminal state...");
-        FineTuningJob finalJob = await WaitForJobTerminalStateAsync(fineTuningClient, fineTuningJob.JobId);
+        FineTuningJob finalJob = await FineTuningHelpers.WaitForJobTerminalStateAsync(fineTuningClient, fineTuningJob.JobId);
         Console.WriteLine($"Job reached terminal state: {finalJob.Status}");
         #endregion
 
@@ -160,6 +165,13 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
     public void SupervisedFineTuningSync()
     {
         #region Snippet:AI_Projects_FineTuning_CreateClients
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -171,7 +183,6 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
         #region Snippet:AI_Projects_FineTuning_UploadFiles
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        string trainingFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl";
         using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = fileClient.UploadFile(
             trainStream,
@@ -181,19 +192,18 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        string validationFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl";
         using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = fileClient.UploadFile(
             validationStream,
             "sft_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
+        #endregion
 
         // Wait for files to complete processing
         Console.WriteLine("Waiting for files to complete processing...");
-        WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
-        WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
-        #endregion
+        FineTuningHelpers.WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        FineTuningHelpers.WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_CreateJob
         // Create supervised fine-tuning job
@@ -258,7 +268,7 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
         #region Snippet:AI_Projects_FineTuning_WaitForTerminalState
         // Wait for job to reach terminal state (succeeded, failed, or cancelled)
         Console.WriteLine($"Waiting for job {fineTuningJob.JobId} to reach terminal state...");
-        FineTuningJob finalJob = WaitForJobTerminalState(fineTuningClient, fineTuningJob.JobId);
+        FineTuningJob finalJob = FineTuningHelpers.WaitForJobTerminalState(fineTuningClient, fineTuningJob.JobId);
         Console.WriteLine($"Job reached terminal state: {finalJob.Status}");
         #endregion
 
@@ -451,158 +461,4 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
         Console.WriteLine($"Response: {messageItem.Content[0].Text}");
         #endregion
     }
-
-    #region Snippet:AI_Projects_FineTuning_WaitForFileProcessingHelper
-#pragma warning disable CS0618 // Type or member is obsolete
-    // Helper method to wait for file processing (async)
-    private static async Task<OpenAIFile> WaitForFileProcessingAsync(
-        OpenAIFileClient fileClient,
-        string fileId,
-        int pollIntervalSeconds = 5,
-        int maxWaitSeconds = 1800)
-    {
-        var start = DateTimeOffset.Now;
-        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
-        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
-
-        OpenAIFile file = await fileClient.GetFileAsync(fileId);
-        Console.WriteLine($"File {fileId} initial status: {file.Status}");
-
-        while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
-        {
-            if (DateTimeOffset.Now - start > timeout)
-            {
-                throw new TimeoutException(
-                    $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
-            }
-
-            await Task.Delay(pollInterval);
-            file = await fileClient.GetFileAsync(fileId);
-            Console.WriteLine($"File {fileId} status: {file.Status}");
-        }
-
-        if (file.Status == FileStatus.Error)
-        {
-            throw new InvalidOperationException(
-                $"File {fileId} processing failed: {file.StatusDetails}");
-        }
-
-        Console.WriteLine($"File {fileId} processing completed successfully");
-        return file;
-    }
-
-    // Helper method to wait for file processing (sync)
-    private static OpenAIFile WaitForFileProcessing(
-        OpenAIFileClient fileClient,
-        string fileId,
-        int pollIntervalSeconds = 5,
-        int maxWaitSeconds = 1800)
-    {
-        var start = DateTimeOffset.Now;
-        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
-        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
-
-        OpenAIFile file = fileClient.GetFile(fileId);
-        Console.WriteLine($"File {fileId} initial status: {file.Status}");
-
-        while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
-        {
-            if (DateTimeOffset.Now - start > timeout)
-            {
-                throw new TimeoutException(
-                    $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
-            }
-
-            System.Threading.Thread.Sleep(pollInterval);
-            file = fileClient.GetFile(fileId);
-            Console.WriteLine($"File {fileId} status: {file.Status}");
-        }
-
-        if (file.Status == FileStatus.Error)
-        {
-            throw new InvalidOperationException(
-                $"File {fileId} processing failed: {file.StatusDetails}");
-        }
-
-        Console.WriteLine($"File {fileId} processing completed successfully");
-        return file;
-    }
-#pragma warning restore CS0618 // Type or member is obsolete
-    #endregion
-
-    #region Snippet:AI_Projects_FineTuning_WaitForTerminalStateHelper
-    // Helper method to wait for job to reach terminal state (async)
-    private static async Task<FineTuningJob> WaitForJobTerminalStateAsync(
-        FineTuningClient fineTuningClient,
-        string jobId,
-        int pollIntervalSeconds = 10,
-        int maxWaitSeconds = 3600)
-    {
-        var start = DateTimeOffset.Now;
-        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
-        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
-
-        FineTuningJob job = await fineTuningClient.GetJobAsync(jobId);
-        Console.WriteLine($"Job {jobId} initial status: {job.Status}");
-
-        while (!IsTerminalState(job.Status))
-        {
-            if (DateTimeOffset.Now - start > timeout)
-            {
-                throw new TimeoutException(
-                    $"Job {jobId} did not reach terminal state after {maxWaitSeconds} seconds. Current status: {job.Status}");
-            }
-
-            await Task.Delay(pollInterval);
-            job = await fineTuningClient.GetJobAsync(jobId);
-            Console.WriteLine($"Job {jobId} status: {job.Status}");
-        }
-
-        Console.WriteLine($"Job {jobId} reached terminal state: {job.Status}");
-        return job;
-    }
-
-    // Helper method to wait for job to reach terminal state (sync)
-    private static FineTuningJob WaitForJobTerminalState(
-        FineTuningClient fineTuningClient,
-        string jobId,
-        int pollIntervalSeconds = 10,
-        int maxWaitSeconds = 3600)
-    {
-        var start = DateTimeOffset.Now;
-        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
-        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
-
-        FineTuningJob job = fineTuningClient.GetJob(jobId);
-        Console.WriteLine($"Job {jobId} initial status: {job.Status}");
-
-        while (!IsTerminalState(job.Status))
-        {
-            if (DateTimeOffset.Now - start > timeout)
-            {
-                throw new TimeoutException(
-                    $"Job {jobId} did not reach terminal state after {maxWaitSeconds} seconds. Current status: {job.Status}");
-            }
-
-            System.Threading.Thread.Sleep(pollInterval);
-            job = fineTuningClient.GetJob(jobId);
-            Console.WriteLine($"Job {jobId} status: {job.Status}");
-        }
-
-        Console.WriteLine($"Job {jobId} reached terminal state: {job.Status}");
-        return job;
-    }
-
-    // Helper method to check if job status is terminal
-    private static bool IsTerminalState(FineTuningStatus status)
-    {
-        return status.ToString().ToLowerInvariant() switch
-        {
-            "succeeded" => true,
-            "failed" => true,
-            "cancelled" => true,
-            _ => false
-        };
-    }
-    #endregion
 }

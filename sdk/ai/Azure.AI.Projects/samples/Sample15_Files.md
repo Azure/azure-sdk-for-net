@@ -13,6 +13,7 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 ### Async
 
 ```C# Snippet:AI_Projects_Files_CreateClientsAsync
+string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -22,6 +23,7 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ### Sync
 
 ```C# Snippet:AI_Projects_Files_CreateClients
+string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -33,25 +35,23 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ### Async
 
 ```C# Snippet:AI_Projects_Files_UploadFileAsync
-var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+using FileStream fileStream = File.OpenRead(testFilePath);
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-    BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+    fileStream,
     "sft_training_set.jsonl",
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
-fileId = uploadedFile.Id;
 ```
 
 ### Sync
 
 ```C# Snippet:AI_Projects_Files_UploadFile
-var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+using FileStream fileStream = File.OpenRead(testFilePath);
 OpenAIFile uploadedFile = fileClient.UploadFile(
-    BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+    fileStream,
     "sft_training_set.jsonl",
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
-fileId = uploadedFile.Id;
 ```
 
 ## Get File Metadata

@@ -6,7 +6,6 @@
 
 using System;
 using System.ClientModel;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -26,6 +25,13 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
     public async Task ReinforcementFineTuningAsync()
     {
         #region Snippet:AI_Projects_FineTuning_Reinforcement_CreateClientsAsync
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/rft_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/rft_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "rft_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "rft_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_MODEL_DEPLOYMENT_NAME");
@@ -38,7 +44,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
         #region Snippet:AI_Projects_FineTuning_Reinforcement_UploadFilesAsync
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/rft_training_set.jsonl");
+        using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = await fileClient.UploadFileAsync(
             trainStream,
             "rft_training_set.jsonl",
@@ -47,46 +53,63 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/rft_validation_set.jsonl");
+        using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = await fileClient.UploadFileAsync(
             validationStream,
             "rft_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-        // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
-        // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessingAsync helper method.
         #endregion
+
+        // Wait for files to complete processing
+        Console.WriteLine("Waiting for files to complete processing...");
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        await FineTuningHelpers.WaitForFileProcessingAsync(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_Reinforcement_CreateJobAsync
         // Create reinforcement fine-tuning job with grader configuration
-        // Note: Currently, reinforcement fine-tuning requires manual JSON construction
         Console.WriteLine("Creating reinforcement fine-tuning job...");
 
-        string jsonBody = JsonSerializer.Serialize(new Dictionary<string, object>
+        var requestJson = new
         {
-            ["model"] = modelDeploymentName,
-            ["training_file"] = trainFile.Id,
-            ["validation_file"] = validationFile.Id,
-            ["method"] = new Dictionary<string, object>
+            model = modelDeploymentName,
+            training_file = trainFile.Id,
+            validation_file = validationFile.Id,
+            trainingType = "Standard",
+            method = new
             {
-                ["type"] = "reinforcement",
-                ["reinforcement"] = new Dictionary<string, object>
+                type = "reinforcement",
+                reinforcement = new
                 {
-                    ["grader"] = new Dictionary<string, object>
+                    grader = new
                     {
-                        ["type"] = "score_model",
-                        ["model"] = "o3-mini"
+                        type = "score_model",
+                        name = graderModelDeploymentName,
+                        model = graderModelDeploymentName,
+                        input = new[]
+                        {
+                            new
+                            {
+                                role = "user",
+                                content = "Evaluate the model's response based on correctness and quality. Rate from 0 to 10."
+                            }
+                        },
+                        range = new[] { 0.0, 10.0 }
+                    },
+                    hyperparameters = new
+                    {
+                        n_epochs = 1,
+                        batch_size = 4,
+                        learning_rate_multiplier = 2,
+                        eval_interval = 5,
+                        eval_samples = 2,
+                        reasoning_effort = "medium"
                     }
-                },
-                ["hyperparameters"] = new Dictionary<string, object>
-                {
-                    ["reasoning_effort"] = "medium",
-                    ["eval_interval"] = 10,
-                    ["eval_samples"] = 5
                 }
             }
-        });
+        };
+
+        string jsonBody = JsonSerializer.Serialize(requestJson);
 
         BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonBody));
         FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
@@ -100,6 +123,13 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
     public void ReinforcementFineTuningSync()
     {
         #region Snippet:AI_Projects_FineTuning_Reinforcement_CreateClients
+#if SNIPPET
+        string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/rft_training_set.jsonl";
+        string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/rft_validation_set.jsonl";
+#else
+        string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "rft_training_set.jsonl");
+        string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "rft_validation_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var graderModelDeploymentName = Environment.GetEnvironmentVariable("GRADER_MODEL_DEPLOYMENT_NAME");
@@ -112,7 +142,7 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
         #region Snippet:AI_Projects_FineTuning_Reinforcement_UploadFiles
         // Upload training file
         Console.WriteLine("Uploading training file...");
-        using FileStream trainStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/rft_training_set.jsonl");
+        using FileStream trainStream = File.OpenRead(trainingFilePath);
         OpenAIFile trainFile = fileClient.UploadFile(
             trainStream,
             "rft_training_set.jsonl",
@@ -121,45 +151,63 @@ public partial class Sample18_FineTuning_Reinforcement : SamplesBase<AIProjectsT
 
         // Upload validation file
         Console.WriteLine("Uploading validation file...");
-        using FileStream validationStream = File.OpenRead("sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/rft_validation_set.jsonl");
+        using FileStream validationStream = File.OpenRead(validationFilePath);
         OpenAIFile validationFile = fileClient.UploadFile(
             validationStream,
             "rft_validation_set.jsonl",
             FileUploadPurpose.FineTune);
         Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-        // Note: In production, you should wait for files to complete processing before creating a fine-tuning job.
-        // See Sample16_FineTuning_Supervised.md for a WaitForFileProcessing helper method.
         #endregion
+
+        // Wait for files to complete processing
+        Console.WriteLine("Waiting for files to complete processing...");
+        FineTuningHelpers.WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
+        FineTuningHelpers.WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 
         #region Snippet:AI_Projects_FineTuning_Reinforcement_CreateJob
         // Create reinforcement fine-tuning job with grader configuration
         Console.WriteLine("Creating reinforcement fine-tuning job...");
 
-        string jsonBody = JsonSerializer.Serialize(new Dictionary<string, object>
+        var requestJson = new
         {
-            ["model"] = modelDeploymentName,
-            ["training_file"] = trainFile.Id,
-            ["validation_file"] = validationFile.Id,
-            ["method"] = new Dictionary<string, object>
+            model = modelDeploymentName,
+            training_file = trainFile.Id,
+            validation_file = validationFile.Id,
+            trainingType = "Standard",
+            method = new
             {
-                ["type"] = "reinforcement",
-                ["reinforcement"] = new Dictionary<string, object>
+                type = "reinforcement",
+                reinforcement = new
                 {
-                    ["grader"] = new Dictionary<string, object>
+                    grader = new
                     {
-                        ["type"] = "score_model",
-                        ["model"] = graderModelDeploymentName
+                        type = "score_model",
+                        name = graderModelDeploymentName,
+                        model = graderModelDeploymentName,
+                        input = new[]
+                        {
+                            new
+                            {
+                                role = "user",
+                                content = "Evaluate the model's response based on correctness and quality. Rate from 0 to 10."
+                            }
+                        },
+                        range = new[] { 0.0, 10.0 }
+                    },
+                    hyperparameters = new
+                    {
+                        n_epochs = 1,
+                        batch_size = 4,
+                        learning_rate_multiplier = 2,
+                        eval_interval = 5,
+                        eval_samples = 2,
+                        reasoning_effort = "medium"
                     }
-                },
-                ["hyperparameters"] = new Dictionary<string, object>
-                {
-                    ["reasoning_effort"] = "medium",
-                    ["eval_interval"] = 10,
-                    ["eval_samples"] = 5
                 }
             }
-        });
+        };
+
+        string jsonBody = JsonSerializer.Serialize(requestJson);
 
         BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonBody));
         FineTuningJob fineTuningJob = fineTuningClient.FineTune(content, waitUntilCompleted: false, options: null);

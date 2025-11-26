@@ -9,6 +9,7 @@ using System.ClientModel;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Tests.Samples.FineTuning;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
@@ -20,14 +21,18 @@ public class Sample15_Files : FineTuningTestsBase
 {
     public Sample15_Files(bool isAsync) : base(isAsync)
     {
+        TestTimeoutInSeconds = 120;
     }
 
     [Test]
     public async Task FileOperationsAsync()
     {
-        var dataDirectory = GetDataDirectory();
-
         #region Snippet:AI_Projects_Files_CreateClientsAsync
+#if SNIPPET
+        string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+#else
+        string testFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -39,14 +44,14 @@ public class Sample15_Files : FineTuningTestsBase
         try
         {
             #region Snippet:AI_Projects_Files_UploadFileAsync
-            var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+            using FileStream fileStream = File.OpenRead(testFilePath);
             OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-                BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+                fileStream,
                 "sft_training_set.jsonl",
                 FileUploadPurpose.FineTune);
             Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
-            fileId = uploadedFile.Id;
             #endregion
+            fileId = uploadedFile.Id;
 
             #region Snippet:AI_Projects_Files_GetFileAsync
             OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
@@ -78,9 +83,12 @@ public class Sample15_Files : FineTuningTestsBase
     [Test]
     public void FileOperations()
     {
-        var dataDirectory = GetDataDirectory();
-
         #region Snippet:AI_Projects_Files_CreateClients
+#if SNIPPET
+        string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+#else
+        string testFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+#endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -92,14 +100,14 @@ public class Sample15_Files : FineTuningTestsBase
         try
         {
             #region Snippet:AI_Projects_Files_UploadFile
-            var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+            using FileStream fileStream = File.OpenRead(testFilePath);
             OpenAIFile uploadedFile = fileClient.UploadFile(
-                BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+                fileStream,
                 "sft_training_set.jsonl",
                 FileUploadPurpose.FineTune);
             Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
-            fileId = uploadedFile.Id;
             #endregion
+            fileId = uploadedFile.Id;
 
             #region Snippet:AI_Projects_Files_GetFile
             OpenAIFile retrievedFile = fileClient.GetFile(fileId);

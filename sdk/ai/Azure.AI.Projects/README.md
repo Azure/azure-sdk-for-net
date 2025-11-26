@@ -451,6 +451,7 @@ projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the ProjectOpenAIClient. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_Files_CreateClients
+string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -458,13 +459,12 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 
 ```C# Snippet:AI_Projects_Files_UploadFile
-var testFilePath = Path.Combine(dataDirectory, "sft_training_set.jsonl");
+using FileStream fileStream = File.OpenRead(testFilePath);
 OpenAIFile uploadedFile = fileClient.UploadFile(
-    BinaryData.FromBytes(File.ReadAllBytes(testFilePath)),
+    fileStream,
     "sft_training_set.jsonl",
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
-fileId = uploadedFile.Id;
 ```
 
 ```C# Snippet:AI_Projects_Files_GetFile
@@ -487,6 +487,8 @@ Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
 The code below shows how to create a supervised fine-tuning job using the OpenAI Fine-Tuning API through the ProjectOpenAIClient. Fine-tuning allows you to customize models for specific tasks using your own training data. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_FineTuning_CreateClients
+string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -498,7 +500,6 @@ FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```C# Snippet:AI_Projects_FineTuning_UploadFiles
 // Upload training file
 Console.WriteLine("Uploading training file...");
-string trainingFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_training_set.jsonl";
 using FileStream trainStream = File.OpenRead(trainingFilePath);
 OpenAIFile trainFile = fileClient.UploadFile(
     trainStream,
@@ -508,18 +509,12 @@ Console.WriteLine($"Uploaded training file with ID: {trainFile.Id}");
 
 // Upload validation file
 Console.WriteLine("Uploading validation file...");
-string validationFilePath = "sdk/ai/Azure.AI.Projects/tests/Samples/FineTuning/data/sft_validation_set.jsonl";
 using FileStream validationStream = File.OpenRead(validationFilePath);
 OpenAIFile validationFile = fileClient.UploadFile(
     validationStream,
     "sft_validation_set.jsonl",
     FileUploadPurpose.FineTune);
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
-
-// Wait for files to complete processing
-Console.WriteLine("Waiting for files to complete processing...");
-WaitForFileProcessing(fileClient, trainFile.Id, pollIntervalSeconds: 2);
-WaitForFileProcessing(fileClient, validationFile.Id, pollIntervalSeconds: 2);
 ```
 
 ```C# Snippet:AI_Projects_FineTuning_CreateJob
