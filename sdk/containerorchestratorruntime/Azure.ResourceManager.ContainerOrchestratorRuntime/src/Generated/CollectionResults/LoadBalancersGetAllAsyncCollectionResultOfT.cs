@@ -25,12 +25,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="client"> The LoadBalancers client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceUri"/> is an empty string, and was expected to be non-empty. </exception>
         public LoadBalancersGetAllAsyncCollectionResultOfT(LoadBalancers client, string resourceUri, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceUri, nameof(resourceUri));
-
             _client = client;
             _resourceUri = resourceUri;
             _context = context;
@@ -66,7 +62,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceUri, _context) : _client.CreateGetAllRequest(_resourceUri, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConnectedClusterLoadBalancerCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadBalancers.GetAll");
             scope.Start();
             try
             {
