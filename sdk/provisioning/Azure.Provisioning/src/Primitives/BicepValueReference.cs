@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
@@ -52,7 +53,7 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
 internal class BicepListValueReference(ProvisionableConstruct construct, string propertyName, string[]? path, int index)
     : BicepValueReference(construct, propertyName, path)
 {
-    public int Index { get; } = index;
+    public int Index { get; set; } = index;
 
     internal override BicepExpression GetReference(bool throwIfNoRoot = true)
     {

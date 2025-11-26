@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(VolumeReplicationRelationshipStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MirrorState))
+            if (Optional.IsDefined(MirrorState))
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());

@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken);
+                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                     StorageDiscoveryWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageDiscoveryWorkspacePatch patch = new StorageDiscoveryWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                     StorageDiscoveryWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageDiscoveryWorkspacePatch patch = new StorageDiscoveryWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken);
+                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken);
+                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
