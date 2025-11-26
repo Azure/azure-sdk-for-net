@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> The error object. </summary>
-    public partial class Error
+    public partial class QuestionAnsweringAuthoringError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal Error(ErrorCode code, string message)
+        internal QuestionAnsweringAuthoringError(QuestionAnsweringAuthoringErrorCode code, string message)
         {
             Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<Error>();
+            Details = new ChangeTrackingList<QuestionAnsweringAuthoringError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// the error.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringError(QuestionAnsweringAuthoringErrorCode code, string message, string target, IReadOnlyList<QuestionAnsweringAuthoringError> details, QuestionAnsweringAuthoringInnerErrorModel innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -78,23 +78,23 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
-        internal Error()
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringError"/> for deserialization. </summary>
+        internal QuestionAnsweringAuthoringError()
         {
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
-        public ErrorCode Code { get; }
+        public QuestionAnsweringAuthoringErrorCode Code { get; }
         /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
         /// <summary> The target of the error. </summary>
         public string Target { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IReadOnlyList<Error> Details { get; }
+        public IReadOnlyList<QuestionAnsweringAuthoringError> Details { get; }
         /// <summary>
         /// An object containing more specific information than the current object about
         /// the error.
         /// </summary>
-        public InnerErrorModel InnerError { get; }
+        public QuestionAnsweringAuthoringInnerErrorModel InnerError { get; }
     }
 }

@@ -590,7 +590,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<QuestionAnsweringAuthoringProjectDeploymentJobState>> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDeploymentJobState>> GetDeployStatusAsync(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -598,7 +598,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeployStatusAsync(projectName, deploymentName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(QuestionAnsweringAuthoringProjectDeploymentJobState.FromResponse(response), response);
+            return Response.FromValue(ProjectDeploymentJobState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of a Deploy job. </summary>
@@ -608,7 +608,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<QuestionAnsweringAuthoringProjectDeploymentJobState> GetDeployStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDeploymentJobState> GetDeployStatus(string projectName, string deploymentName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -616,7 +616,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeployStatus(projectName, deploymentName, jobId, context);
-            return Response.FromValue(QuestionAnsweringAuthoringProjectDeploymentJobState.FromResponse(response), response);
+            return Response.FromValue(ProjectDeploymentJobState.FromResponse(response), response);
         }
 
         /// <summary>

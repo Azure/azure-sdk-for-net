@@ -15,7 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// Microsoft One API guidelines -
     /// https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
     /// </summary>
-    public partial class InnerErrorModel
+    public partial class QuestionAnsweringAuthoringInnerErrorModel
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,11 +49,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringInnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal InnerErrorModel(InnerErrorCode code, string message)
+        internal QuestionAnsweringAuthoringInnerErrorModel(QuestionAnsweringAuthoringInnerErrorCode code, string message)
         {
             Argument.AssertNotNull(message, nameof(message));
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Details = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringInnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// the error.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InnerErrorModel(InnerErrorCode code, string message, IReadOnlyDictionary<string, string> details, string target, InnerErrorModel innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringInnerErrorModel(QuestionAnsweringAuthoringInnerErrorCode code, string message, IReadOnlyDictionary<string, string> details, string target, QuestionAnsweringAuthoringInnerErrorModel innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -82,13 +82,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/> for deserialization. </summary>
-        internal InnerErrorModel()
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringInnerErrorModel"/> for deserialization. </summary>
+        internal QuestionAnsweringAuthoringInnerErrorModel()
         {
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
-        public InnerErrorCode Code { get; }
+        public QuestionAnsweringAuthoringInnerErrorCode Code { get; }
         /// <summary> Error message. </summary>
         public string Message { get; }
         /// <summary> Error details. </summary>
@@ -99,6 +99,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// An object containing more specific information than the current object about
         /// the error.
         /// </summary>
-        public InnerErrorModel Innererror { get; }
+        public QuestionAnsweringAuthoringInnerErrorModel Innererror { get; }
     }
 }

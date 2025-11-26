@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    public partial class InnerErrorModel : IUtf8JsonSerializable, IJsonModel<InnerErrorModel>
+    public partial class QuestionAnsweringAuthoringInnerErrorModel : IUtf8JsonSerializable, IJsonModel<QuestionAnsweringAuthoringInnerErrorModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InnerErrorModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuestionAnsweringAuthoringInnerErrorModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InnerErrorModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuestionAnsweringAuthoringInnerErrorModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerErrorModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringInnerErrorModel)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("code"u8);
@@ -76,19 +76,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        InnerErrorModel IJsonModel<InnerErrorModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuestionAnsweringAuthoringInnerErrorModel IJsonModel<QuestionAnsweringAuthoringInnerErrorModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerErrorModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringInnerErrorModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInnerErrorModel(document.RootElement, options);
+            return DeserializeQuestionAnsweringAuthoringInnerErrorModel(document.RootElement, options);
         }
 
-        internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuestionAnsweringAuthoringInnerErrorModel DeserializeQuestionAnsweringAuthoringInnerErrorModel(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,18 +96,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            InnerErrorCode code = default;
+            QuestionAnsweringAuthoringInnerErrorCode code = default;
             string message = default;
             IReadOnlyDictionary<string, string> details = default;
             string target = default;
-            InnerErrorModel innererror = default;
+            QuestionAnsweringAuthoringInnerErrorModel innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = new InnerErrorCode(property.Value.GetString());
+                    code = new QuestionAnsweringAuthoringInnerErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -140,7 +140,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerErrorModel(property.Value, options);
+                    innererror = DeserializeQuestionAnsweringAuthoringInnerErrorModel(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InnerErrorModel(
+            return new QuestionAnsweringAuthoringInnerErrorModel(
                 code,
                 message,
                 details ?? new ChangeTrackingDictionary<string, string>(),
@@ -158,43 +158,43 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InnerErrorModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InnerErrorModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringInnerErrorModel)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InnerErrorModel IPersistableModel<InnerErrorModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuestionAnsweringAuthoringInnerErrorModel IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInnerErrorModel(document.RootElement, options);
+                        return DeserializeQuestionAnsweringAuthoringInnerErrorModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InnerErrorModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringInnerErrorModel)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InnerErrorModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuestionAnsweringAuthoringInnerErrorModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static InnerErrorModel FromResponse(Response response)
+        internal static QuestionAnsweringAuthoringInnerErrorModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeInnerErrorModel(document.RootElement);
+            return DeserializeQuestionAnsweringAuthoringInnerErrorModel(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

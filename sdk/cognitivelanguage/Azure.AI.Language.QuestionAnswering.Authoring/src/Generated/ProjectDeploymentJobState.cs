@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary> Job state represents the job metadata and any errors. </summary>
-    public partial class QuestionAnsweringAuthoringProjectDeploymentJobState
+    public partial class ProjectDeploymentJobState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringProjectDeploymentJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectDeploymentJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
-        internal QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status)
+        internal ProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status)
         {
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new ChangeTrackingList<QuestionAnsweringAuthoringError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringProjectDeploymentJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectDeploymentJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="expirationDateTime"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status, IReadOnlyList<Error> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectDeploymentJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status, IReadOnlyList<QuestionAnsweringAuthoringError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -76,8 +76,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringProjectDeploymentJobState"/> for deserialization. </summary>
-        internal QuestionAnsweringAuthoringProjectDeploymentJobState()
+        /// <summary> Initializes a new instance of <see cref="ProjectDeploymentJobState"/> for deserialization. </summary>
+        internal ProjectDeploymentJobState()
         {
         }
 
@@ -92,6 +92,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Job Status. </summary>
         public QuestionAnsweringAuthoringJobStatus Status { get; }
         /// <summary> The errors encountered while executing the job. </summary>
-        public IReadOnlyList<Error> Errors { get; }
+        public IReadOnlyList<QuestionAnsweringAuthoringError> Errors { get; }
     }
 }

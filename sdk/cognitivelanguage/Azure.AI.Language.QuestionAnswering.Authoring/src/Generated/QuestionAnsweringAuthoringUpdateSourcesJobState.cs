@@ -54,7 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new ChangeTrackingList<QuestionAnsweringAuthoringError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringUpdateSourcesJobState"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status, IReadOnlyList<Error> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, QuestionAnsweringAuthoringJobStatus status, IReadOnlyList<QuestionAnsweringAuthoringError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -92,6 +92,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Job Status. </summary>
         public QuestionAnsweringAuthoringJobStatus Status { get; }
         /// <summary> The errors encountered while executing the job. </summary>
-        public IReadOnlyList<Error> Errors { get; }
+        public IReadOnlyList<QuestionAnsweringAuthoringError> Errors { get; }
     }
 }

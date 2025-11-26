@@ -104,7 +104,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
             QuestionAnsweringAuthoringJobStatus status = default;
-            IReadOnlyList<Error> errors = default;
+            IReadOnlyList<QuestionAnsweringAuthoringError> errors = default;
             string resultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -145,10 +145,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<QuestionAnsweringAuthoringError> array = new List<QuestionAnsweringAuthoringError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Error.DeserializeError(item, options));
+                        array.Add(QuestionAnsweringAuthoringError.DeserializeQuestionAnsweringAuthoringError(item, options));
                     }
                     errors = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 jobId,
                 lastUpdatedDateTime,
                 status,
-                errors ?? new ChangeTrackingList<Error>(),
+                errors ?? new ChangeTrackingList<QuestionAnsweringAuthoringError>(),
                 resultUrl,
                 serializedAdditionalRawData);
         }

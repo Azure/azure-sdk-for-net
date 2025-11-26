@@ -79,17 +79,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            IList<File> files = default;
+            IList<KnowledgeBaseFile> files = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("files"u8))
                 {
-                    List<File> array = new List<File>();
+                    List<KnowledgeBaseFile> array = new List<KnowledgeBaseFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(File.DeserializeFile(item, options));
+                        array.Add(KnowledgeBaseFile.DeserializeKnowledgeBaseFile(item, options));
                     }
                     files = array;
                     continue;
@@ -121,9 +121,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
         {
             MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            foreach (File item in Files)
+            foreach (KnowledgeBaseFile item in Files)
             {
-                content.Add(ModelReaderWriter.Write<File>(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default), "files");
+                content.Add(ModelReaderWriter.Write<KnowledgeBaseFile>(item, ModelSerializationExtensions.WireOptions, AzureAILanguageQuestionAnsweringAuthoringContext.Default), "files");
             }
             return content;
         }

@@ -47,7 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             if (Optional.IsDefined(FileUri))
             {
                 writer.WritePropertyName("fileUri"u8);
-                writer.WriteStringValue(FileUri);
+                writer.WriteStringValue(FileUri.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             QuestionAnsweringProject metadata = default;
             QuestionAnsweringAuthoringAssets assets = default;
-            string fileUri = default;
+            Uri fileUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (property.NameEquals("fileUri"u8))
                 {
-                    fileUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

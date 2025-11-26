@@ -49,7 +49,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of <see cref="ImportFiles"/>. </summary>
         /// <param name="files"> Collection of files where the fileName is required. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> is null. </exception>
-        public ImportFiles(IEnumerable<File> files)
+        public ImportFiles(IEnumerable<KnowledgeBaseFile> files)
         {
             Argument.AssertNotNull(files, nameof(files));
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Initializes a new instance of <see cref="ImportFiles"/>. </summary>
         /// <param name="files"> Collection of files where the fileName is required. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportFiles(IList<File> files, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportFiles(IList<KnowledgeBaseFile> files, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Files = files;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> Collection of files where the fileName is required. </summary>
-        public IList<File> Files { get; }
+        public IList<KnowledgeBaseFile> Files { get; }
     }
 }

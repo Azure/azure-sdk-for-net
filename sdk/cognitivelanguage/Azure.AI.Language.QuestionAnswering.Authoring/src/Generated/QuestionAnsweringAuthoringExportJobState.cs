@@ -58,7 +58,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             CreatedDateTime = createdDateTime;
             LastUpdated = lastUpdated;
             Status = status;
-            Errors = new ChangeTrackingList<Error>();
+            Errors = new ChangeTrackingList<QuestionAnsweringAuthoringError>();
             ResultUrl = resultUrl;
         }
 
@@ -71,7 +71,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdated, QuestionAnsweringAuthoringJobStatus status, IReadOnlyList<Error> errors, string resultUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdated, QuestionAnsweringAuthoringJobStatus status, IReadOnlyList<QuestionAnsweringAuthoringError> errors, string resultUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> Job Status. </summary>
         public QuestionAnsweringAuthoringJobStatus Status { get; }
         /// <summary> The errors encountered while executing the job. </summary>
-        public IReadOnlyList<Error> Errors { get; }
+        public IReadOnlyList<QuestionAnsweringAuthoringError> Errors { get; }
         /// <summary> URL to download the result of the Export Job. </summary>
         public string ResultUrl { get; }
     }

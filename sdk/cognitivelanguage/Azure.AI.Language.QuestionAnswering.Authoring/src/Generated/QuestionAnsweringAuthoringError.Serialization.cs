@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    public partial class Error : IUtf8JsonSerializable, IJsonModel<Error>
+    public partial class QuestionAnsweringAuthoringError : IUtf8JsonSerializable, IJsonModel<QuestionAnsweringAuthoringError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Error>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuestionAnsweringAuthoringError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Error>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuestionAnsweringAuthoringError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Error)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringError)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("code"u8);
@@ -75,19 +75,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        Error IJsonModel<Error>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuestionAnsweringAuthoringError IJsonModel<QuestionAnsweringAuthoringError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Error)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeError(document.RootElement, options);
+            return DeserializeQuestionAnsweringAuthoringError(document.RootElement, options);
         }
 
-        internal static Error DeserializeError(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuestionAnsweringAuthoringError DeserializeQuestionAnsweringAuthoringError(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -95,18 +95,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            ErrorCode code = default;
+            QuestionAnsweringAuthoringErrorCode code = default;
             string message = default;
             string target = default;
-            IReadOnlyList<Error> details = default;
-            InnerErrorModel innererror = default;
+            IReadOnlyList<QuestionAnsweringAuthoringError> details = default;
+            QuestionAnsweringAuthoringInnerErrorModel innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = new ErrorCode(property.Value.GetString());
+                    code = new QuestionAnsweringAuthoringErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -125,10 +125,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<QuestionAnsweringAuthoringError> array = new List<QuestionAnsweringAuthoringError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeError(item, options));
+                        array.Add(DeserializeQuestionAnsweringAuthoringError(item, options));
                     }
                     details = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value, options);
+                    innererror = QuestionAnsweringAuthoringInnerErrorModel.DeserializeQuestionAnsweringAuthoringInnerErrorModel(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,52 +148,52 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Error(
+            return new QuestionAnsweringAuthoringError(
                 code,
                 message,
                 target,
-                details ?? new ChangeTrackingList<Error>(),
+                details ?? new ChangeTrackingList<QuestionAnsweringAuthoringError>(),
                 innererror,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Error>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuestionAnsweringAuthoringError>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Error)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringError)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Error IPersistableModel<Error>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuestionAnsweringAuthoringError IPersistableModel<QuestionAnsweringAuthoringError>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Error>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringAuthoringError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeError(document.RootElement, options);
+                        return DeserializeQuestionAnsweringAuthoringError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Error)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringError)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Error>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuestionAnsweringAuthoringError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Error FromResponse(Response response)
+        internal static QuestionAnsweringAuthoringError FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeError(document.RootElement);
+            return DeserializeQuestionAnsweringAuthoringError(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// `filename` field. You can combine the metadata decorators with `@visibility` to control when the `filename` location
     /// is overridden, as shown in the examples below.
     /// </summary>
-    public partial class File
+    public partial class KnowledgeBaseFile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="File"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFile"/>. </summary>
         /// <param name="contents">
         /// The contents of the file.
         ///
@@ -88,14 +88,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// this value is serialized as a field in the response.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
-        public File(BinaryData contents)
+        public KnowledgeBaseFile(BinaryData contents)
         {
             Argument.AssertNotNull(contents, nameof(contents));
 
             Contents = contents;
         }
 
-        /// <summary> Initializes a new instance of <see cref="File"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFile"/>. </summary>
         /// <param name="contentType">
         /// The allowed media (MIME) types of the file contents.
         ///
@@ -124,7 +124,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// this value is serialized as a field in the response.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal File(string contentType, string filename, BinaryData contents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KnowledgeBaseFile(string contentType, string filename, BinaryData contents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentType = contentType;
             Filename = filename;
@@ -132,8 +132,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="File"/> for deserialization. </summary>
-        internal File()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseFile"/> for deserialization. </summary>
+        internal KnowledgeBaseFile()
         {
         }
 

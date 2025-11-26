@@ -44,7 +44,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authoring.QuestionAnsweringAuthoringError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
@@ -53,12 +53,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// An object containing more specific information than the current object about
         /// the error.
         /// </param>
-        /// <returns> A new <see cref="Authoring.Error"/> instance for mocking. </returns>
-        public static Error Error(ErrorCode code = default, string message = null, string target = null, IEnumerable<Error> details = null, InnerErrorModel innerError = null)
+        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringError"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringError QuestionAnsweringAuthoringError(QuestionAnsweringAuthoringErrorCode code = default, string message = null, string target = null, IEnumerable<QuestionAnsweringAuthoringError> details = null, QuestionAnsweringAuthoringInnerErrorModel innerError = null)
         {
-            details ??= new List<Error>();
+            details ??= new List<QuestionAnsweringAuthoringError>();
 
-            return new Error(
+            return new QuestionAnsweringAuthoringError(
                 code,
                 message,
                 target,
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.InnerErrorModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authoring.QuestionAnsweringAuthoringInnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
@@ -76,12 +76,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// An object containing more specific information than the current object about
         /// the error.
         /// </param>
-        /// <returns> A new <see cref="Authoring.InnerErrorModel"/> instance for mocking. </returns>
-        public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = null, IReadOnlyDictionary<string, string> details = null, string target = null, InnerErrorModel innererror = null)
+        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringInnerErrorModel"/> instance for mocking. </returns>
+        public static QuestionAnsweringAuthoringInnerErrorModel QuestionAnsweringAuthoringInnerErrorModel(QuestionAnsweringAuthoringInnerErrorCode code = default, string message = null, IReadOnlyDictionary<string, string> details = null, string target = null, QuestionAnsweringAuthoringInnerErrorModel innererror = null)
         {
             details ??= new Dictionary<string, string>();
 
-            return new InnerErrorModel(
+            return new QuestionAnsweringAuthoringInnerErrorModel(
                 code,
                 message,
                 details,
@@ -98,9 +98,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringProjectDeletionJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<Error> errors = null)
+        public static QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<QuestionAnsweringAuthoringError> errors = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<QuestionAnsweringAuthoringError>();
 
             return new QuestionAnsweringAuthoringProjectDeletionJobState(
                 createdDateTime,
@@ -121,9 +121,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringExportJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdated = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<Error> errors = null, string resultUrl = null)
+        public static QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdated = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<QuestionAnsweringAuthoringError> errors = null, string resultUrl = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<QuestionAnsweringAuthoringError>();
 
             return new QuestionAnsweringAuthoringExportJobState(
                 createdDateTime,
@@ -180,9 +180,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringImportJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<Error> errors = null)
+        public static QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<QuestionAnsweringAuthoringError> errors = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<QuestionAnsweringAuthoringError>();
 
             return new QuestionAnsweringAuthoringImportJobState(
                 createdDateTime,
@@ -194,7 +194,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.File"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authoring.KnowledgeBaseFile"/>. </summary>
         /// <param name="contentType">
         /// The allowed media (MIME) types of the file contents.
         ///
@@ -222,25 +222,25 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// In file bodies, this value comes from the body of the request, response, or multipart payload. In JSON bodies,
         /// this value is serialized as a field in the response.
         /// </param>
-        /// <returns> A new <see cref="Authoring.File"/> instance for mocking. </returns>
-        public static File File(string contentType = null, string filename = null, BinaryData contents = null)
+        /// <returns> A new <see cref="Authoring.KnowledgeBaseFile"/> instance for mocking. </returns>
+        public static KnowledgeBaseFile KnowledgeBaseFile(string contentType = null, string filename = null, BinaryData contents = null)
         {
-            return new File(contentType, filename, contents, serializedAdditionalRawData: null);
+            return new KnowledgeBaseFile(contentType, filename, contents, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authoring.ProjectDeploymentJobState"/>. </summary>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="expirationDateTime"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<Error> errors = null)
+        /// <returns> A new <see cref="Authoring.ProjectDeploymentJobState"/> instance for mocking. </returns>
+        public static ProjectDeploymentJobState ProjectDeploymentJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<QuestionAnsweringAuthoringError> errors = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<QuestionAnsweringAuthoringError>();
 
-            return new QuestionAnsweringAuthoringProjectDeploymentJobState(
+            return new ProjectDeploymentJobState(
                 createdDateTime,
                 expirationDateTime,
                 jobId,
@@ -290,9 +290,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<Error> errors = null)
+        public static QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<QuestionAnsweringAuthoringError> errors = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<QuestionAnsweringAuthoringError>();
 
             return new QuestionAnsweringAuthoringUpdateSourcesJobState(
                 createdDateTime,
@@ -346,9 +346,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringUpdateQnasJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<Error> errors = null)
+        public static QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, QuestionAnsweringAuthoringJobStatus status = default, IEnumerable<QuestionAnsweringAuthoringError> errors = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<QuestionAnsweringAuthoringError>();
 
             return new QuestionAnsweringAuthoringUpdateQnasJobState(
                 createdDateTime,

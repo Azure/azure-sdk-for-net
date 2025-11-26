@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    public partial class File : IUtf8JsonSerializable, IJsonModel<File>
+    public partial class KnowledgeBaseFile : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<File>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBaseFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<File>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeBaseFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(File)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeBaseFile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ContentType))
@@ -63,19 +63,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
-        File IJsonModel<File>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KnowledgeBaseFile IJsonModel<KnowledgeBaseFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(File)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeBaseFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFile(document.RootElement, options);
+            return DeserializeKnowledgeBaseFile(document.RootElement, options);
         }
 
-        internal static File DeserializeFile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KnowledgeBaseFile DeserializeKnowledgeBaseFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,46 +111,46 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new File(contentType, filename, contents, serializedAdditionalRawData);
+            return new KnowledgeBaseFile(contentType, filename, contents, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<File>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KnowledgeBaseFile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(File)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeBaseFile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        File IPersistableModel<File>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KnowledgeBaseFile IPersistableModel<KnowledgeBaseFile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<File>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFile(document.RootElement, options);
+                        return DeserializeKnowledgeBaseFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(File)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeBaseFile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<File>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeBaseFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static File FromResponse(Response response)
+        internal static KnowledgeBaseFile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFile(document.RootElement);
+            return DeserializeKnowledgeBaseFile(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
