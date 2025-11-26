@@ -191,3 +191,6 @@ indent_size = 2
 end_of_line = lf
 [*.{cmd, bat}]
 end_of_line = crlf
+
+[sdk/cloudmachine/Azure.Projects.Provisioning/tests/Data/*.bicep]
+insert_final_newline = false
