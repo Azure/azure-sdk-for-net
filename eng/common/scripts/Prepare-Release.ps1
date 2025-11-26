@@ -30,6 +30,9 @@ If one isn't provided, then it will compute the next ship date or today's date i
 .PARAMETER ReleaseTrackingOnly
 Optional: If this switch is passed then the script will only update the release work items and not update the versions in the local repo or validate the changelog.
 
+.PARAMETER GroupId
+Optional: The group ID for the package. For Java packages, if not provided, the script will prompt for input with 'com.azure' as the default.
+
 .EXAMPLE
 PS> ./eng/common/scripts/Prepare-Release.ps1 <PackageName>
 
@@ -49,13 +52,26 @@ param(
   [string]$PackageName,
   [string]$ServiceDirectory,
   [string]$ReleaseDate, # Pass Date in the form MM/dd/yyyy"
-  [switch]$ReleaseTrackingOnly = $false
+  [switch]$ReleaseTrackingOnly = $false,
+  [string]$GroupId
 )
 Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
 . ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
 . ${PSScriptRoot}\Helpers\DevOps-WorkItem-Helpers.ps1
+
+# Prompt for GroupId if language is Java and GroupId is not provided
+if ($Language -eq 'java' -and [string]::IsNullOrEmpty($GroupId)) {
+  $userInput = Read-Host "Input the group id, or press Enter to use 'com.azure' as the group id"
+  if ([string]::IsNullOrWhiteSpace($userInput)) {
+    $GroupId = "com.azure"
+  }
+  else {
+    $GroupId = $userInput.Trim()
+  }
+  Write-Host "Using GroupId: $GroupId" -ForegroundColor Green
+}
 
 function Get-ReleaseDay($baseDate)
 {
@@ -74,7 +90,7 @@ function Get-ReleaseDay($baseDate)
 $ErrorPreference = 'Stop'
 
 $packageProperties = $null
-$packageProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
+$packageProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory -GroupId $GroupId
 
 if (!$packageProperties)
 {
@@ -128,7 +144,7 @@ if (Test-Path "Function:GetExistingPackageVersions")
 }
 
 $currentProjectVersion = $packageProperties.Version
-$newVersion = Read-Host -Prompt "Input the new version, or press Enter to use use current project version '$currentProjectVersion'"
+$newVersion = Read-Host -Prompt "Input the new version, or press Enter to use current project version '$currentProjectVersion'"
 
 if (!$newVersion)
 {
@@ -142,8 +158,10 @@ if ($null -eq $newVersionParsed)
   exit 1
 }
 
+$fullPackageName = Get-FullPackageName -PackageInfo $packageProperties
+
 $result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
-    -packageName $packageProperties.Name `
+    -packageName $fullPackageName `
     -version $newVersion `
     -plannedDate $releaseDateString `
     -packageRepoPath $packageProperties.serviceDirectory `
@@ -166,7 +184,8 @@ try
   }
   $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
   $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-  Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+  $fullPackageNameInApiView = Get-FullPackageName -PackageInfo $packageProperties -UseColonSeparator
+  Check-ApiReviewStatus -PackageName $fullPackageNameInApiView -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
 }
 catch
 {
@@ -194,7 +213,7 @@ if (Test-Path "Function:SetPackageVersion")
   }
   SetPackageVersion -PackageName $packageProperties.Name -Version $newVersion `
     -ServiceDirectory $packageProperties.ServiceDirectory -ReleaseDate $releaseDateString `
-    -PackageProperties $packageProperties -ReplaceLatestEntryTitle $replaceLatestEntryTitle
+    -PackageProperties $packageProperties -ReplaceLatestEntryTitle $replaceLatestEntryTitle -GroupId $packageProperties.Group
 }
 else
 {

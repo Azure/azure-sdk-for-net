@@ -14,6 +14,9 @@ parameters:
 - name: Condition
   type: string
   default: succeeded()
+- name: GroupId
+  type: string
+  default: ''
 
 steps:
   - task: Powershell@2
@@ -23,6 +26,7 @@ steps:
         -PackageName '${{ parameters.PackageName }}'
         -ServiceDirectory '${{ coalesce(parameters.ServiceDirectory, parameters.ServiceName) }}'
         -ForRelease $${{ parameters.ForRelease }}
+        -GroupId '${{ parameters.GroupId }}'
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify ChangeLogEntry for ${{ parameters.PackageName }}
