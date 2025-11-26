@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Quota
     /// Each <see cref="CurrentQuotaLimitBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="CurrentQuotaLimitBaseCollection"/> instance call the GetCurrentQuotaLimitBases method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class CurrentQuotaLimitBaseCollection : ArmCollection
+    public partial class CurrentQuotaLimitBaseCollection : ArmCollection, IEnumerable<CurrentQuotaLimitBaseResource>, IAsyncEnumerable<CurrentQuotaLimitBaseResource>
     {
         private readonly ClientDiagnostics _currentQuotaLimitBasesClientDiagnostics;
         private readonly CurrentQuotaLimitBases _currentQuotaLimitBasesRestClient;
@@ -279,6 +281,62 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
+        /// Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CurrentQuotaLimitBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id, context), data => new CurrentQuotaLimitBaseResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CurrentQuotaLimitBaseResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id, context), data => new CurrentQuotaLimitBaseResource(Client, data));
+        }
+
+        /// <summary>
         /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
         /// <list type="bullet">
         /// <item>
@@ -532,6 +590,22 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<CurrentQuotaLimitBaseResource> IEnumerable<CurrentQuotaLimitBaseResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<CurrentQuotaLimitBaseResource> IAsyncEnumerable<CurrentQuotaLimitBaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Quota allocated to subscriptions. </summary>
         [WirePath("allocatedToSubscriptions")]
-        public AllocatedQuotaToSubscriptionList AllocatedToSubscriptions { get; }
+        internal AllocatedQuotaToSubscriptionList AllocatedToSubscriptions { get; }
 
         /// <summary> Resource name. </summary>
         [WirePath("name.value")]
@@ -88,6 +88,16 @@ namespace Azure.ResourceManager.Quota.Models
             get
             {
                 return Name.LocalizedValue;
+            }
+        }
+
+        /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions.value")]
+        public IReadOnlyList<SubscriptionAllocatedQuota> AllocatedToSubscriptionsValue
+        {
+            get
+            {
+                return AllocatedToSubscriptions.Value;
             }
         }
     }

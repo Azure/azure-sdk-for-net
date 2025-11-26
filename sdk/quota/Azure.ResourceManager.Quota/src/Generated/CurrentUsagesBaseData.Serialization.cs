@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Quota
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeCurrentUsagesBaseData(document.RootElement, options);
                     }
@@ -174,11 +174,10 @@ namespace Azure.ResourceManager.Quota
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CurrentUsagesBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="CurrentUsagesBaseData"/> from. </param>
-        internal static CurrentUsagesBaseData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CurrentUsagesBaseData"/> from. </param>
+        internal static CurrentUsagesBaseData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCurrentUsagesBaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

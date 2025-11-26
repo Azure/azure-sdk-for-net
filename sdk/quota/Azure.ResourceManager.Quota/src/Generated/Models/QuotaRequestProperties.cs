@@ -11,7 +11,6 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Quota request properties. </summary>
     internal partial class QuotaRequestProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaRequestProperties(QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IList<QuotaSubRequestDetail> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaRequestProperties(QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IReadOnlyList<QuotaSubRequestDetail> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Message = message;
@@ -55,9 +54,5 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
         [WirePath("requestSubmitTime")]
         public DateTimeOffset? RequestSubmitOn { get; }
-
-        /// <summary> Quota request details. </summary>
-        [WirePath("value")]
-        public IList<QuotaSubRequestDetail> Value { get; } = new ChangeTrackingList<QuotaSubRequestDetail>();
     }
 }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Quota.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGroupQuotasEntityProperties(document.RootElement, options);
                     }

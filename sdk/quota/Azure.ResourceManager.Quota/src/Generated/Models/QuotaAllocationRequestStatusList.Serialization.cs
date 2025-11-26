@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (QuotaAllocationRequestStatusData item in Value)
+            foreach (QuotaAllocationRequestStatus item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            IList<QuotaAllocationRequestStatusData> value = default;
+            IList<QuotaAllocationRequestStatus> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<QuotaAllocationRequestStatusData> array = new List<QuotaAllocationRequestStatusData>();
+                    List<QuotaAllocationRequestStatus> array = new List<QuotaAllocationRequestStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuotaAllocationRequestStatusData.DeserializeQuotaAllocationRequestStatusData(item, options));
+                        array.Add(QuotaAllocationRequestStatus.DeserializeQuotaAllocationRequestStatus(item, options));
                     }
                     value = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Quota.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeQuotaAllocationRequestStatusList(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuotaAllocationRequestStatusList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="QuotaAllocationRequestStatusList"/> from. </param>
-        internal static QuotaAllocationRequestStatusList FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuotaAllocationRequestStatusList"/> from. </param>
+        internal static QuotaAllocationRequestStatusList FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeQuotaAllocationRequestStatusList(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

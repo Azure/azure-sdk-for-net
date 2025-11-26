@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Quota
 
         /// <summary> Quota request details. </summary>
         [WirePath("properties.value")]
-        public IList<QuotaSubRequestDetail> Value
+        public IReadOnlyList<QuotaSubRequestDetail> Value
         {
             get
             {

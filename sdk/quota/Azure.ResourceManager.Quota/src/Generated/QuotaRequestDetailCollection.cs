@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Quota
     /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class QuotaRequestDetailCollection : ArmCollection
+    public partial class QuotaRequestDetailCollection : ArmCollection, IEnumerable<QuotaRequestDetailResource>, IAsyncEnumerable<QuotaRequestDetailResource>
     {
         private readonly ClientDiagnostics _quotaRequestStatusClientDiagnostics;
         private readonly QuotaRequestStatus _quotaRequestStatusRestClient;
@@ -136,6 +138,94 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotaRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaRequestStatus_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter">
+        /// | Field                    | Supported operators
+        /// |---------------------|------------------------
+        /// 
+        /// |requestSubmitTime | ge, le, eq, gt, lt
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
+                _quotaRequestStatusRestClient,
+                Id,
+                filter,
+                top,
+                skiptoken,
+                context), data => new QuotaRequestDetailResource(Client, data));
+        }
+
+        /// <summary>
+        /// For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Quota/quotaRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> QuotaRequestStatus_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter">
+        /// | Field                    | Supported operators
+        /// |---------------------|------------------------
+        /// 
+        /// |requestSubmitTime | ge, le, eq, gt, lt
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaRequestDetailResource> GetAll(string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<QuotaRequestDetailData, QuotaRequestDetailResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
+                _quotaRequestStatusRestClient,
+                Id,
+                filter,
+                top,
+                skiptoken,
+                context), data => new QuotaRequestDetailResource(Client, data));
         }
 
         /// <summary>
@@ -372,6 +462,22 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<QuotaRequestDetailResource> IEnumerable<QuotaRequestDetailResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<QuotaRequestDetailResource> IAsyncEnumerable<QuotaRequestDetailResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

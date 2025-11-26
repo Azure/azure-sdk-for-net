@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Quota.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeQuotaOperationListResult(document.RootElement, options);
                     }
@@ -162,11 +162,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<QuotaOperationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="QuotaOperationListResult"/> from. </param>
-        internal static QuotaOperationListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuotaOperationListResult"/> from. </param>
+        internal static QuotaOperationListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeQuotaOperationListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

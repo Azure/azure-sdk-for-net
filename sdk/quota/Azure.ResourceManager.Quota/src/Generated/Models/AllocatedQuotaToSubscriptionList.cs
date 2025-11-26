@@ -11,8 +11,7 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Quota allocated to subscriptions. </summary>
-    public partial class AllocatedQuotaToSubscriptionList
+    internal partial class AllocatedQuotaToSubscriptionList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

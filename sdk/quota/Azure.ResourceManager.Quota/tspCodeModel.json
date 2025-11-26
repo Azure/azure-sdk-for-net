@@ -6298,7 +6298,7 @@
                 "methodId": "Microsoft.Quota.CurrentUsagesBases.get",
                 "kind": "Get",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/usages/{resourceName}",
-                "operationScope": "Tenant",
+                "operationScope": "Extension",
                 "resourceScope": "/{scope}/providers/Microsoft.Quota/usages/{resourceName}"
               },
               {
@@ -6306,10 +6306,10 @@
                 "methodId": "Microsoft.Quota.CurrentUsagesBases.list",
                 "kind": "List",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/usages",
-                "operationScope": "Tenant"
+                "operationScope": "Extension"
               }
             ],
-            "resourceScope": "Tenant",
+            "resourceScope": "Extension",
             "resourceName": "CurrentUsagesBase"
           }
         }
@@ -6808,7 +6808,7 @@
                 "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.get",
                 "kind": "Get",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
-                "operationScope": "Tenant",
+                "operationScope": "Extension",
                 "resourceScope": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}"
               },
               {
@@ -6816,7 +6816,7 @@
                 "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.createOrUpdate",
                 "kind": "Create",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
-                "operationScope": "Tenant",
+                "operationScope": "Extension",
                 "resourceScope": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}"
               },
               {
@@ -6824,7 +6824,7 @@
                 "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.update",
                 "kind": "Update",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}",
-                "operationScope": "Tenant",
+                "operationScope": "Extension",
                 "resourceScope": "/{scope}/providers/Microsoft.Quota/quotas/{resourceName}"
               },
               {
@@ -6832,10 +6832,10 @@
                 "methodId": "Microsoft.Quota.CurrentQuotaLimitBases.list",
                 "kind": "List",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/quotas",
-                "operationScope": "Tenant"
+                "operationScope": "Extension"
               }
             ],
-            "resourceScope": "Tenant",
+            "resourceScope": "Extension",
             "resourceName": "CurrentQuotaLimitBase"
           }
         }
@@ -7387,7 +7387,7 @@
                 "methodId": "Microsoft.Quota.QuotaRequestStatus.get",
                 "kind": "Get",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/quotaRequests/{id}",
-                "operationScope": "Tenant",
+                "operationScope": "Extension",
                 "resourceScope": "/{scope}/providers/Microsoft.Quota/quotaRequests/{id}"
               },
               {
@@ -7395,10 +7395,10 @@
                 "methodId": "Microsoft.Quota.QuotaRequestStatus.list",
                 "kind": "List",
                 "operationPath": "/{scope}/providers/Microsoft.Quota/quotaRequests",
-                "operationScope": "Tenant"
+                "operationScope": "Extension"
               }
             ],
-            "resourceScope": "Tenant",
+            "resourceScope": "Extension",
             "resourceName": "QuotaRequestDetail"
           }
         }

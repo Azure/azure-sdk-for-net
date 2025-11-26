@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Quota
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGroupQuotaEntityData(document.RootElement, options);
                     }
@@ -186,11 +186,10 @@ namespace Azure.ResourceManager.Quota
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaEntityData"/> from. </param>
-        internal static GroupQuotaEntityData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaEntityData"/> from. </param>
+        internal static GroupQuotaEntityData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGroupQuotaEntityData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

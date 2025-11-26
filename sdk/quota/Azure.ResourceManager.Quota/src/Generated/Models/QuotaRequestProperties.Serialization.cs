@@ -13,7 +13,6 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Quota request properties. </summary>
     internal partial class QuotaRequestProperties : IJsonModel<QuotaRequestProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Quota.Models
             string message = default;
             ServiceErrorDetail error = default;
             DateTimeOffset? requestSubmitOn = default;
-            IList<QuotaSubRequestDetail> value = default;
+            IReadOnlyList<QuotaSubRequestDetail> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Quota.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeQuotaRequestProperties(document.RootElement, options);
                     }
