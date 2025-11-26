@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportSchedule"/>. </summary>
-        /// <param name="status"> The status of the export's schedule. If 'Inactive', the export's schedule is paused. </param>
+        /// <param name="status"> The status of the export's schedule. If 'Inactive', the export's schedule is paused. To enable export set the status to be Active and then make a PUT request. </param>
         /// <param name="recurrence"> The schedule recurrence. </param>
         /// <param name="recurrencePeriod"> Has start and end date of the recurrence. The start date must be in future. If present, the end date must be greater than start date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the export's schedule. If 'Inactive', the export's schedule is paused. </summary>
+        /// <summary> The status of the export's schedule. If 'Inactive', the export's schedule is paused. To enable export set the status to be Active and then make a PUT request. </summary>
         public ExportScheduleStatusType? Status { get; set; }
         /// <summary> The schedule recurrence. </summary>
         public ExportScheduleRecurrenceType? Recurrence { get; set; }

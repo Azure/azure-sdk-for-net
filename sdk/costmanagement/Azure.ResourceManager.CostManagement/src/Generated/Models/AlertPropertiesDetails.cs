@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceGroupFilter = new ChangeTrackingList<BinaryData>();
             ResourceFilter = new ChangeTrackingList<BinaryData>();
             MeterFilter = new ChangeTrackingList<BinaryData>();
+            TagFilter = new ChangeTrackingDictionary<string, BinaryData>();
             ContactEmails = new ChangeTrackingList<string>();
             ContactGroups = new ChangeTrackingList<string>();
             ContactRoles = new ChangeTrackingList<string>();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="enrollmentEndDate"> datetime of enrollmentEndDate. </param>
         /// <param name="invoicingThreshold"> invoicing threshold. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, BinaryData tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AlertPropertiesDetails(AlertTimeGrainType? timeGrainType, string periodStartDate, string triggeredBy, IList<BinaryData> resourceGroupFilter, IList<BinaryData> resourceFilter, IList<BinaryData> meterFilter, IDictionary<string, BinaryData> tagFilter, decimal? threshold, CostManagementAlertOperator? @operator, decimal? amount, string unit, decimal? currentSpend, IList<string> contactEmails, IList<string> contactGroups, IList<string> contactRoles, string overridingAlert, string departmentName, string companyName, string enrollmentNumber, string enrollmentStartDate, string enrollmentEndDate, decimal? invoicingThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeGrainType = timeGrainType;
             PeriodStartDate = periodStartDate;
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary>
         /// tags to filter by
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData TagFilter { get; set; }
+        public IDictionary<string, BinaryData> TagFilter { get; }
         /// <summary> notification threshold percentage as a decimal which activated this alert. </summary>
         public decimal? Threshold { get; set; }
         /// <summary> operator used to compare currentSpend with amount. </summary>

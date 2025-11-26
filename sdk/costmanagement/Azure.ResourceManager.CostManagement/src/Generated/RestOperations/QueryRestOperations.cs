@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Query the usage data for external cloud provider type defined. </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="queryDefinition"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Query the usage data for external cloud provider type defined. </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="queryDefinition"> Parameters supplied to the CreateOrUpdate Query Config operation. </param>
+        /// <param name="queryDefinition"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>

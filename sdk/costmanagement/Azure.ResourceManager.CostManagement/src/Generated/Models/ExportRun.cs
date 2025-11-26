@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
-        public ExportRun()
+        internal ExportRun()
         {
         }
 
@@ -63,12 +63,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="submittedOn"> The time when export was queued to be run. </param>
         /// <param name="processingStartOn"> The time when export was picked up to be run. </param>
         /// <param name="processingEndOn"> The time when the export run finished. </param>
+        /// <param name="startOn"> The start datetime for the export. </param>
+        /// <param name="endOn"> The end datetime for the export. </param>
         /// <param name="fileName"> The name of the exported file. </param>
+        /// <param name="manifestFile"> The manifest file location(URI location) for the exported files. </param>
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, string fileName, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunExecutionType? executionType, ExportRunExecutionStatus? status, string submittedBy, DateTimeOffset? submittedOn, DateTimeOffset? processingStartOn, DateTimeOffset? processingEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string fileName, string manifestFile, CommonExportProperties runSettings, ExportRunErrorDetails error, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExecutionType = executionType;
             Status = status;
@@ -76,7 +79,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             SubmittedOn = submittedOn;
             ProcessingStartOn = processingStartOn;
             ProcessingEndOn = processingEndOn;
+            StartOn = startOn;
+            EndOn = endOn;
             FileName = fileName;
+            ManifestFile = manifestFile;
             RunSettings = runSettings;
             Error = error;
             ETag = eTag;
@@ -84,24 +90,30 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The type of the export run. </summary>
-        public ExportRunExecutionType? ExecutionType { get; set; }
+        public ExportRunExecutionType? ExecutionType { get; }
         /// <summary> The last known status of the export run. </summary>
-        public ExportRunExecutionStatus? Status { get; set; }
+        public ExportRunExecutionStatus? Status { get; }
         /// <summary> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </summary>
-        public string SubmittedBy { get; set; }
+        public string SubmittedBy { get; }
         /// <summary> The time when export was queued to be run. </summary>
-        public DateTimeOffset? SubmittedOn { get; set; }
+        public DateTimeOffset? SubmittedOn { get; }
         /// <summary> The time when export was picked up to be run. </summary>
-        public DateTimeOffset? ProcessingStartOn { get; set; }
+        public DateTimeOffset? ProcessingStartOn { get; }
         /// <summary> The time when the export run finished. </summary>
-        public DateTimeOffset? ProcessingEndOn { get; set; }
+        public DateTimeOffset? ProcessingEndOn { get; }
+        /// <summary> The start datetime for the export. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> The end datetime for the export. </summary>
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The name of the exported file. </summary>
-        public string FileName { get; set; }
+        public string FileName { get; }
+        /// <summary> The manifest file location(URI location) for the exported files. </summary>
+        public string ManifestFile { get; }
         /// <summary> The export settings that were in effect for this run. </summary>
-        public CommonExportProperties RunSettings { get; set; }
+        public CommonExportProperties RunSettings { get; }
         /// <summary> The details of any error. </summary>
-        public ExportRunErrorDetails Error { get; set; }
+        public ExportRunErrorDetails Error { get; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag { get; }
     }
 }

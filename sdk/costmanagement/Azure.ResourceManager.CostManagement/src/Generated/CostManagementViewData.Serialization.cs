@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DateRange))
+            if (Optional.IsDefined(DateRange))
             {
                 writer.WritePropertyName("dateRange"u8);
                 writer.WriteStringValue(DateRange);
@@ -396,6 +396,7 @@ namespace Azure.ResourceManager.CostManagement
                 name,
                 type,
                 systemData,
+                eTag,
                 displayName,
                 scope,
                 createdOn,
@@ -412,7 +413,6 @@ namespace Azure.ResourceManager.CostManagement
                 timePeriod,
                 dataSet,
                 includeMonetaryCommitment,
-                eTag,
                 serializedAdditionalRawData);
         }
 

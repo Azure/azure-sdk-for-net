@@ -32,113 +32,15 @@ namespace Azure.ResourceManager.CostManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountIdRequestUri(string billingAccountId, GrainContent? grainParameter, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountId, true);
-            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (grainParameter != null)
-            {
-                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountIdRequest(string billingAccountId, GrainContent? grainParameter, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountId, true);
-            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (grainParameter != null)
-            {
-                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-
-            using var message = CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BenefitUtilizationSummariesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-
-            using var message = CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BenefitUtilizationSummariesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateListByBillingProfileIdRequestUri(string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
@@ -162,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
@@ -183,8 +85,8 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -212,8 +114,8 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -240,11 +142,109 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountIdRequestUri(string billingAccountId, GrainContent? grainParameter, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (grainParameter != null)
+            {
+                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByBillingAccountIdRequest(string billingAccountId, GrainContent? grainParameter, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (grainParameter != null)
+            {
+                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            using var message = CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BenefitUtilizationSummariesListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            using var message = CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BenefitUtilizationSummariesListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateListBySavingsPlanOrderRequestUri(string savingsPlanOrderId, string filter, GrainContent? grainParameter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath("/providers/microsoft.BillingBenefits/savingsPlanOrders/", false);
             uri.AppendPath(savingsPlanOrderId, true);
             uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath("/providers/microsoft.BillingBenefits/savingsPlanOrders/", false);
             uri.AppendPath(savingsPlanOrderId, true);
             uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath("/providers/microsoft.BillingBenefits/savingsPlanOrders/", false);
             uri.AppendPath(savingsPlanOrderId, true);
             uri.AppendPath("/savingsPlans/", false);
             uri.AppendPath(savingsPlanId, true);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath("/providers/microsoft.BillingBenefits/savingsPlanOrders/", false);
             uri.AppendPath(savingsPlanOrderId, true);
             uri.AppendPath("/savingsPlans/", false);
             uri.AppendPath(savingsPlanId, true);
@@ -444,86 +444,6 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        internal RequestUriBuilder CreateListByBillingAccountIdNextPageRequestUri(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountIdNextPageRequest(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdNextPageAsync(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-
-            using var message = CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BenefitUtilizationSummariesListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="grainParameter"> Grain. </param>
-        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountIdNextPage(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
-
-            using var message = CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BenefitUtilizationSummariesListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListByBillingProfileIdNextPageRequestUri(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
         {
             var uri = new RawRequestUriBuilder();
@@ -548,8 +468,8 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -579,8 +499,8 @@ namespace Azure.ResourceManager.CostManagement
 
         /// <summary> Lists savings plan utilization summaries for billing profile. Supported at grain values: 'Daily' and 'Monthly'. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountId"> Billing account ID. </param>
-        /// <param name="billingProfileId"> Billing profile ID. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="billingProfileId"> Billing Profile ID. </param>
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -593,6 +513,86 @@ namespace Azure.ResourceManager.CostManagement
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             using var message = CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BenefitUtilizationSummariesListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountIdNextPageRequestUri(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByBillingAccountIdNextPageRequest(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BenefitUtilizationSummariesListResult>> ListByBillingAccountIdNextPageAsync(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            using var message = CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BenefitUtilizationSummariesListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BenefitUtilizationSummariesListResult.DeserializeBenefitUtilizationSummariesListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists savings plan utilization summaries for the enterprise agreement scope. Supported at grain values: 'Daily' and 'Monthly'. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="billingAccountId"> BillingAccount ID. </param>
+        /// <param name="grainParameter"> Grain. </param>
+        /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BenefitUtilizationSummariesListResult> ListByBillingAccountIdNextPage(string nextLink, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+
+            using var message = CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CostManagement.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByBillingAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByBillingAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportGetByBillingAccount.json
             // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByDepartment()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByDepartment.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportGetByDepartment.json
             // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByEnrollmentAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByEnrollmentAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportGetByEnrollmentAccount.json
             // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByManagementGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByManagementGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportGetByManagementGroup.json
             // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetByResourceGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportGetByResourceGroup.json
             // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportGetBySubscription()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportGetBySubscription.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportGetBySubscription.json
             // this example is just showing the usage of "Exports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExportDeleteByBillingAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportDeleteByBillingAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportDeleteByBillingAccount.json
             // this example is just showing the usage of "Exports_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExportDeleteByDepartment()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportDeleteByDepartment.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportDeleteByDepartment.json
             // this example is just showing the usage of "Exports_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExportDeleteByEnrollmentAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportDeleteByEnrollmentAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportDeleteByEnrollmentAccount.json
             // this example is just showing the usage of "Exports_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExportDeleteByManagementGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportDeleteByManagementGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportDeleteByManagementGroup.json
             // this example is just showing the usage of "Exports_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExportDeleteByResourceGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportDeleteByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportDeleteByResourceGroup.json
             // this example is just showing the usage of "Exports_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExportDeleteBySubscription()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportDeleteBySubscription.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportDeleteBySubscription.json
             // this example is just showing the usage of "Exports_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -344,7 +345,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExportCreateOrUpdateByBillingAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByBillingAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccount.json
             // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -362,9 +363,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementExportData data = new CostManagementExportData
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
+                    DestinationType = DestinationType.AzureBlob,
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
@@ -373,16 +377,361 @@ namespace Azure.ResourceManager.CostManagement.Samples
                     DataSet = new ExportDataset
                     {
                         Granularity = GranularityType.Daily,
-                        Columns = { "Date", "MeterId", "ResourceId", "ResourceLocation", "Quantity" },
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
                     },
                 },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
                 Schedule = new ExportSchedule
                 {
                     Status = ExportScheduleStatusType.Active,
-                    Recurrence = ExportScheduleRecurrenceType.Weekly,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
-                        To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
+                        To = DateTimeOffset.Parse("2020-06-30T00:00:00Z"),
+                    },
+                },
+            };
+            ArmOperation<CostManagementExportResource> lro = await costManagementExport.UpdateAsync(WaitUntil.Completed, data);
+            CostManagementExportResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementExportData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ExportCreateOrUpdateByBillingAccountCustom()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccountCustom.json
+            // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            CostManagementExportData data = new CostManagementExportData
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Csv,
+                DeliveryInfoDestination = new ExportDeliveryDestination("exports")
+                {
+                    DestinationType = DestinationType.AzureBlob,
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
+                    RootFolderPath = "ad-hoc",
+                },
+                Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.Custom)
+                {
+                    TimePeriod = new ExportTimePeriod(DateTimeOffset.Parse("2025-04-03T00:00:00.000Z"), DateTimeOffset.Parse("2025-04-03T00:00:00.000Z")),
+                    DataSet = new ExportDataset
+                    {
+                        Granularity = GranularityType.Daily,
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
+                    },
+                },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
+                Schedule = new ExportSchedule
+                {
+                    Status = ExportScheduleStatusType.Inactive,
+                },
+            };
+            ArmOperation<CostManagementExportResource> lro = await costManagementExport.UpdateAsync(WaitUntil.Completed, data);
+            CostManagementExportResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementExportData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ExportCreateOrUpdateByBillingAccountMonthly()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccountMonthly.json
+            // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            CostManagementExportData data = new CostManagementExportData
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Csv,
+                DeliveryInfoDestination = new ExportDeliveryDestination("exports")
+                {
+                    DestinationType = DestinationType.AzureBlob,
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
+                    RootFolderPath = "ad-hoc",
+                },
+                Definition = new ExportDefinition(ExportType.ActualCost, TimeframeType.TheLastMonth)
+                {
+                    DataSet = new ExportDataset
+                    {
+                        Granularity = GranularityType.Daily,
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
+                    },
+                },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
+                Schedule = new ExportSchedule
+                {
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Monthly,
+                    RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-05T00:00:00Z"))
+                    {
+                        To = DateTimeOffset.Parse("2030-06-30T00:00:00Z"),
+                    },
+                },
+            };
+            ArmOperation<CostManagementExportResource> lro = await costManagementExport.UpdateAsync(WaitUntil.Completed, data);
+            CostManagementExportResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementExportData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ExportCreateOrUpdateByBillingAccountPricesheet()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccountPricesheet.json
+            // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            CostManagementExportData data = new CostManagementExportData
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Csv,
+                DeliveryInfoDestination = new ExportDeliveryDestination("exports")
+                {
+                    DestinationType = DestinationType.AzureBlob,
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
+                    RootFolderPath = "ad-hoc",
+                },
+                Definition = new ExportDefinition(ExportType.PriceSheet, TimeframeType.TheCurrentMonth)
+                {
+                    DataSet = new ExportDataset
+                    {
+                        Granularity = GranularityType.Daily,
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
+                    },
+                },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
+                Schedule = new ExportSchedule
+                {
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
+                    RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2023-06-01T00:00:00Z"))
+                    {
+                        To = DateTimeOffset.Parse("2023-06-30T00:00:00Z"),
+                    },
+                },
+            };
+            ArmOperation<CostManagementExportResource> lro = await costManagementExport.UpdateAsync(WaitUntil.Completed, data);
+            CostManagementExportResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementExportData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ExportCreateOrUpdateByBillingAccountReservationDetails()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccountReservationDetails.json
+            // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            CostManagementExportData data = new CostManagementExportData
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Csv,
+                DeliveryInfoDestination = new ExportDeliveryDestination("exports")
+                {
+                    DestinationType = DestinationType.AzureBlob,
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
+                    RootFolderPath = "ad-hoc",
+                },
+                Definition = new ExportDefinition(ExportType.ReservationDetails, TimeframeType.MonthToDate)
+                {
+                    DataSet = new ExportDataset
+                    {
+                        Granularity = GranularityType.Daily,
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-03-01",
+                        },
+                    },
+                },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
+                Schedule = new ExportSchedule
+                {
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
+                    RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2023-06-01T00:00:00Z"))
+                    {
+                        To = DateTimeOffset.Parse("2023-06-30T00:00:00Z"),
+                    },
+                },
+            };
+            ArmOperation<CostManagementExportResource> lro = await costManagementExport.UpdateAsync(WaitUntil.Completed, data);
+            CostManagementExportResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementExportData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ExportCreateOrUpdateByBillingAccountReservationRecommendation()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccountReservationRecommendation.json
+            // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            CostManagementExportData data = new CostManagementExportData
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Csv,
+                DeliveryInfoDestination = new ExportDeliveryDestination("exports")
+                {
+                    DestinationType = DestinationType.AzureBlob,
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
+                    RootFolderPath = "ad-hoc",
+                },
+                Definition = new ExportDefinition(ExportType.ReservationRecommendations, TimeframeType.MonthToDate)
+                {
+                    DataSet = new ExportDataset
+                    {
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                            Filters = {new FilterItems
+{
+Name = FilterItemName.ReservationScope,
+Value = "Single",
+}, new FilterItems
+{
+Name = FilterItemName.ResourceType,
+Value = "VirtualMachines",
+}, new FilterItems
+{
+Name = FilterItemName.LookBackPeriod,
+Value = "Last7Days",
+}},
+                        },
+                    },
+                },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
+                Schedule = new ExportSchedule
+                {
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
+                    RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2023-06-01T00:00:00Z"))
+                    {
+                        To = DateTimeOffset.Parse("2023-06-30T00:00:00Z"),
                     },
                 },
             };
@@ -400,7 +749,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExportCreateOrUpdateByDepartment()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByDepartment.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByDepartment.json
             // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -418,9 +767,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementExportData data = new CostManagementExportData
             {
-                Format = ExportFormatType.Csv,
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Parquet,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
+                    DestinationType = DestinationType.AzureBlob,
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
@@ -429,16 +781,23 @@ namespace Azure.ResourceManager.CostManagement.Samples
                     DataSet = new ExportDataset
                     {
                         Granularity = GranularityType.Daily,
-                        Columns = { "Date", "MeterId", "ResourceId", "ResourceLocation", "Quantity" },
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
                     },
                 },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Snappy,
+                ExportDescription = "This is a test export.",
                 Schedule = new ExportSchedule
                 {
                     Status = ExportScheduleStatusType.Active,
-                    Recurrence = ExportScheduleRecurrenceType.Weekly,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
-                        To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
+                        To = DateTimeOffset.Parse("2020-06-30T00:00:00Z"),
                     },
                 },
             };
@@ -456,7 +815,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExportCreateOrUpdateByEnrollmentAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByEnrollmentAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByEnrollmentAccount.json
             // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -474,9 +833,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementExportData data = new CostManagementExportData
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
+                    DestinationType = DestinationType.AzureBlob,
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
@@ -485,16 +847,23 @@ namespace Azure.ResourceManager.CostManagement.Samples
                     DataSet = new ExportDataset
                     {
                         Granularity = GranularityType.Daily,
-                        Columns = { "Date", "MeterId", "ResourceId", "ResourceLocation", "Quantity" },
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
                     },
                 },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
                 Schedule = new ExportSchedule
                 {
                     Status = ExportScheduleStatusType.Active,
-                    Recurrence = ExportScheduleRecurrenceType.Weekly,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
-                        To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
+                        To = DateTimeOffset.Parse("2020-06-30T00:00:00Z"),
                     },
                 },
             };
@@ -512,7 +881,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExportCreateOrUpdateByManagementGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByManagementGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByManagementGroup.json
             // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -530,9 +899,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementExportData data = new CostManagementExportData
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
+                    DestinationType = DestinationType.AzureBlob,
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
@@ -541,16 +913,23 @@ namespace Azure.ResourceManager.CostManagement.Samples
                     DataSet = new ExportDataset
                     {
                         Granularity = GranularityType.Daily,
-                        Columns = { "Date", "MeterId", "ResourceId", "ResourceLocation", "Quantity" },
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
                     },
                 },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
                 Schedule = new ExportSchedule
                 {
                     Status = ExportScheduleStatusType.Active,
-                    Recurrence = ExportScheduleRecurrenceType.Weekly,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
-                        To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
+                        To = DateTimeOffset.Parse("2020-06-30T00:00:00Z"),
                     },
                 },
             };
@@ -568,7 +947,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExportCreateOrUpdateByResourceGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByResourceGroup.json
             // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -586,9 +965,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementExportData data = new CostManagementExportData
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
+                    DestinationType = DestinationType.AzureBlob,
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
@@ -597,16 +979,23 @@ namespace Azure.ResourceManager.CostManagement.Samples
                     DataSet = new ExportDataset
                     {
                         Granularity = GranularityType.Daily,
-                        Columns = { "Date", "MeterId", "ResourceId", "ResourceLocation", "Quantity" },
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
                     },
                 },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
                 Schedule = new ExportSchedule
                 {
                     Status = ExportScheduleStatusType.Active,
-                    Recurrence = ExportScheduleRecurrenceType.Weekly,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
-                        To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
+                        To = DateTimeOffset.Parse("2020-06-30T00:00:00Z"),
                     },
                 },
             };
@@ -624,7 +1013,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExportCreateOrUpdateBySubscription()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportCreateOrUpdateBySubscription.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateBySubscription.json
             // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -642,9 +1031,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostManagementExportData data = new CostManagementExportData
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
                 Format = ExportFormatType.Csv,
                 DeliveryInfoDestination = new ExportDeliveryDestination("exports")
                 {
+                    DestinationType = DestinationType.AzureBlob,
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
                     RootFolderPath = "ad-hoc",
                 },
@@ -653,16 +1045,88 @@ namespace Azure.ResourceManager.CostManagement.Samples
                     DataSet = new ExportDataset
                     {
                         Granularity = GranularityType.Daily,
-                        Columns = { "Date", "MeterId", "ResourceId", "ResourceLocation", "Quantity" },
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
                     },
                 },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
                 Schedule = new ExportSchedule
                 {
                     Status = ExportScheduleStatusType.Active,
-                    Recurrence = ExportScheduleRecurrenceType.Weekly,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
                     RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2020-06-01T00:00:00Z"))
                     {
-                        To = DateTimeOffset.Parse("2020-10-31T00:00:00Z"),
+                        To = DateTimeOffset.Parse("2020-06-30T00:00:00Z"),
+                    },
+                },
+            };
+            ArmOperation<CostManagementExportResource> lro = await costManagementExport.UpdateAsync(WaitUntil.Completed, data);
+            CostManagementExportResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementExportData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ExportCreateOrUpdateExportCreateOrUpdateByBillingAccountReservationTransactionsByBillingAccount()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportCreateOrUpdateByBillingAccountReservationTransactions.json
+            // this example is just showing the usage of "Exports_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            CostManagementExportData data = new CostManagementExportData
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Location = new AzureLocation("centralus"),
+                Format = ExportFormatType.Csv,
+                DeliveryInfoDestination = new ExportDeliveryDestination("exports")
+                {
+                    DestinationType = DestinationType.AzureBlob,
+                    ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182"),
+                    RootFolderPath = "ad-hoc",
+                },
+                Definition = new ExportDefinition(ExportType.ReservationTransactions, TimeframeType.MonthToDate)
+                {
+                    DataSet = new ExportDataset
+                    {
+                        Configuration = new ExportDatasetConfiguration
+                        {
+                            DataVersion = "2023-05-01",
+                        },
+                    },
+                },
+                PartitionData = true,
+                DataOverwriteBehavior = DataOverwriteBehaviorType.OverwritePreviousReport,
+                CompressionMode = CompressionModeType.Gzip,
+                ExportDescription = "This is a test export.",
+                Schedule = new ExportSchedule
+                {
+                    Status = ExportScheduleStatusType.Active,
+                    Recurrence = ExportScheduleRecurrenceType.Daily,
+                    RecurrencePeriod = new ExportRecurrencePeriod(DateTimeOffset.Parse("2023-06-01T00:00:00Z"))
+                    {
+                        To = DateTimeOffset.Parse("2023-06-30T00:00:00Z"),
                     },
                 },
             };
@@ -680,7 +1144,32 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_ExportRunByBillingAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunByBillingAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunByBillingAccount.json
+            // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CostManagementExportResource created on azure
+            // for more information of creating CostManagementExportResource, please refer to the document of CostManagementExportResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/123456";
+            string exportName = "TestExport";
+            ResourceIdentifier costManagementExportResourceId = CostManagementExportResource.CreateResourceIdentifier(scope, exportName);
+            CostManagementExportResource costManagementExport = client.GetCostManagementExportResource(costManagementExportResourceId);
+
+            // invoke the operation
+            await costManagementExport.ExecuteAsync();
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Execute_ExportRunByBillingAccountWithOptionalRequestBody()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunByBillingAccountWithOptionalRequestBody.json
             // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -705,7 +1194,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_ExportRunByDepartment()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunByDepartment.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunByDepartment.json
             // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -730,7 +1219,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_ExportRunByEnrollmentAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunByEnrollmentAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunByEnrollmentAccount.json
             // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -755,7 +1244,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_ExportRunByManagementGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunByManagementGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunByManagementGroup.json
             // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -780,7 +1269,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_ExportRunByResourceGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunByResourceGroup.json
             // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -805,7 +1294,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Execute_ExportRunBySubscription()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunBySubscription.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunBySubscription.json
             // this example is just showing the usage of "Exports_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -830,7 +1319,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionHistory_ExportRunHistoryGetByBillingAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunHistoryGetByBillingAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunHistoryGetByBillingAccount.json
             // this example is just showing the usage of "Exports_GetExecutionHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -858,7 +1347,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionHistory_ExportRunHistoryGetByDepartment()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunHistoryGetByDepartment.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunHistoryGetByDepartment.json
             // this example is just showing the usage of "Exports_GetExecutionHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -886,7 +1375,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionHistory_ExportRunHistoryGetByEnrollmentAccount()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunHistoryGetByEnrollmentAccount.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunHistoryGetByEnrollmentAccount.json
             // this example is just showing the usage of "Exports_GetExecutionHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -914,7 +1403,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionHistory_ExportRunHistoryGetByManagementGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunHistoryGetByManagementGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunHistoryGetByManagementGroup.json
             // this example is just showing the usage of "Exports_GetExecutionHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -942,7 +1431,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionHistory_ExportRunHistoryGetByResourceGroup()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunHistoryGetByResourceGroup.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunHistoryGetByResourceGroup.json
             // this example is just showing the usage of "Exports_GetExecutionHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -970,7 +1459,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionHistory_ExportRunHistoryGetBySubscription()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExportRunHistoryGetBySubscription.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ExportRunHistoryGetBySubscription.json
             // this example is just showing the usage of "Exports_GetExecutionHistory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

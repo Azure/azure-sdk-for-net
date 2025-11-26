@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportDataset"/>. </summary>
-        /// <param name="granularity"> The granularity of rows in the export. Currently only 'Daily' is supported. </param>
+        /// <param name="granularity"> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </param>
         /// <param name="configuration"> The export dataset configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,19 +61,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The granularity of rows in the export. Currently only 'Daily' is supported. </summary>
+        /// <summary> The granularity of rows in the export. Currently 'Daily' is supported for most cases. </summary>
         public GranularityType? Granularity { get; set; }
         /// <summary> The export dataset configuration. </summary>
-        internal ExportDatasetConfiguration Configuration { get; set; }
-        /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>
-        public IList<string> Columns
-        {
-            get
-            {
-                if (Configuration is null)
-                    Configuration = new ExportDatasetConfiguration();
-                return Configuration.Columns;
-            }
-        }
+        public ExportDatasetConfiguration Configuration { get; set; }
     }
 }

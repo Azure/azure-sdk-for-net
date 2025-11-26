@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportDeliveryInfo : IUtf8JsonSerializable, IJsonModel<ExportDeliveryInfo>
+    internal partial class ExportDeliveryInfo : IUtf8JsonSerializable, IJsonModel<ExportDeliveryInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDeliveryInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

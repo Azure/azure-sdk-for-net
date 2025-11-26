@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
     {
         private ClientDiagnostics _benefitRecommendationsClientDiagnostics;
         private BenefitRecommendationsRestOperations _benefitRecommendationsRestClient;
-        private ClientDiagnostics _forecastClientDiagnostics;
-        private ForecastRestOperations _forecastRestClient;
-        private ClientDiagnostics _dimensionsClientDiagnostics;
-        private DimensionsRestOperations _dimensionsRestClient;
-        private ClientDiagnostics _queryClientDiagnostics;
-        private QueryRestOperations _queryRestClient;
         private ClientDiagnostics _scheduledActionsClientDiagnostics;
         private ScheduledActionsRestOperations _scheduledActionsRestClient;
+        private ClientDiagnostics _dimensionsClientDiagnostics;
+        private DimensionsRestOperations _dimensionsRestClient;
+        private ClientDiagnostics _forecastClientDiagnostics;
+        private ForecastRestOperations _forecastRestClient;
+        private ClientDiagnostics _queryClientDiagnostics;
+        private QueryRestOperations _queryRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableCostManagementArmClient"/> class for mocking. </summary>
         protected MockableCostManagementArmClient()
@@ -47,19 +47,233 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
         private ClientDiagnostics BenefitRecommendationsClientDiagnostics => _benefitRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BenefitRecommendationsRestOperations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DimensionsRestOperations DimensionsRestClient => _dimensionsRestClient ??= new DimensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ForecastRestOperations ForecastRestClient => _forecastRestClient ??= new ForecastRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QueryRestOperations QueryRestClient => _queryRestClient ??= new QueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of CostManagementAlertResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
+        public virtual CostManagementAlertCollection GetCostManagementAlerts(ResourceIdentifier scope)
+        {
+            return new CostManagementAlertCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Gets the alert for the scope by alert ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="alertId"> Alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            return await GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the alert for the scope by alert ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="alertId"> Alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CostManagementAlertResource> GetCostManagementAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            return GetCostManagementAlerts(scope).Get(alertId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BudgetResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of BudgetResources and their operations over a BudgetResource. </returns>
+        public virtual BudgetCollection GetBudgets(ResourceIdentifier scope)
+        {
+            return new BudgetCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Gets the budget for the scope by budget name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BudgetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="budgetName"> Budget Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BudgetResource>> GetBudgetAsync(ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
+        {
+            return await GetBudgets(scope).GetAsync(budgetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the budget for the scope by budget name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BudgetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="budgetName"> Budget Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BudgetResource> GetBudget(ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
+        {
+            return GetBudgets(scope).Get(budgetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ScheduledActionResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
+        public virtual ScheduledActionCollection GetScheduledActions(ResourceIdentifier scope)
+        {
+            return new ScheduledActionCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get the shared scheduled action from the given scope by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            return await GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the shared scheduled action from the given scope by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScheduledActionResource> GetScheduledAction(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            return GetScheduledActions(scope).Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of CostManagementExportResources in the ArmClient. </summary>
@@ -83,7 +297,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +330,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,6 +348,74 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         public virtual Response<CostManagementExportResource> GetCostManagementExport(ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetCostManagementExports(scope).Get(exportName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SettingResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of SettingResources and their operations over a SettingResource. </returns>
+        public virtual SettingCollection GetSettings(ResourceIdentifier scope)
+        {
+            return new SettingCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get the setting from the given scope by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/settings/{type}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="type"> Setting type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SettingResource>> GetSettingAsync(ResourceIdentifier scope, SettingType type, CancellationToken cancellationToken = default)
+        {
+            return await GetSettings(scope).GetAsync(type, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the setting from the given scope by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/settings/{type}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Settings_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="type"> Setting type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SettingResource> GetSetting(ResourceIdentifier scope, SettingType type, CancellationToken cancellationToken = default)
+        {
+            return GetSettings(scope).Get(type, cancellationToken);
         }
 
         /// <summary> Gets a collection of CostManagementViewsResources in the ArmClient. </summary>
@@ -157,7 +439,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -189,7 +471,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,148 +490,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return GetAllCostManagementViews(scope).Get(viewName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CostManagementAlertResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
-        public virtual CostManagementAlertCollection GetCostManagementAlerts(ResourceIdentifier scope)
-        {
-            return new CostManagementAlertCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="alertId"> Alert ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
-        {
-            return await GetCostManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the alert for the scope by alert ID.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="alertId"> Alert ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CostManagementAlertResource> GetCostManagementAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
-        {
-            return GetCostManagementAlerts(scope).Get(alertId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ScheduledActionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
-        public virtual ScheduledActionCollection GetScheduledActions(ResourceIdentifier scope)
-        {
-            return new ScheduledActionCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ScheduledActionResource> GetScheduledAction(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return GetScheduledActions(scope).Get(name, cancellationToken);
-        }
-
         /// <summary>
         /// List of recommendations for purchasing savings plan.
         /// <list type="bullet">
@@ -363,7 +503,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +536,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,6 +557,154 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
+        /// Checks availability and correctness of the name for a scheduled action within the given scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
+            scope0.Start();
+            try
+            {
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(scope, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks availability and correctness of the name for a scheduled action within the given scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
+            scope0.Start();
+            try
+            {
+                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(scope, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the defined scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
+        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DimensionsRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand, skiptoken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the dimensions by the defined scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Dimensions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
+        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DimensionsRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand, skiptoken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Lists the forecast charges for scope defined.
         /// <list type="bullet">
         /// <item>
@@ -429,7 +717,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,7 +758,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,72 +787,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Lists the dimensions by the defined scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostManagementDimension> GetDimensionsAsync(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the dimensions by the defined scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/dimensions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Dimensions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostManagementDimension> GetDimensions(ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateListRequest(scope, filter, expand, skiptoken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementArmClient.GetDimensions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Query the usage data for scope defined.
         /// <list type="bullet">
         /// <item>
@@ -577,7 +799,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -617,7 +839,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,122 +865,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 throw;
             }
         }
-
-        /// <summary>
-        /// Checks availability and correctness of the name for a scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> Scheduled action to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
-            scope0.Start();
-            try
-            {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(scope, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks availability and correctness of the name for a scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CheckNameAvailabilityByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> Scheduled action to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope0 = ScheduledActionsClientDiagnostics.CreateScope("MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
-            scope0.Start();
-            try
-            {
-                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(scope, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementExportResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
-        public virtual CostManagementExportResource GetCostManagementExportResource(ResourceIdentifier id)
-        {
-            CostManagementExportResource.ValidateResourceId(id);
-            return new CostManagementExportResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
-        public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
-        {
-            TenantsCostManagementViewsResource.ValidateResourceId(id);
-            return new TenantsCostManagementViewsResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
-        public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
-        {
-            CostManagementViewsResource.ValidateResourceId(id);
-            return new CostManagementViewsResource(Client, id);
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="CostManagementAlertResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
@@ -769,6 +875,30 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         {
             CostManagementAlertResource.ValidateResourceId(id);
             return new CostManagementAlertResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BudgetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BudgetResource.CreateResourceIdentifier" /> to create a <see cref="BudgetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BudgetResource"/> object. </returns>
+        public virtual BudgetResource GetBudgetResource(ResourceIdentifier id)
+        {
+            BudgetResource.ValidateResourceId(id);
+            return new BudgetResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
+        public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
+        {
+            ScheduledActionResource.ValidateResourceId(id);
+            return new ScheduledActionResource(Client, id);
         }
 
         /// <summary>
@@ -784,15 +914,63 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CostManagementExportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
-        public virtual ScheduledActionResource GetScheduledActionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
+        public virtual CostManagementExportResource GetCostManagementExportResource(ResourceIdentifier id)
         {
-            ScheduledActionResource.ValidateResourceId(id);
-            return new ScheduledActionResource(Client, id);
+            CostManagementExportResource.ValidateResourceId(id);
+            return new CostManagementExportResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SettingResource.CreateResourceIdentifier" /> to create a <see cref="SettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SettingResource"/> object. </returns>
+        public virtual SettingResource GetSettingResource(ResourceIdentifier id)
+        {
+            SettingResource.ValidateResourceId(id);
+            return new SettingResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
+        public virtual CostManagementViewsResource GetCostManagementViewsResource(ResourceIdentifier id)
+        {
+            CostManagementViewsResource.ValidateResourceId(id);
+            return new CostManagementViewsResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantsCostManagementViewsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
+        public virtual TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(ResourceIdentifier id)
+        {
+            TenantsCostManagementViewsResource.ValidateResourceId(id);
+            return new TenantsCostManagementViewsResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CostAllocationRuleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostAllocationRuleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CostAllocationRuleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostAllocationRuleDefinitionResource"/> object. </returns>
+        public virtual CostAllocationRuleDefinitionResource GetCostAllocationRuleDefinitionResource(ResourceIdentifier id)
+        {
+            CostAllocationRuleDefinitionResource.ValidateResourceId(id);
+            return new CostAllocationRuleDefinitionResource(Client, id);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The delivery information associated with a export. </summary>
-    public partial class ExportDeliveryInfo
+    internal partial class ExportDeliveryInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

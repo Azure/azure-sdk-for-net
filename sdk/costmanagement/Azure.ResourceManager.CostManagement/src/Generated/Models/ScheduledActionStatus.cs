@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CostManagement.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
         private const string ExpiredValue = "Expired";
+        private const string DisabledValue = "Disabled";
 
-        /// <summary> Scheduled action is saved but will not be run. </summary>
-        public static ScheduledActionStatus Disabled { get; } = new ScheduledActionStatus(DisabledValue);
         /// <summary> Scheduled action is saved and will be run. </summary>
         public static ScheduledActionStatus Enabled { get; } = new ScheduledActionStatus(EnabledValue);
         /// <summary> Scheduled action is expired. </summary>
         public static ScheduledActionStatus Expired { get; } = new ScheduledActionStatus(ExpiredValue);
+        /// <summary> Scheduled action is saved but will not be run. </summary>
+        public static ScheduledActionStatus Disabled { get; } = new ScheduledActionStatus(DisabledValue);
         /// <summary> Determines if two <see cref="ScheduledActionStatus"/> values are the same. </summary>
         public static bool operator ==(ScheduledActionStatus left, ScheduledActionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledActionStatus"/> values are not the same. </summary>

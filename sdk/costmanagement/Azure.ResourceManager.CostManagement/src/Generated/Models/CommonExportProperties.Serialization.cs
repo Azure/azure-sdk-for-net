@@ -53,10 +53,30 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
+            if (Optional.IsDefined(DataOverwriteBehavior))
+            {
+                writer.WritePropertyName("dataOverwriteBehavior"u8);
+                writer.WriteStringValue(DataOverwriteBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(CompressionMode))
+            {
+                writer.WritePropertyName("compressionMode"u8);
+                writer.WriteStringValue(CompressionMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ExportDescription))
+            {
+                writer.WritePropertyName("exportDescription"u8);
+                writer.WriteStringValue(ExportDescription);
+            }
             if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemSuspensionContext))
+            {
+                writer.WritePropertyName("systemSuspensionContext"u8);
+                writer.WriteObjectValue(SystemSuspensionContext, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +120,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             ExportDefinition definition = default;
             ExportExecutionListResult runHistory = default;
             bool? partitionData = default;
+            DataOverwriteBehaviorType? dataOverwriteBehavior = default;
+            CompressionModeType? compressionMode = default;
+            string exportDescription = default;
             DateTimeOffset? nextRunTimeEstimate = default;
+            ExportSuspensionContext systemSuspensionContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,6 +166,29 @@ namespace Azure.ResourceManager.CostManagement.Models
                     partitionData = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("dataOverwriteBehavior"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataOverwriteBehavior = new DataOverwriteBehaviorType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("compressionMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compressionMode = new CompressionModeType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("exportDescription"u8))
+                {
+                    exportDescription = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("nextRunTimeEstimate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -149,6 +196,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                         continue;
                     }
                     nextRunTimeEstimate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("systemSuspensionContext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemSuspensionContext = ExportSuspensionContext.DeserializeExportSuspensionContext(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +219,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 definition,
                 runHistory,
                 partitionData,
+                dataOverwriteBehavior,
+                compressionMode,
+                exportDescription,
                 nextRunTimeEstimate,
+                systemSuspensionContext,
                 serializedAdditionalRawData);
         }
 

@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.CostManagement
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
@@ -70,10 +80,30 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
+            if (Optional.IsDefined(DataOverwriteBehavior))
+            {
+                writer.WritePropertyName("dataOverwriteBehavior"u8);
+                writer.WriteStringValue(DataOverwriteBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(CompressionMode))
+            {
+                writer.WritePropertyName("compressionMode"u8);
+                writer.WriteStringValue(CompressionMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ExportDescription))
+            {
+                writer.WritePropertyName("exportDescription"u8);
+                writer.WriteStringValue(ExportDescription);
+            }
             if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemSuspensionContext))
+            {
+                writer.WritePropertyName("systemSuspensionContext"u8);
+                writer.WriteObjectValue(SystemSuspensionContext, options);
             }
             if (Optional.IsDefined(Schedule))
             {
@@ -103,6 +133,8 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -113,12 +145,34 @@ namespace Azure.ResourceManager.CostManagement
             ExportDefinition definition = default;
             ExportExecutionListResult runHistory = default;
             bool? partitionData = default;
+            DataOverwriteBehaviorType? dataOverwriteBehavior = default;
+            CompressionModeType? compressionMode = default;
+            string exportDescription = default;
             DateTimeOffset? nextRunTimeEstimate = default;
+            ExportSuspensionContext systemSuspensionContext = default;
             ExportSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCostManagementContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -206,6 +260,29 @@ namespace Azure.ResourceManager.CostManagement
                             partitionData = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("dataOverwriteBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataOverwriteBehavior = new DataOverwriteBehaviorType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("compressionMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            compressionMode = new CompressionModeType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("exportDescription"u8))
+                        {
+                            exportDescription = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("nextRunTimeEstimate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -213,6 +290,15 @@ namespace Azure.ResourceManager.CostManagement
                                 continue;
                             }
                             nextRunTimeEstimate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("systemSuspensionContext"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            systemSuspensionContext = ExportSuspensionContext.DeserializeExportSuspensionContext(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("schedule"u8))
@@ -238,14 +324,20 @@ namespace Azure.ResourceManager.CostManagement
                 name,
                 type,
                 systemData,
+                identity,
+                location,
+                eTag,
                 format,
                 deliveryInfo,
                 definition,
                 runHistory,
                 partitionData,
+                dataOverwriteBehavior,
+                compressionMode,
+                exportDescription,
                 nextRunTimeEstimate,
+                systemSuspensionContext,
                 schedule,
-                eTag,
                 serializedAdditionalRawData);
         }
 

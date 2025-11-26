@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -260,6 +260,8 @@ namespace Azure.ResourceManager.CostManagement
                 name,
                 type,
                 systemData,
+                eTag,
+                kind,
                 displayName,
                 fileDestination,
                 notification,
@@ -268,8 +270,6 @@ namespace Azure.ResourceManager.CostManagement
                 scope,
                 status,
                 viewId,
-                eTag,
-                kind,
                 serializedAdditionalRawData);
         }
 

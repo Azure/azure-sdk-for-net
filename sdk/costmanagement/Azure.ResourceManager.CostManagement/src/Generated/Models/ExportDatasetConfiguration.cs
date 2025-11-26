@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The export dataset configuration. Allows columns to be selected for the export. If not provided then the export will include all available columns. </summary>
-    internal partial class ExportDatasetConfiguration
+    /// <summary> This is on path to deprecation and will not be supported going forward. </summary>
+    public partial class ExportDatasetConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,18 +49,27 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
+            Filters = new ChangeTrackingList<FilterItems>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportDatasetConfiguration"/>. </summary>
         /// <param name="columns"> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </param>
+        /// <param name="dataVersion"> The data version for the selected for the export. If not provided then the export will default to latest data version. </param>
+        /// <param name="filters"> Filters associated with the data sets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDatasetConfiguration(IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportDatasetConfiguration(IList<string> columns, string dataVersion, IList<FilterItems> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Columns = columns;
+            DataVersion = dataVersion;
+            Filters = filters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of column names to be included in the export. If not provided then the export will include all available columns. The available columns can vary by customer channel (see examples). </summary>
         public IList<string> Columns { get; }
+        /// <summary> The data version for the selected for the export. If not provided then the export will default to latest data version. </summary>
+        public string DataVersion { get; set; }
+        /// <summary> Filters associated with the data sets. </summary>
+        public IList<FilterItems> Filters { get; }
     }
 }
