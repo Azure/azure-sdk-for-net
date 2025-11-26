@@ -29,13 +29,8 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="watcherName"> The database watcher name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="watcherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public SharedPrivateLinkResourcesGetByWatcherAsyncCollectionResultOfT(SharedPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string watcherName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByWatcherRequest(nextLink, _subscriptionId, _resourceGroupName, _watcherName, _context) : _client.CreateGetByWatcherRequest(_subscriptionId, _resourceGroupName, _watcherName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SharedPrivateLinkResources.GetByWatcher");
             scope.Start();
             try
             {

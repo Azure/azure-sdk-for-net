@@ -28,14 +28,8 @@ namespace Azure.ResourceManager.DependencyMap
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mapName"> Maps resource name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
         public DiscoverySourcesGetByMapsResourceCollectionResultOfT(DiscoverySources client, string subscriptionId, string resourceGroupName, string mapName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -73,7 +67,7 @@ namespace Azure.ResourceManager.DependencyMap
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByMapsResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _mapName, _context) : _client.CreateGetByMapsResourceRequest(_subscriptionId, _resourceGroupName, _mapName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DependencyMapDiscoverySourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DiscoverySources.GetByMapsResource");
             scope.Start();
             try
             {

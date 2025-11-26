@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ComputeLimit
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionLocationResourceRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetBySubscriptionLocationResourceRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ComputeLimitSharedLimitCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SharedLimits.GetBySubscriptionLocationResource");
             scope.Start();
             try
             {
