@@ -1,20 +1,32 @@
 param(
-  [string]$ServiceDirectory,
-  [string]$PackageName,
-  [string]$ExpectedWarningsFilePath,
-  [string]$DirectoryName = "")
+  # Path to the csproj file for the package relative to the repository root
+  [string]$PackagePath)
+
+### Check if AOT compatibility is opted out ###
+
+$RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
+$ProjectPath = Join-Path $RepoRoot $PackagePath
+$PackageName = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
+
+# Get the property directly from the project file - replicating what the target does
+$output = dotnet msbuild -getProperty:AotCompatOptOut "$ProjectPath"
+
+$aotOptOut = $output.Trim() -eq "true"
+
+if ($aotOptOut) {
+    Write-Host "AOT compatibility is opted out for $PackageName. Skipping AOT compatibility check."
+        exit 0
+}
 
 ### Creating a test app ###
 
 Write-Host "Creating a test app to publish."
 
-$expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
-
 # Set the project reference path based on whether DirectoryName was provided
 if ([string]::IsNullOrEmpty($DirectoryName)) {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj"
+    $projectRefFullPath = "..\..\..\..\$PackagePath"
 } else {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$DirectoryName\src\$PackageName.csproj"
+    $projectRefFullPath = "..\..\..\..\$PackagePath"
 }
 
 $folderPath = "\TempAotCompatFiles"
@@ -97,25 +109,24 @@ foreach ($line in $($publishOutput -split "`r`n"))
     }
 }
 
-Write-Host "There were $actualWarningCount warnings reported."
+### Compare to baselined warnings ###
 
-### Reading the contents of the text file path ###
+# Baselining warnings is only allowed for two of the Azure.Core.* packages, hard code the file path to the expected
+# warnings as a backdoor for those packages.
 
-Write-Host "Reading the list of patterns that represent the list of expected warnings."
+$expectedWarningsPath = "..\..\..\..\sdk\core\$PackageName\tests\compatibility\ExpectedAotWarnings.txt"
 
-if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
+if (Test-Path $expectedWarningsPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
-    $expectedWarnings = Get-Content -Path $expectedWarningsFullPath
+    $expectedWarnings = Get-Content -Path $expectedWarningsPath
 } else {
     # If no correct expected warnings were provided, check that there are no warnings reported.
-
-    Write-Host "The specified file does not exist. Assuming no warnings are expected."
 
     $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
-      Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
+      Write-Host "Found $numWarnings AOT warnings:" -ForegroundColor Red
       foreach ($warning in $warnings) {
         Write-Host $warning -ForegroundColor Yellow
       }
@@ -127,15 +138,16 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     Remove-Item -Path "./$folderPath" -Recurse -Force
 
     Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
+    Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath'"
 
     exit $warnings.Count
 }
 
-### Comparing expected warnings to the publish output ###
+Write-Host "There were $actualWarningCount warnings reported from the publish."
 
 $numExpectedWarnings = $expectedWarnings.Count
 
-Write-Host "Checking against the list of expected warnings. There are $numExpectedWarnings warnings expected."
+Write-Host "There are $numExpectedWarnings warnings expected."
 
 $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
@@ -156,8 +168,10 @@ Remove-Item -Path "./$folderPath" -Recurse -Force
 if ($numExpectedWarnings -ne $actualWarningCount) {
   Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
   Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
+  Write-Host "To run locally, run eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath"
   exit 2
 }
-
+  
 Write-Host "`nFor help with this check, please see https://github.com/Azure/azure-sdk-for-net/tree/main/doc/dev/AotCompatibility.md"
+Write-Host "To see this output locally, run 'eng/scripts/compatibility/Check-AOT-Compatibility.ps1 $PackagePath'"
 exit $warnings.Count
