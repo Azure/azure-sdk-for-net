@@ -526,6 +526,11 @@ public class FineTuningTests : FineTuningTestsBase
     {
         // This test demonstrates deploying a fine-tuned model using Azure Resource Manager.
         // It requires a completed fine-tuning job and takes approximately 30 minutes to complete.
+        // Skip in playback mode since ARM operations are not recorded via the test proxy.
+        if (Mode == Microsoft.ClientModel.TestFramework.RecordedTestMode.Playback)
+        {
+            Assert.Ignore("Skipping Test_FineTuning_Deploy_Model in playback mode - ARM operations not supported.");
+        }
 
         // Override the default 10 second timeout for this long-running deployment test
         TestTimeoutInSeconds = 300; // 5 minutes for deployment operations in playback mode
@@ -534,9 +539,10 @@ public class FineTuningTests : FineTuningTestsBase
         string completedJobId = "ftjob-4cb599f9e32d411dba27960ef42cea09";
 
         // Azure Resource Manager configuration - update these values for your environment
-        string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? "your-subscription-id";
-        string resourceGroupName = Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP") ?? "your-resource-group";
-        string accountName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT_NAME") ?? "your-account-name";
+        // Using valid GUID format for dummy subscription ID to pass ARM validation in playback mode
+        string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? "00000000-0000-0000-0000-000000000000";
+        string resourceGroupName = Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP") ?? "test-resource-group";
+        string accountName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT_NAME") ?? "test-account-name";
 
         var (_, fineTuningClient) = GetClients();
 

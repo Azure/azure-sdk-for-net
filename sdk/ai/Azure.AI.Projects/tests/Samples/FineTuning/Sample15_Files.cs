@@ -15,15 +15,10 @@ using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples.FineTuning;
 
-public class Sample15_Files : FineTuningTestsBase
+public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
 {
-    public Sample15_Files(bool isAsync) : base(isAsync)
-    {
-        TestTimeoutInSeconds = 120;
-    }
-
     [Test]
     public async Task FileOperationsAsync()
     {
