@@ -307,18 +307,17 @@ namespace Azure.Generator.Management.Visitors
             var propertyMap = new Dictionary<PropertyProvider, List<FlattenPropertyInfo>>();
             foreach (var internalProperty in model.Properties.Concat(model.CustomCodeView?.Properties ?? []))
             {
-                // we need to flatten the inner property type first
+                // only flatten complex type properties
                 var propertyType = internalProperty.Type;
-                if (!propertyType.IsFrameworkType && ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] is ModelProvider propertyModel
-                    && !_flattenedModelTypes.ContainsKey(propertyType) && propertyType != model.Type)
-                {
-                    FlattenModel(propertyModel);
-                }
-
-                if (!(ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(internalProperty.Type, out var typeProvider)
-                    && typeProvider is ModelProvider modelProvider))
+                if (!(ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(propertyType, out var typeProvider) && typeProvider is ModelProvider modelProvider))
                 {
                     continue;
+                }
+
+                // we need to flatten the inner property type first if its type is also a model type
+                if (!propertyType.IsFrameworkType && !_flattenedModelTypes.ContainsKey(propertyType) && propertyType != model.Type)
+                {
+                    FlattenModel(modelProvider);
                 }
 
                 var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
