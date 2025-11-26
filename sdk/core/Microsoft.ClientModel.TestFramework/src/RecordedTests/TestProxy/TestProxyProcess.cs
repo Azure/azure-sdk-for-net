@@ -160,10 +160,25 @@ public class TestProxyProcess
                 _errorBuffer.Clear();
                 if (error.Contains("dotnet tool restore"))
                 {
+                    var processInfo2 = new ProcessStartInfo
+                    {
+                        FileName = s_dotNetExe,
+                        Arguments = "tool list --local",
+                        WorkingDirectory = TestEnvironment.RepositoryRoot,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+                    using var process2 = Process.Start(processInfo2);
+                    var standardOutput2 = process2!.StandardOutput.ReadToEnd();
+                    Console.WriteLine($"dotnet tool list --local output:\n{standardOutput2}");
+
                     throw new InvalidOperationException("An error occurred in the test proxy. You may need to install the test-proxy tool with the correct source " +
                         "using 'dotnet tool restore --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json' or ensure " +
                         "TestEnvironment.RepositoryRoot is set correctly so the test framework can restore local tools from the dotnet-tools.json manifest. " +
-                        $"The full error is: {error}");
+                        $"The full error is: {error}" + Environment.NewLine +
+                        $"list tool output: {standardOutput2}");
                 }
                 throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
             }
@@ -322,20 +337,6 @@ public class TestProxyProcess
                             }
                         }
                     }
-
-                    var processInfo2 = new ProcessStartInfo
-                    {
-                        FileName = s_dotNetExe,
-                        Arguments = "tool list --local",
-                        WorkingDirectory = repoRoot,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
-                    using var process2 = Process.Start(processInfo2);
-                    var standardOutput2 = process2!.StandardOutput.ReadToEnd();
-                    Console.WriteLine($"dotnet tool list --local output:\n{standardOutput2}");
                 }
             }
         }
