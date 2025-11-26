@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 provisioningState,
                 partnerNamespace,
                 alternateName,
                 role,
                 pendingReplicationOperationsCount,
-                location,
                 serializedAdditionalRawData);
         }
 
