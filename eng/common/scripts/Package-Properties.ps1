@@ -219,16 +219,29 @@ class PackageProps {
 # Returns important properties of the package relative to the language repo
 # Returns a PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }
 # Note: python is required for parsing python package properties.
+# GroupId is optional and is used to filter packages for languages that support group identifiers (e.g., Java).
+# When GroupId is provided, the function will match both the package name and the group ID.
 function Get-PkgProperties {
     Param
     (
         [Parameter(Mandatory = $true)]
         [string]$PackageName,
-        [string]$ServiceDirectory
+        [string]$ServiceDirectory,
+        [string]$GroupId
     )
 
     $allPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
-    $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
+    
+    if ([string]::IsNullOrEmpty($GroupId)) {
+        $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
+    }
+    else {
+        $pkgProps = $allPkgProps.Where({ 
+            ($_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName) -and 
+            $_.PSObject.Properties.Name -contains "Group" -and 
+            $_.Group -eq $GroupId 
+        });
+    }
 
     if ($pkgProps.Count -ge 1) {
         if ($pkgProps.Count -gt 1) {

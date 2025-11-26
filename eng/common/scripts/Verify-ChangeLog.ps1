@@ -1,11 +1,20 @@
 # Wrapper Script for ChangeLog Verification
+# Parameter description
+# ChangeLogLocation: Path to the changelog file
+# VersionString: Version string to verify in the changelog
+# PackageName: Name of the package
+# ServiceDirectory: Service directory path
+# ForRelease: Whether to verify for release (default: false)
+# GroupId: Optional. The group ID for the package. Used for filtering packages in languages that support group identifiers (e.g., Java).
+
 [CmdletBinding()]
 param (
   [String]$ChangeLogLocation,
   [String]$VersionString,
   [string]$PackageName,
   [string]$ServiceDirectory,
-  [boolean]$ForRelease = $False
+  [boolean]$ForRelease = $False,
+  [String]$GroupId
 )
 Set-StrictMode -Version 3
 
@@ -18,7 +27,7 @@ if ($ChangeLogLocation -and $VersionString)
 }
 else
 {
-  $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
+  $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory -GroupId $GroupId
   $validChangeLog = Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $ForRelease
 }
 

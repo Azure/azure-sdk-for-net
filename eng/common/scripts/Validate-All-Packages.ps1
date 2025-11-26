@@ -200,15 +200,9 @@ function ProcessPackage($packageInfo)
 
     # If there's a groupId that means this is Java and pkgName = GroupId+ArtifactName
     # but the VerifyAPIReview requires GroupId:ArtifactName
-    # Can API view handle groupId+artifactName format so that we can use consistent format?
-    Write-Host "Package name before checking groupId: $fullPackageName"
-    if ($packageInfo.PSObject.Members.Name -contains "Group") {
-        $groupId = $packageInfo.Group
-        if ($groupId){
-            $fullPackageName = "${groupId}:$($packageInfo.ArtifactName)"
-        }
-    }
-
+    # Technically we can use groupId+artifactName format in api view,
+    # however it will need to migrate the existing data and Java parser also needs the change.
+    $fullPackageName = Get-FullPackageName -PackageInfo $packageInfo -UseColonSeparator
     Write-Host "Checking API review status for package $fullPackageName"
     $apireviewDetails = VerifyAPIReview $fullPackageName $packageInfo.Version $Language
 
