@@ -29,13 +29,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="schemaRegistryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         public SchemasGetBySchemaRegistryAsyncCollectionResultOfT(Schemas client, Guid subscriptionId, string resourceGroupName, string schemaRegistryName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySchemaRegistryRequest(nextLink, _subscriptionId, _resourceGroupName, _schemaRegistryName, _context) : _client.CreateGetBySchemaRegistryRequest(_subscriptionId, _resourceGroupName, _schemaRegistryName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceRegistrySchemaCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Schemas.GetBySchemaRegistry");
             scope.Start();
             try
             {

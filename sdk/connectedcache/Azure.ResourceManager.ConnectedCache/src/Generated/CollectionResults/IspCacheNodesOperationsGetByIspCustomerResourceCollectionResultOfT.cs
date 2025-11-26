@@ -28,13 +28,8 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public IspCacheNodesOperationsGetByIspCustomerResourceCollectionResultOfT(IspCacheNodesOperations client, Guid subscriptionId, string resourceGroupName, string customerResourceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -72,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedCache
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByIspCustomerResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _customerResourceName, _context) : _client.CreateGetByIspCustomerResourceRequest(_subscriptionId, _resourceGroupName, _customerResourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IspCacheNodeCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IspCacheNodesOperations.GetByIspCustomerResource");
             scope.Start();
             try
             {

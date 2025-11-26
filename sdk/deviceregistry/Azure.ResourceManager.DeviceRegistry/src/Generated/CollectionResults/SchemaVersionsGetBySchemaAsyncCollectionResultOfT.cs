@@ -31,14 +31,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="schemaName"> Schema name parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="schemaRegistryName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="schemaRegistryName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public SchemaVersionsGetBySchemaAsyncCollectionResultOfT(SchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -77,7 +71,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySchemaRequest(nextLink, _subscriptionId, _resourceGroupName, _schemaRegistryName, _schemaName, _context) : _client.CreateGetBySchemaRequest(_subscriptionId, _resourceGroupName, _schemaRegistryName, _schemaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SchemaVersions.GetBySchema");
             scope.Start();
             try
             {
