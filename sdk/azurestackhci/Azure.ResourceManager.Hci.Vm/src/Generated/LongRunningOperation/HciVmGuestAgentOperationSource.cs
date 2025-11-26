@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    internal class HciVmGuestAgentOperationSource : IOperationSource<HciVmGuestAgentResource>
+    /// <summary></summary>
+    internal partial class HciVmGuestAgentOperationSource : IOperationSource<HciVmGuestAgentResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HciVmGuestAgentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HciVmGuestAgentResource IOperationSource<HciVmGuestAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciVmGuestAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciVmGuestAgentData data = HciVmGuestAgentData.DeserializeHciVmGuestAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HciVmGuestAgentResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciVmGuestAgentResource> IOperationSource<HciVmGuestAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciVmGuestAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
-            return await Task.FromResult(new HciVmGuestAgentResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciVmGuestAgentData data = HciVmGuestAgentData.DeserializeHciVmGuestAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HciVmGuestAgentResource(_client, data);
         }
     }
 }

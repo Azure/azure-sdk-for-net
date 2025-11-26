@@ -8,90 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
     /// <summary>
     /// A class representing a collection of <see cref="HciVmStorageContainerResource"/> and their operations.
-    /// Each <see cref="HciVmStorageContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="HciVmStorageContainerCollection"/> instance call the GetHciVmStorageContainers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="HciVmStorageContainerResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="HciVmStorageContainerCollection"/> instance call the GetHciVmStorageContainers method from an instance of the parent resource.
     /// </summary>
     public partial class HciVmStorageContainerCollection : ArmCollection, IEnumerable<HciVmStorageContainerResource>, IAsyncEnumerable<HciVmStorageContainerResource>
     {
-        private readonly ClientDiagnostics _hciVmStorageContainerStorageContainersClientDiagnostics;
-        private readonly StorageContainersRestOperations _hciVmStorageContainerStorageContainersRestClient;
+        private readonly ClientDiagnostics _storageContainersClientDiagnostics;
+        private readonly StorageContainers _storageContainersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmStorageContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmStorageContainerCollection for mocking. </summary>
         protected HciVmStorageContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmStorageContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmStorageContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmStorageContainerStorageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HciVmStorageContainerResource.ResourceType, out string hciVmStorageContainerStorageContainersApiVersion);
-            _hciVmStorageContainerStorageContainersRestClient = new StorageContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmStorageContainerStorageContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HciVmStorageContainerResource.ResourceType, out string hciVmStorageContainerApiVersion);
+            _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmStorageContainerResource.ResourceType.Namespace, Diagnostics);
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Endpoint, hciVmStorageContainerApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// The operation to create or update a storage container. Please note some properties can be set only during storage container creation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to create or update a storage container. Please note some properties can be set only during storage container creation. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HciVmStorageContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageContainerName, HciVmStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmStorageContainerStorageContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmStorageContainerResource>(new HciVmStorageContainerOperationSource(Client), _hciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, _hciVmStorageContainerStorageContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, HciVmStorageContainerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmStorageContainerResource> operation = new VmArmOperation<HciVmStorageContainerResource>(
+                    new HciVmStorageContainerOperationSource(Client),
+                    _storageContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,46 +97,39 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to create or update a storage container. Please note some properties can be set only during storage container creation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to create or update a storage container. Please note some properties can be set only during storage container creation. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HciVmStorageContainerResource> CreateOrUpdate(WaitUntil waitUntil, string storageContainerName, HciVmStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmStorageContainerStorageContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmStorageContainerResource>(new HciVmStorageContainerOperationSource(Client), _hciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, _hciVmStorageContainerStorageContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, HciVmStorageContainerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmStorageContainerResource> operation = new VmArmOperation<HciVmStorageContainerResource>(
+                    new HciVmStorageContainerOperationSource(Client),
+                    _storageContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,42 +139,30 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Gets a storage container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a storage container. </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HciVmStorageContainerResource>> GetAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Get");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmStorageContainerStorageContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmStorageContainerData> response = Response.FromValue(HciVmStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,42 +172,30 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Gets a storage container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a storage container. </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HciVmStorageContainerResource> Get(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Get");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _hciVmStorageContainerStorageContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmStorageContainerData> response = Response.FromValue(HciVmStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,100 +205,62 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Lists all of the storage containers in the specified resource group. Use the nextLink property in the response to get the next page of storage containers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the storage containers in the specified resource group. Use the nextLink property in the response to get the next page of storage containers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmStorageContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmStorageContainerStorageContainersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmStorageContainerStorageContainersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmStorageContainerResource(Client, HciVmStorageContainerData.DeserializeHciVmStorageContainerData(e)), _hciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, "HciVmStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmStorageContainerResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the storage containers in the specified resource group. Use the nextLink property in the response to get the next page of storage containers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the storage containers in the specified resource group. Use the nextLink property in the response to get the next page of storage containers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmStorageContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciVmStorageContainerStorageContainersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciVmStorageContainerStorageContainersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmStorageContainerResource(Client, HciVmStorageContainerData.DeserializeHciVmStorageContainerData(e)), _hciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, "HciVmStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmStorageContainerResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Exists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hciVmStorageContainerStorageContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,40 +270,38 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Exists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hciVmStorageContainerStorageContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,42 +311,42 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HciVmStorageContainerResource>> GetIfExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hciVmStorageContainerStorageContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HciVmStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmStorageContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,42 +356,42 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HciVmStorageContainerResource> GetIfExists(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using var scope = _hciVmStorageContainerStorageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("HciVmStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hciVmStorageContainerStorageContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, storageContainerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HciVmStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HciVmStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HciVmStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HciVmStorageContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +411,7 @@ namespace Azure.ResourceManager.Hci.Vm
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciVmStorageContainerResource> IAsyncEnumerable<HciVmStorageContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

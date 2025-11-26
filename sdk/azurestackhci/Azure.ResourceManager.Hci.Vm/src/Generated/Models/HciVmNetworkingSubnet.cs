@@ -8,107 +8,159 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Properties of the subnet. </summary>
     public partial class HciVmNetworkingSubnet
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkingSubnet"/>. </summary>
         public HciVmNetworkingSubnet()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            IPConfigurationReferences = new ChangeTrackingList<WritableSubResource>();
-            IPPools = new ChangeTrackingList<HciVmNetworkingIPPool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkingSubnet"/>. </summary>
-        /// <param name="addressPrefix"> The address prefix for the subnet: Cidr for this subnet - IPv4, IPv6. </param>
-        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
-        /// <param name="ipAllocationMethod"> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </param>
-        /// <param name="ipConfigurationReferences"> IPConfigurationReferences - list of IPConfigurationReferences. </param>
-        /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the logical network. </param>
-        /// <param name="routeTable"> Route table resource. </param>
-        /// <param name="ipPools"> network associated pool of IP Addresses. </param>
-        /// <param name="vlan"> Vlan to use for the subnet. </param>
+        /// <param name="properties"> Properties of the subnet. </param>
         /// <param name="name"> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkingSubnet(string addressPrefix, IList<string> addressPrefixes, HciVmIPAllocationMethod? ipAllocationMethod, IList<WritableSubResource> ipConfigurationReferences, WritableSubResource networkSecurityGroup, HciVmNetworkingRouteTable routeTable, IList<HciVmNetworkingIPPool> ipPools, int? vlan, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmNetworkingSubnet(SubnetProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AddressPrefix = addressPrefix;
-            AddressPrefixes = addressPrefixes;
-            IPAllocationMethod = ipAllocationMethod;
-            IPConfigurationReferences = ipConfigurationReferences;
-            NetworkSecurityGroup = networkSecurityGroup;
-            RouteTable = routeTable;
-            IPPools = ipPools;
-            Vlan = vlan;
+            Properties = properties;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of the subnet. </summary>
+        internal SubnetProperties Properties { get; set; }
+
+        /// <summary> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; set; }
+
         /// <summary> The address prefix for the subnet: Cidr for this subnet - IPv4, IPv6. </summary>
-        public string AddressPrefix { get; set; }
-        /// <summary> List of address prefixes for the subnet. </summary>
-        public IList<string> AddressPrefixes { get; }
-        /// <summary> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </summary>
-        public HciVmIPAllocationMethod? IPAllocationMethod { get; set; }
-        /// <summary> IPConfigurationReferences - list of IPConfigurationReferences. </summary>
-        public IList<WritableSubResource> IPConfigurationReferences { get; }
-        /// <summary> NetworkSecurityGroup - Network Security Group attached to the logical network. </summary>
-        internal WritableSubResource NetworkSecurityGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier NetworkSecurityGroupId
+        public string AddressPrefix
         {
-            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
             set
             {
-                if (NetworkSecurityGroup is null)
-                    NetworkSecurityGroup = new WritableSubResource();
-                NetworkSecurityGroup.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                Properties.AddressPrefix = value;
+            }
+        }
+
+        /// <summary> List of address prefixes for the subnet. </summary>
+        public IList<string> AddressPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                return Properties.AddressPrefixes;
+            }
+        }
+
+        /// <summary> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </summary>
+        public HciVmIPAllocationMethod? IPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAllocationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                Properties.IPAllocationMethod = value.Value;
+            }
+        }
+
+        /// <summary> IPConfigurationReferences - list of IPConfigurationReferences. </summary>
+        public IList<SubnetIpConfigurationReference> IPConfigurationReferences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                return Properties.IPConfigurationReferences;
             }
         }
 
         /// <summary> Route table resource. </summary>
-        public HciVmNetworkingRouteTable RouteTable { get; set; }
+        public HciVmNetworkingRouteTable RouteTable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteTable;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                Properties.RouteTable = value;
+            }
+        }
+
         /// <summary> network associated pool of IP Addresses. </summary>
-        public IList<HciVmNetworkingIPPool> IPPools { get; }
+        public IList<HciVmNetworkingIPPool> IPPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                return Properties.IPPools;
+            }
+        }
+
         /// <summary> Vlan to use for the subnet. </summary>
-        public int? Vlan { get; set; }
-        /// <summary> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
+        public int? Vlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                Properties.Vlan = value.Value;
+            }
+        }
+
+        /// <summary> The ARM ID for a Network Security Group. </summary>
+        public ResourceIdentifier NetworkSecurityGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetProperties();
+                }
+                Properties.NetworkSecurityGroupId = value;
+            }
+        }
     }
 }

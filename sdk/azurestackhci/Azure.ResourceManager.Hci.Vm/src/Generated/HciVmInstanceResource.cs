@@ -6,44 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Hci.Vm.Models;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
     /// <summary>
-    /// A Class representing a HciVmInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmInstanceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHciVmInstanceResource method.
+    /// A class representing a HciVmInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmInstanceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciVmInstance method.
     /// </summary>
     public partial class HciVmInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HciVmInstanceResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hciVmInstanceVirtualMachineInstancesClientDiagnostics;
-        private readonly VirtualMachineInstancesRestOperations _hciVmInstanceVirtualMachineInstancesRestClient;
+        private readonly ClientDiagnostics _virtualMachineInstancesClientDiagnostics;
+        private readonly VirtualMachineInstances _virtualMachineInstancesRestClient;
         private readonly HciVmInstanceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualMachineInstances";
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmInstanceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmInstanceResource for mocking. </summary>
         protected HciVmInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciVmInstanceResource(ArmClient client, HciVmInstanceData data) : this(client, data.Id)
@@ -52,92 +44,70 @@ namespace Azure.ResourceManager.Hci.Vm
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmInstanceVirtualMachineInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hciVmInstanceVirtualMachineInstancesApiVersion);
-            _hciVmInstanceVirtualMachineInstancesRestClient = new VirtualMachineInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmInstanceVirtualMachineInstancesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hciVmInstanceApiVersion);
+            _virtualMachineInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
+            _virtualMachineInstancesRestClient = new VirtualMachineInstances(_virtualMachineInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciVmInstanceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary> Gets an object representing a HciVmHybridIdentityMetadataResource along with the instance operations that can be performed on it in the HciVmInstance. </summary>
-        /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
-        public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata()
-        {
-            return new HciVmHybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
-        }
-
-        /// <summary> Gets an object representing a HciVmAttestationStatusResource along with the instance operations that can be performed on it in the HciVmInstance. </summary>
-        /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
-        public virtual HciVmAttestationStatusResource GetHciVmAttestationStatus()
-        {
-            return new HciVmAttestationStatusResource(Client, Id.AppendChildResource("attestationStatus", "default"));
-        }
-
-        /// <summary> Gets an object representing a HciVmGuestAgentResource along with the instance operations that can be performed on it in the HciVmInstance. </summary>
-        /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
-        public virtual HciVmGuestAgentResource GetHciVmGuestAgent()
-        {
-            return new HciVmGuestAgentResource(Client, Id.AppendChildResource("guestAgents", "default"));
-        }
-
-        /// <summary>
-        /// Gets a virtual machine instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a virtual machine instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciVmInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Get");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.GetAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,37 +117,25 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Gets a virtual machine instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a virtual machine instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciVmInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Get");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Get(Id.Parent, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -187,203 +145,7 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to delete a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.DeleteAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Delete(Id.Parent, cancellationToken);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to update a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<HciVmInstanceResource>> UpdateAsync(WaitUntil waitUntil, HciVmInstancePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.UpdateAsync(Id.Parent, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmInstanceResource>(new HciVmInstanceOperationSource(Client), _hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to update a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<HciVmInstanceResource> Update(WaitUntil waitUntil, HciVmInstancePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Update(Id.Parent, patch, cancellationToken);
-                var operation = new VmArmOperation<HciVmInstanceResource>(new HciVmInstanceOperationSource(Client), _hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -392,14 +154,27 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.CreateOrUpdateAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<HciVmInstanceResource>(new HciVmInstanceOperationSource(Client), _hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, HciVmInstanceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
+                    new HciVmInstanceOperationSource(Client),
+                    _virtualMachineInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -409,27 +184,7 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstance_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to create or update a virtual machine instance. Please note some properties can be set only during virtual machine instance creation. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,14 +193,27 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.CreateOrUpdate(Id.Parent, data, cancellationToken);
-                var operation = new VmArmOperation<HciVmInstanceResource>(new HciVmInstanceOperationSource(Client), _hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, HciVmInstanceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
+                    new HciVmInstanceOperationSource(Client),
+                    _virtualMachineInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -455,39 +223,162 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to start a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/start</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Start</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to update a virtual machine instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciVmInstanceResource>> UpdateAsync(WaitUntil waitUntil, HciVmInstancePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent, HciVmInstancePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
+                    new HciVmInstanceOperationSource(Client),
+                    _virtualMachineInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to update a virtual machine instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<HciVmInstanceResource> Update(WaitUntil waitUntil, HciVmInstancePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent, HciVmInstancePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
+                    new HciVmInstanceOperationSource(Client),
+                    _virtualMachineInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to delete a virtual machine instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to delete a virtual machine instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to start a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Start");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Start");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.StartAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateStartRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -497,39 +388,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to start a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/start</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Start</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to start a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Start");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Start");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Start(Id.Parent, cancellationToken);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateStartRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -539,39 +417,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to stop a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to stop a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Stop");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Stop");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.StopAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateStopRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -581,39 +446,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to stop a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to stop a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Stop");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Stop");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Stop(Id.Parent, cancellationToken);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateStopRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -623,39 +475,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to restart a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/restart</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Restart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to restart a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Restart");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Restart");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.RestartAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -665,39 +504,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to restart a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/restart</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Restart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to restart a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Restart");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Restart");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Restart(Id.Parent, cancellationToken);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -707,39 +533,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to pause a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/pause</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Pause</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to pause a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> PauseAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Pause");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Pause");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.PauseAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -749,39 +562,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to pause a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/pause</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Pause</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to pause a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Pause(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Pause");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Pause");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Pause(Id.Parent, cancellationToken);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreatePauseRequest(Id.Parent, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -791,39 +591,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to save a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/save</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Save</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to save a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> SaveAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Save");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Save");
             scope.Start();
             try
             {
-                var response = await _hciVmInstanceVirtualMachineInstancesRestClient.SaveAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -833,39 +620,26 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// The operation to save a virtual machine instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/save</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineInstances_Save</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> The operation to save a virtual machine instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Save(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Save");
+            using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("HciVmInstanceResource.Save");
             scope.Start();
             try
             {
-                var response = _hciVmInstanceVirtualMachineInstancesRestClient.Save(Id.Parent, cancellationToken);
-                var operation = new VmArmOperation(_hciVmInstanceVirtualMachineInstancesClientDiagnostics, Pipeline, _hciVmInstanceVirtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineInstancesRestClient.CreateSaveRequest(Id.Parent, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                VmArmOperation operation = new VmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -873,6 +647,27 @@ namespace Azure.ResourceManager.Hci.Vm
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmHybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <returns> Returns a <see cref="HciVmHybridIdentityMetadataResource"/> object. </returns>
+        public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata()
+        {
+            return new HciVmHybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmAttestationStatusResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <returns> Returns a <see cref="HciVmAttestationStatusResource"/> object. </returns>
+        public virtual HciVmAttestationStatusResource GetHciVmAttestationStatus()
+        {
+            return new HciVmAttestationStatusResource(Client, Id.AppendChildResource("attestationStatus", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="HciVmGuestAgentResource"/> along with the instance operations that can be performed on it in the <see cref="ArmResource"/>. </summary>
+        /// <returns> Returns a <see cref="HciVmGuestAgentResource"/> object. </returns>
+        public virtual HciVmGuestAgentResource GetHciVmGuestAgent()
+        {
+            return new HciVmGuestAgentResource(Client, Id.AppendChildResource("guestAgents", "default"));
         }
     }
 }
