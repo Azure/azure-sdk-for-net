@@ -29,6 +29,27 @@ namespace Azure.AI.Language.Conversations.Models
         private const string NumericIdentifierValue = "NumericIdentifier";
         private const string PhoneValue = "Phone";
         private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
+        private const string DriversLicenseNumberValue = "DriversLicenseNumber";
+        private const string PassportNumberValue = "PassportNumber";
+        private const string PersonTypeValue = "PersonType";
+        private const string OrganizationValue = "Organization";
+        private const string ABARoutingNumberValue = "ABARoutingNumber";
+        private const string BankAccountNumberValue = "BankAccountNumber";
+        private const string DateOfBirthValue = "DateOfBirth";
+        private const string InternationalBankingAccountNumberValue = "InternationalBankingAccountNumber";
+        private const string SWIFTCodeValue = "SWIFTCode";
+        private const string VehicleIdentificationNumberValue = "VehicleIdentificationNumber";
+        private const string AgeValue = "Age";
+        private const string DateValue = "Date";
+        private const string ZipCodeValue = "ZipCode";
+        private const string GovernmentIssuedIdValue = "GovernmentIssuedId";
+        private const string CVVValue = "CVV";
+        private const string HealthCardNumberValue = "HealthCardNumber";
+        private const string CASocialInsuranceNumberValue = "CASocialInsuranceNumber";
+        private const string USMedicareBeneficiaryIdValue = "USMedicareBeneficiaryId";
+        private const string GithubAccountValue = "GithubAccount";
+        private const string LocationValue = "Location";
+        private const string GPEValue = "GPE";
         private const string AllValue = "All";
         private const string DefaultValue = "Default";
 
@@ -46,6 +67,48 @@ namespace Azure.AI.Language.Conversations.Models
         public static ConversationPiiCategories Phone { get; } = new ConversationPiiCategories(PhoneValue);
         /// <summary> US social security number category. </summary>
         public static ConversationPiiCategories UsSocialSecurityNumber { get; } = new ConversationPiiCategories(UsSocialSecurityNumberValue);
+        /// <summary> Driver's license number category. </summary>
+        public static ConversationPiiCategories DriversLicenseNumber { get; } = new ConversationPiiCategories(DriversLicenseNumberValue);
+        /// <summary> Passport number category. </summary>
+        public static ConversationPiiCategories PassportNumber { get; } = new ConversationPiiCategories(PassportNumberValue);
+        /// <summary> Person type category. </summary>
+        public static ConversationPiiCategories PersonType { get; } = new ConversationPiiCategories(PersonTypeValue);
+        /// <summary> Organization category. </summary>
+        public static ConversationPiiCategories Organization { get; } = new ConversationPiiCategories(OrganizationValue);
+        /// <summary> ABA routing number category. </summary>
+        public static ConversationPiiCategories ABARoutingNumber { get; } = new ConversationPiiCategories(ABARoutingNumberValue);
+        /// <summary> Bank account number category. </summary>
+        public static ConversationPiiCategories BankAccountNumber { get; } = new ConversationPiiCategories(BankAccountNumberValue);
+        /// <summary> Date of birth category. </summary>
+        public static ConversationPiiCategories DateOfBirth { get; } = new ConversationPiiCategories(DateOfBirthValue);
+        /// <summary> International Bank Account Number category. </summary>
+        public static ConversationPiiCategories InternationalBankingAccountNumber { get; } = new ConversationPiiCategories(InternationalBankingAccountNumberValue);
+        /// <summary> SWIFT code category. </summary>
+        public static ConversationPiiCategories SWIFTCode { get; } = new ConversationPiiCategories(SWIFTCodeValue);
+        /// <summary> Vehicle identification number category. </summary>
+        public static ConversationPiiCategories VehicleIdentificationNumber { get; } = new ConversationPiiCategories(VehicleIdentificationNumberValue);
+        /// <summary> Age category. </summary>
+        public static ConversationPiiCategories Age { get; } = new ConversationPiiCategories(AgeValue);
+        /// <summary> Date category. </summary>
+        public static ConversationPiiCategories Date { get; } = new ConversationPiiCategories(DateValue);
+        /// <summary> Zip code category. </summary>
+        public static ConversationPiiCategories ZipCode { get; } = new ConversationPiiCategories(ZipCodeValue);
+        /// <summary> Government issued ID category. </summary>
+        public static ConversationPiiCategories GovernmentIssuedId { get; } = new ConversationPiiCategories(GovernmentIssuedIdValue);
+        /// <summary> Card verification value category. </summary>
+        public static ConversationPiiCategories CVV { get; } = new ConversationPiiCategories(CVVValue);
+        /// <summary> Health card number category. </summary>
+        public static ConversationPiiCategories HealthCardNumber { get; } = new ConversationPiiCategories(HealthCardNumberValue);
+        /// <summary> CA Social insurance number category. </summary>
+        public static ConversationPiiCategories CASocialInsuranceNumber { get; } = new ConversationPiiCategories(CASocialInsuranceNumberValue);
+        /// <summary> US Medicare beneficiary ID category. </summary>
+        public static ConversationPiiCategories USMedicareBeneficiaryId { get; } = new ConversationPiiCategories(USMedicareBeneficiaryIdValue);
+        /// <summary> Github account category. </summary>
+        public static ConversationPiiCategories GithubAccount { get; } = new ConversationPiiCategories(GithubAccountValue);
+        /// <summary> Location category. </summary>
+        public static ConversationPiiCategories Location { get; } = new ConversationPiiCategories(LocationValue);
+        /// <summary> GPE category. </summary>
+        public static ConversationPiiCategories GPE { get; } = new ConversationPiiCategories(GPEValue);
         /// <summary> All categories. </summary>
         public static ConversationPiiCategories All { get; } = new ConversationPiiCategories(AllValue);
         /// <summary> Default categories. </summary>
