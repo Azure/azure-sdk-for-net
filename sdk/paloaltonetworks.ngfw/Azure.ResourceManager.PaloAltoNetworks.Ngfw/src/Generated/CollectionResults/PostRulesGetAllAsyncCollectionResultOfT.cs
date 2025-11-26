@@ -25,12 +25,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The PostRules client used to send requests. </param>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public PostRulesGetAllAsyncCollectionResultOfT(PostRules client, string globalRulestackName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
             _client = client;
             _globalRulestackName = globalRulestackName;
             _context = context;
@@ -66,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _globalRulestackName, _context) : _client.CreateGetAllRequest(_globalRulestackName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PostRulestackRuleCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PostRules.GetAll");
             scope.Start();
             try
             {

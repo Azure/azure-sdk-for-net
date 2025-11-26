@@ -24,12 +24,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="client"> The Firewalls client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public FirewallsGetBySubscriptionCollectionResultOfT(Firewalls client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
@@ -65,7 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Firewalls.GetBySubscription");
             scope.Start();
             try
             {

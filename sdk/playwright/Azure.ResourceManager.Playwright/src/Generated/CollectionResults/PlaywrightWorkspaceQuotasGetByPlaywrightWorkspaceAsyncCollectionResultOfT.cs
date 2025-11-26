@@ -29,13 +29,8 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="playwrightWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public PlaywrightWorkspaceQuotasGetByPlaywrightWorkspaceAsyncCollectionResultOfT(PlaywrightWorkspaceQuotas client, Guid subscriptionId, string resourceGroupName, string playwrightWorkspaceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(playwrightWorkspaceName, nameof(playwrightWorkspaceName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.Playwright
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByPlaywrightWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _playwrightWorkspaceName, _context) : _client.CreateGetByPlaywrightWorkspaceRequest(_subscriptionId, _resourceGroupName, _playwrightWorkspaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotas.GetByPlaywrightWorkspace");
             scope.Start();
             try
             {
