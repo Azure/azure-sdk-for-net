@@ -181,7 +181,7 @@ public static OpenAIFile WaitForFileProcessing(
 
 Once the files are processed, we can create a fine-tuning job. The `FineTune` method accepts the model name, training file ID, and optional parameters like hyperparameters and validation file. Setting `waitUntilCompleted: false` returns immediately after job creation, allowing you to monitor progress asynchronously.
 
-> **Note:** If you need to pass additional parameters like `trainingType` (e.g., for OSS models), use the JSON construction approach with `BinaryContent` instead of the strongly-typed API. Recommended approach is to set trainingType. See [Sample19_FineTuning_OSS.md](Sample19_FineTuning_OSS.md) for an example.
+> **Note:** If you need to pass additional parameters like `trainingType` (e.g., for OSS models), use the JSON construction approach with `BinaryContent` instead of the strongly-typed API. Recommended approach is to set trainingType. See `Sample19_FineTuning_OSS.md` for an example.
 
 ### Asynchronous
 

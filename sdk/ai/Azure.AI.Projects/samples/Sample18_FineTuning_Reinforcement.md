@@ -95,7 +95,7 @@ Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 
 ## Wait for File Processing
 
-In production, you should wait for files to complete processing before creating a fine-tuning job. See the helper methods in [Sample16_FineTuning_Supervised.md](Sample16_FineTuning_Supervised.md#wait-for-file-processing-helper) for `WaitForFileProcessingAsync` and `WaitForFileProcessing` implementations.
+In production, you should wait for files to complete processing before creating a fine-tuning job. See the helper methods in `Sample16_FineTuning_Supervised.md` for `WaitForFileProcessingAsync` and `WaitForFileProcessing` implementations.
 
 ## Create Reinforcement Fine-Tuning Job
 
