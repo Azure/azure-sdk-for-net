@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks);$(NetFxTargetFramework)</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>$(AllActiveCurrentTargetFrameworks);$(NetFxTargetFramework)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>

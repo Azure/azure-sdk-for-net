@@ -38,7 +38,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.Conventions.Files.csproj" />
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
   <ItemGroup>
