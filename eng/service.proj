@@ -18,6 +18,7 @@
   <ItemGroup>
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
       <!-- because this project is using the project below -->
+      <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\batch\Microsoft.Azure.Batch\tools\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitivelanguage\Azure.AI.Language.QuestionAnswering\tests\Azure.AI.Language.QuestionAnswering.Tests.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Knowledge.QnAMaker\**\*.csproj" />
       <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.CustomVision.Prediction\**\*.csproj" />
