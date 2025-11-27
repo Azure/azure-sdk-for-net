@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAuthorizationRules()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleListAll.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleListAll.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
