@@ -50,6 +50,11 @@ public abstract class ModelBase(
     /// <param name="writer">Code writer.</param>
     public virtual void Generate() { }
 
+    public virtual void GenerateSchema(IndentWriter writer)
+    {
+        writer.WriteLine();
+    }
+
     /// <summary>
     /// Generate the name of a type in a way that can be used by C# code.
     /// You can assume the namespace has already been imported.

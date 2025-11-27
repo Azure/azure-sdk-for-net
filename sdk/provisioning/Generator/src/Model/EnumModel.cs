@@ -127,6 +127,11 @@ public class EnumModel : ModelBase
                 Spec!.SaveFile(Path.Combine("Models", $"{Name}.cs"), writer.ToString());
             });
     }
+
+    public override void GenerateSchema(IndentWriter writer)
+    {
+        writer.WriteLine("'string'");
+    }
 }
 
 public class EnumValue(EnumModel parent, string name, string? value = default, string? description = default)

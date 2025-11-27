@@ -178,4 +178,17 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                 Spec!.SaveFile(Path.Combine("Models", $"{Name}.cs"), writer.ToString());
             });
     }
+
+    public override void GenerateSchema(IndentWriter writer)
+    {
+        ContextualException.WithContext(
+            $"Generating schema for simple model {Namespace}.{Name}",
+            () =>
+            {
+                using (writer.Scope("{", "}"))
+                {
+                    WriteSchema(writer, new HashSet<TypeModel>());
+                }
+            });
+    }
 }
