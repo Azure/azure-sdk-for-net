@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
     {
         private ClientDiagnostics _devTestLabLabsClientDiagnostics;
         private LabsRestOperations _devTestLabLabsRestClient;
-        private ClientDiagnostics _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics;
-        private GlobalSchedulesRestOperations _devTestLabGlobalScheduleGlobalSchedulesRestClient;
+        private ClientDiagnostics _scheduleGlobalSchedulesClientDiagnostics;
+        private GlobalSchedulesRestOperations _scheduleGlobalSchedulesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDevTestLabsSubscriptionResource"/> class for mocking. </summary>
         protected MockableDevTestLabsSubscriptionResource()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
 
         private ClientDiagnostics DevTestLabLabsClientDiagnostics => _devTestLabLabsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabResource.ResourceType.Namespace, Diagnostics);
         private LabsRestOperations DevTestLabLabsRestClient => _devTestLabLabsRestClient ??= new LabsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevTestLabResource.ResourceType));
-        private ClientDiagnostics DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics => _devTestLabGlobalScheduleGlobalSchedulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabGlobalScheduleResource.ResourceType.Namespace, Diagnostics);
-        private GlobalSchedulesRestOperations DevTestLabGlobalScheduleGlobalSchedulesRestClient => _devTestLabGlobalScheduleGlobalSchedulesRestClient ??= new GlobalSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DevTestLabGlobalScheduleResource.ResourceType));
+        private ClientDiagnostics ScheduleGlobalSchedulesClientDiagnostics => _scheduleGlobalSchedulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ScheduleResource.ResourceType.Namespace, Diagnostics);
+        private GlobalSchedulesRestOperations ScheduleGlobalSchedulesRestClient => _scheduleGlobalSchedulesRestClient ??= new GlobalSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScheduleResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ListBySubscription</description>
+        /// <description>Lab_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ListBySubscription</description>
+        /// <description>Lab_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// <description>Schedule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduleResource> GetSchedulesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), ScheduleGlobalSchedulesClientDiagnostics, Pipeline, "MockableDevTestLabsSubscriptionResource.GetSchedules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// <description>Schedule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduleResource> GetSchedules(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), ScheduleGlobalSchedulesClientDiagnostics, Pipeline, "MockableDevTestLabsSubscriptionResource.GetSchedules", "value", "nextLink", cancellationToken);
         }
     }
 }

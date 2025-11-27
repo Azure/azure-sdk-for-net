@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DevTestLabs
             DateTimeOffset? expirationDate = default;
             bool? allowClaim = default;
             string storageType = default;
-            DevTestLabVmCreationSource? vmCreationSource = default;
+            DevTestLabVmCreationSource? virtualMachineCreationSource = default;
             ResourceIdentifier environmentId = default;
             IList<DevTestLabDataDiskProperties> dataDiskParameters = default;
             IList<DevTestLabScheduleCreationParameter> scheduleParameters = default;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vmCreationSource = new DevTestLabVmCreationSource(property0.Value.GetString());
+                            virtualMachineCreationSource = new DevTestLabVmCreationSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentId"u8))
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 expirationDate,
                 allowClaim,
                 storageType,
-                vmCreationSource,
+                virtualMachineCreationSource,
                 environmentId,
                 dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>(),
                 scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>(),

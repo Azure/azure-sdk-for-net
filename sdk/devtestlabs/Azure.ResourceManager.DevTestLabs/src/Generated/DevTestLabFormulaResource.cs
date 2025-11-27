@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Delete</description>
+        /// <description>Formula_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Delete</description>
+        /// <description>Formula_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Update</description>
+        /// <description>Formula_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Update</description>
+        /// <description>Formula_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Formulas_Get</description>
+        /// <description>Formula_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (Optional.IsDefined(ObjectId))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             string principalName = default;
             string principalId = default;
-            Guid? tenantId = default;
+            string tenantId = default;
             string objectId = default;
             string appId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -117,11 +117,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectId"u8))

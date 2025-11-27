@@ -48,13 +48,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         internal DevTestLabParametersValueFileInfo()
         {
+            ParametersValueInfo = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabParametersValueFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabParametersValueFileInfo(string fileName, BinaryData parametersValueInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabParametersValueFileInfo(string fileName, IReadOnlyDictionary<string, BinaryData> parametersValueInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileName = fileName;
             ParametersValueInfo = parametersValueInfo;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary>
         /// Contents of the file.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -93,6 +94,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ParametersValueInfo { get; }
+        public IReadOnlyDictionary<string, BinaryData> ParametersValueInfo { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A gallery image. </summary>
-    public partial class DevTestLabGalleryImage : TrackedResourceData
+    public partial class DevTestLabGalleryImage : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public DevTestLabGalleryImage(AzureLocation location) : base(location)
+        internal DevTestLabGalleryImage()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
@@ -58,8 +58,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="author"> The author of the gallery image. </param>
         /// <param name="createdOn"> The creation date of the gallery image. </param>
         /// <param name="description"> The description of the gallery image. </param>
@@ -68,8 +66,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="isEnabled"> Indicates whether this gallery image is enabled. </param>
         /// <param name="planId"> The third party plan that applies to this image. </param>
         /// <param name="isPlanAuthorized"> Indicates if the plan has been authorized for programmatic deployment. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string author, DateTimeOffset? createdOn, string description, DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string author, DateTimeOffset? createdOn, string description, DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized, IReadOnlyDictionary<string, string> tags, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Author = author;
             CreatedOn = createdOn;
@@ -79,29 +79,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IsEnabled = isEnabled;
             PlanId = planId;
             IsPlanAuthorized = isPlanAuthorized;
+            Tags = tags;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/> for deserialization. </summary>
-        internal DevTestLabGalleryImage()
-        {
-        }
-
         /// <summary> The author of the gallery image. </summary>
-        public string Author { get; set; }
+        public string Author { get; }
         /// <summary> The creation date of the gallery image. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The description of the gallery image. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
         /// <summary> The image reference of the gallery image. </summary>
-        public DevTestLabGalleryImageReference ImageReference { get; set; }
+        public DevTestLabGalleryImageReference ImageReference { get; }
         /// <summary> The icon of the gallery image. </summary>
-        public string Icon { get; set; }
+        public string Icon { get; }
         /// <summary> Indicates whether this gallery image is enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled { get; }
         /// <summary> The third party plan that applies to this image. </summary>
-        public string PlanId { get; set; }
+        public string PlanId { get; }
         /// <summary> Indicates if the plan has been authorized for programmatic deployment. </summary>
-        public bool? IsPlanAuthorized { get; set; }
+        public bool? IsPlanAuthorized { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; }
     }
 }

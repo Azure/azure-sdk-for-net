@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Delete</description>
+        /// <description>Disk_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Delete</description>
+        /// <description>Disk_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Update</description>
+        /// <description>Disk_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Update</description>
+        /// <description>Disk_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <description>Disk_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

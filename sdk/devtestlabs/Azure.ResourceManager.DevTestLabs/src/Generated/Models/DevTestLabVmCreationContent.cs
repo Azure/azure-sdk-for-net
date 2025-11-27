@@ -49,16 +49,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmCreationContent"/>. </summary>
         public DevTestLabVmCreationContent()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
             DataDiskParameters = new ChangeTrackingList<DevTestLabDataDiskProperties>();
             ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabVmCreationContent"/>. </summary>
-        /// <param name="name"> The name of the virtual machine or environment. </param>
-        /// <param name="location"> The location of the new virtual machine or environment. </param>
-        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="bulkCreationParameters"> The number of virtual machine instances to create. </param>
         /// <param name="notes"> The notes of the virtual machine. </param>
         /// <param name="ownerObjectId"> The object identifier of the owner of the virtual machine. </param>
@@ -83,12 +80,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
         /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
         /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
+        /// <param name="name"> The name of the virtual machine or environment. </param>
+        /// <param name="location"> The location of the new virtual machine or environment. </param>
+        /// <param name="tags"> The tags of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabVmCreationContent(string name, AzureLocation? location, IDictionary<string, string> tags, BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabVmCreationContent(BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, string name, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Location = location;
-            Tags = tags;
             BulkCreationParameters = bulkCreationParameters;
             Notes = notes;
             OwnerObjectId = ownerObjectId;
@@ -113,15 +110,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             EnvironmentId = environmentId;
             DataDiskParameters = dataDiskParameters;
             ScheduleParameters = scheduleParameters;
+            Name = name;
+            Location = location;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the virtual machine or environment. </summary>
-        public string Name { get; set; }
-        /// <summary> The location of the new virtual machine or environment. </summary>
-        public AzureLocation? Location { get; set; }
-        /// <summary> The tags of the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The number of virtual machine instances to create. </summary>
         internal BulkCreationParameters BulkCreationParameters { get; set; }
         /// <summary> The number of virtual machine instances to create. </summary>
@@ -182,5 +176,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public IList<DevTestLabDataDiskProperties> DataDiskParameters { get; }
         /// <summary> Virtual Machine schedules to be created. </summary>
         public IList<DevTestLabScheduleCreationParameter> ScheduleParameters { get; }
+        /// <summary> The name of the virtual machine or environment. </summary>
+        public string Name { get; set; }
+        /// <summary> The location of the new virtual machine or environment. </summary>
+        public string Location { get; set; }
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ArmTemplates_Get</description>
+        /// <description>ArmTemplate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

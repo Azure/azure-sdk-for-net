@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="keyVaultUri"> The URI of the user's Key vault. </param>
         /// <param name="keyVaultId"> The ID of the user's Key vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabUserSecretStore(Uri keyVaultUri, ResourceIdentifier keyVaultId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabUserSecretStore(string keyVaultUri, ResourceIdentifier keyVaultId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyVaultId = keyVaultId;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The URI of the user's Key vault. </summary>
-        public Uri KeyVaultUri { get; set; }
+        public string KeyVaultUri { get; set; }
         /// <summary> The ID of the user's Key vault. </summary>
         public ResourceIdentifier KeyVaultId { get; set; }
     }

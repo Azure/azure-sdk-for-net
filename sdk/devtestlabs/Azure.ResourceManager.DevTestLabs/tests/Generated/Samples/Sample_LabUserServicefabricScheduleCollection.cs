@@ -9,19 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
-    public partial class Sample_DevTestLabServiceFabricScheduleCollection
+    public partial class Sample_LabUserServicefabricScheduleCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServiceFabricSchedulesCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabricSchedules_CreateOrUpdate.json
-            // this example is just showing the usage of "ServiceFabricSchedules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceFabricSchedules_CreateOrUpdate.json
+            // this example is just showing the usage of "Schedule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,39 +37,20 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabServiceFabricResourceId = DevTestLabServiceFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName, serviceFabricName);
             DevTestLabServiceFabricResource devTestLabServiceFabric = client.GetDevTestLabServiceFabricResource(devTestLabServiceFabricResourceId);
 
-            // get the collection of this DevTestLabServiceFabricScheduleResource
-            DevTestLabServiceFabricScheduleCollection collection = devTestLabServiceFabric.GetDevTestLabServiceFabricSchedules();
+            // get the collection of this LabUserServicefabricScheduleResource
+            LabUserServicefabricScheduleCollection collection = devTestLabServiceFabric.GetLabUserServicefabricSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
             DevTestLabScheduleData data = new DevTestLabScheduleData(new AzureLocation("{location}"))
             {
-                Status = new DevTestLabEnableStatus("{Enabled|Disabled}"),
-                TaskType = "{Unknown|LabVmsShutdownTask|LabVmsStartupTask|LabVmReclamationTask|ComputeVmShutdownTask}",
-                WeeklyRecurrence = new DevTestLabWeekDetails
-                {
-                    Weekdays = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" },
-                    Time = "19:00",
-                },
-                DailyRecurrenceTime = "19:00",
-                HourlyRecurrenceMinute = 0,
-                TimeZoneId = "Pacific Standard Time",
-                NotificationSettings = new DevTestLabNotificationSettings
-                {
-                    Status = new DevTestLabEnableStatus("{Enabled|Disabled}"),
-                    TimeInMinutes = 15,
-                    WebhookUri = new Uri("{webhoolUrl}"),
-                    EmailRecipient = "{email}",
-                    NotificationLocale = "EN",
-                },
-                TargetResourceId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/providers/Microsoft.DevTestLab/labs/{labName}/users/{uniqueIdentifier}/servicefabrics/{serviceFrabicName}",
                 Tags =
 {
 ["tagName1"] = "tagValue1"
 },
             };
-            ArmOperation<DevTestLabServiceFabricScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            DevTestLabServiceFabricScheduleResource result = lro.Value;
+            ArmOperation<LabUserServicefabricScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            LabUserServicefabricScheduleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -83,8 +63,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ServiceFabricSchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabricSchedules_Get.json
-            // this example is just showing the usage of "ServiceFabricSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceFabricSchedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -101,12 +81,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabServiceFabricResourceId = DevTestLabServiceFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName, serviceFabricName);
             DevTestLabServiceFabricResource devTestLabServiceFabric = client.GetDevTestLabServiceFabricResource(devTestLabServiceFabricResourceId);
 
-            // get the collection of this DevTestLabServiceFabricScheduleResource
-            DevTestLabServiceFabricScheduleCollection collection = devTestLabServiceFabric.GetDevTestLabServiceFabricSchedules();
+            // get the collection of this LabUserServicefabricScheduleResource
+            LabUserServicefabricScheduleCollection collection = devTestLabServiceFabric.GetLabUserServicefabricSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
-            DevTestLabServiceFabricScheduleResource result = await collection.GetAsync(name);
+            LabUserServicefabricScheduleResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -119,8 +99,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ServiceFabricSchedulesList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabricSchedules_List.json
-            // this example is just showing the usage of "ServiceFabricSchedules_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceFabricSchedules_List.json
+            // this example is just showing the usage of "Schedule_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -137,11 +117,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabServiceFabricResourceId = DevTestLabServiceFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName, serviceFabricName);
             DevTestLabServiceFabricResource devTestLabServiceFabric = client.GetDevTestLabServiceFabricResource(devTestLabServiceFabricResourceId);
 
-            // get the collection of this DevTestLabServiceFabricScheduleResource
-            DevTestLabServiceFabricScheduleCollection collection = devTestLabServiceFabric.GetDevTestLabServiceFabricSchedules();
+            // get the collection of this LabUserServicefabricScheduleResource
+            LabUserServicefabricScheduleCollection collection = devTestLabServiceFabric.GetLabUserServicefabricSchedules();
 
             // invoke the operation and iterate over the result
-            await foreach (DevTestLabServiceFabricScheduleResource item in collection.GetAllAsync())
+            await foreach (LabUserServicefabricScheduleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -157,8 +137,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ServiceFabricSchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabricSchedules_Get.json
-            // this example is just showing the usage of "ServiceFabricSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceFabricSchedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -175,8 +155,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabServiceFabricResourceId = DevTestLabServiceFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName, serviceFabricName);
             DevTestLabServiceFabricResource devTestLabServiceFabric = client.GetDevTestLabServiceFabricResource(devTestLabServiceFabricResourceId);
 
-            // get the collection of this DevTestLabServiceFabricScheduleResource
-            DevTestLabServiceFabricScheduleCollection collection = devTestLabServiceFabric.GetDevTestLabServiceFabricSchedules();
+            // get the collection of this LabUserServicefabricScheduleResource
+            LabUserServicefabricScheduleCollection collection = devTestLabServiceFabric.GetLabUserServicefabricSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
@@ -189,8 +169,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ServiceFabricSchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/ServiceFabricSchedules_Get.json
-            // this example is just showing the usage of "ServiceFabricSchedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/ServiceFabricSchedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -207,13 +187,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabServiceFabricResourceId = DevTestLabServiceFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName, serviceFabricName);
             DevTestLabServiceFabricResource devTestLabServiceFabric = client.GetDevTestLabServiceFabricResource(devTestLabServiceFabricResourceId);
 
-            // get the collection of this DevTestLabServiceFabricScheduleResource
-            DevTestLabServiceFabricScheduleCollection collection = devTestLabServiceFabric.GetDevTestLabServiceFabricSchedules();
+            // get the collection of this LabUserServicefabricScheduleResource
+            LabUserServicefabricScheduleCollection collection = devTestLabServiceFabric.GetLabUserServicefabricSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
-            NullableResponse<DevTestLabServiceFabricScheduleResource> response = await collection.GetIfExistsAsync(name);
-            DevTestLabServiceFabricScheduleResource result = response.HasValue ? response.Value : null;
+            NullableResponse<LabUserServicefabricScheduleResource> response = await collection.GetIfExistsAsync(name);
+            LabUserServicefabricScheduleResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

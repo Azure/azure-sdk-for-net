@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The response of a list operation. </summary>
-    internal partial class LabVmList
+    /// <summary> Properties of a managed identity. </summary>
+    public partial class DevTestLabManagedIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,30 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LabVmList"/>. </summary>
-        internal LabVmList()
+        /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
+        public DevTestLabManagedIdentity()
         {
-            Value = new ChangeTrackingList<DevTestLabVmData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabVmList"/>. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
+        /// <param name="type"> Managed identity. </param>
+        /// <param name="principalId"> The principal id of resource identity. </param>
+        /// <param name="tenantId"> The tenant identifier of resource. </param>
+        /// <param name="clientSecretUri"> The client secret URL of the identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LabVmList(IReadOnlyList<DevTestLabVmData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabManagedIdentity(ManagedServiceIdentityType? type, Guid? principalId, string tenantId, string clientSecretUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Type = type;
+            PrincipalId = principalId;
+            TenantId = tenantId;
+            ClientSecretUri = clientSecretUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<DevTestLabVmData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The principal id of resource identity. </summary>
+        public Guid? PrincipalId { get; set; }
+        /// <summary> The tenant identifier of resource. </summary>
+        public string TenantId { get; set; }
+        /// <summary> The client secret URL of the identity. </summary>
+        public string ClientSecretUri { get; set; }
     }
 }

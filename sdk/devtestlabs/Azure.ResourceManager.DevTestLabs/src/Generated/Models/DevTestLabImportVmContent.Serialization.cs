@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 throw new FormatException($"The model {nameof(DevTestLabImportVmContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SourceVmResourceId))
+            if (Optional.IsDefined(SourceVirtualMachineResourceId))
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId"u8);
-                writer.WriteStringValue(SourceVmResourceId);
+                writer.WriteStringValue(SourceVirtualMachineResourceId);
             }
-            if (Optional.IsDefined(DestinationVmName))
+            if (Optional.IsDefined(DestinationVirtualMachineName))
             {
                 writer.WritePropertyName("destinationVirtualMachineName"u8);
-                writer.WriteStringValue(DestinationVmName);
+                writer.WriteStringValue(DestinationVirtualMachineName);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            ResourceIdentifier sourceVmResourceId = default;
-            string destinationVmName = default;
+            ResourceIdentifier sourceVirtualMachineResourceId = default;
+            string destinationVirtualMachineName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sourceVmResourceId = new ResourceIdentifier(property.Value.GetString());
+                    sourceVirtualMachineResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("destinationVirtualMachineName"u8))
                 {
-                    destinationVmName = property.Value.GetString();
+                    destinationVirtualMachineName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevTestLabImportVmContent(sourceVmResourceId, destinationVmName, serializedAdditionalRawData);
+            return new DevTestLabImportVmContent(sourceVirtualMachineResourceId, destinationVirtualMachineName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabImportVmContent>.Write(ModelReaderWriterOptions options)

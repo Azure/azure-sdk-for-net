@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DevTestLabs
 namespace: Azure.ResourceManager.DevTestLabs
-require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/devtestlabs/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/471eab645d7bb83a4f54d283db5690f58d04a670/specification/devtestlabs/resource-manager/readme.md
 #tag: package-2018-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -184,7 +184,6 @@ rename-mapping:
   UserSecretStore.keyVaultId: -|arm-id
   VirtualMachineCreationSource: DevTestLabVmCreationSource
   WeekDetails: DevTestLabWeekDetails
-  WindowsOSState: DevTestLabWindowsOSState
   ArmTemplate.properties.enabled: IsEnabled
   LabAnnouncementProperties.expired: IsExpired
   CustomImagePropertiesCustom.sysPrep: IsSysPrepEnabled
@@ -195,5 +194,89 @@ rename-mapping:
 
 directive:
   - remove-operation: ProviderOperations_List
-
+  - from: swagger-document
+    where: $.definitions.ArmTemplateProperties.properties.contents
+    transform: >
+      delete $["additionalProperties"];
+  - from: swagger-document
+    where: $.definitions.ArmTemplateInfo.properties.parameters
+    transform: >
+      delete $["additionalProperties"];
+  - from: swagger-document
+    where: $.definitions.ParametersValueFileInfo.properties.parametersValueInfo
+    transform: >
+      delete $["additionalProperties"];
+  - from: swagger-document
+    where: $.definitions.ArtifactProperties.properties.parameters
+    transform: >
+      delete $["additionalProperties"];
+  - from: swagger-document
+    where: $.definitions.ArmTemplateInfo.properties.template
+    transform: >
+      delete $["additionalProperties"];
+  # Bulk update for all 'name' parameters in paths
+  - from: swagger-document
+    where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
+    transform: >
+      if ($["description"] && $["description"].includes("LabCost")) {
+        $["description"] = " The name of the cost";
+      }
+      if ($["description"] && $["description"].includes("CustomImage")) {
+        $["description"] = " The name of the custom image";
+      }
+      if ($["description"] && $["description"].includes("DtlEnvironment")) {
+        $["description"] = " The name of the environment";
+      }
+      if ($["description"] && $["description"].includes("Disk")) {
+        $["description"] = " The name of the disk";
+      }
+      if ($["description"] && $["description"].includes("ArtifactSource")) {
+        $["description"] = " The name of the artifact source";
+      }
+      if ($["description"] && $["description"].includes("Artifact")) {
+        $["description"] = " The name of the artifact";
+      }
+      if ($["description"] && $["description"].includes("ArmTemplate")) {
+        $["description"] = "The name of the azure resource manager template";
+      }
+      if ($["description"] && $["description"].includes("Formula")) {
+        $["description"] = "The name of the formula";
+      }
+      if ($["description"] && $["description"].includes("Schedule")) {
+        $["description"] = "The name of the schedule";
+      }
+      if ($["description"] && $["description"].includes("NotificationChannel")) {
+        $["description"] = "The name of the notification channel";
+      }
+      if ($["description"] && $["description"].includes("LabVirtualMachine")) {
+        $["description"] = "The name of the virtual machine";
+      }
+      if ($["description"] && $["description"].includes("VirtualNetwork")) {
+        $["description"] = "The name of the virtual network";
+      }
+      if ($["description"] && $["description"].includes("Secret")) {
+        $["description"] = "The name of the secret";
+      }
+      if ($["description"] && $["description"].includes("ServiceFabric")) {
+        $["description"] = "The name of the service fabric";
+      }
+      if ($["description"] && $["description"].includes("User")) {
+        $["description"] = "The name of the user profile";
+      }
+      if ($["description"] && $["description"].includes("ServiceRunner")) {
+        $["description"] = "The name of the service runner";
+      }
+      if ($["description"] && $["description"].includes("PolicySet")) {
+        $["description"] = "The name of the policy set";
+      }
+  # Fix policySetName parameter specifically
+  - from: swagger-document
+    where: $.paths[*][*].parameters[?(@.name == "policySetName")]
+    transform: >
+      $["description"] = "The name of the policy set";
+  # Fix specific policy name parameter
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}"][*].parameters[?(@.name == "name")]
+    transform: >
+      $["description"] = "The name of the policy";
 ```

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabServiceFabricScheduleResource : IJsonModel<DevTestLabScheduleData>
+    public partial class LabVirtualmachineScheduleResource : IJsonModel<DevTestLabScheduleData>
     {
         private static DevTestLabScheduleData s_dataDeserializationInstance;
         private static DevTestLabScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

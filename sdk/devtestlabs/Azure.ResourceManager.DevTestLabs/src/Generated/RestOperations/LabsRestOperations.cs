@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <summary> Initializes a new instance of LabsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public LabsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,250 +34,6 @@ namespace Azure.ResourceManager.DevTestLabs
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-09-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string expand, string filter, int? top, string orderby)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string expand, string filter, int? top, string orderby)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List labs in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabList>> ListBySubscriptionAsync(string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId, expand, filter, top, orderby);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = LabList.DeserializeLabList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List labs in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabList> ListBySubscription(string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId, expand, filter, top, orderby);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = LabList.DeserializeLabList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string expand, string filter, int? top, string orderby)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string expand, string filter, int? top, string orderby)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List labs in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand, filter, top, orderby);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = LabList.DeserializeLabList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List labs in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand, filter, top, orderby);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = LabList.DeserializeLabList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name, string expand)
@@ -290,11 +46,11 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -311,11 +67,11 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -323,8 +79,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get lab. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,8 +111,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get lab. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -425,8 +181,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Create or replace an existing lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="data"> A lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -452,8 +208,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Create or replace an existing lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="data"> A lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -472,92 +228,6 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                 case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Delete lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="name"> The name of the lab. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="name"> The name of the lab. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -603,8 +273,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Allows modifying tags of labs. All other properties will be ignored. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="patch"> A lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -634,8 +304,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Allows modifying tags of labs. All other properties will be ignored. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="patch"> A lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -657,6 +327,335 @@ namespace Azure.ResourceManager.DevTestLabs
                         DevTestLabData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevTestLabData.DeserializeDevTestLabData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Delete lab. This operation can take a while to complete. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the lab. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete lab. This operation can take a while to complete. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the lab. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string expand, string filter, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string expand, string filter, int? top, string orderby)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List labs in a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<LabList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand, filter, top, orderby);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LabList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = LabList.DeserializeLabList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List labs in a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<LabList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand, filter, top, orderby);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LabList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = LabList.DeserializeLabList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string expand, string filter, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string expand, string filter, int? top, string orderby)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List labs in a subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<LabList>> ListBySubscriptionAsync(string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId, expand, filter, top, orderby);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LabList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = LabList.DeserializeLabList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List labs in a subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<LabList> ListBySubscription(string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId, expand, filter, top, orderby);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LabList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -695,14 +694,13 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/claimAnyVm", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Claim a random claimable virtual machine in the lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
@@ -717,8 +715,8 @@ namespace Azure.ResourceManager.DevTestLabs
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -726,8 +724,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Claim a random claimable virtual machine in the lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
@@ -742,8 +740,8 @@ namespace Azure.ResourceManager.DevTestLabs
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -781,7 +779,6 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/createEnvironment", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
@@ -791,8 +788,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Create virtual machines in a lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> Properties for creating a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -809,8 +806,8 @@ namespace Azure.ResourceManager.DevTestLabs
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -818,8 +815,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Create virtual machines in a lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> Properties for creating a virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -836,8 +833,8 @@ namespace Azure.ResourceManager.DevTestLabs
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -875,7 +872,6 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/exportResourceUsage", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
@@ -885,8 +881,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Exports the lab resource usage into a storage account This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> The parameters of the export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -903,8 +899,8 @@ namespace Azure.ResourceManager.DevTestLabs
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -912,8 +908,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Exports the lab resource usage into a storage account This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> The parameters of the export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -930,8 +926,8 @@ namespace Azure.ResourceManager.DevTestLabs
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -979,8 +975,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Generate a URI for uploading custom disk images to a Lab. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> Properties for generating an upload URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1010,8 +1006,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Generate a URI for uploading custom disk images to a Lab. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> Properties for generating an upload URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1071,7 +1067,6 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/importVirtualMachine", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
@@ -1081,8 +1076,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Import a virtual machine into a different lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> This represents the payload required to import a virtual machine from a different lab into the current one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1099,8 +1094,8 @@ namespace Azure.ResourceManager.DevTestLabs
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1108,8 +1103,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Import a virtual machine into a different lab. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="content"> This represents the payload required to import a virtual machine from a different lab into the current one. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1126,8 +1121,8 @@ namespace Azure.ResourceManager.DevTestLabs
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1171,8 +1166,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> List disk images available for custom image creation. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
@@ -1200,8 +1195,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> List disk images available for custom image creation. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
@@ -1221,90 +1216,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         LabVhdList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabVhdList.DeserializeLabVhdList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string expand, string filter, int? top, string orderby)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string expand, string filter, int? top, string orderby)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List labs in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand, filter, top, orderby);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LabList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = LabList.DeserializeLabList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List labs in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand, filter, top, orderby);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        LabList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = LabList.DeserializeLabList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1336,8 +1247,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List labs in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -1369,8 +1280,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List labs in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -1385,6 +1296,90 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, expand, filter, top, orderby);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LabList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = LabList.DeserializeLabList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string expand, string filter, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string expand, string filter, int? top, string orderby)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> List labs in a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<LabList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand, filter, top, orderby);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LabList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = LabList.DeserializeLabList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List labs in a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<LabList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand, filter, top, orderby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1424,8 +1419,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List disk images available for custom image creation. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
@@ -1455,8 +1450,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List disk images available for custom image creation. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the lab. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>

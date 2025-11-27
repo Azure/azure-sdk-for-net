@@ -52,79 +52,79 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabGlobalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabGlobalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabGlobalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetDevTestLabGlobalScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource"/> object. </returns>
-        public static DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScheduleResource"/> object. </returns>
+        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevTestLabsArmClient(client).GetDevTestLabGlobalScheduleResource(id);
+            return GetMockableDevTestLabsArmClient(client).GetScheduleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetDevTestLabScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetLabScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevTestLabScheduleResource"/> object. </returns>
-        public static DevTestLabScheduleResource GetDevTestLabScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabScheduleResource"/> object. </returns>
+        public static LabScheduleResource GetLabScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevTestLabsArmClient(client).GetDevTestLabScheduleResource(id);
+            return GetMockableDevTestLabsArmClient(client).GetLabScheduleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabServiceFabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabUserServicefabricScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabUserServicefabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabUserServicefabricScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetDevTestLabServiceFabricScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetLabUserServicefabricScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource"/> object. </returns>
-        public static DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabUserServicefabricScheduleResource"/> object. </returns>
+        public static LabUserServicefabricScheduleResource GetLabUserServicefabricScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevTestLabsArmClient(client).GetDevTestLabServiceFabricScheduleResource(id);
+            return GetMockableDevTestLabsArmClient(client).GetLabUserServicefabricScheduleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DevTestLabVmScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DevTestLabVmScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabVirtualmachineScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabVirtualmachineScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualmachineScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetDevTestLabVmScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsArmClient.GetLabVirtualmachineScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DevTestLabVmScheduleResource"/> object. </returns>
-        public static DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabVirtualmachineScheduleResource"/> object. </returns>
+        public static LabVirtualmachineScheduleResource GetLabVirtualmachineScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevTestLabsArmClient(client).GetDevTestLabVmScheduleResource(id);
+            return GetMockableDevTestLabsArmClient(client).GetLabVirtualmachineScheduleResource(id);
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_Get</description>
+        /// <description>Lab_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -527,20 +527,20 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Gets a collection of DevTestLabGlobalScheduleResources in the ResourceGroupResource.
+        /// Gets a collection of ScheduleResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabGlobalSchedules()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetSchedules()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
-        public static DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
+        public static ScheduleCollection GetSchedules(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabGlobalSchedules();
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetSchedules();
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -560,26 +560,26 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabGlobalScheduleAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetScheduleAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduleResource>> GetScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabGlobalScheduleAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetScheduleAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -599,26 +599,26 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetDevTestLabGlobalSchedule(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsResourceGroupResource.GetSchedule(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ScheduleResource> GetSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabGlobalSchedule(name, expand, cancellationToken);
+            return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetSchedule(name, expand, cancellationToken);
         }
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ListBySubscription</description>
+        /// <description>Lab_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ListBySubscription</description>
+        /// <description>Lab_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// <description>Schedule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -718,12 +718,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules(string,string,int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsSubscriptionResource.GetSchedules(string,string,int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -733,12 +733,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduleResource> GetSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
+            return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetSchedulesAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// <description>Schedule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -758,12 +758,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabGlobalScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsSubscriptionResource.GetDevTestLabGlobalSchedules(string,string,int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevTestLabsSubscriptionResource.GetSchedules(string,string,int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -773,12 +773,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduleResource> GetSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
+            return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetSchedules(expand, filter, top, orderby, cancellationToken);
         }
     }
 }

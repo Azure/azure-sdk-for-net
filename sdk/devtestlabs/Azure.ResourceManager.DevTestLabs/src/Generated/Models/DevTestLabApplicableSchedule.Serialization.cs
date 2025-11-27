@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LabVmsShutdown))
@@ -72,8 +88,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -84,6 +100,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -96,11 +121,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -168,8 +188,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 labVmsShutdown,
                 labVmsStartup,
                 serializedAdditionalRawData);

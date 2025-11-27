@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
         /// <param name="dailyRecurrence"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
         /// <param name="hourlyRecurrence"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="createdOn"> The creation date of the schedule. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        /// <summary> The time zone ID (e.g. Pacific Standard time). </summary>
+        /// <summary> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </summary>
         public string TimeZoneId { get; set; }
         /// <summary> Notification settings. </summary>
         public DevTestLabNotificationSettings NotificationSettings { get; set; }

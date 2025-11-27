@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DevTestLabServiceFabricScheduleResources in the DevTestLabServiceFabric. </summary>
-        /// <returns> An object representing collection of DevTestLabServiceFabricScheduleResources and their operations over a DevTestLabServiceFabricScheduleResource. </returns>
-        public virtual DevTestLabServiceFabricScheduleCollection GetDevTestLabServiceFabricSchedules()
+        /// <summary> Gets a collection of LabUserServicefabricScheduleResources in the DevTestLabServiceFabric. </summary>
+        /// <returns> An object representing collection of LabUserServicefabricScheduleResources and their operations over a LabUserServicefabricScheduleResource. </returns>
+        public virtual LabUserServicefabricScheduleCollection GetLabUserServicefabricSchedules()
         {
-            return GetCachedClient(client => new DevTestLabServiceFabricScheduleCollection(client, Id));
+            return GetCachedClient(client => new LabUserServicefabricScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabricSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -115,19 +115,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceFabricScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabServiceFabricScheduleResource>> GetDevTestLabServiceFabricScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserServicefabricScheduleResource>> GetLabUserServicefabricScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetDevTestLabServiceFabricSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetLabUserServicefabricSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabricSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -147,19 +147,19 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceFabricScheduleResource"/></description>
+        /// <description><see cref="LabUserServicefabricScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabServiceFabricScheduleResource> GetDevTestLabServiceFabricSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserServicefabricScheduleResource> GetLabUserServicefabricSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetDevTestLabServiceFabricSchedules().Get(name, expand, cancellationToken);
+            return GetLabUserServicefabricSchedules().Get(name, expand, cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Delete</description>
+        /// <description>ServiceFabric_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Delete</description>
+        /// <description>ServiceFabric_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Update</description>
+        /// <description>ServiceFabric_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Update</description>
+        /// <description>ServiceFabric_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceFabrics_Get</description>
+        /// <description>ServiceFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Title))
@@ -109,8 +125,8 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -143,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -241,8 +257,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 title,
                 description,
                 publisher,
@@ -251,6 +265,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 targetOSType,
                 parameters,
                 createdDate,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 serializedAdditionalRawData);
         }
 

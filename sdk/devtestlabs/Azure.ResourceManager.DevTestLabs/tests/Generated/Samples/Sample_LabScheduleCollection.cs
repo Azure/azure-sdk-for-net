@@ -9,19 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
-    public partial class Sample_DevTestLabScheduleCollection
+    public partial class Sample_LabScheduleCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SchedulesCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Schedules_CreateOrUpdate.json
-            // this example is just showing the usage of "Schedules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Schedules_CreateOrUpdate.json
+            // this example is just showing the usage of "Schedule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,39 +35,20 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
             DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
 
-            // get the collection of this DevTestLabScheduleResource
-            DevTestLabScheduleCollection collection = devTestLab.GetDevTestLabSchedules();
+            // get the collection of this LabScheduleResource
+            LabScheduleCollection collection = devTestLab.GetLabSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
             DevTestLabScheduleData data = new DevTestLabScheduleData(new AzureLocation("{location}"))
             {
-                Status = new DevTestLabEnableStatus("{Enabled|Disabled}"),
-                TaskType = "{myLabVmTaskType}",
-                WeeklyRecurrence = new DevTestLabWeekDetails
-                {
-                    Weekdays = { "Monday", "Wednesday", "Friday" },
-                    Time = "{timeOfTheDayTheScheduleWillOccurOnThoseDays}",
-                },
-                DailyRecurrenceTime = "{timeOfTheDayTheScheduleWillOccurEveryDay}",
-                HourlyRecurrenceMinute = 30,
-                TimeZoneId = "Pacific Standard Time",
-                NotificationSettings = new DevTestLabNotificationSettings
-                {
-                    Status = new DevTestLabEnableStatus("{Enabled|Disabled}"),
-                    TimeInMinutes = 15,
-                    WebhookUri = new Uri("{webhookUrl}"),
-                    EmailRecipient = "{email}",
-                    NotificationLocale = "EN",
-                },
-                TargetResourceId = "/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}",
                 Tags =
 {
 ["tagName1"] = "tagValue1"
 },
             };
-            ArmOperation<DevTestLabScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            DevTestLabScheduleResource result = lro.Value;
+            ArmOperation<LabScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            LabScheduleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -81,8 +61,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Schedules_Get.json
-            // this example is just showing the usage of "Schedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Schedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,12 +77,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
             DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
 
-            // get the collection of this DevTestLabScheduleResource
-            DevTestLabScheduleCollection collection = devTestLab.GetDevTestLabSchedules();
+            // get the collection of this LabScheduleResource
+            LabScheduleCollection collection = devTestLab.GetLabSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
-            DevTestLabScheduleResource result = await collection.GetAsync(name);
+            LabScheduleResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -115,8 +95,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SchedulesList()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Schedules_List.json
-            // this example is just showing the usage of "Schedules_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Schedules_List.json
+            // this example is just showing the usage of "Schedule_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -131,11 +111,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
             DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
 
-            // get the collection of this DevTestLabScheduleResource
-            DevTestLabScheduleCollection collection = devTestLab.GetDevTestLabSchedules();
+            // get the collection of this LabScheduleResource
+            LabScheduleCollection collection = devTestLab.GetLabSchedules();
 
             // invoke the operation and iterate over the result
-            await foreach (DevTestLabScheduleResource item in collection.GetAllAsync())
+            await foreach (LabScheduleResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -151,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicable_SchedulesListApplicable()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Schedules_ListApplicable.json
+            // Generated from example definition: 2018-09-15/Schedules_ListApplicable.json
             // this example is just showing the usage of "Schedules_ListApplicable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,12 +147,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
             DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
 
-            // get the collection of this DevTestLabScheduleResource
-            DevTestLabScheduleCollection collection = devTestLab.GetDevTestLabSchedules();
+            // get the collection of this LabScheduleResource
+            LabScheduleCollection collection = devTestLab.GetLabSchedules();
 
             // invoke the operation and iterate over the result
             string name = "{scheduleName}";
-            await foreach (DevTestLabScheduleResource item in collection.GetApplicableAsync(name))
+            await foreach (LabScheduleResource item in collection.GetApplicableAsync(name))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -188,8 +168,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Schedules_Get.json
-            // this example is just showing the usage of "Schedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Schedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -204,8 +184,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
             DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
 
-            // get the collection of this DevTestLabScheduleResource
-            DevTestLabScheduleCollection collection = devTestLab.GetDevTestLabSchedules();
+            // get the collection of this LabScheduleResource
+            LabScheduleCollection collection = devTestLab.GetLabSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
@@ -218,8 +198,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SchedulesGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Schedules_Get.json
-            // this example is just showing the usage of "Schedules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/Schedules_Get.json
+            // this example is just showing the usage of "Schedule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -234,13 +214,13 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
             DevTestLabResource devTestLab = client.GetDevTestLabResource(devTestLabResourceId);
 
-            // get the collection of this DevTestLabScheduleResource
-            DevTestLabScheduleCollection collection = devTestLab.GetDevTestLabSchedules();
+            // get the collection of this LabScheduleResource
+            LabScheduleCollection collection = devTestLab.GetLabSchedules();
 
             // invoke the operation
             string name = "{scheduleName}";
-            NullableResponse<DevTestLabScheduleResource> response = await collection.GetIfExistsAsync(name);
-            DevTestLabScheduleResource result = response.HasValue ? response.Value : null;
+            NullableResponse<LabScheduleResource> response = await collection.GetIfExistsAsync(name);
+            LabScheduleResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

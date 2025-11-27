@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Delete</description>
+        /// <description>ServiceRunner_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Delete</description>
+        /// <description>ServiceRunner_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_CreateOrUpdate</description>
+        /// <description>ServiceRunner_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_CreateOrUpdate</description>
+        /// <description>ServiceRunner_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceRunners_Get</description>
+        /// <description>ServiceRunner_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

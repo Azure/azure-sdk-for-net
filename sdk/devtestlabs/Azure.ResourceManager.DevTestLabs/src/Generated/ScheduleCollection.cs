@@ -14,32 +14,33 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevTestLabVmScheduleResource"/> and their operations.
-    /// Each <see cref="DevTestLabVmScheduleResource"/> in the collection will belong to the same instance of <see cref="DevTestLabVmResource"/>.
-    /// To get a <see cref="DevTestLabVmScheduleCollection"/> instance call the GetDevTestLabVmSchedules method from an instance of <see cref="DevTestLabVmResource"/>.
+    /// A class representing a collection of <see cref="ScheduleResource"/> and their operations.
+    /// Each <see cref="ScheduleResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ScheduleCollection"/> instance call the GetSchedules method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class DevTestLabVmScheduleCollection : ArmCollection, IEnumerable<DevTestLabVmScheduleResource>, IAsyncEnumerable<DevTestLabVmScheduleResource>
+    public partial class ScheduleCollection : ArmCollection, IEnumerable<ScheduleResource>, IAsyncEnumerable<ScheduleResource>
     {
-        private readonly ClientDiagnostics _devTestLabVmScheduleVmSchedulesClientDiagnostics;
-        private readonly VirtualMachineSchedulesRestOperations _devTestLabVmScheduleVmSchedulesRestClient;
+        private readonly ClientDiagnostics _scheduleGlobalSchedulesClientDiagnostics;
+        private readonly GlobalSchedulesRestOperations _scheduleGlobalSchedulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmScheduleCollection"/> class for mocking. </summary>
-        protected DevTestLabVmScheduleCollection()
+        /// <summary> Initializes a new instance of the <see cref="ScheduleCollection"/> class for mocking. </summary>
+        protected ScheduleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabVmScheduleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScheduleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DevTestLabVmScheduleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ScheduleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devTestLabVmScheduleVmSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabVmScheduleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevTestLabVmScheduleResource.ResourceType, out string devTestLabVmScheduleVmSchedulesApiVersion);
-            _devTestLabVmScheduleVmSchedulesRestClient = new VirtualMachineSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVmScheduleVmSchedulesApiVersion);
+            _scheduleGlobalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ScheduleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ScheduleResource.ResourceType, out string scheduleGlobalSchedulesApiVersion);
+            _scheduleGlobalSchedulesRestClient = new GlobalSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scheduleGlobalSchedulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +48,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevTestLabVmResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabVmResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,11 +57,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_CreateOrUpdate</description>
+        /// <description>Schedule_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -68,29 +69,29 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DevTestLabVmScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.CreateOrUpdate");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _devTestLabVmScheduleVmSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data);
+                var response = await _scheduleGlobalSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _scheduleGlobalSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DevTestLabsArmOperation<DevTestLabVmScheduleResource>(Response.FromValue(new DevTestLabVmScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new DevTestLabsArmOperation<ScheduleResource>(Response.FromValue(new ScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,11 +108,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_CreateOrUpdate</description>
+        /// <description>Schedule_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -119,29 +120,29 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DevTestLabVmScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.CreateOrUpdate");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken);
-                var uri = _devTestLabVmScheduleVmSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data);
+                var response = _scheduleGlobalSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
+                var uri = _scheduleGlobalSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DevTestLabsArmOperation<DevTestLabVmScheduleResource>(Response.FromValue(new DevTestLabVmScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new DevTestLabsArmOperation<ScheduleResource>(Response.FromValue(new ScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,11 +159,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -170,27 +171,27 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabVmScheduleResource>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduleResource>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Get");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _scheduleGlobalSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,11 +205,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -216,27 +217,27 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DevTestLabVmScheduleResource> Get(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduleResource> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Get");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken);
+                var response = _scheduleGlobalSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,15 +247,15 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// List schedules in a given virtual machine.
+        /// List schedules in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_List</description>
+        /// <description>Schedule_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,24 +272,24 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevTestLabVmScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabVmScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabVmScheduleVmSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabVmScheduleVmSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabVmScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabVmScheduleVmSchedulesClientDiagnostics, Pipeline, "DevTestLabVmScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduleGlobalSchedulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduleGlobalSchedulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _scheduleGlobalSchedulesClientDiagnostics, Pipeline, "ScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List schedules in a given virtual machine.
+        /// List schedules in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_List</description>
+        /// <description>Schedule_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,12 +306,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabVmScheduleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabVmScheduleResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduleResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabVmScheduleVmSchedulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabVmScheduleVmSchedulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabVmScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _devTestLabVmScheduleVmSchedulesClientDiagnostics, Pipeline, "DevTestLabVmScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduleGlobalSchedulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduleGlobalSchedulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), _scheduleGlobalSchedulesClientDiagnostics, Pipeline, "ScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,11 +319,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -330,11 +331,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -343,11 +344,11 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Exists");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _scheduleGlobalSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,11 +363,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -374,11 +375,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -387,11 +388,11 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.Exists");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
+                var response = _scheduleGlobalSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,11 +407,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -418,27 +419,27 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<DevTestLabVmScheduleResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ScheduleResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.GetIfExists");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devTestLabVmScheduleVmSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _scheduleGlobalSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<DevTestLabVmScheduleResource>(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new ScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -452,11 +453,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineSchedules_Get</description>
+        /// <description>Schedule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -464,27 +465,27 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DevTestLabVmScheduleResource"/></description>
+        /// <description><see cref="ScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="name"> The name of the Schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<DevTestLabVmScheduleResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ScheduleResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabVmScheduleVmSchedulesClientDiagnostics.CreateScope("DevTestLabVmScheduleCollection.GetIfExists");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devTestLabVmScheduleVmSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
+                var response = _scheduleGlobalSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<DevTestLabVmScheduleResource>(response.GetRawResponse());
-                return Response.FromValue(new DevTestLabVmScheduleResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new ScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -493,7 +494,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        IEnumerator<DevTestLabVmScheduleResource> IEnumerable<DevTestLabVmScheduleResource>.GetEnumerator()
+        IEnumerator<ScheduleResource> IEnumerable<ScheduleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -503,7 +504,7 @@ namespace Azure.ResourceManager.DevTestLabs
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DevTestLabVmScheduleResource> IAsyncEnumerable<DevTestLabVmScheduleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ScheduleResource> IAsyncEnumerable<ScheduleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

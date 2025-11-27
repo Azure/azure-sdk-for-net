@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NotificationChannelsGet()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Get.json
-            // this example is just showing the usage of "NotificationChannels_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_Get.json
+            // this example is just showing the usage of "NotificationChannel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NotificationChannelsDelete()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Delete.json
-            // this example is just showing the usage of "NotificationChannels_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_Delete.json
+            // this example is just showing the usage of "NotificationChannel_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NotificationChannelsUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Update.json
-            // this example is just showing the usage of "NotificationChannels_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2018-09-15/NotificationChannels_Update.json
+            // this example is just showing the usage of "NotificationChannel_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Notify_NotificationChannelsNotify()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/NotificationChannels_Notify.json
+            // Generated from example definition: 2018-09-15/NotificationChannels_Notify.json
             // this example is just showing the usage of "NotificationChannels_Notify" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

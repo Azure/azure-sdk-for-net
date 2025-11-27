@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Artifacts_Get</description>
+        /// <description>Artifact_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Artifacts_Get</description>
+        /// <description>Artifact_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
