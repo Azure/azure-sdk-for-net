@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxKeyEncryptionKey : IUtf8JsonSerializable, IJsonModel<DataBoxKeyEncryptionKey>
+    /// <summary> Encryption key containing details about key to encrypt different keys. </summary>
+    public partial class DataBoxKeyEncryptionKey : IJsonModel<DataBoxKeyEncryptionKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxKeyEncryptionKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/> for deserialization. </summary>
+        internal DataBoxKeyEncryptionKey()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxKeyEncryptionKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("kekType"u8);
             writer.WriteStringValue(KekType.ToSerialString());
             if (Optional.IsDefined(ManagedIdentity))
@@ -46,20 +52,20 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultResourceId))
+            if (Optional.IsDefined(KekVaultResourceID))
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
-                writer.WriteStringValue(KekVaultResourceId);
+                writer.WriteStringValue(KekVaultResourceID);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,79 +74,85 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxKeyEncryptionKey IJsonModel<DataBoxKeyEncryptionKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxKeyEncryptionKey IJsonModel<DataBoxKeyEncryptionKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxKeyEncryptionKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxKeyEncryptionKey)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxKeyEncryptionKey(document.RootElement, options);
         }
 
-        internal static DataBoxKeyEncryptionKey DeserializeDataBoxKeyEncryptionKey(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxKeyEncryptionKey DeserializeDataBoxKeyEncryptionKey(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataBoxKeyEncryptionKeyType kekType = default;
-            DataBoxManagedIdentity identityProperties = default;
-            Uri kekUrl = default;
-            ResourceIdentifier kekVaultResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DataBoxManagedIdentity managedIdentity = default;
+            Uri kekUri = default;
+            ResourceIdentifier kekVaultResourceID = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kekType"u8))
+                if (prop.NameEquals("kekType"u8))
                 {
-                    kekType = property.Value.GetString().ToDataBoxKeyEncryptionKeyType();
+                    kekType = prop.Value.GetString().ToDataBoxKeyEncryptionKeyType();
                     continue;
                 }
-                if (property.NameEquals("identityProperties"u8))
+                if (prop.NameEquals("identityProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value, options);
+                    managedIdentity = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("kekUrl"u8))
+                if (prop.NameEquals("kekUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kekUrl = new Uri(property.Value.GetString());
+                    kekUri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kekVaultResourceID"u8))
+                if (prop.NameEquals("kekVaultResourceID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kekVaultResourceId = new ResourceIdentifier(property.Value.GetString());
+                    kekVaultResourceID = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoxKeyEncryptionKey(kekType, identityProperties, kekUrl, kekVaultResourceId, serializedAdditionalRawData);
+            return new DataBoxKeyEncryptionKey(kekType, managedIdentity, kekUri, kekVaultResourceID, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DataBoxKeyEncryptionKey>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxKeyEncryptionKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -150,15 +162,20 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        DataBoxKeyEncryptionKey IPersistableModel<DataBoxKeyEncryptionKey>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxKeyEncryptionKey IPersistableModel<DataBoxKeyEncryptionKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxKeyEncryptionKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxKeyEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxKeyEncryptionKey(document.RootElement, options);
                     }
                 default:
@@ -166,6 +183,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxKeyEncryptionKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

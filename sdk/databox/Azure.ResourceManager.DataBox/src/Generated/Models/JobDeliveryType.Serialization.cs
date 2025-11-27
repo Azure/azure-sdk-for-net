@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class JobDeliveryTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this JobDeliveryType value) => value switch
         {
             JobDeliveryType.NonScheduled => "NonScheduled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobDeliveryType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static JobDeliveryType ToJobDeliveryType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonScheduled")) return JobDeliveryType.NonScheduled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scheduled")) return JobDeliveryType.Scheduled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonScheduled"))
+            {
+                return JobDeliveryType.NonScheduled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scheduled"))
+            {
+                return JobDeliveryType.Scheduled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobDeliveryType value.");
         }
     }
