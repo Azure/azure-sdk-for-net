@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             serialNumberCustomerResolutionMap ??= new Dictionary<string, CustomerResolutionCode>();
 
-            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap, serializedAdditionalRawData: null);
+            return new MitigateJobContent(customerResolutionCode, serialNumberCustomerResolutionMap, additionalBinaryDataProperties: null);
         }
     }
 }

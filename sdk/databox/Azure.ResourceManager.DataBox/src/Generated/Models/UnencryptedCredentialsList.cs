@@ -14,66 +14,30 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> List of unencrypted credentials for accessing device. </summary>
     internal partial class UnencryptedCredentialsList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UnencryptedCredentialsList"/>. </summary>
         /// <param name="value"> The UnencryptedCredentials items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal UnencryptedCredentialsList(IEnumerable<UnencryptedCredentials> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="UnencryptedCredentialsList"/>. </summary>
         /// <param name="value"> The UnencryptedCredentials items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnencryptedCredentialsList(IReadOnlyList<UnencryptedCredentials> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnencryptedCredentialsList(IList<UnencryptedCredentials> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentialsList"/> for deserialization. </summary>
-        internal UnencryptedCredentialsList()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The UnencryptedCredentials items on this page. </summary>
-        public IReadOnlyList<UnencryptedCredentials> Value { get; }
+        public IList<UnencryptedCredentials> Value { get; }
+
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

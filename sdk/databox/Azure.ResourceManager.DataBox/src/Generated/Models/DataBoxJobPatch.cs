@@ -7,44 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The JobResourceUpdateParameter. </summary>
     public partial class DataBoxJobPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxJobPatch"/>. </summary>
         public DataBoxJobPatch()
@@ -53,23 +24,42 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxJobPatch"/>. </summary>
-        /// <param name="details"> Details of a job to be updated. </param>
+        /// <param name="properties"> Properties of a job to be updated. </param>
         /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxJobPatch(UpdateJobDetails details, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxJobPatch(UpdateJobProperties properties, IDictionary<string, string> tags, ResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Details = details;
+            Properties = properties;
             Tags = tags;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Details of a job to be updated. </summary>
-        public UpdateJobDetails Details { get; set; }
+        /// <summary> Properties of a job to be updated. </summary>
+        internal UpdateJobProperties Properties { get; set; }
+
         /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Msi identity of the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public ResourceIdentity Identity { get; set; }
+
+        /// <summary> Details of a job to be updated. </summary>
+        public UpdateJobDetails Details
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Details;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateJobProperties();
+                }
+                Properties.Details = value;
+            }
+        }
     }
 }
