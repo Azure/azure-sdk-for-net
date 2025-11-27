@@ -31,6 +31,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Computer use](#computer-use)
   - [Function call](#function-call)
   - [Web Search](#web-search)
+  - [Bing Grounding](#bing-grounding)
+  - [Bing Custom Search](#bing-custom-search)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -820,6 +822,98 @@ await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateRe
 }
 Console.WriteLine($"{text}{annotation}");
 ```
+
+## Bing Grounding
+
+To support the response returned by the Agent, Bing grounding can be used. To implement it,
+create the `BingGroundingAgentTool` and use it in `PromptAgentDefinition` object.
+
+```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
+AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
+BingGroundingAgentTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
+    searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+    )
+);
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent.",
+    Tools = { bingGroundingAgentTool, }
+};
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+If the Bing search returned the result, we can get the URL annotation
+using the same methods we used for AI Search result.
+
+
+Getting the result of Bing grounding in non-streaming scenarios:
+```C# Snippet:Sample_WaitForResponse_BingGrounding
+Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
+```
+
+Streaming the results:
+```C# Snippet:Sample_StreamResponse_BingGroundingStreaming_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+
+string annotation = "";
+string text = "";
+await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
+{
+    if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+    {
+        Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
+    }
+    else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
+    {
+        Console.WriteLine($"Delta: {textDelta.Delta}");
+    }
+    else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
+    {
+        text = textDoneUpdate.Text;
+    }
+    else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
+    {
+        if (annotation.Length == 0)
+        {
+            annotation = GetFormattedAnnotation(itemDoneUpdate.Item);
+        }
+    }
+    else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
+    {
+        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}");
+    }
+}
+Console.WriteLine($"{text}{annotation}");
+```
+
+## Bing Custom Search
+
+Along with bing grounding, Agents can use the custom search. To implement it,
+create the `BingCustomSearchAgentTool` and use it in `PromptAgentDefinition` object. The
+use of this tool is like Bing Grounding, however it requires ID of Grounding with Bing
+Custom Search and the name of a search configuration. In this scenario, we use Bing to search
+en.wikipedia.org. This configuration is called "wikipedia" its search URL is configured through Azure.
+
+```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
+AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
+BingCustomSearchAgentTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+    searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+    )
+);
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent.",
+    Tools = { customBingSearchAgentTool, }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+Sending request and formatting the response is done the same way as in Bing Grounding.
 
 ## Tracing
 **Note:** The tracing functionality is currently in preview with limited scope. Only agent creation operations generate dedicated gen_ai traces currently. As a preview feature, the trace structure including spans, attributes, and events may change in future releases.

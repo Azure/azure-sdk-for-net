@@ -20,6 +20,7 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -40,6 +41,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         Memory,
         AzureFunction,
         BingGrounding,
+        BingGroundingCustom,
         MCP,
         OpenAPI,
         A2A,
@@ -59,6 +61,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.WebSearch, "What is special about this place?"},
         {ToolType.Memory, "What is user's favorite animal?"},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
+        {ToolType.BingGroundingCustom, "How many medals did the USA win in the 2024 summer olympics?"},
         {ToolType.OpenAPI, "What's the weather in Seattle?"},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
             "including what is currently known about orcas' cognitive capabilities, " +
@@ -83,6 +86,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.None, "You are a prompt agent."},
         {ToolType.BingGrounding, "You are helpful agent."},
+        {ToolType.BingGroundingCustom, "You are helpful agent."},
         {ToolType.ImageGeneration, "Generate images based on user prompts"},
         {ToolType.WebSearch, "You are a helpful assistant that can search the web"},
         {ToolType.Memory, "You are a prompt agent capable to access memorized conversation."},
@@ -110,6 +114,14 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.WebSearch, "centralia" },
         {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
+        {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
+    };
+
+    public Dictionary<ToolType, string> ExpectedAnnotationTitle = new()
+    {
+        {ToolType.AzureAISearch, "product_info_7.md"},
+        {ToolType.BingGrounding, "Wikipedia"},
+        {ToolType.BingGroundingCustom, "Wikipedia"},
     };
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
@@ -121,6 +133,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         {ToolType.FileSearch, typeof(FileCitationMessageAnnotation) },
         {ToolType.AzureAISearch, typeof(UriCitationMessageAnnotation) },
+        {ToolType.BingGrounding, typeof(UriCitationMessageAnnotation) },
+        {ToolType.BingGroundingCustom, typeof(UriCitationMessageAnnotation) },
     };
     #endregion
 
@@ -146,6 +160,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
+        ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
@@ -369,6 +384,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             ToolType.Memory => new MemorySearchTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex(projectClient)])),
+            ToolType.BingGrounding => new BingGroundingAgentTool(new BingGroundingSearchToolOptions(
+                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.BING_CONNECTION_NAME).Id)]
+            )),
+            ToolType.BingGroundingCustom => new BingCustomSearchAgentTool(new BingCustomSearchToolParameters(
+                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.CUSTOM_BING_CONNECTION_NAME).Id, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
+            )),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
