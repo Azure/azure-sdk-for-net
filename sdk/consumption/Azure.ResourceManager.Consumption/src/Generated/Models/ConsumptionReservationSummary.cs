@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationSummary"/>. </summary>
-        internal ConsumptionReservationSummary()
+        public ConsumptionReservationSummary()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
         /// <param name="reservationId"> The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to. </param>
         /// <param name="skuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
@@ -73,11 +75,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="totalReservedQuantity"> This is the total count of instances that are reserved for the reservationId. </param>
         /// <param name="usedQuantity"> This is the used quantity for the reservationId. </param>
         /// <param name="utilizedPercentage"> This is the utilized percentage for the reservation Id. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionReservationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reservationOrderId, string reservationId, string skuName, decimal? reservedHours, DateTimeOffset? useOn, decimal? usedHours, decimal? minUtilizationPercentage, decimal? avgUtilizationPercentage, decimal? maxUtilizationPercentage, string kind, decimal? purchasedQuantity, decimal? remainingQuantity, decimal? totalReservedQuantity, decimal? usedQuantity, decimal? utilizedPercentage, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionReservationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string reservationOrderId, string reservationId, string skuName, decimal? reservedHours, DateTimeOffset? useOn, decimal? usedHours, decimal? minUtilizationPercentage, decimal? avgUtilizationPercentage, decimal? maxUtilizationPercentage, string kind, decimal? purchasedQuantity, decimal? remainingQuantity, decimal? totalReservedQuantity, decimal? usedQuantity, decimal? utilizedPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             ReservationOrderId = reservationOrderId;
             ReservationId = reservationId;
             SkuName = skuName;
@@ -93,11 +95,13 @@ namespace Azure.ResourceManager.Consumption.Models
             TotalReservedQuantity = totalReservedQuantity;
             UsedQuantity = usedQuantity;
             UtilizedPercentage = utilizedPercentage;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The etag for the resource. </summary>
+        public ETag? ETag { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </summary>
         public string ReservationOrderId { get; }
         /// <summary> The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to. </summary>
@@ -128,9 +132,5 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? UsedQuantity { get; }
         /// <summary> This is the utilized percentage for the reservation Id. </summary>
         public decimal? UtilizedPercentage { get; }
-        /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

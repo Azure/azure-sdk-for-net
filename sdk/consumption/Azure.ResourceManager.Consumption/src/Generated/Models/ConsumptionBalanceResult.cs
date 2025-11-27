@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceResult"/>. </summary>
-        internal ConsumptionBalanceResult()
+        public ConsumptionBalanceResult()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             NewPurchasesDetails = new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>();
             AdjustmentDetails = new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceResult"/>. </summary>
@@ -60,6 +60,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
         /// <param name="beginningBalance"> The beginning balance for the billing period. </param>
         /// <param name="endingBalance"> The ending balance for the billing period (for open periods this will be updated daily). </param>
@@ -73,13 +75,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="azureMarketplaceServiceCharges"> Total charges for Azure Marketplace. </param>
         /// <param name="billingFrequency"> The billing frequency. </param>
         /// <param name="isPriceHidden"> Price is hidden or not. </param>
+        /// <param name="overageRefund"> Overage Refunds. </param>
         /// <param name="newPurchasesDetails"> List of new purchases. </param>
         /// <param name="adjustmentDetails"> List of Adjustments (Promo credit, SIE credit etc.). </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, decimal? overageRefund, IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             Currency = currency;
             BeginningBalance = beginningBalance;
             EndingBalance = endingBalance;
@@ -93,13 +96,16 @@ namespace Azure.ResourceManager.Consumption.Models
             AzureMarketplaceServiceCharges = azureMarketplaceServiceCharges;
             BillingFrequency = billingFrequency;
             IsPriceHidden = isPriceHidden;
+            OverageRefund = overageRefund;
             NewPurchasesDetails = newPurchasesDetails;
             AdjustmentDetails = adjustmentDetails;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The etag for the resource. </summary>
+        public ETag? ETag { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
         public string Currency { get; }
         /// <summary> The beginning balance for the billing period. </summary>
@@ -123,16 +129,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Total charges for Azure Marketplace. </summary>
         public decimal? AzureMarketplaceServiceCharges { get; }
         /// <summary> The billing frequency. </summary>
-        public ConsumptionBillingFrequency? BillingFrequency { get; }
+        public ConsumptionBillingFrequency? BillingFrequency { get; set; }
         /// <summary> Price is hidden or not. </summary>
         public bool? IsPriceHidden { get; }
+        /// <summary> Overage Refunds. </summary>
+        public decimal? OverageRefund { get; }
         /// <summary> List of new purchases. </summary>
         public IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> NewPurchasesDetails { get; }
         /// <summary> List of Adjustments (Promo credit, SIE credit etc.). </summary>
         public IReadOnlyList<ConsumptionBalanceAdjustmentDetail> AdjustmentDetails { get; }
-        /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionModernUsageDetail : ConsumptionUsageDetail
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernUsageDetail"/>. </summary>
-        internal ConsumptionModernUsageDetail()
+        public ConsumptionModernUsageDetail()
         {
             Kind = UsageDetailsKind.Modern;
         }

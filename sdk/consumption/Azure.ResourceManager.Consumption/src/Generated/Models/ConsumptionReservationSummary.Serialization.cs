@@ -367,6 +367,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 reservationOrderId,
                 reservationId,
                 skuName,
@@ -382,8 +384,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalReservedQuantity,
                 usedQuantity,
                 utilizedPercentage,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

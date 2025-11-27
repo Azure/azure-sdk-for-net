@@ -423,6 +423,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingList<string>(),
                 eventDate,
                 reservationOrderId,
                 description,
@@ -446,7 +447,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 billingMonth,
                 monetaryCommitment,
                 overage,
-                tags ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

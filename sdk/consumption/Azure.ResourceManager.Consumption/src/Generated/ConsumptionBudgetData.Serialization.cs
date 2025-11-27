@@ -264,6 +264,7 @@ namespace Azure.ResourceManager.Consumption
                 name,
                 type,
                 systemData,
+                etag,
                 category,
                 amount,
                 timeGrain,
@@ -272,7 +273,6 @@ namespace Azure.ResourceManager.Consumption
                 currentSpend,
                 notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
                 forecastSpend,
-                etag,
                 serializedAdditionalRawData);
         }
 

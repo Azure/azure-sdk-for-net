@@ -61,8 +61,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="unitPrice"> Unit Price. </param>
         /// <param name="currencyCode"> Currency Code. </param>
         /// <param name="offerId"> Offer Id. </param>
+        /// <param name="savingsPlan"> SavingsPlan Details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId, ConsumptionSavingsPlan savingsPlan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             MeterId = meterId;
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.Consumption.Models
             UnitPrice = unitPrice;
             CurrencyCode = currencyCode;
             OfferId = offerId;
+            SavingsPlan = savingsPlan;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,5 +96,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string CurrencyCode { get; }
         /// <summary> Offer Id. </summary>
         public string OfferId { get; }
+        /// <summary> SavingsPlan Details. </summary>
+        public ConsumptionSavingsPlan SavingsPlan { get; }
     }
 }

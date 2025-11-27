@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Consumption
 namespace: Azure.ResourceManager.Consumption
-require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/consumption/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b83a16850340fd9ed529a6ae4841b31744430bcc/specification/consumption/resource-manager/readme.md
+# tag: package-2024-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -44,6 +45,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default
@@ -143,6 +147,9 @@ rename-mapping:
   ManagementGroupAggregatedCostResult: ConsumptionAggregatedCostResult
   ManagementGroupAggregatedCostResult.properties.usageStart: UsageStartOn
   ManagementGroupAggregatedCostResult.properties.usageEnd: UsageEndOn
+  ManagementGroupAggregatedCostResult.properties.children: ChildResults
+  ManagementGroupAggregatedCostResult.properties.includedSubscriptions: IncludedSubscriptionIds
+  ManagementGroupAggregatedCostResult.properties.excludedSubscriptions: ExcludedSubscriptionIds
   LotSummary: ConsumptionLotSummary
   LotSource: ConsumptionLotSource
   Status: ConsumptionLotStatus
@@ -216,31 +223,36 @@ rename-mapping:
   ReservationRecommendationDetailsUsageProperties: ConsumptionUsageProperties
   SkuProperty: ConsumptionSkuProperty
   Tag: ConsumptionTag
+  SavingsPlan: ConsumptionSavingsPlan
+  OrganizationType: ConsumptionOrganizationType
+  OperationStatusType: ConsumptionOperationStatusType
+  OperationStatus: ConsumptionOperationStatus
+  ModernReservationRecommendationProperties.resourceType: -|resource-type
+  ReservationDetail: ConsumptionReservationDetail
+  LegacyUsageDetail.properties.subscriptionId: -|uuid
+  ModernChargeSummary.properties.subscriptionId: -|uuid
+  ReservationDetail.properties.usageDate: ConsumptionOccurredOn
+  ReservationDetail.properties.instanceId: -|arm-id
 
 directive:
-  - from: consumption.json
-    where: $.definitions
-    transform: >
-      delete $.CreditSummaryProperties.properties.eTag;
-      delete $.EventProperties.properties.eTag;
-      delete $.LotProperties.properties.eTag;
-    reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
-  - from: consumption.json
-    where: $.definitions
-    transform: >
-      $.ReservationDetail['x-ms-client-name'] = 'ConsumptionReservationDetail';
-      $.ReservationDetailProperties.properties.usageDate['x-ms-client-name'] = 'ConsumptionOccurredOn';
-      $.ReservationDetailProperties.properties.instanceId['x-ms-format'] = 'arm-id';
-    reason: avoid duplicated schema issue in partial resource generation process.
-  - from: consumption.json
+  - from: openapi.json
     where: $.paths
     transform: >
-      $['/{scope}/providers/Microsoft.Consumption/usageDetails'].get.parameters[3]['x-ms-client-name'] = 'skipToken';
-      $['/{scope}/providers/Microsoft.Consumption/marketplaces'].get.parameters[2]['x-ms-client-name'] = 'skipToken';
-      $['/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[1]['x-ms-client-name'] = 'skipToken';
-      $['/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[1]['x-ms-client-name'] = 'skipToken';
+      $['/{scope}/providers/Microsoft.Consumption/usageDetails'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
+      $['/{scope}/providers/Microsoft.Consumption/marketplaces'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
+      $['/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[3]['x-ms-client-name'] = 'skipToken';
+      $['/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
     reason: change the query parameter name from skiptoken to skipToken.
-  - from: consumption.json
-    where: $.parameters.scopeParameter
-    transform: $["x-ms-client-name"] = "reservationScope";
-```
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.LegacyReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
+      $.ModernReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
+    reason: Flatten the 'properties' property in both LegacyReservationRecommendation and ModernReservationRecommendation models.
+  - from: openapi.json
+    where: $.definitions.EventSummary
+    transform: >
+      $.properties.eTag.readOnly = false;
+    reason: Make EventSummary eTag property writable.
+
+````

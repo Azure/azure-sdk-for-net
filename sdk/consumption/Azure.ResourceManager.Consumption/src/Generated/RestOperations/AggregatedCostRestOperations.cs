@@ -32,8 +32,94 @@ namespace Azure.ResourceManager.Consumption
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2024-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetForBillingPeriodByManagementGroupRequestUri(string managementGroupId, string billingPeriodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
+            uri.AppendPath(billingPeriodName, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetForBillingPeriodByManagementGroupRequest(string managementGroupId, string billingPeriodName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
+            uri.AppendPath(billingPeriodName, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Provides the aggregate cost of a management group and all child management groups by specified billing period. </summary>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using var message = CreateGetForBillingPeriodByManagementGroupRequest(managementGroupId, billingPeriodName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConsumptionAggregatedCostResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Provides the aggregate cost of a management group and all child management groups by specified billing period. </summary>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
+        /// <param name="billingPeriodName"> Billing Period Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
+
+            using var message = CreateGetForBillingPeriodByManagementGroupRequest(managementGroupId, billingPeriodName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConsumptionAggregatedCostResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetByManagementGroupRequestUri(string managementGroupId, string filter)
@@ -73,8 +159,8 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Provides the aggregate cost of a management group and all child management groups by current billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -99,8 +185,8 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Provides the aggregate cost of a management group and all child management groups by current billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -109,92 +195,6 @@ namespace Azure.ResourceManager.Consumption
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
             using var message = CreateGetByManagementGroupRequest(managementGroupId, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConsumptionAggregatedCostResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetForBillingPeriodByManagementGroupRequestUri(string managementGroupId, string billingPeriodName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
-            uri.AppendPath(billingPeriodName, true);
-            uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetForBillingPeriodByManagementGroupRequest(string managementGroupId, string billingPeriodName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
-            uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
-            uri.AppendPath(billingPeriodName, true);
-            uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Provides the aggregate cost of a management group and all child management groups by specified billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConsumptionAggregatedCostResult>> GetForBillingPeriodByManagementGroupAsync(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
-
-            using var message = CreateGetForBillingPeriodByManagementGroupRequest(managementGroupId, billingPeriodName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConsumptionAggregatedCostResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConsumptionAggregatedCostResult.DeserializeConsumptionAggregatedCostResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Provides the aggregate cost of a management group and all child management groups by specified billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConsumptionAggregatedCostResult> GetForBillingPeriodByManagementGroup(string managementGroupId, string billingPeriodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
-
-            using var message = CreateGetForBillingPeriodByManagementGroupRequest(managementGroupId, billingPeriodName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="calculatedSavings"> List of calculated savings. </param>
         /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
         /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>
-        /// <param name="reservationOrderTerm"> Term period of the reservation, ex: P1Y or P3Y. </param>
+        /// <param name="reservationOrderTerm"> Term period of the reservation. ex: P1M, P1Y or P3Y. </param>
         /// <param name="savingsType"> Type of savings, ex: instance. </param>
         /// <param name="unitOfMeasure"> Measurement unit ex: hour etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public int? LookBackPeriod { get; }
         /// <summary> Number of recommended units of the resource. </summary>
         public float? RecommendedQuantity { get; }
-        /// <summary> Term period of the reservation, ex: P1Y or P3Y. </summary>
+        /// <summary> Term period of the reservation. ex: P1M, P1Y or P3Y. </summary>
         public string ReservationOrderTerm { get; }
         /// <summary> Type of savings, ex: instance. </summary>
         public string SavingsType { get; }

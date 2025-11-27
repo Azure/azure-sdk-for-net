@@ -42,6 +42,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
@@ -79,6 +90,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsEstimatedBalance))
+            {
+                writer.WritePropertyName("isEstimatedBalance"u8);
+                writer.WriteBooleanValue(IsEstimatedBalance.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -103,6 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ETag? etag = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -114,6 +131,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string creditCurrency = default;
             string billingCurrency = default;
             ConsumptionReseller reseller = default;
+            bool? isEstimatedBalance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,6 +143,20 @@ namespace Azure.ResourceManager.Consumption.Models
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -215,6 +247,15 @@ namespace Azure.ResourceManager.Consumption.Models
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("isEstimatedBalance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isEstimatedBalance = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -229,6 +270,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 balanceSummary,
                 pendingCreditAdjustments,
                 expiredCredit,
@@ -236,7 +279,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 creditCurrency,
                 billingCurrency,
                 reseller,
-                etag,
+                isEstimatedBalance,
                 serializedAdditionalRawData);
         }
 

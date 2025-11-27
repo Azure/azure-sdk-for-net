@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
                 tags ?? new ChangeTrackingList<ConsumptionTag>(),
                 nextLink,
                 previousLink,
-                etag,
                 serializedAdditionalRawData);
         }
 

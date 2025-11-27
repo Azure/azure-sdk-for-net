@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Consumption
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2024-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product)
+        internal RequestUriBuilder CreateGetRequestUri(string resourceScope, ConsumptionReservationRecommendationScope scope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath(resourceScope, false);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendationDetails", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("scope", reservationScope.ToString(), true);
+            uri.AppendQuery("scope", scope.ToString(), true);
             uri.AppendQuery("region", region, true);
             uri.AppendQuery("term", term.ToString(), true);
             uri.AppendQuery("lookBackPeriod", lookBackPeriod.ToString(), true);
             uri.AppendQuery("product", product, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product)
+        internal HttpMessage CreateGetRequest(string resourceScope, ConsumptionReservationRecommendationScope scope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,11 +67,15 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath(resourceScope, false);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendationDetails", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("scope", reservationScope.ToString(), true);
+            uri.AppendQuery("scope", scope.ToString(), true);
             uri.AppendQuery("region", region, true);
             uri.AppendQuery("term", term.ToString(), true);
             uri.AppendQuery("lookBackPeriod", lookBackPeriod.ToString(), true);
             uri.AppendQuery("product", product, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -76,20 +84,21 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Details of a reservation recommendation for what-if analysis of reserved instances. </summary>
         /// <param name="resourceScope"> The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope, and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope. </param>
-        /// <param name="reservationScope"> Scope of the reservation. </param>
+        /// <param name="scope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
+        /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
-        public async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionReservationRecommendationDetails>> GetAsync(string resourceScope, ConsumptionReservationRecommendationScope scope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceScope, nameof(resourceScope));
             Argument.AssertNotNull(region, nameof(region));
             Argument.AssertNotNull(product, nameof(product));
 
-            using var message = CreateGetRequest(resourceScope, reservationScope, region, term, lookBackPeriod, product);
+            using var message = CreateGetRequest(resourceScope, scope, region, term, lookBackPeriod, product, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -109,20 +118,21 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary> Details of a reservation recommendation for what-if analysis of reserved instances. </summary>
         /// <param name="resourceScope"> The scope associated with reservation recommendation details operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resource group scope, /providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for BillingAccount scope, and '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope. </param>
-        /// <param name="reservationScope"> Scope of the reservation. </param>
+        /// <param name="scope"> Scope of the reservation. </param>
         /// <param name="region"> Used to select the region the recommendation should be generated for. </param>
         /// <param name="term"> Specify length of reservation recommendation term. </param>
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
+        /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
-        public Response<ConsumptionReservationRecommendationDetails> Get(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
+        public Response<ConsumptionReservationRecommendationDetails> Get(string resourceScope, ConsumptionReservationRecommendationScope scope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceScope, nameof(resourceScope));
             Argument.AssertNotNull(region, nameof(region));
             Argument.AssertNotNull(product, nameof(product));
 
-            using var message = CreateGetRequest(resourceScope, reservationScope, region, term, lookBackPeriod, product);
+            using var message = CreateGetRequest(resourceScope, scope, region, term, lookBackPeriod, product, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

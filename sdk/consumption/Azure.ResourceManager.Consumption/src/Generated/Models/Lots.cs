@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
         /// <param name="value"> The list of lot summary. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Lots(IReadOnlyList<ConsumptionLotSummary> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> The list of lot summary. </summary>
         public IReadOnlyList<ConsumptionLotSummary> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }
 }
