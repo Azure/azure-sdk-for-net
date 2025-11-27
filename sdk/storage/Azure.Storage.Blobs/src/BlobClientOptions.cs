@@ -228,6 +228,12 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
+        /// <summary>
+        /// Whether to include the StorageRequestValidationPipelinePolicy, which throws an exception when the
+        /// <see cref="Constants.HeaderNames.ClientRequestId"/> header is different for the request and the response.
+        /// </summary>
+        public bool DontIncludeStorageRequestValidationPipelinePolicy { get; set; } = Constants.DontIncludeStorageRequestValidationPipelinePolicy;
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion
@@ -381,7 +387,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri, Request100ContinueOptions);
+            return this.Build(authentication, GeoRedundantSecondaryUri, Request100ContinueOptions, DontIncludeStorageRequestValidationPipelinePolicy);
         }
 
         /// <summary>
@@ -391,7 +397,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri, Request100ContinueOptions);
+            return this.Build(credentials, GeoRedundantSecondaryUri, Request100ContinueOptions, DontIncludeStorageRequestValidationPipelinePolicy);
         }
 
         /// <inheritdoc />
