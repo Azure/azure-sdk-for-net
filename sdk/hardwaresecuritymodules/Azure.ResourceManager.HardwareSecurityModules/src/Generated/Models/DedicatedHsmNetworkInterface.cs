@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmNetworkInterface"/>. </summary>
         /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
-        /// <param name="privateIpAddress"> Private Ip address of the interface. </param>
+        /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmNetworkInterface(ResourceIdentifier resourceId, string privateIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHsmNetworkInterface(ResourceIdentifier resourceId, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
-            PrivateIpAddress = privateIpAddress;
+            PrivateIPAddress = privateIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Private Ip address of the interface. </summary>
-        public string PrivateIpAddress { get; set; }
+        public string PrivateIPAddress { get; set; }
     }
 }

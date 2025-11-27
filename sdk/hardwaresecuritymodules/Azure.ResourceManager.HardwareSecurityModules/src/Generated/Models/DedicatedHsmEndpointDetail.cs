@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmEndpointDetail(string ipAddress, int? port, string protocol, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Port = port;
             Protocol = protocol;
             Description = description;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
-        public string IpAddress { get; }
+        public string IPAddress { get; }
 
         /// <summary> The port an endpoint is connected to. </summary>
         public int? Port { get; }

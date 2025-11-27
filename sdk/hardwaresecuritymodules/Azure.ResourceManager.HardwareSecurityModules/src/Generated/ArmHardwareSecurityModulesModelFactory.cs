@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> The network interface definition. </summary>
         /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
-        /// <param name="privateIpAddress"> Private Ip address of the interface. </param>
+        /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <returns> A new <see cref="Models.DedicatedHsmNetworkInterface"/> instance for mocking. </returns>
-        public static DedicatedHsmNetworkInterface DedicatedHsmNetworkInterface(ResourceIdentifier resourceId = default, string privateIpAddress = default)
+        public static DedicatedHsmNetworkInterface DedicatedHsmNetworkInterface(ResourceIdentifier resourceId = default, string privateIPAddress = default)
         {
-            return new DedicatedHsmNetworkInterface(resourceId, privateIpAddress, additionalBinaryDataProperties: null);
+            return new DedicatedHsmNetworkInterface(resourceId, privateIPAddress, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Patchable properties of the dedicated HSM. </summary>

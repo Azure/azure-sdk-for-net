@@ -5313,7 +5313,7 @@
                             {
                               "$id": "430",
                               "kind": "property",
-                              "name": "privateIpAddress",
+                              "name": "PrivateIPAddress",
                               "serializedName": "privateIpAddress",
                               "doc": "Private Ip address of the interface",
                               "type": {
@@ -5996,7 +5996,7 @@
                                 {
                                   "$id": "474",
                                   "kind": "property",
-                                  "name": "ipAddress",
+                                  "name": "IPAddress",
                                   "serializedName": "ipAddress",
                                   "doc": "An IP Address that Domain Name currently resolves to.",
                                   "type": {

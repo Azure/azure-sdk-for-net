@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(Port))
             {
