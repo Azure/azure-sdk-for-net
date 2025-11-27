@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("forwardDeadLetteredMessagesTo"u8);
                 writer.WriteStringValue(ForwardDeadLetteredMessagesTo);
             }
+            if (Optional.IsDefined(UserMetadata))
+            {
+                writer.WritePropertyName("userMetadata"u8);
+                writer.WriteStringValue(UserMetadata);
+            }
             writer.WriteEndObject();
         }
 
@@ -205,6 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
             bool? enableExpress = default;
             string forwardTo = default;
             string forwardDeadLetteredMessagesTo = default;
+            string userMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -441,6 +447,11 @@ namespace Azure.ResourceManager.ServiceBus
                             forwardDeadLetteredMessagesTo = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("userMetadata"u8))
+                        {
+                            userMetadata = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -455,6 +466,7 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 countDetails,
                 createdAt,
                 updatedAt,
@@ -477,7 +489,7 @@ namespace Azure.ResourceManager.ServiceBus
                 enableExpress,
                 forwardTo,
                 forwardDeadLetteredMessagesTo,
-                location,
+                userMetadata,
                 serializedAdditionalRawData);
         }
 
@@ -917,6 +929,29 @@ namespace Azure.ResourceManager.ServiceBus
                     else
                     {
                         builder.AppendLine($"'{ForwardDeadLetteredMessagesTo}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userMetadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserMetadata))
+                {
+                    builder.Append("    userMetadata: ");
+                    if (UserMetadata.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserMetadata}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserMetadata}'");
                     }
                 }
             }

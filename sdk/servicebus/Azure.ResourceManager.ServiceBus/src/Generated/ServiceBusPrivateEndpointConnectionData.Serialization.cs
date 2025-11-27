@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 provisioningState,
-                location,
                 serializedAdditionalRawData);
         }
 
