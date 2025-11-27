@@ -21,12 +21,8 @@ namespace Azure.AI.Projects
         /// <param name="client"> The AIProjectIndexesOperations client used to send requests. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public AIProjectIndexesOperationsGetIndexVersionsAsyncCollectionResultOfT(AIProjectIndexesOperations client, string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             _client = client;
             _name = name;
             _options = options;

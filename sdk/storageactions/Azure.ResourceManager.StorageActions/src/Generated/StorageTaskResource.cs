@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.StorageActions
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.StorageActions
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.StorageActions
                     StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.StorageActions
                     StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.StorageActions
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.StorageActions
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

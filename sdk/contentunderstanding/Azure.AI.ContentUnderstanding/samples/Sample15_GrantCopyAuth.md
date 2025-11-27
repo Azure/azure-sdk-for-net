@@ -53,35 +53,36 @@ See [Sample 01][sample01] for authentication examples using `DefaultAzureCredent
 
 Create a source analyzer, grant copy authorization, and copy it to a target resource:
 
+> **Note:** This snippet requires `using Azure.Identity;` for `DefaultAzureCredential`.
+
 ```C# Snippet:ContentUnderstandingGrantCopyAuth
 // Get source endpoint from configuration
 // Note: configuration is already loaded in Main method
-string sourceEndpoint = configuration["AZURE_CONTENT_UNDERSTANDING_ENDPOINT"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_ENDPOINT is required");
-string? sourceKey = configuration["AZURE_CONTENT_UNDERSTANDING_KEY"];
+string sourceEndpoint = "https://source-resource.services.ai.azure.com/";
+string? sourceKey = "optional-source-api-key"; // Set to null to use DefaultAzureCredential
 
 // Create source client
-var sourceClientOptions = new ContentUnderstandingClientOptions();
 ContentUnderstandingClient sourceClient = !string.IsNullOrEmpty(sourceKey)
-    ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey), sourceClientOptions)
-    : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential(), sourceClientOptions);
+    ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey))
+    : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
 
-// Generate unique analyzer IDs
-string sourceAnalyzerId = $"my_analyzer_source_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
-string targetAnalyzerId = $"my_analyzer_target_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+// Source analyzer ID (must already exist in the source resource)
+string sourceAnalyzerId = "my_source_analyzer_id_in_the_source_resource";
+// Target analyzer ID (will be created during copy)
+string targetAnalyzerId = "my_target_analyzer_id_in_the_target_resource";
 
 // Get source and target resource information from configuration
-string sourceResourceId = configuration["AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID is required");
-string sourceRegion = configuration["AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION is required");
-string targetEndpoint = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT is required");
-string targetResourceId = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID is required");
-string targetRegion = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_REGION"] ?? throw new InvalidOperationException("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION is required");
-string? targetKey = configuration["AZURE_CONTENT_UNDERSTANDING_TARGET_KEY"];
+string sourceResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}";
+string sourceRegion = "eastus"; // Replace with actual source region
+string targetEndpoint = "https://target-resource.services.ai.azure.com/";
+string targetResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}";
+string targetRegion = "westus"; // Replace with actual target region
+string? targetKey = "optional-target-api-key"; // Set to null to use DefaultAzureCredential
 
 // Create target client
-var targetClientOptions = new ContentUnderstandingClientOptions();
 ContentUnderstandingClient targetClient = !string.IsNullOrEmpty(targetKey)
-    ? new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey), targetClientOptions)
-    : new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential(), targetClientOptions);
+    ? new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey))
+    : new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential());
 
 // Step 1: Create the source analyzer
 var sourceConfig = new ContentAnalyzerConfig

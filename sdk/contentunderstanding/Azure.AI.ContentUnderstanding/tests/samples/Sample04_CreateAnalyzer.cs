@@ -312,6 +312,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 #region Snippet:ContentUnderstandingUseCustomAnalyzer
 #if SNIPPET
+                var documentUrl = new Uri("<document_url>");
                 // Analyze a document using the custom analyzer
                 var analyzeOperation = await client.AnalyzeAsync(
                     WaitUntil.Completed,
@@ -571,7 +572,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine("✅ All custom analyzer usage properties validated successfully");
                 #endregion
 
-                #region Snippet:ContentUnderstandingDeleteAnalyzerCleanup
                 // Clean up: delete the analyzer (for testing purposes only)
                 // In production, analyzers are typically kept and reused
 #if SNIPPET
@@ -588,7 +588,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     // Ignore cleanup errors in tests
                 }
 #endif
-                #endregion
             }
             finally
             {

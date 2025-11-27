@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<LocalRulestackResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<LocalRulestackResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<LocalRulestackResource> result = Update(patch, cancellationToken);
+                    Response<LocalRulestackResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     LocalRulestackData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     LocalRulestackPatch patch = new LocalRulestackPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<LocalRulestackResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<LocalRulestackResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     LocalRulestackData current = Get(cancellationToken: cancellationToken).Value.Data;
                     LocalRulestackPatch patch = new LocalRulestackPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<LocalRulestackResource> result = Update(patch, cancellationToken);
+                    Response<LocalRulestackResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<LocalRulestackResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<LocalRulestackResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<LocalRulestackResource> result = Update(patch, cancellationToken);
+                    Response<LocalRulestackResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

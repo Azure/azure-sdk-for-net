@@ -26,7 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Include sample file -->
-    <None Include="..\sample_files\sample_invoice.pdf" Link="sample_files\sample_invoice.pdf">
+    <None Include="..\sample_files\mixed_financial_docs.pdf" Link="sample_files\mixed_financial_docs.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

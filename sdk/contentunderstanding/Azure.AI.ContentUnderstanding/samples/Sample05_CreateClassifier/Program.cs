@@ -115,7 +115,7 @@ class Program
         Console.WriteLine($"Classifier '{analyzerId}' created successfully!");
 
         // Read the sample file
-        string filePath = Path.Combine(AppContext.BaseDirectory, "sample_files", "sample_invoice.pdf");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "sample_files", "mixed_financial_docs.pdf");
         if (!File.Exists(filePath))
         {
             Console.Error.WriteLine($"Error: Sample file not found at {filePath}");

@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         private const string ActiveValue = "Active";
         private const string SuspendedValue = "Suspended";
+        private const string UnsubscribedValue = "Unsubscribed";
 
         /// <summary> Active. </summary>
         public static DynatraceMonitorMarketplaceSubscriptionStatus Active { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(ActiveValue);
         /// <summary> Suspended. </summary>
         public static DynatraceMonitorMarketplaceSubscriptionStatus Suspended { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(SuspendedValue);
+        /// <summary> Unsubscribed. </summary>
+        public static DynatraceMonitorMarketplaceSubscriptionStatus Unsubscribed { get; } = new DynatraceMonitorMarketplaceSubscriptionStatus(UnsubscribedValue);
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(DynatraceMonitorMarketplaceSubscriptionStatus left, DynatraceMonitorMarketplaceSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are not the same. </summary>
