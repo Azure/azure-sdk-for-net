@@ -451,7 +451,7 @@ projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the ProjectOpenAIClient. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_Files_CreateClients
-string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -459,7 +459,7 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 
 ```C# Snippet:AI_Projects_Files_UploadFile
-using FileStream fileStream = File.OpenRead(testFilePath);
+using FileStream fileStream = File.OpenRead(trainFilePath);
 OpenAIFile uploadedFile = fileClient.UploadFile(
     fileStream,
     "sft_training_set.jsonl",

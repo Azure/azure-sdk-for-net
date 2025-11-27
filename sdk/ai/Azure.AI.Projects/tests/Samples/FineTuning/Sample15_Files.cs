@@ -24,9 +24,9 @@ public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_Files_CreateClientsAsync
 #if SNIPPET
-        string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+        string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 #else
-        string testFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+        string trainFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
 #endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -39,7 +39,7 @@ public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
         try
         {
             #region Snippet:AI_Projects_Files_UploadFileAsync
-            using FileStream fileStream = File.OpenRead(testFilePath);
+            using FileStream fileStream = File.OpenRead(trainFilePath);
             OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
                 fileStream,
                 "sft_training_set.jsonl",
@@ -80,9 +80,9 @@ public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_Files_CreateClients
 #if SNIPPET
-        string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+        string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 #else
-        string testFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
+        string trainFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
 #endif
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -95,7 +95,7 @@ public class Sample15_Files : SamplesBase<AIProjectsTestEnvironment>
         try
         {
             #region Snippet:AI_Projects_Files_UploadFile
-            using FileStream fileStream = File.OpenRead(testFilePath);
+            using FileStream fileStream = File.OpenRead(trainFilePath);
             OpenAIFile uploadedFile = fileClient.UploadFile(
                 fileStream,
                 "sft_training_set.jsonl",

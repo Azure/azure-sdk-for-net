@@ -149,11 +149,7 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
 
         while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
         {
-            if (DateTimeOffset.Now - start > timeout)
-            {
-                throw new TimeoutException(
-                    $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
-            }
+            Assert.That(DateTimeOffset.Now - start, Is.LessThan(timeout), $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
 
             // Skip delay in Playback mode since responses are pre-recorded
             if (Mode != RecordedTestMode.Playback)
@@ -164,11 +160,7 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
             Console.WriteLine($"File {fileId} status: {file.Status}");
         }
 
-        if (file.Status == FileStatus.Error)
-        {
-            throw new InvalidOperationException(
-                $"File {fileId} processing failed: {file.StatusDetails}");
-        }
+        Assert.That(file.Status, Is.EqualTo(FileStatus.Processed), $"File {fileId} processing failed: {file.StatusDetails}");
 
         Console.WriteLine($"File {fileId} processing completed successfully");
         return file;
@@ -199,11 +191,7 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
 
         while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
         {
-            if (DateTimeOffset.Now - start > timeout)
-            {
-                throw new TimeoutException(
-                    $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
-            }
+            Assert.That(DateTimeOffset.Now - start, Is.LessThan(timeout), $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
 
             // Skip delay in Playback mode since responses are pre-recorded
             if (Mode != RecordedTestMode.Playback)
@@ -214,11 +202,7 @@ public abstract class FineTuningTestsBase : RecordedTestBase<FineTuningTestEnvir
             Console.WriteLine($"File {fileId} status: {file.Status}");
         }
 
-        if (file.Status == FileStatus.Error)
-        {
-            throw new InvalidOperationException(
-                $"File {fileId} processing failed: {file.StatusDetails}");
-        }
+        Assert.That(file.Status, Is.EqualTo(FileStatus.Processed), $"File {fileId} processing failed: {file.StatusDetails}");
 
         Console.WriteLine($"File {fileId} processing completed successfully");
         return file;

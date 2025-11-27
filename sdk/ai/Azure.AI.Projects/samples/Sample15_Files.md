@@ -13,7 +13,7 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 ### Async
 
 ```C# Snippet:AI_Projects_Files_CreateClientsAsync
-string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -23,7 +23,7 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ### Sync
 
 ```C# Snippet:AI_Projects_Files_CreateClients
-string testFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
@@ -37,7 +37,7 @@ The `UploadFile` method uploads a file to the OpenAI Files API. This method retu
 ### Async
 
 ```C# Snippet:AI_Projects_Files_UploadFileAsync
-using FileStream fileStream = File.OpenRead(testFilePath);
+using FileStream fileStream = File.OpenRead(trainFilePath);
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
     fileStream,
     "sft_training_set.jsonl",
@@ -48,7 +48,7 @@ Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
 ### Sync
 
 ```C# Snippet:AI_Projects_Files_UploadFile
-using FileStream fileStream = File.OpenRead(testFilePath);
+using FileStream fileStream = File.OpenRead(trainFilePath);
 OpenAIFile uploadedFile = fileClient.UploadFile(
     fileStream,
     "sft_training_set.jsonl",
