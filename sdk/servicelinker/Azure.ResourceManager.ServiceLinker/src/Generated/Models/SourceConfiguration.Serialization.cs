@@ -51,6 +51,35 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("value");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(ConfigType))
+            {
+                writer.WritePropertyName("configType"u8);
+                writer.WriteStringValue(ConfigType.Value.ToString());
+            }
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            {
+                if (KeyVaultReferenceIdentity != null)
+                {
+                    writer.WritePropertyName("keyVaultReferenceIdentity"u8);
+                    writer.WriteStringValue(KeyVaultReferenceIdentity);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultReferenceIdentity");
+                }
+            }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,6 +119,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             string name = default;
             string value = default;
+            LinkerConfigurationType? configType = default;
+            string keyVaultReferenceIdentity = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,13 +141,48 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("configType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configType = new LinkerConfigurationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("keyVaultReferenceIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultReferenceIdentity = null;
+                        continue;
+                    }
+                    keyVaultReferenceIdentity = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SourceConfiguration(name, value, serializedAdditionalRawData);
+            return new SourceConfiguration(
+                name,
+                value,
+                configType,
+                keyVaultReferenceIdentity,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceConfiguration>.Write(ModelReaderWriterOptions options)
