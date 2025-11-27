@@ -29,6 +29,7 @@ namespace Azure.Provisioning.RedisEnterprise
             public static readonly string V2024_02_01;
             public static readonly string V2024_10_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_07_01;
         }
     }
     public enum DeferUpgradeSetting
@@ -70,8 +71,11 @@ namespace Azure.Provisioning.RedisEnterprise
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterpriseTlsVersion> MinimumTlsVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepList<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterpriseProvisioningStatus> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterprisePublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RedisVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterpriseRedundancyMode> RedundancyMode { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterpriseClusterResourceState> ResourceState { get { throw null; } }
@@ -93,6 +97,7 @@ namespace Azure.Provisioning.RedisEnterprise
             public static readonly string V2024_02_01;
             public static readonly string V2024_10_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_07_01;
         }
     }
     public enum RedisEnterpriseClusteringPolicy
@@ -100,6 +105,7 @@ namespace Azure.Provisioning.RedisEnterprise
         EnterpriseCluster = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="OSSCluster")]
         OssCluster = 1,
+        NoCluster = 2,
     }
     public enum RedisEnterpriseClusterResourceState
     {
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.RedisEnterprise
             public static readonly string V2024_02_01;
             public static readonly string V2024_10_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_07_01;
         }
     }
     public partial class RedisEnterpriseDatabaseGeoReplication : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -263,8 +270,10 @@ namespace Azure.Provisioning.RedisEnterprise
             public static readonly string V2024_02_01;
             public static readonly string V2024_10_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_07_01;
         }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RedisEnterprisePrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RedisEnterprisePrivateEndpointConnectionData() { }
@@ -306,6 +315,11 @@ namespace Azure.Provisioning.RedisEnterprise
         Creating = 3,
         Updating = 4,
         Deleting = 5,
+    }
+    public enum RedisEnterprisePublicNetworkAccess
+    {
+        Enabled = 0,
+        Disabled = 1,
     }
     public enum RedisEnterpriseRedundancyMode
     {
