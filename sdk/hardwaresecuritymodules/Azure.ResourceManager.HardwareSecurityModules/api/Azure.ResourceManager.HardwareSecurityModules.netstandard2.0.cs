@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEgressEndpoint DedicatedHsmEgressEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency> endpoints = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDependency DedicatedHsmEndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail DedicatedHsmEndpointDetail(string ipAddress = null, int? port = default(int?), string protocol = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface DedicatedHsmNetworkInterface(Azure.Core.ResourceIdentifier resourceId = null, string privateIpAddress = null) { throw null; }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface DedicatedHsmNetworkInterface(Azure.Core.ResourceIdentifier resourceId = null, string privateIPAddress = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile DedicatedHsmNetworkProfile(Azure.Core.ResourceIdentifier subnetResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface> networkInterfaces = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmPatch DedicatedHsmPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmProperties DedicatedHsmProperties(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile networkProfile = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkProfile managementNetworkProfile = null, string stampId = null, string statusMessage = null, Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType? provisioningState = default(Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmJsonWebKeyType?)) { throw null; }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     {
         internal DedicatedHsmEndpointDetail() { }
         public string Description { get { throw null; } }
-        public string IpAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public int? Port { get { throw null; } }
         public string Protocol { get { throw null; } }
         protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmEndpointDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public partial class DedicatedHsmNetworkInterface : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface>
     {
         public DedicatedHsmNetworkInterface() { }
-        public string PrivateIpAddress { get { throw null; } set { } }
+        public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.HardwareSecurityModules.Models.DedicatedHsmNetworkInterface JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
