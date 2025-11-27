@@ -42,6 +42,11 @@ interface Bars {
   list is ArmResourceListByParent<Bar>;
 }
 
+// Test case: Singleton resource with @parentResource decorator.
+// Expected behavior: The CreateOrUpdate operation for this singleton resource
+// should be generated in the parent resource (BarResource), not in the singleton resource itself.
+// This verifies that singleton resources honor their parent resource as per issue:
+// "Singleton resource should also honor parent Resource"
 @singleton("current")
 @parentResource(Bar)
 model BarSettingsResource is ProxyResource<BarSettingsProperties> {
@@ -118,6 +123,10 @@ union QuotaName {
   ExecutionMinutes: "ExecutionMinutes",
 }
 
+// Operations for BarSettingsResource singleton.
+// Expected behavior: The createOrUpdate operation should be generated as a method
+// in the parent BarResource class (e.g., CreateOrUpdateBarSettingsResourceAsync),
+// not as a method in the BarSettingsResource class itself.
 @armResourceOperations
 interface BarSettingsOperations {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettingsResource>;
