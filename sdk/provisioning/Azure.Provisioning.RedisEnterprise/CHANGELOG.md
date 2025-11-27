@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (2025-11-27)
+## 1.1.0-beta.1 (2025-11-28)
 
 ### Features Added
 
@@ -11,10 +11,6 @@
 
 - Deprecated models `RedisEnterprisePrivateEndpointConnectionData`. Please use `RedisEnterprisePrivateEndpointConnection` instead.
 - Deprecated properties `RedisEnterpriseCluster.PrivateEndpointConnections`. Please use `RedisEnterpriseCluster.PrivateEndpointConnectionResources` instead.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2025-08-26)
 
