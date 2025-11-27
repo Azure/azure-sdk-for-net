@@ -458,6 +458,7 @@ ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 
+Use authenticated `OpenAIFileClient` to upload the local files to Azure. 
 ```C# Snippet:AI_Projects_Files_UploadFile
 using FileStream fileStream = File.OpenRead(testFilePath);
 OpenAIFile uploadedFile = fileClient.UploadFile(
