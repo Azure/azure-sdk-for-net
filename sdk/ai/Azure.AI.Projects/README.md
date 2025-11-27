@@ -474,6 +474,7 @@ OpenAIFile retrievedFile = fileClient.GetFile(fileId);
 Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
 ```
 
+Use `GetFiles` method of `OpenAIFileClient` to list the files.
 ```C# Snippet:AI_Projects_Files_ListFiles
 ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
 Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
