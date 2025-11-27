@@ -450,6 +450,7 @@ projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 
 The code below shows some Files operations, which allow you to manage files through the OpenAI Files API. These operations are accessed via the ProjectOpenAIClient. Full samples can be found under the "FineTuning" folder in the [package samples][samples].
 
+The first step working with OpenAI files is to authenticate to Azure through `AIProjectClient` and get the `OpenAIFileClient`.
 ```C# Snippet:AI_Projects_Files_CreateClients
 string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -458,6 +459,7 @@ ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 
+Use authenticated `OpenAIFileClient` to upload the local files to Azure. 
 ```C# Snippet:AI_Projects_Files_UploadFile
 using FileStream fileStream = File.OpenRead(trainFilePath);
 OpenAIFile uploadedFile = fileClient.UploadFile(
@@ -467,11 +469,13 @@ OpenAIFile uploadedFile = fileClient.UploadFile(
 Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
 ```
 
+To retrieve file, use `GetFile` method of `OpenAIFileClient`.
 ```C# Snippet:AI_Projects_Files_GetFile
 OpenAIFile retrievedFile = fileClient.GetFile(fileId);
 Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
 ```
 
+Use `GetFiles` method of `OpenAIFileClient` to list the files.
 ```C# Snippet:AI_Projects_Files_ListFiles
 ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
 Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
@@ -497,6 +501,7 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```
 
+The fine-tuning task represents the adaptation of deep neural network weights to the domain specific data. To achieve this goal, we need to provide model with training data set for weights update and a validation set for evaluation of learning efficiency.
 ```C# Snippet:AI_Projects_FineTuning_UploadFiles
 // Upload training file
 Console.WriteLine("Uploading training file...");
@@ -517,6 +522,7 @@ OpenAIFile validationFile = fileClient.UploadFile(
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 ```
 
+Now we will use the uploaded training and validation set to fine-tue the model. In our experiment we will train the model for three epochs batch size of one and the constant [learning rate](https://en.wikipedia.org/wiki/Learning_rate) of 1.0.
 ```C# Snippet:AI_Projects_FineTuning_CreateJob
 // Create supervised fine-tuning job
 Console.WriteLine("Creating supervised fine-tuning job...");
