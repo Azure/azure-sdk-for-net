@@ -9,14 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class MarketplaceSaaSResourceDetailsResult : IUtf8JsonSerializable, IJsonModel<MarketplaceSaaSResourceDetailsResult>
+    /// <summary> Marketplace SaaS resource details linked to the given tenant Id. </summary>
+    public partial class MarketplaceSaaSResourceDetailsResult : IJsonModel<MarketplaceSaaSResourceDetailsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceSaaSResourceDetailsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MarketplaceSaaSResourceDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +31,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(MarketplaceSaaSResourceId))
             {
                 writer.WritePropertyName("marketplaceSaaSResourceId"u8);
@@ -54,15 +56,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WritePropertyName("marketplaceSaaSResourceName"u8);
                 writer.WriteStringValue(MarketplaceSaaSResourceName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +73,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        MarketplaceSaaSResourceDetailsResult IJsonModel<MarketplaceSaaSResourceDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MarketplaceSaaSResourceDetailsResult IJsonModel<MarketplaceSaaSResourceDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceSaaSResourceDetailsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MarketplaceSaaSResourceDetailsResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement, options);
         }
 
-        internal static MarketplaceSaaSResourceDetailsResult DeserializeMarketplaceSaaSResourceDetailsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MarketplaceSaaSResourceDetailsResult DeserializeMarketplaceSaaSResourceDetailsResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,51 +102,52 @@ namespace Azure.ResourceManager.Dynatrace.Models
             string planId = default;
             DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             string marketplaceSaaSResourceName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("marketplaceSaaSResourceId"u8))
+                if (prop.NameEquals("marketplaceSaaSResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSaaSResourceId = new ResourceIdentifier(property.Value.GetString());
+                    marketplaceSaaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("planId"u8))
+                if (prop.NameEquals("planId"u8))
                 {
-                    planId = property.Value.GetString();
+                    planId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
+                if (prop.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = new DynatraceMonitorMarketplaceSubscriptionStatus(property.Value.GetString());
+                    marketplaceSubscriptionStatus = new DynatraceMonitorMarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("marketplaceSaaSResourceName"u8))
+                if (prop.NameEquals("marketplaceSaaSResourceName"u8))
                 {
-                    marketplaceSaaSResourceName = property.Value.GetString();
+                    marketplaceSaaSResourceName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, serializedAdditionalRawData);
+            return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MarketplaceSaaSResourceDetailsResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MarketplaceSaaSResourceDetailsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -149,15 +157,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
-        MarketplaceSaaSResourceDetailsResult IPersistableModel<MarketplaceSaaSResourceDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MarketplaceSaaSResourceDetailsResult IPersistableModel<MarketplaceSaaSResourceDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceSaaSResourceDetailsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement, options);
                     }
                 default:
@@ -165,6 +178,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MarketplaceSaaSResourceDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MarketplaceSaaSResourceDetailsResult"/> from. </param>
+        internal static MarketplaceSaaSResourceDetailsResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMarketplaceSaaSResourceDetailsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

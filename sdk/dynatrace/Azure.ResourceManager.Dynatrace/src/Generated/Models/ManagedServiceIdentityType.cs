@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Dynatrace.Models
     internal readonly partial struct ManagedServiceIdentityType : IEquatable<ManagedServiceIdentityType>
     {
         private readonly string _value;
+        /// <summary> No managed identity. </summary>
+        private const string NoneValue = "None";
+        /// <summary> System assigned managed identity. </summary>
+        private const string SystemAssignedValue = "SystemAssigned";
+        /// <summary> User assigned managed identity. </summary>
+        private const string UserAssignedValue = "UserAssigned";
+        /// <summary> System and user assigned managed identity. </summary>
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedServiceIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string SystemAssignedValue = "SystemAssigned";
-        private const string UserAssignedValue = "UserAssigned";
-        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
-
-        /// <summary> None. </summary>
+        /// <summary> No managed identity. </summary>
         public static ManagedServiceIdentityType None { get; } = new ManagedServiceIdentityType(NoneValue);
-        /// <summary> SystemAssigned. </summary>
+
+        /// <summary> System assigned managed identity. </summary>
         public static ManagedServiceIdentityType SystemAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+
+        /// <summary> User assigned managed identity. </summary>
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
-        /// <summary> SystemAssigned,UserAssigned. </summary>
+
+        /// <summary> System and user assigned managed identity. </summary>
         public static ManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedUserAssignedValue);
+
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedServiceIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedServiceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedServiceIdentityType(string value) => new ManagedServiceIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedServiceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedServiceIdentityType?(string value) => value == null ? null : new ManagedServiceIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedServiceIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedServiceIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
