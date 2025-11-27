@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dynatrace.Samples
 
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
-        /*
+
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_MonitoredSubscriptionsCreateOrUpdate()
@@ -96,6 +96,5 @@ namespace Azure.ResourceManager.Dynatrace.Samples
 
             Console.WriteLine("Succeeded");
         }
-        */
     }
 }

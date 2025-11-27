@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionProperties"/>. </summary>
-        internal DynatraceMonitoredSubscriptionProperties()
+        public DynatraceMonitoredSubscriptionProperties()
         {
             MonitoredSubscriptionList = new ChangeTrackingList<DynatraceMonitoredSubscriptionStatus>();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <summary> The operation for the patch on the resource. </summary>
-        public DynatraceMonitoredSubscriptionOperation? Operation { get; }
+        public DynatraceMonitoredSubscriptionOperation? Operation { get; set; }
 
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
         public IList<DynatraceMonitoredSubscriptionStatus> MonitoredSubscriptionList { get; }

@@ -174,6 +174,18 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DynatraceMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="dynatraceMonitoredSubscriptionData"> The <see cref="DynatraceMonitoredSubscriptionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DynatraceMonitoredSubscriptionData dynatraceMonitoredSubscriptionData)
+        {
+            if (dynatraceMonitoredSubscriptionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dynatraceMonitoredSubscriptionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DynatraceMonitoredSubscriptionData"/> from. </param>
         internal static DynatraceMonitoredSubscriptionData FromResponse(Response response)
         {

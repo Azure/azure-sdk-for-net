@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dynatrace
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionData"/>. </summary>
-        internal DynatraceMonitoredSubscriptionData()
+        public DynatraceMonitoredSubscriptionData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Dynatrace
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
-        public DynatraceMonitoredSubscriptionProperties Properties { get; }
+        public DynatraceMonitoredSubscriptionProperties Properties { get; set; }
     }
 }

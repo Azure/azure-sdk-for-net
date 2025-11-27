@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredSubscriptionStatus"/>. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
-        internal DynatraceMonitoredSubscriptionStatus(Guid subscriptionId)
+        public DynatraceMonitoredSubscriptionStatus(Guid subscriptionId)
         {
             SubscriptionId = subscriptionId;
         }
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <summary> The subscriptionId to be monitored. </summary>
-        public Guid SubscriptionId { get; }
+        public Guid SubscriptionId { get; set; }
 
         /// <summary> The state of monitoring. </summary>
-        public DynatraceMonitoringState? Status { get; }
+        public DynatraceMonitoringState? Status { get; set; }
 
         /// <summary> The reason of not monitoring the subscription. </summary>
-        public string Error { get; }
+        public string Error { get; set; }
 
         /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
-        public DynatraceTagRuleProperties TagRules { get; }
+        public DynatraceTagRuleProperties TagRules { get; set; }
     }
 }
