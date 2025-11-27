@@ -9,15 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceBus.Models;
 
-namespace Azure.ResourceManager.ServiceBus
+namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterConfiguration data model.
-    /// Network Security Perimeter related configurations of a given namespace
-    /// </summary>
-    public partial class NetworkSecurityPerimeterConfigurationData : ResourceData
+    /// <summary> Network Security Perimeter related configurations of a given namespace. </summary>
+    public partial class NetworkSecurityPerimeterConfiguration : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +47,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
+        public NetworkSecurityPerimeterConfiguration()
         {
             ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
             ApplicableFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parentAssociationName"> Source Resource Association name. </param>
         /// <param name="sourceResourceId"> ARM Id of source resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;

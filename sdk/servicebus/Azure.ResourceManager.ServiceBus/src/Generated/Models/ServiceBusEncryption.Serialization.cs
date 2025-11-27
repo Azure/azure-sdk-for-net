@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IList<ServiceBusKeyVaultProperties> keyVaultProperties = default;
-            EncryptionKeySource? keySource = default;
+            ServiceBusEncryptionKeySource? keySource = default;
             bool? requireInfrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    keySource = new EncryptionKeySource(property.Value.GetString());
+                    keySource = new ServiceBusEncryptionKeySource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requireInfrastructureEncryption"u8))

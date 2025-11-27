@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterConfigurationData>> GetResourceAssociationNameAsync(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameAsync(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -94,13 +95,11 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        NetworkSecurityPerimeterConfigurationData value = default;
+                        NetworkSecurityPerimeterConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
+                        value = NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkSecurityPerimeterConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterConfigurationData> GetResourceAssociationName(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterConfiguration> GetResourceAssociationName(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -127,13 +126,11 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        NetworkSecurityPerimeterConfigurationData value = default;
+                        NetworkSecurityPerimeterConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
+                        value = NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((NetworkSecurityPerimeterConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
