@@ -49,17 +49,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitoredSubscriptionProperties(operation, monitoredSubscriptionList.ToList(), provisioningState, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The list of subscriptions and it's monitoring status by current Dynatrace monitor. </summary>
-        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
-        /// <param name="status"> The state of monitoring. </param>
-        /// <param name="error"> The reason of not monitoring the subscription. </param>
-        /// <param name="tagRules"> Properties for the Tag rules resource of a Monitor account. </param>
-        /// <returns> A new <see cref="Models.DynatraceMonitoredSubscriptionStatus"/> instance for mocking. </returns>
-        public static DynatraceMonitoredSubscriptionStatus DynatraceMonitoredSubscriptionStatus(Guid subscriptionId = default, DynatraceMonitoringState? status = default, string error = default, DynatraceTagRuleProperties tagRules = default)
-        {
-            return new DynatraceMonitoredSubscriptionStatus(subscriptionId, status, error, tagRules, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
