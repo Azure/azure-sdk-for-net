@@ -162,11 +162,11 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     /// List of private endpoint connections associated with the specified
     /// Redis Enterprise cluster.
     /// </summary>
-    public BicepList<RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections 
+    public BicepList<RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnectionResources 
     {
-        get { Initialize(); return _privateEndpointConnections!; }
+        get { Initialize(); return _privateEndpointConnectionResources!; }
     }
-    private BicepList<RedisEnterprisePrivateEndpointConnection>? _privateEndpointConnections;
+    private BicepList<RedisEnterprisePrivateEndpointConnection>? _privateEndpointConnectionResources;
 
     /// <summary>
     /// Current provisioning status of the cluster.
@@ -248,13 +248,16 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
         _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _kind = DefineProperty<RedisEnterpriseKind>("Kind", ["kind"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<RedisEnterprisePrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _privateEndpointConnectionResources = DefineListProperty<RedisEnterprisePrivateEndpointConnection>("PrivateEndpointConnectionResources", ["properties", "privateEndpointConnections"], isOutput: true);
         _provisioningState = DefineProperty<RedisEnterpriseProvisioningStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _redisVersion = DefineProperty<string>("RedisVersion", ["properties", "redisVersion"], isOutput: true);
         _redundancyMode = DefineProperty<RedisEnterpriseRedundancyMode>("RedundancyMode", ["properties", "redundancyMode"], isOutput: true);
         _resourceState = DefineProperty<RedisEnterpriseClusterResourceState>("ResourceState", ["properties", "resourceState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported RedisEnterpriseCluster resource versions.

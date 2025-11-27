@@ -71,7 +71,9 @@ namespace Azure.Provisioning.RedisEnterprise
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterpriseTlsVersion> MinimumTlsVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterpriseProvisioningStatus> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterprisePublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RedisVersion { get { throw null; } }
@@ -270,6 +272,19 @@ namespace Azure.Provisioning.RedisEnterprise
             public static readonly string V2025_04_01;
             public static readonly string V2025_07_01;
         }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class RedisEnterprisePrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public RedisEnterprisePrivateEndpointConnectionData() { }
+        public Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RedisEnterprisePrivateEndpointConnectionProvisioningState
     {

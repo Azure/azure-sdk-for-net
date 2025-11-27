@@ -1,10 +1,16 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-11-27)
 
 ### Features Added
 
+- Update api-version to `2025-07-01`.
+- Removed `ExperimentalAttribute` on the assembly.
+
 ### Breaking Changes
+
+- Deprecated models `RedisEnterprisePrivateEndpointConnectionData`. Please use `RedisEnterprisePrivateEndpointConnection` instead.
+- Deprecated properties `RedisEnterpriseCluster.PrivateEndpointConnections`. Please use `RedisEnterpriseCluster.PrivateEndpointConnectionResources` instead.
 
 ### Bugs Fixed
 

@@ -11,6 +11,11 @@ public class RedisEnterpriseSpecification() :
 {
     protected override void Customize()
     {
+        CustomizeProperty<RedisEnterpriseClusterResource>("PrivateEndpointConnections", p => p.Name = "PrivateEndpointConnectionResources");
+        CustomizeResource<RedisEnterpriseClusterResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
         // Naming requirements
         AddNameRequirements<RedisEnterpriseClusterResource>(min: 1, max: 60, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<RedisEnterpriseDatabaseResource>(min: 1, max: 60, lower: true, upper: true, digits: true, hyphen: true);
