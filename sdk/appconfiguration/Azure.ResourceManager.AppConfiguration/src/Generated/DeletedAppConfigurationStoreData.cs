@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppConfiguration
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeletedAppConfigurationStoreData"/>. </summary>
-        internal DeletedAppConfigurationStoreData()
+        public DeletedAppConfigurationStoreData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

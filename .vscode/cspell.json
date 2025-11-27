@@ -246,6 +246,12 @@
       ]
     },
     {
+      "filename": "**/sdk/appconfiguration/**/*.cs",
+      "words": [
+        "Mobo"
+      ]
+    },
+    {
       "filename": "**/sdk/appplatform/**/*.cs",
       "words": [
         "dynatrace",
