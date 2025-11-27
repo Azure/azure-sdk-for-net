@@ -20,6 +20,7 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -159,6 +160,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
+        ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
