@@ -6,46 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A Class representing a GlobalRulestack along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalRulestackResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGlobalRulestackResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetGlobalRulestack method.
+    /// A class representing a GlobalRulestack along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalRulestackResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetGlobalRulestacks method.
     /// </summary>
     public partial class GlobalRulestackResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GlobalRulestackResource"/> instance. </summary>
-        /// <param name="globalRulestackName"> The globalRulestackName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName)
-        {
-            var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         private readonly ClientDiagnostics _globalRulestackClientDiagnostics;
-        private readonly GlobalRulestackRestOperations _globalRulestackRestClient;
+        private readonly GlobalRulestack _globalRulestackRestClient;
         private readonly GlobalRulestackData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks";
 
-        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GlobalRulestackResource for mocking. </summary>
         protected GlobalRulestackResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GlobalRulestackResource(ArmClient client, GlobalRulestackData data) : this(client, data.Id)
@@ -54,416 +45,79 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GlobalRulestackResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _globalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string globalRulestackApiVersion);
-            _globalRulestackRestClient = new GlobalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual GlobalRulestackData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName)
+        {
+            string resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of GlobalRulestackCertificateObjectResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of GlobalRulestackCertificateObjectResources and their operations over a GlobalRulestackCertificateObjectResource. </returns>
-        public virtual GlobalRulestackCertificateObjectCollection GetGlobalRulestackCertificateObjects()
-        {
-            return GetCachedClient(client => new GlobalRulestackCertificateObjectCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a CertificateObjectGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalRulestackCertificateObjectResource>> GetGlobalRulestackCertificateObjectAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetGlobalRulestackCertificateObjects().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a CertificateObjectGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CertificateObjectGlobalRulestack_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackCertificateObjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GlobalRulestackCertificateObjectResource> GetGlobalRulestackCertificateObject(string name, CancellationToken cancellationToken = default)
-        {
-            return GetGlobalRulestackCertificateObjects().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of GlobalRulestackFqdnResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of GlobalRulestackFqdnResources and their operations over a GlobalRulestackFqdnResource. </returns>
-        public virtual GlobalRulestackFqdnCollection GetGlobalRulestackFqdns()
-        {
-            return GetCachedClient(client => new GlobalRulestackFqdnCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListGlobalRulestack_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackFqdnResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> fqdn list name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalRulestackFqdnResource>> GetGlobalRulestackFqdnAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetGlobalRulestackFqdns().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListGlobalRulestack_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackFqdnResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> fqdn list name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GlobalRulestackFqdnResource> GetGlobalRulestackFqdn(string name, CancellationToken cancellationToken = default)
-        {
-            return GetGlobalRulestackFqdns().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PostRulestackRuleResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of PostRulestackRuleResources and their operations over a PostRulestackRuleResource. </returns>
-        public virtual PostRulestackRuleCollection GetPostRulestackRules()
-        {
-            return GetCachedClient(client => new PostRulestackRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a PostRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Post Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PostRulestackRuleResource>> GetPostRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
-        {
-            return await GetPostRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a PostRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/postRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PostRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Post Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PostRulestackRuleResource> GetPostRulestackRule(string priority, CancellationToken cancellationToken = default)
-        {
-            return GetPostRulestackRules().Get(priority, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of GlobalRulestackPrefixResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of GlobalRulestackPrefixResources and their operations over a GlobalRulestackPrefixResource. </returns>
-        public virtual GlobalRulestackPrefixCollection GetGlobalRulestackPrefixes()
-        {
-            return GetCachedClient(client => new GlobalRulestackPrefixCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a PrefixListGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrefixListGlobalRulestack_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackPrefixResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Local Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalRulestackPrefixResource>> GetGlobalRulestackPrefixAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetGlobalRulestackPrefixes().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a PrefixListGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrefixListGlobalRulestack_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackPrefixResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Local Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GlobalRulestackPrefixResource> GetGlobalRulestackPrefix(string name, CancellationToken cancellationToken = default)
-        {
-            return GetGlobalRulestackPrefixes().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PreRulestackRuleResources in the GlobalRulestack. </summary>
-        /// <returns> An object representing collection of PreRulestackRuleResources and their operations over a PreRulestackRuleResource. </returns>
-        public virtual PreRulestackRuleCollection GetPreRulestackRules()
-        {
-            return GetCachedClient(client => new PreRulestackRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a PreRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PreRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PreRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Pre Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PreRulestackRuleResource>> GetPreRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
-        {
-            return await GetPreRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a PreRulesResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PreRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PreRulestackRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="priority"> Pre Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PreRulestackRuleResource> GetPreRulestackRule(string priority, CancellationToken cancellationToken = default)
-        {
-            return GetPreRulestackRules().Get(priority, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a GlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GlobalRulestackResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
             scope.Start();
             try
             {
-                var response = await _globalRulestackRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GlobalRulestackData> response = Response.FromValue(GlobalRulestackData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -477,118 +131,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a GlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GlobalRulestackResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.Get(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GlobalRulestackData> response = Response.FromValue(GlobalRulestackData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a GlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _globalRulestackRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a GlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _globalRulestackRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -601,20 +179,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Update a GlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -625,11 +203,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
             scope.Start();
             try
             {
-                var response = await _globalRulestackRestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateUpdateRequest(Id.Name, GlobalRulestackPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GlobalRulestackData> response = Response.FromValue(GlobalRulestackData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -643,20 +231,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Update a GlobalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -667,11 +255,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.Update(Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateUpdateRequest(Id.Name, GlobalRulestackPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GlobalRulestackData> response = Response.FromValue(GlobalRulestackData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -682,23 +280,121 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
+        /// Delete a GlobalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateDeleteRequest(Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NgfwArmOperation operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a GlobalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateDeleteRequest(Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NgfwArmOperation operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Commit rulestack configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/commit</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/commit. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Commit</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Commit. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -706,14 +402,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> CommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
             scope.Start();
             try
             {
-                var response = await _globalRulestackRestClient.CommitAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCommitRequest(Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateCommitRequest(Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NgfwArmOperation operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -727,20 +430,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Commit rulestack configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/commit</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/commit. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Commit</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Commit. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -748,14 +451,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Commit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.Commit(Id.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCommitRequest(Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateCommitRequest(Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NgfwArmOperation operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -769,31 +479,41 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get changelog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/getChangeLog</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/getChangeLog. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_GetChangeLog</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_GetChangeLog. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RulestackChangelog>> GetChangeLogAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
             scope.Start();
             try
             {
-                var response = await _globalRulestackRestClient.GetChangeLogAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetChangeLogRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RulestackChangelog> response = Response.FromValue(RulestackChangelog.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -807,31 +527,41 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get changelog
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/getChangeLog</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/getChangeLog. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_GetChangeLog</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_GetChangeLog. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RulestackChangelog> GetChangeLog(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.GetChangeLog(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetChangeLogRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RulestackChangelog> response = Response.FromValue(RulestackChangelog.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -845,34 +575,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get the list of advanced security objects
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAdvancedSecurityObjects</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAdvancedSecurityObjects. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListAdvancedSecurityObjects</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_ListAdvancedSecurityObjects. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
+        /// <param name="type"></param>
+        /// <param name="skip"></param>
+        /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdvancedSecurityObjectListResult>> GetAdvancedSecurityObjectsAsync(AdvancedSecurityObjectType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvancedSecurityObjectListResult>> GetAdvancedSecurityObjectsAsync(AdvancedSecurityObjectType @type, string skip = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
             scope.Start();
             try
             {
-                var response = await _globalRulestackRestClient.ListAdvancedSecurityObjectsAsync(Id.Name, type, skip, top, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetAdvancedSecurityObjectsRequest(Id.Name, @type.ToString(), skip, top, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvancedSecurityObjectListResult> response = Response.FromValue(AdvancedSecurityObjectListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -886,323 +626,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get the list of advanced security objects
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAdvancedSecurityObjects</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAdvancedSecurityObjects. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListAdvancedSecurityObjects</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_ListAdvancedSecurityObjects. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
+        /// <param name="type"></param>
+        /// <param name="skip"></param>
+        /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdvancedSecurityObjectListResult> GetAdvancedSecurityObjects(AdvancedSecurityObjectType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<AdvancedSecurityObjectListResult> GetAdvancedSecurityObjects(AdvancedSecurityObjectType @type, string skip = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.ListAdvancedSecurityObjects(Id.Name, type, skip, top, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List of AppIds for GlobalRulestack ApiVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAppIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListAppIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
-        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAppIdsAsync(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of AppIds for GlobalRulestack ApiVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listAppIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListAppIds</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
-        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAppIds(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of countries for Rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RulestackCountry"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RulestackCountry.DeserializeRulestackCountry(e), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of countries for Rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListCountries</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RulestackCountry"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RulestackCountry> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RulestackCountry.DeserializeRulestackCountry(e), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of Firewalls associated with Rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listFirewalls</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListFirewalls</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetFirewallsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List of Firewalls associated with Rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listFirewalls</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListFirewalls</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetFirewalls(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List predefined URL categories for rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listPredefinedUrlCategories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListPredefinedUrlCategories</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PredefinedUrlCategory"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PredefinedUrlCategory.DeserializePredefinedUrlCategory(e), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List predefined URL categories for rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listPredefinedUrlCategories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListPredefinedUrlCategories</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PredefinedUrlCategory"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PredefinedUrlCategory.DeserializePredefinedUrlCategory(e), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the security services for rulestack
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listSecurityServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListSecurityServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RulestackSecurityServiceListResult>> GetSecurityServicesAsync(RulestackSecurityServiceType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
-            scope.Start();
-            try
-            {
-                var response = await _globalRulestackRestClient.ListSecurityServicesAsync(Id.Name, type, skip, top, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetAdvancedSecurityObjectsRequest(Id.Name, @type.ToString(), skip, top, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvancedSecurityObjectListResult> response = Response.FromValue(AdvancedSecurityObjectListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1216,34 +677,95 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// List the security services for rulestack
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listSecurityServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listSecurityServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_ListSecurityServices</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_ListSecurityServices. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
-        /// <param name="skip"> The <see cref="string"/> to use. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
+        /// <param name="type"></param>
+        /// <param name="skip"></param>
+        /// <param name="top"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RulestackSecurityServiceListResult> GetSecurityServices(RulestackSecurityServiceType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RulestackSecurityServiceListResult>> GetSecurityServicesAsync(RulestackSecurityServiceType @type, string skip = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.ListSecurityServices(Id.Name, type, skip, top, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetSecurityServicesRequest(Id.Name, @type.ToString(), skip, top, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RulestackSecurityServiceListResult> response = Response.FromValue(RulestackSecurityServiceListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the security services for rulestack
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/listSecurityServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_ListSecurityServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="skip"></param>
+        /// <param name="top"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RulestackSecurityServiceListResult> GetSecurityServices(RulestackSecurityServiceType @type, string skip = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateGetSecurityServicesRequest(Id.Name, @type.ToString(), skip, top, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RulestackSecurityServiceListResult> response = Response.FromValue(RulestackSecurityServiceListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1257,31 +779,36 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Revert rulestack configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/revert</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/revert. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Revert</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Revert. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RevertAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
             scope.Start();
             try
             {
-                var response = await _globalRulestackRestClient.RevertAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateRevertRequest(Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1295,31 +822,36 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Revert rulestack configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/revert</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/revert. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalRulestack_Revert</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalRulestackResources_Revert. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GlobalRulestackResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Revert(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
+            using DiagnosticScope scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
             scope.Start();
             try
             {
-                var response = _globalRulestackRestClient.Revert(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _globalRulestackRestClient.CreateRevertRequest(Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -1327,6 +859,171 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of GlobalRulestackCertificateObjects in the <see cref="GlobalRulestackResource"/>. </summary>
+        /// <returns> An object representing collection of GlobalRulestackCertificateObjects and their operations over a GlobalRulestackCertificateObjectResource. </returns>
+        public virtual GlobalRulestackCertificateObjectCollection GetGlobalRulestackCertificateObjects()
+        {
+            return GetCachedClient(client => new GlobalRulestackCertificateObjectCollection(client, Id));
+        }
+
+        /// <summary> Get a CertificateObjectGlobalRulestackResource. </summary>
+        /// <param name="name"> certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GlobalRulestackCertificateObjectResource>> GetGlobalRulestackCertificateObjectAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetGlobalRulestackCertificateObjects().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a CertificateObjectGlobalRulestackResource. </summary>
+        /// <param name="name"> certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GlobalRulestackCertificateObjectResource> GetGlobalRulestackCertificateObject(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetGlobalRulestackCertificateObjects().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GlobalRulestackFqdns in the <see cref="GlobalRulestackResource"/>. </summary>
+        /// <returns> An object representing collection of GlobalRulestackFqdns and their operations over a GlobalRulestackFqdnResource. </returns>
+        public virtual GlobalRulestackFqdnCollection GetGlobalRulestackFqdns()
+        {
+            return GetCachedClient(client => new GlobalRulestackFqdnCollection(client, Id));
+        }
+
+        /// <summary> Get a FqdnListGlobalRulestackResource. </summary>
+        /// <param name="name"> fqdn list name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GlobalRulestackFqdnResource>> GetGlobalRulestackFqdnAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetGlobalRulestackFqdns().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a FqdnListGlobalRulestackResource. </summary>
+        /// <param name="name"> fqdn list name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GlobalRulestackFqdnResource> GetGlobalRulestackFqdn(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetGlobalRulestackFqdns().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PostRulestackRules in the <see cref="GlobalRulestackResource"/>. </summary>
+        /// <returns> An object representing collection of PostRulestackRules and their operations over a PostRulestackRuleResource. </returns>
+        public virtual PostRulestackRuleCollection GetPostRulestackRules()
+        {
+            return GetCachedClient(client => new PostRulestackRuleCollection(client, Id));
+        }
+
+        /// <summary> Get a PostRulesResource. </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PostRulestackRuleResource>> GetPostRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            return await GetPostRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PostRulesResource. </summary>
+        /// <param name="priority"> Post Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PostRulestackRuleResource> GetPostRulestackRule(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            return GetPostRulestackRules().Get(priority, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GlobalRulestackPrefixes in the <see cref="GlobalRulestackResource"/>. </summary>
+        /// <returns> An object representing collection of GlobalRulestackPrefixes and their operations over a GlobalRulestackPrefixResource. </returns>
+        public virtual GlobalRulestackPrefixCollection GetGlobalRulestackPrefixes()
+        {
+            return GetCachedClient(client => new GlobalRulestackPrefixCollection(client, Id));
+        }
+
+        /// <summary> Get a PrefixListGlobalRulestackResource. </summary>
+        /// <param name="name"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GlobalRulestackPrefixResource>> GetGlobalRulestackPrefixAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetGlobalRulestackPrefixes().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PrefixListGlobalRulestackResource. </summary>
+        /// <param name="name"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GlobalRulestackPrefixResource> GetGlobalRulestackPrefix(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetGlobalRulestackPrefixes().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PreRulestackRules in the <see cref="GlobalRulestackResource"/>. </summary>
+        /// <returns> An object representing collection of PreRulestackRules and their operations over a PreRulestackRuleResource. </returns>
+        public virtual PreRulestackRuleCollection GetPreRulestackRules()
+        {
+            return GetCachedClient(client => new PreRulestackRuleCollection(client, Id));
+        }
+
+        /// <summary> Get a PreRulesResource. </summary>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PreRulestackRuleResource>> GetPreRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            return await GetPreRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PreRulesResource. </summary>
+        /// <param name="priority"> Pre Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PreRulestackRuleResource> GetPreRulestackRule(string priority, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+
+            return GetPreRulestackRules().Get(priority, cancellationToken);
         }
     }
 }

@@ -86,7 +86,7 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : ProvisionableResour
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteFtpPublishingCredentialsPolicy.</param>
     public WebSiteFtpPublishingCredentialsPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -96,6 +96,7 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : ProvisionableResour
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _allow = DefineProperty<bool>("Allow", ["properties", "allow"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
@@ -109,6 +110,11 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : ProvisionableResour
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

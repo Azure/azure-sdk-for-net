@@ -178,6 +178,7 @@ artifacts
 
 # Temporary typespec folders for typespec generation
 TempTypeSpecFiles/
+tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp

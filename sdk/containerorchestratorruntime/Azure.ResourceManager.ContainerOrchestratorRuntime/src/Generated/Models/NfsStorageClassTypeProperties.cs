@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -17,47 +18,44 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="server"> NFS Server. </param>
         /// <param name="share"> NFS share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="share"/> is null. </exception>
-        public NfsStorageClassTypeProperties(string server, string share)
+        public NfsStorageClassTypeProperties(string server, string share) : base(StorageClassType.Nfs)
         {
             Argument.AssertNotNull(server, nameof(server));
             Argument.AssertNotNull(share, nameof(share));
 
             Server = server;
             Share = share;
-            Type = StorageClassType.Nfs;
         }
 
         /// <summary> Initializes a new instance of <see cref="NfsStorageClassTypeProperties"/>. </summary>
         /// <param name="type"> Type of the storage class. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="server"> NFS Server. </param>
         /// <param name="share"> NFS share. </param>
         /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
         /// <param name="mountPermissions"> Mounted folder permissions. Default is 0. If set as non-zero, driver will perform `chmod` after mount. </param>
         /// <param name="onDelete"> The action to take when a NFS volume is deleted. Default is Delete. </param>
-        internal NfsStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string server, string share, string subDir, string mountPermissions, NfsDirectoryActionOnVolumeDeletion? onDelete) : base(type, serializedAdditionalRawData)
+        internal NfsStorageClassTypeProperties(StorageClassType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string server, string share, string subDir, string mountPermissions, NfsDirectoryActionOnVolumeDeletion? onDelete) : base(@type, additionalBinaryDataProperties)
         {
             Server = server;
             Share = share;
             SubDir = subDir;
             MountPermissions = mountPermissions;
             OnDelete = onDelete;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NfsStorageClassTypeProperties"/> for deserialization. </summary>
-        internal NfsStorageClassTypeProperties()
-        {
         }
 
         /// <summary> NFS Server. </summary>
         public string Server { get; set; }
+
         /// <summary> NFS share. </summary>
         public string Share { get; set; }
+
         /// <summary> Sub directory under share. If the sub directory doesn't exist, driver will create it. </summary>
         public string SubDir { get; set; }
+
         /// <summary> Mounted folder permissions. Default is 0. If set as non-zero, driver will perform `chmod` after mount. </summary>
         public string MountPermissions { get; set; }
+
         /// <summary> The action to take when a NFS volume is deleted. Default is Delete. </summary>
         public NfsDirectoryActionOnVolumeDeletion? OnDelete { get; set; }
     }

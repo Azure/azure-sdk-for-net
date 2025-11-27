@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerGet.json
-            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ServerGet.json
+            // this example is just showing the usage of "Server_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerWithVnet()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerGetWithVnet.json
-            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ServerGetWithVnet.json
+            // this example is just showing the usage of "Server_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerDelete.json
-            // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ServerDelete.json
+            // this example is just showing the usage of "Server_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,98 +105,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerUpdate.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch
-            {
-                Storage = new MySqlFlexibleServerStorage
-                {
-                    StorageSizeInGB = 30,
-                    Iops = 200,
-                    AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                    AutoIoScaling = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                    StorageRedundancy = MySqlFlexibleServerStorageRedundancyType.LocalRedundancy,
-                },
-                Network = new MySqlFlexibleServerNetwork
-                {
-                    PublicNetworkAccess = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                },
-            };
-            ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            MySqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MySqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateServerCustomerMaintenanceWindow()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerUpdateWithCustomerMaintenanceWindow.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch
-            {
-                MaintenanceWindow = new MySqlFlexibleServerMaintenanceWindow
-                {
-                    CustomWindow = "Enabled",
-                    StartHour = 8,
-                    StartMinute = 0,
-                    DayOfWeek = 1,
-                    BatchOfMaintenance = MySqlFlexibleServerBatchOfMaintenance.Batch1,
-                },
-            };
-            ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            MySqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MySqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerToOptInVirtualCanary()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/MaintenancePolicyPatchOptInVirtualCanary.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/MaintenancePolicyPatchOptInVirtualCanary.json
+            // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -212,10 +124,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch
-            {
-                MaintenancePatchStrategy = MySqlFlexibleServerPatchStrategy.VirtualCanary,
-            };
+            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
             ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             MySqlFlexibleServerResource result = lro.Value;
 
@@ -230,8 +139,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerToOptOutVirtualCanary()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/MaintenancePolicyPatchOptOutVirtualCanary.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/MaintenancePolicyPatchOptOutVirtualCanary.json
+            // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -247,10 +156,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch
-            {
-                MaintenancePatchStrategy = new MySqlFlexibleServerPatchStrategy("Default"),
-            };
+            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
+            ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            MySqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAServer()
+        {
+            // Generated from example definition: 2024-12-30/ServerUpdate.json
+            // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "mysqltestserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
             ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             MySqlFlexibleServerResource result = lro.Value;
 
@@ -265,8 +203,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerWithByok()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerUpdateWithBYOK.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ServerUpdateWithBYOK.json
+            // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -291,14 +229,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 [new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity()
 },
                 },
-                DataEncryption = new MySqlFlexibleServerDataEncryption
-                {
-                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity"),
-                    PrimaryKeyUri = new Uri("https://test.vault.azure.net/keys/key/c8a92236622244c0a4fdb892666f671a"),
-                    GeoBackupUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-geo-identity"),
-                    GeoBackupKeyUri = new Uri("https://test-geo.vault.azure.net/keys/key/c8a92236622244c0a4fdb892666f671a"),
-                    EncryptionType = MySqlFlexibleServerDataEncryptionType.AzureKeyVault,
-                },
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             MySqlFlexibleServerResource result = lro.Value;
@@ -312,10 +242,211 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateServerCustomerMaintenanceWindow()
+        {
+            // Generated from example definition: 2024-12-30/ServerUpdateWithCustomerMaintenanceWindow.json
+            // this example is just showing the usage of "Server_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "mysqltestserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch();
+            ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            MySqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Failover_RestartAServer()
+        {
+            // Generated from example definition: 2024-12-30/ServerFailover.json
+            // this example is just showing the usage of "Servers_Failover" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            await mySqlFlexibleServer.FailoverAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ValidateEstimateHighAvailability_ValidateAValidationAndEstimationOfHighAvailability()
+        {
+            // Generated from example definition: 2024-12-30/ServerValidateEstimateHighAvailability.json
+            // this example is just showing the usage of "Servers_ValidateEstimateHighAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            HighAvailabilityValidationEstimation highAvailabilityValidationEstimation = new HighAvailabilityValidationEstimation
+            {
+                ExpectedStandbyAvailabilityZone = "1",
+            };
+            HighAvailabilityValidationEstimation result = await mySqlFlexibleServer.ValidateEstimateHighAvailabilityAsync(highAvailabilityValidationEstimation);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Restart_RestartAServer()
+        {
+            // Generated from example definition: 2024-12-30/ServerRestart.json
+            // this example is just showing the usage of "Servers_Restart" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            MySqlFlexibleServerRestartParameter mySqlFlexibleServerRestartParameter = new MySqlFlexibleServerRestartParameter
+            {
+                RestartWithFailover = MySqlFlexibleServerEnableStatusEnum.Enabled,
+                MaxFailoverSeconds = 60,
+            };
+            await mySqlFlexibleServer.RestartAsync(WaitUntil.Completed, mySqlFlexibleServerRestartParameter);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Start_StartAServer()
+        {
+            // Generated from example definition: 2024-12-30/ServerStart.json
+            // this example is just showing the usage of "Servers_Start" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            await mySqlFlexibleServer.StartAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Stop_StopAServer()
+        {
+            // Generated from example definition: 2024-12-30/ServerStop.json
+            // this example is just showing the usage of "Servers_Stop" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            await mySqlFlexibleServer.StopAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ResetGtid_ResetGTIDOnAServer()
+        {
+            // Generated from example definition: 2024-12-30/ServerResetGtid.json
+            // this example is just showing the usage of "Servers_ResetGtid" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+
+            // invoke the operation
+            MySqlFlexibleServerGtidSetContent content = new MySqlFlexibleServerGtidSetContent
+            {
+                GtidSet = "4aff5b51-97ba-11ed-a955-002248036acc:1-16",
+            };
+            await mySqlFlexibleServer.ResetGtidAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DetachVnet_DetachVNetOnAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerDetachVNet.json
-            // this example is just showing the usage of "Servers_DetachVNet" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ServerDetachVNet.json
+            // this example is just showing the usage of "Servers_DetachVnet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -347,178 +478,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Failover_RestartAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerFailover.json
-            // this example is just showing the usage of "Servers_Failover" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            await mySqlFlexibleServer.FailoverAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ResetGtid_ResetGTIDOnAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerResetGtid.json
-            // this example is just showing the usage of "Servers_ResetGtid" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            MySqlFlexibleServerGtidSetContent content = new MySqlFlexibleServerGtidSetContent
-            {
-                GtidSet = "4aff5b51-97ba-11ed-a955-002248036acc:1-16",
-            };
-            await mySqlFlexibleServer.ResetGtidAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Restart_RestartAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerRestart.json
-            // this example is just showing the usage of "Servers_Restart" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            MySqlFlexibleServerRestartParameter mySqlFlexibleServerRestartParameter = new MySqlFlexibleServerRestartParameter
-            {
-                RestartWithFailover = MySqlFlexibleServerEnableStatusEnum.Enabled,
-                MaxFailoverSeconds = 60,
-            };
-            await mySqlFlexibleServer.RestartAsync(WaitUntil.Completed, mySqlFlexibleServerRestartParameter);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Start_StartAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerStart.json
-            // this example is just showing the usage of "Servers_Start" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            await mySqlFlexibleServer.StartAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Stop_StopAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerStop.json
-            // this example is just showing the usage of "Servers_Stop" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            await mySqlFlexibleServer.StopAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ValidateEstimateHighAvailability_ValidateAValidationAndEstimationOfHighAvailability()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerValidateEstimateHighAvailability.json
-            // this example is just showing the usage of "Servers_ValidateEstimateHighAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // invoke the operation
-            HighAvailabilityValidationEstimation highAvailabilityValidationEstimation = new HighAvailabilityValidationEstimation
-            {
-                ExpectedStandbyAvailabilityZone = "1",
-            };
-            HighAvailabilityValidationEstimation result = await mySqlFlexibleServer.ValidateEstimateHighAvailabilityAsync(highAvailabilityValidationEstimation);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateBackupAndExport_CreateAndExportBackup()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/BackupAndExport.json
+            // Generated from example definition: 2024-12-30/BackupAndExport.json
             // this example is just showing the usage of "BackupAndExport_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -546,7 +508,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateBackup_ValidateBackup()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ValidateBackup.json
+            // Generated from example definition: 2024-12-30/ValidateBackup.json
             // this example is just showing the usage of "BackupAndExport_ValidateBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -570,10 +532,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task UpdateConfigurations_ConfigurationList()
+        public async Task GetLogFiles_ListAllServerLogFilesForAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ConfigurationsBatchUpdate.json
-            // this example is just showing the usage of "Configurations_BatchUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/LogFilesListByServer.json
+            // this example is just showing the usage of "LogFiles_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -584,35 +546,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
-            string serverName = "mysqltestserver";
+            string serverName = "mysqltestsvc1";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // invoke the operation
-            MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate = new MySqlFlexibleServerConfigurationListForBatchUpdate
+            // invoke the operation and iterate over the result
+            await foreach (MySqlFlexibleServerLogFile item in mySqlFlexibleServer.GetLogFilesAsync())
             {
-                Values = {new MySqlFlexibleServerConfigurationForBatchUpdate
-{
-Name = "event_scheduler",
-Value = "OFF",
-}, new MySqlFlexibleServerConfigurationForBatchUpdate
-{
-Name = "div_precision_increment",
-Value = "8",
-}},
-                ResetAllToDefault = MySqlFlexibleServerConfigurationResetAllToDefault.False,
-            };
-            ArmOperation<MySqlFlexibleServerConfigurations> lro = await mySqlFlexibleServer.UpdateConfigurationsAsync(WaitUntil.Completed, mySqlFlexibleServerConfigurationListForBatchUpdate);
-            MySqlFlexibleServerConfigurations result = lro.Value;
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task CutoverMigrationServersMigration_CutoverMigrationForMySQLImport()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/CutoverMigration.json
+            // Generated from example definition: 2024-12-30/CutoverMigration.json
             // this example is just showing the usage of "ServersMigration_CutoverMigration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -641,10 +592,10 @@ Value = "8",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetLogFiles_ListAllServerLogFilesForAServer()
+        public async Task UpdateConfigurations_ConfigurationList()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/LogFilesListByServer.json
-            // this example is just showing the usage of "LogFiles_ListByServer" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/ConfigurationsBatchUpdate.json
+            // this example is just showing the usage of "Configurations_UpdateConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -655,17 +606,26 @@ Value = "8",
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "testrg";
-            string serverName = "mysqltestsvc1";
+            string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (MySqlFlexibleServerLogFile item in mySqlFlexibleServer.GetLogFilesAsync())
+            // invoke the operation
+            MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate = new MySqlFlexibleServerConfigurationListForBatchUpdate
             {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+                Values = {new MySqlFlexibleServerConfigurationForBatchUpdate
+{
+Name = "event_scheduler",
+}, new MySqlFlexibleServerConfigurationForBatchUpdate
+{
+Name = "div_precision_increment",
+}},
+                ResetAllToDefault = MySqlFlexibleServerConfigurationResetAllToDefault.False,
+            };
+            ArmOperation<MySqlFlexibleServerConfigurations> lro = await mySqlFlexibleServer.UpdateConfigurationsAsync(WaitUntil.Completed, mySqlFlexibleServerConfigurationListForBatchUpdate);
+            MySqlFlexibleServerConfigurations result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DatabaseWatcher.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,30 +19,32 @@ namespace Azure.ResourceManager.DatabaseWatcher
     /// <summary> A class to add extension methods to Azure.ResourceManager.DatabaseWatcher. </summary>
     public static partial class DatabaseWatcherExtensions
     {
+        /// <param name="client"></param>
         private static MockableDatabaseWatcherArmClient GetMockableDatabaseWatcherArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableDatabaseWatcherArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableDatabaseWatcherArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableDatabaseWatcherResourceGroupResource GetMockableDatabaseWatcherResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableDatabaseWatcherResourceGroupResource GetMockableDatabaseWatcherResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableDatabaseWatcherResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableDatabaseWatcherResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableDatabaseWatcherSubscriptionResource GetMockableDatabaseWatcherSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableDatabaseWatcherSubscriptionResource GetMockableDatabaseWatcherSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableDatabaseWatcherSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableDatabaseWatcherSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseWatcherResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseWatcherResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DatabaseWatcherResource"/> object. </returns>
@@ -52,14 +56,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseWatcherAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseWatcherAlertRuleResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherAlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherAlertRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherAlertRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherAlertRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DatabaseWatcherAlertRuleResource"/> object. </returns>
@@ -71,14 +74,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseWatcherHealthValidationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseWatcherHealthValidationResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherHealthValidationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherHealthValidationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherHealthValidationResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherHealthValidationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DatabaseWatcherHealthValidationResource"/> object. </returns>
@@ -90,14 +92,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseWatcherTargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseWatcherTargetResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherTargetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherTargetResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherTargetResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DatabaseWatcherTargetResource"/> object. </returns>
@@ -109,14 +110,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseWatcherSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseWatcherSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherSharedPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherArmClient.GetDatabaseWatcherSharedPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> object. </returns>
@@ -128,15 +128,15 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Gets a collection of DatabaseWatcherResources in the ResourceGroupResource.
+        /// Gets a collection of DatabaseWatchers in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.GetDatabaseWatchers()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.GetDatabaseWatchers()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DatabaseWatcherResources and their operations over a DatabaseWatcherResource. </returns>
+        /// <returns> An object representing collection of DatabaseWatchers and their operations over a DatabaseWatcherResource. </returns>
         public static DatabaseWatcherCollection GetDatabaseWatchers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -146,34 +146,15 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         /// <summary>
         /// Get a Watcher
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.GetDatabaseWatcherAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.GetDatabaseWatcherAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="watcherName"> The database watcher name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="watcherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseWatcherResource>> GetDatabaseWatcherAsync(this ResourceGroupResource resourceGroupResource, string watcherName, CancellationToken cancellationToken = default)
         {
@@ -184,34 +165,15 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         /// <summary>
         /// Get a Watcher
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.GetDatabaseWatcher(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherResourceGroupResource.GetDatabaseWatcher(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="watcherName"> The database watcher name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="watcherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DatabaseWatcherResource> GetDatabaseWatcher(this ResourceGroupResource resourceGroupResource, string watcherName, CancellationToken cancellationToken = default)
         {
@@ -222,33 +184,15 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         /// <summary>
         /// List Watcher resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DatabaseWatcherResource> GetDatabaseWatchersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -258,30 +202,12 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         /// <summary>
         /// List Watcher resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DatabaseWatcher/watchers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DatabaseWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DatabaseWatcherResource"/> that may take multiple service requests to iterate over. </returns>

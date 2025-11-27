@@ -1167,6 +1167,7 @@
           "crossLanguageDefinitionId": "Versioning.Removed.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Removed",
       "apiVersions": [
@@ -1389,6 +1390,7 @@
               "crossLanguageDefinitionId": "Versioning.Removed.version"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1",
           "apiVersions": [

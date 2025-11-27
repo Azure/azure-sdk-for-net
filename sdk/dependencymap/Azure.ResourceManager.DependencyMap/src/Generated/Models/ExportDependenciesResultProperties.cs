@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
     /// <summary> Model representing properties returned upon successful completion of the export dependencies asynchronous operation. </summary>
     public partial class ExportDependenciesResultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportDependenciesResultProperties"/>. </summary>
         internal ExportDependenciesResultProperties()
@@ -54,25 +25,31 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="exportedDataSasUri"> The SAS URI of the blob containing the exported dependencies data. </param>
         /// <param name="statusCode"> A status code returned by the service with additional context about the export dependencies operation. </param>
         /// <param name="additionalInfo"> Additional information about the exported data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesResultProperties(string exportedDataSasUri, ExportDependenciesStatusCode? statusCode, ExportDependenciesAdditionalInfo additionalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDependenciesResultProperties(string exportedDataSasUri, ExportDependenciesStatusCode? statusCode, ExportDependenciesAdditionalInfo additionalInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExportedDataSasUri = exportedDataSasUri;
             StatusCode = statusCode;
             AdditionalInfo = additionalInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The SAS URI of the blob containing the exported dependencies data. </summary>
         public string ExportedDataSasUri { get; }
+
         /// <summary> A status code returned by the service with additional context about the export dependencies operation. </summary>
         public ExportDependenciesStatusCode? StatusCode { get; }
+
         /// <summary> Additional information about the exported data. </summary>
         internal ExportDependenciesAdditionalInfo AdditionalInfo { get; }
+
         /// <summary> Number of days for which data was available in the exported results. </summary>
         public int? AdditionalInfoAvailableDaysCount
         {
-            get => AdditionalInfo?.AvailableDaysCount;
+            get
+            {
+                return AdditionalInfo.AvailableDaysCount;
+            }
         }
     }
 }

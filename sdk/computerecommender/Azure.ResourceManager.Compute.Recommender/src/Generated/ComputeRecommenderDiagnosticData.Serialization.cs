@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Recommender
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeComputeRecommenderDiagnosticData(document.RootElement, options);
                     }
@@ -174,11 +174,10 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeRecommenderDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ComputeRecommenderDiagnosticData"/> from. </param>
-        internal static ComputeRecommenderDiagnosticData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeRecommenderDiagnosticData"/> from. </param>
+        internal static ComputeRecommenderDiagnosticData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeComputeRecommenderDiagnosticData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

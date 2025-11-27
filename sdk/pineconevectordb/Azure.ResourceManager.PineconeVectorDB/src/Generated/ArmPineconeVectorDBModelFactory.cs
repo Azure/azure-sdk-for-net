@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PineconeVectorDB;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, new Dictionary<string, BinaryData>()),
+                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

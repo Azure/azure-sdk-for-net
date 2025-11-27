@@ -34,6 +34,11 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(ManagedDisk)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(DiskEncryptionSet))
+            {
+                writer.WritePropertyName("diskEncryptionSet"u8);
+                writer.WriteObjectValue(DiskEncryptionSet, options);
+            }
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
@@ -81,12 +86,22 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
+            DiskEncryptionSetParameters diskEncryptionSet = default;
             StorageAccountType? storageAccountType = default;
             BatchVmDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("diskEncryptionSet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,7 +126,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedDisk(storageAccountType, securityProfile, serializedAdditionalRawData);
+            return new ManagedDisk(diskEncryptionSet, storageAccountType, securityProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDisk>.Write(ModelReaderWriterOptions options)

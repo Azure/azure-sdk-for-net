@@ -44,6 +44,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("runtime"u8);
+                writer.WriteObjectValue(Runtime, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(LastResult))
             {
                 if (LastResult != null)
@@ -115,6 +120,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             IndexerStatus status = default;
+            IndexerRuntime runtime = default;
             IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
@@ -131,6 +137,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToIndexerStatus();
+                    continue;
+                }
+                if (property.NameEquals("runtime"u8))
+                {
+                    runtime = IndexerRuntime.DeserializeIndexerRuntime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastResult"u8))
@@ -176,6 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchIndexerStatus(
                 name,
                 status,
+                runtime,
                 lastResult,
                 executionHistory,
                 limits,
