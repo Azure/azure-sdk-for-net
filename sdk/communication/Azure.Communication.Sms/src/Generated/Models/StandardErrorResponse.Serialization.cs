@@ -5,42 +5,36 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Communication.Sms.Models
 {
-    internal partial class OptOutResponse
+    internal partial class StandardErrorResponse
     {
-        internal static OptOutResponse DeserializeOptOutResponse(JsonElement element)
+        internal static StandardErrorResponse DeserializeStandardErrorResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<OptOutResponseItem> value = default;
+            ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("error"u8))
                 {
-                    List<OptOutResponseItem> array = new List<OptOutResponseItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(OptOutResponseItem.DeserializeOptOutResponseItem(item));
-                    }
-                    value = array;
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
             }
-            return new OptOutResponse(value);
+            return new StandardErrorResponse(error);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OptOutResponse FromResponse(Response response)
+        internal static StandardErrorResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOptOutResponse(document.RootElement);
+            return DeserializeStandardErrorResponse(document.RootElement);
         }
     }
 }

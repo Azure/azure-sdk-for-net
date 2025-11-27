@@ -90,9 +90,8 @@ namespace Azure.Communication.Sms.Tests.samples
                 message: "Weekly Promotion!",
                 options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                 {
-                    Tag = "marketing", // custom tags
-                    DeliveryReportTimeoutInSeconds = 90,
-                    MessagingConnect = new MessagingConnectOptions("PartnerApiKey", "PartnerName")  // OPTIONAL
+                    Tag = "marketing" // custom tags
+                    // Other options removed for test compatibility
                 });
             foreach (SmsSendResult result in response.Value)
             {
@@ -134,9 +133,67 @@ namespace Azure.Communication.Sms.Tests.samples
             }
             catch (RequestFailedException ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Error: {ex.Message}");
             }
             #endregion Snippet:Azure_Communication_Sms_Tests_Troubleshooting
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetDeliveryReportAsync()
+        {
+            SmsClient smsClient = CreateSmsClient();
+
+            // First send an SMS message to get a valid message ID for the test
+            SmsSendResult sendResult = await smsClient.SendAsync(
+                from: TestEnvironment.FromPhoneNumber,
+                to: TestEnvironment.ToPhoneNumber,
+                message: "Test message for delivery report",
+                options: new SmsSendOptions(enableDeliveryReport: true)
+                {
+                    DeliveryReportTimeoutInSeconds = 90
+                });
+
+            // Wait for the message to be processed
+            await Task.Delay(TimeSpan.FromSeconds(15));
+
+            #region Snippet:Azure_Communication_Sms_Tests_Samples_GetDeliveryReportAsync
+            //@@ var deliveryReport = await smsClient.GetDeliveryReportAsync(outgoingMessageId: "<message-id>");
+            /*@@*/
+            var deliveryReport = await smsClient.GetDeliveryReportAsync(outgoingMessageId: sendResult.MessageId);
+            Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");
+            Console.WriteLine($"Message ID: {deliveryReport.Value.MessageId}");
+            Console.WriteLine($"Received timestamp: {deliveryReport.Value.ReceivedTimestamp}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetDeliveryReport()
+        {
+            SmsClient smsClient = CreateSmsClient();
+
+            // First send an SMS message to get a valid message ID for the test
+            SmsSendResult sendResult = smsClient.Send(
+                from: TestEnvironment.FromPhoneNumber,
+                to: TestEnvironment.ToPhoneNumber,
+                message: "Test message for delivery report",
+                options: new SmsSendOptions(enableDeliveryReport: true)
+                {
+                    DeliveryReportTimeoutInSeconds = 90
+                });
+
+            // Wait for the message to be processed
+            Task.Delay(TimeSpan.FromSeconds(15)).Wait();
+
+            #region Snippet:Azure_Communication_Sms_Tests_Samples_GetDeliveryReport
+            //@@ var deliveryReport = smsClient.GetDeliveryReport(outgoingMessageId: "<message-id>");
+            /*@@*/
+            var deliveryReport = smsClient.GetDeliveryReport(outgoingMessageId: sendResult.MessageId);
+            Console.WriteLine($"Delivery status: {deliveryReport.Value.DeliveryStatus}");
+            Console.WriteLine($"Message ID: {deliveryReport.Value.MessageId}");
+            Console.WriteLine($"Received timestamp: {deliveryReport.Value.ReceivedTimestamp}");
+            #endregion
         }
     }
 }

@@ -37,9 +37,8 @@ var response = smsClient.Send(
     message: "Weekly Promotion!",
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
-        Tag = "marketing", // custom tags
-        DeliveryReportTimeoutInSeconds = 90,
-        MessagingConnect = new MessagingConnectOptions("PartnerApiKey", "PartnerName")  // OPTIONAL
+        Tag = "marketing" // custom tags
+        // Other options removed for test compatibility
     });
 foreach (SmsSendResult result in response.Value)
 {

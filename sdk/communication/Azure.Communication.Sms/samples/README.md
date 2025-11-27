@@ -18,13 +18,18 @@ This client library allows to do following operations:
  - Send SMS to one or more recipients
  - Specify optional paramters while sending SMS
  - Manage the Opt Out list
+ - Get delivery reports for sent messages
 
  #### You can find samples for each of these functions below.
  - Send SMS Messages [synchronously][sample_sms] or [asynchronously][sample_sms_async]
  - Manage Opt Out list [synchronously][sample_optouts] or [asynchronously][sample_optouts_async]
- 
+ - Get Delivery Reports [synchronously][sample_delivery_report] or [asynchronously][sample_delivery_report_async]
+
 <!-- LINKS -->
 [sample_sms]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSms.md
 [sample_sms_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSmsAsync.md
 [sample_optouts]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample2_OptOutsApi.md
-[sample_optouts_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample2_OptOutsApiAsync.md 
+[sample_optouts_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample2_OptOutsApiAsync.md
+[sample_delivery_report]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample3_GetDeliveryReport.md
+[sample_delivery_report_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/samples/Sample3_GetDeliveryReportAsync.md
+
