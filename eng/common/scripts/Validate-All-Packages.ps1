@@ -155,7 +155,8 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -packageNewLibrary $pkgInfo.IsNewSDK `
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
-        -inRelease $IsReleaseBuild
+        -inRelease $IsReleaseBuild `
+        -specProjectPath $pkgInfo.SpecProjectPath
 
     if (-not $result)
     {
