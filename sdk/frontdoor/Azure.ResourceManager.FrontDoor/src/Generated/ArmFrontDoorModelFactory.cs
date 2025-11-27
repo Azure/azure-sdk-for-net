@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -113,11 +114,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
+        /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
         /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, ManagedRuleEnabledState? defaultState = null, RuleMatchActionType? defaultAction = null, string description = null)
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, ManagedRuleEnabledState? defaultState = null, RuleMatchActionType? defaultAction = null, SensitivityType? defaultSensitivity = null, string description = null)
         {
-            return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description, serializedAdditionalRawData: null);
+            return new ManagedRuleDefinition(
+                ruleId,
+                defaultState,
+                defaultAction,
+                defaultSensitivity,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorNameAvailabilityResult"/>. </summary>
@@ -599,6 +607,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 country,
                 timeSeriesData?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition" />. </summary>
+        /// <param name="ruleId"> Identifier for the managed rule. </param>
+        /// <param name="defaultState"> Describes the default state for the managed rule. </param>
+        /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
+        /// <param name="description"> Describes the functionality of the managed rule. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description)
+        {
+            return ManagedRuleDefinition(ruleId: ruleId, defaultState: defaultState, defaultAction: defaultAction, defaultSensitivity: default, description: description);
         }
     }
 }

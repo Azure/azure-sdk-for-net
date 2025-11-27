@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorGet.json
             // this example is just showing the usage of "FrontDoors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorDelete.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorDelete.json
             // this example is just showing the usage of "FrontDoors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateSpecificFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorCreate.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorCreate.json
             // this example is just showing the usage of "FrontDoors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -202,7 +202,7 @@ Name = "default",
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateCustomDomain_FrontDoorValidateCustomDomain()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorValidateCustomDomain.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorValidateCustomDomain.json
             // this example is just showing the usage of "FrontDoors_ValidateCustomDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +229,7 @@ Name = "default",
         [Ignore("Only validating compilation of examples")]
         public async Task PurgeContent_PurgeContentFromFrontDoor()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorPurgeContent.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-10-01/examples/FrontdoorPurgeContent.json
             // this example is just showing the usage of "Endpoints_PurgeContent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DefaultSensitivity))
+            {
+                writer.WritePropertyName("defaultSensitivity"u8);
+                writer.WriteStringValue(DefaultSensitivity.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string ruleId = default;
             ManagedRuleEnabledState? defaultState = default;
             RuleMatchActionType? defaultAction = default;
+            SensitivityType? defaultSensitivity = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,6 +129,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     defaultAction = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("defaultSensitivity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultSensitivity = new SensitivityType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
@@ -134,7 +149,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description, serializedAdditionalRawData);
+            return new ManagedRuleDefinition(
+                ruleId,
+                defaultState,
+                defaultAction,
+                defaultSensitivity,
+                description,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -198,6 +219,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     builder.Append("  defaultAction: ");
                     builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSensitivity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultSensitivity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultSensitivity))
+                {
+                    builder.Append("  defaultSensitivity: ");
+                    builder.AppendLine($"'{DefaultSensitivity.Value.ToString()}'");
                 }
             }
 

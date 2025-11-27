@@ -54,13 +54,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
+        /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, SensitivityType? defaultSensitivity, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             DefaultState = defaultState;
             DefaultAction = defaultAction;
+            DefaultSensitivity = defaultSensitivity;
             Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -74,6 +76,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Describes the default action to be applied when the managed rule matches. </summary>
         [WirePath("defaultAction")]
         public RuleMatchActionType? DefaultAction { get; }
+        /// <summary> Describes the default sensitivity to be applied when the managed rule matches. </summary>
+        [WirePath("defaultSensitivity")]
+        public SensitivityType? DefaultSensitivity { get; }
         /// <summary> Describes the functionality of the managed rule. </summary>
         [WirePath("description")]
         public string Description { get; }
