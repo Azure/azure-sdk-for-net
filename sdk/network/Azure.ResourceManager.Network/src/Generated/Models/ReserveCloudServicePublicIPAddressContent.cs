@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ReserveCloudServicePublicIPAddressContent"/>. </summary>
         /// <param name="isRollback"> When true, reverts from Static to Dynamic allocation (undo reservation). </param>
-        public ReserveCloudServicePublicIPAddressContent(IsRollback isRollback)
+        public ReserveCloudServicePublicIPAddressContent(UndoReservationType isRollback)
         {
             IsRollback = isRollback;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ReserveCloudServicePublicIPAddressContent"/>. </summary>
         /// <param name="isRollback"> When true, reverts from Static to Dynamic allocation (undo reservation). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReserveCloudServicePublicIPAddressContent(IsRollback isRollback, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReserveCloudServicePublicIPAddressContent(UndoReservationType isRollback, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsRollback = isRollback;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> When true, reverts from Static to Dynamic allocation (undo reservation). </summary>
         [WirePath("isRollback")]
-        public IsRollback IsRollback { get; }
+        public UndoReservationType IsRollback { get; }
     }
 }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("loadDistributionPolicy"u8);
                 ((IJsonModel<WritableSubResource>)LoadDistributionPolicy).Write(writer, options);
             }
-            if (Optional.IsDefined(EntraJWTValidationConfig))
+            if (Optional.IsDefined(EntraJwtValidationConfig))
             {
                 writer.WritePropertyName("entraJWTValidationConfig"u8);
-                ((IJsonModel<WritableSubResource>)EntraJWTValidationConfig).Write(writer, options);
+                ((IJsonModel<WritableSubResource>)EntraJwtValidationConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
             WritableSubResource rewriteRuleSet = default;
             WritableSubResource redirectConfiguration = default;
             WritableSubResource loadDistributionPolicy = default;
-            WritableSubResource entraJWTValidationConfig = default;
+            WritableSubResource entraJwtValidationConfig = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            entraJWTValidationConfig = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            entraJwtValidationConfig = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network.Models
                 rewriteRuleSet,
                 redirectConfiguration,
                 loadDistributionPolicy,
-                entraJWTValidationConfig,
+                entraJwtValidationConfig,
                 provisioningState);
         }
 
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EntraJWTValidationConfigId", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EntraJwtValidationConfigId", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    entraJWTValidationConfig: ");
@@ -558,10 +558,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             else
             {
-                if (Optional.IsDefined(EntraJWTValidationConfig))
+                if (Optional.IsDefined(EntraJwtValidationConfig))
                 {
                     builder.Append("    entraJWTValidationConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, EntraJWTValidationConfig, options, 4, false, "    entraJWTValidationConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, EntraJwtValidationConfig, options, 4, false, "    entraJWTValidationConfig: ");
                 }
             }
 

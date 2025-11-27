@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Samples
             PublicIPAddressResource publicIPAddress = client.GetPublicIPAddressResource(publicIPAddressResourceId);
 
             // invoke the operation
-            ReserveCloudServicePublicIPAddressContent content = new ReserveCloudServicePublicIPAddressContent(IsRollback.False);
+            ReserveCloudServicePublicIPAddressContent content = new ReserveCloudServicePublicIPAddressContent(UndoReservationType.False);
             ArmOperation<PublicIPAddressResource> lro = await publicIPAddress.ReserveCloudServicePublicIPAddressAsync(WaitUntil.Completed, content);
             PublicIPAddressResource result = lro.Value;
 

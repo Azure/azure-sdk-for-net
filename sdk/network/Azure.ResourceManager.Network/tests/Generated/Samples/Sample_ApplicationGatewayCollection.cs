@@ -173,7 +173,7 @@ BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGrou
 BackendHttpSettingsId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/appgwbhs"),
 HttpListenerId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/httpListeners/appgwhl"),
 RewriteRuleSetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/rewriteRuleSets/rewriteRuleSet1"),
-EntraJWTValidationConfigId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/entraJWTValidationConfigs/entraJWTValidationConfig1"),
+EntraJwtValidationConfigId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/entraJWTValidationConfigs/entraJWTValidationConfig1"),
 Name = "appgwrule",
 }},
                 RewriteRuleSets = {new ApplicationGatewayRewriteRuleSet
@@ -209,7 +209,7 @@ ModifiedPath = "/abc",
 }},
 Name = "rewriteRuleSet1",
 }},
-                EntraJWTValidationConfigs = {new ApplicationGatewayEntraJWTValidationConfig
+                EntraJwtValidationConfigs = {new ApplicationGatewayEntraJwtValidationConfig
 {
 UnAuthorizedRequestAction = ApplicationGatewayUnAuthorizedRequestAction.Deny,
 TenantId = Guid.Parse("70a036f6-8e4d-4615-bad6-149c02e7720d"),

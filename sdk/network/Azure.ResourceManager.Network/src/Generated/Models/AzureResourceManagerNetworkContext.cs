@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayConnectionDraining))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayCustomError))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayData))]
-    [ModelReaderWriterBuildable(typeof(ApplicationGatewayEntraJWTValidationConfig))]
+    [ModelReaderWriterBuildable(typeof(ApplicationGatewayEntraJwtValidationConfig))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayFirewallDisabledRuleGroup))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayFirewallExclusion))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayFirewallManifestRuleSet))]

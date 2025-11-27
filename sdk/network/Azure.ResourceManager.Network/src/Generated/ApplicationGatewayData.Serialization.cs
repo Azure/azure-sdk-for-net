@@ -347,11 +347,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EntraJWTValidationConfigs))
+            if (Optional.IsCollectionDefined(EntraJwtValidationConfigs))
             {
                 writer.WritePropertyName("entraJWTValidationConfigs"u8);
                 writer.WriteStartArray();
-                foreach (var item in EntraJWTValidationConfigs)
+                foreach (var item in EntraJwtValidationConfigs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Network
             IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
             bool? forceFirewallPolicyAssociation = default;
             IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default;
-            IList<ApplicationGatewayEntraJWTValidationConfig> entraJWTValidationConfigs = default;
+            IList<ApplicationGatewayEntraJwtValidationConfig> entraJwtValidationConfigs = default;
             ApplicationGatewayGlobalConfiguration globalConfiguration = default;
             ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -953,12 +953,12 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<ApplicationGatewayEntraJWTValidationConfig> array = new List<ApplicationGatewayEntraJWTValidationConfig>();
+                            List<ApplicationGatewayEntraJwtValidationConfig> array = new List<ApplicationGatewayEntraJwtValidationConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayEntraJWTValidationConfig.DeserializeApplicationGatewayEntraJWTValidationConfig(item, options));
+                                array.Add(ApplicationGatewayEntraJwtValidationConfig.DeserializeApplicationGatewayEntraJwtValidationConfig(item, options));
                             }
-                            entraJWTValidationConfigs = array;
+                            entraJwtValidationConfigs = array;
                             continue;
                         }
                         if (property0.NameEquals("globalConfiguration"u8))
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.Network
                 customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
                 forceFirewallPolicyAssociation,
                 loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(),
-                entraJWTValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJWTValidationConfig>(),
+                entraJwtValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>(),
                 globalConfiguration,
                 defaultPredefinedSslPolicy);
         }
@@ -1908,7 +1908,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntraJWTValidationConfigs), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntraJwtValidationConfigs), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    entraJWTValidationConfigs: ");
@@ -1916,13 +1916,13 @@ namespace Azure.ResourceManager.Network
             }
             else
             {
-                if (Optional.IsCollectionDefined(EntraJWTValidationConfigs))
+                if (Optional.IsCollectionDefined(EntraJwtValidationConfigs))
                 {
-                    if (EntraJWTValidationConfigs.Any())
+                    if (EntraJwtValidationConfigs.Any())
                     {
                         builder.Append("    entraJWTValidationConfigs: ");
                         builder.AppendLine("[");
-                        foreach (var item in EntraJWTValidationConfigs)
+                        foreach (var item in EntraJwtValidationConfigs)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    entraJWTValidationConfigs: ");
                         }

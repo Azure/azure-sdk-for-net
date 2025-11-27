@@ -141,6 +141,7 @@ rename-mapping:
   IPTraffic: NetworkVerifierIPTraffic
   IpType: IpamIPType
   IPVersion: NetworkIPVersion
+  IsRollback: UndoReservationType
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
@@ -308,6 +309,7 @@ acronym-mapping:
   IkeV2: IkeV2
   Stag: STag|stag
   Nsp: NetworkSecurityPerimeter
+  JWT: Jwt|jwt
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

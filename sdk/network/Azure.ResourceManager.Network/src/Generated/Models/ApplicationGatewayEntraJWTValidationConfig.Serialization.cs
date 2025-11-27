@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayEntraJWTValidationConfig : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayEntraJWTValidationConfig>
+    public partial class ApplicationGatewayEntraJwtValidationConfig : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayEntraJwtValidationConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayEntraJWTValidationConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayEntraJwtValidationConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApplicationGatewayEntraJWTValidationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationGatewayEntraJwtValidationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        ApplicationGatewayEntraJWTValidationConfig IJsonModel<ApplicationGatewayEntraJWTValidationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApplicationGatewayEntraJwtValidationConfig IJsonModel<ApplicationGatewayEntraJwtValidationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationGatewayEntraJWTValidationConfig(document.RootElement, options);
+            return DeserializeApplicationGatewayEntraJwtValidationConfig(document.RootElement, options);
         }
 
-        internal static ApplicationGatewayEntraJWTValidationConfig DeserializeApplicationGatewayEntraJWTValidationConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApplicationGatewayEntraJwtValidationConfig DeserializeApplicationGatewayEntraJwtValidationConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationGatewayEntraJWTValidationConfig(
+            return new ApplicationGatewayEntraJwtValidationConfig(
                 id,
                 name,
                 type,
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.Network.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -405,26 +405,26 @@ namespace Azure.ResourceManager.Network.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApplicationGatewayEntraJWTValidationConfig IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApplicationGatewayEntraJwtValidationConfig IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationGatewayEntraJWTValidationConfig(document.RootElement, options);
+                        return DeserializeApplicationGatewayEntraJwtValidationConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJWTValidationConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayEntraJwtValidationConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApplicationGatewayEntraJWTValidationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationGatewayEntraJwtValidationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
