@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task FailOver_NameSpaceCreate()
+        public async Task Failover_NameSpaceCreate()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/SBNamespaceFailover.json
             // this example is just showing the usage of "Namespaces_Failover" operation, for the dependent resources, they will have to be created separately.
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
                 PrimaryLocation = "centralus",
                 Force = true,
             };
-            ArmOperation<FailOver> lro = await serviceBusNamespace.FailOverAsync(WaitUntil.Completed, failOver);
+            ArmOperation<FailOver> lro = await serviceBusNamespace.FailoverAsync(WaitUntil.Completed, failOver);
             FailOver result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

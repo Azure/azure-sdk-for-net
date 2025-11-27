@@ -16,12 +16,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
-
-# mgmt-debug:
-#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: ServiceBusNamespaceAuthorizationRule
@@ -29,13 +25,13 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}: ServiceBusQueueAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}: ServiceBusTopicAuthorizationRule
 request-path-is-non-resource:
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}
+
 override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNamespaceNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckServiceBusDisasterRecoveryNameAvailability
   Topics_ListKeys: GetKeys
   Queues_ListKeys: GetKeys
-  Namespaces_Failover: FailOver
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -72,48 +68,53 @@ rename-mapping:
   EntityStatus: ServiceBusMessagingEntityStatus
   FilterType: ServiceBusFilterType
   SqlFilter: ServiceBusSqlFilter
+  CorrelationFilter.properties: ApplicationProperties
   CorrelationFilter: ServiceBusCorrelationFilter
   CorrelationFilter.to: sendTo
   CorrelationFilter.label: Subject
-  CorrelationFilter.properties: ApplicationProperties
+  FilterAction: ServiceBusFilterAction
+  ServiceBusNamespace.properties.zoneRedundant: IsZoneRedundant
+  ServiceBusNetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
+  ServiceBusNameAvailabilityResult.nameAvailable: IsNameAvailable
   PublicNetworkAccess: ServiceBusPublicNetworkAccess
   TlsVersion: ServiceBusMinimumTlsVersion
+  MigrationConfigProperties.properties.targetNamespace: targetServiceBusNamespace|arm-id
+  MigrationConfigProperties: MigrationConfiguration
   KeyType: ServiceBusAccessKeyType
   RegenerateAccessKeyParameters: ServiceBusRegenerateAccessKeyContent
   ProvisioningStateDR: ServiceBusDisasterRecoveryProvisioningState
   RoleDisasterRecovery: ServiceBusDisasterRecoveryRole
   ArmDisasterRecovery: ServiceBusDisasterRecovery
-  MigrationConfigProperties.properties.targetNamespace: targetServiceBusNamespace|arm-id
-  MigrationConfigProperties: MigrationConfiguration
   AccessKeys: ServiceBusAccessKeys
   AccessRights: ServiceBusAccessRight
-  SBAuthorizationRule: ServiceBusAuthorizationRule
-  PublicNetworkAccessFlag: ServiceBusPublicNetworkAccessFlag
-  DefaultAction: ServiceBusNetworkRuleSetDefaultAction
-  NetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
-  NetworkRuleSet: ServiceBusNetworkRuleSet
-  NWRuleSetIpRules: ServiceBusNetworkRuleSetIPRules
-  NetworkRuleIPAction: ServiceBusNetworkRuleIPAction
-  NWRuleSetVirtualNetworkRules: ServiceBusNetworkRuleSetVirtualNetworkRules
-  SBNamespace.properties.zoneRedundant: IsZoneRedundant
-  SBNamespace: ServiceBusNamespace
-  SBSku: ServiceBusSku
-  SBNamespaceUpdateParameters: ServiceBusNamespaceUpdateParameters
+  Rule: ServiceBusRule
+  Action: ServiceBusFilterAction
   EncryptionKeySource: ServiceBusEncryptionKeySource 
   Encryption: ServiceBusEncryption
   ConnectionState: ServiceBusPrivateLinkServiceConnectionState
   PrivateLinkConnectionStatus: ServiceBusPrivateLinkConnectionStatus
   EndPointProvisioningState: ServiceBusPrivateEndpointConnectionProvisioningState
-  KeyVaultProperties: ServiceBusKeyVaultProperties
-  CheckNameAvailability: ServiceBusNameAvailabilityContent
-  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
-  CheckNameAvailabilityResult: ServiceBusNameAvailabilityResult
-  Rule: ServiceBusRule
-  Action: ServiceBusFilterAction
+  PublicNetworkAccessFlag: ServiceBusPublicNetworkAccessFlag
+  NWRuleSetIpRules: ServiceBusNetworkRuleSetIPRules
+  NetworkRuleIPAction: ServiceBusNetworkRuleIPAction
+  NWRuleSetVirtualNetworkRules: ServiceBusNetworkRuleSetVirtualNetworkRules
+  DefaultAction: ServiceBusNetworkRuleSetDefaultAction
   SBTopic: ServiceBusTopic
   SBQueue: ServiceBusQueue
   SBSubscription: ServiceBusSubscription
   SBClientAffineProperties: ServiceBusClientAffineProperties
+  KeyVaultProperties: ServiceBusKeyVaultProperties
+  SBNamespace: ServiceBusNamespace
+  SBNamespace.properties.zoneRedundant: IsZoneRedundant
+  SBSku: ServiceBusSku
+  SBAuthorization: ServiceBusAuthorization
+  SBAuthorizationRule: ServiceBusAuthorizationRules
+  CheckNameAvailability: ServiceBusNameAvailabilityContent
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityResult: ServiceBusNameAvailabilityResult
+  NetworkRuleSet: ServiceBusNetworkRuleSet
+  NetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
+
 
 directive:
     - from: swagger-document
@@ -136,7 +137,7 @@ directive:
       transform: return "NamespaceAuthorizationRules_RegenerateKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules'].get.operationId
-      transform: return "QueueAuthorizationRules_List"
+      transform: return "QueueAuthorizationRules_list"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}'].put.operationId
       transform: return "QueueAuthorizationRules_CreateOrUpdate"
@@ -147,14 +148,14 @@ directive:
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}'].get.operationId
       transform: return "QueueAuthorizationRules_Get"
     - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
-      transform: return "QueueAuthorizationRules_ListKeys"
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/ListKeys'].post.operationId
+      transform: return "QueueAuthorizationRules_listKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
       transform: return "QueueAuthorizationRules_RegenerateKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules'].get.operationId
-      transform: return "TopicAuthorizationRules_List"
+      transform: return "TopicAuthorizationRules_list"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].put.operationId
       transform: return "TopicAuthorizationRules_CreateOrUpdate"
@@ -165,8 +166,8 @@ directive:
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}'].get.operationId
       transform: return "TopicAuthorizationRules_Get"
     - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
-      transform: return "TopicAuthorizationRules_ListKeys"
+      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/ListKeys'].post.operationId
+      transform: return "TopicAuthorizationRules_listKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/regenerateKeys'].post.operationId
       transform: return "TopicAuthorizationRules_RegenerateKeys"
