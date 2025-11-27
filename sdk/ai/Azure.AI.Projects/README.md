@@ -468,6 +468,7 @@ OpenAIFile uploadedFile = fileClient.UploadFile(
 Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
 ```
 
+To retrieve file, use `GetFile` method of `OpenAIFileClient`.
 ```C# Snippet:AI_Projects_Files_GetFile
 OpenAIFile retrievedFile = fileClient.GetFile(fileId);
 Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
