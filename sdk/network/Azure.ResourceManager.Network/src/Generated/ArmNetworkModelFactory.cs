@@ -62,10 +62,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
         /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
         /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
+        /// <param name="entraJWTValidationConfigs"> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="globalConfiguration"> Global Configuration. </param>
         /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
         /// <returns> A new <see cref="Network.ApplicationGatewayData"/> instance for mocking. </returns>
-        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, IEnumerable<string> availabilityZones = null, ManagedServiceIdentity identity = null, ApplicationGatewaySku sku = null, ApplicationGatewaySslPolicy sslPolicy = null, ApplicationGatewayOperationalState? operationalState = null, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = null, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = null, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = null, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = null, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates = null, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = null, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts = null, IEnumerable<ApplicationGatewayProbe> probes = null, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools = null, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = null, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection = null, IEnumerable<ApplicationGatewayHttpListener> httpListeners = null, IEnumerable<ApplicationGatewayListener> listeners = null, IEnumerable<ApplicationGatewaySslProfile> sslProfiles = null, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps = null, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules = null, IEnumerable<ApplicationGatewayRoutingRule> routingRules = null, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = null, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations = null, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = null, ResourceIdentifier firewallPolicyId = null, bool? enableHttp2 = null, bool? enableFips = null, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = null, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = null, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, bool? forceFirewallPolicyAssociation = null, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = null, ApplicationGatewayGlobalConfiguration globalConfiguration = null, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = null)
+        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, IEnumerable<string> availabilityZones = null, ManagedServiceIdentity identity = null, ApplicationGatewaySku sku = null, ApplicationGatewaySslPolicy sslPolicy = null, ApplicationGatewayOperationalState? operationalState = null, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = null, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = null, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = null, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = null, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates = null, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = null, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts = null, IEnumerable<ApplicationGatewayProbe> probes = null, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools = null, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = null, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection = null, IEnumerable<ApplicationGatewayHttpListener> httpListeners = null, IEnumerable<ApplicationGatewayListener> listeners = null, IEnumerable<ApplicationGatewaySslProfile> sslProfiles = null, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps = null, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules = null, IEnumerable<ApplicationGatewayRoutingRule> routingRules = null, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = null, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations = null, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = null, ResourceIdentifier firewallPolicyId = null, bool? enableHttp2 = null, bool? enableFips = null, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = null, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = null, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = null, bool? forceFirewallPolicyAssociation = null, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = null, IEnumerable<ApplicationGatewayEntraJWTValidationConfig> entraJWTValidationConfigs = null, ApplicationGatewayGlobalConfiguration globalConfiguration = null, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = null)
         {
             tags ??= new Dictionary<string, string>();
             availabilityZones ??= new List<string>();
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             privateEndpointConnections ??= new List<ApplicationGatewayPrivateEndpointConnectionData>();
             customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
             loadDistributionPolicies ??= new List<ApplicationGatewayLoadDistributionPolicy>();
+            entraJWTValidationConfigs ??= new List<ApplicationGatewayEntraJWTValidationConfig>();
 
             return new ApplicationGatewayData(
                 id,
@@ -137,6 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                 customErrorConfigurations?.ToList(),
                 forceFirewallPolicyAssociation,
                 loadDistributionPolicies?.ToList(),
+                entraJWTValidationConfigs?.ToList(),
                 globalConfiguration,
                 defaultPredefinedSslPolicy);
         }
@@ -806,6 +809,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The ID of the subnet from which the private IP will be allocated. </param>
         /// <param name="networkInterfaces"> An array of references to the network interfaces created for this private endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint resource. </param>
+        /// <param name="ipVersionType"> Specifies the IP version type for the private IPs of the private endpoint. If not defined, this defaults to IPv4. </param>
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
@@ -813,7 +817,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </param>
         /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
         /// <returns> A new <see cref="Network.PrivateEndpointData"/> instance for mocking. </returns>
-        public static PrivateEndpointData PrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, SubnetData subnet = null, IEnumerable<NetworkInterfaceData> networkInterfaces = null, NetworkProvisioningState? provisioningState = null, IEnumerable<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = null, IEnumerable<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = null, IEnumerable<CustomDnsConfigProperties> customDnsConfigs = null, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups = null, IEnumerable<PrivateEndpointIPConfiguration> ipConfigurations = null, string customNetworkInterfaceName = null)
+        public static PrivateEndpointData PrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, SubnetData subnet = null, IEnumerable<NetworkInterfaceData> networkInterfaces = null, NetworkProvisioningState? provisioningState = null, PrivateEndpointIPVersionType? ipVersionType = null, IEnumerable<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = null, IEnumerable<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = null, IEnumerable<CustomDnsConfigProperties> customDnsConfigs = null, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups = null, IEnumerable<PrivateEndpointIPConfiguration> ipConfigurations = null, string customNetworkInterfaceName = null)
         {
             tags ??= new Dictionary<string, string>();
             networkInterfaces ??= new List<NetworkInterfaceData>();
@@ -835,6 +839,7 @@ namespace Azure.ResourceManager.Network.Models
                 subnet,
                 networkInterfaces?.ToList(),
                 provisioningState,
+                ipVersionType,
                 privateLinkServiceConnections?.ToList(),
                 manualPrivateLinkServiceConnections?.ToList(),
                 customDnsConfigs?.ToList(),
@@ -1033,13 +1038,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
+        /// <param name="recordTypes"> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
-        public static FlowLogData FlowLogData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ManagedServiceIdentity identity = null, ResourceIdentifier targetResourceId = null, Guid? targetResourceGuid = null, ResourceIdentifier storageId = null, string enabledFilteringCriteria = null, bool? enabled = null, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, NetworkProvisioningState? provisioningState = null)
+        public static FlowLogData FlowLogData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ManagedServiceIdentity identity = null, ResourceIdentifier targetResourceId = null, Guid? targetResourceGuid = null, ResourceIdentifier storageId = null, string enabledFilteringCriteria = null, string recordTypes = null, bool? enabled = null, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, NetworkProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1056,6 +1062,7 @@ namespace Azure.ResourceManager.Network.Models
                 targetResourceGuid,
                 storageId,
                 enabledFilteringCriteria,
+                recordTypes,
                 enabled,
                 retentionPolicy,
                 format,
@@ -1850,9 +1857,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSetId"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfigurationId"> Redirect configuration resource of the application gateway. </param>
         /// <param name="loadDistributionPolicyId"> Load Distribution Policy resource of the application gateway. </param>
+        /// <param name="entraJWTValidationConfigId"> Entra JWT validation configuration resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier httpListenerId = null, ResourceIdentifier urlPathMapId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier redirectConfigurationId = null, ResourceIdentifier loadDistributionPolicyId = null, NetworkProvisioningState? provisioningState = null)
+        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier httpListenerId = null, ResourceIdentifier urlPathMapId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier redirectConfigurationId = null, ResourceIdentifier loadDistributionPolicyId = null, ResourceIdentifier entraJWTValidationConfigId = null, NetworkProvisioningState? provisioningState = null)
         {
             return new ApplicationGatewayRequestRoutingRule(
                 id,
@@ -1869,6 +1877,7 @@ namespace Azure.ResourceManager.Network.Models
                 rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null,
                 redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null,
                 loadDistributionPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(loadDistributionPolicyId) : null,
+                entraJWTValidationConfigId != null ? ResourceManagerModelFactory.WritableSubResource(entraJWTValidationConfigId) : null,
                 provisioningState);
         }
 
@@ -2072,6 +2081,34 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 weightPerServer,
                 backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayEntraJWTValidationConfig"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="unAuthorizedRequestAction"> Unauthorized request action. </param>
+        /// <param name="tenantId"> The Tenant ID of the Microsoft Entra ID application. </param>
+        /// <param name="clientId"> The Client ID of the Microsoft Entra ID application. </param>
+        /// <param name="audiences"> List of acceptable audience claims that can be present in the token (aud claim). A maximum of 5 audiences are permitted. </param>
+        /// <param name="provisioningState"> The provisioning state of the entra jwt validation configuration resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayEntraJWTValidationConfig"/> instance for mocking. </returns>
+        public static ApplicationGatewayEntraJWTValidationConfig ApplicationGatewayEntraJWTValidationConfig(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction = null, Guid? tenantId = null, string clientId = null, IEnumerable<string> audiences = null, NetworkProvisioningState? provisioningState = null)
+        {
+            audiences ??= new List<string>();
+
+            return new ApplicationGatewayEntraJWTValidationConfig(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                unAuthorizedRequestAction,
+                tenantId,
+                clientId,
+                audiences?.ToList(),
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayBackendHealth"/>. </summary>
@@ -2731,10 +2768,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
+        /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
+        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
         /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null)
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, IEnumerable<DdosDetectionRule> detectionRules = null, IEnumerable<WritableSubResource> frontEndIPConfiguration = null)
         {
             tags ??= new Dictionary<string, string>();
+            detectionRules ??= new List<DdosDetectionRule>();
+            frontEndIPConfiguration ??= new List<WritableSubResource>();
 
             return new DdosCustomPolicyData(
                 id,
@@ -2745,7 +2786,31 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null,
                 etag,
                 resourceGuid,
-                provisioningState);
+                provisioningState,
+                detectionRules?.ToList(),
+                frontEndIPConfiguration?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DdosDetectionRule"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="provisioningState"> The provisioning state of the DDoS detection rule. </param>
+        /// <param name="detectionMode"> The detection mode for the DDoS detection rule. </param>
+        /// <param name="trafficDetectionRule"> The traffic detection rule details. </param>
+        /// <returns> A new <see cref="Models.DdosDetectionRule"/> instance for mocking. </returns>
+        public static DdosDetectionRule DdosDetectionRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, NetworkProvisioningState? provisioningState = null, DdosDetectionMode? detectionMode = null, TrafficDetectionRule trafficDetectionRule = null)
+        {
+            return new DdosDetectionRule(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                etag,
+                provisioningState,
+                detectionMode,
+                trafficDetectionRule);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.DdosProtectionPlanData"/>. </summary>
@@ -9164,6 +9229,144 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionMonitorQueryResult(sourceStatus, states?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.ApplicationGatewayData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="availabilityZones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="identity"> The identity of the application gateway, if configured. </param>
+        /// <param name="sku"> SKU of the application gateway resource. </param>
+        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
+        /// <param name="operationalState"> Operational state of the application gateway resource. </param>
+        /// <param name="gatewayIPConfigurations"> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="authenticationCertificates"> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="trustedRootCertificates"> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="trustedClientCertificates"> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="sslCertificates"> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="frontendIPConfigurations"> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="frontendPorts"> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="probes"> Probes of the application gateway resource. </param>
+        /// <param name="backendAddressPools"> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendHttpSettingsCollection"> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendSettingsCollection"> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="httpListeners"> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
+        /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
+        /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
+        /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
+        /// <param name="firewallPolicyId"> Reference to the FirewallPolicy resource. </param>
+        /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
+        /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
+        /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
+        /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
+        /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
+        /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
+        /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
+        /// <param name="globalConfiguration"> Global Configuration. </param>
+        /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.ApplicationGatewayData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IEnumerable<string> availabilityZones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts, IEnumerable<ApplicationGatewayProbe> probes, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection, IEnumerable<ApplicationGatewayHttpListener> httpListeners, IEnumerable<ApplicationGatewayListener> listeners, IEnumerable<ApplicationGatewaySslProfile> sslProfiles, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IEnumerable<ApplicationGatewayRoutingRule> routingRules, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, ResourceIdentifier firewallPolicyId, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy)
+        {
+            return ApplicationGatewayData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, availabilityZones: availabilityZones, identity: identity, sku: sku, sslPolicy: sslPolicy, operationalState: operationalState, gatewayIPConfigurations: gatewayIPConfigurations, authenticationCertificates: authenticationCertificates, trustedRootCertificates: trustedRootCertificates, trustedClientCertificates: trustedClientCertificates, sslCertificates: sslCertificates, frontendIPConfigurations: frontendIPConfigurations, frontendPorts: frontendPorts, probes: probes, backendAddressPools: backendAddressPools, backendHttpSettingsCollection: backendHttpSettingsCollection, backendSettingsCollection: backendSettingsCollection, httpListeners: httpListeners, listeners: listeners, sslProfiles: sslProfiles, urlPathMaps: urlPathMaps, requestRoutingRules: requestRoutingRules, routingRules: routingRules, rewriteRuleSets: rewriteRuleSets, redirectConfigurations: redirectConfigurations, webApplicationFirewallConfiguration: webApplicationFirewallConfiguration, firewallPolicyId: firewallPolicyId, enableHttp2: enableHttp2, enableFips: enableFips, autoscaleConfiguration: autoscaleConfiguration, privateLinkConfigurations: privateLinkConfigurations, privateEndpointConnections: privateEndpointConnections, resourceGuid: resourceGuid, provisioningState: provisioningState, customErrorConfigurations: customErrorConfigurations, forceFirewallPolicyAssociation: forceFirewallPolicyAssociation, loadDistributionPolicies: loadDistributionPolicies, entraJWTValidationConfigs: default, globalConfiguration: globalConfiguration, defaultPredefinedSslPolicy: defaultPredefinedSslPolicy);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.PrivateEndpointData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="extendedLocation"> The extended location of the load balancer. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="subnet"> The ID of the subnet from which the private IP will be allocated. </param>
+        /// <param name="networkInterfaces"> An array of references to the network interfaces created for this private endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint resource. </param>
+        /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
+        /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
+        /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
+        /// <param name="applicationSecurityGroups"> Application security groups in which the private endpoint IP configuration is included. </param>
+        /// <param name="ipConfigurations"> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </param>
+        /// <param name="customNetworkInterfaceName"> The custom name of the network interface attached to the private endpoint. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.PrivateEndpointData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PrivateEndpointData PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IEnumerable<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IEnumerable<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IEnumerable<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IEnumerable<CustomDnsConfigProperties> customDnsConfigs, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups, IEnumerable<PrivateEndpointIPConfiguration> ipConfigurations, string customNetworkInterfaceName)
+        {
+            return PrivateEndpointData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, extendedLocation: extendedLocation, etag: etag, subnet: subnet, networkInterfaces: networkInterfaces, provisioningState: provisioningState, ipVersionType: default, privateLinkServiceConnections: privateLinkServiceConnections, manualPrivateLinkServiceConnections: manualPrivateLinkServiceConnections, customDnsConfigs: customDnsConfigs, applicationSecurityGroups: applicationSecurityGroups, ipConfigurations: ipConfigurations, customNetworkInterfaceName: customNetworkInterfaceName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.FlowLogData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> FlowLog resource Managed Identity. </param>
+        /// <param name="targetResourceId"> ID of network security group to which flow log will be applied. </param>
+        /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
+        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
+        /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
+        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
+        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
+        /// <param name="format"> Parameters that define the flow log format. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="provisioningState"> The provisioning state of the flow log. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.FlowLogData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FlowLogData FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, string enabledFilteringCriteria, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, NetworkProvisioningState? provisioningState)
+        {
+            return FlowLogData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, identity: identity, targetResourceId: targetResourceId, targetResourceGuid: targetResourceGuid, storageId: storageId, enabledFilteringCriteria: enabledFilteringCriteria, recordTypes: default, enabled: enabled, retentionPolicy: retentionPolicy, format: format, trafficAnalyticsConfiguration: trafficAnalyticsConfiguration, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="ruleType"> Rule type. </param>
+        /// <param name="priority"> Priority of the request routing rule. </param>
+        /// <param name="backendAddressPoolId"> Backend address pool resource of the application gateway. </param>
+        /// <param name="backendHttpSettingsId"> Backend http settings resource of the application gateway. </param>
+        /// <param name="httpListenerId"> Http listener resource of the application gateway. </param>
+        /// <param name="urlPathMapId"> URL path map resource of the application gateway. </param>
+        /// <param name="rewriteRuleSetId"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
+        /// <param name="redirectConfigurationId"> Redirect configuration resource of the application gateway. </param>
+        /// <param name="loadDistributionPolicyId"> Load Distribution Policy resource of the application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.ApplicationGatewayRequestRoutingRule" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, ResourceIdentifier backendAddressPoolId, ResourceIdentifier backendHttpSettingsId, ResourceIdentifier httpListenerId, ResourceIdentifier urlPathMapId, ResourceIdentifier rewriteRuleSetId, ResourceIdentifier redirectConfigurationId, ResourceIdentifier loadDistributionPolicyId, NetworkProvisioningState? provisioningState)
+        {
+            return ApplicationGatewayRequestRoutingRule(id: id, name: name, resourceType: resourceType, etag: etag, ruleType: ruleType, priority: priority, backendAddressPoolId: backendAddressPoolId, backendHttpSettingsId: backendHttpSettingsId, httpListenerId: httpListenerId, urlPathMapId: urlPathMapId, rewriteRuleSetId: rewriteRuleSetId, redirectConfigurationId: redirectConfigurationId, loadDistributionPolicyId: loadDistributionPolicyId, entraJWTValidationConfigId: default, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.DdosCustomPolicyData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
+        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.DdosCustomPolicyData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
+        {
+            return DdosCustomPolicyData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, resourceGuid: resourceGuid, provisioningState: provisioningState, detectionRules: default, frontEndIPConfiguration: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ApplicationGatewayProbe" />. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -10030,7 +10233,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FlowLogData FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, NetworkProvisioningState? provisioningState)
         {
-            return FlowLogData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, identity: default, targetResourceId: targetResourceId, targetResourceGuid: targetResourceGuid, storageId: storageId, enabledFilteringCriteria: default, enabled: enabled, retentionPolicy: retentionPolicy, format: format, trafficAnalyticsConfiguration: trafficAnalyticsConfiguration, provisioningState: provisioningState);
+            return FlowLogData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, identity: default, targetResourceId: targetResourceId, targetResourceGuid: targetResourceGuid, storageId: storageId, enabledFilteringCriteria: default, recordTypes: default, enabled: enabled, retentionPolicy: retentionPolicy, format: format, trafficAnalyticsConfiguration: trafficAnalyticsConfiguration, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ServiceEndpointProperties" />. </summary>
