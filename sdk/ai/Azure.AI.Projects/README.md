@@ -522,6 +522,7 @@ OpenAIFile validationFile = fileClient.UploadFile(
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 ```
 
+Now we will use the uploaded training and validation set to fine-tue the model. In our experiment we will train the model for three epochs batch size of one and the constant [learning rate](https://en.wikipedia.org/wiki/Learning_rate) of 1.0.
 ```C# Snippet:AI_Projects_FineTuning_CreateJob
 // Create supervised fine-tuning job
 Console.WriteLine("Creating supervised fine-tuning job...");
