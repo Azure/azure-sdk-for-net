@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -47,25 +48,34 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
-        internal LinkedResourceListResponse()
+        /// <param name="value"> The LinkedResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LinkedResourceListResponse(IEnumerable<SubResource> value)
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
-        /// <param name="value"> Results of a list operation. </param>
-        /// <param name="nextLink"> Link to the next set of results, if any. </param>
+        /// <param name="value"> The LinkedResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedResourceListResponse(IReadOnlyList<SubResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinkedResourceListResponse(IReadOnlyList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Results of a list operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/> for deserialization. </summary>
+        internal LinkedResourceListResponse()
+        {
+        }
+
+        /// <summary> The LinkedResource items on this page. </summary>
         public IReadOnlyList<SubResource> Value { get; }
-        /// <summary> Link to the next set of results, if any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

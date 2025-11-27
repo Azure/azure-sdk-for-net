@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsStatusContent(string userEmail)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMetricsStatusContent(IList<string> azureResourceIds, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Azure resource IDs. </summary>
         [WirePath("azureResourceIds")]
         public IList<string> AzureResourceIds { get; }
-        /// <summary> User Email. </summary>
+        /// <summary> Reusable representation of an email address. </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; }
     }

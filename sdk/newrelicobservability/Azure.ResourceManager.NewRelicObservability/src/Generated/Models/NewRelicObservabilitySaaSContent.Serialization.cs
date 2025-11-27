@@ -77,14 +77,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            string saaSResourceId = default;
+            ResourceIdentifier saaSResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("saaSResourceId"u8))
                 {
-                    saaSResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saaSResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -118,15 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 if (Optional.IsDefined(SaaSResourceId))
                 {
                     builder.Append("  saaSResourceId: ");
-                    if (SaaSResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SaaSResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SaaSResourceId}'");
-                    }
+                    builder.AppendLine($"'{SaaSResourceId.ToString()}'");
                 }
             }
 

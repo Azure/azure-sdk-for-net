@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountInfo"/>. </summary>
         /// <param name="accountId"> Account id. </param>
-        /// <param name="ingestionKey"> ingestion key of account. </param>
+        /// <param name="ingestionKey"> Credential string. </param>
         /// <param name="region"> Region where New Relic account is present. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Account id. </summary>
         [WirePath("accountId")]
         public string AccountId { get; set; }
-        /// <summary> ingestion key of account. </summary>
+        /// <summary> Credential string. </summary>
         [WirePath("ingestionKey")]
         public string IngestionKey { get; set; }
         /// <summary> Region where New Relic account is present. </summary>
