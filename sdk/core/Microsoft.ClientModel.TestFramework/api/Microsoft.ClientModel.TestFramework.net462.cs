@@ -380,7 +380,7 @@ namespace Microsoft.ClientModel.TestFramework
         public static bool IsWindows { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode? Mode { get { throw null; } set { } }
         public string? PathToTestResourceBootstrappingScript { get { throw null; } set { } }
-        public static string? RepositoryRoot { get { throw null; } }
+        public static string? RepositoryRoot { get { throw null; } protected set { } }
         public void BootStrapTestResources() { }
         protected string? GetOptionalVariable(string name) { throw null; }
         protected string? GetRecordedOptionalVariable(string name) { throw null; }
