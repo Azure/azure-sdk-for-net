@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" VersionOverride="2.9.1"/>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
