@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDInsight On-demand cluster resource group authentication type. </summary>
-    public readonly partial struct HDInsightOndemandClusterResourceGroupAuthenticationType : IEquatable<HDInsightOndemandClusterResourceGroupAuthenticationType>
+    public readonly partial struct HDInsightOnDemandClusterResourceGroupAuthenticationType : IEquatable<HDInsightOnDemandClusterResourceGroupAuthenticationType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightOndemandClusterResourceGroupAuthenticationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandClusterResourceGroupAuthenticationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HDInsightOndemandClusterResourceGroupAuthenticationType(string value)
+        public HDInsightOnDemandClusterResourceGroupAuthenticationType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> ServicePrincipalKey. </summary>
-        public static HDInsightOndemandClusterResourceGroupAuthenticationType ServicePrincipalKey { get; } = new HDInsightOndemandClusterResourceGroupAuthenticationType(ServicePrincipalKeyValue);
+        public static HDInsightOnDemandClusterResourceGroupAuthenticationType ServicePrincipalKey { get; } = new HDInsightOnDemandClusterResourceGroupAuthenticationType(ServicePrincipalKeyValue);
         /// <summary> SystemAssignedManagedIdentity. </summary>
-        public static HDInsightOndemandClusterResourceGroupAuthenticationType SystemAssignedManagedIdentity { get; } = new HDInsightOndemandClusterResourceGroupAuthenticationType(SystemAssignedManagedIdentityValue);
+        public static HDInsightOnDemandClusterResourceGroupAuthenticationType SystemAssignedManagedIdentity { get; } = new HDInsightOnDemandClusterResourceGroupAuthenticationType(SystemAssignedManagedIdentityValue);
         /// <summary> UserAssignedManagedIdentity. </summary>
-        public static HDInsightOndemandClusterResourceGroupAuthenticationType UserAssignedManagedIdentity { get; } = new HDInsightOndemandClusterResourceGroupAuthenticationType(UserAssignedManagedIdentityValue);
-        /// <summary> Determines if two <see cref="HDInsightOndemandClusterResourceGroupAuthenticationType"/> values are the same. </summary>
-        public static bool operator ==(HDInsightOndemandClusterResourceGroupAuthenticationType left, HDInsightOndemandClusterResourceGroupAuthenticationType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="HDInsightOndemandClusterResourceGroupAuthenticationType"/> values are not the same. </summary>
-        public static bool operator !=(HDInsightOndemandClusterResourceGroupAuthenticationType left, HDInsightOndemandClusterResourceGroupAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightOndemandClusterResourceGroupAuthenticationType"/>. </summary>
-        public static implicit operator HDInsightOndemandClusterResourceGroupAuthenticationType(string value) => new HDInsightOndemandClusterResourceGroupAuthenticationType(value);
+        public static HDInsightOnDemandClusterResourceGroupAuthenticationType UserAssignedManagedIdentity { get; } = new HDInsightOnDemandClusterResourceGroupAuthenticationType(UserAssignedManagedIdentityValue);
+        /// <summary> Determines if two <see cref="HDInsightOnDemandClusterResourceGroupAuthenticationType"/> values are the same. </summary>
+        public static bool operator ==(HDInsightOnDemandClusterResourceGroupAuthenticationType left, HDInsightOnDemandClusterResourceGroupAuthenticationType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HDInsightOnDemandClusterResourceGroupAuthenticationType"/> values are not the same. </summary>
+        public static bool operator !=(HDInsightOnDemandClusterResourceGroupAuthenticationType left, HDInsightOnDemandClusterResourceGroupAuthenticationType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightOnDemandClusterResourceGroupAuthenticationType"/>. </summary>
+        public static implicit operator HDInsightOnDemandClusterResourceGroupAuthenticationType(string value) => new HDInsightOnDemandClusterResourceGroupAuthenticationType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HDInsightOndemandClusterResourceGroupAuthenticationType other && Equals(other);
+        public override bool Equals(object obj) => obj is HDInsightOnDemandClusterResourceGroupAuthenticationType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(HDInsightOndemandClusterResourceGroupAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HDInsightOnDemandClusterResourceGroupAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

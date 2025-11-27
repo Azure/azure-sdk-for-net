@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> clusterResourceGroup = default;
-            HDInsightOndemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType = default;
+            HDInsightOnDemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType = default;
             DataFactoryElement<string> clusterNamePrefix = default;
             DataFactoryElement<string> clusterUserName = default;
             DataFactorySecret clusterPassword = default;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterResourceGroupAuthType = new HDInsightOndemandClusterResourceGroupAuthenticationType(property0.Value.GetString());
+                            clusterResourceGroupAuthType = new HDInsightOnDemandClusterResourceGroupAuthenticationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterNamePrefix"u8))

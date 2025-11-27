@@ -72,6 +72,7 @@ acronym-mapping:
   VNet: Vnet
   Bw: BW
   SQL: Sql
+  HDInsightOndemand: HDInsightOnDemand
 
 keep-plural-enums:
   - ActivityOnInactiveMarkAs
