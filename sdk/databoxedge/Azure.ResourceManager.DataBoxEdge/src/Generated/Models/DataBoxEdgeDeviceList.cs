@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/>. </summary>
-        internal DataBoxEdgeDeviceList()
+        /// <param name="value"> The DataBoxEdgeDevice items on this page. </param>
+        internal DataBoxEdgeDeviceList(IEnumerable<DataBoxEdgeDeviceData> value)
         {
-            Value = new ChangeTrackingList<DataBoxEdgeDeviceData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/>. </summary>
-        /// <param name="value"> The list of Data Box Edge/Gateway devices. </param>
-        /// <param name="nextLink"> Link to the next set of results. </param>
+        /// <param name="value"> The DataBoxEdgeDevice items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDeviceList(IReadOnlyList<DataBoxEdgeDeviceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoxEdgeDeviceList(IReadOnlyList<DataBoxEdgeDeviceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Data Box Edge/Gateway devices. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceList"/> for deserialization. </summary>
+        internal DataBoxEdgeDeviceList()
+        {
+        }
+
+        /// <summary> The DataBoxEdgeDevice items on this page. </summary>
         public IReadOnlyList<DataBoxEdgeDeviceData> Value { get; }
-        /// <summary> Link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

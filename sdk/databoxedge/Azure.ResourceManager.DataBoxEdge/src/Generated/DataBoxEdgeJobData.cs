@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobData"/>. </summary>
-        internal DataBoxEdgeJobData()
+        public DataBoxEdgeJobData()
         {
         }
 
@@ -118,6 +118,6 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> ARM ID of the entity that was refreshed. </summary>
         public ResourceIdentifier RefreshedEntityId { get; }
         /// <summary> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </summary>
-        public string Folder { get; }
+        public string Folder { get; set; }
     }
 }
