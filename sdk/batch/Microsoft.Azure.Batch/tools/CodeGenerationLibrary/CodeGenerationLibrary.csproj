@@ -18,6 +18,6 @@
   </ItemGroup>
 
   <Target Name="WarnNonNetFrameworkBuild" BeforeTargets="CoreCompile" Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
-    <Warning Text="CodeGenerationLibrary only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
+    <Message Text="CodeGenerationLibrary only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
   </Target>
 </Project>

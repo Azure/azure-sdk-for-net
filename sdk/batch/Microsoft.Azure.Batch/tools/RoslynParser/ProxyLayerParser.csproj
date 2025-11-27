@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <Target Name="WarnNonNetFrameworkBuild" BeforeTargets="CoreCompile" Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
-    <Warning Text="ProxyLayerParser only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
+    <Message Text="ProxyLayerParser only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
   </Target>
 
 </Project>

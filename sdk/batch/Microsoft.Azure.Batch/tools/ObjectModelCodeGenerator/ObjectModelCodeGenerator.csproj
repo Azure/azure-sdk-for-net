@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <Target Name="WarnNonNetFrameworkBuild" BeforeTargets="CoreCompile" Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
-    <Warning Text="ObjectModelCodeGenerator only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
+    <Message Text="ObjectModelCodeGenerator only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
   </Target>
 
   <ItemGroup>
