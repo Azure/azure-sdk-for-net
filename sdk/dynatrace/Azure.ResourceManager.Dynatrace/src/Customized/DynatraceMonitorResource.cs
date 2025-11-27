@@ -7,8 +7,6 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
 using Azure.ResourceManager.Dynatrace.Models;
 
 namespace Azure.ResourceManager.Dynatrace
@@ -27,10 +25,6 @@ namespace Azure.ResourceManager.Dynatrace
         /// <description>Monitors_GetAccountCredentials</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-09-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
@@ -38,21 +32,11 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         // Add this custom code due to the api compatibility for operation: Monitors_GetAccountCredentials.
+        [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Response<DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAccountCredentials");
-            scope.Start();
-            try
-            {
-                var response = await _dynatraceMonitorMonitorsRestClient.GetAccountCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This method is no longer supported.");
         }
 
         /// <summary>
@@ -78,21 +62,11 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         // Add this custom code due to the api compatibility for operation: Monitors_GetAccountCredentials.
+        [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DynatraceAccountCredentialsInfo> GetAccountCredentials(CancellationToken cancellationToken = default)
         {
-            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAccountCredentials");
-            scope.Start();
-            try
-            {
-                var response = _dynatraceMonitorMonitorsRestClient.GetAccountCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This method is no longer supported.");
         }
 
         /// <summary>

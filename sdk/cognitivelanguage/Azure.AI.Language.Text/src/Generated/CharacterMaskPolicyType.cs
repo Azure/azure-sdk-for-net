@@ -21,14 +21,25 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
+        /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
+        /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will bce * as before. We allow specific ascii characters for redaction. </param>
-        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> serializedAdditionalRawData, RedactionCharacter? redactionCharacter) : base(policyKind, serializedAdditionalRawData)
+        /// <param name="unmaskLength"> Optional parameter to indicate the length of unmasked characters at the end of the redacted PII entity. Default is 0. </param>
+        /// <param name="unmaskFromEnd"> Optional parameter to indicate whether to unmask characters from the end of the redacted PII entity. Default is true. </param>
+        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData, RedactionCharacter? redactionCharacter, int? unmaskLength, bool? unmaskFromEnd) : base(policyKind, entityTypes, policyName, isDefault, serializedAdditionalRawData)
         {
             RedactionCharacter = redactionCharacter;
+            UnmaskLength = unmaskLength;
+            UnmaskFromEnd = unmaskFromEnd;
         }
 
         /// <summary> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will bce * as before. We allow specific ascii characters for redaction. </summary>
         public RedactionCharacter? RedactionCharacter { get; set; }
+        /// <summary> Optional parameter to indicate the length of unmasked characters at the end of the redacted PII entity. Default is 0. </summary>
+        public int? UnmaskLength { get; set; }
+        /// <summary> Optional parameter to indicate whether to unmask characters from the end of the redacted PII entity. Default is true. </summary>
+        public bool? UnmaskFromEnd { get; set; }
     }
 }

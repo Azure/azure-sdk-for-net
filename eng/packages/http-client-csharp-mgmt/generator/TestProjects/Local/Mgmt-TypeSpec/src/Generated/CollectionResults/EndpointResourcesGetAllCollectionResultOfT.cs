@@ -61,7 +61,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceUri, _context) : _client.CreateGetAllRequest(_resourceUri, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EndpointResources.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EndpointResourceCollection.GetAll");
             scope.Start();
             try
             {

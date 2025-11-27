@@ -12,7 +12,7 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public partial class Dog : Pet
     {
-        public Dog(string name, bool trained, string breed) : base(name, trained) => throw null;
+        public Dog(string name, bool trained, string breed) : base("dog", name, trained) => throw null;
 
         internal Dog(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool trained, string breed) : base(kind, name, additionalBinaryDataProperties, trained) => throw null;
 

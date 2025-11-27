@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dynatrace
                 MetricRules = patch.MetricRules
             };
 
-            using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleResource.UpdateAsync");
+            using var scope = _tagRulesClientDiagnostics.CreateScope("DynatraceTagRuleResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Dynatrace
                 MetricRules = patch.MetricRules
             };
 
-            using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleResource.UpdateAsync");
+            using var scope = _tagRulesClientDiagnostics.CreateScope("DynatraceTagRuleResource.UpdateAsync");
             scope.Start();
             try
             {

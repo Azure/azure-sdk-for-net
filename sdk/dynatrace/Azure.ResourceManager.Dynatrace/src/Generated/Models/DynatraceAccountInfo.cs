@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Dynatrace Account Information. </summary>
     public partial class DynatraceAccountInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DynatraceAccountInfo"/>. </summary>
         public DynatraceAccountInfo()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="regionId"> Region in which the account is created. </param>
         /// <param name="companyName"> Name of the customer account / company. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceAccountInfo(string accountId, string regionId, string companyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceAccountInfo(string accountId, string regionId, string companyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountId = accountId;
             RegionId = regionId;
             CompanyName = companyName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Account Id of the account this environment is linked to. </summary>
         public string AccountId { get; set; }
+
         /// <summary> Region in which the account is created. </summary>
         public string RegionId { get; set; }
+
         /// <summary> Name of the customer account / company. </summary>
         public string CompanyName { get; set; }
     }
