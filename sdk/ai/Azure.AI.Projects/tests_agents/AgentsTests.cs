@@ -89,7 +89,7 @@ public class AgentsTests : AgentsTestBase
             for (int i = ids.Count; i < agentLimit; i++)
             {
                 AgentDefinition definition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
-                AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync($"MyAgent_{i}", new AgentVersionCreationOptions(definition));
+                AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync($"MyAgent{i}", new AgentVersionCreationOptions(definition));
                 ids.Add(agent.Id);
             }
         }
