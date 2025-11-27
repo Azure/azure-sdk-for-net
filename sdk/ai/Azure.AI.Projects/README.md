@@ -501,6 +501,7 @@ OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```
 
+The fine-tuning task represents the adaptation of deep neural network weights to the domain specific data. To achieve this goal, we need to provide model with training data set for weights update and a validation set for evaluation of learning efficiency.
 ```C# Snippet:AI_Projects_FineTuning_UploadFiles
 // Upload training file
 Console.WriteLine("Uploading training file...");
