@@ -806,11 +806,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="failOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failOver"/> is null. </exception>
-        public virtual async Task<ArmOperation<FailOver>> FailOverAsync(WaitUntil waitUntil, FailOver failOver, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FailOver>> FailoverAsync(WaitUntil waitUntil, FailOver failOver, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(failOver, nameof(failOver));
 
-            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.FailOver");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.Failover");
             scope.Start();
             try
             {
@@ -852,11 +852,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="failOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failOver"/> is null. </exception>
-        public virtual ArmOperation<FailOver> FailOver(WaitUntil waitUntil, FailOver failOver, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FailOver> Failover(WaitUntil waitUntil, FailOver failOver, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(failOver, nameof(failOver));
 
-            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.FailOver");
+            using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.Failover");
             scope.Start();
             try
             {
