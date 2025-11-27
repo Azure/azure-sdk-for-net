@@ -217,11 +217,14 @@
 # ServiceLabel: %Cognitive - Face
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
-# PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @vkurpad
+# PRLabel: %Cognitive - Content Understanding
+/sdk/contentunderstanding/                                         @vkurpad, @yungshinlintw, @bojunehsu, @changjian-wang
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @vkurpad
+/sdk/documentintelligence/                                         @vkurpad, @yungshinlintw, @bojunehsu
+
+# PRLabel: %Cognitive - Form Recognizer
+/sdk/formrecognizer/                                               @vkurpad, @yungshinlintw
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # ServiceOwners:                                                   @vkurpad
