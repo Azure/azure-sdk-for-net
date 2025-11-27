@@ -520,7 +520,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
                 """);
             }
-            // Sent by by client.Runs.GetRunsAsync(...) method
+            // Sent by client.Runs.GetRunsAsync(...) method
             else if (request.Method == RequestMethod.Get && request.Uri.Path == $"/threads/{FakeThreadId}/runs")
             {
                 return CreateOKMockResponse($$"""

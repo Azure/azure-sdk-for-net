@@ -40,7 +40,9 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>Lazily-retrieved agent instance. Used for its properties.</summary>
         private PersistentAgent? _agent;
 
-        /// <summary>Chat tool mode indicating that no tools should be used.</summary>
+        /// <summary>
+        /// Indicates whether to throw exceptions when content errors are encountered.
+        /// </summary>
         private readonly bool _throwOnContentErrors;
 
         /// <summary>Initializes a new instance of the <see cref="PersistentAgentsChatClient"/> class for the specified <see cref="PersistentAgentsClient"/>.</summary>
