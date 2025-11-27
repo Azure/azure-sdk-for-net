@@ -1,6 +1,6 @@
 # File Operations with OpenAI Files API
 
-This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK.
+This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK. The file operations are accessed via the ProjectOpenAIClient GetOpenAIClient method.
 
 ## Prerequisites
 
