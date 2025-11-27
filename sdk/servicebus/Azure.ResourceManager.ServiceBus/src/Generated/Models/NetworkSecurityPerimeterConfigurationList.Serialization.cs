@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value = default;
+            IReadOnlyList<NetworkSecurityPerimeterConfiguration> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
+                    List<NetworkSecurityPerimeterConfiguration> array = new List<NetworkSecurityPerimeterConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
+                        array.Add(NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(item, options));
                     }
                     value = array;
                     continue;

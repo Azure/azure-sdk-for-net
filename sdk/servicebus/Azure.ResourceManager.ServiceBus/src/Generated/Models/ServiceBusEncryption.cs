@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusEncryption(IList<ServiceBusKeyVaultProperties> keyVaultProperties, EncryptionKeySource? keySource, bool? requireInfrastructureEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusEncryption(IList<ServiceBusKeyVaultProperties> keyVaultProperties, ServiceBusEncryptionKeySource? keySource, bool? requireInfrastructureEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public IList<ServiceBusKeyVaultProperties> KeyVaultProperties { get; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
         [WirePath("keySource")]
-        public EncryptionKeySource? KeySource { get; set; }
+        public ServiceBusEncryptionKeySource? KeySource { get; set; }
         /// <summary> Enable Infrastructure Encryption (Double Encryption). </summary>
         [WirePath("requireInfrastructureEncryption")]
         public bool? RequireInfrastructureEncryption { get; set; }

@@ -28,11 +28,14 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: ServiceBusDisasterRecoveryAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}: ServiceBusQueueAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}: ServiceBusTopicAuthorizationRule
+request-path-is-non-resource:
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}
 override-operation-name:
   Namespaces_CheckNameAvailability: CheckServiceBusNamespaceNameAvailability
   DisasterRecoveryConfigs_CheckNameAvailability: CheckServiceBusDisasterRecoveryNameAvailability
   Topics_ListKeys: GetKeys
   Queues_ListKeys: GetKeys
+  Namespaces_Failover: FailOver
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -96,7 +99,7 @@ rename-mapping:
   SBNamespace: ServiceBusNamespace
   SBSku: ServiceBusSku
   SBNamespaceUpdateParameters: ServiceBusNamespaceUpdateParameters
-  KeySource: ServiceBusEncryptionKeySource
+  EncryptionKeySource: ServiceBusEncryptionKeySource 
   Encryption: ServiceBusEncryption
   ConnectionState: ServiceBusPrivateLinkServiceConnectionState
   PrivateLinkConnectionStatus: ServiceBusPrivateLinkConnectionStatus
