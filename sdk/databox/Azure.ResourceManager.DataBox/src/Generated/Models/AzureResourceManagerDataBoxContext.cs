@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataBox
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AddressValidationOutput))]
     [ModelReaderWriterBuildable(typeof(AddressValidationResult))]
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(ImportDiskDetails))]
     [ModelReaderWriterBuildable(typeof(JobDelayDetails))]
     [ModelReaderWriterBuildable(typeof(JobDeliveryInfo))]
+    [ModelReaderWriterBuildable(typeof(JobProperties))]
     [ModelReaderWriterBuildable(typeof(JobSecrets))]
     [ModelReaderWriterBuildable(typeof(LastMitigationActionOnJob))]
     [ModelReaderWriterBuildable(typeof(ManagedDiskDetails))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarkDevicesShippedContent))]
     [ModelReaderWriterBuildable(typeof(MitigateJobContent))]
     [ModelReaderWriterBuildable(typeof(NotificationPreference))]
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(PreferencesValidationResult))]
     [ModelReaderWriterBuildable(typeof(RegionConfigurationContent))]
     [ModelReaderWriterBuildable(typeof(RegionConfigurationResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
     [ModelReaderWriterBuildable(typeof(ScheduleAvailabilityContent))]
@@ -120,6 +122,7 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(ShipmentPickUpContent))]
     [ModelReaderWriterBuildable(typeof(SkuAvailabilityValidationContent))]
     [ModelReaderWriterBuildable(typeof(SkuAvailabilityValidationResult))]
+    [ModelReaderWriterBuildable(typeof(SkuProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionIsAllowedToCreateJobValidationContent))]
     [ModelReaderWriterBuildable(typeof(SubscriptionIsAllowedToCreateJobValidationResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
@@ -136,16 +139,18 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(UnencryptedCredentialsList))]
     [ModelReaderWriterBuildable(typeof(UnknownCopyLogDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownDataAccountDetails))]
-    [ModelReaderWriterBuildable(typeof(UnknownDataCenterAddressResponse))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataBoxBasicJobDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataBoxValidationContent))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataBoxValidationInputContent))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataBoxValidationInputResult))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataCenterAddressResult))]
     [ModelReaderWriterBuildable(typeof(UnknownGranularCopyLogDetails))]
-    [ModelReaderWriterBuildable(typeof(UnknownJobDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownJobSecrets))]
-    [ModelReaderWriterBuildable(typeof(UnknownScheduleAvailabilityRequest))]
-    [ModelReaderWriterBuildable(typeof(UnknownValidationInputRequest))]
-    [ModelReaderWriterBuildable(typeof(UnknownValidationInputResponse))]
-    [ModelReaderWriterBuildable(typeof(UnknownValidationRequest))]
+    [ModelReaderWriterBuildable(typeof(UnknownScheduleAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(UpdateJobDetails))]
+    [ModelReaderWriterBuildable(typeof(UpdateJobProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(ValidationResponseProperties))]
     public partial class AzureResourceManagerDataBoxContext : ModelReaderWriterContext
     {
     }
