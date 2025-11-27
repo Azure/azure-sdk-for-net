@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Snippets;
@@ -24,6 +25,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -97,6 +100,26 @@ namespace Azure.Generator.Management.Providers
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
         public bool IsSingleton => SingletonResourceName is not null;
+
+        /// <summary>
+        /// Gets whether this singleton resource has an explicit parent resource defined via @parentResource decorator.
+        /// </summary>
+        internal bool HasExplicitParentResource => IsSingleton && _resourceMetadata.ParentResourceId is not null;
+
+        /// <summary>
+        /// Gets the Create method for this resource, if it exists.
+        /// </summary>
+        internal ResourceMethod? CreateMethod => _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
+
+        /// <summary>
+        /// Gets the client info for the specified input client.
+        /// </summary>
+        internal RestClientInfo? GetRestClientInfo(InputClient inputClient) => _clientInfos.TryGetValue(inputClient, out var info) ? info : null;
+
+        /// <summary>
+        /// Gets the contextual path for building operation methods.
+        /// </summary>
+        internal RequestPathPattern GetContextualPath() => _contextualPath;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -513,6 +536,12 @@ namespace Azure.Generator.Management.Providers
                     var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
                     var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
                     methods.Add(new MethodProvider(signature, bodyStatement, this));
+
+                    // For singleton child resources with explicit parent resource, add CreateOrUpdate methods in the parent
+                    if (childResource.HasExplicitParentResource && childResource.CreateMethod is not null)
+                    {
+                        methods.AddRange(BuildSingletonChildCreateOrUpdateMethods(childResource));
+                    }
                 }
                 else
                 {
@@ -556,6 +585,78 @@ namespace Azure.Generator.Management.Providers
             }
 
             return methods;
+        }
+
+        /// <summary>
+        /// Builds CreateOrUpdate wrapper methods for a singleton child resource to be added to the parent resource.
+        /// These methods delegate to the singleton child's CreateOrUpdate methods.
+        /// </summary>
+        private List<MethodProvider> BuildSingletonChildCreateOrUpdateMethods(ResourceClientProvider childResource)
+        {
+            var result = new List<MethodProvider>();
+            var createMethod = childResource.CreateMethod;
+            if (createMethod is null)
+            {
+                return result;
+            }
+
+            var restClientInfo = childResource.GetRestClientInfo(createMethod.InputClient);
+            if (restClientInfo is null)
+            {
+                return result;
+            }
+
+            var thisResource = This.As<ArmResource>();
+            var factoryMethodName = childResource.FactoryMethodSignature.Name;
+
+            // Get the data parameter type from the child resource's CreateMethod
+            var dataParameter = createMethod.InputMethod.Parameters.FirstOrDefault(p => p.Location == InputRequestLocation.Body);
+            if (dataParameter is null)
+            {
+                return result;
+            }
+
+            var dataType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(dataParameter.Type);
+            if (dataType is null)
+            {
+                return result;
+            }
+
+            var dataParam = new ParameterProvider("data", $"The data for creating or updating the {childResource.ResourceName}.", dataType);
+            var cancellationTokenParam = new ParameterProvider("cancellationToken", $"The cancellation token to use.", new CSharpType(typeof(CancellationToken)), Default);
+
+            // Build async method
+            var asyncMethodName = $"CreateOrUpdate{childResource.ResourceName}Async";
+            var asyncReturnType = new CSharpType(typeof(Task<>), new CSharpType(typeof(ArmOperation<>), childResource.Type));
+            var asyncSignature = new MethodSignature(
+                asyncMethodName,
+                $"Create a {childResource.Type:C}.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                asyncReturnType,
+                null,
+                [KnownAzureParameters.WaitUntil, dataParam, cancellationTokenParam]);
+
+            // The isAsync parameter (true) adds await and ConfigureAwait(false) automatically
+            var asyncBody = Return(
+                thisResource.Invoke(factoryMethodName).Invoke("CreateOrUpdateAsync", [KnownAzureParameters.WaitUntil, dataParam, cancellationTokenParam], null, true));
+            result.Add(new MethodProvider(asyncSignature, asyncBody, this));
+
+            // Build sync method
+            var syncMethodName = $"CreateOrUpdate{childResource.ResourceName}";
+            var syncReturnType = new CSharpType(typeof(ArmOperation<>), childResource.Type);
+            var syncSignature = new MethodSignature(
+                syncMethodName,
+                $"Create a {childResource.Type:C}.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                syncReturnType,
+                null,
+                [KnownAzureParameters.WaitUntil, dataParam, cancellationTokenParam]);
+
+            var syncBody = Return(
+                thisResource.Invoke(factoryMethodName).Invoke("CreateOrUpdate", [KnownAzureParameters.WaitUntil, dataParam, cancellationTokenParam]));
+            result.Add(new MethodProvider(syncSignature, syncBody, this));
+
+            return result;
         }
 
         private bool HasTags()
