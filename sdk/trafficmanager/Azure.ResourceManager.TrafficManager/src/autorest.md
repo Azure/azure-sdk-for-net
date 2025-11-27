@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: TrafficManager
 namespace: Azure.ResourceManager.TrafficManager
-require: https://github.com/Azure/azure-rest-api-specs/blob/ff99df7c551a54d3a3e9e395cb5cf6c62c8c53f7/specification/trafficmanager/resource-manager/readme.md
-tag: package-preview-2024-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/75042a240749256fb2728fb5c555ca5e603ce190/specification/trafficmanager/resource-manager/readme.md
+# tag: package-2022-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -110,7 +110,7 @@ directive:
     transform: >
       delete $["schema"]
   - from: trafficmanager.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}"]..parameters[2]
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}"]..parameters[4]
     transform:
       delete $["enum"];
       delete $["x-ms-enum"];

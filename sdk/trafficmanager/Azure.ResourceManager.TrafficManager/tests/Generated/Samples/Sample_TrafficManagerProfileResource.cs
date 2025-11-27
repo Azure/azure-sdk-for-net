@@ -20,37 +20,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithEndpoints()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Profile-GET-WithEndpoints.json
-            // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TrafficManagerProfileResource created on azure
-            // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
-            string profileName = "azuresdkfornetautoresttrafficmanager3880";
-            ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            TrafficManagerProfileResource trafficManagerProfile = client.GetTrafficManagerProfileResource(trafficManagerProfileResourceId);
-
-            // invoke the operation
-            TrafficManagerProfileResource result = await trafficManagerProfile.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TrafficManagerProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_ProfileGETWithEndpointsAndRecordType()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Profile-GET-WithEndpointsAndRecordType.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithEndpoints.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithTrafficViewDisabled()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Profile-GET-WithTrafficViewDisabled.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewDisabled.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +80,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfileGETWithTrafficViewEnabled()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Profile-GET-WithTrafficViewEnabled.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-GET-WithTrafficViewEnabled.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +110,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ProfileDELETE()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Profile-DELETE.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-DELETE.json
             // this example is just showing the usage of "Profiles_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +136,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ProfilePATCHMonitorConfig()
         {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/preview/2024-04-01-preview/examples/Profile-PATCH-MonitorConfig.json
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/Profile-PATCH-MonitorConfig.json
             // this example is just showing the usage of "Profiles_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
