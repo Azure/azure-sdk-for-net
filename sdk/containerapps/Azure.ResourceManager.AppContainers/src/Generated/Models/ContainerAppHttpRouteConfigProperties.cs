@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteConfigProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the Http Route Config. </param>
+        /// <param name="provisioningState"> The provisioning state of the Http Route Config in cluster. </param>
         /// <param name="provisioningErrors"> List of errors when trying to reconcile http routes. </param>
         /// <param name="fqdn"> FQDN of the route resource. </param>
-        /// <param name="customDomains"> Custom domain bindings for Http Routes' hostnames. </param>
-        /// <param name="rules"> Routing Rules for the Http Route resource. </param>
+        /// <param name="customDomains"> Custom domain bindings for http Routes' hostnames. </param>
+        /// <param name="rules"> Routing Rules for http route resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerAppHttpRouteConfigProperties(ContainerAppHttpRouteProvisioningState? provisioningState, IReadOnlyList<ContainerAppHttpRouteProvisioningErrors> provisioningErrors, string fqdn, IList<ContainerAppCustomDomain> customDomains, IList<ContainerAppHttpRouteRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the Http Route Config. </summary>
+        /// <summary> The provisioning state of the Http Route Config in cluster. </summary>
         [WirePath("provisioningState")]
         public ContainerAppHttpRouteProvisioningState? ProvisioningState { get; }
         /// <summary> List of errors when trying to reconcile http routes. </summary>
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> FQDN of the route resource. </summary>
         [WirePath("fqdn")]
         public string Fqdn { get; }
-        /// <summary> Custom domain bindings for Http Routes' hostnames. </summary>
+        /// <summary> Custom domain bindings for http Routes' hostnames. </summary>
         [WirePath("customDomains")]
         public IList<ContainerAppCustomDomain> CustomDomains { get; }
-        /// <summary> Routing Rules for the Http Route resource. </summary>
+        /// <summary> Routing Rules for http route resource. </summary>
         [WirePath("rules")]
         public IList<ContainerAppHttpRouteRule> Rules { get; }
     }

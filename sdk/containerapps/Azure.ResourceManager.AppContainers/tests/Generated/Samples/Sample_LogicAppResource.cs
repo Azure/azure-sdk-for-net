@@ -6,9 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.AppContainers.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppContainers.Samples
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLogicAppExtensionByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/LogicApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_Get.json
             // this example is just showing the usage of "LogicApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CreateLogicAppExtension()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/LogicApps_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_Delete.json
             // this example is just showing the usage of "LogicApps_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateLogicAppExtension()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/LogicApps_Create.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_Create.json
             // this example is just showing the usage of "LogicApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +97,10 @@ namespace Azure.ResourceManager.AppContainers.Samples
             LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
 
             // invoke the operation
-            LogicAppData data = new LogicAppData();
+            LogicAppData data = new LogicAppData
+            {
+                Properties = BinaryData.FromObjectAsJson(new object()),
+            };
             ArmOperation<LogicAppResource> lro = await logicApp.UpdateAsync(WaitUntil.Completed, data);
             LogicAppResource result = lro.Value;
 
@@ -108,9 +113,128 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task DeployWorkflowArtifacts_DeleteWorkflowArtifacts()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_DeleteDeployWorkflowArtifacts.json
+            // this example is just showing the usage of "LogicApps_DeployWorkflowArtifacts" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LogicAppResource created on azure
+            // for more information of creating LogicAppResource, please refer to the document of LogicAppResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string containerAppName = "testapp2";
+            string logicAppName = "testapp2";
+            ResourceIdentifier logicAppResourceId = LogicAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, logicAppName);
+            LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
+
+            // invoke the operation
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
+            {
+                FilesToDelete = { "test/workflow.json", "test/" },
+            };
+            await logicApp.DeployWorkflowArtifactsAsync(workflowArtifacts: workflowArtifacts);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeployWorkflowArtifacts_DeploysWorkflowArtifacts()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_PostDeployWorkflowArtifacts.json
+            // this example is just showing the usage of "LogicApps_DeployWorkflowArtifacts" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LogicAppResource created on azure
+            // for more information of creating LogicAppResource, please refer to the document of LogicAppResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string containerAppName = "testapp2";
+            string logicAppName = "testapp2";
+            ResourceIdentifier logicAppResourceId = LogicAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, logicAppName);
+            LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
+
+            // invoke the operation
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
+            {
+                AppSettings = BinaryData.FromObjectAsJson(new
+                {
+                    eventHub_connectionString = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE=",
+                }),
+                Files = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                {
+                    ["connections.json"] = new
+                    {
+                        managedApiConnections = new object(),
+                        serviceProviderConnections = new
+                        {
+                            eventHub = new
+                            {
+                                displayName = "example1",
+                                parameterValues = new
+                                {
+                                    connectionString = "@appsetting('eventHub_connectionString')",
+                                },
+                                serviceProvider = new
+                                {
+                                    id = "/serviceProviders/eventHub",
+                                },
+                            },
+                        },
+                    },
+                    ["test1/workflow.json"] = new
+                    {
+                        definition = new Dictionary<string, object>
+                        {
+                            ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                            ["actions"] = new object(),
+                            ["contentVersion"] = "1.0.0.0",
+                            ["outputs"] = new object(),
+                            ["triggers"] = new
+                            {
+                                When_events_are_available_in_Event_hub = new
+                                {
+                                    type = "ServiceProvider",
+                                    inputs = new
+                                    {
+                                        parameters = new
+                                        {
+                                            eventHubName = "test123",
+                                        },
+                                        serviceProviderConfiguration = new
+                                        {
+                                            operationId = "receiveEvents",
+                                            connectionName = "eventHub",
+                                            serviceProviderId = "/serviceProviders/eventHub",
+                                        },
+                                    },
+                                    splitOn = "@triggerOutputs()?['body']",
+                                },
+                            }
+                        },
+                        kind = "Stateful",
+                    }
+                }),
+            };
+            await logicApp.DeployWorkflowArtifactsAsync(workflowArtifacts: workflowArtifacts);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkflowsConnections_ListTheWorkflowsConfigurationConnections()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/LogicApps_ListConnections.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_ListConnections.json
             // this example is just showing the usage of "LogicApps_ListWorkflowsConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,6 +259,35 @@ namespace Azure.ResourceManager.AppContainers.Samples
             LogicAppWorkflowEnvelopeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Invoke_GetWorkflowListCallBackURL()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/LogicApps_ListCallbackURL.json
+            // this example is just showing the usage of "LogicApps_Invoke" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LogicAppResource created on azure
+            // for more information of creating LogicAppResource, please refer to the document of LogicAppResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string containerAppName = "testapp2";
+            string logicAppName = "testapp2";
+            ResourceIdentifier logicAppResourceId = LogicAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, logicAppName);
+            LogicAppResource logicApp = client.GetLogicAppResource(logicAppResourceId);
+
+            // invoke the operation
+            string xMsLogicAppsProxyPath = "/runtime/webhooks/workflow/api/management/workflows/Stateful1/triggers/When_a_HTTP_request_is_received/listCallbackUrl";
+            LogicAppsProxyMethod xMsLogicAppsProxyMethod = LogicAppsProxyMethod.Post;
+            BinaryData result = await logicApp.InvokeAsync(xMsLogicAppsProxyPath, xMsLogicAppsProxyMethod);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

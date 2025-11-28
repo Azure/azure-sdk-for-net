@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppSRevisionReplica()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Replicas_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Replicas_Get.json
             // this example is just showing the usage of "ContainerAppsRevisionReplicas_GetReplica" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListContainerAppSReplicas()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Replicas_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Replicas_List.json
             // this example is just showing the usage of "ContainerAppsRevisionReplicas_ListReplicas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetContainerAppSRevisionReplica()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Replicas_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Replicas_Get.json
             // this example is just showing the usage of "ContainerAppsRevisionReplicas_GetReplica" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetContainerAppSRevisionReplica()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Replicas_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Replicas_Get.json
             // this example is just showing the usage of "ContainerAppsRevisionReplicas_GetReplica" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

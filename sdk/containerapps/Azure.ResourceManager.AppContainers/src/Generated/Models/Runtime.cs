@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App Runtime configuration. </summary>
-    internal partial class Runtime
+    public partial class Runtime
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,25 +52,30 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="Runtime"/>. </summary>
         /// <param name="java"> Java app configuration. </param>
+        /// <param name="dotnet"> .NET app configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Runtime(RuntimeJava java, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Runtime(RuntimeJava java, RuntimeDotnet dotnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Java = java;
+            Dotnet = dotnet;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Java app configuration. </summary>
-        internal RuntimeJava Java { get; set; }
-        /// <summary> Enable jmx core metrics for the java app. </summary>
-        [WirePath("java.enableMetrics")]
-        public bool? EnableMetrics
+        [WirePath("java")]
+        public RuntimeJava Java { get; set; }
+        /// <summary> .NET app configuration. </summary>
+        internal RuntimeDotnet Dotnet { get; set; }
+        /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
+        [WirePath("dotnet.autoConfigureDataProtection")]
+        public bool? AutoConfigureDataProtection
         {
-            get => Java is null ? default : Java.EnableMetrics;
+            get => Dotnet is null ? default : Dotnet.AutoConfigureDataProtection;
             set
             {
-                if (Java is null)
-                    Java = new RuntimeJava();
-                Java.EnableMetrics = value;
+                if (Dotnet is null)
+                    Dotnet = new RuntimeDotnet();
+                Dotnet.AutoConfigureDataProtection = value;
             }
         }
     }

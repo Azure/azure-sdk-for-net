@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("sessionNetworkConfiguration"u8);
                 writer.WriteObjectValue(SessionNetworkConfiguration, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(TemplateUpdateStatus))
+            {
+                writer.WritePropertyName("templateUpdateStatus"u8);
+                writer.WriteObjectValue(TemplateUpdateStatus, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(PoolManagementEndpoint))
             {
                 writer.WritePropertyName("poolManagementEndpoint"u8);
@@ -115,6 +120,11 @@ namespace Azure.ResourceManager.AppContainers
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(McpServerSettings))
+            {
+                writer.WritePropertyName("mcpServerSettings"u8);
+                writer.WriteObjectValue(McpServerSettings, options);
             }
             writer.WriteEndObject();
         }
@@ -155,9 +165,11 @@ namespace Azure.ResourceManager.AppContainers
             DynamicPoolConfiguration dynamicPoolConfiguration = default;
             CustomContainerTemplate customContainerTemplate = default;
             SessionNetworkConfiguration sessionNetworkConfiguration = default;
+            TemplateUpdateStatus templateUpdateStatus = default;
             Uri poolManagementEndpoint = default;
             SessionPoolProvisioningState? provisioningState = default;
             IList<SessionPoolManagedIdentitySetting> managedIdentitySettings = default;
+            McpServerSettings mcpServerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,6 +321,15 @@ namespace Azure.ResourceManager.AppContainers
                             sessionNetworkConfiguration = SessionNetworkConfiguration.DeserializeSessionNetworkConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("templateUpdateStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            templateUpdateStatus = TemplateUpdateStatus.DeserializeTemplateUpdateStatus(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("poolManagementEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -341,6 +362,15 @@ namespace Azure.ResourceManager.AppContainers
                             managedIdentitySettings = array;
                             continue;
                         }
+                        if (property0.NameEquals("mcpServerSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            mcpServerSettings = McpServerSettings.DeserializeMcpServerSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -367,9 +397,11 @@ namespace Azure.ResourceManager.AppContainers
                 dynamicPoolConfiguration,
                 customContainerTemplate,
                 sessionNetworkConfiguration,
+                templateUpdateStatus,
                 poolManagementEndpoint,
                 provisioningState,
                 managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>(),
+                mcpServerSettings,
                 serializedAdditionalRawData);
         }
 
@@ -656,6 +688,21 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateUpdateStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    templateUpdateStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateUpdateStatus))
+                {
+                    builder.Append("    templateUpdateStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TemplateUpdateStatus, options, 4, false, "    templateUpdateStatus: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoolManagementEndpoint), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -706,6 +753,21 @@ namespace Azure.ResourceManager.AppContainers
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(McpServerSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    mcpServerSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(McpServerSettings))
+                {
+                    builder.Append("    mcpServerSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, McpServerSettings, options, 4, false, "    mcpServerSettings: ");
                 }
             }
 

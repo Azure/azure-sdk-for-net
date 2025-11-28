@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string containerApp = default;
             string revision = default;
             string label = default;
+            int? weight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +112,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("weight"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    weight = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppHttpRouteTarget(containerApp, revision, label, serializedAdditionalRawData);
+            return new ContainerAppHttpRouteTarget(containerApp, revision, label, weight, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -192,6 +207,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         builder.AppendLine($"'{Label}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weight: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Weight))
+                {
+                    builder.Append("  weight: ");
+                    builder.AppendLine($"{Weight.Value}");
                 }
             }
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Dapr Component in a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Dapr Component in a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Dapr Component from a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Dapr Component from a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> List secrets for a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> List secrets for a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAEnvironmentsStorage()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentsStorages_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironmentsStorages_Get.json
             // this example is just showing the usage of "ManagedEnvironmentsStorages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAEnvironmentsStorageForNFSAzureFile()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentsStorages_Get_NfsAzureFile.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironmentsStorages_Get_NfsAzureFile.json
             // this example is just showing the usage of "ManagedEnvironmentsStorages_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ListEnvironmentsStoragesBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentsStorages_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironmentsStorages_Delete.json
             // this example is just showing the usage of "ManagedEnvironmentsStorages_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateEnvironmentsStorage()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentsStorages_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironmentsStorages_CreateOrUpdate.json
             // this example is just showing the usage of "ManagedEnvironmentsStorages_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateEnvironmentsStorageForNFSAzureFile()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironmentsStorages_CreateOrUpdate_NfsAzureFile.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironmentsStorages_CreateOrUpdate_NfsAzureFile.json
             // this example is just showing the usage of "ManagedEnvironmentsStorages_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

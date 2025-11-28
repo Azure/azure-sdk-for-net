@@ -51,26 +51,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
-        /// <param name="azureFile"> Azure file properties. </param>
         /// <param name="provisioningState"> Provisioning state of the storage. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <param name="azureFile"> Azure file properties. </param>
+        /// <param name="smb"> SMB storage properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedEnvironmentStorageProperties(ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, ContainerAppAzureFileProperties azureFile, SmbStorage smb, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AzureFile = azureFile;
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
+            AzureFile = azureFile;
+            Smb = smb;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure file properties. </summary>
-        [WirePath("azureFile")]
-        public ContainerAppAzureFileProperties AzureFile { get; set; }
         /// <summary> Provisioning state of the storage. </summary>
         [WirePath("provisioningState")]
         public ConnectedEnvironmentStorageProvisioningState? ProvisioningState { get; }
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
         [WirePath("deploymentErrors")]
         public string DeploymentErrors { get; }
+        /// <summary> Azure file properties. </summary>
+        [WirePath("azureFile")]
+        public ContainerAppAzureFileProperties AzureFile { get; set; }
+        /// <summary> SMB storage properties. </summary>
+        [WirePath("smb")]
+        public SmbStorage Smb { get; set; }
     }
 }

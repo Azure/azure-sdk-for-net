@@ -82,13 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours { get; set; }
         /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
-        internal BlobStorageTokenStore AzureBlobStorage { get; set; }
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
-        [WirePath("azureBlobStorage.sasUrlSettingName")]
-        public string AzureBlobStorageSasUrlSettingName
-        {
-            get => AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
-            set => AzureBlobStorage = new BlobStorageTokenStore(value);
-        }
+        [WirePath("azureBlobStorage")]
+        public BlobStorageTokenStore AzureBlobStorage { get; set; }
     }
 }

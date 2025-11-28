@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ContainerAppManagedEnvironmentData(AzureLocation location) : base(location)
         {
+            AvailabilityZones = new ChangeTrackingList<string>();
             WorkloadProfiles = new ChangeTrackingList<ContainerAppWorkloadProfile>();
             PrivateEndpointConnections = new ChangeTrackingList<ContainerAppPrivateEndpointConnectionData>();
         }
@@ -75,9 +76,13 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="vnetConfiguration"> Vnet configuration for the environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
+        /// <param name="privateLinkDefaultDomain"> Private Link Default Domain Name for the environment. </param>
         /// <param name="staticIP"> Static IP of the Environment. </param>
         /// <param name="appLogsConfiguration"> Cluster configuration which enables the log daemon to export app logs to configured destination. </param>
+        /// <param name="appInsightsConfiguration"> Environment level Application Insights configuration. </param>
+        /// <param name="openTelemetryConfiguration"> Environment Open Telemetry configuration. </param>
         /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
+        /// <param name="availabilityZones"> The list of availability zones to use for managed environment. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
         /// <param name="workloadProfiles"> Workload profiles configured for the Managed Environment. </param>
@@ -89,8 +94,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="ingressConfiguration"> Ingress configuration for the Managed Environment. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled'. </param>
+        /// <param name="diskEncryptionConfiguration"> Disk encryption configuration for the Managed Environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, ManagedEnvironmentIngressConfiguration ingressConfiguration, IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections, ContainerAppPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, string privateLinkDefaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, AppInsightsConfiguration appInsightsConfiguration, OpenTelemetryConfiguration openTelemetryConfiguration, bool? isZoneRedundant, IList<string> availabilityZones, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, ManagedEnvironmentIngressConfiguration ingressConfiguration, IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections, ContainerAppPublicNetworkAccess? publicNetworkAccess, DiskEncryptionConfiguration diskEncryptionConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -100,9 +106,13 @@ namespace Azure.ResourceManager.AppContainers
             VnetConfiguration = vnetConfiguration;
             DeploymentErrors = deploymentErrors;
             DefaultDomain = defaultDomain;
+            PrivateLinkDefaultDomain = privateLinkDefaultDomain;
             StaticIP = staticIP;
             AppLogsConfiguration = appLogsConfiguration;
+            AppInsightsConfiguration = appInsightsConfiguration;
+            OpenTelemetryConfiguration = openTelemetryConfiguration;
             IsZoneRedundant = isZoneRedundant;
+            AvailabilityZones = availabilityZones;
             CustomDomainConfiguration = customDomainConfiguration;
             EventStreamEndpoint = eventStreamEndpoint;
             WorkloadProfiles = workloadProfiles;
@@ -114,6 +124,7 @@ namespace Azure.ResourceManager.AppContainers
             IngressConfiguration = ingressConfiguration;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            DiskEncryptionConfiguration = diskEncryptionConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -146,15 +157,39 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Default Domain Name for the cluster. </summary>
         [WirePath("properties.defaultDomain")]
         public string DefaultDomain { get; }
+        /// <summary> Private Link Default Domain Name for the environment. </summary>
+        [WirePath("properties.privateLinkDefaultDomain")]
+        public string PrivateLinkDefaultDomain { get; }
         /// <summary> Static IP of the Environment. </summary>
         [WirePath("properties.staticIp")]
         public IPAddress StaticIP { get; }
         /// <summary> Cluster configuration which enables the log daemon to export app logs to configured destination. </summary>
         [WirePath("properties.appLogsConfiguration")]
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
+        /// <summary> Environment level Application Insights configuration. </summary>
+        internal AppInsightsConfiguration AppInsightsConfiguration { get; set; }
+        /// <summary> Application Insights connection string. </summary>
+        [WirePath("properties.appInsightsConfiguration.connectionString")]
+        public string AppInsightsConnectionString
+        {
+            get => AppInsightsConfiguration is null ? default : AppInsightsConfiguration.ConnectionString;
+            set
+            {
+                if (AppInsightsConfiguration is null)
+                    AppInsightsConfiguration = new AppInsightsConfiguration();
+                AppInsightsConfiguration.ConnectionString = value;
+            }
+        }
+
+        /// <summary> Environment Open Telemetry configuration. </summary>
+        [WirePath("properties.openTelemetryConfiguration")]
+        public OpenTelemetryConfiguration OpenTelemetryConfiguration { get; set; }
         /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>
         [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
+        /// <summary> The list of availability zones to use for managed environment. </summary>
+        [WirePath("properties.availabilityZones")]
+        public IList<string> AvailabilityZones { get; }
         /// <summary> Custom domain configuration for the environment. </summary>
         [WirePath("properties.customDomainConfiguration")]
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
@@ -204,14 +239,14 @@ namespace Azure.ResourceManager.AppContainers
         internal ManagedEnvironmentPropertiesPeerTrafficConfiguration PeerTrafficConfiguration { get; set; }
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
         [WirePath("properties.peerTrafficConfiguration.encryption.enabled")]
-        public bool? IsEnabled
+        public bool? IsPeerToPeerEncryptionEnabled
         {
-            get => PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsEnabled;
+            get => PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsPeerToPeerEncryptionEnabled;
             set
             {
                 if (PeerTrafficConfiguration is null)
                     PeerTrafficConfiguration = new ManagedEnvironmentPropertiesPeerTrafficConfiguration();
-                PeerTrafficConfiguration.IsEnabled = value;
+                PeerTrafficConfiguration.IsPeerToPeerEncryptionEnabled = value;
             }
         }
 
@@ -224,5 +259,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled'. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public ContainerAppPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Disk encryption configuration for the Managed Environment. </summary>
+        internal DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
+        /// <summary> The Key Vault that contains your key to use for disk encryption. The Key Vault must be in the same region as the Managed Environment. </summary>
+        [WirePath("properties.diskEncryptionConfiguration.keyVaultConfiguration")]
+        public DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration
+        {
+            get => DiskEncryptionConfiguration is null ? default : DiskEncryptionConfiguration.KeyVaultConfiguration;
+            set
+            {
+                if (DiskEncryptionConfiguration is null)
+                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration();
+                DiskEncryptionConfiguration.KeyVaultConfiguration = value;
+            }
+        }
     }
 }

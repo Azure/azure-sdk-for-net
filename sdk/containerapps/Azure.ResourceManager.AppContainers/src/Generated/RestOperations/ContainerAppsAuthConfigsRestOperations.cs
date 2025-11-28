@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Container App AuthConfigs in a given resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Container App AuthConfigs in a given resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a AuthConfig of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a AuthConfig of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or update the AuthConfig for a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or update the AuthConfig for a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Container App AuthConfig. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Container App AuthConfig. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Container App AuthConfigs in a given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Container App AuthConfigs in a given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

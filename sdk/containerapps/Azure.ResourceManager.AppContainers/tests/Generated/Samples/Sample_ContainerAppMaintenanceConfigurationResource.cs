@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedEnvironmentMaintenanceConfigurationsGet()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironment_MaintenanceConfigurations_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironment_MaintenanceConfigurations_Get.json
             // this example is just showing the usage of "MaintenanceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ManagedEnvironmentMaintenanceConfigurationsDelete()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironment_MaintenanceConfigurations_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironment_MaintenanceConfigurations_Delete.json
             // this example is just showing the usage of "MaintenanceConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ManagedEnvironmentMaintenanceConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironment_MaintenanceConfigurations_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironment_MaintenanceConfigurations_CreateOrUpdate.json
             // this example is just showing the usage of "MaintenanceConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

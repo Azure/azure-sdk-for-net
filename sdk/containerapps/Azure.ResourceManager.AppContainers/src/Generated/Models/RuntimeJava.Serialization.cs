@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class RuntimeJava : IUtf8JsonSerializable, IJsonModel<RuntimeJava>
+    public partial class RuntimeJava : IUtf8JsonSerializable, IJsonModel<RuntimeJava>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeJava>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("enableMetrics"u8);
                 writer.WriteBooleanValue(EnableMetrics.Value);
+            }
+            if (Optional.IsDefined(JavaAgent))
+            {
+                writer.WritePropertyName("javaAgent"u8);
+                writer.WriteObjectValue(JavaAgent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             bool? enableMetrics = default;
+            RuntimeJavaAgent javaAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +97,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     enableMetrics = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("javaAgent"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    javaAgent = RuntimeJavaAgent.DeserializeRuntimeJavaAgent(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RuntimeJava(enableMetrics, serializedAdditionalRawData);
+            return new RuntimeJava(enableMetrics, javaAgent, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -124,6 +139,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     builder.Append("  enableMetrics: ");
                     var boolValue = EnableMetrics.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JavaAgent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  javaAgent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JavaAgent))
+                {
+                    builder.Append("  javaAgent: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, JavaAgent, options, 2, false, "  javaAgent: ");
                 }
             }
 

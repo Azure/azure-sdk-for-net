@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> List of provisioning errors for a Http Route Config object. </summary>
+    /// <summary> List of provisioning errors for a http route config object. </summary>
     public partial class ContainerAppHttpRouteProvisioningErrors
     {
         /// <summary>

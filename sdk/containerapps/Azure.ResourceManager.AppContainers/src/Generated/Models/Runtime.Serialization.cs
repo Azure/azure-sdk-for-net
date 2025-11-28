@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class Runtime : IUtf8JsonSerializable, IJsonModel<Runtime>
+    public partial class Runtime : IUtf8JsonSerializable, IJsonModel<Runtime>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Runtime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("java"u8);
                 writer.WriteObjectValue(Java, options);
+            }
+            if (Optional.IsDefined(Dotnet))
+            {
+                writer.WritePropertyName("dotnet"u8);
+                writer.WriteObjectValue(Dotnet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,6 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             RuntimeJava java = default;
+            RuntimeDotnet dotnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +97,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     java = RuntimeJava.DeserializeRuntimeJava(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("dotnet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dotnet = RuntimeDotnet.DeserializeRuntimeDotnet(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Runtime(java, serializedAdditionalRawData);
+            return new Runtime(java, dotnet, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -111,14 +126,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EnableMetrics", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Java), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  java: ");
-                builder.AppendLine("{");
-                builder.Append("    enableMetrics: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
             }
             else
             {
@@ -126,6 +138,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  java: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Java, options, 2, false, "  java: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AutoConfigureDataProtection", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dotnet: ");
+                builder.AppendLine("{");
+                builder.Append("    autoConfigureDataProtection: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Dotnet))
+                {
+                    builder.Append("  dotnet: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Dotnet, options, 2, false, "  dotnet: ");
                 }
             }
 

@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
         /// <param name="provisioningState"> Provisioning state of the Container Apps Job. </param>
+        /// <param name="runningState"> Current running state of the job. </param>
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="workloadProfileName"> Workload profile name to pin for container apps job execution. </param>
         /// <param name="configuration"> Container Apps Job configuration properties. </param>
@@ -74,10 +76,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, JobRunningState? runningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ExtendedLocation = extendedLocation;
             Identity = identity;
             ProvisioningState = provisioningState;
+            RunningState = runningState;
             EnvironmentId = environmentId;
             WorkloadProfileName = workloadProfileName;
             Configuration = configuration;
@@ -92,12 +96,18 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
+        /// <summary> The complex type of the extended location. </summary>
+        [WirePath("extendedLocation")]
+        public ContainerAppExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the Container Apps Job. </summary>
         [WirePath("properties.provisioningState")]
         public ContainerAppJobProvisioningState? ProvisioningState { get; }
+        /// <summary> Current running state of the job. </summary>
+        [WirePath("properties.runningState")]
+        public JobRunningState? RunningState { get; }
         /// <summary> Resource ID of environment. </summary>
         [WirePath("properties.environmentId")]
         public string EnvironmentId { get; set; }

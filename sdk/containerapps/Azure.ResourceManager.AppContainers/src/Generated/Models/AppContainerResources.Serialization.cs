@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("ephemeralStorage"u8);
                 writer.WriteStringValue(EphemeralStorage);
             }
+            if (Optional.IsDefined(Gpu))
+            {
+                writer.WritePropertyName("gpu"u8);
+                writer.WriteNumberValue(Gpu.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             double? cpu = default;
             string memory = default;
             string ephemeralStorage = default;
+            double? gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +119,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ephemeralStorage = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("gpu"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gpu = property.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AppContainerResources(cpu, memory, ephemeralStorage, serializedAdditionalRawData);
+            return new AppContainerResources(cpu, memory, ephemeralStorage, gpu, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -191,6 +206,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         builder.AppendLine($"'{EphemeralStorage}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gpu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gpu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Gpu))
+                {
+                    builder.Append("  gpu: ");
+                    builder.AppendLine($"'{Gpu.Value.ToString()}'");
                 }
             }
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Java app configuration. </summary>
-    internal partial class RuntimeJava
+    public partial class RuntimeJava
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,15 +52,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="RuntimeJava"/>. </summary>
         /// <param name="enableMetrics"> Enable jmx core metrics for the java app. </param>
+        /// <param name="javaAgent"> Diagnostic capabilities achieved by java agent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeJava(bool? enableMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RuntimeJava(bool? enableMetrics, RuntimeJavaAgent javaAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableMetrics = enableMetrics;
+            JavaAgent = javaAgent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable jmx core metrics for the java app. </summary>
         [WirePath("enableMetrics")]
         public bool? EnableMetrics { get; set; }
+        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+        [WirePath("javaAgent")]
+        public RuntimeJavaAgent JavaAgent { get; set; }
     }
 }

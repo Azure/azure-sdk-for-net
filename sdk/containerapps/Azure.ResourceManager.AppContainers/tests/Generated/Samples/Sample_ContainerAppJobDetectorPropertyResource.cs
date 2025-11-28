@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppJobByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Job_ProxyGet.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Job_ProxyGet.json
             // this example is just showing the usage of "Jobs_ProxyGet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppJobDetectorPropertyResource, please refer to the document of ContainerAppJobDetectorPropertyResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string jobName = "testcontainerappsjob0";
+            string jobName = "testcontainerAppsJob0";
             string apiName = "rootApi";
             ResourceIdentifier containerAppJobDetectorPropertyResourceId = ContainerAppJobDetectorPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName, apiName);
             ContainerAppJobDetectorPropertyResource containerAppJobDetectorProperty = client.GetContainerAppJobDetectorPropertyResource(containerAppJobDetectorPropertyResourceId);

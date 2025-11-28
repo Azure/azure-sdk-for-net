@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -50,6 +51,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
+            if (Optional.IsDefined(DockerfilePath))
+            {
+                writer.WritePropertyName("dockerfilePath"u8);
+                writer.WriteStringValue(DockerfilePath);
+            }
             if (Optional.IsDefined(GitHubPersonalAccessToken))
             {
                 writer.WritePropertyName("githubPersonalAccessToken"u8);
@@ -79,6 +85,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
+            }
+            if (Optional.IsCollectionDefined(BuildEnvironmentVariables))
+            {
+                writer.WritePropertyName("buildEnvironmentVariables"u8);
+                writer.WriteStartArray();
+                foreach (var item in BuildEnvironmentVariables)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -120,12 +136,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppRegistryInfo registryInfo = default;
             ContainerAppCredentials azureCredentials = default;
             string contextPath = default;
+            string dockerfilePath = default;
             string gitHubPersonalAccessToken = default;
             string image = default;
             string publishType = default;
             string os = default;
             string runtimeStack = default;
             string runtimeVersion = default;
+            IList<EnvironmentVariable> buildEnvironmentVariables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,6 +169,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dockerfilePath"u8))
+                {
+                    dockerfilePath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("githubPersonalAccessToken"u8))
@@ -183,6 +206,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("buildEnvironmentVariables"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                    }
+                    buildEnvironmentVariables = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -193,12 +230,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 registryInfo,
                 azureCredentials,
                 contextPath,
+                dockerfilePath,
                 gitHubPersonalAccessToken,
                 image,
                 publishType,
                 os,
                 runtimeStack,
                 runtimeVersion,
+                buildEnvironmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
                 serializedAdditionalRawData);
         }
 
@@ -262,6 +301,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                     else
                     {
                         builder.AppendLine($"'{ContextPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DockerfilePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dockerfilePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DockerfilePath))
+                {
+                    builder.Append("  dockerfilePath: ");
+                    if (DockerfilePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DockerfilePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DockerfilePath}'");
                     }
                 }
             }
@@ -400,6 +462,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                     else
                     {
                         builder.AppendLine($"'{RuntimeVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BuildEnvironmentVariables), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  buildEnvironmentVariables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BuildEnvironmentVariables))
+                {
+                    if (BuildEnvironmentVariables.Any())
+                    {
+                        builder.Append("  buildEnvironmentVariables: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BuildEnvironmentVariables)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  buildEnvironmentVariables: ");
+                        }
+                        builder.AppendLine("  ]");
                     }
                 }
             }

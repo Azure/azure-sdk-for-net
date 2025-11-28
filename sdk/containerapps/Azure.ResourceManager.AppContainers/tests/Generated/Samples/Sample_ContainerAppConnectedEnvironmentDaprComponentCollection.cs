@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_CreateOrUpdate.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,6 +70,16 @@ Name = "masterkey",
 SecretRef = "masterkey",
 }},
                 Scopes = { "container-app-1", "container-app-2" },
+                ServiceComponentBind = {new DaprComponentServiceBinding
+{
+Name = "statestore",
+ServiceId = "/subscriptions/9f7371f1-b593-4c3c-84e2-9167806ad358/resourceGroups/ca-syn2-group/providers/Microsoft.App/containerapps/cappredis",
+Metadata = new DaprServiceBindMetadata
+{
+Name = "daprcomponentBind",
+Value = "redis-bind",
+},
+}},
             };
             ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, componentName, data);
             ContainerAppConnectedEnvironmentDaprComponentResource result = lro.Value;
@@ -85,7 +95,7 @@ SecretRef = "masterkey",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_Get.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +129,7 @@ SecretRef = "masterkey",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDaprComponents()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_List.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +165,7 @@ SecretRef = "masterkey",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_Get.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +195,7 @@ SecretRef = "masterkey",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_Get.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

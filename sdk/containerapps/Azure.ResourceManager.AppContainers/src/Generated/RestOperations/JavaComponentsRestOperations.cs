@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Java Components for a managed environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Java Components for a managed environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a Java Component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a Java Component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Java Component in a Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Java Component in a Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Patches a Java Component using JSON Merge Patch. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Patches a Java Component using JSON Merge Patch. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Java Component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Java Component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="name"> Name of the Java Component. </param>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Java Components for a managed environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Java Components for a managed environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

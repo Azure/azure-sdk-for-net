@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
         }
 
         LogicAppData IJsonModel<LogicAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
+            BinaryData properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -67,6 +80,15 @@ namespace Azure.ResourceManager.AppContainers
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -97,7 +119,13 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LogicAppData(id, name, type, systemData, serializedAdditionalRawData);
+            return new LogicAppData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -131,6 +159,21 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         builder.AppendLine($"'{Name}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("  properties: ");
+                    builder.AppendLine($"'{Properties.ToString()}'");
                 }
             }
 

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -783,6 +783,174 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Resumes a suspended job
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ContainerAppJobResource>> ResumeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Resume");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppJobJobsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resumes a suspended job
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ContainerAppJobResource> Resume(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Resume");
+            scope.Start();
+            try
+            {
+                var response = _containerAppJobJobsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspends a job
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ContainerAppJobResource>> SuspendAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Suspend");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppJobJobsRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspends a job
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ContainerAppJobResource> Suspend(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Suspend");
+            scope.Start();
+            try
+            {
+                var response = _containerAppJobJobsRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -795,7 +963,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -857,7 +1025,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -919,7 +1087,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -976,7 +1144,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1033,7 +1201,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1093,7 +1261,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

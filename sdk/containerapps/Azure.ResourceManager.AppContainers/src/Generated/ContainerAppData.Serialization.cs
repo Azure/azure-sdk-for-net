@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("runningStatus"u8);
                 writer.WriteStringValue(RunningStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             if (Optional.IsDefined(ManagedEnvironmentId))
             {
                 writer.WritePropertyName("managedEnvironmentId"u8);
@@ -86,6 +91,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
+            }
+            if (Optional.IsDefined(PatchingConfiguration))
+            {
+                writer.WritePropertyName("patchingConfiguration"u8);
+                writer.WriteObjectValue(PatchingConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LatestRevisionName))
             {
@@ -172,9 +182,11 @@ namespace Azure.ResourceManager.AppContainers
             SystemData systemData = default;
             ContainerAppProvisioningState? provisioningState = default;
             ContainerAppRunningStatus? runningStatus = default;
+            string deploymentErrors = default;
             ResourceIdentifier managedEnvironmentId = default;
             ResourceIdentifier environmentId = default;
             string workloadProfileName = default;
+            ContainerAppPropertiesPatchingConfiguration patchingConfiguration = default;
             string latestRevisionName = default;
             string latestReadyRevisionName = default;
             string latestRevisionFqdn = default;
@@ -289,6 +301,11 @@ namespace Azure.ResourceManager.AppContainers
                             runningStatus = new ContainerAppRunningStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("deploymentErrors"u8))
+                        {
+                            deploymentErrors = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("managedEnvironmentId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -310,6 +327,15 @@ namespace Azure.ResourceManager.AppContainers
                         if (property0.NameEquals("workloadProfileName"u8))
                         {
                             workloadProfileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("patchingConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            patchingConfiguration = ContainerAppPropertiesPatchingConfiguration.DeserializeContainerAppPropertiesPatchingConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("latestRevisionName"u8))
@@ -402,9 +428,11 @@ namespace Azure.ResourceManager.AppContainers
                 kind,
                 provisioningState,
                 runningStatus,
+                deploymentErrors,
                 managedEnvironmentId,
                 environmentId,
                 workloadProfileName,
+                patchingConfiguration,
                 latestRevisionName,
                 latestReadyRevisionName,
                 latestRevisionFqdn,
@@ -629,6 +657,29 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deploymentErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentErrors))
+                {
+                    builder.Append("    deploymentErrors: ");
+                    if (DeploymentErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentErrors}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedEnvironmentId), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -679,6 +730,26 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         builder.AppendLine($"'{WorkloadProfileName}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PatchingMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    patchingConfiguration: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      patchingConfiguration: {");
+                builder.Append("        patchingMode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PatchingConfiguration))
+                {
+                    builder.Append("    patchingConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PatchingConfiguration, options, 4, false, "    patchingConfiguration: ");
                 }
             }
 

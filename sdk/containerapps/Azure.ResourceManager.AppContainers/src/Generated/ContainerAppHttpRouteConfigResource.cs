@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the specified Http Route Config.
+        /// Get the specified Managed Http Route Config.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the specified Http Route Config.
+        /// Get the specified Managed Http Route Config.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Deletes the specified Http Route Config.
+        /// Deletes the specified Managed Http Route.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Deletes the specified Http Route Config.
+        /// Deletes the specified Managed Http Route.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Patches a Http Route Config resource. Only patching of tags is supported
+        /// Patches an http route config resource. Only patching of tags is supported
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Patches a Http Route Config resource. Only patching of tags is supported
+        /// Patches an http route config resource. Only patching of tags is supported
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

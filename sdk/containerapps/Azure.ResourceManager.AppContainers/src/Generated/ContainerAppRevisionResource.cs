@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppRevisionContainerAppsRevisionsClientDiagnostics;
         private readonly ContainerAppsRevisionsRestOperations _containerAppRevisionContainerAppsRevisionsRestClient;
+        private readonly ClientDiagnostics _functionsExtensionClientDiagnostics;
+        private readonly FunctionsExtensionRestOperations _functionsExtensionRestClient;
         private readonly ContainerAppRevisionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -62,6 +64,8 @@ namespace Azure.ResourceManager.AppContainers
             _containerAppRevisionContainerAppsRevisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string containerAppRevisionContainerAppsRevisionsApiVersion);
             _containerAppRevisionContainerAppsRevisionsRestClient = new ContainerAppsRevisionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppRevisionContainerAppsRevisionsApiVersion);
+            _functionsExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _functionsExtensionRestClient = new FunctionsExtensionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,6 +92,75 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ContainerAppRevisionFunctionResources in the ContainerAppRevision. </summary>
+        /// <returns> An object representing collection of ContainerAppRevisionFunctionResources and their operations over a ContainerAppRevisionFunctionResource. </returns>
+        public virtual ContainerAppRevisionFunctionCollection GetContainerAppRevisionFunctions()
+        {
+            return GetCachedClient(client => new ContainerAppRevisionFunctionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific function of a Container App Revision.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/functions/{functionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisionFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppRevisionFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionName"> Name of the Function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppRevisionFunctionResource>> GetContainerAppRevisionFunctionAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppRevisionFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific function of a Container App Revision.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/functions/{functionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsRevisionFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppRevisionFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionName"> Name of the Function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppRevisionFunctionResource> GetContainerAppRevisionFunction(string functionName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppRevisionFunctions().Get(functionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppReplicaResources in the ContainerAppRevision. </summary>
         /// <returns> An object representing collection of ContainerAppReplicaResources and their operations over a ContainerAppReplicaResource. </returns>
         public virtual ContainerAppReplicaCollection GetContainerAppReplicas()
@@ -108,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +243,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +323,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +361,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +399,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +437,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,7 +475,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -440,7 +513,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -456,6 +529,84 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppRevisionContainerAppsRevisionsRestClient.RestartRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Proxies a Functions host call to the function app backed by the container app.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/providers/Microsoft.App/functions/{functionAppName}/invoke</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FunctionsExtension_InvokeFunctionsHost</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionAppName"> Name of the Function App, the extension resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        public virtual async Task<Response<string>> InvokeFunctionsHostFunctionsExtensionAsync(string functionAppName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+
+            using var scope = _functionsExtensionClientDiagnostics.CreateScope("ContainerAppRevisionResource.InvokeFunctionsHostFunctionsExtension");
+            scope.Start();
+            try
+            {
+                var response = await _functionsExtensionRestClient.InvokeFunctionsHostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Proxies a Functions host call to the function app backed by the container app.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/providers/Microsoft.App/functions/{functionAppName}/invoke</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FunctionsExtension_InvokeFunctionsHost</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="functionAppName"> Name of the Function App, the extension resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        public virtual Response<string> InvokeFunctionsHostFunctionsExtension(string functionAppName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+
+            using var scope = _functionsExtensionClientDiagnostics.CreateScope("ContainerAppRevisionResource.InvokeFunctionsHostFunctionsExtension");
+            scope.Start();
+            try
+            {
+                var response = _functionsExtensionRestClient.InvokeFunctionsHost(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken);
                 return response;
             }
             catch (Exception e)

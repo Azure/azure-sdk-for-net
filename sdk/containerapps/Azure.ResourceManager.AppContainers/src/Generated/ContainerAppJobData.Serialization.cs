@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -50,6 +55,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
             }
             if (Optional.IsDefined(EnvironmentId))
             {
@@ -109,6 +119,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
+            ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -117,6 +128,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             SystemData systemData = default;
             ContainerAppJobProvisioningState? provisioningState = default;
+            JobRunningState? runningState = default;
             string environmentId = default;
             string workloadProfileName = default;
             ContainerAppJobConfiguration configuration = default;
@@ -127,6 +139,15 @@ namespace Azure.ResourceManager.AppContainers
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("extendedLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -197,6 +218,15 @@ namespace Azure.ResourceManager.AppContainers
                             provisioningState = new ContainerAppJobProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("runningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningState = new JobRunningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("environmentId"u8))
                         {
                             environmentId = property0.Value.GetString();
@@ -260,8 +290,10 @@ namespace Azure.ResourceManager.AppContainers
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                extendedLocation,
                 identity,
                 provisioningState,
+                runningState,
                 environmentId,
                 workloadProfileName,
                 configuration,
@@ -354,6 +386,21 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extendedLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtendedLocation))
+                {
+                    builder.Append("  extendedLocation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -413,6 +460,21 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    runningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RunningState))
+                {
+                    builder.Append("    runningState: ");
+                    builder.AppendLine($"'{RunningState.Value.ToString()}'");
                 }
             }
 

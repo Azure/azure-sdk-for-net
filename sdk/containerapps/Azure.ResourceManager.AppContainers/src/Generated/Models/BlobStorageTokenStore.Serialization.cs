@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class BlobStorageTokenStore : IUtf8JsonSerializable, IJsonModel<BlobStorageTokenStore>
+    public partial class BlobStorageTokenStore : IUtf8JsonSerializable, IJsonModel<BlobStorageTokenStore>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobStorageTokenStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -35,8 +35,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("sasUrlSettingName"u8);
-            writer.WriteStringValue(SasUrlSettingName);
+            if (Optional.IsDefined(SasUrlSettingName))
+            {
+                writer.WritePropertyName("sasUrlSettingName"u8);
+                writer.WriteStringValue(SasUrlSettingName);
+            }
+            if (Optional.IsDefined(BlobContainerUri))
+            {
+                writer.WritePropertyName("blobContainerUri"u8);
+                writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ManagedIdentityResourceId))
+            {
+                writer.WritePropertyName("managedIdentityResourceId"u8);
+                writer.WriteStringValue(ManagedIdentityResourceId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,6 +93,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string sasUrlSettingName = default;
+            Uri blobContainerUri = default;
+            string clientId = default;
+            string managedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,13 +105,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                     sasUrlSettingName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("blobContainerUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobContainerUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("managedIdentityResourceId"u8))
+                {
+                    managedIdentityResourceId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BlobStorageTokenStore(sasUrlSettingName, serializedAdditionalRawData);
+            return new BlobStorageTokenStore(sasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -123,6 +163,67 @@ namespace Azure.ResourceManager.AppContainers.Models
                     else
                     {
                         builder.AppendLine($"'{SasUrlSettingName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobContainerUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  blobContainerUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BlobContainerUri))
+                {
+                    builder.Append("  blobContainerUri: ");
+                    builder.AppendLine($"'{BlobContainerUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("  clientId: ");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentityResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedIdentityResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedIdentityResourceId))
+                {
+                    builder.Append("  managedIdentityResourceId: ");
+                    if (ManagedIdentityResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ManagedIdentityResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ManagedIdentityResourceId}'");
                     }
                 }
             }
