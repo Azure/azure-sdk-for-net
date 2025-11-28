@@ -2,12 +2,26 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using System;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests
 {
     public class AclManagementTestEnvironment : TestEnvironment
     {
-        public string TestLedgerNamePrefix => GetRecordedVariable("TEST-LEDGER-NAME-PREFIX");
-        public string TestUserObjectId => GetRecordedVariable("TEST-USER-OBJECT-ID");
+        public string TestLedgerNamePrefix
+        {
+            get
+            {
+                try
+                {
+                    return GetRecordedVariable("TEST_LEDGER_NAME_PREFIX");
+                }
+                catch (Exception)
+                {
+                    return "dotnet-sdk-test-ledger-";
+                }
+            }
+        }
+        public string TestUserObjectId => GetRecordedVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
     }
 }
