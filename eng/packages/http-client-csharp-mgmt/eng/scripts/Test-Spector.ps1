@@ -58,7 +58,7 @@ foreach ($specFile in Get-Sorted-Specs) {
     }
 
     Write-Host "Testing $subPath" -ForegroundColor Cyan
-    $command  = "dotnet test $spectorCsproj --filter `"FullyQualifiedName~$testFilter`""
+    $command = "dotnet test $spectorCsproj --filter `"FullyQualifiedName~$testFilter`""
     Invoke $command
     # exit if the testing failed
     if ($LASTEXITCODE -ne 0) {
