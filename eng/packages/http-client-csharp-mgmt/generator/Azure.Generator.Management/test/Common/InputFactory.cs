@@ -390,6 +390,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="discriminatedModels"></param>
         /// <param name="derivedModels"></param>
         /// <param name="decorators"></param>
+        /// <param name="isDynamicModel"></param>
         /// <returns></returns>
         public static InputModelType Model(
             string name,

@@ -67,15 +67,16 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
          **/
         internal static IEnumerable<BlobHierarchyItem> ListBlobsByHierachy(this BlobContainerClient container, string prefix = null, string delimiter = null)
         {
-            IEnumerable<Page<BlobHierarchyItem>> resultSegment = container.GetBlobsByHierarchy(delimiter: delimiter, prefix: prefix).AsPages();
+            throw new NotImplementedException("The Storage library needs to be updated; the current package fails CI builds due to changes with package references.");
+            // IEnumerable<Page<BlobHierarchyItem>> resultSegment = container.GetBlobsByHierarchy(delimiter: delimiter, prefix: prefix).AsPages();
 
-            foreach (Page<BlobHierarchyItem> page in resultSegment)
-            {
-                foreach (BlobHierarchyItem blobHeiracyItem in page.Values)
-                {
-                    yield return blobHeiracyItem;
-                }
-            }
+            // foreach (Page<BlobHierarchyItem> page in resultSegment)
+            // {
+            //     foreach (BlobHierarchyItem blobHeiracyItem in page.Values)
+            //     {
+            //         yield return blobHeiracyItem;
+            //     }
+            // }
         }
     }
 }

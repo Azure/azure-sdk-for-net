@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <RequiredTargetFrameworks>$(AllActiveCurrentTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Description>Microsoft Azure Blob storage support as key store (https://docs.microsoft.com/aspnet/core/security/data-protection/implementation/key-storage-providers).</Description>
     <PackageTags>aspnetcore;dataprotection;azure;blob;key store</PackageTags>

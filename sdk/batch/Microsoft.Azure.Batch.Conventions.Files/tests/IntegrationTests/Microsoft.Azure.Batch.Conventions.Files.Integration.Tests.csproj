@@ -9,6 +9,9 @@
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Stop .NET 10 from flagging the transitive System.Runtime.InteropServices, as it cannot be pruned. -->
+    <NoWarn>$(NoWarn);NU1510</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
@@ -31,12 +34,12 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.Conventions.Files.csproj" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="Files\File\Under\Further\Under\TestText3.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
