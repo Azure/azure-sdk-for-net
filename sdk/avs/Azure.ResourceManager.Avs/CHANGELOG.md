@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag to 'package-2025-09-01'.
 
 ## 1.5.0 (2025-07-02)
 

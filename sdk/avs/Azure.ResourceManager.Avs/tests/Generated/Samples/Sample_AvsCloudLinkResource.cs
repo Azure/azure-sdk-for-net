@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
+            // Generated from example definition: 2025-09-01/CloudLinks_Get.json
             // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CloudLinksDelete()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_Delete.json
+            // Generated from example definition: 2025-09-01/CloudLinks_Delete.json
             // this example is just showing the usage of "CloudLink_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CloudLinksCreateOrUpdate()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_CreateOrUpdate.json
+            // Generated from example definition: 2025-09-01/CloudLinks_CreateOrUpdate.json
             // this example is just showing the usage of "CloudLink_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

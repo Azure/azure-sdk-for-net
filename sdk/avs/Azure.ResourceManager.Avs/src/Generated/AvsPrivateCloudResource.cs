@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -794,6 +794,140 @@ namespace Azure.ResourceManager.Avs
             return GetAvsPureStoragePolicies().Get(storagePolicyName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of MaintenanceResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of MaintenanceResources and their operations over a MaintenanceResource. </returns>
+        public virtual MaintenanceCollection GetMaintenances()
+        {
+            return GetCachedClient(client => new MaintenanceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Maintenance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Maintenance_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceResource>> GetMaintenanceAsync(string maintenanceName, CancellationToken cancellationToken = default)
+        {
+            return await GetMaintenances().GetAsync(maintenanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Maintenance
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Maintenance_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="maintenanceName"> Name of the maintenance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceResource> GetMaintenance(string maintenanceName, CancellationToken cancellationToken = default)
+        {
+            return GetMaintenances().Get(maintenanceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LicenseResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of LicenseResources and their operations over a LicenseResource. </returns>
+        public virtual LicenseCollection GetLicenses()
+        {
+            return GetCachedClient(client => new LicenseCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a License
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>License_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="licenseName"> Name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LicenseResource>> GetLicenseAsync(LicenseName licenseName, CancellationToken cancellationToken = default)
+        {
+            return await GetLicenses().GetAsync(licenseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a License
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>License_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="licenseName"> Name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<LicenseResource> GetLicense(LicenseName licenseName, CancellationToken cancellationToken = default)
+        {
+            return GetLicenses().Get(licenseName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a PrivateCloud
         /// <list type="bullet">
@@ -807,7 +941,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,7 +981,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -887,7 +1021,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -929,7 +1063,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -971,7 +1105,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1017,7 +1151,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1063,7 +1197,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1105,7 +1239,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1147,7 +1281,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1189,7 +1323,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1231,7 +1365,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1269,7 +1403,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1295,6 +1429,82 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
+        /// Get the license for the private cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/getVcfLicense</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_GetVcfLicense</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<VcfLicense>> GetVcfLicenseAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetVcfLicense");
+            scope.Start();
+            try
+            {
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.GetVcfLicenseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the license for the private cloud
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/getVcfLicense</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateClouds_GetVcfLicense</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VcfLicense> GetVcfLicense(CancellationToken cancellationToken = default)
+        {
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetVcfLicense");
+            scope.Start();
+            try
+            {
+                var response = _avsPrivateCloudPrivateCloudsRestClient.GetVcfLicense(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -1307,7 +1517,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1369,7 +1579,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1431,7 +1641,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1488,7 +1698,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1545,7 +1755,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1605,7 +1815,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
