@@ -49,6 +49,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool EnableLiveMetrics { get; set; } = true;
 
         /// <summary>
+        /// Enables or disables filtering logs based on trace sampling decisions.
+        /// </summary>
+        /// <remarks>
+        /// When enabled, only logs associated with sampled traces are exported.
+        /// Logs without trace context are always exported.
+        /// This reduces log volume while maintaining trace-log correlation.
+        /// </remarks>
+        public bool EnableTraceBasedLogsSampler { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
         /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
         /// The default value is 1.0F, indicating that all telemetry items are sampled.
@@ -86,6 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.TracesPerSecond = TracesPerSecond;
             exporterOptions.StorageDirectory = StorageDirectory;
             exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
+            exporterOptions.EnableTraceBasedLogsSampler = EnableTraceBasedLogsSampler;
             if (Transport != null)
             {
                 exporterOptions.Transport = Transport;
@@ -93,20 +104,5 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
             exporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
         }
-
-        //internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
-        //{
-        //    liveMetricsOptions.ConnectionString = ConnectionString;
-        //    liveMetricsOptions.Credential = Credential;
-        //    liveMetricsOptions.EnableLiveMetrics = EnableLiveMetrics;
-
-        //    if (Transport != null)
-        //    {
-        //        liveMetricsOptions.Transport = Transport;
-        //    }
-
-        //    liveMetricsOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
-        //    liveMetricsOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
-        //}
     }
 }

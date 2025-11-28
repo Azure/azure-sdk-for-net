@@ -151,6 +151,7 @@
           "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Basic",
       "apiVersions": [],
@@ -307,6 +308,7 @@
               "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody",
           "apiVersions": [],
@@ -470,6 +472,7 @@
               "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody",
           "apiVersions": [],

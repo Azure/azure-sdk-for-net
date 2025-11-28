@@ -38,7 +38,7 @@ namespace Azure.Generator.Management.Utilities
                 //Find matching parameter from pathFieldsParameters if enclosing type is ResourceCollectionClientProvider
                 else if (enclosingType is ResourceCollectionClientProvider collectionProvider && collectionProvider.TryGetPrivateFieldParameter(parameter, out var matchingField) && matchingField != null)
                 {
-                    arguments.Add(matchingField);
+                    arguments.Add(Convert(matchingField, matchingField.Type, parameter.Type));
                 }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {

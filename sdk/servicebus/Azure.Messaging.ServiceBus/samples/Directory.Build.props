@@ -6,6 +6,7 @@
     <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <TargetFramework>$(LtsTargetFramework)</TargetFramework>
   </PropertyGroup>
 
   <Import Project="..\Directory.Build.props" />

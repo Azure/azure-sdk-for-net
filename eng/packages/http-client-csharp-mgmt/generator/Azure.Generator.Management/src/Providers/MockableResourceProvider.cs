@@ -38,9 +38,26 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resources">the resources in this scope.</param>
         /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
         /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
-        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        private MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
             : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, resourceMethods, nonResourceMethods)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="MockableResourceProvider"/> if there are resources or methods to generate.
+        /// </summary>
+        /// <param name="resourceScope">The scope of this mockable resource.</param>
+        /// <param name="resources">The resources in this scope.</param>
+        /// <param name="resourceMethods">The resource methods that belong to this scope.</param>
+        /// <param name="nonResourceMethods">The non-resource methods that belong to this scope.</param>
+        /// <returns>A new instance of <see cref="MockableResourceProvider"/> if there are resources or methods, otherwise null.</returns>
+        public static MockableResourceProvider? TryCreate(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        {
+            if (resources.Count == 0 && resourceMethods.Count == 0 && nonResourceMethods.Count == 0)
+            {
+                return null;
+            }
+            return new MockableResourceProvider(resourceScope, resources, resourceMethods, nonResourceMethods);
         }
 
         private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
@@ -206,7 +223,7 @@ namespace Azure.Generator.Management.Providers
                     foreach (var p in m.Signature.Parameters)
                     {
                         var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                        if (normalizedName != null)
+                        if (normalizedName != null && normalizedName != p.Name)
                         {
                             p.Update(name: normalizedName);
                             updated = true;
@@ -233,10 +250,19 @@ namespace Azure.Generator.Management.Providers
                         resource.Type,
                         This.As<ArmResource>().Client(),
                         BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
-                yield return new MethodProvider(
+                var method = new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
                     this);
+
+                // Copy the enhanced XML documentation from the singleton resource's Get method if available
+                var getMethod = resource.Methods.FirstOrDefault(m => m.Signature.Name == "Get");
+                if (getMethod?.XmlDocs?.Summary != null)
+                {
+                    method.XmlDocs?.Update(summary: getMethod.XmlDocs.Summary);
+                }
+
+                yield return method;
             }
             else
             {
@@ -278,11 +304,19 @@ namespace Azure.Generator.Management.Providers
                         [.. pathParameters, .. resourceGetMethod.Signature.Parameters],
                         Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
-                    return new MethodProvider(
+                    var method = new MethodProvider(
                         signature,
                         // invoke on a MethodSignature would handle the async extra calls and keyword automatically
                         Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
                         enclosingType);
+
+                    // Copy the enhanced XML documentation from the collection's Get method
+                    if (resourceGetMethod.XmlDocs?.Summary != null)
+                    {
+                        method.XmlDocs?.Update(summary: resourceGetMethod.XmlDocs.Summary);
+                    }
+
+                    return method;
                 }
             }
         }

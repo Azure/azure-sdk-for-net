@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-11-14)
+
+### Features Added
+
+* Added `EnableTraceBasedLogSampler` property to `AzureMonitorOptions` to enable
+  filtering logs based on trace sampling decisions, reducing log volume while
+  maintaining trace-log correlation.
+  ([#53441](https://github.com/Azure/azure-sdk-for-net/pull/53441))
+
+* Update OpenTelemetry dependencies
+  ([#53910](https://github.com/Azure/azure-sdk-for-net/pull/53910))
+  - OpenTelemetry 1.14.0
+  - OpenTelemetry.Extensions.Hosting 1.14.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.14.0
+  - OpenTelemetry.Instrumentation.Http 1.14.0
 
 ## 1.4.0-beta.1 (2025-10-21)
 

@@ -95,6 +95,7 @@ public partial class DomainOwnershipIdentifier : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _ownershipId = DefineProperty<string>("OwnershipId", ["properties", "ownershipId"]);

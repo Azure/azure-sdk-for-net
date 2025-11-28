@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchTask)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -44,40 +44,40 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("lastModified"u8);
-                writer.WriteStringValue(LastModified.Value, "O");
+                writer.WriteStringValue(LastModified, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime.Value, "O");
+                writer.WriteStringValue(CreationTime, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExitConditions))
             {
                 writer.WritePropertyName("exitConditions"u8);
                 writer.WriteObjectValue(ExitConditions, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("stateTransitionTime"u8);
-                writer.WriteStringValue(StateTransitionTime.Value, "O");
+                writer.WriteStringValue(StateTransitionTime, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("previousStateTransitionTime"u8);
                 writer.WriteStringValue(PreviousStateTransitionTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CommandLine))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
@@ -229,12 +229,12 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             Uri url = default;
-            ETag? eTag = default;
-            DateTimeOffset? lastModified = default;
-            DateTimeOffset? creationTime = default;
+            ETag eTag = default;
+            DateTimeOffset lastModified = default;
+            DateTimeOffset creationTime = default;
             ExitConditions exitConditions = default;
-            BatchTaskState? state = default;
-            DateTimeOffset? stateTransitionTime = default;
+            BatchTaskState state = default;
+            DateTimeOffset stateTransitionTime = default;
             BatchTaskState? previousState = default;
             DateTimeOffset? previousStateTransitionTime = default;
             string commandLine = default;
@@ -269,37 +269,21 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -314,19 +298,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new BatchTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stateTransitionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

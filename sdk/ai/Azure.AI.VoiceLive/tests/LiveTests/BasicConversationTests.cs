@@ -63,7 +63,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.AreEqual(sessionCreated.Session.InputAudioEchoCancellation, sessionUpdated.Session?.InputAudioEchoCancellation);
 
             // Flow audio to the service.
-            await SendAudioAsync(session, "weather.wav").ConfigureAwait(false);
+            await SendAudioAsync(session, "What is the weather like?").ConfigureAwait(false);
 
             // Now we get a speech started
             var speechStarted = await GetNextUpdate<SessionUpdateInputAudioBufferSpeechStarted>(updatesEnum).ConfigureAwait(false);
@@ -498,10 +498,10 @@ namespace Azure.AI.VoiceLive.Tests
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
             // Now send audio:
-            await SendAudioAsync(session, "weather.wav").ConfigureAwait(false);
+            await SendAudioAsync(session, "What is the weather like?").ConfigureAwait(false);
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
-            await SendAudioAsync(session, "kws_howoldareyou.wav").ConfigureAwait(false);
+            await SendAudioAsync(session, "Computer, how old are you?").ConfigureAwait(false);
 
             await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
             await GetNextUpdate<SessionUpdateInputAudioBufferCommitted>(updatesEnum).ConfigureAwait(false);
@@ -557,7 +557,7 @@ namespace Azure.AI.VoiceLive.Tests
             await session.ClearInputAudioAsync(TimeoutToken).ConfigureAwait(false);
 
             // Now send audio:
-            await SendAudioAsync(session, "Weather.wav").ConfigureAwait(false);
+            await SendAudioAsync(session, "What is the weather like?").ConfigureAwait(false);
 
             await session.CommitInputAudioAsync(TimeoutToken).ConfigureAwait(false);
             await GetNextUpdate<SessionUpdateInputAudioBufferCommitted>(updatesEnum).ConfigureAwait(false);

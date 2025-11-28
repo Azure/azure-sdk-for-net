@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchPool)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -44,35 +44,35 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("lastModified"u8);
-                writer.WriteStringValue(LastModified.Value, "O");
+                writer.WriteStringValue(LastModified, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime.Value, "O");
+                writer.WriteStringValue(CreationTime, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("stateTransitionTime"u8);
-                writer.WriteStringValue(StateTransitionTime.Value, "O");
+                writer.WriteStringValue(StateTransitionTime, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AllocationState))
             {
@@ -84,7 +84,7 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("allocationStateTransitionTime"u8);
                 writer.WriteStringValue(AllocationStateTransitionTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(VmSize))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
@@ -109,26 +109,15 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTags))
-            {
-                writer.WritePropertyName("resourceTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in ResourceTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("currentDedicatedNodes"u8);
-                writer.WriteNumberValue(CurrentDedicatedNodes.Value);
+                writer.WriteNumberValue(CurrentDedicatedNodes);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentLowPriorityNodes))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("currentLowPriorityNodes"u8);
-                writer.WriteNumberValue(CurrentLowPriorityNodes.Value);
+                writer.WriteNumberValue(CurrentLowPriorityNodes);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetDedicatedNodes))
             {
@@ -174,16 +163,6 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
@@ -245,16 +224,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (Optional.IsDefined(TargetNodeCommunicationMode))
-            {
-                writer.WritePropertyName("targetNodeCommunicationMode"u8);
-                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCommunicationMode))
-            {
-                writer.WritePropertyName("currentNodeCommunicationMode"u8);
-                writer.WriteStringValue(CurrentNodeCommunicationMode.Value.ToString());
-            }
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
@@ -300,20 +269,19 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             Uri url = default;
-            ETag? eTag = default;
-            DateTimeOffset? lastModified = default;
-            DateTimeOffset? creationTime = default;
-            BatchPoolState? state = default;
-            DateTimeOffset? stateTransitionTime = default;
+            ETag eTag = default;
+            DateTimeOffset lastModified = default;
+            DateTimeOffset creationTime = default;
+            BatchPoolState state = default;
+            DateTimeOffset stateTransitionTime = default;
             AllocationState? allocationState = default;
             DateTimeOffset? allocationStateTransitionTime = default;
             string vmSize = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             TimeSpan? resizeTimeout = default;
             IReadOnlyList<ResizeError> resizeErrors = default;
-            IReadOnlyDictionary<string, string> resourceTags = default;
-            int? currentDedicatedNodes = default;
-            int? currentLowPriorityNodes = default;
+            int currentDedicatedNodes = default;
+            int currentLowPriorityNodes = default;
             int? targetDedicatedNodes = default;
             int? targetLowPriorityNodes = default;
             bool? enableAutoScale = default;
@@ -323,7 +291,6 @@ namespace Azure.Compute.Batch
             bool? enableInterNodeCommunication = default;
             NetworkConfiguration networkConfiguration = default;
             BatchStartTask startTask = default;
-            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences = default;
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
@@ -332,8 +299,6 @@ namespace Azure.Compute.Batch
             BatchPoolStatistics stats = default;
             IReadOnlyList<MountConfiguration> mountConfiguration = default;
             BatchPoolIdentity identity = default;
-            BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
-            BatchNodeCommunicationMode? currentNodeCommunicationMode = default;
             UpgradePolicy upgradePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -351,55 +316,31 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new BatchPoolState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stateTransitionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -458,35 +399,13 @@ namespace Azure.Compute.Batch
                     resizeErrors = array;
                     continue;
                 }
-                if (property.NameEquals("resourceTags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    resourceTags = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("currentDedicatedNodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     currentDedicatedNodes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("currentLowPriorityNodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     currentLowPriorityNodes = property.Value.GetInt32();
                     continue;
                 }
@@ -565,20 +484,6 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
                     continue;
                 }
                 if (property.NameEquals("applicationPackageReferences"u8))
@@ -673,24 +578,6 @@ namespace Azure.Compute.Batch
                     identity = BatchPoolIdentity.DeserializeBatchPoolIdentity(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("currentNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    currentNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("upgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -721,7 +608,6 @@ namespace Azure.Compute.Batch
                 virtualMachineConfiguration,
                 resizeTimeout,
                 resizeErrors ?? new ChangeTrackingList<ResizeError>(),
-                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
                 currentDedicatedNodes,
                 currentLowPriorityNodes,
                 targetDedicatedNodes,
@@ -733,7 +619,6 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
@@ -742,8 +627,6 @@ namespace Azure.Compute.Batch
                 stats,
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 identity,
-                targetNodeCommunicationMode,
-                currentNodeCommunicationMode,
                 upgradePolicy,
                 serializedAdditionalRawData);
         }

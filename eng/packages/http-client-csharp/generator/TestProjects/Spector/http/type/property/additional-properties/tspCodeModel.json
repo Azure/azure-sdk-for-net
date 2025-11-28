@@ -3030,6 +3030,7 @@
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Property.AdditionalProperties",
       "apiVersions": [],
@@ -3274,6 +3275,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknown",
           "apiVersions": [],
@@ -3521,6 +3523,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDerived",
           "apiVersions": [],
@@ -3768,6 +3771,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated",
           "apiVersions": [],
@@ -4015,6 +4019,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknown",
           "apiVersions": [],
@@ -4262,6 +4267,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDerived",
           "apiVersions": [],
@@ -4509,6 +4515,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsUnknownDiscriminated",
           "apiVersions": [],
@@ -4756,6 +4763,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsString",
           "apiVersions": [],
@@ -5003,6 +5011,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsString",
           "apiVersions": [],
@@ -5250,6 +5259,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadString",
           "apiVersions": [],
@@ -5497,6 +5507,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsFloat",
           "apiVersions": [],
@@ -5744,6 +5755,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsFloat",
           "apiVersions": [],
@@ -5991,6 +6003,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadFloat",
           "apiVersions": [],
@@ -6238,6 +6251,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModel",
           "apiVersions": [],
@@ -6485,6 +6499,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModel",
           "apiVersions": [],
@@ -6732,6 +6747,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModel",
           "apiVersions": [],
@@ -6979,6 +6995,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsModelArray",
           "apiVersions": [],
@@ -7226,6 +7243,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.IsModelArray",
           "apiVersions": [],
@@ -7473,6 +7491,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadModelArray",
           "apiVersions": [],
@@ -7720,6 +7739,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentString",
           "apiVersions": [],
@@ -7967,6 +7987,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentFloat",
           "apiVersions": [],
@@ -8214,6 +8235,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModel",
           "apiVersions": [],
@@ -8461,6 +8483,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadDifferentModelArray",
           "apiVersions": [],
@@ -8708,6 +8731,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadString",
           "apiVersions": [],
@@ -8955,6 +8979,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadFloat",
           "apiVersions": [],
@@ -9202,6 +9227,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel",
           "apiVersions": [],
@@ -9449,6 +9475,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray",
           "apiVersions": [],
@@ -9696,6 +9723,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.MultipleSpread",
           "apiVersions": [],
@@ -9943,6 +9971,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordUnion",
           "apiVersions": [],
@@ -10190,6 +10219,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion",
           "apiVersions": [],
@@ -10437,6 +10467,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion2",
           "apiVersions": [],
@@ -10684,6 +10715,7 @@
               "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion3",
           "apiVersions": [],

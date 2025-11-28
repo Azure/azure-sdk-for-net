@@ -444,6 +444,7 @@
           "crossLanguageDefinitionId": "Type.Scalar.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Scalar",
       "apiVersions": [],
@@ -706,6 +707,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.String",
           "apiVersions": [],
@@ -971,6 +973,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.Boolean",
           "apiVersions": [],
@@ -1236,6 +1239,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.Unknown",
           "apiVersions": [],
@@ -1576,6 +1580,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.DecimalType",
           "apiVersions": [],
@@ -1916,6 +1921,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type",
           "apiVersions": [],
@@ -2175,6 +2181,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify",
           "apiVersions": [],
@@ -2391,6 +2398,7 @@
               "crossLanguageDefinitionId": "Type.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify",
           "apiVersions": [],

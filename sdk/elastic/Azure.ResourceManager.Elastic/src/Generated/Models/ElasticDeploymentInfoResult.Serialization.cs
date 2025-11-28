@@ -69,6 +69,16 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("marketplaceSaasInfo"u8);
                 writer.WriteObjectValue(MarketplaceSaasInfo, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProjectType))
+            {
+                writer.WritePropertyName("projectType"u8);
+                writer.WriteStringValue(ProjectType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationType))
+            {
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -113,6 +123,8 @@ namespace Azure.ResourceManager.Elastic.Models
             string elasticsearchEndPoint = default;
             Uri deploymentUrl = default;
             MarketplaceSaaSInfo marketplaceSaasInfo = default;
+            string projectType = default;
+            string configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,6 +176,16 @@ namespace Azure.ResourceManager.Elastic.Models
                     marketplaceSaasInfo = MarketplaceSaaSInfo.DeserializeMarketplaceSaaSInfo(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("projectType"u8))
+                {
+                    projectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("configurationType"u8))
+                {
+                    configurationType = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -178,6 +200,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 elasticsearchEndPoint,
                 deploymentUrl,
                 marketplaceSaasInfo,
+                projectType,
+                configurationType,
                 serializedAdditionalRawData);
         }
 

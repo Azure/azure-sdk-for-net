@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.Tests
         public async Task CreateUpdateGetDelete()
         {
             // Create
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastAsia);
             MySqlFlexibleServerCollection serverCollection = rg.GetMySqlFlexibleServers();
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             var data = new MySqlFlexibleServerData(rg.Data.Location)

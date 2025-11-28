@@ -151,7 +151,7 @@ namespace Azure.Core
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePagedIndex(document.RootElement, options);
                     }
@@ -166,8 +166,8 @@ namespace Azure.Core
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PagedIndex"/> from. </param>
         public static explicit operator PagedIndex(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePagedIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

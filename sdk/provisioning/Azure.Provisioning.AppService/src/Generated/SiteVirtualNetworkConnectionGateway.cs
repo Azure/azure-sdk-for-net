@@ -97,7 +97,7 @@ public partial class SiteVirtualNetworkConnectionGateway : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnectionGateway.</param>
     public SiteVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -107,6 +107,7 @@ public partial class SiteVirtualNetworkConnectionGateway : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _vnetName = DefineProperty<string>("VnetName", ["properties", "vnetName"]);
@@ -121,6 +122,11 @@ public partial class SiteVirtualNetworkConnectionGateway : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

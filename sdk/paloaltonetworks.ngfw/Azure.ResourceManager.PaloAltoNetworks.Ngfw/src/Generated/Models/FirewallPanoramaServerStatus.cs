@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallPanoramaServerStatus : IEquatable<FirewallPanoramaServerStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaServerStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FirewallPanoramaServerStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UpValue = "UP";
         private const string DownValue = "DOWN";
 
-        /// <summary> UP. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaServerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FirewallPanoramaServerStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Up. </summary>
         public static FirewallPanoramaServerStatus Up { get; } = new FirewallPanoramaServerStatus(UpValue);
-        /// <summary> DOWN. </summary>
+
+        /// <summary> Gets the Down. </summary>
         public static FirewallPanoramaServerStatus Down { get; } = new FirewallPanoramaServerStatus(DownValue);
+
         /// <summary> Determines if two <see cref="FirewallPanoramaServerStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPanoramaServerStatus left, FirewallPanoramaServerStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPanoramaServerStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPanoramaServerStatus left, FirewallPanoramaServerStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPanoramaServerStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPanoramaServerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPanoramaServerStatus(string value) => new FirewallPanoramaServerStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPanoramaServerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPanoramaServerStatus?(string value) => value == null ? null : new FirewallPanoramaServerStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPanoramaServerStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPanoramaServerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

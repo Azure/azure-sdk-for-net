@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CloudHealth
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.CloudHealth
     /// </summary>
     public partial class HealthModelRelationshipCollection : ArmCollection, IEnumerable<HealthModelRelationshipResource>, IAsyncEnumerable<HealthModelRelationshipResource>
     {
-        private readonly ClientDiagnostics _healthModelRelationshipRelationshipsClientDiagnostics;
-        private readonly RelationshipsRestOperations _healthModelRelationshipRelationshipsRestClient;
+        private readonly ClientDiagnostics _relationshipsClientDiagnostics;
+        private readonly Relationships _relationshipsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelRelationshipCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthModelRelationshipCollection for mocking. </summary>
         protected HealthModelRelationshipCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthModelRelationshipCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthModelRelationshipCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthModelRelationshipCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthModelRelationshipRelationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelRelationshipResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HealthModelRelationshipResource.ResourceType, out string healthModelRelationshipRelationshipsApiVersion);
-            _healthModelRelationshipRelationshipsRestClient = new RelationshipsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelRelationshipRelationshipsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HealthModelRelationshipResource.ResourceType, out string healthModelRelationshipApiVersion);
+            _relationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelRelationshipResource.ResourceType.Namespace, Diagnostics);
+            _relationshipsRestClient = new Relationships(_relationshipsClientDiagnostics, Pipeline, Endpoint, healthModelRelationshipApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HealthModelRelationshipResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationshipName, HealthModelRelationshipData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _healthModelRelationshipRelationshipsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _healthModelRelationshipRelationshipsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(Response.FromValue(new HealthModelRelationshipResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// Create a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HealthModelRelationshipResource> CreateOrUpdate(WaitUntil waitUntil, string relationshipName, HealthModelRelationshipData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _healthModelRelationshipRelationshipsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data, cancellationToken);
-                var uri = _healthModelRelationshipRelationshipsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(Response.FromValue(new HealthModelRelationshipResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HealthModelRelationshipResource>> GetAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Get");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Get");
             scope.Start();
             try
             {
-                var response = await _healthModelRelationshipRelationshipsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HealthModelRelationshipResource> Get(string relationshipName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Get");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Get");
             scope.Start();
             try
             {
-                var response = _healthModelRelationshipRelationshipsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,98 +266,120 @@ namespace Azure.ResourceManager.CloudHealth
         /// List Relationship resources by HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_ListByHealthModel</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_ListByHealthModel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthModelRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthModelRelationshipResource> GetAllAsync(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelRelationshipRelationshipsRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelRelationshipRelationshipsRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthModelRelationshipResource(Client, HealthModelRelationshipData.DeserializeHealthModelRelationshipData(e)), _healthModelRelationshipRelationshipsClientDiagnostics, Pipeline, "HealthModelRelationshipCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List Relationship resources by HealthModel
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_ListByHealthModel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthModelRelationshipResource> GetAll(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HealthModelRelationshipResource> GetAllAsync(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelRelationshipRelationshipsRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelRelationshipRelationshipsRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthModelRelationshipResource(Client, HealthModelRelationshipData.DeserializeHealthModelRelationshipData(e)), _healthModelRelationshipRelationshipsClientDiagnostics, Pipeline, "HealthModelRelationshipCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HealthModelRelationshipData, HealthModelRelationshipResource>(new RelationshipsGetByHealthModelAsyncCollectionResultOfT(
+                _relationshipsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                timestamp,
+                context), data => new HealthModelRelationshipResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// List Relationship resources by HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_ListByHealthModel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HealthModelRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthModelRelationshipResource> GetAll(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HealthModelRelationshipData, HealthModelRelationshipResource>(new RelationshipsGetByHealthModelCollectionResultOfT(
+                _relationshipsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                timestamp,
+                context), data => new HealthModelRelationshipResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a Relationship
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Exists");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _healthModelRelationshipRelationshipsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,39 +390,53 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string relationshipName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Exists");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.Exists");
             scope.Start();
             try
             {
-                var response = _healthModelRelationshipRelationshipsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,41 +447,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HealthModelRelationshipResource>> GetIfExistsAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.GetIfExists");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _healthModelRelationshipRelationshipsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HealthModelRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelRelationshipResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,41 +508,57 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a Relationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Relationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HealthModelRelationshipResource> GetIfExists(string relationshipName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationshipName, nameof(relationshipName));
 
-            using var scope = _healthModelRelationshipRelationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.GetIfExists");
+            using DiagnosticScope scope = _relationshipsClientDiagnostics.CreateScope("HealthModelRelationshipCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _healthModelRelationshipRelationshipsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HealthModelRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HealthModelRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HealthModelRelationshipResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthModelRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +578,7 @@ namespace Azure.ResourceManager.CloudHealth
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HealthModelRelationshipResource> IAsyncEnumerable<HealthModelRelationshipResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeAgricultureServicePatch(document.RootElement, options);
                     }
@@ -213,15 +213,15 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgricultureServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patch"> The <see cref="AgricultureServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AgricultureServicePatch patch)
+        /// <param name="agricultureServicePatch"> The <see cref="AgricultureServicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AgricultureServicePatch agricultureServicePatch)
         {
-            if (patch == null)
+            if (agricultureServicePatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(agricultureServicePatch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

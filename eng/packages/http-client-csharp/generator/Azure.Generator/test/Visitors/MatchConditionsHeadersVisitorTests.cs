@@ -259,7 +259,7 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-                if (method.IsProtocolMethod && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
                 }
@@ -311,7 +311,7 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var method in methodCollection)
             {
                 visitor.VisitScmMethod(method);
-                if (method.IsProtocolMethod && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                if (method.Kind == ScmMethodKind.Protocol && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
                 {
                     protocolMethod = method;
                 }

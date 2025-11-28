@@ -395,6 +395,7 @@
           "crossLanguageDefinitionId": "Versioning.MadeOptional.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.MadeOptional",
       "apiVersions": [

@@ -214,6 +214,7 @@
           "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.Service",
       "apiVersions": [],
@@ -265,6 +266,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Baz",
           "apiVersions": [],
@@ -357,6 +359,7 @@
                   "crossLanguageDefinitionId": "Client.Structure.Service.client"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Client.Structure.Service.Baz.Foo",
               "apiVersions": [],
@@ -451,6 +454,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Qux",
           "apiVersions": [],
@@ -543,6 +547,7 @@
                   "crossLanguageDefinitionId": "Client.Structure.Service.client"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Client.Structure.Service.Qux.Bar",
               "apiVersions": [],
@@ -674,6 +679,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Foo",
           "apiVersions": [],
@@ -803,6 +809,7 @@
               "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.Service.Bar",
           "apiVersions": [],

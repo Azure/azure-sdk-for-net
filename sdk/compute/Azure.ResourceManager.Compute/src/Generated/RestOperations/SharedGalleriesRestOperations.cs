@@ -187,8 +187,6 @@ namespace Azure.ResourceManager.Compute
                         value = SharedGalleryData.DeserializeSharedGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SharedGalleryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -217,8 +215,6 @@ namespace Azure.ResourceManager.Compute
                         value = SharedGalleryData.DeserializeSharedGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SharedGalleryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

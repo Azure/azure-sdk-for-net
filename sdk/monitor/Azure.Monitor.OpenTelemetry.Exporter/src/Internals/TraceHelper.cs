@@ -50,7 +50,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         case TelemetryType.Request:
                             var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
-                            requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+                            // Only set Name if not already set by override attribute
+                            if (string.IsNullOrEmpty(requestData.Name))
+                            {
+                                requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+                            }
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",

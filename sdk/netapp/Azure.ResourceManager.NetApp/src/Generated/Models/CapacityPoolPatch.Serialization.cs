@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Optional.IsDefined(CustomThroughputMibps))
+            if (Optional.IsDefined(CustomThroughputMibpsInt))
             {
-                if (CustomThroughputMibps != null)
+                if (CustomThroughputMibpsInt != null)
                 {
                     writer.WritePropertyName("customThroughputMibps"u8);
-                    writer.WriteNumberValue(CustomThroughputMibps.Value);
+                    writer.WriteNumberValue(CustomThroughputMibpsInt.Value);
                 }
                 else
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
-            float? customThroughputMibps = default;
+            int? customThroughputMibps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Models
                                 customThroughputMibps = null;
                                 continue;
                             }
-                            customThroughputMibps = property0.Value.GetSingle();
+                            customThroughputMibps = property0.Value.GetInt32();
                             continue;
                         }
                     }

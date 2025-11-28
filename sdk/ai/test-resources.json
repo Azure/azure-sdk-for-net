@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "name": {
+        "baseName": {
             "type": "string",
             "defaultValue": "[resourceGroup().name]",
             "metadata": {
@@ -72,7 +72,7 @@
         },
         "defaultProjectName": {
             "type": "string",
-            "defaultValue": "[concat(toLower(parameters('name')), '-ai-defaultproject')]"
+            "defaultValue": "[concat(toLower(parameters('baseName')), '-ai-defaultproject')]"
         },
         "identity": {
             "type": "object",
@@ -146,47 +146,9 @@
         }
     },
     "variables": {
-        "secretValue": "Very secret value",
-        "testKeyVaultName": "[parameters('name')]",
-        "aiServicesName": "[concat(parameters('name'), '-ai')]"
+        "aiServicesName": "[concat(parameters('baseName'), '-ai')]"
     },
     "resources": [
-        {
-            "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2016-10-01",
-            "name": "[variables('testKeyVaultName')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "sku": {
-                    "family": "A",
-                    "name": "premium"
-                },
-                "tenantId": "[parameters('tenantId')]",
-                "accessPolicies": [
-                    {
-                        "tenantId": "[parameters('tenantId')]",
-                        "objectId": "[parameters('testApplicationOid')]",
-                        "permissions": {
-                            "secrets": [
-                                "get"
-                            ]
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "name": "[concat(variables('testKeyVaultName'), '/TestSecret')]",
-            "apiVersion": "2016-10-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', variables('testKeyVaultName'))]"
-            ],
-            "properties": {
-                "value": "[variables('secretValue')]"
-            }
-        },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
@@ -588,18 +550,6 @@
         }
     ],
     "outputs": {
-        "KEYVAULT_NAME": {
-            "type": "string",
-            "value": "[variables('testKeyVaultName')]"
-        },
-        "KEYVAULT_URL": {
-            "type": "string",
-            "value": "[reference(variables('testKeyVaultName')).vaultUri]"
-        },
-        "KEYVAULT_SECRET": {
-            "type": "string",
-            "value": "[variables('secretValue')]"
-        },
         "AI_SERVICES_NAME": {
             "type": "string",
             "value": "[variables('aiServicesName')]"

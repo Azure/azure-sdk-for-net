@@ -260,6 +260,7 @@
           "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Enum.Fixed",
       "apiVersions": [],
@@ -625,6 +626,7 @@
               "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Enum.Fixed.String",
           "apiVersions": [],

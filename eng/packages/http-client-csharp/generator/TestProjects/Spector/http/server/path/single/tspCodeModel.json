@@ -73,6 +73,7 @@
           "crossLanguageDefinitionId": "Server.Path.Single.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Path.Single",
       "apiVersions": []

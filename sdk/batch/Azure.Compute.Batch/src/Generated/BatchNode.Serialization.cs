@@ -35,77 +35,82 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Uri))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(State))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.ToString());
             }
-            if (Optional.IsDefined(SchedulingState))
+            if (options.Format != "W" && Optional.IsDefined(SchedulingState))
             {
                 writer.WritePropertyName("schedulingState"u8);
                 writer.WriteStringValue(SchedulingState.Value.ToString());
             }
-            if (Optional.IsDefined(StateTransitionTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("stateTransitionTime"u8);
-                writer.WriteStringValue(StateTransitionTime.Value, "O");
+                writer.WriteStringValue(StateTransitionTime, "O");
             }
-            if (Optional.IsDefined(LastBootTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("lastBootTime"u8);
-                writer.WriteStringValue(LastBootTime.Value, "O");
+                writer.WriteStringValue(LastBootTime, "O");
             }
-            if (Optional.IsDefined(AllocationTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("allocationTime"u8);
-                writer.WriteStringValue(AllocationTime.Value, "O");
+                writer.WriteStringValue(AllocationTime, "O");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IpAddress.ToString());
             }
-            if (Optional.IsDefined(AffinityId))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("ipv6Address"u8);
+                writer.WriteStringValue(Ipv6Address.ToString());
+            }
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("affinityId"u8);
                 writer.WriteStringValue(AffinityId);
             }
-            if (Optional.IsDefined(VmSize))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(TotalTasksRun))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("totalTasksRun"u8);
-                writer.WriteNumberValue(TotalTasksRun.Value);
+                writer.WriteNumberValue(TotalTasksRun);
             }
-            if (Optional.IsDefined(RunningTasksCount))
+            if (options.Format != "W" && Optional.IsDefined(RunningTasksCount))
             {
                 writer.WritePropertyName("runningTasksCount"u8);
                 writer.WriteNumberValue(RunningTasksCount.Value);
             }
-            if (Optional.IsDefined(RunningTaskSlotsCount))
+            if (options.Format != "W" && Optional.IsDefined(RunningTaskSlotsCount))
             {
                 writer.WritePropertyName("runningTaskSlotsCount"u8);
                 writer.WriteNumberValue(RunningTaskSlotsCount.Value);
             }
-            if (Optional.IsDefined(TotalTasksSucceeded))
+            if (options.Format != "W" && Optional.IsDefined(TotalTasksSucceeded))
             {
                 writer.WritePropertyName("totalTasksSucceeded"u8);
                 writer.WriteNumberValue(TotalTasksSucceeded.Value);
             }
-            if (Optional.IsCollectionDefined(RecentTasks))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecentTasks))
             {
                 writer.WritePropertyName("recentTasks"u8);
                 writer.WriteStartArray();
@@ -115,27 +120,17 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartTask))
+            if (options.Format != "W" && Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            if (Optional.IsDefined(StartTaskInfo))
+            if (options.Format != "W" && Optional.IsDefined(StartTaskInfo))
             {
                 writer.WritePropertyName("startTaskInfo"u8);
                 writer.WriteObjectValue(StartTaskInfo, options);
             }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -145,22 +140,22 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDedicated))
+            if (options.Format != "W" && Optional.IsDefined(IsDedicated))
             {
                 writer.WritePropertyName("isDedicated"u8);
                 writer.WriteBooleanValue(IsDedicated.Value);
             }
-            if (Optional.IsDefined(EndpointConfiguration))
+            if (options.Format != "W" && Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration, options);
             }
-            if (Optional.IsDefined(NodeAgentInfo))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("nodeAgentInfo"u8);
                 writer.WriteObjectValue(NodeAgentInfo, options);
             }
-            if (Optional.IsDefined(VirtualMachineInfo))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("virtualMachineInfo"u8);
                 writer.WriteObjectValue(VirtualMachineInfo, options);
@@ -204,22 +199,22 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             Uri url = default;
-            BatchNodeState? state = default;
+            BatchNodeState state = default;
             SchedulingState? schedulingState = default;
-            DateTimeOffset? stateTransitionTime = default;
-            DateTimeOffset? lastBootTime = default;
-            DateTimeOffset? allocationTime = default;
+            DateTimeOffset stateTransitionTime = default;
+            DateTimeOffset lastBootTime = default;
+            DateTimeOffset allocationTime = default;
             IPAddress ipAddress = default;
+            IPAddress ipv6Address = default;
             string affinityId = default;
             string vmSize = default;
-            int? totalTasksRun = default;
+            int totalTasksRun = default;
             int? runningTasksCount = default;
             int? runningTaskSlotsCount = default;
             int? totalTasksSucceeded = default;
             IReadOnlyList<BatchTaskInfo> recentTasks = default;
             BatchStartTask startTask = default;
             BatchStartTaskInfo startTaskInfo = default;
-            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchNodeError> errors = default;
             bool? isDedicated = default;
             BatchNodeEndpointConfiguration endpointConfiguration = default;
@@ -236,19 +231,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new BatchNodeState(property.Value.GetString());
                     continue;
                 }
@@ -263,38 +250,27 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stateTransitionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastBootTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastBootTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("allocationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     allocationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     ipAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipv6Address"u8))
+                {
+                    ipv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityId"u8))
@@ -309,10 +285,6 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("totalTasksRun"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     totalTasksRun = property.Value.GetInt32();
                     continue;
                 }
@@ -375,20 +347,6 @@ namespace Azure.Compute.Batch
                     startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -423,19 +381,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("nodeAgentInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     nodeAgentInfo = BatchNodeAgentInfo.DeserializeBatchNodeAgentInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     virtualMachineInfo = VirtualMachineInfo.DeserializeVirtualMachineInfo(property.Value, options);
                     continue;
                 }
@@ -454,6 +404,7 @@ namespace Azure.Compute.Batch
                 lastBootTime,
                 allocationTime,
                 ipAddress,
+                ipv6Address,
                 affinityId,
                 vmSize,
                 totalTasksRun,
@@ -463,7 +414,6 @@ namespace Azure.Compute.Batch
                 recentTasks ?? new ChangeTrackingList<BatchTaskInfo>(),
                 startTask,
                 startTaskInfo,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 errors ?? new ChangeTrackingList<BatchNodeError>(),
                 isDedicated,
                 endpointConfiguration,

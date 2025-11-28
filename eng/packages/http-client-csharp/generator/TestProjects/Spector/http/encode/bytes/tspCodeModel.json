@@ -625,6 +625,7 @@
           "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Bytes",
       "apiVersions": [],
@@ -987,6 +988,7 @@
               "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.Query",
           "apiVersions": [],
@@ -1657,6 +1659,7 @@
               "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.Property",
           "apiVersions": [],
@@ -2023,6 +2026,7 @@
               "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.Header",
           "apiVersions": [],
@@ -2670,6 +2674,7 @@
               "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.RequestBody",
           "apiVersions": [],
@@ -3188,6 +3193,7 @@
               "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody",
           "apiVersions": [],

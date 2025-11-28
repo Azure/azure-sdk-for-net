@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PlanetaryComputer.Models;
 
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
     [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogPatch))]
     [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogProperties))]
     [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPlanetaryComputerContext : ModelReaderWriterContext

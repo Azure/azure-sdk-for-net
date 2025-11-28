@@ -10,12 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient;
-using _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient;
+using Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient;
 
-namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation
+namespace Specs.Azure.ClientGenerator.Core.ClientLocation
 {
     public partial class ClientLocationClient
     {

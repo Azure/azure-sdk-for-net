@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
-    public partial class SqlMITargetProperties : IUtf8JsonSerializable, IJsonModel<SqlMITargetProperties>
+    /// <summary> The properties specific to Azure SQL Managed Instance targets. </summary>
+    public partial class SqlMITargetProperties : DatabaseWatcherTargetProperties, IJsonModel<SqlMITargetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMITargetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SqlMITargetProperties"/> for deserialization. </summary>
+        internal SqlMITargetProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlMITargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlMITargetProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sqlMiResourceId"u8);
             writer.WriteStringValue(SqlMiResourceId);
@@ -49,116 +55,122 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
-        SqlMITargetProperties IJsonModel<SqlMITargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlMITargetProperties IJsonModel<SqlMITargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SqlMITargetProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseWatcherTargetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlMITargetProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlMITargetProperties(document.RootElement, options);
         }
 
-        internal static SqlMITargetProperties DeserializeSqlMITargetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlMITargetProperties DeserializeSqlMITargetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier sqlMiResourceId = default;
-            int? connectionTcpPort = default;
-            bool? readIntent = default;
-            string targetType = default;
+            string targetType = "SqlMi";
             TargetAuthenticationType targetAuthenticationType = default;
             TargetAuthenticationVaultSecret targetVault = default;
             string connectionServerName = default;
             DatabaseWatcherResourceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceIdentifier sqlMiResourceId = default;
+            int? connectionTcpPort = default;
+            bool? readIntent = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlMiResourceId"u8))
+                if (prop.NameEquals("targetType"u8))
                 {
-                    sqlMiResourceId = new ResourceIdentifier(property.Value.GetString());
+                    targetType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionTcpPort"u8))
+                if (prop.NameEquals("targetAuthenticationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    targetAuthenticationType = new TargetAuthenticationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("targetVault"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionTcpPort = property.Value.GetInt32();
+                    targetVault = TargetAuthenticationVaultSecret.DeserializeTargetAuthenticationVaultSecret(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("readIntent"u8))
+                if (prop.NameEquals("connectionServerName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    connectionServerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    readIntent = property.Value.GetBoolean();
+                    provisioningState = new DatabaseWatcherResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetType"u8))
+                if (prop.NameEquals("sqlMiResourceId"u8))
                 {
-                    targetType = property.Value.GetString();
+                    sqlMiResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAuthenticationType"u8))
+                if (prop.NameEquals("connectionTcpPort"u8))
                 {
-                    targetAuthenticationType = new TargetAuthenticationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetVault"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetVault = TargetAuthenticationVaultSecret.DeserializeTargetAuthenticationVaultSecret(property.Value, options);
+                    connectionTcpPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("connectionServerName"u8))
+                if (prop.NameEquals("readIntent"u8))
                 {
-                    connectionServerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DatabaseWatcherResourceProvisioningState(property.Value.GetString());
+                    readIntent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlMITargetProperties(
                 targetType,
                 targetAuthenticationType,
                 targetVault,
                 connectionServerName,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 sqlMiResourceId,
                 connectionTcpPort,
                 readIntent);
         }
 
-        BinaryData IPersistableModel<SqlMITargetProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlMITargetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -168,15 +180,20 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
-        SqlMITargetProperties IPersistableModel<SqlMITargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlMITargetProperties IPersistableModel<SqlMITargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlMITargetProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseWatcherTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlMITargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlMITargetProperties(document.RootElement, options);
                     }
                 default:
@@ -184,6 +201,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SqlMITargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -13,7 +12,7 @@ namespace Azure.AI.DocumentIntelligence
     // given that they are input-only models that can be directly instantiated by users. For this reason we're
     // suppressing their generation here.
 
-    [CodeGenModel("AIDocumentIntelligenceModelFactory")]
+    [CodeGenType("AIDocumentIntelligenceModelFactory")]
     [CodeGenSuppress("AnalyzeDocumentOptions", typeof(Uri), typeof(BinaryData))]
     [CodeGenSuppress("ClassifierDocumentTypeDetails", typeof(ContentSourceKind?), typeof(BlobContentSource), typeof(BlobFileListContentSource))]
     [CodeGenSuppress("ClassifyDocumentOptions", typeof(Uri), typeof(BinaryData))]
@@ -72,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence
                 languages?.ToList(),
                 documents?.ToList(),
                 warnings?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         // CUSTOM CODE NOTE: the AnalyzedDocument and DocumentField methods must be added manually to
@@ -98,7 +97,7 @@ namespace Azure.AI.DocumentIntelligence
                 spans?.ToList(),
                 fields,
                 confidence,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentField"/>. </summary>
@@ -152,7 +151,7 @@ namespace Azure.AI.DocumentIntelligence
                 boundingRegions?.ToList(),
                 spans?.ToList(),
                 confidence,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFieldDictionary"/>. </summary>

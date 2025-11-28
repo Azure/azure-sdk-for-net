@@ -70,8 +70,8 @@ namespace Azure.Compute.Batch
         /// <param name="previousState"> The previous state of the Job. This property is not set if the Job is in its initial Active state. </param>
         /// <param name="previousStateTransitionTime"> The time at which the Job entered its previous state. This property is not set if the Job is in its initial Active state. </param>
         /// <param name="priority"> The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0. </param>
-        /// <param name="allowTaskPreemption"> Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </param>
-        /// <param name="maxParallelTasks"> The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </param>
+        /// <param name="allowTaskPreemption"> Whether Tasks in this job can be preempted by other high priority jobs. (This property is not available by default. Please contact support for more information) If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </param>
+        /// <param name="maxParallelTasks"> The maximum number of tasks that can be executed in parallel for the job. (This property is not available by default. Please contact support for more information) The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </param>
         /// <param name="constraints"> The execution constraints for the Job. </param>
         /// <param name="jobManagerTask"> Details of a Job Manager Task to be launched when the Job is started. </param>
         /// <param name="jobPreparationTask"> The Job Preparation Task. The Job Preparation Task is a special Task run on each Compute Node before any other Task of the Job. </param>
@@ -80,12 +80,12 @@ namespace Azure.Compute.Batch
         /// <param name="poolInfo"> The Pool settings associated with the Job. </param>
         /// <param name="allTasksCompleteMode"> The action the Batch service should take when all Tasks in the Job are in the completed state. The default is noaction. </param>
         /// <param name="taskFailureMode"> The action the Batch service should take when any Task in the Job fails. A Task is considered to have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </param>
-        /// <param name="networkConfiguration"> The network configuration for the Job. </param>
+        /// <param name="networkConfiguration"> (This property is not available by default. Please contact support for more information) The network configuration for the Job. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="executionInfo"> The execution information for the Job. </param>
         /// <param name="jobStatistics"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobState? state, DateTimeOffset? stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<BatchMetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics jobStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, BatchJobState state, DateTimeOffset stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<BatchMetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics jobStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -130,24 +130,24 @@ namespace Azure.Compute.Batch
         /// <summary> The URL of the Job. </summary>
         public Uri Uri { get; }
         /// <summary> The ETag of the Job. This is an opaque string. You can use it to detect whether the Job has changed between requests. In particular, you can be pass the ETag when updating a Job to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </summary>
-        public ETag? ETag { get; }
+        public ETag ETag { get; }
         /// <summary> The last modified time of the Job. This is the last time at which the Job level data, such as the Job state or priority, changed. It does not factor in task-level changes such as adding new Tasks or Tasks changing state. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset LastModified { get; }
         /// <summary> The creation time of the Job. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset CreationTime { get; }
         /// <summary> The current state of the Job. </summary>
-        public BatchJobState? State { get; }
+        public BatchJobState State { get; }
         /// <summary> The time at which the Job entered its current state. </summary>
-        public DateTimeOffset? StateTransitionTime { get; }
+        public DateTimeOffset StateTransitionTime { get; }
         /// <summary> The previous state of the Job. This property is not set if the Job is in its initial Active state. </summary>
         public BatchJobState? PreviousState { get; }
         /// <summary> The time at which the Job entered its previous state. This property is not set if the Job is in its initial Active state. </summary>
         public DateTimeOffset? PreviousStateTransitionTime { get; }
         /// <summary> The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0. </summary>
         public int? Priority { get; set; }
-        /// <summary> Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </summary>
+        /// <summary> Whether Tasks in this job can be preempted by other high priority jobs. (This property is not available by default. Please contact support for more information) If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. </summary>
         public bool? AllowTaskPreemption { get; set; }
-        /// <summary> The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </summary>
+        /// <summary> The maximum number of tasks that can be executed in parallel for the job. (This property is not available by default. Please contact support for more information) The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. </summary>
         public int? MaxParallelTasks { get; set; }
         /// <summary> The execution constraints for the Job. </summary>
         public BatchJobConstraints Constraints { get; set; }
@@ -165,7 +165,7 @@ namespace Azure.Compute.Batch
         public BatchAllTasksCompleteMode? AllTasksCompleteMode { get; set; }
         /// <summary> The action the Batch service should take when any Task in the Job fails. A Task is considered to have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </summary>
         public BatchTaskFailureMode? TaskFailureMode { get; }
-        /// <summary> The network configuration for the Job. </summary>
+        /// <summary> (This property is not available by default. Please contact support for more information) The network configuration for the Job. </summary>
         public BatchJobNetworkConfiguration NetworkConfiguration { get; }
         /// <summary> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
         public IList<BatchMetadataItem> Metadata { get; }

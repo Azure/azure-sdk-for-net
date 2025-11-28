@@ -115,6 +115,7 @@
           "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json",
       "apiVersions": [],
@@ -353,6 +354,7 @@
               "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property",
           "apiVersions": [],

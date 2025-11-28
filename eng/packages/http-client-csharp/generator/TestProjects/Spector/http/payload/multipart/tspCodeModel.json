@@ -1163,11 +1163,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "filename",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "contentType": {
@@ -1196,11 +1196,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "contentType",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "defaultContentTypes": [
@@ -1394,11 +1394,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "filename",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "contentType": {
@@ -1435,11 +1435,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "contentType",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "defaultContentTypes": [
@@ -1584,11 +1584,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "filename",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "contentType": {
@@ -1619,11 +1619,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "contentType",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "defaultContentTypes": [
@@ -1705,11 +1705,11 @@
                   16
                 ],
                 "access": "public",
+                "flatten": false,
                 "kind": "property",
                 "discriminator": false,
                 "serializedName": "contentType",
                 "isMultipartFileInput": false,
-                "flatten": false,
                 "serializationOptions": {}
               },
               "defaultContentTypes": [
@@ -1764,6 +1764,7 @@
           "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.MultiPart",
       "apiVersions": [],
@@ -2598,6 +2599,7 @@
               "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.MultiPart.FormData",
           "apiVersions": [],
@@ -2757,6 +2759,7 @@
                   "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
                 }
               ],
+              "initializedBy": 0,
               "decorators": [],
               "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts",
               "apiVersions": [],
@@ -3142,6 +3145,7 @@
                       "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType",
                   "apiVersions": [],
@@ -3301,6 +3305,7 @@
                       "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
                     }
                   ],
+                  "initializedBy": 0,
                   "decorators": [],
                   "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString",
                   "apiVersions": [],

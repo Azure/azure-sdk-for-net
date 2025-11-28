@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> Client options for EasmClient. </summary>
+    /// <summary> Client options for <see cref="EasmClient"/>. </summary>
     public partial class EasmClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_10_01_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-03-01-preview". </summary>
-            V2023_03_01_Preview = 1,
-            /// <summary> Service version "2024-03-01-preview". </summary>
-            V2024_03_01_Preview = 2,
-            /// <summary> Service version "2024-10-01-preview". </summary>
-            V2024_10_01_Preview = 3,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of EasmClientOptions. </summary>
+        /// <summary> Initializes a new instance of EasmClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public EasmClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -38,6 +26,20 @@ namespace Azure.Analytics.Defender.Easm
                 ServiceVersion.V2024_10_01_Preview => "2024-10-01-preview",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Version 2023-03-01-preview. </summary>
+            V2023_03_01_Preview = 1,
+            /// <summary> Version 2024-03-01-preview. </summary>
+            V2024_03_01_Preview = 2,
+            /// <summary> Version 2024-10-01-preview. </summary>
+            V2024_10_01_Preview = 3
         }
     }
 }

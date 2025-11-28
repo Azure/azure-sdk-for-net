@@ -160,6 +160,7 @@
           "crossLanguageDefinitionId": "Authentication.OAuth2.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.OAuth2",
       "apiVersions": []

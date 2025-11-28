@@ -253,6 +253,7 @@
           "crossLanguageDefinitionId": "Encode.Numeric.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Numeric",
       "apiVersions": [],
@@ -764,6 +765,7 @@
               "crossLanguageDefinitionId": "Encode.Numeric.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Numeric.Property",
           "apiVersions": [],

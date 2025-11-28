@@ -13,8 +13,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(AzureKeyCredential))]
     [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridSenderClientOptions))]
-    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridSenderClientOptions))]
+    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridNamespacesClientOptions))]
+    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridNamespacesClientOptions))]
     public partial class EventGridSenderClient
     {
         private readonly string _topicName;

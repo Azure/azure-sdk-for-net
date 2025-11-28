@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation.
-    /// Serialized Name: DomainValidationState
-    /// </summary>
+    /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </summary>
     public readonly partial struct DomainValidationState : IEquatable<DomainValidationState>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RefreshingValidationTokenValue = "RefreshingValidationToken";
         private const string InternalErrorValue = "InternalError";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: DomainValidationState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static DomainValidationState Unknown { get; } = new DomainValidationState(UnknownValue);
-        /// <summary>
-        /// Submitting
-        /// Serialized Name: DomainValidationState.Submitting
-        /// </summary>
+        /// <summary> Submitting. </summary>
         public static DomainValidationState Submitting { get; } = new DomainValidationState(SubmittingValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: DomainValidationState.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static DomainValidationState Pending { get; } = new DomainValidationState(PendingValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: DomainValidationState.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static DomainValidationState Rejected { get; } = new DomainValidationState(RejectedValue);
-        /// <summary>
-        /// TimedOut
-        /// Serialized Name: DomainValidationState.TimedOut
-        /// </summary>
+        /// <summary> TimedOut. </summary>
         public static DomainValidationState TimedOut { get; } = new DomainValidationState(TimedOutValue);
-        /// <summary>
-        /// PendingRevalidation
-        /// Serialized Name: DomainValidationState.PendingRevalidation
-        /// </summary>
+        /// <summary> PendingRevalidation. </summary>
         public static DomainValidationState PendingRevalidation { get; } = new DomainValidationState(PendingRevalidationValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: DomainValidationState.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static DomainValidationState Approved { get; } = new DomainValidationState(ApprovedValue);
-        /// <summary>
-        /// RefreshingValidationToken
-        /// Serialized Name: DomainValidationState.RefreshingValidationToken
-        /// </summary>
+        /// <summary> RefreshingValidationToken. </summary>
         public static DomainValidationState RefreshingValidationToken { get; } = new DomainValidationState(RefreshingValidationTokenValue);
-        /// <summary>
-        /// InternalError
-        /// Serialized Name: DomainValidationState.InternalError
-        /// </summary>
+        /// <summary> InternalError. </summary>
         public static DomainValidationState InternalError { get; } = new DomainValidationState(InternalErrorValue);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are the same. </summary>
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);

@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.Payload.Pageable
+namespace Specs.Azure.Payload.Pageable
 {
     public partial class PageableClientOptions : ClientOptions
     {

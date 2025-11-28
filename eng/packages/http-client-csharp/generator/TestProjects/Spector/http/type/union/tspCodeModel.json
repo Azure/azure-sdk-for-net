@@ -1982,6 +1982,7 @@
           "crossLanguageDefinitionId": "Type.Union.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Union",
       "apiVersions": [],
@@ -2221,6 +2222,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringsOnly",
           "apiVersions": [],
@@ -2463,6 +2465,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringExtensible",
           "apiVersions": [],
@@ -2705,6 +2708,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed",
           "apiVersions": [],
@@ -2947,6 +2951,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.IntsOnly",
           "apiVersions": [],
@@ -3189,6 +3194,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.FloatsOnly",
           "apiVersions": [],
@@ -3431,6 +3437,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.ModelsOnly",
           "apiVersions": [],
@@ -3673,6 +3680,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.EnumsOnly",
           "apiVersions": [],
@@ -3915,6 +3923,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.StringAndArray",
           "apiVersions": [],
@@ -4157,6 +4166,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.MixedLiterals",
           "apiVersions": [],
@@ -4399,6 +4409,7 @@
               "crossLanguageDefinitionId": "Type.Union.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Union.MixedTypes",
           "apiVersions": [],

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Specifies the type of threshold criteria. </summary>
+    /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
     internal readonly partial struct CriterionType : IEquatable<CriterionType>
     {
         private readonly string _value;

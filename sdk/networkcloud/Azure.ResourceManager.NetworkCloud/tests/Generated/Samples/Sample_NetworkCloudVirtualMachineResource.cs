@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // invoke the operation
             VirtualMachineAssignRelayContent content = new VirtualMachineAssignRelayContent(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.HybridCompute/machines/machineName"))
             {
-                RelayType = RelayType.Platform,
+                RelayType = VirtualMachineAssignRelayType.Platform,
             };
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVirtualMachine.AssignRelayAsync(WaitUntil.Completed, content: content);
             NetworkCloudOperationStatusResult result = lro.Value;

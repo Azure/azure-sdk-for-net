@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
-    internal class IspCacheNodeOperationSource : IOperationSource<IspCacheNodeResource>
+    /// <summary></summary>
+    internal partial class IspCacheNodeOperationSource : IOperationSource<IspCacheNodeResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal IspCacheNodeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         IspCacheNodeResource IOperationSource<IspCacheNodeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IspCacheNodeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedCacheContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            IspCacheNodeData data = IspCacheNodeData.DeserializeIspCacheNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new IspCacheNodeResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IspCacheNodeResource> IOperationSource<IspCacheNodeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IspCacheNodeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedCacheContext.Default);
-            return await Task.FromResult(new IspCacheNodeResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            IspCacheNodeData data = IspCacheNodeData.DeserializeIspCacheNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IspCacheNodeResource(_client, data);
         }
     }
 }

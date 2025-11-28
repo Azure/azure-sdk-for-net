@@ -53,12 +53,12 @@ public partial class AppServiceEnvironment : ProvisionableResource
     /// <summary>
     /// Full view of the custom domain suffix configuration for ASEv3.
     /// </summary>
-    public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration 
+    public CustomDnsSuffixConfiguration CustomDnsSuffixConfig 
     {
-        get { Initialize(); return _customDnsSuffixConfiguration!; }
-        set { Initialize(); AssignOrReplace(ref _customDnsSuffixConfiguration, value); }
+        get { Initialize(); return _customDnsSuffixConfig!; }
+        set { Initialize(); AssignOrReplace(ref _customDnsSuffixConfig, value); }
     }
-    private CustomDnsSuffixConfigurationData? _customDnsSuffixConfiguration;
+    private CustomDnsSuffixConfiguration? _customDnsSuffixConfig;
 
     /// <summary>
     /// Dedicated Host Count.
@@ -146,12 +146,12 @@ public partial class AppServiceEnvironment : ProvisionableResource
     /// <summary>
     /// Full view of networking configuration for an ASE.
     /// </summary>
-    public AseV3NetworkingConfigurationData NetworkingConfiguration 
+    public AseV3NetworkingConfiguration NetworkingConfig 
     {
-        get { Initialize(); return _networkingConfiguration!; }
-        set { Initialize(); AssignOrReplace(ref _networkingConfiguration, value); }
+        get { Initialize(); return _networkingConfig!; }
+        set { Initialize(); AssignOrReplace(ref _networkingConfig, value); }
     }
-    private AseV3NetworkingConfigurationData? _networkingConfiguration;
+    private AseV3NetworkingConfiguration? _networkingConfig;
 
     /// <summary>
     /// Gets or sets the Tags.
@@ -289,7 +289,7 @@ public partial class AppServiceEnvironment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceEnvironment.</param>
     public AppServiceEnvironment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -298,10 +298,11 @@ public partial class AppServiceEnvironment : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _clusterSettings = DefineListProperty<AppServiceNameValuePair>("ClusterSettings", ["properties", "clusterSettings"]);
-        _customDnsSuffixConfiguration = DefineModelProperty<CustomDnsSuffixConfigurationData>("CustomDnsSuffixConfiguration", ["properties", "customDnsSuffixConfiguration"]);
+        _customDnsSuffixConfig = DefineModelProperty<CustomDnsSuffixConfiguration>("CustomDnsSuffixConfig", ["properties", "customDnsSuffixConfiguration"], new CustomDnsSuffixConfiguration("customDnsSuffixConfiguration"));
         _dedicatedHostCount = DefineProperty<int>("DedicatedHostCount", ["properties", "dedicatedHostCount"]);
         _dnsSuffix = DefineProperty<string>("DnsSuffix", ["properties", "dnsSuffix"]);
         _frontEndScaleFactor = DefineProperty<int>("FrontEndScaleFactor", ["properties", "frontEndScaleFactor"]);
@@ -310,7 +311,7 @@ public partial class AppServiceEnvironment : ProvisionableResource
         _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _multiSize = DefineProperty<string>("MultiSize", ["properties", "multiSize"]);
-        _networkingConfiguration = DefineModelProperty<AseV3NetworkingConfigurationData>("NetworkingConfiguration", ["properties", "networkingConfiguration"]);
+        _networkingConfig = DefineModelProperty<AseV3NetworkingConfiguration>("NetworkingConfig", ["properties", "networkingConfiguration"], new AseV3NetworkingConfiguration("aseV3NetworkingConfiguration"));
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _upgradePreference = DefineProperty<AppServiceEnvironmentUpgradePreference>("UpgradePreference", ["properties", "upgradePreference"]);
         _userWhitelistedIPRanges = DefineListProperty<string>("UserWhitelistedIPRanges", ["properties", "userWhitelistedIpRanges"]);
@@ -324,13 +325,21 @@ public partial class AppServiceEnvironment : ProvisionableResource
         _status = DefineProperty<HostingEnvironmentStatus>("Status", ["properties", "status"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _upgradeAvailability = DefineProperty<AppServiceEnvironmentUpgradeAvailability>("UpgradeAvailability", ["properties", "upgradeAvailability"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported AppServiceEnvironment resource versions.
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

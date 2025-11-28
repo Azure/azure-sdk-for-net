@@ -238,6 +238,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar",
       "apiVersions": [
@@ -887,6 +888,7 @@
               "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar",
           "apiVersions": [

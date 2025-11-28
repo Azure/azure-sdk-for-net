@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CertificateProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> CertificateProfiles_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> CertificateProfiles_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RevokeCertificate. </description>
+        /// <description> CertificateProfiles_RevokeCertificate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RevokeCertificate. </description>
+        /// <description> CertificateProfiles_RevokeCertificate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> CertificateProfiles_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> CertificateProfiles_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -806,19 +806,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="bareMetalMachineRunDataExtractsParameters"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(bareMetalMachineRunDataExtractsParameters, nameof(bareMetalMachineRunDataExtractsParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -852,19 +852,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="bareMetalMachineRunDataExtractsParameters"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsParameters"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtracts(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtracts(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(bareMetalMachineRunDataExtractsParameters, nameof(bareMetalMachineRunDataExtractsParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtracts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtracts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -898,19 +898,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="bareMetalMachineRunDataExtractsRestrictedParameters"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsRestrictedParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsRestrictedAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsRestrictedAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(bareMetalMachineRunDataExtractsRestrictedParameters, nameof(bareMetalMachineRunDataExtractsRestrictedParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestrictedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestrictedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -944,19 +944,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="bareMetalMachineRunDataExtractsRestrictedParameters"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineRunDataExtractsRestrictedParameters"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtractsRestricted(WaitUntil waitUntil, BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtractsRestricted(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(bareMetalMachineRunDataExtractsRestrictedParameters, nameof(bareMetalMachineRunDataExtractsRestrictedParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestricted(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineRunDataExtractsRestrictedParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestricted(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

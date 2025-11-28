@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackFqdnCollection : ArmCollection, IEnumerable<LocalRulestackFqdnResource>, IAsyncEnumerable<LocalRulestackFqdnResource>
     {
-        private readonly ClientDiagnostics _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics;
-        private readonly FqdnListLocalRulestackRestOperations _localRulestackFqdnFqdnListLocalRulestackRestClient;
+        private readonly ClientDiagnostics _fqdnListLocalRulestackClientDiagnostics;
+        private readonly FqdnListLocalRulestack _fqdnListLocalRulestackRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="LocalRulestackFqdnCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LocalRulestackFqdnCollection for mocking. </summary>
         protected LocalRulestackFqdnCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LocalRulestackFqdnCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LocalRulestackFqdnCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackFqdnResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(LocalRulestackFqdnResource.ResourceType, out string localRulestackFqdnFqdnListLocalRulestackApiVersion);
-            _localRulestackFqdnFqdnListLocalRulestackRestClient = new FqdnListLocalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackFqdnFqdnListLocalRulestackApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(LocalRulestackFqdnResource.ResourceType, out string localRulestackFqdnApiVersion);
+            _fqdnListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackFqdnResource.ResourceType.Namespace, Diagnostics);
+            _fqdnListLocalRulestackRestClient = new FqdnListLocalRulestack(_fqdnListLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackFqdnApiVersion ?? "2025-10-08");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != LocalRulestackResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> fqdn list name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<LocalRulestackFqdnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, LocalRulestackFqdnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<LocalRulestackFqdnResource>(new LocalRulestackFqdnOperationSource(Client), _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics, Pipeline, _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackFqdnData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NgfwArmOperation<LocalRulestackFqdnResource> operation = new NgfwArmOperation<LocalRulestackFqdnResource>(
+                    new LocalRulestackFqdnOperationSource(Client),
+                    _fqdnListLocalRulestackClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Create a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> fqdn list name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<LocalRulestackFqdnResource> CreateOrUpdate(WaitUntil waitUntil, string name, LocalRulestackFqdnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new NgfwArmOperation<LocalRulestackFqdnResource>(new LocalRulestackFqdnOperationSource(Client), _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics, Pipeline, _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackFqdnData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NgfwArmOperation<LocalRulestackFqdnResource> operation = new NgfwArmOperation<LocalRulestackFqdnResource>(
+                    new LocalRulestackFqdnOperationSource(Client),
+                    _fqdnListLocalRulestackClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<LocalRulestackFqdnResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Get");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Get");
             scope.Start();
             try
             {
-                var response = await _localRulestackFqdnFqdnListLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LocalRulestackFqdnData> response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LocalRulestackFqdnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<LocalRulestackFqdnResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Get");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Get");
             scope.Start();
             try
             {
-                var response = _localRulestackFqdnFqdnListLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LocalRulestackFqdnData> response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LocalRulestackFqdnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// List FqdnListLocalRulestackResource resources by LocalRulestacks
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_ListByLocalRulestacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_ListByLocalRulestacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LocalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackFqdnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackFqdnResource(Client, LocalRulestackFqdnData.DeserializeLocalRulestackFqdnData(e)), _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(_fqdnListLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>
         /// List FqdnListLocalRulestackResource resources by LocalRulestacks
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_ListByLocalRulestacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_ListByLocalRulestacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="LocalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackFqdnResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackFqdnFqdnListLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackFqdnResource(Client, LocalRulestackFqdnData.DeserializeLocalRulestackFqdnData(e)), _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LocalRulestackFqdnData, LocalRulestackFqdnResource>(new FqdnListLocalRulestackGetByLocalRulestacksCollectionResultOfT(_fqdnListLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Exists");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _localRulestackFqdnFqdnListLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<LocalRulestackFqdnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LocalRulestackFqdnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,39 +382,53 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Exists");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.Exists");
             scope.Start();
             try
             {
-                var response = _localRulestackFqdnFqdnListLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<LocalRulestackFqdnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LocalRulestackFqdnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,41 +439,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<LocalRulestackFqdnResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.GetIfExists");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _localRulestackFqdnFqdnListLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<LocalRulestackFqdnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LocalRulestackFqdnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<LocalRulestackFqdnResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new LocalRulestackFqdnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,41 +500,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a FqdnListLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/fqdnlists/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListLocalRulestack_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FqdnListLocalRulestackResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalRulestackFqdnResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-08. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<LocalRulestackFqdnResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _localRulestackFqdnFqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.GetIfExists");
+            using DiagnosticScope scope = _fqdnListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackFqdnCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _localRulestackFqdnFqdnListLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<LocalRulestackFqdnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LocalRulestackFqdnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<LocalRulestackFqdnResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new LocalRulestackFqdnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<LocalRulestackFqdnResource> IAsyncEnumerable<LocalRulestackFqdnResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

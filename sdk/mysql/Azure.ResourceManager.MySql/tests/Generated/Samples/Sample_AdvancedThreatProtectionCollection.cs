@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DisableAServerSAdvancedThreatProtectionSettingsWithAllParametersUsingPUT()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsPutDisabled.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_UpdatePut" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsPutDisabled.json
+            // this example is just showing the usage of "AdvancedThreatProtection_UpdatePut" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,10 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
-            AdvancedThreatProtectionData data = new AdvancedThreatProtectionData
-            {
-                State = AdvancedThreatProtectionState.Disabled,
-            };
+            AdvancedThreatProtectionData data = new AdvancedThreatProtectionData();
             ArmOperation<AdvancedThreatProtectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionName, data);
             AdvancedThreatProtectionResource result = lro.Value;
 
@@ -59,8 +56,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EnableAServerSAdvancedThreatProtectionSettingsUsingPUT()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsPutEnabled.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_UpdatePut" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsPutEnabled.json
+            // this example is just showing the usage of "AdvancedThreatProtection_UpdatePut" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,10 +77,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // invoke the operation
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
-            AdvancedThreatProtectionData data = new AdvancedThreatProtectionData
-            {
-                State = AdvancedThreatProtectionState.Enabled,
-            };
+            AdvancedThreatProtectionData data = new AdvancedThreatProtectionData();
             ArmOperation<AdvancedThreatProtectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionName, data);
             AdvancedThreatProtectionResource result = lro.Value;
 
@@ -98,8 +92,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,8 +126,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetListOfServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsList.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsList.json
+            // this example is just showing the usage of "AdvancedThreatProtection_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -168,8 +162,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -198,8 +192,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-30/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

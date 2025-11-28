@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.Example.Basic;
+using Specs.Azure.Example.Basic;
 
 namespace AzureExampleBasicClient
 {

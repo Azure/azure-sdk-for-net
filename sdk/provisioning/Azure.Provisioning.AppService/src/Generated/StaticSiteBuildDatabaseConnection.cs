@@ -120,7 +120,7 @@ public partial class StaticSiteBuildDatabaseConnection : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildDatabaseConnection.</param>
     public StaticSiteBuildDatabaseConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/staticSites/builds/databaseConnections", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/builds/databaseConnections", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -130,6 +130,7 @@ public partial class StaticSiteBuildDatabaseConnection : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionIdentity = DefineProperty<string>("ConnectionIdentity", ["properties", "connectionIdentity"]);
         _connectionString = DefineProperty<string>("ConnectionString", ["properties", "connectionString"]);
@@ -146,6 +147,11 @@ public partial class StaticSiteBuildDatabaseConnection : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

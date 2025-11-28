@@ -262,6 +262,7 @@
           "crossLanguageDefinitionId": "Client.ClientNamespace.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient",
       "apiVersions": []
@@ -387,6 +388,7 @@
           "crossLanguageDefinitionId": "Client.ClientNamespace.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient",
       "apiVersions": []

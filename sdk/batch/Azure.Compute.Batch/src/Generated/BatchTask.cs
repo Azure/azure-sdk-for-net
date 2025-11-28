@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
         /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTask(string id, string displayName, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, ExitConditions exitConditions, BatchTaskState? state, DateTimeOffset? stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTask(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, ExitConditions exitConditions, BatchTaskState state, DateTimeOffset stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -132,17 +132,17 @@ namespace Azure.Compute.Batch
         /// <summary> The URL of the Task. </summary>
         public Uri Uri { get; }
         /// <summary> The ETag of the Task. This is an opaque string. You can use it to detect whether the Task has changed between requests. In particular, you can be pass the ETag when updating a Task to specify that your changes should take effect only if nobody else has modified the Task in the meantime. </summary>
-        public ETag? ETag { get; }
+        public ETag ETag { get; }
         /// <summary> The last modified time of the Task. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset LastModified { get; }
         /// <summary> The creation time of the Task. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset CreationTime { get; }
         /// <summary> How the Batch service should respond when the Task completes. </summary>
         public ExitConditions ExitConditions { get; }
         /// <summary> The current state of the Task. </summary>
-        public BatchTaskState? State { get; }
+        public BatchTaskState State { get; }
         /// <summary> The time at which the Task entered its current state. </summary>
-        public DateTimeOffset? StateTransitionTime { get; }
+        public DateTimeOffset StateTransitionTime { get; }
         /// <summary> The previous state of the Task. This property is not set if the Task is in its initial Active state. </summary>
         public BatchTaskState? PreviousState { get; }
         /// <summary> The time at which the Task entered its previous state. This property is not set if the Task is in its initial Active state. </summary>

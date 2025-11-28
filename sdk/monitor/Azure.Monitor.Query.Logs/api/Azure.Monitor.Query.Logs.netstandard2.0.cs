@@ -158,7 +158,7 @@ namespace Azure.Monitor.Query.Logs.Models
         public System.BinaryData GetVisualization() { throw null; }
         protected virtual Azure.Monitor.Query.Logs.Models.LogsQueryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Monitor.Query.Logs.Models.LogsQueryResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Monitor.Query.Logs.Models.LogsQueryResult (Azure.Response response) { throw null; }
         protected virtual Azure.Monitor.Query.Logs.Models.LogsQueryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Monitor.Query.Logs.Models.LogsQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

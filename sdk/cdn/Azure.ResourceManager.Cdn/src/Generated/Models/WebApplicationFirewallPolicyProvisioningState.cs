@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Provisioning state of the WebApplicationFirewallPolicy.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
     public readonly partial struct WebApplicationFirewallPolicyProvisioningState : IEquatable<WebApplicationFirewallPolicyProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static WebApplicationFirewallPolicyProvisioningState Creating { get; } = new WebApplicationFirewallPolicyProvisioningState(CreatingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static WebApplicationFirewallPolicyProvisioningState Succeeded { get; } = new WebApplicationFirewallPolicyProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static WebApplicationFirewallPolicyProvisioningState Failed { get; } = new WebApplicationFirewallPolicyProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallPolicyProvisioningState left, WebApplicationFirewallPolicyProvisioningState right) => left.Equals(right);

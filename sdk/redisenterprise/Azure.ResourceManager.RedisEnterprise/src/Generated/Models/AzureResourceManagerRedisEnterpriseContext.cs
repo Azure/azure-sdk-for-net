@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterprisePrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSku))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetails))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]

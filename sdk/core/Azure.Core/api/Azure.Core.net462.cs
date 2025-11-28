@@ -306,6 +306,8 @@ namespace Azure.Core
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn) { throw null; }
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn) { throw null; }
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn, string tokenType) { throw null; }
+        public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn, string tokenType, System.Security.Cryptography.X509Certificates.X509Certificate2 bindingCertificate) { throw null; }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2? BindingCertificate { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string Token { get { throw null; } }
@@ -700,13 +702,14 @@ namespace Azure.Core
         public static bool TryParse(string? input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
+    public readonly partial struct ResourceType : System.IComparable<Azure.Core.ResourceType>, System.IEquatable<Azure.Core.ResourceType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ResourceType(string resourceType) { throw null; }
         public string Namespace { get { throw null; } }
         public string Type { get { throw null; } }
+        public int CompareTo(Azure.Core.ResourceType other) { throw null; }
         public bool Equals(Azure.Core.ResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? other) { throw null; }
@@ -1041,12 +1044,15 @@ namespace Azure.Core.Pipeline
     {
         public static readonly Azure.Core.Pipeline.HttpClientTransport Shared;
         public HttpClientTransport() { }
+        public HttpClientTransport(System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, System.Net.Http.HttpClient> clientFactory) { }
+        public HttpClientTransport(System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, System.Net.Http.HttpMessageHandler> handlerFactory) { }
         public HttpClientTransport(System.Net.Http.HttpClient client) { }
         public HttpClientTransport(System.Net.Http.HttpMessageHandler messageHandler) { }
         public sealed override Azure.Core.Request CreateRequest() { throw null; }
         public void Dispose() { }
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
+        public override void Update(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
     }
     public partial class HttpPipeline
     {
@@ -1102,6 +1108,7 @@ namespace Azure.Core.Pipeline
         public abstract Azure.Core.Request CreateRequest();
         public abstract void Process(Azure.Core.HttpMessage message);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message);
+        public virtual void Update(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
     }
     public partial class HttpPipelineTransportOptions
     {

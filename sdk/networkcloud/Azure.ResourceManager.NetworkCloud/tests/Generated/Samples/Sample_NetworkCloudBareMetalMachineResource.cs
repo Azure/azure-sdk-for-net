@@ -294,14 +294,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters = new BareMetalMachineRunDataExtractsParameters(new BareMetalMachineCommandSpecification[]
+            BareMetalMachineRunDataExtractsContent content = new BareMetalMachineRunDataExtractsContent(new BareMetalMachineCommandSpecification[]
             {
 new BareMetalMachineCommandSpecification("hardware-support-data-collection")
 {
 Arguments = {"SysInfo", "TTYLog"},
 }
             }, 60L);
-            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, bareMetalMachineRunDataExtractsParameters);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, content);
             NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -328,14 +328,14 @@ Arguments = {"SysInfo", "TTYLog"},
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters = new BareMetalMachineRunDataExtractsParameters(new BareMetalMachineCommandSpecification[]
+            BareMetalMachineRunDataExtractsContent content = new BareMetalMachineRunDataExtractsContent(new BareMetalMachineCommandSpecification[]
             {
 new BareMetalMachineCommandSpecification("cluster-cve-report")
 {
 Arguments = {"--min-severity=8"},
 }
             }, 60L);
-            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsRestrictedAsync(WaitUntil.Completed, bareMetalMachineRunDataExtractsRestrictedParameters);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsRestrictedAsync(WaitUntil.Completed, content);
             NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

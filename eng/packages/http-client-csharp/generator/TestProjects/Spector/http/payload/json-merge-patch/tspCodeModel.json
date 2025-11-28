@@ -1104,6 +1104,7 @@
           "crossLanguageDefinitionId": "Payload.JsonMergePatch.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.JsonMergePatch",
       "apiVersions": []

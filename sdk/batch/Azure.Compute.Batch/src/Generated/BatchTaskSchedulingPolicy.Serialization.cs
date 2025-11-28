@@ -34,6 +34,11 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchTaskSchedulingPolicy)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(JobDefaultOrder))
+            {
+                writer.WritePropertyName("jobDefaultOrder"u8);
+                writer.WriteStringValue(JobDefaultOrder.Value.ToString());
+            }
             writer.WritePropertyName("nodeFillType"u8);
             writer.WriteStringValue(NodeFillType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -73,11 +78,21 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
+            BatchJobDefaultOrder? jobDefaultOrder = default;
             BatchNodeFillType nodeFillType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("jobDefaultOrder"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobDefaultOrder = new BatchJobDefaultOrder(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("nodeFillType"u8))
                 {
                     nodeFillType = new BatchNodeFillType(property.Value.GetString());
@@ -89,7 +104,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchTaskSchedulingPolicy(nodeFillType, serializedAdditionalRawData);
+            return new BatchTaskSchedulingPolicy(jobDefaultOrder, nodeFillType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchTaskSchedulingPolicy>.Write(ModelReaderWriterOptions options)

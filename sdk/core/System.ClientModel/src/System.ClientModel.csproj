@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <Description>Contains building blocks for clients that call cloud services.</Description>
-    <Version>1.8.0-beta.1</Version>
+    <Version>1.9.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.7.0</ApiCompatVersion>
+    <ApiCompatVersion>1.8.1</ApiCompatVersion>
     <Nullable>enable</Nullable>
     <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>

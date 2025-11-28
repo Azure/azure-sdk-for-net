@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Resource status of the policy.
-    /// Serialized Name: PolicyResourceState
-    /// </summary>
+    /// <summary> Resource status of the policy. </summary>
     public readonly partial struct PolicyResourceState : IEquatable<PolicyResourceState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: PolicyResourceState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static PolicyResourceState Creating { get; } = new PolicyResourceState(CreatingValue);
-        /// <summary>
-        /// Enabling
-        /// Serialized Name: PolicyResourceState.Enabling
-        /// </summary>
+        /// <summary> Enabling. </summary>
         public static PolicyResourceState Enabling { get; } = new PolicyResourceState(EnablingValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PolicyResourceState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PolicyResourceState Enabled { get; } = new PolicyResourceState(EnabledValue);
-        /// <summary>
-        /// Disabling
-        /// Serialized Name: PolicyResourceState.Disabling
-        /// </summary>
+        /// <summary> Disabling. </summary>
         public static PolicyResourceState Disabling { get; } = new PolicyResourceState(DisablingValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PolicyResourceState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PolicyResourceState Disabled { get; } = new PolicyResourceState(DisabledValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PolicyResourceState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static PolicyResourceState Deleting { get; } = new PolicyResourceState(DeletingValue);
         /// <summary> Determines if two <see cref="PolicyResourceState"/> values are the same. </summary>
         public static bool operator ==(PolicyResourceState left, PolicyResourceState right) => left.Equals(right);

@@ -53,14 +53,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationPatch"/>. </summary>
         /// <param name="tags"> Application update parameters. </param>
+        /// <param name="properties"> Application update parameters properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedApplicationPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricManagedApplicationPatch(IDictionary<string, string> tags, ApplicationUpdateParametersProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application update parameters. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Application update parameters properties. </summary>
+        internal ApplicationUpdateParametersProperties Properties { get; set; }
+        /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
+        public IDictionary<string, string> ApplicationUpdateParameters
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new ApplicationUpdateParametersProperties();
+                return Properties.Parameters;
+            }
+        }
     }
 }

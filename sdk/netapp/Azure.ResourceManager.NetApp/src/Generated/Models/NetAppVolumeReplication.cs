@@ -62,14 +62,20 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
+        /// <param name="mirrorState"> The status of the replication. </param>
+        /// <param name="replicationCreationOn"> Replication creation time. </param>
+        /// <param name="replicationDeletionOn"> Replication deletion time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, ReplicationMirrorState? mirrorState, DateTimeOffset? replicationCreationOn, DateTimeOffset? replicationDeletionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
             ReplicationSchedule = replicationSchedule;
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemoteVolumeRegion = remoteVolumeRegion;
+            MirrorState = mirrorState;
+            ReplicationCreationOn = replicationCreationOn;
+            ReplicationDeletionOn = replicationDeletionOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,5 +94,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public ResourceIdentifier RemoteVolumeResourceId { get; }
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; }
+        /// <summary> The status of the replication. </summary>
+        public ReplicationMirrorState? MirrorState { get; }
+        /// <summary> Replication creation time. </summary>
+        public DateTimeOffset? ReplicationCreationOn { get; }
+        /// <summary> Replication deletion time. </summary>
+        public DateTimeOffset? ReplicationDeletionOn { get; }
     }
 }

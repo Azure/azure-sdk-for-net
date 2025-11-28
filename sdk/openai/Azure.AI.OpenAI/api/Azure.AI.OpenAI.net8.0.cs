@@ -106,11 +106,17 @@ namespace Azure.AI.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.Batch.BatchClient GetBatchClient() { throw null; }
         public override OpenAI.Chat.ChatClient GetChatClient(string deploymentName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Containers.ContainerClient GetContainerClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         public override OpenAI.Embeddings.EmbeddingClient GetEmbeddingClient(string deploymentName) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.Evals.EvaluationClient GetEvaluationClient() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.FineTuning.FineTuningClient GetFineTuningClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Graders.GraderClient GetGraderClient() { throw null; }
         public override OpenAI.Images.ImageClient GetImageClient(string deploymentName) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Moderations.ModerationClient GetModerationClient(string _) { throw null; }
@@ -123,6 +129,8 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Videos.VideoClient GetVideoClient() { throw null; }
     }
     public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
@@ -425,8 +433,6 @@ namespace Azure.AI.OpenAI.Chat
         public static Azure.AI.OpenAI.ResponseContentFilterResult GetResponseContentFilterResult(this OpenAI.Chat.StreamingChatCompletionUpdate chatUpdate) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
         public static Azure.AI.OpenAI.UserSecurityContext GetUserSecurityContext(this OpenAI.Chat.ChatCompletionOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
-        public static void SetNewMaxCompletionTokensPropertyEnabled(this OpenAI.Chat.ChatCompletionOptions options, bool newPropertyEnabled = true) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
         public static void SetUserSecurityContext(this OpenAI.Chat.ChatCompletionOptions options, Azure.AI.OpenAI.UserSecurityContext userSecurityContext) { }
     }

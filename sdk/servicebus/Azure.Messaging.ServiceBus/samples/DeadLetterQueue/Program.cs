@@ -17,21 +17,30 @@ namespace DeadLetterQueue
 
         public static async Task Main(string[] args)
         {
+            var namespaceOption = new Option<string>(
+                name: "--namespace",
+                description: "Fully qualified Service Bus Queue namespace to use");
+
+            var queueOption = new Option<string>(
+                name: "--queue",
+                description: "Service Bus Queue Name to use") { IsRequired = true };
+
+            var connectionOption = new Option<string>(
+                name: "--connection-variable",
+                description: "The name of an environment variable containing the connection string to use.");
+
             var command = new RootCommand("Demonstrates the DeadLetter feature of Azure Service Bus.")
             {
-                new Option<string>(
-                    alias: "--namespace",
-                    description: "Fully qualified Service Bus Queue namespace to use") { Name = "FullyQualifiedNamespace" },
-                new Option<string>(
-                    alias: "--queue",
-                    description: "Service Bus Queue Name to use") { IsRequired = true, Name = "QueueName"},
-                new Option<string>(
-                    alias: "--connection-variable",
-                    description: "The name of an environment variable containing the connection string to use.") { Name = "Connection"},
+                namespaceOption,
+                queueOption,
+                connectionOption
             };
-            command.Handler = CommandHandler.Create<string, string, string>(RunAsync);
+
+            command.SetHandler(RunAsync, namespaceOption, queueOption, connectionOption);
+
             await command.InvokeAsync(args);
         }
+
 
         private static async Task RunAsync(string fullyQualifiedNamespace, string queueName, string connection)
         {

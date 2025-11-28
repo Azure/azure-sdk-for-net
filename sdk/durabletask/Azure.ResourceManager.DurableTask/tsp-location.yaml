@@ -1,3 +1,4 @@
 directory: specification/durabletask/DurableTask.Management
-commit: c918b5a1177038636095dfb92ae8cace737b60d6
-repo: berndverst/azure-rest-api-specs
+commit: 38ff6d42ea00d97b4bbc7e109f66b3b7b8171517
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

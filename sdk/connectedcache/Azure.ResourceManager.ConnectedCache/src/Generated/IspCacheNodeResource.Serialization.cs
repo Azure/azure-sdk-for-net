@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
+    /// <summary></summary>
     public partial class IspCacheNodeResource : IJsonModel<IspCacheNodeData>
     {
-        private static IspCacheNodeData s_dataDeserializationInstance;
-        private static IspCacheNodeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IspCacheNodeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IspCacheNodeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IspCacheNodeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IspCacheNodeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IspCacheNodeData>)Data).Write(writer, options);
 
-        IspCacheNodeData IJsonModel<IspCacheNodeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IspCacheNodeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IspCacheNodeData IJsonModel<IspCacheNodeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IspCacheNodeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IspCacheNodeData>(Data, options, AzureResourceManagerConnectedCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IspCacheNodeData IPersistableModel<IspCacheNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IspCacheNodeData>(data, options, AzureResourceManagerConnectedCacheContext.Default);
 
-        string IPersistableModel<IspCacheNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IspCacheNodeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IspCacheNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

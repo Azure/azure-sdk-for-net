@@ -28,7 +28,13 @@ namespace Azure.ResourceManager.Compute.Recommender
             return subscriptionResource.GetCachedClient(client => new MockableComputeRecommenderSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderArmClient.GetComputeRecommenderDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -40,7 +46,13 @@ namespace Azure.ResourceManager.Compute.Recommender
             return GetMockableComputeRecommenderArmClient(client).GetComputeRecommenderDiagnosticResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeRecommenderDiagnostic()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>

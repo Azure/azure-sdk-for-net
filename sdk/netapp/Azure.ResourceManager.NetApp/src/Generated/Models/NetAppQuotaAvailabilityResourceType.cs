@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsValue = "Microsoft.NetApp/netAppAccounts/capacityPools";
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes";
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
+        private const string MicrosoftNetAppNetAppAccountsBackupVaultsBackupsValue = "Microsoft.NetApp/netAppAccounts/backupVaults/backups";
+        private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackupsValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups";
 
         /// <summary> Microsoft.NetApp/netAppAccounts. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccounts { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsValue);
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue);
         /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue);
+        /// <summary> ANF Backup under a volume , deprecated, use `Microsoft.NetApp/netAppAccounts/backupVaults/backups` instead. </summary>
+        public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsBackupVaultsBackups { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsBackupVaultsBackupsValue);
+        /// <summary> ANF Backup under a Backup Vault. </summary>
+        public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackups { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackupsValue);
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are the same. </summary>
         public static bool operator ==(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are not the same. </summary>

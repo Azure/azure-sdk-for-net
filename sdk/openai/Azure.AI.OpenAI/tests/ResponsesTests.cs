@@ -165,7 +165,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 {
                     Tools =
                     {
-                        ResponseTool.CreateWebSearchTool()
+                        ResponseTool.CreateWebSearchPreviewTool()
                     }
                 }));
         Assert.That(expectedException, Is.Not.Null);
@@ -783,7 +783,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         }
 
         AssertSerializationRoundTrip<MessageResponseItem>(
-            @"{""type"":""message"",""potato_details"":{""cultivar"":""russet""},""role"":""potato""}",
+            @"{""type"":""message"",""role"":""potato"",""potato_details"":{""cultivar"":""russet""}}",
             potatoMessage =>
             {
                 Assert.That(potatoMessage.Role, Is.EqualTo(MessageRole.Unknown));

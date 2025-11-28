@@ -10,6 +10,15 @@
 
 ### Other Changes
 
+## 5.3.7 (2025-10-29)
+
+### Other Changes
+- The following optimizations were added to Blob Trigger processing:
+  - Exclude containers that are not intended for monitoring.
+  - Do not perform unnecessary scanning for container(s) detected during the initial write log.
+  - Cache recently found write entry to avoid analyzing log blobs again.
+  - Migrate ScaleMonitor to TargetScaler.
+
 ## 5.3.6 (2025-09-09)
 
 ### Bugs Fixed

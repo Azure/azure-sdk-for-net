@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -68,11 +69,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
         /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
         /// <param name="comments"> IoT hub comments. </param>
+        /// <param name="deviceStreamsStreamingEndpoints"> The device streams properties of iothub. </param>
         /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
+        /// <param name="encryption"> The encryption properties for the IoT hub. </param>
         /// <param name="locations"> Primary and secondary location for iot hub. </param>
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
+        /// <param name="rootCertificate"> This property store root certificate related information. </param>
+        /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
+        /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IotHubCapability? features = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IEnumerable<string> deviceStreamsStreamingEndpoints = null, IotHubCapability? features = null, IotHubEncryptionProperties encryption = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null, IotHubRootCertificateProperties rootCertificate = null, IotHubIPVersion? ipVersion = null, IotHubDeviceRegistry deviceRegistry = null)
         {
             authorizationPolicies ??= new List<SharedAccessSignatureAuthorizationRule>();
             allowedFqdns ??= new List<string>();
@@ -81,6 +87,7 @@ namespace Azure.ResourceManager.IotHub.Models
             eventHubEndpoints ??= new Dictionary<string, EventHubCompatibleEndpointProperties>();
             storageEndpoints ??= new Dictionary<string, IotHubStorageEndpointProperties>();
             messagingEndpoints ??= new Dictionary<string, MessagingEndpointProperties>();
+            deviceStreamsStreamingEndpoints ??= new List<string>();
             locations ??= new List<IotHubLocationDescription>();
 
             return new IotHubProperties(
@@ -105,9 +112,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 enableFileUploadNotifications,
                 cloudToDevice,
                 comments,
+                deviceStreamsStreamingEndpoints != null ? new IotHubPropertiesDeviceStreams(deviceStreamsStreamingEndpoints?.ToList(), serializedAdditionalRawData: null) : null,
                 features,
+                encryption,
                 locations?.ToList(),
                 enableDataResidency,
+                rootCertificate,
+                ipVersion,
+                deviceRegistry,
                 serializedAdditionalRawData: null);
         }
 
@@ -190,6 +202,15 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubLocationDescription IotHubLocationDescription(AzureLocation? location = null, IotHubReplicaRoleType? role = null)
         {
             return new IotHubLocationDescription(location, role, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubRootCertificateProperties"/>. </summary>
+        /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
+        /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
+        /// <returns> A new <see cref="Models.IotHubRootCertificateProperties"/> instance for mocking. </returns>
+        public static IotHubRootCertificateProperties IotHubRootCertificateProperties(bool? isRootCertificateV2Enabled = null, DateTimeOffset? lastUpdatedOn = null)
+        {
+            return new IotHubRootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubSkuInfo"/>. </summary>
@@ -489,8 +510,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="createdOn"> The certificate's create date and time. </param>
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
+        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null)
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null, ResourceIdentifier policyResourceId = null)
         {
             return new IotHubCertificateProperties(
                 subject,
@@ -500,6 +522,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 createdOn,
                 updatedOn,
                 certificate,
+                policyResourceId,
                 serializedAdditionalRawData: null);
         }
 
@@ -532,8 +555,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
         /// <param name="certificate"> The certificate content. </param>
+        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null)
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null, ResourceIdentifier policyResourceId = null)
         {
             return new IotHubCertificatePropertiesWithNonce(
                 subject,
@@ -544,6 +568,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 updatedOn,
                 verificationCode,
                 certificate,
+                policyResourceId,
                 serializedAdditionalRawData: null);
         }
 
@@ -576,6 +601,69 @@ namespace Azure.ResourceManager.IotHub.Models
             requiredDnsZoneNames ??= new List<string>();
 
             return new IotHubPrivateEndpointGroupInformationProperties(groupId, requiredMembers?.ToList(), requiredDnsZoneNames?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubProperties" />. </summary>
+        /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
+        /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
+        /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
+        /// <param name="disableModuleSas"> If true, all module scoped SAS keys cannot be used for authentication. </param>
+        /// <param name="restrictOutboundNetworkAccess"> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </param>
+        /// <param name="allowedFqdns"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="ipFilterRules"> The IP filter rules. </param>
+        /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
+        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="state"> The hub state. </param>
+        /// <param name="hostName"> The name of the host. </param>
+        /// <param name="eventHubEndpoints"> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </param>
+        /// <param name="routing"> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </param>
+        /// <param name="storageEndpoints"> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </param>
+        /// <param name="messagingEndpoints"> The messaging endpoint properties for the file upload notification queue. </param>
+        /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
+        /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
+        /// <param name="comments"> IoT hub comments. </param>
+        /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
+        /// <param name="locations"> Primary and secondary location for iot hub. </param>
+        /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency)
+        {
+            return IotHubProperties(authorizationPolicies: authorizationPolicies, disableLocalAuth: disableLocalAuth, disableDeviceSas: disableDeviceSas, disableModuleSas: disableModuleSas, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdns: allowedFqdns, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, networkRuleSets: networkRuleSets, minTlsVersion: minTlsVersion, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, state: state, hostName: hostName, eventHubEndpoints: eventHubEndpoints, routing: routing, storageEndpoints: storageEndpoints, messagingEndpoints: messagingEndpoints, enableFileUploadNotifications: enableFileUploadNotifications, cloudToDevice: cloudToDevice, comments: comments, deviceStreamsStreamingEndpoints: default, features: features, encryption: default, locations: locations, enableDataResidency: enableDataResidency, rootCertificate: default, ipVersion: default, deviceRegistry: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties" />. </summary>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
+        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
+        /// <param name="certificate"> The certificate content. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
+        {
+            return IotHubCertificateProperties(subject: subject, expireOn: expireOn, thumbprintString: thumbprintString, isVerified: isVerified, createdOn: createdOn, updatedOn: updatedOn, certificate: certificate, policyResourceId: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce" />. </summary>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
+        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
+        /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
+        /// <param name="certificate"> The certificate content. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
+        {
+            return IotHubCertificatePropertiesWithNonce(subject: subject, expireOn: expireOn, thumbprintString: thumbprintString, isVerified: isVerified, createdOn: createdOn, updatedOn: updatedOn, verificationCode: verificationCode, certificate: certificate, policyResourceId: default);
         }
     }
 }

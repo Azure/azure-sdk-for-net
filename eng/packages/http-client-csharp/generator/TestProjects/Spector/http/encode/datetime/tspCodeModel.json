@@ -448,6 +448,7 @@
           "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Encode.Datetime",
       "apiVersions": [],
@@ -948,6 +949,7 @@
               "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.Query",
           "apiVersions": [],
@@ -1774,6 +1776,7 @@
               "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.Property",
           "apiVersions": [],
@@ -2278,6 +2281,7 @@
               "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.Header",
           "apiVersions": [],
@@ -2552,6 +2556,7 @@
               "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader",
           "apiVersions": [],

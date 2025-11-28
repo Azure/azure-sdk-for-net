@@ -36,15 +36,15 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class ConversationsClientOptions : Azure.Core.ClientOptions
     {
-        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview) { }
+        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2025_11_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_05_01 = 3,
             V2024_11_01 = 4,
-            V2024_11_15_Preview = 5,
-            V2025_05_15_Preview = 6,
+            V2025_05_15_Preview = 5,
+            V2025_11_15_Preview = 6,
         }
     }
     public static partial class ConversationsModelFactory
@@ -856,15 +856,36 @@ namespace Azure.AI.Language.Conversations.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConversationPiiCategories(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories ABARoutingNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Address { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Age { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories All { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories BankAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CASocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CreditCard { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories CVV { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Date { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories DateOfBirth { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Default { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Email { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GithubAccount { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GovernmentIssuedId { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories GPE { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories HealthCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Location { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories NumericIdentifier { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Organization { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Person { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories PersonType { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories Phone { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories SWIFTCode { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories USMedicareBeneficiaryId { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories UsSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories VehicleIdentificationNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategories ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationPiiCategories other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -881,13 +902,34 @@ namespace Azure.AI.Language.Conversations.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ConversationPiiCategoryExclusions(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions ABARoutingNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Address { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Age { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions BankAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CASocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CreditCard { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions CVV { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Date { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions DateOfBirth { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Email { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GithubAccount { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GovernmentIssuedId { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions GPE { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions HealthCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions InternationalBankingAccountNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Location { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions NumericIdentifier { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Organization { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Person { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions PersonType { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions Phone { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions SWIFTCode { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions USMedicareBeneficiaryId { get { throw null; } }
         public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions UsSocialSecurityNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions VehicleIdentificationNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions ZipCode { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.Models.ConversationPiiCategoryExclusions other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
