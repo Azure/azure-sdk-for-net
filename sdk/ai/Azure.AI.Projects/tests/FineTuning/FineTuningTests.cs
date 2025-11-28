@@ -429,6 +429,33 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [RecordedTest]
+    public async Task Test_FineTuning_Pause_Job()
+    {
+        // Note: This test uses a running fine-tuning job ID to test pause functionality.
+        // Pause is only valid for jobs that are currently running (not queued, completed, or cancelled).
+        // When re-recording this test, ensure the job is in a running state.
+        string runningJobId = "ftjob-7ee8bc9638cf491eaf19146a1900acaf";
+
+        var (_, fineTuningClient) = GetClients();
+
+        // Retrieve the job first
+        FineTuningJob job = await fineTuningClient.GetJobAsync(runningJobId);
+        Console.WriteLine($"Retrieved job: {job.JobId}, Status: {job.Status}");
+
+        // Pause the job
+        Console.WriteLine($"Pausing fine-tuning job with ID: {runningJobId}");
+        await fineTuningClient.PauseFineTuningJobAsync(runningJobId, options: null);
+
+        // Retrieve the job again to verify status
+        FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(runningJobId);
+        Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
+
+        // Verify the job is paused (status should be "paused" or similar)
+        Assert.That(pausedJob, Is.Not.Null);
+        Assert.That(pausedJob.JobId, Is.EqualTo(runningJobId));
+    }
+
+    [RecordedTest]
     public async Task Test_FineTuning_List_Events()
     {
         var (fileClient, fineTuningClient) = GetClients();

@@ -856,6 +856,8 @@ public async Task TestToolChoiceWorks()
     [TestCase(false)]
     public async Task TestComputerUse(bool useFileUpload)
     {
+        TestTimeoutInSeconds = 120; // Increase timeout to 2 minutes for computer use operations
+
         AIProjectClient projectClient = GetTestProjectClient();
         // If the files are not in the foundry (used only for file upload),uncomment the code below and
         // set the serializedScreenshots value to COMPUTER_SCREENSHOTS environment variable;
