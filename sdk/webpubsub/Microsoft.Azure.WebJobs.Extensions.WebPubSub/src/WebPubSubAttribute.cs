@@ -15,9 +15,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public class WebPubSubAttribute : Attribute
     {
         /// <summary>
-        /// The connection of target Web PubSub service.
+        /// The connection name that resolves to the service endpoint URI or connection string.
         /// </summary>
-        [ConnectionString]
         public string Connection { get; set; } = Constants.WebPubSubConnectionStringName;
 
         /// <summary>
