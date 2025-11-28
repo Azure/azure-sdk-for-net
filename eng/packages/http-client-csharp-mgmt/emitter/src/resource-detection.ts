@@ -1,6 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+// NOTE: This resource detection implementation uses decorator-based parsing to identify
+// ARM resource operations. A future enhancement is to replace this with the
+// resolveArmResources API from @azure-tools/typespec-azure-resource-manager.
+// See: https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/src/resource.ts
+//
+// Current limitation: The resolveArmResources API does not properly handle multiple
+// singleton resources (e.g., when both Employee and CurrentEmployee are defined with
+// different @singleton keys, only one is returned). This needs to be fixed in the
+// TypeSpec ARM library before the replacement can be completed.
+
 import {
   CodeModel,
   CSharpEmitterContext,
