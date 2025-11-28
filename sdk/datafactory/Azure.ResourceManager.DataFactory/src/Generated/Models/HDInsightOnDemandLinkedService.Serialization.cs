@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Tenant);
             writer.WritePropertyName("clusterResourceGroup"u8);
             JsonSerializer.Serialize(writer, ClusterResourceGroup);
+            if (Optional.IsDefined(ClusterResourceGroupAuthType))
+            {
+                writer.WritePropertyName("clusterResourceGroupAuthType"u8);
+                writer.WriteStringValue(ClusterResourceGroupAuthType.Value.ToString());
+            }
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix"u8);
@@ -324,6 +329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> clusterResourceGroup = default;
+            HDInsightOnDemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType = default;
             DataFactoryElement<string> clusterNamePrefix = default;
             DataFactoryElement<string> clusterUserName = default;
             DataFactorySecret clusterPassword = default;
@@ -472,6 +478,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         if (property0.NameEquals("clusterResourceGroup"u8))
                         {
                             clusterResourceGroup = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("clusterResourceGroupAuthType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterResourceGroupAuthType = new HDInsightOnDemandClusterResourceGroupAuthenticationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterNamePrefix"u8))
@@ -728,6 +743,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 servicePrincipalKey,
                 tenant,
                 clusterResourceGroup,
+                clusterResourceGroupAuthType,
                 clusterNamePrefix,
                 clusterUserName,
                 clusterPassword,
