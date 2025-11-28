@@ -241,9 +241,6 @@
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
 
-# Question Answering (Inference + Authoring)
-/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering*/       @Amichelangelo
-
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
 
