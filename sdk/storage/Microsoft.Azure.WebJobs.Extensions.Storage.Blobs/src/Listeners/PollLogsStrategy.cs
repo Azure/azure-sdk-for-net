@@ -49,7 +49,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
         }
 
-        public async Task RegisterAsync(BlobServiceClient blobServiceClient, BlobContainerClient container, ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
+        public async Task RegisterAsync(
+            BlobServiceClient blobServiceClient,
+            BlobContainerClient container,
+            ITriggerExecutor<BlobTriggerExecutorContext> triggerExecutor,
             CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
@@ -78,8 +81,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             if (!_logListeners.ContainsKey(blobServiceClient))
             {
-                BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
-                _logListeners.Add(blobServiceClient, logListener);
+                try
+                {
+                    BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
+                    _logListeners.Add(blobServiceClient, logListener);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.AuthorizationPermissionMismatch ||
+                                                        ex.ErrorCode == BlobErrorCode.InsufficientAccountPermissions ||
+                                                        ex.ErrorCode == BlobErrorCode.AuthorizationFailure)
+                {
+                    // Log which account we couldn't enable logging on due to permissions. Ensure that no SAS token is logged on the Uri.
+                    BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobServiceClient.Uri){ Sas = null };
+                    Logger.LoggingNotEnabledOnTargetAccount(_logger, blobUriBuilder.ToUri().AbsoluteUri);
+                }
             }
         }
 
