@@ -1,5 +1,11 @@
 # Release History
 
+## 2.7.0-beta.2 (2025-12-01)
+
+### Bugs fixed
+
+- Addressed a Thanksgiving mistake in the `beta.1` release wherein the `SetNewMaxCompletionTokensPropertyEnabled()` extension method was unintentionally removed from the public surface.
+
 ## 2.7.0-beta.1 (2025-11-24)
 
 This update restores compatibility with the latest `2.7.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13).

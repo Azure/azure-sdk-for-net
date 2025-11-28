@@ -60,7 +60,7 @@ public static partial class AzureChatExtensions
     }
 
     [Experimental("AOAI001")]
-    internal static void SetNewMaxCompletionTokensPropertyEnabled(this ChatCompletionOptions options, bool newPropertyEnabled = true)
+    public static void SetNewMaxCompletionTokensPropertyEnabled(this ChatCompletionOptions options, bool newPropertyEnabled = true)
         => options.SetMaxTokenPatchValues(newPropertyEnabled);
 
     internal static void SetMaxTokenPatchValues(this ChatCompletionOptions options, bool? newPropertyRequested = null)
