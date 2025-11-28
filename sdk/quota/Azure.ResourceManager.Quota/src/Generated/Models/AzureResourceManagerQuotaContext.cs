@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
     [ModelReaderWriterBuildable(typeof(CurrentQuotaLimitBaseData))]
@@ -21,25 +22,26 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(CurrentUsagesBaseData))]
     [ModelReaderWriterBuildable(typeof(CurrentUsagesBaseResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaDetails))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaDetailsName))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaEntityBase))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaEntityData))]
-    [ModelReaderWriterBuildable(typeof(GroupQuotaEntityPatch))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaEntityResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimit))]
-    [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListData))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaLimitList))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListProperties))]
-    [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimitProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaList))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaRequestBase))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaRequestBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaRequestBasePropertiesName))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaRequestStatusData))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaRequestStatusProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaRequestStatusResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaResourceUsages))]
-    [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatusData))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatus))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatusProperties))]
-    [ModelReaderWriterBuildable(typeof(GroupQuotasEnforcementStatusResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEntityBasePatch))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotasEntityPatch))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEntityPatchProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotasEntityProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionData))]
@@ -51,10 +53,13 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionRequestStatusResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaUsagesBase))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaUsagesBaseName))]
     [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestBase))]
-    [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestStatusData))]
+    [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestBasePropertiesName))]
+    [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestStatus))]
     [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestStatusList))]
-    [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestStatusResource))]
+    [ModelReaderWriterBuildable(typeof(QuotaAllocationRequestStatusProperties))]
     [ModelReaderWriterBuildable(typeof(QuotaLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(QuotaLimitObject))]
     [ModelReaderWriterBuildable(typeof(QuotaLimits))]
@@ -65,6 +70,7 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(QuotaRequestDetailData))]
     [ModelReaderWriterBuildable(typeof(QuotaRequestDetailResource))]
     [ModelReaderWriterBuildable(typeof(QuotaRequestDetailsList))]
+    [ModelReaderWriterBuildable(typeof(QuotaRequestProperties))]
     [ModelReaderWriterBuildable(typeof(QuotaRequestResourceName))]
     [ModelReaderWriterBuildable(typeof(QuotaSubRequestDetail))]
     [ModelReaderWriterBuildable(typeof(QuotaUsagesObject))]
@@ -75,11 +81,11 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(SubmittedResourceRequestStatusList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAllocatedQuota))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocations))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListData))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListProperties))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetails))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetailsName))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UsagesLimits))]

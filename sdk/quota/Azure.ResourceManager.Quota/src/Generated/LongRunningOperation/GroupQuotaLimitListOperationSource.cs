@@ -5,32 +5,41 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal class GroupQuotaLimitListOperationSource : IOperationSource<GroupQuotaLimitListResource>
+    /// <summary></summary>
+    internal partial class GroupQuotaLimitListOperationSource : IOperationSource<GroupQuotaLimitList>
     {
-        private readonly ArmClient _client;
-
-        internal GroupQuotaLimitListOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal GroupQuotaLimitListOperationSource()
         {
-            _client = client;
         }
 
-        GroupQuotaLimitListResource IOperationSource<GroupQuotaLimitListResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        GroupQuotaLimitList IOperationSource<GroupQuotaLimitList>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
-            return new GroupQuotaLimitListResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            GroupQuotaLimitList result = GroupQuotaLimitList.DeserializeGroupQuotaLimitList(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
-        async ValueTask<GroupQuotaLimitListResource> IOperationSource<GroupQuotaLimitListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<GroupQuotaLimitList> IOperationSource<GroupQuotaLimitList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
-            return await Task.FromResult(new GroupQuotaLimitListResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            GroupQuotaLimitList result = GroupQuotaLimitList.DeserializeGroupQuotaLimitList(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }
