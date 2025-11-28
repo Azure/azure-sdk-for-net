@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class VirtualMachineResourceNames : IUtf8JsonSerializable, IJsonModel<VirtualMachineResourceNames>
+    /// <summary> The resource names object for virtual machine and related resources. </summary>
+    internal partial class VirtualMachineResourceNames : IJsonModel<VirtualMachineResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetworkInterfaces)
+                foreach (NetworkInterfaceResourceNames item in NetworkInterfaces)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSDiskName))
+            if (Optional.IsDefined(OsDiskName))
             {
                 writer.WritePropertyName("osDiskName"u8);
-                writer.WriteStringValue(OSDiskName);
+                writer.WriteStringValue(OsDiskName);
             }
             if (Optional.IsCollectionDefined(DataDiskNames))
             {
@@ -72,23 +72,28 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
+                    foreach (string item0 in item.Value)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,22 +102,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        VirtualMachineResourceNames IJsonModel<VirtualMachineResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineResourceNames IJsonModel<VirtualMachineResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineResourceNames JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineResourceNames(document.RootElement, options);
         }
 
-        internal static VirtualMachineResourceNames DeserializeVirtualMachineResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineResourceNames DeserializeVirtualMachineResourceNames(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,60 +132,66 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             IList<NetworkInterfaceResourceNames> networkInterfaces = default;
             string osDiskName = default;
             IDictionary<string, IList<string>> dataDiskNames = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmName"u8))
+                if (prop.NameEquals("vmName"u8))
                 {
-                    vmName = property.Value.GetString();
+                    vmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostName"u8))
+                if (prop.NameEquals("hostName"u8))
                 {
-                    hostName = property.Value.GetString();
+                    hostName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkInterfaces"u8))
+                if (prop.NameEquals("networkInterfaces"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetworkInterfaceResourceNames> array = new List<NetworkInterfaceResourceNames>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NetworkInterfaceResourceNames.DeserializeNetworkInterfaceResourceNames(item, options));
                     }
                     networkInterfaces = array;
                     continue;
                 }
-                if (property.NameEquals("osDiskName"u8))
+                if (prop.NameEquals("osDiskName"u8))
                 {
-                    osDiskName = property.Value.GetString();
+                    osDiskName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataDiskNames"u8))
+                if (prop.NameEquals("dataDiskNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetString());
+                                }
                             }
-                            dictionary.Add(property0.Name, array);
+                            dictionary.Add(prop0.Name, array);
                         }
                     }
                     dataDiskNames = dictionary;
@@ -183,23 +199,25 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineResourceNames(
                 vmName,
                 hostName,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(),
                 osDiskName,
                 dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VirtualMachineResourceNames>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineResourceNames>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -209,15 +227,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        VirtualMachineResourceNames IPersistableModel<VirtualMachineResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineResourceNames IPersistableModel<VirtualMachineResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineResourceNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineResourceNames(document.RootElement, options);
                     }
                 default:
@@ -225,6 +248,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualMachineResourceNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
