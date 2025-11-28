@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             _loggerFactory.AddProvider(_loggerProvider);
             _mockQueue = new Mock<QueueClient>(new Uri("https://test.queue.core.windows.net/testqueue"), new QueueClientOptions());
             _mockQueue.Setup(x => x.Name).Returns("testqueue");
-            _metricsProvider = new QueueMetricsProvider(_mockQueue.Object, _loggerFactory);
+            _metricsProvider = new QueueMetricsProvider("testfunction", _mockQueue.Object, _loggerFactory);
         }
 
         [OneTimeSetUp]
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         [Test]
         public async Task GetMetrics_ReturnsExpectedResult()
         {
-            QueueMetricsProvider _provider = new QueueMetricsProvider(Fixture.Queue, _loggerFactory);
+            QueueMetricsProvider _provider = new QueueMetricsProvider("testfunction", Fixture.Queue, _loggerFactory);
             var metrics = await _provider.GetMetricsAsync();
 
             Assert.AreEqual(0, metrics.QueueLength);
