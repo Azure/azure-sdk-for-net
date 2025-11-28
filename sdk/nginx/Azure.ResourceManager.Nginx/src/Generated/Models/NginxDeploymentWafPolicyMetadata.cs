@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Update settings for NGINX App Protect (NAP). </summary>
-    internal partial class NginxDeploymentUpdatePropertiesNginxAppProtect
+    /// <summary> Nginx Deployment Waf Policy Metadata. </summary>
+    public partial class NginxDeploymentWafPolicyMetadata : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +47,25 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdatePropertiesNginxAppProtect"/>. </summary>
-        public NginxDeploymentUpdatePropertiesNginxAppProtect()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyMetadata"/>. </summary>
+        internal NginxDeploymentWafPolicyMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdatePropertiesNginxAppProtect"/>. </summary>
-        /// <param name="webApplicationFirewallSettings"> Settings for the NGINX App Protect Web Application Firewall (WAF). </param>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyMetadata"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Nginx Deployment Waf Policy Metadata Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentUpdatePropertiesNginxAppProtect(WebApplicationFirewallSettings webApplicationFirewallSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentWafPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxDeploymentWafPolicyMetadataProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            WebApplicationFirewallSettings = webApplicationFirewallSettings;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Settings for the NGINX App Protect Web Application Firewall (WAF). </summary>
-        internal WebApplicationFirewallSettings WebApplicationFirewallSettings { get; set; }
-        /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
-        public WebApplicationFirewallActivationState? WebApplicationFirewallActivationState
-        {
-            get => WebApplicationFirewallSettings is null ? default : WebApplicationFirewallSettings.ActivationState;
-            set
-            {
-                if (WebApplicationFirewallSettings is null)
-                    WebApplicationFirewallSettings = new WebApplicationFirewallSettings();
-                WebApplicationFirewallSettings.ActivationState = value;
-            }
-        }
+        /// <summary> Nginx Deployment Waf Policy Metadata Properties. </summary>
+        public NginxDeploymentWafPolicyMetadataProperties Properties { get; }
     }
 }

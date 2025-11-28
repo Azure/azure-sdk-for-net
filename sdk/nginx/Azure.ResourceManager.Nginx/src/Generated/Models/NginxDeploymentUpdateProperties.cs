@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentUpdateProperties. </summary>
+    /// <summary> Nginx Deployment Update Properties. </summary>
     public partial class NginxDeploymentUpdateProperties
     {
         /// <summary>
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         /// <param name="enableDiagnosticsSupport"></param>
-        /// <param name="logging"></param>
+        /// <param name="logging"> Nginx Logging. </param>
         /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
-        /// <param name="userProfile"></param>
-        /// <param name="networkProfile"></param>
+        /// <param name="userProfile"> Nginx Deployment User Profile. </param>
+        /// <param name="networkProfile"> Nginx Network Profile. </param>
         /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
-        /// <param name="nginxAppProtect"> Update settings for NGINX App Protect (NAP). </param>
+        /// <param name="webApplicationFirewallSettings"> Settings for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, NginxNetworkProfile networkProfile, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, NginxNetworkProfile networkProfile, AutoUpgradeProfile autoUpgradeProfile, WebApplicationFirewallSettings webApplicationFirewallSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.Nginx.Models
             UserProfile = userProfile;
             NetworkProfile = networkProfile;
             AutoUpgradeProfile = autoUpgradeProfile;
-            NginxAppProtect = nginxAppProtect;
+            WebApplicationFirewallSettings = webApplicationFirewallSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the enable diagnostics support. </summary>
         public bool? EnableDiagnosticsSupport { get; set; }
-        /// <summary> Gets or sets the logging. </summary>
+        /// <summary> Nginx Logging. </summary>
         internal NginxLogging Logging { get; set; }
-        /// <summary> Gets or sets the logging storage account. </summary>
+        /// <summary> Nginx Storage Account. </summary>
         public NginxStorageAccount LoggingStorageAccount
         {
             get => Logging is null ? default : Logging.StorageAccount;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Information on how the deployment will be scaled. </summary>
         public NginxDeploymentScalingProperties ScalingProperties { get; set; }
-        /// <summary> Gets or sets the user profile. </summary>
+        /// <summary> Nginx Deployment User Profile. </summary>
         internal NginxDeploymentUserProfile UserProfile { get; set; }
         /// <summary> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </summary>
         public string UserPreferredEmail
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        /// <summary> Gets or sets the network profile. </summary>
+        /// <summary> Nginx Network Profile. </summary>
         public NginxNetworkProfile NetworkProfile { get; set; }
         /// <summary> Autoupgrade settings of a deployment. </summary>
         internal AutoUpgradeProfile AutoUpgradeProfile { get; set; }
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.Nginx.Models
             set => AutoUpgradeProfile = new AutoUpgradeProfile(value);
         }
 
-        /// <summary> Update settings for NGINX App Protect (NAP). </summary>
-        internal NginxDeploymentUpdatePropertiesNginxAppProtect NginxAppProtect { get; set; }
+        /// <summary> Settings for the NGINX App Protect Web Application Firewall (WAF). </summary>
+        internal WebApplicationFirewallSettings WebApplicationFirewallSettings { get; set; }
         /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
         public WebApplicationFirewallActivationState? WebApplicationFirewallActivationState
         {
-            get => NginxAppProtect is null ? default : NginxAppProtect.WebApplicationFirewallActivationState;
+            get => WebApplicationFirewallSettings is null ? default : WebApplicationFirewallSettings.ActivationState;
             set
             {
-                if (NginxAppProtect is null)
-                    NginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect();
-                NginxAppProtect.WebApplicationFirewallActivationState = value;
+                if (WebApplicationFirewallSettings is null)
+                    WebApplicationFirewallSettings = new WebApplicationFirewallSettings();
+                WebApplicationFirewallSettings.ActivationState = value;
             }
         }
     }

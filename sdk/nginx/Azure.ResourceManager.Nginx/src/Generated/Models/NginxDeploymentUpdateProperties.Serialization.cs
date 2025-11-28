@@ -64,11 +64,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("autoUpgradeProfile"u8);
                 writer.WriteObjectValue(AutoUpgradeProfile, options);
             }
-            if (Optional.IsDefined(NginxAppProtect))
+            writer.WritePropertyName("nginxAppProtect"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(WebApplicationFirewallSettings))
             {
-                writer.WritePropertyName("nginxAppProtect"u8);
-                writer.WriteObjectValue(NginxAppProtect, options);
+                writer.WritePropertyName("webApplicationFirewallSettings"u8);
+                writer.WriteObjectValue(WebApplicationFirewallSettings, options);
             }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxDeploymentUserProfile userProfile = default;
             NginxNetworkProfile networkProfile = default;
             AutoUpgradeProfile autoUpgradeProfile = default;
-            NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect = default;
+            WebApplicationFirewallSettings webApplicationFirewallSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,9 +178,21 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nginxAppProtect = NginxDeploymentUpdatePropertiesNginxAppProtect.DeserializeNginxDeploymentUpdatePropertiesNginxAppProtect(property.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("webApplicationFirewallSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            webApplicationFirewallSettings = WebApplicationFirewallSettings.DeserializeWebApplicationFirewallSettings(property0.Value, options);
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +208,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 userProfile,
                 networkProfile,
                 autoUpgradeProfile,
-                nginxAppProtect,
+                webApplicationFirewallSettings,
                 serializedAdditionalRawData);
         }
 
