@@ -35,6 +35,30 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ActiveDirectoryConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ActiveDirectoryConfigResource.CreateResourceIdentifier" /> to create an <see cref="ActiveDirectoryConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ActiveDirectoryConfigResource"/> object. </returns>
+        public virtual ActiveDirectoryConfigResource GetActiveDirectoryConfigResource(ResourceIdentifier id)
+        {
+            ActiveDirectoryConfigResource.ValidateResourceId(id);
+            return new ActiveDirectoryConfigResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticAccountResource.CreateResourceIdentifier" /> to create an <see cref="ElasticAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticAccountResource"/> object. </returns>
+        public virtual ElasticAccountResource GetElasticAccountResource(ResourceIdentifier id)
+        {
+            ElasticAccountResource.ValidateResourceId(id);
+            return new ElasticAccountResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RegionInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RegionInfoResource.CreateResourceIdentifier" /> to create a <see cref="RegionInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -56,6 +80,90 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             NetAppAccountResource.ValidateResourceId(id);
             return new NetAppAccountResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticBackupPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ElasticBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticBackupPolicyResource"/> object. </returns>
+        public virtual ElasticBackupPolicyResource GetElasticBackupPolicyResource(ResourceIdentifier id)
+        {
+            ElasticBackupPolicyResource.ValidateResourceId(id);
+            return new ElasticBackupPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticBackupVaultResource.CreateResourceIdentifier" /> to create an <see cref="ElasticBackupVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticBackupVaultResource"/> object. </returns>
+        public virtual ElasticBackupVaultResource GetElasticBackupVaultResource(ResourceIdentifier id)
+        {
+            ElasticBackupVaultResource.ValidateResourceId(id);
+            return new ElasticBackupVaultResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticBackupResource.CreateResourceIdentifier" /> to create an <see cref="ElasticBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticBackupResource"/> object. </returns>
+        public virtual ElasticBackupResource GetElasticBackupResource(ResourceIdentifier id)
+        {
+            ElasticBackupResource.ValidateResourceId(id);
+            return new ElasticBackupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticCapacityPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticCapacityPoolResource.CreateResourceIdentifier" /> to create an <see cref="ElasticCapacityPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticCapacityPoolResource"/> object. </returns>
+        public virtual ElasticCapacityPoolResource GetElasticCapacityPoolResource(ResourceIdentifier id)
+        {
+            ElasticCapacityPoolResource.ValidateResourceId(id);
+            return new ElasticCapacityPoolResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticVolumeResource.CreateResourceIdentifier" /> to create an <see cref="ElasticVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticVolumeResource"/> object. </returns>
+        public virtual ElasticVolumeResource GetElasticVolumeResource(ResourceIdentifier id)
+        {
+            ElasticVolumeResource.ValidateResourceId(id);
+            return new ElasticVolumeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticSnapshotResource"/> object. </returns>
+        public virtual ElasticSnapshotResource GetElasticSnapshotResource(ResourceIdentifier id)
+        {
+            ElasticSnapshotResource.ValidateResourceId(id);
+            return new ElasticSnapshotResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticSnapshotPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticSnapshotPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSnapshotPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticSnapshotPolicyResource"/> object. </returns>
+        public virtual ElasticSnapshotPolicyResource GetElasticSnapshotPolicyResource(ResourceIdentifier id)
+        {
+            ElasticSnapshotPolicyResource.ValidateResourceId(id);
+            return new ElasticSnapshotPolicyResource(Client, id);
         }
 
         /// <summary>
@@ -107,6 +215,18 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CacheResource.CreateResourceIdentifier" /> to create a <see cref="CacheResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CacheResource"/> object. </returns>
+        public virtual CacheResource GetCacheResource(ResourceIdentifier id)
+        {
+            CacheResource.ValidateResourceId(id);
+            return new CacheResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetAppVolumeResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -116,6 +236,30 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             NetAppVolumeResource.ValidateResourceId(id);
             return new NetAppVolumeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetAppBucketResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBucketResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBucketResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetAppBucketResource"/> object. </returns>
+        public virtual NetAppBucketResource GetNetAppBucketResource(ResourceIdentifier id)
+        {
+            NetAppBucketResource.ValidateResourceId(id);
+            return new NetAppBucketResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RansomwareReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RansomwareReportResource.CreateResourceIdentifier" /> to create a <see cref="RansomwareReportResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RansomwareReportResource"/> object. </returns>
+        public virtual RansomwareReportResource GetRansomwareReportResource(ResourceIdentifier id)
+        {
+            RansomwareReportResource.ValidateResourceId(id);
+            return new RansomwareReportResource(Client, id);
         }
 
         /// <summary>

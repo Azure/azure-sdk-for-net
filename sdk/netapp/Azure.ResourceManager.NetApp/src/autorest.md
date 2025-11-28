@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/dbdbc75c548071c0f5f0bdfae18dd1b31a7ab95a/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
-tag: package-2025-09-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/97241c594f16e0915407b7dc85377e4e3b26b0b9/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+tag: package-preview-2025-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -284,6 +284,8 @@ rename-mapping:
   BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
   ListReplicationsRequest.exclude: ExcludeReplicationsFilter
   Exclude: ExcludeReplicationsFilter
+  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResult
+
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
