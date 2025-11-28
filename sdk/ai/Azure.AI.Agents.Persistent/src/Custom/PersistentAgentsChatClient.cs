@@ -211,6 +211,59 @@ namespace Azure.AI.Agents.Persistent
                         yield return ruUpdate;
                         break;
 
+                    case RunStepDetailsUpdate details:
+                        if (!string.IsNullOrEmpty(details.CodeInterpreterInput))
+                        {
+                            CodeInterpreterToolCallContent citcc = new()
+                            {
+                                CallId = details.ToolCallId,
+                                Inputs = [new DataContent(Encoding.UTF8.GetBytes(details.CodeInterpreterInput), "text/x-python")],
+                                RawRepresentation = details,
+                            };
+
+                            yield return new ChatResponseUpdate(ChatRole.Assistant, [citcc])
+                            {
+                                AuthorName = _agentId,
+                                ConversationId = threadId,
+                                MessageId = responseId,
+                                RawRepresentation = update,
+                                ResponseId = responseId,
+                            };
+                        }
+
+                        if (details.CodeInterpreterOutputs is { Count: > 0 })
+                        {
+                            CodeInterpreterToolResultContent citrc = new()
+                            {
+                                CallId = details.ToolCallId,
+                                RawRepresentation = details,
+                            };
+
+                            foreach (var output in details.CodeInterpreterOutputs)
+                            {
+                                switch (output)
+                                {
+                                    case RunStepDeltaCodeInterpreterImageOutput imageOutput when imageOutput.Image?.FileId is string imageFileId && !string.IsNullOrWhiteSpace(imageFileId):
+                                        (citrc.Outputs ??= []).Add(new HostedFileContent(imageFileId) { MediaType = "image/*" });
+                                        break;
+
+                                    case RunStepDeltaCodeInterpreterLogOutput logOutput when logOutput.Logs is string logs && !string.IsNullOrEmpty(logs):
+                                        (citrc.Outputs ??= []).Add(new TextContent(logs));
+                                        break;
+                                }
+                            }
+
+                            yield return new ChatResponseUpdate(ChatRole.Assistant, [citrc])
+                            {
+                                AuthorName = _agentId,
+                                ConversationId = threadId,
+                                MessageId = responseId,
+                                RawRepresentation = update,
+                                ResponseId = responseId,
+                            };
+                        }
+                        break;
+
                     case MessageContentUpdate mcu:
                         ChatResponseUpdate textUpdate = new(mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant, mcu.Text)
                         {
