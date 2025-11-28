@@ -5,7 +5,6 @@
 
 #nullable enable
 
-using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -15,13 +14,12 @@ using System;
 namespace Azure.Provisioning.CognitiveServices;
 
 /// <summary>
-/// CognitiveServicesEncryptionScope.
+/// CognitiveServicesConnection.
 /// </summary>
-public partial class CognitiveServicesEncryptionScope : ProvisionableResource
+public partial class CognitiveServicesConnection : ProvisionableResource
 {
     /// <summary>
-    /// The name of the encryptionScope associated with the Cognitive Services
-    /// Account.
+    /// Friendly name of the connection.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,33 +29,32 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Properties of Cognitive Services EncryptionScope.
+    /// Connection property base schema.             Please note
+    /// Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties
+    /// is the base class. According to the scenario, a derived class of the
+    /// base class might need to be assigned here, or this property needs to
+    /// be casted to one of the possible derived classes.             The
+    /// available derived classes include
+    /// Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties,
+    /// Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties
+    /// and
+    /// Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties.
     /// </summary>
-    public CognitiveServicesEncryptionScopeProperties Properties 
+    public CognitiveServicesConnectionProperties Properties 
     {
         get { Initialize(); return _properties!; }
         set { Initialize(); AssignOrReplace(ref _properties, value); }
     }
-    private CognitiveServicesEncryptionScopeProperties? _properties;
-
-    /// <summary>
-    /// Resource tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
-    }
-    private BicepDictionary<string>? _tags;
-
-    /// <summary>
-    /// Resource Etag.
-    /// </summary>
-    public BicepValue<ETag> ETag 
-    {
-        get { Initialize(); return _eTag!; }
-    }
-    private BicepValue<ETag>? _eTag;
+    private CognitiveServicesConnectionProperties? _properties;
 
     /// <summary>
     /// Gets the Id.
@@ -88,38 +85,35 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     private ResourceReference<CognitiveServicesAccount>? _parent;
 
     /// <summary>
-    /// Creates a new CognitiveServicesEncryptionScope.
+    /// Creates a new CognitiveServicesConnection.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the CognitiveServicesEncryptionScope
+    /// The the Bicep identifier name of the CognitiveServicesConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the CognitiveServicesEncryptionScope.</param>
-    public CognitiveServicesEncryptionScope(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/encryptionScopes", resourceVersion ?? "2025-09-01")
+    /// <param name="resourceVersion">Version of the CognitiveServicesConnection.</param>
+    public CognitiveServicesConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/connections", resourceVersion ?? "2025-09-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of
-    /// CognitiveServicesEncryptionScope.
+    /// Define all the provisionable properties of CognitiveServicesConnection.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _properties = DefineModelProperty<CognitiveServicesEncryptionScopeProperties>("Properties", ["properties"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _properties = DefineModelProperty<CognitiveServicesConnectionProperties>("Properties", ["properties"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<CognitiveServicesAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported CognitiveServicesEncryptionScope resource versions.
+    /// Supported CognitiveServicesConnection resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -132,44 +126,19 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
         /// 2025-06-01.
         /// </summary>
         public static readonly string V2025_06_01 = "2025-06-01";
-
-        /// <summary>
-        /// 2024-10-01.
-        /// </summary>
-        public static readonly string V2024_10_01 = "2024-10-01";
-
-        /// <summary>
-        /// 2023-05-01.
-        /// </summary>
-        public static readonly string V2023_05_01 = "2023-05-01";
-
-        /// <summary>
-        /// 2022-12-01.
-        /// </summary>
-        public static readonly string V2022_12_01 = "2022-12-01";
-
-        /// <summary>
-        /// 2022-10-01.
-        /// </summary>
-        public static readonly string V2022_10_01 = "2022-10-01";
-
-        /// <summary>
-        /// 2022-03-01.
-        /// </summary>
-        public static readonly string V2022_03_01 = "2022-03-01";
     }
 
     /// <summary>
-    /// Creates a reference to an existing CognitiveServicesEncryptionScope.
+    /// Creates a reference to an existing CognitiveServicesConnection.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the CognitiveServicesEncryptionScope
+    /// The the Bicep identifier name of the CognitiveServicesConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the CognitiveServicesEncryptionScope.</param>
-    /// <returns>The existing CognitiveServicesEncryptionScope resource.</returns>
-    public static CognitiveServicesEncryptionScope FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the CognitiveServicesConnection.</param>
+    /// <returns>The existing CognitiveServicesConnection resource.</returns>
+    public static CognitiveServicesConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

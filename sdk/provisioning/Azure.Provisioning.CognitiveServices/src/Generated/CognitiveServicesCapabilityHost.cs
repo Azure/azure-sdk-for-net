@@ -5,7 +5,6 @@
 
 #nullable enable
 
-using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -15,13 +14,13 @@ using System;
 namespace Azure.Provisioning.CognitiveServices;
 
 /// <summary>
-/// CognitiveServicesEncryptionScope.
+/// CognitiveServicesCapabilityHost.
 /// </summary>
-public partial class CognitiveServicesEncryptionScope : ProvisionableResource
+public partial class CognitiveServicesCapabilityHost : ProvisionableResource
 {
     /// <summary>
-    /// The name of the encryptionScope associated with the Cognitive Services
-    /// Account.
+    /// The name of the capability host associated with the Cognitive Services
+    /// Resource.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,33 +30,14 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Properties of Cognitive Services EncryptionScope.
+    /// [Required] Additional attributes of the entity.
     /// </summary>
-    public CognitiveServicesEncryptionScopeProperties Properties 
+    public CognitiveServicesCapabilityHostProperties Properties 
     {
         get { Initialize(); return _properties!; }
         set { Initialize(); AssignOrReplace(ref _properties, value); }
     }
-    private CognitiveServicesEncryptionScopeProperties? _properties;
-
-    /// <summary>
-    /// Resource tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
-    }
-    private BicepDictionary<string>? _tags;
-
-    /// <summary>
-    /// Resource Etag.
-    /// </summary>
-    public BicepValue<ETag> ETag 
-    {
-        get { Initialize(); return _eTag!; }
-    }
-    private BicepValue<ETag>? _eTag;
+    private CognitiveServicesCapabilityHostProperties? _properties;
 
     /// <summary>
     /// Gets the Id.
@@ -88,38 +68,36 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
     private ResourceReference<CognitiveServicesAccount>? _parent;
 
     /// <summary>
-    /// Creates a new CognitiveServicesEncryptionScope.
+    /// Creates a new CognitiveServicesCapabilityHost.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the CognitiveServicesEncryptionScope
+    /// The the Bicep identifier name of the CognitiveServicesCapabilityHost
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the CognitiveServicesEncryptionScope.</param>
-    public CognitiveServicesEncryptionScope(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/encryptionScopes", resourceVersion ?? "2025-09-01")
+    /// <param name="resourceVersion">Version of the CognitiveServicesCapabilityHost.</param>
+    public CognitiveServicesCapabilityHost(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/capabilityHosts", resourceVersion ?? "2025-09-01")
     {
     }
 
     /// <summary>
     /// Define all the provisionable properties of
-    /// CognitiveServicesEncryptionScope.
+    /// CognitiveServicesCapabilityHost.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _properties = DefineModelProperty<CognitiveServicesEncryptionScopeProperties>("Properties", ["properties"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _properties = DefineModelProperty<CognitiveServicesCapabilityHostProperties>("Properties", ["properties"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<CognitiveServicesAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported CognitiveServicesEncryptionScope resource versions.
+    /// Supported CognitiveServicesCapabilityHost resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -132,44 +110,19 @@ public partial class CognitiveServicesEncryptionScope : ProvisionableResource
         /// 2025-06-01.
         /// </summary>
         public static readonly string V2025_06_01 = "2025-06-01";
-
-        /// <summary>
-        /// 2024-10-01.
-        /// </summary>
-        public static readonly string V2024_10_01 = "2024-10-01";
-
-        /// <summary>
-        /// 2023-05-01.
-        /// </summary>
-        public static readonly string V2023_05_01 = "2023-05-01";
-
-        /// <summary>
-        /// 2022-12-01.
-        /// </summary>
-        public static readonly string V2022_12_01 = "2022-12-01";
-
-        /// <summary>
-        /// 2022-10-01.
-        /// </summary>
-        public static readonly string V2022_10_01 = "2022-10-01";
-
-        /// <summary>
-        /// 2022-03-01.
-        /// </summary>
-        public static readonly string V2022_03_01 = "2022-03-01";
     }
 
     /// <summary>
-    /// Creates a reference to an existing CognitiveServicesEncryptionScope.
+    /// Creates a reference to an existing CognitiveServicesCapabilityHost.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the CognitiveServicesEncryptionScope
+    /// The the Bicep identifier name of the CognitiveServicesCapabilityHost
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the CognitiveServicesEncryptionScope.</param>
-    /// <returns>The existing CognitiveServicesEncryptionScope resource.</returns>
-    public static CognitiveServicesEncryptionScope FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the CognitiveServicesCapabilityHost.</param>
+    /// <returns>The existing CognitiveServicesCapabilityHost resource.</returns>
+    public static CognitiveServicesCapabilityHost FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
