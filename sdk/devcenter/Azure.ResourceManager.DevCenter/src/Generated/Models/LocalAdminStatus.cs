@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> The LocalAdminStatus. </summary>
+    /// <summary> Local Administrator enable or disable status. Indicates whether owners of Dev Boxes are added as local administrators on the Dev Box. </summary>
     public readonly partial struct LocalAdminStatus : IEquatable<LocalAdminStatus>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string IsDisabledValue = "Disabled";
         private const string IsEnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Local administrator is disabled. </summary>
         public static LocalAdminStatus IsDisabled { get; } = new LocalAdminStatus(IsDisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary> Local administrator is enabled. </summary>
         public static LocalAdminStatus IsEnabled { get; } = new LocalAdminStatus(IsEnabledValue);
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are the same. </summary>
         public static bool operator ==(LocalAdminStatus left, LocalAdminStatus right) => left.Equals(right);

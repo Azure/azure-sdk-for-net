@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
+        /// <param name="resourceId"> The resource ID of the resource being operated on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
+        internal DevCenterOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, BinaryData properties, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
         {
-            ResourceId = resourceId;
             Properties = properties;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,8 +77,6 @@ namespace Azure.ResourceManager.DevCenter.Models
         {
         }
 
-        /// <summary> The id of the resource. </summary>
-        public ResourceIdentifier ResourceId { get; }
         /// <summary>
         /// Custom operation properties, populated only for a successful operation.
         /// <para>
@@ -110,5 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// </para>
         /// </summary>
         public BinaryData Properties { get; }
+        /// <summary> The resource ID of the resource being operated on. </summary>
+        public ResourceIdentifier ResourceId { get; }
     }
 }

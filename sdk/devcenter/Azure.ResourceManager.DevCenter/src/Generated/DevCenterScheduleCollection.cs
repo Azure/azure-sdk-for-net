@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,11 +173,10 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        public virtual async Task<Response<DevCenterScheduleResource>> GetAsync(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevCenterScheduleResource>> GetAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DevCenterScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,11 +218,10 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        public virtual Response<DevCenterScheduleResource> Get(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<DevCenterScheduleResource> Get(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
@@ -231,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken);
+                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DevCenterScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -244,7 +242,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Lists schedules for a pool
+        /// Lists schedules for a pool.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -256,7 +254,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +273,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Lists schedules for a pool
+        /// Lists schedules for a pool.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -287,7 +285,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +316,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,11 +325,10 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
@@ -339,7 +336,7 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,7 +359,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,11 +368,10 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        public virtual Response<bool> Exists(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
@@ -383,7 +379,7 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken);
+                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +402,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,11 +411,10 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DevCenterScheduleResource>> GetIfExistsAsync(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DevCenterScheduleResource>> GetIfExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
@@ -427,7 +422,7 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _devCenterScheduleSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DevCenterScheduleResource>(response.GetRawResponse());
                 return Response.FromValue(new DevCenterScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -452,7 +447,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -461,11 +456,10 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        public virtual NullableResponse<DevCenterScheduleResource> GetIfExists(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DevCenterScheduleResource> GetIfExists(string scheduleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
@@ -473,7 +467,7 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, top, cancellationToken: cancellationToken);
+                var response = _devCenterScheduleSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DevCenterScheduleResource>(response.GetRawResponse());
                 return Response.FromValue(new DevCenterScheduleResource(Client, response.Value), response.GetRawResponse());
