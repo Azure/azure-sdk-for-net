@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: CostManagement
 namespace: Azure.ResourceManager.CostManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/5eaf51d87d53aad85b1bc14f43754e7de0aa43ed/specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f61e11971b66e35d893c182e01cef00243e37e01/specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -75,6 +75,14 @@ request-path-to-resource-name:
 override-operation-name:
   ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
   ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailabilityByScheduledAction
+  PriceSheet_DownloadByInvoice: DownloadPriceSheet
+  GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId: GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByReservationId: GenerateBenefitUtilizationSummariesReportReservationScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId: GenerateBenefitUtilizationSummariesReportReservationOrderScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile: GenerateBenefitUtilizationSummariesReportBillingProfileScope
+  GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount: GenerateBenefitUtilizationSummariesReportBillingAccountScope
+  GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId: GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope
+  PriceSheet_DownloadByBillingProfile: DownloadPriceSheetByBillingProfile
 
 prepend-rp-prefix:
   - Alert
@@ -145,6 +153,7 @@ directive:
   - remove-operation: GenerateDetailedCostReportOperationResults_Get
   - remove-operation: GenerateDetailedCostReportOperationStatus_Get
   - remove-operation: Operations_List
+#   - remove-operation: CostAllocationRules_CheckNameAvailability
 
   # Could not set ResourceTypeSegment for request path /{scope}
   - from: openapi.json
@@ -203,10 +212,6 @@ directive:
     where: $.paths['/{scope}/providers/Microsoft.CostManagement/settings/{type}'].delete
     transform: >
         $['parameters'][1]['x-ms-skip-url-encoding'] = true;
-  - from: openapi.json
-    where: $.paths['/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability'].post
-    transform: >
-        $['parameters'][1]['x-ms-parameter-location'] = "method";
   # Dup schema
   - from: openapi.json
     where: $.definitions.ErrorResponse

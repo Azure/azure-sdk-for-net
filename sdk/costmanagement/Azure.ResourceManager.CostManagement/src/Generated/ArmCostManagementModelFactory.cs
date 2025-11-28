@@ -848,19 +848,29 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of a cost allocation rule. </param>
-        /// <param name="details"> Resource information for the cost allocation rule. </param>
-        /// <param name="status"> Status of the rule. </param>
-        /// <param name="createdOn"> Time at which the rule was created. Rules that change cost for the same resource are applied in order of creation. </param>
-        /// <param name="updatedOn"> Time at which the rule was last updated. </param>
+        /// <param name="properties"> Cost allocation rule properties. </param>
         /// <returns> A new <see cref="CostManagement.CostAllocationRuleDefinitionData"/> instance for mocking. </returns>
-        public static CostAllocationRuleDefinitionData CostAllocationRuleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, CostAllocationRuleDetails details = null, RuleStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
+        public static CostAllocationRuleDefinitionData CostAllocationRuleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CostAllocationRuleProperties properties = null)
         {
             return new CostAllocationRuleDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CostAllocationRuleProperties"/>. </summary>
+        /// <param name="description"> Description of a cost allocation rule. </param>
+        /// <param name="details"> Resource information for the cost allocation rule. </param>
+        /// <param name="status"> Status of the rule. </param>
+        /// <param name="createdOn"> Time at which the rule was created. Rules that change cost for the same resource are applied in order of creation. </param>
+        /// <param name="updatedOn"> Time at which the rule was last updated. </param>
+        /// <returns> A new <see cref="Models.CostAllocationRuleProperties"/> instance for mocking. </returns>
+        public static CostAllocationRuleProperties CostAllocationRuleProperties(string description = null, CostAllocationRuleDetails details = null, RuleStatus status = default, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
+        {
+            return new CostAllocationRuleProperties(
                 description,
                 details,
                 status,

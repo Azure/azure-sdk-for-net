@@ -61,31 +61,15 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of a cost allocation rule. </param>
-        /// <param name="details"> Resource information for the cost allocation rule. </param>
-        /// <param name="status"> Status of the rule. </param>
-        /// <param name="createdOn"> Time at which the rule was created. Rules that change cost for the same resource are applied in order of creation. </param>
-        /// <param name="updatedOn"> Time at which the rule was last updated. </param>
+        /// <param name="properties"> Cost allocation rule properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CostAllocationRuleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, CostAllocationRuleDetails details, RuleStatus? status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CostAllocationRuleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CostAllocationRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            Details = details;
-            Status = status;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description of a cost allocation rule. </summary>
-        public string Description { get; set; }
-        /// <summary> Resource information for the cost allocation rule. </summary>
-        public CostAllocationRuleDetails Details { get; set; }
-        /// <summary> Status of the rule. </summary>
-        public RuleStatus? Status { get; set; }
-        /// <summary> Time at which the rule was created. Rules that change cost for the same resource are applied in order of creation. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Time at which the rule was last updated. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> Cost allocation rule properties. </summary>
+        public CostAllocationRuleProperties Properties { get; set; }
     }
 }

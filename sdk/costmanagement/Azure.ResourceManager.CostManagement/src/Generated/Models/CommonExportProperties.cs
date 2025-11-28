@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfo"/> or <paramref name="definition"/> is null. </exception>
-        internal CommonExportProperties(ExportDeliveryInfo deliveryInfo, ExportDefinition definition)
+        public CommonExportProperties(ExportDeliveryInfo deliveryInfo, ExportDefinition definition)
         {
             Argument.AssertNotNull(deliveryInfo, nameof(deliveryInfo));
             Argument.AssertNotNull(definition, nameof(definition));
@@ -91,33 +91,39 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The format of the export being delivered. </summary>
-        public ExportFormatType? Format { get; }
+        public ExportFormatType? Format { get; set; }
         /// <summary> Has delivery information for the export. </summary>
-        internal ExportDeliveryInfo DeliveryInfo { get; }
+        internal ExportDeliveryInfo DeliveryInfo { get; set; }
         /// <summary> Has destination for the export being delivered. </summary>
         public ExportDeliveryDestination DeliveryInfoDestination
         {
-            get => DeliveryInfo?.Destination;
+            get => DeliveryInfo is null ? default : DeliveryInfo.Destination;
+            set => DeliveryInfo = new ExportDeliveryInfo(value);
         }
 
         /// <summary> Has the definition for the export. </summary>
-        public ExportDefinition Definition { get; }
+        public ExportDefinition Definition { get; set; }
         /// <summary> If requested, has the most recent run history for the export. </summary>
-        internal ExportExecutionListResult RunHistory { get; }
+        internal ExportExecutionListResult RunHistory { get; set; }
         /// <summary> A list of export runs. </summary>
         public IReadOnlyList<ExportRun> RunHistoryValue
         {
-            get => RunHistory?.Value;
+            get
+            {
+                if (RunHistory is null)
+                    RunHistory = new ExportExecutionListResult();
+                return RunHistory.Value;
+            }
         }
 
         /// <summary> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </summary>
-        public bool? PartitionData { get; }
+        public bool? PartitionData { get; set; }
         /// <summary> Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will enable overwrite data for the same month in customer storage account. By default set to CreateNewReport. </summary>
-        public DataOverwriteBehaviorType? DataOverwriteBehavior { get; }
+        public DataOverwriteBehaviorType? DataOverwriteBehavior { get; set; }
         /// <summary> Allow customers to select compress data for exports. This setting will enable destination file compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet. </summary>
-        public CompressionModeType? CompressionMode { get; }
+        public CompressionModeType? CompressionMode { get; set; }
         /// <summary> The export description set by customer at time of export creation/update. </summary>
-        public string ExportDescription { get; }
+        public string ExportDescription { get; set; }
         /// <summary> If the export has an active schedule, provides an estimate of the next run time. </summary>
         public DateTimeOffset? NextRunTimeEstimate { get; }
         /// <summary> The export suspension reason if export is in SystemSuspended state. This is not populated currently. </summary>

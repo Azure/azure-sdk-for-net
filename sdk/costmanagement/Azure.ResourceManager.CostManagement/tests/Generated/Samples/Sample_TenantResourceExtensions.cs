@@ -358,7 +358,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DownloadByInvoicePriceSheet_PricesheetDownload()
+        public async Task DownloadPriceSheet_PricesheetDownload()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PricesheetDownload.json
             // this example is just showing the usage of "PriceSheet_DownloadByInvoice" operation, for the dependent resources, they will have to be created separately.
@@ -374,7 +374,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
             string billingProfileName = "2USN-TPCD-BG7-TGB";
             string invoiceName = "T000940677";
-            ArmOperation<DownloadURL> lro = await tenantResource.DownloadByInvoicePriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName, invoiceName);
+            ArmOperation<DownloadURL> lro = await tenantResource.DownloadPriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName, invoiceName);
             DownloadURL result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -382,7 +382,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DownloadByBillingProfilePriceSheet_PricesheetDownloadByBillingProfile()
+        public async Task DownloadPriceSheetByBillingProfile_PricesheetDownloadByBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/PricesheetDownloadByBillingProfile.json
             // this example is just showing the usage of "PriceSheet_DownloadByBillingProfile" operation, for the dependent resources, they will have to be created separately.
@@ -397,7 +397,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             // invoke the operation
             string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
             string billingProfileName = "2USN-TPCD-BG7-TGB";
-            ArmOperation<PricesheetDownloadProperties> lro = await tenantResource.DownloadByBillingProfilePriceSheetAsync(WaitUntil.Completed, billingAccountName, billingProfileName);
+            ArmOperation<PricesheetDownloadProperties> lro = await tenantResource.DownloadPriceSheetByBillingProfileAsync(WaitUntil.Completed, billingAccountName, billingProfileName);
             PricesheetDownloadProperties result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -505,7 +505,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport_GenerateUtilizationSummariesReportByBillingProfile()
+        public async Task GenerateBenefitUtilizationSummariesReportBillingProfileScope_GenerateUtilizationSummariesReportByBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingProfile.json
             // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByBillingProfile" operation, for the dependent resources, they will have to be created separately.
@@ -524,7 +524,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             {
                 Kind = BillingAccountBenefitKind.Reservation,
             };
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateByBillingProfileGenerateBenefitUtilizationSummariesReportAsync(WaitUntil.Completed, billingAccountId, billingProfileId, content);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil.Completed, billingAccountId, billingProfileId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -532,7 +532,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport_GenerateUtilizationSummariesReportByBillingAccount()
+        public async Task GenerateBenefitUtilizationSummariesReportBillingAccountScope_GenerateUtilizationSummariesReportByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingAccount.json
             // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByBillingAccount" operation, for the dependent resources, they will have to be created separately.
@@ -550,7 +550,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             {
                 Kind = BillingAccountBenefitKind.Reservation,
             };
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateByBillingAccountGenerateBenefitUtilizationSummariesReportAsync(WaitUntil.Completed, billingAccountId, content);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil.Completed, billingAccountId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -558,7 +558,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport_GenerateUtilizationSummariesReportBySavingsPlanOrder()
+        public async Task GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope_GenerateUtilizationSummariesReportBySavingsPlanOrder()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlanOrder.json
             // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanOrderId" operation, for the dependent resources, they will have to be created separately.
@@ -573,7 +573,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             // invoke the operation
             string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
             BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil.Completed, savingsPlanOrderId, content);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil.Completed, savingsPlanOrderId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -581,7 +581,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport_GenerateUtilizationSummariesReportBySavingsPlan()
+        public async Task GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope_GenerateUtilizationSummariesReportBySavingsPlan()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlan.json
             // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateBySavingsPlanId" operation, for the dependent resources, they will have to be created separately.
@@ -597,7 +597,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
             string savingsPlanId = "00000000-0000-0000-0000-000000000000";
             BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, content);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -605,7 +605,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport_GenerateUtilizationSummariesReportByReservationOrder()
+        public async Task GenerateBenefitUtilizationSummariesReportReservationOrderScope_GenerateUtilizationSummariesReportByReservationOrder()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservationOrder.json
             // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByReservationOrderId" operation, for the dependent resources, they will have to be created separately.
@@ -620,7 +620,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             // invoke the operation
             string reservationOrderId = "00000000-0000-0000-0000-000000000000";
             BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil.Completed, reservationOrderId, content);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil.Completed, reservationOrderId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -628,7 +628,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateByReservationIdGenerateBenefitUtilizationSummariesReport_GenerateUtilizationSummariesReportByReservation()
+        public async Task GenerateBenefitUtilizationSummariesReportReservationScope_GenerateUtilizationSummariesReportByReservation()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservation.json
             // this example is just showing the usage of "GenerateBenefitUtilizationSummariesReport_GenerateByReservationId" operation, for the dependent resources, they will have to be created separately.
@@ -644,7 +644,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In
             string reservationOrderId = "00000000-0000-0000-0000-000000000000";
             string reservationId = "00000000-0000-0000-0000-000000000000";
             BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateByReservationIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil.Completed, reservationOrderId, reservationId, content);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil.Completed, reservationOrderId, reservationId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

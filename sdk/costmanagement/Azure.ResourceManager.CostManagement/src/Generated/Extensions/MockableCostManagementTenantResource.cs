@@ -808,13 +808,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<DownloadURL>> DownloadByInvoicePriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByInvoicePriceSheet");
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
             scope.Start();
             try
             {
@@ -855,13 +855,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
-        public virtual ArmOperation<DownloadURL> DownloadByInvoicePriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DownloadURL> DownloadPriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByInvoicePriceSheet");
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheet");
             scope.Start();
             try
             {
@@ -905,12 +905,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        public virtual async Task<ArmOperation<PricesheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PricesheetDownloadProperties>> DownloadPriceSheetByBillingProfileAsync(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet");
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheetByBillingProfile");
             scope.Start();
             try
             {
@@ -954,12 +954,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        public virtual ArmOperation<PricesheetDownloadProperties> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PricesheetDownloadProperties> DownloadPriceSheetByBillingProfile(WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
-            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet");
+            using var scope = PriceSheetClientDiagnostics.CreateScope("MockableCostManagementTenantResource.DownloadPriceSheetByBillingProfile");
             scope.Start();
             try
             {
@@ -1272,13 +1272,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByBillingProfileGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
             scope.Start();
             try
             {
@@ -1319,13 +1319,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByBillingProfileGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope");
             scope.Start();
             try
             {
@@ -1365,12 +1365,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByBillingAccountGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
             scope.Start();
             try
             {
@@ -1410,12 +1410,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByBillingAccountGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope");
             scope.Start();
             try
             {
@@ -1455,12 +1455,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
             scope.Start();
             try
             {
@@ -1500,12 +1500,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBySavingsPlanOrderIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope");
             scope.Start();
             try
             {
@@ -1546,13 +1546,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
             scope.Start();
             try
             {
@@ -1593,13 +1593,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBySavingsPlanIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope");
             scope.Start();
             try
             {
@@ -1639,12 +1639,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
             scope.Start();
             try
             {
@@ -1684,12 +1684,12 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByReservationOrderIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope");
             scope.Start();
             try
             {
@@ -1730,13 +1730,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateByReservationIdGenerateBenefitUtilizationSummariesReportAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByReservationIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
             scope.Start();
             try
             {
@@ -1777,13 +1777,13 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateByReservationIdGenerateBenefitUtilizationSummariesReport(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateByReservationIdGenerateBenefitUtilizationSummariesReport");
+            using var scope = GenerateBenefitUtilizationSummariesReportClientDiagnostics.CreateScope("MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope");
             scope.Start();
             try
             {

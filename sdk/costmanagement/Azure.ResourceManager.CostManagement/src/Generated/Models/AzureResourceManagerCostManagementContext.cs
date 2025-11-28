@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleDefinitionResource))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleDetails))]
     [ModelReaderWriterBuildable(typeof(CostAllocationRuleList))]
+    [ModelReaderWriterBuildable(typeof(CostAllocationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(CostManagementAlertData))]
     [ModelReaderWriterBuildable(typeof(CostManagementAlertPatch))]
     [ModelReaderWriterBuildable(typeof(CostManagementAlertResource))]

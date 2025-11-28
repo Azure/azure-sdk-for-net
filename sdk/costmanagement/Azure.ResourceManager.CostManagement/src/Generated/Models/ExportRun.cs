@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExportRun"/>. </summary>
-        internal ExportRun()
+        public ExportRun()
         {
         }
 
@@ -90,30 +90,30 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The type of the export run. </summary>
-        public ExportRunExecutionType? ExecutionType { get; }
+        public ExportRunExecutionType? ExecutionType { get; set; }
         /// <summary> The last known status of the export run. </summary>
-        public ExportRunExecutionStatus? Status { get; }
+        public ExportRunExecutionStatus? Status { get; set; }
         /// <summary> The identifier for the entity that triggered the export. For on-demand runs it is the user email. For scheduled runs it is 'System'. </summary>
-        public string SubmittedBy { get; }
+        public string SubmittedBy { get; set; }
         /// <summary> The time when export was queued to be run. </summary>
-        public DateTimeOffset? SubmittedOn { get; }
+        public DateTimeOffset? SubmittedOn { get; set; }
         /// <summary> The time when export was picked up to be run. </summary>
-        public DateTimeOffset? ProcessingStartOn { get; }
+        public DateTimeOffset? ProcessingStartOn { get; set; }
         /// <summary> The time when the export run finished. </summary>
-        public DateTimeOffset? ProcessingEndOn { get; }
+        public DateTimeOffset? ProcessingEndOn { get; set; }
         /// <summary> The start datetime for the export. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end datetime for the export. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> The name of the exported file. </summary>
-        public string FileName { get; }
+        public string FileName { get; set; }
         /// <summary> The manifest file location(URI location) for the exported files. </summary>
-        public string ManifestFile { get; }
+        public string ManifestFile { get; set; }
         /// <summary> The export settings that were in effect for this run. </summary>
-        public CommonExportProperties RunSettings { get; }
+        public CommonExportProperties RunSettings { get; set; }
         /// <summary> The details of any error. </summary>
-        public ExportRunErrorDetails Error { get; }
+        public ExportRunErrorDetails Error { get; set; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
     }
 }

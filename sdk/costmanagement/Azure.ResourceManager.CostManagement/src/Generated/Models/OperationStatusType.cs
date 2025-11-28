@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         private const string RunningValue = "Running";
-        private const string CompleteValue = "Complete";
+        private const string CompletedValue = "Completed";
         private const string FailedValue = "Failed";
 
         /// <summary> Running. </summary>
         public static OperationStatusType Running { get; } = new OperationStatusType(RunningValue);
-        /// <summary> Complete. </summary>
-        public static OperationStatusType Complete { get; } = new OperationStatusType(CompleteValue);
+        /// <summary> Completed. </summary>
+        public static OperationStatusType Completed { get; } = new OperationStatusType(CompletedValue);
         /// <summary> Failed. </summary>
         public static OperationStatusType Failed { get; } = new OperationStatusType(FailedValue);
         /// <summary> Determines if two <see cref="OperationStatusType"/> values are the same. </summary>

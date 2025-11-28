@@ -115,28 +115,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TagFilter))
+            if (Optional.IsDefined(TagFilter))
             {
                 writer.WritePropertyName("tagFilter"u8);
-                writer.WriteStartObject();
-                foreach (var item in TagFilter)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(TagFilter);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(TagFilter, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
             if (Optional.IsDefined(Threshold))
             {
@@ -271,7 +260,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             IList<BinaryData> resourceGroupFilter = default;
             IList<BinaryData> resourceFilter = default;
             IList<BinaryData> meterFilter = default;
-            IDictionary<string, BinaryData> tagFilter = default;
+            BinaryData tagFilter = default;
             decimal? threshold = default;
             CostManagementAlertOperator? @operator = default;
             decimal? amount = default;
@@ -379,19 +368,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    tagFilter = dictionary;
+                    tagFilter = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("threshold"u8))
@@ -529,7 +506,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(),
                 resourceFilter ?? new ChangeTrackingList<BinaryData>(),
                 meterFilter ?? new ChangeTrackingList<BinaryData>(),
-                tagFilter ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                tagFilter,
                 threshold,
                 @operator,
                 amount,

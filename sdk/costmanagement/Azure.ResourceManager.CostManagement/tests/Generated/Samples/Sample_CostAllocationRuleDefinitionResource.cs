@@ -92,8 +92,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             CostAllocationRuleDefinitionData data = new CostAllocationRuleDefinitionData
             {
-                Description = "This is a testRule",
-                Details = new CostAllocationRuleDetails
+                Properties = new CostAllocationRuleProperties(new CostAllocationRuleDetails
                 {
                     SourceResources = { new SourceCostAllocationResource(CostAllocationResourceType.Dimension, "ResourceGroupName", new string[] { "sampleRG", "secondRG" }) },
                     TargetResources = {new TargetCostAllocationResource(CostAllocationResourceType.Dimension, "ResourceGroupName", new CostAllocationProportion[]
@@ -101,8 +100,10 @@ namespace Azure.ResourceManager.CostManagement.Samples
 new CostAllocationProportion("destinationRG", 45),
 new CostAllocationProportion("destinationRG2", 54)
 }, CostAllocationPolicyType.FixedProportion)},
+                }, RuleStatus.Active)
+                {
+                    Description = "This is a testRule",
                 },
-                Status = RuleStatus.Active,
             };
             ArmOperation<CostAllocationRuleDefinitionResource> lro = await costAllocationRuleDefinition.UpdateAsync(WaitUntil.Completed, data);
             CostAllocationRuleDefinitionResource result = lro.Value;
@@ -136,8 +137,7 @@ new CostAllocationProportion("destinationRG2", 54)
             // invoke the operation
             CostAllocationRuleDefinitionData data = new CostAllocationRuleDefinitionData
             {
-                Description = "This is a testRule",
-                Details = new CostAllocationRuleDetails
+                Properties = new CostAllocationRuleProperties(new CostAllocationRuleDetails
                 {
                     SourceResources = { new SourceCostAllocationResource(CostAllocationResourceType.Tag, "category", new string[] { "devops" }) },
                     TargetResources = {new TargetCostAllocationResource(CostAllocationResourceType.Dimension, "ResourceGroupName", new CostAllocationProportion[]
@@ -146,8 +146,10 @@ new CostAllocationProportion("destinationRG", (float)33.33),
 new CostAllocationProportion("destinationRG2", (float)33.33),
 new CostAllocationProportion("destinationRG3", (float)33.34)
 }, CostAllocationPolicyType.FixedProportion)},
+                }, RuleStatus.Active)
+                {
+                    Description = "This is a testRule",
                 },
-                Status = RuleStatus.Active,
             };
             ArmOperation<CostAllocationRuleDefinitionResource> lro = await costAllocationRuleDefinition.UpdateAsync(WaitUntil.Completed, data);
             CostAllocationRuleDefinitionResource result = lro.Value;
