@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="definition"> defines the type of alert. </param>
         /// <param name="description"> Alert description. </param>
         /// <param name="source"> Source of alert. </param>
@@ -72,10 +73,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
         /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
-        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModifiedOn, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = eTag;
             Definition = definition;
             Description = description;
             Source = source;
@@ -87,10 +88,11 @@ namespace Azure.ResourceManager.CostManagement
             ModifiedOn = modifiedOn;
             StatusModificationUserName = statusModificationUserName;
             StatusModifiedOn = statusModifiedOn;
-            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> defines the type of alert. </summary>
         public AlertPropertiesDefinition Definition { get; set; }
         /// <summary> Alert description. </summary>
@@ -113,7 +115,5 @@ namespace Azure.ResourceManager.CostManagement
         public string StatusModificationUserName { get; set; }
         /// <summary> dateTime in which the alert status was last modified. </summary>
         public DateTimeOffset? StatusModifiedOn { get; set; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
     }
 }

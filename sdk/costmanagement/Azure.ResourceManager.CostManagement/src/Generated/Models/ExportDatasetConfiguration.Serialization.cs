@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class ExportDatasetConfiguration : IUtf8JsonSerializable, IJsonModel<ExportDatasetConfiguration>
+    public partial class ExportDatasetConfiguration : IUtf8JsonSerializable, IJsonModel<ExportDatasetConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDatasetConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -41,6 +41,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Columns)
                 {
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DataVersion))
+            {
+                writer.WritePropertyName("dataVersion"u8);
+                writer.WriteStringValue(DataVersion);
+            }
+            if (Optional.IsCollectionDefined(Filters))
+            {
+                writer.WritePropertyName("filters"u8);
+                writer.WriteStartArray();
+                foreach (var item in Filters)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,6 +97,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             IList<string> columns = default;
+            string dataVersion = default;
+            IList<FilterItems> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,13 +117,32 @@ namespace Azure.ResourceManager.CostManagement.Models
                     columns = array;
                     continue;
                 }
+                if (property.NameEquals("dataVersion"u8))
+                {
+                    dataVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("filters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FilterItems> array = new List<FilterItems>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FilterItems.DeserializeFilterItems(item, options));
+                    }
+                    filters = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportDatasetConfiguration(columns ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ExportDatasetConfiguration(columns ?? new ChangeTrackingList<string>(), dataVersion, filters ?? new ChangeTrackingList<FilterItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDatasetConfiguration>.Write(ModelReaderWriterOptions options)

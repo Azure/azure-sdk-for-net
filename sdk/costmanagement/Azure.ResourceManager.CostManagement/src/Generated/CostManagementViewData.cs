@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="displayName"> User input name of the view. Required. </param>
         /// <param name="scope"> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
         /// <param name="createdOn"> Date the user created this view. </param>
@@ -79,10 +80,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="timePeriod"> Has time period for pulling data for the report. </param>
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
-        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<ViewKpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string displayName, ResourceIdentifier scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<ViewKpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = eTag;
             DisplayName = displayName;
             Scope = scope;
             CreatedOn = createdOn;
@@ -99,10 +100,11 @@ namespace Azure.ResourceManager.CostManagement
             TimePeriod = timePeriod;
             DataSet = dataSet;
             IncludeMonetaryCommitment = includeMonetaryCommitment;
-            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> User input name of the view. Required. </summary>
         public string DisplayName { get; set; }
         /// <summary> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </summary>
@@ -110,9 +112,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Date the user created this view. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Date when the user last modified this view. </summary>
-        public DateTimeOffset? ModifiedOn { get; }
+        public DateTimeOffset? ModifiedOn { get; set; }
         /// <summary> Date range of the current view. </summary>
-        public string DateRange { get; }
+        public string DateRange { get; set; }
         /// <summary> Currency of the current view. </summary>
         public string Currency { get; }
         /// <summary> Chart type of the main view in Cost Analysis. Required. </summary>
@@ -135,7 +137,5 @@ namespace Azure.ResourceManager.CostManagement
         public ReportConfigDataset DataSet { get; set; }
         /// <summary> If true, report includes monetary commitment. </summary>
         public bool? IncludeMonetaryCommitment { get; set; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
     }
 }

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string UsageValue = "Usage";
         private const string ActualCostValue = "ActualCost";
         private const string AmortizedCostValue = "AmortizedCost";
+        private const string FocusCostValue = "FocusCost";
+        private const string PriceSheetValue = "PriceSheet";
+        private const string ReservationTransactionsValue = "ReservationTransactions";
+        private const string ReservationRecommendationsValue = "ReservationRecommendations";
+        private const string ReservationDetailsValue = "ReservationDetails";
 
         /// <summary> Usage. </summary>
         public static ExportType Usage { get; } = new ExportType(UsageValue);
@@ -32,6 +37,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static ExportType ActualCost { get; } = new ExportType(ActualCostValue);
         /// <summary> AmortizedCost. </summary>
         public static ExportType AmortizedCost { get; } = new ExportType(AmortizedCostValue);
+        /// <summary> FocusCost. </summary>
+        public static ExportType FocusCost { get; } = new ExportType(FocusCostValue);
+        /// <summary> PriceSheet. </summary>
+        public static ExportType PriceSheet { get; } = new ExportType(PriceSheetValue);
+        /// <summary> ReservationTransactions. </summary>
+        public static ExportType ReservationTransactions { get; } = new ExportType(ReservationTransactionsValue);
+        /// <summary> ReservationRecommendations. </summary>
+        public static ExportType ReservationRecommendations { get; } = new ExportType(ReservationRecommendationsValue);
+        /// <summary> ReservationDetails. </summary>
+        public static ExportType ReservationDetails { get; } = new ExportType(ReservationDetailsValue);
         /// <summary> Determines if two <see cref="ExportType"/> values are the same. </summary>
         public static bool operator ==(ExportType left, ExportType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportType"/> values are not the same. </summary>

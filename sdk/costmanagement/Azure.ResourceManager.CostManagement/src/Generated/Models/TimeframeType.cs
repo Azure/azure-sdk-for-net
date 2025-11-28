@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string TheLastBillingMonthValue = "TheLastBillingMonth";
         private const string WeekToDateValue = "WeekToDate";
         private const string CustomValue = "Custom";
+        private const string TheCurrentMonthValue = "TheCurrentMonth";
 
         /// <summary> MonthToDate. </summary>
         public static TimeframeType MonthToDate { get; } = new TimeframeType(MonthToDateValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static TimeframeType WeekToDate { get; } = new TimeframeType(WeekToDateValue);
         /// <summary> Custom. </summary>
         public static TimeframeType Custom { get; } = new TimeframeType(CustomValue);
+        /// <summary> TheCurrentMonth. </summary>
+        public static TimeframeType TheCurrentMonth { get; } = new TimeframeType(TheCurrentMonthValue);
         /// <summary> Determines if two <see cref="TimeframeType"/> values are the same. </summary>
         public static bool operator ==(TimeframeType left, TimeframeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeframeType"/> values are not the same. </summary>

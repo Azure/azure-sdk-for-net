@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SingleResourceGroupAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SingleResourceGroupAlert.json
             // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SingleSubscriptionAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SingleSubscriptionAlert.json
             // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BillingAccountAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BillingAccountAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BillingAccountAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             ArmClient client = new ArmClient(cred);
 
             // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789";
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345-6789";
             CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BillingProfileAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BillingProfileAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/BillingProfileAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             ArmClient client = new ArmClient(cred);
 
             // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/billingProfiles/13579";
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345-6789/billingProfiles/13579";
             CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DepartmentAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/DepartmentAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/DepartmentAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_EnrollmentAccountAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/EnrollmentAccountAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/EnrollmentAccountAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_InvoiceSectionAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/InvoiceSectionAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/InvoiceSectionAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ResourceGroupAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ResourceGroupAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/ResourceGroupAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SubscriptionAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SubscriptionAlerts.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SubscriptionAlerts.json
             // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SingleResourceGroupAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SingleResourceGroupAlert.json
             // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SingleSubscriptionAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SingleSubscriptionAlert.json
             // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SingleResourceGroupAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SingleResourceGroupAlert.json
             // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SingleSubscriptionAlerts()
         {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/CostManagement/stable/2025-03-01/examples/SingleSubscriptionAlert.json
             // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
