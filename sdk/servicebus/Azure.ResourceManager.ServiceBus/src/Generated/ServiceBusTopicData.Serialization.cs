@@ -130,6 +130,11 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("enableExpress"u8);
                 writer.WriteBooleanValue(EnableExpress.Value);
             }
+            if (Optional.IsDefined(UserMetadata))
+            {
+                writer.WritePropertyName("userMetadata"u8);
+                writer.WriteStringValue(UserMetadata);
+            }
             writer.WriteEndObject();
         }
 
@@ -175,6 +180,7 @@ namespace Azure.ResourceManager.ServiceBus
             TimeSpan? autoDeleteOnIdle = default;
             bool? enablePartitioning = default;
             bool? enableExpress = default;
+            string userMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -374,6 +380,11 @@ namespace Azure.ResourceManager.ServiceBus
                             enableExpress = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("userMetadata"u8))
+                        {
+                            userMetadata = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -388,6 +399,7 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 sizeInBytes,
                 createdAt,
                 updatedAt,
@@ -405,7 +417,7 @@ namespace Azure.ResourceManager.ServiceBus
                 autoDeleteOnIdle,
                 enablePartitioning,
                 enableExpress,
-                location,
+                userMetadata,
                 serializedAdditionalRawData);
         }
 
@@ -753,6 +765,29 @@ namespace Azure.ResourceManager.ServiceBus
                     builder.Append("    enableExpress: ");
                     var boolValue = EnableExpress.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserMetadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userMetadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserMetadata))
+                {
+                    builder.Append("    userMetadata: ");
+                    if (UserMetadata.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserMetadata}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserMetadata}'");
+                    }
                 }
             }
 
