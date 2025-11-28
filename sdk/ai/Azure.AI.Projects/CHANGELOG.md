@@ -20,6 +20,9 @@
 
 ## 1.2.0-beta.1 (2025-11-14)
 
+### Other Changes
+* Added `finetuning` samples for operations create, retrieve, list, list events, list checkpoints, cancel, pause and resume. Also, these samples includes various finetuning techniques like Supervised (SFT), Reinforcement (RFT) and Direct performance optimization (DPO).
+
 ### Features Added
 
 This major update brings feature support for Microsoft Foundry Agents Service, integration with the new `Azure.AI.Projects.OpenAI` package, expanded evaluations capabilities, insights, red teaming, schedules, and more.

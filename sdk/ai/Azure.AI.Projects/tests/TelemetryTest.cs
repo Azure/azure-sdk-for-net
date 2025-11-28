@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Tests
             if (Mode == RecordedTestMode.Playback)
             {
                 // In playback mode, the connection string should be sanitized
-                Assert.AreEqual("Sanitized", connectionString, "In playback mode, the connection string should be 'Sanitized'.");
+                Assert.That(connectionString, Is.EqualTo("Sanitized"), "In playback mode, the connection string should be 'Sanitized'.");
             }
             else
             {
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects.Tests
                 ValidateAppInsightsConnectionString(connectionString);
             }
 
-            Assert.AreEqual(connectionString, projectClient.Telemetry.GetApplicationInsightsConnectionString(),
+            Assert.That(connectionString, Is.EqualTo(projectClient.Telemetry.GetApplicationInsightsConnectionString()),
                 "Testing the cached value of the connection string.");
         }
     }

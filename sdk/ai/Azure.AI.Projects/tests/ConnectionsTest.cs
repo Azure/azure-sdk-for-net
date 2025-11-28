@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Tests
                 ValidateConnection(connection, false);
                 Console.WriteLine(connection);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one connection to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one connection to be returned.");
 
             Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
             isEmpty = true;
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Tests
                 isEmpty = false;
                 ValidateConnection(connection, false, expectedConnectionType: connectionType);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one connection of type to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one connection of type to be returned.");
 
             Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
             AIProjectConnection specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Tests
                 ValidateConnection(connection, false);
                 Console.WriteLine(connection);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one connection to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one connection to be returned.");
 
             Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
             isEmpty = true;
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Tests
                 isEmpty = false;
                 ValidateConnection(connection, false, expectedConnectionType: connectionType);
             }
-            Assert.IsFalse(isEmpty, "Expected at least one connection of type to be returned.");
+            Assert.That(isEmpty, Is.False, "Expected at least one connection of type to be returned.");
 
             Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
             AIProjectConnection specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
