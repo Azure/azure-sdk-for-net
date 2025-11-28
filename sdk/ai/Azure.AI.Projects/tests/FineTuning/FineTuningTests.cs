@@ -274,6 +274,8 @@ public class FineTuningTests : FineTuningTestsBase
     [RecordedTest]
     public async Task Test_Rft_FineTuning_Create_Job()
     {
+        TestTimeoutInSeconds = 120; // Increase timeout to 2 minutes for RFT job operations
+
         var (fileClient, fineTuningClient) = GetClients();
         var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "rft");
 
