@@ -129,6 +129,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 });
             }
 
+            public static Task<string> TestResponse(
+                [HttpTrigger("get", "post")] HttpRequest req)
+            {
+                return Task.FromResult("test-response");
+            }
+        }
+
+        private sealed class WebPubSubMissingHubFuncs
+        {
             public static async Task TestWebPubSubOutputMissingHub(
                 [WebPubSub] IAsyncCollector<WebPubSubAction> operation)
             {
@@ -137,12 +146,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     Data = TestMessage,
                     DataType = WebPubSubDataType.Text
                 });
-            }
-
-            public static Task<string> TestResponse(
-                [HttpTrigger("get", "post")] HttpRequest req)
-            {
-                return Task.FromResult("test-response");
             }
         }
     }
