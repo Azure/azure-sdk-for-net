@@ -38,6 +38,7 @@ import {
   extensionResourceOperationName,
   nonResourceMethodMetadata,
   parentResourceName,
+  readsResourceName,
   resourceGroupResource,
   resourceMetadata,
   singleton,
@@ -195,6 +196,7 @@ function parseResourceOperation(
   const decorators = serviceMethod?.__raw?.decorators;
   for (const decorator of decorators ?? []) {
     switch (decorator.definition?.name) {
+      case readsResourceName:
       case armResourceReadName:
         return [
           ResourceOperationKind.Get,
