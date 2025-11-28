@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/azure.resourcemanager.compute.skus/Azure.ResourceManager.Compute.Skus",
+  "Tag": ""
+}

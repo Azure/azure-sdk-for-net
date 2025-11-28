@@ -10,7 +10,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/readme.md
+title: ComputeManagementClient
+# require: https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/readme.md
+tag: split-package-2025-04-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -458,4 +460,21 @@ directive:
     transform: >
       delete $["$ref"];
       $["type"] = "string";
+```
+
+## Tag: split-package-2025-04-01
+
+Creating this tag to exclude some preview operations that do not exist in our previous stable version of monitor releases.
+
+These settings apply only when `--tag=split-package-2025-04-01` is specified on the command line.
+
+This is identical to the real compute's tag, but we removed the skus.json input file for test.
+
+```yaml $(tag) == 'split-package-2025-04-01'
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/ComputeRP.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2025-01-02/DiskRP.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2024-03-03/GalleryRP.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/cloudService.json
+#   - https://github.com/Azure/azure-rest-api-specs/blob/6fb604853ab1c56f2adbe6e4922c31e772425cba/specification/compute/resource-manager/Microsoft.Compute/Skus/stable/2021-07-01/skus.json
 ```

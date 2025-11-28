@@ -1,0 +1,6 @@
+directory: specification/compute/Sku.Management
+commit: 55ac480b46d167b05e741d35b2f08f27f887b292
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories:
+- specification/compute/Common.Management
