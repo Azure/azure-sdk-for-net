@@ -91,11 +91,11 @@ public partial class DnsTxtRecord : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _txtRecords = DefineListProperty<DnsTxtRecordInfo>("TxtRecords", ["properties", "TXTRecords"]);
-        _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
+        _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>(nameof(Id), ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>(nameof(SystemData), ["systemData"], isOutput: true);
+        _txtRecords = DefineListProperty<DnsTxtRecordInfo>(nameof(TxtRecords), ["properties", "TXTRecords"]);
+        _parent = DefineResource<DnsZone>(nameof(Parent), ["parent"], isRequired: true);
         _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), ["properties", "TTL"]);
     }
 

@@ -93,11 +93,11 @@ public partial class DnsARecord : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<DnsZone>("Parent", ["parent"], isRequired: true);
-        _aRecords = DefineListProperty<DnsARecordInfo>("ARecords", ["properties", "ARecords"]);
+        _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>(nameof(Id), ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>(nameof(SystemData), ["systemData"], isOutput: true);
+        _parent = DefineResource<DnsZone>(nameof(Parent), ["parent"], isRequired: true);
+        _aRecords = DefineListProperty<DnsARecordInfo>(nameof(ARecords), ["properties", "ARecords"]);
         _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), ["properties", "TTL"]);
     }
 
