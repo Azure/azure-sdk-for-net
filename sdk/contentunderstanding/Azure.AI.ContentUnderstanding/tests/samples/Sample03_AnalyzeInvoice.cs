@@ -39,12 +39,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeInvoice
+            Assert.IsNotNull(invoiceUrl, "Invoice URL should not be null");
+            Assert.IsTrue(invoiceUrl.IsAbsoluteUri, "Invoice URL should be absolute");
             Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
             Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
-            TestContext.WriteLine("✅ Analysis operation properties verified");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+            Console.WriteLine("✅ Analysis operation properties verified");
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+            Assert.AreEqual(1, result.Contents.Count, "Invoice should have exactly one content element");
+            Console.WriteLine($"✅ Analysis result contains {result.Contents.Count} content(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractInvoiceFields
@@ -131,6 +139,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingExtractInvoiceFields
             var content = result.Contents?.FirstOrDefault();
             Assert.IsNotNull(content, "Content should not be null");
+            Assert.IsInstanceOf<DocumentContent>(content, "Content should be of type DocumentContent");
 
             if (content is DocumentContent docContent)
             {
@@ -138,87 +147,222 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
                 Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
                     "End page should be >= start page");
+                int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
+                Assert.IsTrue(totalPages > 0, "Total pages should be positive");
+                Console.WriteLine($"✅ Document has {totalPages} page(s) from {docContent.StartPageNumber} to {docContent.EndPageNumber}");
 
-                // Verify field access is working (fields may or may not have values depending on the document)
+                // Verify document unit
+                if (docContent.Unit.HasValue)
+                {
+                    Console.WriteLine($"✅ Document unit: {docContent.Unit.Value}");
+                }
+
+                // Verify CustomerName field
                 var customerNameField = docContent["CustomerName"];
-                var invoiceDateField = docContent["InvoiceDate"];
-
-                // If fields exist, verify their properties
                 if (customerNameField != null)
                 {
+                    Console.WriteLine($"✅ CustomerName field found");
+
+                    if (customerNameField.Value != null)
+                    {
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameField.Value.ToString()),
+                            "CustomerName value should not be empty when present");
+                        Console.WriteLine($"  Value: {customerNameField.Value}");
+                    }
+
                     if (customerNameField.Confidence.HasValue)
                     {
                         Assert.IsTrue(customerNameField.Confidence.Value >= 0 && customerNameField.Confidence.Value <= 1,
-                            "Confidence should be between 0 and 1");
+                            $"CustomerName confidence should be between 0 and 1, but was {customerNameField.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {customerNameField.Confidence.Value:F2}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(customerNameField.Source))
+                    {
+                        Assert.IsTrue(customerNameField.Source.StartsWith("D("),
+                            "Source should start with 'D(' for document fields");
+                        Console.WriteLine($"  Source: {customerNameField.Source}");
                     }
 
                     if (customerNameField.Spans != null && customerNameField.Spans.Count > 0)
                     {
+                        Assert.IsTrue(customerNameField.Spans.Count > 0, "Spans should not be empty when not null");
                         foreach (var span in customerNameField.Spans)
                         {
-                            Assert.IsTrue(span.Offset >= 0, "Span offset should be >= 0");
-                            Assert.IsTrue(span.Length > 0, "Span length should be > 0");
+                            Assert.IsTrue(span.Offset >= 0, $"Span offset should be >= 0, but was {span.Offset}");
+                            Assert.IsTrue(span.Length > 0, $"Span length should be > 0, but was {span.Length}");
                         }
+                        Console.WriteLine($"  Spans: {customerNameField.Spans.Count} span(s)");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ CustomerName field not found");
+                }
 
+                // Verify InvoiceDate field
+                var invoiceDateField = docContent["InvoiceDate"];
                 if (invoiceDateField != null)
                 {
+                    Console.WriteLine($"✅ InvoiceDate field found");
+
+                    if (invoiceDateField.Value != null)
+                    {
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(invoiceDateField.Value.ToString()),
+                            "InvoiceDate value should not be empty when present");
+                        Console.WriteLine($"  Value: {invoiceDateField.Value}");
+                    }
+
                     if (invoiceDateField.Confidence.HasValue)
                     {
                         Assert.IsTrue(invoiceDateField.Confidence.Value >= 0 && invoiceDateField.Confidence.Value <= 1,
-                            "Confidence should be between 0 and 1");
+                            $"InvoiceDate confidence should be between 0 and 1, but was {invoiceDateField.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {invoiceDateField.Confidence.Value:F2}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(invoiceDateField.Source))
+                    {
+                        Assert.IsTrue(invoiceDateField.Source.StartsWith("D("),
+                            "Source should start with 'D(' for document fields");
+                        Console.WriteLine($"  Source: {invoiceDateField.Source}");
                     }
 
                     if (invoiceDateField.Spans != null && invoiceDateField.Spans.Count > 0)
                     {
+                        Assert.IsTrue(invoiceDateField.Spans.Count > 0, "Spans should not be empty when not null");
                         foreach (var span in invoiceDateField.Spans)
                         {
-                            Assert.IsTrue(span.Offset >= 0, "Span offset should be >= 0");
-                            Assert.IsTrue(span.Length > 0, "Span length should be > 0");
+                            Assert.IsTrue(span.Offset >= 0, $"Span offset should be >= 0, but was {span.Offset}");
+                            Assert.IsTrue(span.Length > 0, $"Span length should be > 0, but was {span.Length}");
                         }
+                        Console.WriteLine($"  Spans: {invoiceDateField.Spans.Count} span(s)");
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ InvoiceDate field not found");
+                }
 
-                // Verify object field structure if it exists
+                // Verify TotalAmount object field
                 if (docContent["TotalAmount"] is ObjectField totalAmountObj)
                 {
+                    Console.WriteLine($"✅ TotalAmount object field found");
+
                     if (totalAmountObj.Confidence.HasValue)
                     {
                         Assert.IsTrue(totalAmountObj.Confidence.Value >= 0 && totalAmountObj.Confidence.Value <= 1,
-                            "TotalAmount confidence should be between 0 and 1");
+                            $"TotalAmount confidence should be between 0 and 1, but was {totalAmountObj.Confidence.Value}");
+                        Console.WriteLine($"  Confidence: {totalAmountObj.Confidence.Value:F2}");
                     }
 
-                    var amountField = totalAmountObj["Amount"];
-                    if (amountField?.Value is double amount)
+                    if (!string.IsNullOrEmpty(totalAmountObj.Source))
                     {
-                        Assert.IsTrue(amount >= 0, "Amount should be >= 0");
+                        Console.WriteLine($"  Source: {totalAmountObj.Source}");
+                    }
+
+                    // Verify Amount sub-field
+                    var amountField = totalAmountObj["Amount"];
+                    if (amountField != null)
+                    {
+                        Console.WriteLine($"  ✅ Amount field found");
+                        if (amountField.Value is double amount)
+                        {
+                            Assert.IsTrue(amount >= 0, $"Amount should be >= 0, but was {amount}");
+                            Console.WriteLine($"    Value: {amount:F2}");
+                        }
+                    }
+
+                    // Verify CurrencyCode sub-field
+                    var currencyField = totalAmountObj["CurrencyCode"];
+                    if (currencyField != null)
+                    {
+                        Console.WriteLine($"  ✅ CurrencyCode field found");
+                        if (currencyField.Value != null)
+                        {
+                            var currency = currencyField.Value.ToString();
+                            if (!string.IsNullOrWhiteSpace(currency))
+                            {
+                                // 修复：先检查 null 再使用
+                                Assert.AreEqual(3, currency.Length,
+                                    $"CurrencyCode should be 3 characters, but was '{currency}'");
+                                Console.WriteLine($"    Value: {currency}");
+                            }
+                        }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ TotalAmount field not found");
+                }
 
-                // Verify array field structure if it exists
+                // Verify LineItems array field
                 if (docContent["LineItems"] is ArrayField lineItems)
                 {
+                    Console.WriteLine($"✅ LineItems array field found with {lineItems.Count} item(s)");
                     Assert.IsTrue(lineItems.Count >= 0, "LineItems count should be >= 0");
 
                     for (int i = 0; i < lineItems.Count; i++)
                     {
                         if (lineItems[i] is ObjectField item)
                         {
+                            Console.WriteLine($"  ✅ Line item {i + 1}:");
+
                             if (item.Confidence.HasValue)
                             {
                                 Assert.IsTrue(item.Confidence.Value >= 0 && item.Confidence.Value <= 1,
-                                    $"Line item {i + 1} confidence should be between 0 and 1");
+                                    $"Line item {i + 1} confidence should be between 0 and 1, but was {item.Confidence.Value}");
+                                Console.WriteLine($"    Confidence: {item.Confidence.Value:F2}");
                             }
 
+                            // Verify Description field
+                            var descriptionField = item["Description"];
+                            if (descriptionField?.Value != null)
+                            {
+                                Assert.IsFalse(string.IsNullOrWhiteSpace(descriptionField.Value.ToString()),
+                                    $"Line item {i + 1} description should not be empty when present");
+                                Console.WriteLine($"    Description: {descriptionField.Value}");
+                            }
+
+                            // Verify Quantity field
                             var quantityField = item["Quantity"];
                             if (quantityField?.Value is double quantity)
                             {
-                                Assert.IsTrue(quantity >= 0, $"Line item {i + 1} quantity should be >= 0");
+                                Assert.IsTrue(quantity >= 0, $"Line item {i + 1} quantity should be >= 0, but was {quantity}");
+                                Console.WriteLine($"    Quantity: {quantity}");
                             }
+
+                            // Verify UnitPrice field if exists
+                            var unitPriceField = item["UnitPrice"];
+                            if (unitPriceField?.Value is double unitPrice)
+                            {
+                                Assert.IsTrue(unitPrice >= 0, $"Line item {i + 1} unit price should be >= 0, but was {unitPrice}");
+                                Console.WriteLine($"    UnitPrice: {unitPrice:F2}");
+                            }
+
+                            // Verify Amount field if exists
+                            var itemAmountField = item["Amount"];
+                            if (itemAmountField?.Value is double itemAmount)
+                            {
+                                Assert.IsTrue(itemAmount >= 0, $"Line item {i + 1} amount should be >= 0, but was {itemAmount}");
+                                Console.WriteLine($"    Amount: {itemAmount:F2}");
+                            }
+                        }
+                        else
+                        {
+                            Assert.Fail($"Line item {i + 1} should be an ObjectField");
                         }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("⚠️ LineItems field not found");
+                }
+
+                Console.WriteLine("✅ All invoice fields validated successfully");
+            }
+            else
+            {
+                Assert.Fail("Content should be DocumentContent for invoice analysis");
             }
             #endregion
         }
