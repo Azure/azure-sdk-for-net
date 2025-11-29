@@ -127,14 +127,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // 3. Call GetResultFileAsync with the operation ID and path
 
             // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
-            // This test requires video content with keyframes
             var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
+#if !SNIPPET
+            // Test assertions (excluded from snippet)
             Assert.IsNotNull(videoContent, "Test requires AudioVisualContent (video content) for GetResultFile");
             Assert.IsNotNull(videoContent!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
             Assert.IsTrue(videoContent.KeyFrameTimesMs!.Count > 0,
                 $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimesMs.Count}");
+#endif
 
-            if (videoContent.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
+            if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
             {
                 // Print keyframe information
                 int totalKeyframes = videoContent.KeyFrameTimesMs.Count;

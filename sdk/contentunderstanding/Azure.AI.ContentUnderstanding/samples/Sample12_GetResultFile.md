@@ -63,6 +63,7 @@ Retrieve a result file (keyframe image) using the operation ID and file path:
 
 // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
 var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
+
 if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
 {
     // Print keyframe information
