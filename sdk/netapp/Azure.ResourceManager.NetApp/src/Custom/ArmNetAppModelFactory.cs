@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 exportRules,
                 null, //protocolTypes
                 throughputMibps,
-                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(null, new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() {SnapshotPolicyId = snapshotPolicyId } } : null,
                 isDefaultQuotaEnabled,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
