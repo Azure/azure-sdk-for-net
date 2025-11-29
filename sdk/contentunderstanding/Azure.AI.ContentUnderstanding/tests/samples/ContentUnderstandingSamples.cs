@@ -15,50 +15,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Disable diagnostic validation for samples (they're for documentation, not full test coverage)
             TestDiagnostics = false;
 
-            // Sanitize endpoint URLs in request/response URIs
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                regex: @"https://[a-zA-Z0-9\-]+\.services\.ai\.azure\.com"
-            )
-            {
-                Value = "https://sanitized.services.ai.azure.com"
-            });
+            // Configure common sanitizers (endpoint URLs, headers)
+            ContentUnderstandingTestBase.ConfigureCommonSanitizers(this);
 
-            // Sanitize endpoint URLs in headers (e.g., Operation-Location header)
-            // This uses regex to match and replace the endpoint URL in header values
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location")
-            {
-                Regex = @"https://[a-zA-Z0-9\-]+\.services\.ai\.azure\.com",
-                Value = "https://sanitized.services.ai.azure.com"
-            });
-
-            // Sanitize resource IDs and regions in request bodies (for GrantCopyAuthorization and CopyAnalyzer)
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
-                regex: @"""targetAzureResourceId""\s*:\s*""[^""]*"""
-            )
-            {
-                Value = @"""targetAzureResourceId"":""Sanitized"""
-            });
-
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
-                regex: @"""targetRegion""\s*:\s*""[^""]*"""
-            )
-            {
-                Value = @"""targetRegion"":""Sanitized"""
-            });
-
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
-                regex: @"""sourceAzureResourceId""\s*:\s*""[^""]*"""
-            )
-            {
-                Value = @"""sourceAzureResourceId"":""Sanitized"""
-            });
-
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
-                regex: @"""sourceRegion""\s*:\s*""[^""]*"""
-            )
-            {
-                Value = @"""sourceRegion"":""Sanitized"""
-            });
+            // Configure copy operation sanitizers (resource IDs, regions)
+            ContentUnderstandingTestBase.ConfigureCopyOperationSanitizers(this);
         }
     }
 }

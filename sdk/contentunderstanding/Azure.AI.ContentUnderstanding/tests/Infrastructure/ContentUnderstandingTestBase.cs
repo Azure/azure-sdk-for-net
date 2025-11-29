@@ -76,16 +76,60 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// This ensures that sensitive information is not exposed in logs or telemetry data.</remarks>
         private void ConfigureSanitizers()
         {
-            // Key: Add URI sanitizer to replace real service endpoint with sanitized version
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
+            ConfigureCommonSanitizers(this);
+            ConfigureBatchOperationSanitizers(this);
+        }
+
+        /// <summary>
+        /// Configures common sanitizers for Content Understanding tests, including endpoint URL sanitization,
+        /// Operation-Location header sanitization, and sensitive header sanitization.
+        /// </summary>
+        /// <param name="testBase">The test base instance to configure sanitizers for.</param>
+        /// <remarks>This method should be called from test constructors to ensure consistent sanitization
+        /// across all Content Understanding tests. It configures:
+        /// <list type="bullet">
+        /// <item><description>URI sanitizer for service endpoint URLs</description></item>
+        /// <item><description>Header regex sanitizer for Operation-Location header</description></item>
+        /// <item><description>Header sanitizers for Ocp-Apim-Subscription-Key and Authorization</description></item>
+        /// </list>
+        /// </remarks>
+        public static void ConfigureCommonSanitizers(RecordedTestBase<ContentUnderstandingClientTestEnvironment> testBase)
+        {
+            // Sanitize endpoint URLs in request/response URIs
+            testBase.UriRegexSanitizers.Add(new UriRegexSanitizer(
                 regex: @"https://[a-zA-Z0-9\-]+\.services\.ai\.azure\.com"
             )
             {
                 Value = "https://sanitized.services.ai.azure.com"
             });
 
+            // Sanitize endpoint URLs in headers (e.g., Operation-Location header)
+            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location")
+            {
+                Regex = @"https://[a-zA-Z0-9\-]+\.services\.ai\.azure\.com",
+                Value = "https://sanitized.services.ai.azure.com"
+            });
+
+            // Sanitize sensitive headers
+            testBase.SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
+            testBase.SanitizedHeaders.Add("Authorization");
+        }
+
+        /// <summary>
+        /// Configures sanitizers specific to batch operations, including Blob Storage URLs and batch-related body fields.
+        /// </summary>
+        /// <param name="testBase">The test base instance to configure sanitizers for.</param>
+        /// <remarks>This method configures sanitizers for:
+        /// <list type="bullet">
+        /// <item><description>Blob Storage URLs</description></item>
+        /// <item><description>containerUrl in request/response bodies</description></item>
+        /// <item><description>fileListPath in request/response bodies</description></item>
+        /// </list>
+        /// </remarks>
+        public static void ConfigureBatchOperationSanitizers(RecordedTestBase<ContentUnderstandingClientTestEnvironment> testBase)
+        {
             // Sanitize Blob Storage URLs
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
+            testBase.UriRegexSanitizers.Add(new UriRegexSanitizer(
                 regex: @"https://[a-zA-Z0-9]+\.blob\.core\.windows\.net"
             )
             {
@@ -93,7 +137,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             });
 
             // Sanitize containerUrl in request/response body
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
                 regex: @"""containerUrl""\s*:\s*""[^""]*"""
             )
             {
@@ -101,16 +145,56 @@ namespace Azure.AI.ContentUnderstanding.Tests
             });
 
             // Sanitize fileListPath in request/response body
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
                 regex: @"""fileListPath""\s*:\s*""[^""]*"""
             )
             {
                 Value = @"""fileListPath"":""sanitized/path/files.txt"""
             });
+        }
 
-            // Sanitize sensitive headers
-            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
-            SanitizedHeaders.Add("Authorization");
+        /// <summary>
+        /// Configures sanitizers specific to copy operations, including resource IDs and regions.
+        /// </summary>
+        /// <param name="testBase">The test base instance to configure sanitizers for.</param>
+        /// <remarks>This method configures sanitizers for:
+        /// <list type="bullet">
+        /// <item><description>targetAzureResourceId in request/response bodies</description></item>
+        /// <item><description>targetRegion in request/response bodies</description></item>
+        /// <item><description>sourceAzureResourceId in request/response bodies</description></item>
+        /// <item><description>sourceRegion in request/response bodies</description></item>
+        /// </list>
+        /// </remarks>
+        public static void ConfigureCopyOperationSanitizers(RecordedTestBase<ContentUnderstandingClientTestEnvironment> testBase)
+        {
+            // Sanitize resource IDs and regions in request bodies (for GrantCopyAuthorization and CopyAnalyzer)
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""targetAzureResourceId""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""targetAzureResourceId"":""Sanitized"""
+            });
+
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""targetRegion""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""targetRegion"":""Sanitized"""
+            });
+
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""sourceAzureResourceId""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""sourceAzureResourceId"":""Sanitized"""
+            });
+
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""sourceRegion""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""sourceRegion"":""Sanitized"""
+            });
         }
 
         /// <summary>
