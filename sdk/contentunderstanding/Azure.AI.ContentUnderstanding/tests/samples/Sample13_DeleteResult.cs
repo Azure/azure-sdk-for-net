@@ -67,46 +67,46 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // ========== Step 1: Verify Analysis Operation ==========
             Assert.IsNotNull(documentUrl, "Document URL should not be null");
             Assert.IsTrue(documentUrl.IsAbsoluteUri, "Document URL should be absolute");
-            Console.WriteLine($"✅ Document URL: {documentUrl}");
+            Console.WriteLine($"Document URL: {documentUrl}");
 
             Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
-            Console.WriteLine("✅ Analysis operation created");
+            Console.WriteLine("Analysis operation created");
 
             // Verify operation ID is available immediately after WaitUntil.Started
             Assert.IsNotNull(operationId, "Operation ID should not be null");
             Assert.IsFalse(string.IsNullOrWhiteSpace(operationId), "Operation ID should not be empty");
             Assert.IsTrue(operationId.Length > 0, "Operation ID should have length > 0");
             Assert.IsFalse(operationId.Contains(" "), "Operation ID should not contain spaces");
-            Console.WriteLine($"✅ Operation ID obtained: {operationId}");
+            Console.WriteLine($"Operation ID obtained: {operationId}");
             Console.WriteLine($"  Length: {operationId.Length} characters");
 
             // Verify operation completed
             Assert.IsTrue(analyzeOperation.HasCompleted, "Operation should be completed after WaitForCompletionAsync");
             Assert.IsTrue(analyzeOperation.HasValue, "Operation should have a value after completion");
-            Console.WriteLine("✅ Operation completed successfully");
+            Console.WriteLine("Operation completed successfully");
 
             // Verify raw response
             var rawResponse = analyzeOperation.GetRawResponse();
             Assert.IsNotNull(rawResponse, "Raw response should not be null");
             Assert.IsTrue(rawResponse.Status >= 200 && rawResponse.Status < 300,
                 $"Response status should be successful, but was {rawResponse.Status}");
-            Console.WriteLine($"✅ Response status: {rawResponse.Status}");
+            Console.WriteLine($"Response status: {rawResponse.Status}");
 
             // ========== Verify Analysis Result ==========
-            Console.WriteLine("\n📄 Analysis Result Verification:");
+            Console.WriteLine("\nAnalysis Result Verification:");
 
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "Invoice should have exactly one content element");
-            Console.WriteLine($"✅ Analysis result contains {result.Contents.Count} content(s)");
+            Console.WriteLine($"Analysis result contains {result.Contents.Count} content(s)");
 
             // Verify content structure
             var documentContent = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(documentContent, "Content should be DocumentContent");
             Assert.IsNotNull(documentContent!.Fields, "Document content should have fields");
             Assert.IsTrue(documentContent.Fields.Count >= 0, "Fields collection should be valid");
-            Console.WriteLine($"✅ Document content has {documentContent.Fields.Count} field(s)");
+            Console.WriteLine($"Document content has {documentContent.Fields.Count} field(s)");
 
             // Verify common invoice fields if present
             var fieldsFound = new System.Collections.Generic.List<string>();
@@ -120,27 +120,27 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                     if (field is StringField sf && !string.IsNullOrWhiteSpace(sf.ValueString))
                     {
-                        Console.WriteLine($"  ✅ {fieldName}: {sf.ValueString}");
+                        Console.WriteLine($"  {fieldName}: {sf.ValueString}");
                     }
                     else if (field is ObjectField of)
                     {
                         var propertyCount = of.Value is System.Collections.IDictionary dict ? dict.Count : 0;
-                        Console.WriteLine($"  ✅ {fieldName}: [Object with {propertyCount} properties]");
+                        Console.WriteLine($"  {fieldName}: [Object with {propertyCount} properties]");
                     }
                     else if (field is ArrayField af)
                     {
-                        Console.WriteLine($"  ✅ {fieldName}: [Array with {af.Count} items]");
+                        Console.WriteLine($"  {fieldName}: [Array with {af.Count} items]");
                     }
                     else
                     {
-                        Console.WriteLine($"  ✅ {fieldName}: [Found]");
+                        Console.WriteLine($"  {fieldName}: [Found]");
                     }
                 }
             }
 
             if (fieldsFound.Count > 0)
             {
-                Console.WriteLine($"✅ Found {fieldsFound.Count}/{commonFields.Length} common invoice fields");
+                Console.WriteLine($"Found {fieldsFound.Count}/{commonFields.Length} common invoice fields");
             }
 
             // Verify analyzer ID
@@ -148,23 +148,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 Assert.AreEqual("prebuilt-invoice", result.AnalyzerId,
                     "Analyzer ID should match the one used in the request");
-                Console.WriteLine($"✅ Analyzer ID verified: {result.AnalyzerId}");
+                Console.WriteLine($"Analyzer ID verified: {result.AnalyzerId}");
             }
 
-            Console.WriteLine($"\n✅ Analysis verification completed:");
+            Console.WriteLine($"\nAnalysis verification completed:");
             Console.WriteLine($"  Operation ID: {operationId}");
             Console.WriteLine($"  Status: Completed");
             Console.WriteLine($"  Fields extracted: {documentContent.Fields.Count}");
 
             // ========== Step 2: Verify Result Deletion ==========
-            Console.WriteLine("\n🗑️ Result Deletion Verification:");
+            Console.WriteLine("\nResult Deletion Verification:");
 
             bool deletionSucceeded = false;
             try
             {
                 await client.DeleteResultAsync(operationId);
                 deletionSucceeded = true;
-                Console.WriteLine($"✅ DeleteResultAsync succeeded for operation ID: {operationId}");
+                Console.WriteLine($"DeleteResultAsync succeeded for operation ID: {operationId}");
             }
             catch (RequestFailedException ex)
             {
@@ -180,7 +180,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(deletionSucceeded, "First deletion should succeed");
 
             // ========== Verify Result No Longer Accessible ==========
-            Console.WriteLine("\n🔍 Verifying result is deleted.. .");
+            Console.WriteLine("\nVerifying result is deleted.. .");
 
             // Try to delete again to verify the result no longer exists
             bool secondDeletionFailed = false;
@@ -192,7 +192,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 await client.DeleteResultAsync(operationId);
 
                 // If we reach here, the service allows idempotent deletion
-                Console.WriteLine("✅ Second delete succeeded (service allows idempotent deletion)");
+                Console.WriteLine("Second delete succeeded (service allows idempotent deletion)");
                 Console.WriteLine("   Result is either deleted or deletion is idempotent");
             }
             catch (RequestFailedException ex)
@@ -201,7 +201,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 secondDeletionStatus = ex.Status;
                 secondDeletionError = ex.Message;
 
-                Console.WriteLine($"✅ Second delete failed as expected");
+                Console.WriteLine($"Second delete failed as expected");
                 Console.WriteLine($"  Status code: {ex.Status}");
                 Console.WriteLine($"  Error code: {ex.ErrorCode ??  "(none)"}");
                 Console.WriteLine($"  Message: {ex.Message}");
@@ -212,15 +212,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 if (ex.Status == 404)
                 {
-                    Console.WriteLine("✅ Status 404 (Not Found) confirms result was deleted");
+                    Console.WriteLine("Status 404 (Not Found) confirms result was deleted");
                 }
                 else if (ex.Status == 400)
                 {
-                    Console.WriteLine("✅ Status 400 (Bad Request) confirms result does not exist");
+                    Console.WriteLine("Status 400 (Bad Request) confirms result does not exist");
                 }
                 else if (ex.Status == 409)
                 {
-                    Console.WriteLine("✅ Status 409 (Conflict) indicates result is already deleted");
+                    Console.WriteLine("Status 409 (Conflict) indicates result is already deleted");
                 }
             }
             catch (Exception ex)
@@ -251,7 +251,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 resultFileAccessFailed = true;
                 resultFileStatus = ex.Status;
 
-                Console.WriteLine($"✅ GetResultFileAsync failed as expected");
+                Console.WriteLine($"GetResultFileAsync failed as expected");
                 Console.WriteLine($"  Status code: {ex.Status}");
 
                 Assert.IsTrue(ex.Status == 404 || ex.Status == 400,
@@ -259,11 +259,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 if (ex.Status == 404)
                 {
-                    Console.WriteLine("✅ Status 404 confirms result files are not accessible");
+                    Console.WriteLine("Status 404 confirms result files are not accessible");
                 }
                 else if (ex.Status == 400)
                 {
-                    Console.WriteLine("✅ Status 400 confirms operation does not exist");
+                    Console.WriteLine("Status 400 confirms operation does not exist");
                 }
             }
             catch (Exception ex)
@@ -273,8 +273,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // ========== Deletion Behavior Summary ==========
-            Console.WriteLine("\n📊 Deletion Behavior Summary:");
-            Console.WriteLine($"  First deletion: ✅ Succeeded");
+            Console.WriteLine("\nDeletion Behavior Summary:");
+            Console.WriteLine($"  First deletion: Succeeded");
 
             if (secondDeletionFailed)
             {
@@ -283,7 +283,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
             else
             {
-                Console.WriteLine($"  Second deletion: ✅ Succeeded");
+                Console.WriteLine($"  Second deletion: Succeeded");
                 Console.WriteLine($"  Behavior: Deletion IS idempotent");
             }
 
@@ -298,7 +298,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             // ========== Final Verification ==========
-            Console.WriteLine($"\n✅ DeleteResult verification completed successfully:");
+            Console.WriteLine($"\nDeleteResult verification completed successfully:");
             Console.WriteLine($"  Operation ID: {operationId}");
             Console.WriteLine($"  Analysis: Completed successfully");
             Console.WriteLine($"  Fields extracted: {documentContent.Fields.Count}");
@@ -310,7 +310,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(secondDeletionFailed || !secondDeletionFailed,
                 "Second deletion result is acceptable either way (idempotent or not)");
 
-            Console.WriteLine("✅ All deletion operations and verifications completed");
+            Console.WriteLine("All deletion operations and verifications completed");
             #endregion
         }
     }

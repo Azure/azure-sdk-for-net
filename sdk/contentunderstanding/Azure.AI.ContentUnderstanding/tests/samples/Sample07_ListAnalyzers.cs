@@ -96,18 +96,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingListAnalyzers
             Assert.IsNotNull(analyzers, "Analyzers list should not be null");
             Assert.IsTrue(analyzers.Count > 0, "Should have at least one analyzer");
-            Console.WriteLine($"✅ Found {analyzers.Count} analyzer(s)");
+            Console.WriteLine($"Found {analyzers.Count} analyzer(s)");
 
             // Verify counts
             Assert.IsTrue(prebuiltCount >= 0, "Prebuilt count should be >= 0");
             Assert.IsTrue(customCount >= 0, "Custom count should be >= 0");
             Assert.AreEqual(analyzers.Count, prebuiltCount + customCount,
                 "Total count should equal prebuilt + custom count");
-            Console.WriteLine($"✅ Count breakdown: {prebuiltCount} prebuilt, {customCount} custom");
+            Console.WriteLine($"Count breakdown: {prebuiltCount} prebuilt, {customCount} custom");
 
             // Verify prebuilt analyzers exist (there should always be some prebuilt analyzers)
             Assert.IsTrue(prebuiltCount > 0, "Should have at least one prebuilt analyzer");
-            Console.WriteLine($"✅ Prebuilt analyzers present: {prebuiltCount}");
+            Console.WriteLine($"Prebuilt analyzers present: {prebuiltCount}");
 
             // Verify each analyzer has required properties
             int validAnalyzers = 0;
@@ -134,7 +134,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             Assert.AreEqual(analyzers.Count, validAnalyzers, "All analyzers should have valid IDs");
-            Console.WriteLine($"✅ All {validAnalyzers} analyzers have valid IDs");
+            Console.WriteLine($"All {validAnalyzers} analyzers have valid IDs");
             Console.WriteLine($"  Analyzers with description: {analyzersWithDescription}");
 
             // Verify common prebuilt analyzers exist
@@ -159,7 +159,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (analyzerIds.Contains(prebuiltId))
                 {
                     foundCommonAnalyzers++;
-                    Console.WriteLine($"  ✅ Found common analyzer: {prebuiltId}");
+                    Console.WriteLine($"  Found common analyzer: {prebuiltId}");
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             Assert.AreEqual(commonPrebuiltAnalyzers.Length, foundCommonAnalyzers,
                 "All common prebuilt analyzers should be present");
-            Console.WriteLine($"✅ All {foundCommonAnalyzers} common prebuilt analyzers verified");
+            Console.WriteLine($"All {foundCommonAnalyzers} common prebuilt analyzers verified");
 
             // Verify prebuilt analyzer naming convention
             var prebuiltAnalyzers = analyzers.Where(a => a.AnalyzerId?.StartsWith("prebuilt-") == true).ToList();
@@ -190,7 +190,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsFalse(prebuilt.AnalyzerId.Contains("_"),
                     $"Prebuilt analyzer ID should use hyphens, not underscores: {prebuilt.AnalyzerId}");
             }
-            Console.WriteLine($"✅ All {prebuiltAnalyzers.Count} prebuilt analyzers follow naming convention");
+            Console.WriteLine($"All {prebuiltAnalyzers.Count} prebuilt analyzers follow naming convention");
 
             // Verify custom analyzers (if any)
             var customAnalyzers = analyzers.Where(a => a.AnalyzerId?.StartsWith("prebuilt-") != true).ToList();
@@ -199,7 +199,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             if (customAnalyzers.Count > 0)
             {
-                Console.WriteLine($"✅ Found {customAnalyzers.Count} custom analyzer(s):");
+                Console.WriteLine($"Found {customAnalyzers.Count} custom analyzer(s):");
                 foreach (var custom in customAnalyzers.Take(5)) // Show first 5 custom analyzers
                 {
                     Console.WriteLine($"  - {custom.AnalyzerId}");
@@ -215,7 +215,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
             else
             {
-                Console.WriteLine("ℹ️ No custom analyzers found");
+                Console.WriteLine("No custom analyzers found");
             }
 
             // Verify no duplicate analyzer IDs
@@ -229,10 +229,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 $"Should not have duplicate analyzer IDs: {string.Join(", ", duplicateIds)}");
             Assert.AreEqual(analyzers.Count, analyzerIds.Count,
                 "Number of unique analyzer IDs should match total count");
-            Console.WriteLine($"✅ All analyzer IDs are unique");
+            Console.WriteLine($"All analyzer IDs are unique");
 
             // Summary statistics
-            Console.WriteLine($"\n✅ Verification completed successfully:");
+            Console.WriteLine($"\nVerification completed successfully:");
             Console.WriteLine($"  Total analyzers: {analyzers.Count}");
             Console.WriteLine($"  Prebuilt: {prebuiltCount} ({(double)prebuiltCount / analyzers.Count * 100:F1}%)");
             Console.WriteLine($"  Custom: {customCount} ({(double)customCount / analyzers.Count * 100:F1}%)");

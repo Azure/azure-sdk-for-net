@@ -47,13 +47,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
             Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
-            Console.WriteLine("✅ Analysis operation properties verified");
+            Console.WriteLine("Analysis operation properties verified");
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
-            Console.WriteLine($"✅ Analysis result contains {result.Contents?.Count ??  0} content(s)");
+            Console.WriteLine($"Analysis result contains {result.Contents?.Count ??  0} content(s)");
             #endregion
 
-            #region Snippet:ContentUnderstandingExtractMarkdownFromUrl
             // A PDF file has only one content element even if it contains multiple pages
             MediaContent?  content = null;
             if (result.Contents == null || result.Contents.Count == 0)
@@ -72,9 +71,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine("(No markdown content available)");
                 }
             }
-            #endregion
-
-            #region Assertion:ContentUnderstandingExtractMarkdown
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
@@ -86,9 +82,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(mediaContent.Markdown),
                     "Markdown content should not be just whitespace");
-                Console.WriteLine($"✅ Markdown content extracted successfully ({mediaContent.Markdown.Length} characters)");
+                Console.WriteLine($"Markdown content extracted successfully ({mediaContent.Markdown.Length} characters)");
             }
-            #endregion
 
             // Check if this is document content to access document-specific properties
             if (content is DocumentContent documentContent)
@@ -122,7 +117,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
             }
 
-            #region Assertion:ContentUnderstandingAccessDocumentPropertiesFromUrl
             Assert.IsNotNull(content, "Content should not be null for document properties validation");
 
             if (content is DocumentContent docContent)
@@ -131,7 +125,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
                 Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
-                Console.WriteLine($"✅ MIME type verified: {docContent.MimeType}");
+                Console.WriteLine($"MIME type verified: {docContent.MimeType}");
 
                 // Validate page numbers
                 Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
@@ -139,7 +133,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "End page should be >= start page");
                 int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
                 Assert.IsTrue(totalPages > 0, "Total pages should be positive");
-                Console.WriteLine($"✅ Page range verified: {docContent.StartPageNumber} to {docContent.EndPageNumber} ({totalPages} pages)");
+                Console.WriteLine($"Page range verified: {docContent.StartPageNumber} to {docContent.EndPageNumber} ({totalPages} pages)");
 
                 // Validate pages collection
                 if (docContent.Pages != null && docContent.Pages.Count > 0)
@@ -147,7 +141,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty when not null");
                     Assert.AreEqual(totalPages, docContent.Pages.Count,
                         "Pages collection count should match calculated total pages");
-                    Console.WriteLine($"✅ Pages collection verified: {docContent.Pages.Count} pages");
+                    Console.WriteLine($"Pages collection verified: {docContent.Pages.Count} pages");
 
                     // Track page numbers to ensure they're sequential and unique
                     var pageNumbers = new System.Collections.Generic.HashSet<int>();
@@ -166,7 +160,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Assert.IsTrue(pageNumbers.Add(page.PageNumber),
                             $"Page number {page.PageNumber} appears multiple times");
 
-                        Console.WriteLine($"  ✅ Page {page.PageNumber}: {page.Width} x {page.Height} {docContent.Unit?.ToString() ?? "units"}");
+                        Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {docContent.Unit?.ToString() ?? "units"}");
                     }
                 }
                 else
@@ -178,7 +172,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (docContent.Tables != null && docContent.Tables.Count > 0)
                 {
                     Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty when not null");
-                    Console.WriteLine($"✅ Tables collection verified: {docContent.Tables.Count} tables");
+                    Console.WriteLine($"Tables collection verified: {docContent.Tables.Count} tables");
 
                     int tableCounter = 1;
                     foreach (var table in docContent.Tables)
@@ -202,7 +196,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             }
                         }
 
-                        Console.WriteLine($"  ✅ Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns" +
+                        Console.WriteLine($"  Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns" +
                             (table.Cells != null ? $" ({table.Cells.Count} cells)" : ""));
                         tableCounter++;
                     }
@@ -212,14 +206,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine("⚠️ No tables found in document content");
                 }
 
-                Console.WriteLine("✅ All document properties validated successfully");
+                Console.WriteLine("All document properties validated successfully");
             }
             else
             {
                 Console.WriteLine("⚠️ Content is not DocumentContent type, skipping document-specific validations");
                 Assert.Warn("Expected DocumentContent but got " + content?.GetType().Name);
             }
-            #endregion
         }
     }
 }

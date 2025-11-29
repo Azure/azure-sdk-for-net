@@ -125,15 +125,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(operation.GetRawResponse(), "Create analyzer operation should have a raw response");
             Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
-            Console.WriteLine("✅ Create analyzer operation properties verified");
+            Console.WriteLine("Create analyzer operation properties verified");
 
             Assert.IsNotNull(result, "Analyzer result should not be null");
-            Console.WriteLine($"✅ Analyzer '{analyzerId}' created successfully");
+            Console.WriteLine($"Analyzer '{analyzerId}' created successfully");
 
             // Verify base analyzer
             Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
             Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
-            Console.WriteLine($"✅ Base analyzer ID verified: {result.BaseAnalyzerId}");
+            Console.WriteLine($"Base analyzer ID verified: {result.BaseAnalyzerId}");
 
             // Verify analyzer config
             Assert.IsNotNull(result.Config, "Analyzer config should not be null");
@@ -142,19 +142,19 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Config.EnableOcr, "EnableOcr should be true");
             Assert.IsTrue(result.Config.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
             Assert.IsTrue(result.Config.ReturnDetails, "ReturnDetails should be true");
-            Console.WriteLine("✅ Analyzer config verified");
+            Console.WriteLine("Analyzer config verified");
 
             // Verify field schema
             Assert.IsNotNull(result.FieldSchema, "Field schema should not be null");
             Assert.IsFalse(string.IsNullOrWhiteSpace(result.FieldSchema.Name), "Field schema name should not be empty");
             Assert.AreEqual("company_schema", result.FieldSchema.Name, "Field schema name should match");
             Assert.IsFalse(string.IsNullOrWhiteSpace(result.FieldSchema.Description), "Field schema description should not be empty");
-            Console.WriteLine($"✅ Field schema verified: {result.FieldSchema.Name}");
+            Console.WriteLine($"Field schema verified: {result.FieldSchema.Name}");
 
             // Verify field schema fields
             Assert.IsNotNull(result.FieldSchema.Fields, "Field schema fields should not be null");
             Assert.AreEqual(4, result.FieldSchema.Fields.Count, "Should have 4 custom fields");
-            Console.WriteLine($"✅ Field schema contains {result.FieldSchema.Fields.Count} fields");
+            Console.WriteLine($"Field schema contains {result.FieldSchema.Fields.Count} fields");
 
             // Verify company_name field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("company_name"), "Should contain company_name field");
@@ -162,7 +162,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(ContentFieldType.String, companyNameDef.Type, "company_name should be String type");
             Assert.AreEqual(GenerationMethod.Extract, companyNameDef.Method, "company_name should use Extract method");
             Assert.IsFalse(string.IsNullOrWhiteSpace(companyNameDef.Description), "company_name should have description");
-            Console.WriteLine("  ✅ company_name field verified (String, Extract)");
+            Console.WriteLine("  company_name field verified (String, Extract)");
 
             // Verify total_amount field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("total_amount"), "Should contain total_amount field");
@@ -170,7 +170,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(ContentFieldType.Number, totalAmountDef.Type, "total_amount should be Number type");
             Assert.AreEqual(GenerationMethod.Extract, totalAmountDef.Method, "total_amount should use Extract method");
             Assert.IsFalse(string.IsNullOrWhiteSpace(totalAmountDef.Description), "total_amount should have description");
-            Console.WriteLine("  ✅ total_amount field verified (Number, Extract)");
+            Console.WriteLine("  total_amount field verified (Number, Extract)");
 
             // Verify document_summary field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("document_summary"), "Should contain document_summary field");
@@ -178,7 +178,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(ContentFieldType.String, summaryDef.Type, "document_summary should be String type");
             Assert.AreEqual(GenerationMethod.Generate, summaryDef.Method, "document_summary should use Generate method");
             Assert.IsFalse(string.IsNullOrWhiteSpace(summaryDef.Description), "document_summary should have description");
-            Console.WriteLine("  ✅ document_summary field verified (String, Generate)");
+            Console.WriteLine("  document_summary field verified (String, Generate)");
 
             // Verify document_type field
             Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("document_type"), "Should contain document_type field");
@@ -193,7 +193,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(documentTypeDef.Enum.Contains("contract"), "document_type enum should contain 'contract'");
             Assert.IsTrue(documentTypeDef.Enum.Contains("report"), "document_type enum should contain 'report'");
             Assert.IsTrue(documentTypeDef.Enum.Contains("other"), "document_type enum should contain 'other'");
-            Console.WriteLine("  ✅ document_type field verified (String, Classify, 5 enum values)");
+            Console.WriteLine("  document_type field verified (String, Classify, 5 enum values)");
 
             // Verify models
             Assert.IsNotNull(result.Models, "Models should not be null");
@@ -202,15 +202,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Models.ContainsKey("embedding"), "Should contain 'embedding' model mapping");
             Assert.AreEqual("gpt-4.1", result.Models["completion"], "Completion model should be 'gpt-4.1'");
             Assert.AreEqual("text-embedding-3-large", result.Models["embedding"], "Embedding model should be 'text-embedding-3-large'");
-            Console.WriteLine($"✅ Model mappings verified: {result.Models.Count} model(s)");
+            Console.WriteLine($"Model mappings verified: {result.Models.Count} model(s)");
 
             // Verify description
             if (!string.IsNullOrWhiteSpace(result.Description))
             {
-                Console.WriteLine($"✅ Analyzer description: {result.Description}");
+                Console.WriteLine($"Analyzer description: {result.Description}");
             }
 
-            Console.WriteLine("✅ All analyzer creation properties validated successfully");
+            Console.WriteLine("All analyzer creation properties validated successfully");
             #endregion
 
             #region Snippet:ContentUnderstandingDeleteCreatedAnalyzer
@@ -410,23 +410,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation should have a raw response");
                 Assert.IsTrue(analyzeOperation.GetRawResponse().Status >= 200 && analyzeOperation.GetRawResponse().Status < 300,
                     $"Response status should be successful, but was {analyzeOperation.GetRawResponse().Status}");
-                Console.WriteLine("✅ Analyze operation properties verified");
+                Console.WriteLine("Analyze operation properties verified");
 
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");
                 Assert.AreEqual(1, analyzeResult.Contents.Count, "Result should have exactly one content element");
-                Console.WriteLine($"✅ Analysis result contains {analyzeResult.Contents.Count} content(s)");
+                Console.WriteLine($"Analysis result contains {analyzeResult.Contents.Count} content(s)");
 
                 var documentContent = analyzeResult.Contents?.FirstOrDefault() as DocumentContent;
                 Assert.IsNotNull(documentContent, "Content should be DocumentContent");
                 Assert.IsNotNull(documentContent!.Fields, "Document content should have fields");
-                Console.WriteLine($"✅ Document content has {documentContent.Fields.Count} field(s)");
+                Console.WriteLine($"Document content has {documentContent.Fields.Count} field(s)");
 
                 // Verify company_name field (Extract method)
                 if (documentContent.Fields.TryGetValue("company_name", out var companyNameFieldAssert))
                 {
-                    Console.WriteLine("✅ company_name field found");
+                    Console.WriteLine("company_name field found");
                     Assert.IsTrue(companyNameFieldAssert is StringField, "company_name should be a StringField");
 
                     if (companyNameFieldAssert is StringField cnf && !string.IsNullOrWhiteSpace(cnf.ValueString))
@@ -467,7 +467,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Verify total_amount field (Extract method)
                 if (documentContent.Fields.TryGetValue("total_amount", out var totalAmountFieldAssert))
                 {
-                    Console.WriteLine("✅ total_amount field found");
+                    Console.WriteLine("total_amount field found");
                     Assert.IsTrue(totalAmountFieldAssert is NumberField, "total_amount should be a NumberField");
 
                     if (totalAmountFieldAssert is NumberField nfAssert && nfAssert.ValueNumber.HasValue)
@@ -509,7 +509,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Verify document_summary field (Generate method)
                 if (documentContent.Fields.TryGetValue("document_summary", out var summaryFieldAssert))
                 {
-                    Console.WriteLine("✅ document_summary field found");
+                    Console.WriteLine("document_summary field found");
                     Assert.IsTrue(summaryFieldAssert is StringField, "document_summary should be a StringField");
 
                     if (summaryFieldAssert is StringField dsf && !string.IsNullOrWhiteSpace(dsf.ValueString))
@@ -539,7 +539,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Verify document_type field (Classify method)
                 if (documentContent.Fields.TryGetValue("document_type", out var documentTypeFieldAssert))
                 {
-                    Console.WriteLine("✅ document_type field found");
+                    Console.WriteLine("document_type field found");
                     Assert.IsTrue(documentTypeFieldAssert is StringField, "document_type should be a StringField");
 
                     if (documentTypeFieldAssert.Confidence.HasValue)
@@ -569,7 +569,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine("⚠️ document_type field not found");
                 }
 
-                Console.WriteLine("✅ All custom analyzer usage properties validated successfully");
+                Console.WriteLine("All custom analyzer usage properties validated successfully");
                 #endregion
 
                 // Clean up: delete the analyzer (for testing purposes only)

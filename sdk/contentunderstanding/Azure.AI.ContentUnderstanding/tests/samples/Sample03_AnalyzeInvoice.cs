@@ -47,12 +47,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
             Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
-            Console.WriteLine("✅ Analysis operation properties verified");
+            Console.WriteLine("Analysis operation properties verified");
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "Invoice should have exactly one content element");
-            Console.WriteLine($"✅ Analysis result contains {result.Contents.Count} content(s)");
+            Console.WriteLine($"Analysis result contains {result.Contents.Count} content(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractInvoiceFields
@@ -149,19 +149,19 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "End page should be >= start page");
                 int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
                 Assert.IsTrue(totalPages > 0, "Total pages should be positive");
-                Console.WriteLine($"✅ Document has {totalPages} page(s) from {docContent.StartPageNumber} to {docContent.EndPageNumber}");
+                Console.WriteLine($"Document has {totalPages} page(s) from {docContent.StartPageNumber} to {docContent.EndPageNumber}");
 
                 // Verify document unit
                 if (docContent.Unit.HasValue)
                 {
-                    Console.WriteLine($"✅ Document unit: {docContent.Unit.Value}");
+                    Console.WriteLine($"Document unit: {docContent.Unit.Value}");
                 }
 
                 // Verify CustomerName field
                 var customerNameField = docContent["CustomerName"];
                 if (customerNameField != null)
                 {
-                    Console.WriteLine($"✅ CustomerName field found");
+                    Console.WriteLine($"CustomerName field found");
 
                     if (customerNameField.Value != null)
                     {
@@ -204,7 +204,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var invoiceDateField = docContent["InvoiceDate"];
                 if (invoiceDateField != null)
                 {
-                    Console.WriteLine($"✅ InvoiceDate field found");
+                    Console.WriteLine($"InvoiceDate field found");
 
                     if (invoiceDateField.Value != null)
                     {
@@ -246,7 +246,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Verify TotalAmount object field
                 if (docContent["TotalAmount"] is ObjectField totalAmountObj)
                 {
-                    Console.WriteLine($"✅ TotalAmount object field found");
+                    Console.WriteLine($"TotalAmount object field found");
 
                     if (totalAmountObj.Confidence.HasValue)
                     {
@@ -264,7 +264,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     var amountField = totalAmountObj["Amount"];
                     if (amountField != null)
                     {
-                        Console.WriteLine($"  ✅ Amount field found");
+                        Console.WriteLine($"  Amount field found");
                         if (amountField.Value is double amount)
                         {
                             Assert.IsTrue(amount >= 0, $"Amount should be >= 0, but was {amount}");
@@ -276,7 +276,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     var currencyField = totalAmountObj["CurrencyCode"];
                     if (currencyField != null)
                     {
-                        Console.WriteLine($"  ✅ CurrencyCode field found");
+                        Console.WriteLine($"  CurrencyCode field found");
                         if (currencyField.Value != null)
                         {
                             var currency = currencyField.Value.ToString();
@@ -298,14 +298,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Verify LineItems array field
                 if (docContent["LineItems"] is ArrayField lineItems)
                 {
-                    Console.WriteLine($"✅ LineItems array field found with {lineItems.Count} item(s)");
+                    Console.WriteLine($"LineItems array field found with {lineItems.Count} item(s)");
                     Assert.IsTrue(lineItems.Count >= 0, "LineItems count should be >= 0");
 
                     for (int i = 0; i < lineItems.Count; i++)
                     {
                         if (lineItems[i] is ObjectField item)
                         {
-                            Console.WriteLine($"  ✅ Line item {i + 1}:");
+                            Console.WriteLine($"  Line item {i + 1}:");
 
                             if (item.Confidence.HasValue)
                             {
@@ -358,7 +358,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine("⚠️ LineItems field not found");
                 }
 
-                Console.WriteLine("✅ All invoice fields validated successfully");
+                Console.WriteLine("All invoice fields validated successfully");
             }
             else
             {

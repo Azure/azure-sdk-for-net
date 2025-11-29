@@ -88,8 +88,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(targetAnalyzerId, "Target analyzer ID should not be null");
             Assert.IsFalse(string.IsNullOrWhiteSpace(targetAnalyzerId), "Target analyzer ID should not be empty");
             Assert.AreNotEqual(sourceAnalyzerId, targetAnalyzerId, "Source and target IDs should be different");
-            Console.WriteLine($"✅ Source analyzer ID: {sourceAnalyzerId}");
-            Console.WriteLine($"✅ Target analyzer ID: {targetAnalyzerId}");
+            Console.WriteLine($"Source analyzer ID: {sourceAnalyzerId}");
+            Console.WriteLine($"Target analyzer ID: {targetAnalyzerId}");
 
             // Verify source analyzer configuration
             Assert.IsNotNull(sourceConfig, "Source config should not be null");
@@ -98,27 +98,27 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(true, sourceConfig.EnableOcr, "EnableOcr should be true");
             Assert.AreEqual(true, sourceConfig.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
             Assert.AreEqual(true, sourceConfig.ReturnDetails, "ReturnDetails should be true");
-            Console.WriteLine("✅ Source config verified");
+            Console.WriteLine("Source config verified");
 
             // Verify source field schema
             Assert.IsNotNull(sourceFieldSchema, "Source field schema should not be null");
             Assert.AreEqual("company_schema", sourceFieldSchema.Name, "Field schema name should match");
             Assert.AreEqual("Schema for extracting company information", sourceFieldSchema.Description, "Field schema description should match");
             Assert.AreEqual(2, sourceFieldSchema.Fields.Count, "Should have 2 fields");
-            Console.WriteLine($"✅ Source field schema verified: {sourceFieldSchema.Name}");
+            Console.WriteLine($"Source field schema verified: {sourceFieldSchema.Name}");
 
             // Verify individual fields
             Assert.IsTrue(sourceFieldSchema.Fields.ContainsKey("company_name"), "Should contain company_name field");
             var companyNameField = sourceFieldSchema.Fields["company_name"];
             Assert.AreEqual(ContentFieldType.String, companyNameField.Type, "company_name should be String type");
             Assert.AreEqual(GenerationMethod.Extract, companyNameField.Method, "company_name should use Extract method");
-            Console.WriteLine("  ✅ company_name field verified");
+            Console.WriteLine("  company_name field verified");
 
             Assert.IsTrue(sourceFieldSchema.Fields.ContainsKey("total_amount"), "Should contain total_amount field");
             var totalAmountField = sourceFieldSchema.Fields["total_amount"];
             Assert.AreEqual(ContentFieldType.Number, totalAmountField.Type, "total_amount should be Number type");
             Assert.AreEqual(GenerationMethod.Extract, totalAmountField.Method, "total_amount should use Extract method");
-            Console.WriteLine("  ✅ total_amount field verified");
+            Console.WriteLine("  total_amount field verified");
 
             // Verify source analyzer object
             Assert.IsNotNull(sourceAnalyzer, "Source analyzer object should not be null");
@@ -128,7 +128,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual("gpt-4.1", sourceAnalyzer.Models["completion"], "Completion model should be gpt-4.1");
             Assert.IsTrue(sourceAnalyzer.Tags.ContainsKey("modelType"), "Should have modelType tag");
             Assert.AreEqual("in_development", sourceAnalyzer.Tags["modelType"], "modelType tag should be in_development");
-            Console.WriteLine("✅ Source analyzer object verified");
+            Console.WriteLine("Source analyzer object verified");
 
             // Verify create operation
             Assert.IsNotNull(createOperation, "Create source analyzer operation should not be null");
@@ -137,13 +137,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(createOperation.GetRawResponse(), "Create source analyzer operation should have a raw response");
             Assert.IsTrue(createOperation.GetRawResponse().Status >= 200 && createOperation.GetRawResponse().Status < 300,
                 $"Response status should be successful, but was {createOperation.GetRawResponse().Status}");
-            Console.WriteLine($"✅ Create operation status: {createOperation.GetRawResponse().Status}");
+            Console.WriteLine($"Create operation status: {createOperation.GetRawResponse().Status}");
 
             // Verify source result
             Assert.IsNotNull(sourceResult, "Source analyzer result should not be null");
             Assert.AreEqual("prebuilt-document", sourceResult.BaseAnalyzerId, "Base analyzer ID should match");
             Assert.AreEqual("Source analyzer for copying", sourceResult.Description, "Description should match");
-            Console.WriteLine($"✅ Source analyzer created: '{sourceAnalyzerId}'");
+            Console.WriteLine($"Source analyzer created: '{sourceAnalyzerId}'");
 
             // Verify config in result
             Assert.IsNotNull(sourceResult.Config, "Config should not be null");
@@ -152,28 +152,28 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(true, sourceResult.Config.EnableOcr, "EnableOcr should be true");
             Assert.AreEqual(true, sourceResult.Config.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
             Assert.AreEqual(true, sourceResult.Config.ReturnDetails, "ReturnDetails should be true");
-            Console.WriteLine("✅ Config preserved in result");
+            Console.WriteLine("Config preserved in result");
             // Verify field schema in result
             Assert.IsNotNull(sourceResult.FieldSchema, "Field schema should not be null");
             Assert.AreEqual("company_schema", sourceResult.FieldSchema.Name, "Field schema name should match");
             Assert.AreEqual(2, sourceResult.FieldSchema.Fields.Count, "Should have 2 fields");
             Assert.IsTrue(sourceResult.FieldSchema.Fields.ContainsKey("company_name"), "Should contain company_name field");
             Assert.IsTrue(sourceResult.FieldSchema.Fields.ContainsKey("total_amount"), "Should contain total_amount field");
-            Console.WriteLine($"✅ Field schema preserved in result: {sourceResult.FieldSchema.Fields.Count} fields");
+            Console.WriteLine($"Field schema preserved in result: {sourceResult.FieldSchema.Fields.Count} fields");
 
             // Verify tags in result
             Assert.IsNotNull(sourceResult.Tags, "Tags should not be null");
             Assert.IsTrue(sourceResult.Tags.ContainsKey("modelType"), "Should contain modelType tag");
             Assert.AreEqual("in_development", sourceResult.Tags["modelType"], "modelType tag should match");
-            Console.WriteLine($"✅ Tags preserved in result: {sourceResult.Tags.Count} tag(s)");
+            Console.WriteLine($"Tags preserved in result: {sourceResult.Tags.Count} tag(s)");
 
             // Verify models in result
             Assert.IsNotNull(sourceResult.Models, "Models should not be null");
             Assert.IsTrue(sourceResult.Models.ContainsKey("completion"), "Should have completion model");
             Assert.AreEqual("gpt-4.1", sourceResult.Models["completion"], "Completion model should match");
-            Console.WriteLine($"✅ Models preserved in result: {sourceResult.Models.Count} model(s)");
+            Console.WriteLine($"Models preserved in result: {sourceResult.Models.Count} model(s)");
 
-            Console.WriteLine($"\n✅ Source analyzer creation completed:");
+            Console.WriteLine($"\nSource analyzer creation completed:");
             Console.WriteLine($"  ID: {sourceAnalyzerId}");
             Console.WriteLine($"  Base: {sourceResult.BaseAnalyzerId}");
             Console.WriteLine($"  Fields: {sourceResult.FieldSchema.Fields.Count}");
@@ -188,26 +188,26 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Source analyzer tags: {string.Join(", ", sourceAnalyzerInfo.Tags.Select(kvp => $"{kvp.Key}={kvp.Value}"))}");
 
             #region Assertion:ContentUnderstandingGetSourceAnalyzer
-            Console.WriteLine("\n🔍 Source Analyzer Retrieval Verification:");
+            Console.WriteLine("\nSource Analyzer Retrieval Verification:");
 
             Assert.IsNotNull(sourceResponse, "Source analyzer response should not be null");
             Assert.IsTrue(sourceResponse.HasValue, "Source analyzer response should have a value");
             Assert.IsNotNull(sourceAnalyzerInfo, "Source analyzer info should not be null");
-            Console.WriteLine("✅ Source analyzer retrieved successfully");
+            Console.WriteLine("Source analyzer retrieved successfully");
 
             // Verify raw response
             var sourceRawResponse = sourceResponse.GetRawResponse();
             Assert.IsNotNull(sourceRawResponse, "Raw response should not be null");
             Assert.AreEqual(200, sourceRawResponse.Status, $"Response status should be 200, but was {sourceRawResponse.Status}");
-            Console.WriteLine($"✅ Response status: {sourceRawResponse.Status}");
+            Console.WriteLine($"Response status: {sourceRawResponse.Status}");
 
             // Verify basic properties
             Assert.AreEqual("Source analyzer for copying", sourceAnalyzerInfo.Description,
                 "Source description should match");
             Assert.AreEqual("prebuilt-document", sourceAnalyzerInfo.BaseAnalyzerId,
                 "Base analyzer ID should match");
-            Console.WriteLine($"✅ Description: '{sourceAnalyzerInfo.Description}'");
-            Console.WriteLine($"✅ Base analyzer: {sourceAnalyzerInfo.BaseAnalyzerId}");
+            Console.WriteLine($"Description: '{sourceAnalyzerInfo.Description}'");
+            Console.WriteLine($"Base analyzer: {sourceAnalyzerInfo.BaseAnalyzerId}");
 
             // Verify tags
             Assert.IsNotNull(sourceAnalyzerInfo.Tags, "Tags should not be null");
@@ -215,24 +215,24 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "Source should contain modelType tag");
             Assert.AreEqual("in_development", sourceAnalyzerInfo.Tags["modelType"],
                 "Source modelType tag should be 'in_development'");
-            Console.WriteLine($"✅ Tags verified: modelType={sourceAnalyzerInfo.Tags["modelType"]}");
+            Console.WriteLine($"Tags verified: modelType={sourceAnalyzerInfo.Tags["modelType"]}");
 
             // Verify field schema
             Assert.IsNotNull(sourceAnalyzerInfo.FieldSchema, "Field schema should not be null");
             Assert.AreEqual("company_schema", sourceAnalyzerInfo.FieldSchema.Name, "Field schema name should match");
             Assert.AreEqual(2, sourceAnalyzerInfo.FieldSchema.Fields.Count, "Should have 2 fields");
-            Console.WriteLine($"✅ Field schema: {sourceAnalyzerInfo.FieldSchema.Name} ({sourceAnalyzerInfo.FieldSchema.Fields.Count} fields)");
+            Console.WriteLine($"Field schema: {sourceAnalyzerInfo.FieldSchema.Name} ({sourceAnalyzerInfo.FieldSchema.Fields.Count} fields)");
 
             // Verify config
             Assert.IsNotNull(sourceAnalyzerInfo.Config, "Config should not be null");
-            Console.WriteLine("✅ Config present");
+            Console.WriteLine("Config present");
 
             // Verify models
             Assert.IsNotNull(sourceAnalyzerInfo.Models, "Models should not be null");
             Assert.IsTrue(sourceAnalyzerInfo.Models.ContainsKey("completion"), "Should have completion model");
-            Console.WriteLine($"✅ Models: {sourceAnalyzerInfo.Models.Count} model(s)");
+            Console.WriteLine($"Models: {sourceAnalyzerInfo.Models.Count} model(s)");
 
-            Console.WriteLine($"✅ Source analyzer retrieval verification completed");
+            Console.WriteLine($"Source analyzer retrieval verification completed");
             #endregion
 
             try
@@ -260,34 +260,34 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var copiedResponse = await client.GetAnalyzerAsync(targetAnalyzerId);
                 Assert.IsNotNull(copiedResponse, "Copied analyzer response should not be null");
                 Assert.IsTrue(copiedResponse.HasValue, "Copied analyzer response should have a value");
-                Console.WriteLine($"✅ Target analyzer '{targetAnalyzerId}' retrieved successfully");
+                Console.WriteLine($"Target analyzer '{targetAnalyzerId}' retrieved successfully");
 
                 // Verify raw response
                 var copiedRawResponse = copiedResponse.GetRawResponse();
                 Assert.IsNotNull(copiedRawResponse, "Raw response should not be null");
                 Assert.AreEqual(200, copiedRawResponse.Status, $"Response status should be 200, but was {copiedRawResponse.Status}");
-                Console.WriteLine($"✅ Response status: {copiedRawResponse.Status}");
+                Console.WriteLine($"Response status: {copiedRawResponse.Status}");
 
                 ContentAnalyzer copiedAnalyzer = copiedResponse.Value;
                 Assert.IsNotNull(copiedAnalyzer, "Copied analyzer should not be null");
 
                 // ========== Verify Base Properties ==========
-                Console.WriteLine("\n🔍 Verifying copied properties.. .");
+                Console.WriteLine("\nVerifying copied properties.. .");
 
                 Assert.IsNotNull(sourceAnalyzerInfo.BaseAnalyzerId, "Source base analyzer ID should not be null");
                 Assert.IsNotNull(copiedAnalyzer.BaseAnalyzerId, "Copied base analyzer ID should not be null");
                 Assert.AreEqual(sourceAnalyzerInfo.BaseAnalyzerId, copiedAnalyzer.BaseAnalyzerId,
                     $"Copied analyzer should have same base analyzer ID, but got '{copiedAnalyzer.BaseAnalyzerId}' instead of '{sourceAnalyzerInfo.BaseAnalyzerId}'");
-                Console.WriteLine($"✅ Base analyzer ID: {copiedAnalyzer.BaseAnalyzerId}");
+                Console.WriteLine($"Base analyzer ID: {copiedAnalyzer.BaseAnalyzerId}");
 
                 Assert.IsNotNull(sourceAnalyzerInfo.Description, "Source description should not be null");
                 Assert.IsNotNull(copiedAnalyzer.Description, "Copied description should not be null");
                 Assert.AreEqual(sourceAnalyzerInfo.Description, copiedAnalyzer.Description,
                     $"Copied analyzer should have same description, but got '{copiedAnalyzer.Description}' instead of '{sourceAnalyzerInfo.Description}'");
-                Console.WriteLine($"✅ Description: '{copiedAnalyzer.Description}'");
+                Console.WriteLine($"Description: '{copiedAnalyzer.Description}'");
 
                 // ========== Verify Field Schema ==========
-                Console.WriteLine("\n📊 Verifying field schema...");
+                Console.WriteLine("\nVerifying field schema...");
 
                 Assert.IsNotNull(copiedAnalyzer.FieldSchema, "Copied analyzer should have field schema");
                 Assert.IsNotNull(sourceAnalyzerInfo.FieldSchema, "Source analyzer should have field schema");
@@ -295,7 +295,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "Field schema name should match");
                 Assert.AreEqual(sourceAnalyzerInfo.FieldSchema.Fields.Count, copiedAnalyzer.FieldSchema.Fields.Count,
                     $"Copied analyzer should have same number of fields ({sourceAnalyzerInfo.FieldSchema.Fields.Count}), but got {copiedAnalyzer.FieldSchema.Fields.Count}");
-                Console.WriteLine($"✅ Field schema: {copiedAnalyzer.FieldSchema.Name} ({copiedAnalyzer.FieldSchema.Fields.Count} fields)");
+                Console.WriteLine($"Field schema: {copiedAnalyzer.FieldSchema.Name} ({copiedAnalyzer.FieldSchema.Fields.Count} fields)");
 
                 // Verify individual fields
                 Assert.IsTrue(copiedAnalyzer.FieldSchema.Fields.ContainsKey("company_name"),
@@ -308,7 +308,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "company_name field method should match");
                 Assert.AreEqual(sourceCompanyNameField.Description, copiedCompanyNameField.Description,
                     "company_name field description should match");
-                Console.WriteLine("  ✅ company_name field copied correctly");
+                Console.WriteLine("  company_name field copied correctly");
 
                 Assert.IsTrue(copiedAnalyzer.FieldSchema.Fields.ContainsKey("total_amount"),
                     "Copied analyzer should contain total_amount field");
@@ -320,25 +320,25 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "total_amount field method should match");
                 Assert.AreEqual(sourceTotalAmountField.Description, copiedTotalAmountField.Description,
                     "total_amount field description should match");
-                Console.WriteLine("  ✅ total_amount field copied correctly");
+                Console.WriteLine("  total_amount field copied correctly");
 
                 // ========== Verify Tags ==========
-                Console.WriteLine("\n🏷️ Verifying tags.. .");
+                Console.WriteLine("\nVerifying tags.. .");
 
                 Assert.IsNotNull(copiedAnalyzer.Tags, "Copied analyzer should have tags");
                 Assert.IsTrue(copiedAnalyzer.Tags.ContainsKey("modelType"),
                     "Copied analyzer should contain modelType tag");
                 Assert.AreEqual("in_development", copiedAnalyzer.Tags["modelType"],
                     $"Copied analyzer should have same tag value 'in_development', but got '{copiedAnalyzer.Tags["modelType"]}'");
-                Console.WriteLine($"✅ Tags copied: modelType={copiedAnalyzer.Tags["modelType"]}");
+                Console.WriteLine($"Tags copied: modelType={copiedAnalyzer.Tags["modelType"]}");
 
                 // Verify tag counts match
                 Assert.AreEqual(sourceAnalyzerInfo.Tags.Count, copiedAnalyzer.Tags.Count,
                     $"Copied analyzer should have same number of tags ({sourceAnalyzerInfo.Tags.Count}), but got {copiedAnalyzer.Tags.Count}");
-                Console.WriteLine($"✅ Tag count matches: {copiedAnalyzer.Tags.Count}");
+                Console.WriteLine($"Tag count matches: {copiedAnalyzer.Tags.Count}");
 
                 // ========== Verify Config ==========
-                Console.WriteLine("\n⚙️ Verifying config...");
+                Console.WriteLine("\nVerifying config...");
 
                 Assert.IsNotNull(copiedAnalyzer.Config, "Copied analyzer should have config");
                 Assert.IsNotNull(sourceAnalyzerInfo.Config, "Source analyzer should have config");
@@ -364,7 +364,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine($"  EnableOcr: {copiedAnalyzer.Config.EnableOcr.Value}");
                 }
 
-                Console.WriteLine("✅ Config copied correctly");
+                Console.WriteLine("Config copied correctly");
 
                 // ========== Verify Models ==========
                 Console.WriteLine("\n🤖 Verifying models...");
@@ -378,11 +378,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     Assert.AreEqual(sourceAnalyzerInfo.Models["completion"], copiedAnalyzer.Models["completion"],
                         "Completion model should match");
-                    Console.WriteLine($"✅ Models copied: completion={copiedAnalyzer.Models["completion"]}");
+                    Console.WriteLine($"Models copied: completion={copiedAnalyzer.Models["completion"]}");
                 }
 
                 // ========== Summary ==========
-                Console.WriteLine($"\n✅ Analyzer copy verification completed successfully:");
+                Console.WriteLine($"\nAnalyzer copy verification completed successfully:");
                 Console.WriteLine($"  Source: {sourceAnalyzerId}");
                 Console.WriteLine($"  Target: {targetAnalyzerId}");
                 Console.WriteLine($"  Base analyzer: {copiedAnalyzer.BaseAnalyzerId}");
@@ -390,7 +390,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"  Fields: {copiedAnalyzer.FieldSchema.Fields.Count}");
                 Console.WriteLine($"  Tags: {copiedAnalyzer.Tags.Count}");
                 Console.WriteLine($"  Models: {copiedAnalyzer.Models.Count}");
-                Console.WriteLine($"  All properties verified: ✅");
+                Console.WriteLine($"  All properties verified:");
                 #endregion
 
                 // Step 3: Update the target analyzer with a production tag
@@ -444,7 +444,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(targetResponse, "Target analyzer response should not be null");
                 Assert.IsTrue(targetResponse.HasValue, "Target analyzer response should have a value");
                 Assert.IsNotNull(targetAnalyzer, "Target analyzer should not be null");
-                Console.WriteLine($"✅ Target analyzer retrieved before update");
+                Console.WriteLine($"Target analyzer retrieved before update");
 
                 // Verify raw response
                 var targetRawResponse = targetResponse.GetRawResponse();
@@ -458,30 +458,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsTrue(updatedAnalyzer.Tags.ContainsKey("modelType"), "Updated analyzer should have modelType tag");
                 Assert.AreEqual("model_in_production", updatedAnalyzer.Tags["modelType"],
                     "Updated analyzer should have new tag value");
-                Console.WriteLine("✅ Update object created with new tag value");
+                Console.WriteLine("Update object created with new tag value");
 
                 // ========== Verify Updated Retrieval ==========
                 Assert.IsNotNull(updatedResponse, "Updated analyzer response should not be null");
                 Assert.IsTrue(updatedResponse.HasValue, "Updated analyzer response should have a value");
                 Assert.IsNotNull(updatedTargetAnalyzer, "Updated target analyzer should not be null");
-                Console.WriteLine($"✅ Updated analyzer retrieved successfully");
+                Console.WriteLine($"Updated analyzer retrieved successfully");
 
                 // Verify raw response
                 var updatedRawResponse = updatedResponse.GetRawResponse();
                 Assert.IsNotNull(updatedRawResponse, "Raw response should not be null");
                 Assert.AreEqual(200, updatedRawResponse.Status, $"Response status should be 200, but was {updatedRawResponse.Status}");
-                Console.WriteLine($"✅ Response status: {updatedRawResponse.Status}");
+                Console.WriteLine($"Response status: {updatedRawResponse.Status}");
 
                 // ========== Verify Description Preserved ==========
-                Console.WriteLine("\n📝 Verifying preserved properties...");
+                Console.WriteLine("\nVerifying preserved properties...");
 
                 Assert.IsNotNull(updatedTargetAnalyzer.Description, "Description should not be null");
                 Assert.AreEqual("Source analyzer for copying", updatedTargetAnalyzer.Description,
                     $"Description should be preserved from source, but got '{updatedTargetAnalyzer.Description}'");
-                Console.WriteLine($"✅ Description preserved: '{updatedTargetAnalyzer.Description}'");
+                Console.WriteLine($"Description preserved: '{updatedTargetAnalyzer.Description}'");
 
                 // ========== Verify Tag Updated ==========
-                Console.WriteLine("\n🏷️ Verifying tag update...");
+                Console.WriteLine("\nVerifying tag update...");
 
                 Assert.IsNotNull(updatedTargetAnalyzer.Tags, "Tags should not be null");
                 Assert.IsTrue(updatedTargetAnalyzer.Tags.ContainsKey("modelType"),
@@ -490,10 +490,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     $"Tag should be updated to 'model_in_production', but got '{updatedTargetAnalyzer.Tags["modelType"]}'");
                 Assert.AreNotEqual("in_development", updatedTargetAnalyzer.Tags["modelType"],
                     "Tag should no longer be 'in_development'");
-                Console.WriteLine($"✅ Tag updated: in_development → model_in_production");
+                Console.WriteLine($"Tag updated: in_development → model_in_production");
 
                 // ========== Verify Field Schema Preserved ==========
-                Console.WriteLine("\n📊 Verifying field schema preservation...");
+                Console.WriteLine("\nVerifying field schema preservation...");
 
                 Assert.IsNotNull(updatedTargetAnalyzer.FieldSchema,
                     "Field schema should still exist after update");
@@ -505,7 +505,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "company_name field should still exist");
                 Assert.IsTrue(updatedTargetAnalyzer.FieldSchema.Fields.ContainsKey("total_amount"),
                     "total_amount field should still exist");
-                Console.WriteLine($"✅ Field schema preserved: {updatedTargetAnalyzer.FieldSchema.Fields.Count} fields");
+                Console.WriteLine($"Field schema preserved: {updatedTargetAnalyzer.FieldSchema.Fields.Count} fields");
                 // ========== Verify Base Analyzer ID Preserved ==========
                 Console.WriteLine("\n🔗 Verifying base analyzer preservation...");
 
@@ -514,13 +514,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     $"Base analyzer ID should be preserved, but got '{updatedTargetAnalyzer.BaseAnalyzerId}' instead of '{sourceAnalyzerInfo.BaseAnalyzerId}'");
                 Assert.AreEqual("prebuilt-document", updatedTargetAnalyzer.BaseAnalyzerId,
                     "Base analyzer ID should still be 'prebuilt-document'");
-                Console.WriteLine($"✅ Base analyzer preserved: {updatedTargetAnalyzer.BaseAnalyzerId}");
+                Console.WriteLine($"Base analyzer preserved: {updatedTargetAnalyzer.BaseAnalyzerId}");
 
                 // ========== Verify Config Preserved ==========
-                Console.WriteLine("\n⚙️ Verifying config preservation...");
+                Console.WriteLine("\nVerifying config preservation...");
 
                 Assert.IsNotNull(updatedTargetAnalyzer.Config, "Config should still exist after update");
-                Console.WriteLine("✅ Config preserved");
+                Console.WriteLine("Config preserved");
 
                 // ========== Verify Models Preserved ==========
                 Console.WriteLine("\n🤖 Verifying models preservation...");
@@ -530,11 +530,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     Assert.AreEqual("gpt-4.1", updatedTargetAnalyzer.Models["completion"],
                         "Completion model should be preserved");
-                    Console.WriteLine($"✅ Models preserved: completion={updatedTargetAnalyzer.Models["completion"]}");
+                    Console.WriteLine($"Models preserved: completion={updatedTargetAnalyzer.Models["completion"]}");
                 }
 
                 // ========== Compare Before and After ==========
-                Console.WriteLine("\n📊 Update comparison:");
+                Console.WriteLine("\nUpdate comparison:");
                 Console.WriteLine($"  Property          | Before            | After");
                 Console.WriteLine($"  ----------------- | ----------------- | -----------------");
                 Console.WriteLine($"  Description       | (preserved)       | {updatedTargetAnalyzer.Description}");
@@ -545,14 +545,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"  Models            | (preserved)       | {updatedTargetAnalyzer.Models.Count}");
 
                 // ========== Summary ==========
-                Console.WriteLine($"\n✅ Analyzer update verification completed successfully:");
+                Console.WriteLine($"\nAnalyzer update verification completed successfully:");
                 Console.WriteLine($"  Analyzer ID: {targetAnalyzerId}");
-                Console.WriteLine($"  Description: Preserved ✅");
-                Console.WriteLine($"  Tag updated: in_development → model_in_production ✅");
-                Console.WriteLine($"  Field schema: Preserved ({updatedTargetAnalyzer.FieldSchema.Fields.Count} fields) ✅");
-                Console.WriteLine($"  Base analyzer: Preserved ({updatedTargetAnalyzer.BaseAnalyzerId}) ✅");
-                Console.WriteLine($"  Config: Preserved ✅");
-                Console.WriteLine($"  Models: Preserved ({updatedTargetAnalyzer.Models.Count}) ✅");
+                Console.WriteLine($"  Description: Preserved");
+                Console.WriteLine($"  Tag updated: in_development → model_in_production");
+                Console.WriteLine($"  Field schema: Preserved ({updatedTargetAnalyzer.FieldSchema.Fields.Count} fields)");
+                Console.WriteLine($"  Base analyzer: Preserved ({updatedTargetAnalyzer.BaseAnalyzerId})");
+                Console.WriteLine($"  Config: Preserved");
+                Console.WriteLine($"  Models: Preserved ({updatedTargetAnalyzer.Models.Count})");
                 #endregion
             }
             finally

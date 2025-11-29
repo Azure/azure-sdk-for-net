@@ -52,37 +52,37 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(response, "Response should not be null");
             Assert.IsTrue(response.HasValue, "Response should have a value");
             Assert.IsNotNull(analyzer, "Analyzer should not be null");
-            Console.WriteLine("✅ Get prebuilt analyzer response verified");
+            Console.WriteLine("Get prebuilt analyzer response verified");
 
             // Verify raw response
             var rawResponse = response.GetRawResponse();
             Assert.IsNotNull(rawResponse, "Raw response should not be null");
             Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
             Assert.IsNotNull(rawResponse.Content, "Response content should not be null");
-            Console.WriteLine($"✅ Raw response status: {rawResponse.Status}");
+            Console.WriteLine($"Raw response status: {rawResponse.Status}");
 
             // Verify analyzer can be serialized to JSON
             Assert.IsNotNull(analyzerJson, "Analyzer JSON should not be null");
             Assert.IsTrue(analyzerJson.Length > 0, "Analyzer JSON should not be empty");
             Assert.IsTrue(analyzerJson.Contains("prebuilt-documentSearch") || analyzerJson.Contains("documentSearch"),
                 "Analyzer JSON should contain analyzer identifier");
-            Console.WriteLine($"✅ Analyzer JSON length: {analyzerJson.Length} characters");
+            Console.WriteLine($"Analyzer JSON length: {analyzerJson.Length} characters");
 
             // Verify basic analyzer properties for prebuilt-documentSearch
             if (!string.IsNullOrWhiteSpace(analyzer.BaseAnalyzerId))
             {
-                Console.WriteLine($"✅ Base analyzer ID: {analyzer.BaseAnalyzerId}");
+                Console.WriteLine($"Base analyzer ID: {analyzer.BaseAnalyzerId}");
             }
 
             if (!string.IsNullOrWhiteSpace(analyzer.Description))
             {
-                Console.WriteLine($"✅ Description: {analyzer.Description}");
+                Console.WriteLine($"Description: {analyzer.Description}");
             }
 
             // Verify config if present
             if (analyzer.Config != null)
             {
-                Console.WriteLine("✅ Analyzer has configuration");
+                Console.WriteLine("Analyzer has configuration");
                 if (analyzer.Config.EnableOcr.HasValue)
                 {
                     Console.WriteLine($"  EnableOcr: {analyzer.Config.EnableOcr.Value}");
@@ -96,14 +96,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Verify models if present
             if (analyzer.Models != null && analyzer.Models.Count > 0)
             {
-                Console.WriteLine($"✅ Analyzer has {analyzer.Models.Count} model mapping(s)");
+                Console.WriteLine($"Analyzer has {analyzer.Models.Count} model mapping(s)");
                 foreach (var model in analyzer.Models)
                 {
                     Console.WriteLine($"  {model.Key}: {model.Value}");
                 }
             }
 
-            Console.WriteLine("✅ All prebuilt analyzer properties validated successfully");
+            Console.WriteLine("All prebuilt analyzer properties validated successfully");
             #endregion
         }
 
@@ -139,28 +139,28 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(invoiceResponse, "Response should not be null");
             Assert.IsTrue(invoiceResponse.HasValue, "Response should have a value");
             Assert.IsNotNull(invoiceAnalyzer, "Invoice analyzer should not be null");
-            Console.WriteLine("✅ Get prebuilt invoice analyzer response verified");
+            Console.WriteLine("Get prebuilt invoice analyzer response verified");
 
             // Verify raw response
             var rawResponse = invoiceResponse.GetRawResponse();
             Assert.IsNotNull(rawResponse, "Raw response should not be null");
             Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
             Assert.IsNotNull(rawResponse.Content, "Response content should not be null");
-            Console.WriteLine($"✅ Raw response status: {rawResponse.Status}");
+            Console.WriteLine($"Raw response status: {rawResponse.Status}");
 
             // Verify analyzer can be serialized to JSON
             Assert.IsNotNull(invoiceAnalyzerJson, "Invoice analyzer JSON should not be null");
             Assert.IsTrue(invoiceAnalyzerJson.Length > 0, "Invoice analyzer JSON should not be empty");
             Assert.IsTrue(invoiceAnalyzerJson.Contains("invoice") || invoiceAnalyzerJson.Contains("Invoice"),
                 "Invoice analyzer JSON should contain 'invoice'");
-            Console.WriteLine($"✅ Invoice analyzer JSON length: {invoiceAnalyzerJson.Length} characters");
+            Console.WriteLine($"Invoice analyzer JSON length: {invoiceAnalyzerJson.Length} characters");
 
             // Verify invoice analyzer has field schema (prebuilt-invoice should have predefined fields)
             Assert.IsNotNull(invoiceAnalyzer.FieldSchema, "Invoice analyzer should have field schema");
             Assert.IsNotNull(invoiceAnalyzer.FieldSchema!.Fields, "Invoice analyzer should have fields");
             Assert.IsTrue(invoiceAnalyzer.FieldSchema.Fields.Count > 0,
                 "Invoice analyzer should have at least one field");
-            Console.WriteLine($"✅ Invoice analyzer has {invoiceAnalyzer.FieldSchema.Fields.Count} field(s)");
+            Console.WriteLine($"Invoice analyzer has {invoiceAnalyzer.FieldSchema.Fields.Count} field(s)");
 
             // Verify common invoice fields
             var commonFields = new[] { "CustomerName", "InvoiceDate", "TotalAmount", "LineItems" };
@@ -171,7 +171,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     foundFields++;
                     var field = invoiceAnalyzer.FieldSchema.Fields[fieldName];
-                    Console.WriteLine($"  ✅ {fieldName} field found (Type: {field.Type})");
+                    Console.WriteLine($"  {fieldName} field found (Type: {field.Type})");
 
                     Assert.IsFalse(string.IsNullOrWhiteSpace(field.Description),
                         $"{fieldName} should have a description");
@@ -180,7 +180,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             if (foundFields > 0)
             {
-                Console.WriteLine($"✅ Found {foundFields} common invoice fields");
+                Console.WriteLine($"Found {foundFields} common invoice fields");
             }
             else
             {
@@ -190,30 +190,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Verify field schema metadata
             if (!string.IsNullOrWhiteSpace(invoiceAnalyzer.FieldSchema.Name))
             {
-                Console.WriteLine($"✅ Field schema name: {invoiceAnalyzer.FieldSchema.Name}");
+                Console.WriteLine($"Field schema name: {invoiceAnalyzer.FieldSchema.Name}");
             }
 
             if (!string.IsNullOrWhiteSpace(invoiceAnalyzer.FieldSchema.Description))
             {
-                Console.WriteLine($"✅ Field schema description: {invoiceAnalyzer.FieldSchema.Description}");
+                Console.WriteLine($"Field schema description: {invoiceAnalyzer.FieldSchema.Description}");
             }
 
             // Verify base analyzer ID
             if (!string.IsNullOrWhiteSpace(invoiceAnalyzer.BaseAnalyzerId))
             {
-                Console.WriteLine($"✅ Base analyzer ID: {invoiceAnalyzer.BaseAnalyzerId}");
+                Console.WriteLine($"Base analyzer ID: {invoiceAnalyzer.BaseAnalyzerId}");
             }
 
             // Verify description
             if (!string.IsNullOrWhiteSpace(invoiceAnalyzer.Description))
             {
-                Console.WriteLine($"✅ Description: {invoiceAnalyzer.Description}");
+                Console.WriteLine($"Description: {invoiceAnalyzer.Description}");
             }
 
             // Verify config
             if (invoiceAnalyzer.Config != null)
             {
-                Console.WriteLine("✅ Invoice analyzer has configuration");
+                Console.WriteLine("Invoice analyzer has configuration");
                 if (invoiceAnalyzer.Config.EnableOcr.HasValue)
                 {
                     Console.WriteLine($"  EnableOcr: {invoiceAnalyzer.Config.EnableOcr.Value}");
@@ -231,14 +231,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Verify models
             if (invoiceAnalyzer.Models != null && invoiceAnalyzer.Models.Count > 0)
             {
-                Console.WriteLine($"✅ Invoice analyzer has {invoiceAnalyzer.Models.Count} model mapping(s)");
+                Console.WriteLine($"Invoice analyzer has {invoiceAnalyzer.Models.Count} model mapping(s)");
                 foreach (var model in invoiceAnalyzer.Models)
                 {
                     Console.WriteLine($"  {model.Key}: {model.Value}");
                 }
             }
 
-            Console.WriteLine("✅ All prebuilt invoice analyzer properties validated successfully");
+            Console.WriteLine("All prebuilt invoice analyzer properties validated successfully");
             #endregion
         }
 
@@ -324,96 +324,96 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(response, "Response should not be null");
                 Assert.IsTrue(response.HasValue, "Response should have a value");
                 Assert.IsNotNull(retrievedAnalyzer, "Retrieved analyzer should not be null");
-                Console.WriteLine($"✅ Get custom analyzer response verified for '{analyzerId}'");
+                Console.WriteLine($"Get custom analyzer response verified for '{analyzerId}'");
 
                 // Verify raw response
                 var rawResponse = response.GetRawResponse();
                 Assert.IsNotNull(rawResponse, "Raw response should not be null");
                 Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
                 Assert.IsNotNull(rawResponse.Content, "Response content should not be null");
-                Console.WriteLine($"✅ Raw response status: {rawResponse.Status}");
+                Console.WriteLine($"Raw response status: {rawResponse.Status}");
 
                 // Verify analyzer can be serialized to JSON
                 Assert.IsNotNull(analyzerJson, "Analyzer JSON should not be null");
                 Assert.IsTrue(analyzerJson.Length > 0, "Analyzer JSON should not be empty");
-                Console.WriteLine($"✅ Analyzer JSON length: {analyzerJson.Length} characters");
+                Console.WriteLine($"Analyzer JSON length: {analyzerJson.Length} characters");
 
                 // Verify the analyzer properties match what we created
                 Assert.IsNotNull(retrievedAnalyzer.BaseAnalyzerId, "Base analyzer ID should not be null");
                 Assert.AreEqual("prebuilt-document", retrievedAnalyzer.BaseAnalyzerId,
                     "Base analyzer ID should match");
-                Console.WriteLine($"✅ Base analyzer ID verified: {retrievedAnalyzer.BaseAnalyzerId}");
+                Console.WriteLine($"Base analyzer ID verified: {retrievedAnalyzer.BaseAnalyzerId}");
 
                 Assert.IsNotNull(retrievedAnalyzer.Description, "Description should not be null");
                 Assert.AreEqual("Test analyzer for GetAnalyzer sample", retrievedAnalyzer.Description,
                     "Description should match");
-                Console.WriteLine($"✅ Description verified: {retrievedAnalyzer.Description}");
+                Console.WriteLine($"Description verified: {retrievedAnalyzer.Description}");
 
                 // Verify field schema
                 Assert.IsNotNull(retrievedAnalyzer.FieldSchema, "Field schema should not be null");
                 Assert.IsNotNull(retrievedAnalyzer.FieldSchema!.Name, "Schema name should not be null");
                 Assert.AreEqual("test_schema", retrievedAnalyzer.FieldSchema.Name,
                     "Schema name should match");
-                Console.WriteLine($"✅ Field schema name verified: {retrievedAnalyzer.FieldSchema.Name}");
+                Console.WriteLine($"Field schema name verified: {retrievedAnalyzer.FieldSchema.Name}");
 
                 Assert.IsNotNull(retrievedAnalyzer.FieldSchema.Description, "Schema description should not be null");
                 Assert.AreEqual("Test schema for GetAnalyzer sample", retrievedAnalyzer.FieldSchema.Description,
                     "Schema description should match");
-                Console.WriteLine($"✅ Field schema description verified");
+                Console.WriteLine($"Field schema description verified");
 
                 Assert.IsNotNull(retrievedAnalyzer.FieldSchema.Fields, "Fields should not be null");
                 Assert.AreEqual(1, retrievedAnalyzer.FieldSchema.Fields.Count,
                     "Should have 1 custom field");
-                Console.WriteLine($"✅ Field count verified: {retrievedAnalyzer.FieldSchema.Fields.Count}");
+                Console.WriteLine($"Field count verified: {retrievedAnalyzer.FieldSchema.Fields.Count}");
 
                 Assert.IsTrue(retrievedAnalyzer.FieldSchema.Fields.ContainsKey("company_name"),
                     "Should contain company_name field");
-                Console.WriteLine("✅ company_name field found");
+                Console.WriteLine("company_name field found");
 
                 // Verify field definition in detail
                 var companyNameField = retrievedAnalyzer.FieldSchema.Fields["company_name"];
                 Assert.IsNotNull(companyNameField, "company_name field should not be null");
                 Assert.AreEqual(ContentFieldType.String, companyNameField.Type,
                     "Field type should be String");
-                Console.WriteLine($"  Type: {companyNameField.Type} ✅");
+                Console.WriteLine($"  Type: {companyNameField.Type}");
 
                 Assert.AreEqual(GenerationMethod.Extract, companyNameField.Method,
                     "Field method should be Extract");
-                Console.WriteLine($"  Method: {companyNameField.Method} ✅");
+                Console.WriteLine($"  Method: {companyNameField.Method}");
 
                 Assert.IsNotNull(companyNameField.Description, "Field description should not be null");
                 Assert.AreEqual("Name of the company", companyNameField.Description,
                     "Field description should match");
-                Console.WriteLine($"  Description: {companyNameField.Description} ✅");
+                Console.WriteLine($"  Description: {companyNameField.Description}");
 
                 // Verify config
                 Assert.IsNotNull(retrievedAnalyzer.Config, "Config should not be null");
                 Assert.IsNotNull(retrievedAnalyzer.Config!.ReturnDetails, "ReturnDetails should not be null");
                 Assert.AreEqual(true, retrievedAnalyzer.Config.ReturnDetails,
                     "ReturnDetails should be true");
-                Console.WriteLine($"✅ Config verified (ReturnDetails={retrievedAnalyzer.Config.ReturnDetails})");
+                Console.WriteLine($"Config verified (ReturnDetails={retrievedAnalyzer.Config.ReturnDetails})");
 
                 // Verify models
                 Assert.IsNotNull(retrievedAnalyzer.Models, "Models should not be null");
                 Assert.IsTrue(retrievedAnalyzer.Models.Count >= 1,
                     "Should have at least 1 model mapping");
-                Console.WriteLine($"✅ Model mappings count: {retrievedAnalyzer.Models.Count}");
+                Console.WriteLine($"Model mappings count: {retrievedAnalyzer.Models.Count}");
 
                 Assert.IsTrue(retrievedAnalyzer.Models.ContainsKey("completion"),
                     "Should contain completion model");
                 var completionModel = retrievedAnalyzer.Models["completion"];
                 Assert.AreEqual("gpt-4.1", completionModel, "Completion model should be gpt-4.1");
-                Console.WriteLine($"  completion: {completionModel} ✅");
+                Console.WriteLine($"  completion: {completionModel}");
 
                 // Verify the retrieved analyzer matches the original
-                Console.WriteLine("✅ Retrieved analyzer matches original configuration:");
+                Console.WriteLine("Retrieved analyzer matches original configuration:");
                 Console.WriteLine($"  - Base analyzer: {retrievedAnalyzer.BaseAnalyzerId}");
                 Console.WriteLine($"  - Description: {retrievedAnalyzer.Description}");
                 Console.WriteLine($"  - Field schema: {retrievedAnalyzer.FieldSchema.Name}");
                 Console.WriteLine($"  - Fields: {retrievedAnalyzer.FieldSchema.Fields.Count}");
                 Console.WriteLine($"  - Models: {retrievedAnalyzer.Models.Count}");
 
-                Console.WriteLine("✅ All custom analyzer properties validated successfully");
+                Console.WriteLine("All custom analyzer properties validated successfully");
                 #endregion
             }
             finally

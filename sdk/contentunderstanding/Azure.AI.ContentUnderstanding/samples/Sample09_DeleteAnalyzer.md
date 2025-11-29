@@ -60,7 +60,7 @@ Console.WriteLine($"Analyzer '{analyzerId}' created successfully.");
 Delete the custom analyzer:
 
 ```C# Snippet:ContentUnderstandingDeleteAnalyzer
-// Delete an analyzer
+            // Delete an analyzer
 await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 ```

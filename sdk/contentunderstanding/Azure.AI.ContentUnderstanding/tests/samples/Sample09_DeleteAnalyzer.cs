@@ -59,7 +59,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingCreateSimpleAnalyzer
             Assert.IsNotNull(analyzerId, "Analyzer ID should not be null");
             Assert.IsFalse(string.IsNullOrWhiteSpace(analyzerId), "Analyzer ID should not be empty");
-            Console.WriteLine($"✅ Analyzer ID generated: {analyzerId}");
+            Console.WriteLine($"Analyzer ID generated: {analyzerId}");
 
             Assert.IsNotNull(analyzer, "Analyzer object should not be null");
             Assert.AreEqual("prebuilt-document", analyzer.BaseAnalyzerId, "Base analyzer ID should match");
@@ -69,36 +69,36 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(analyzer.Models, "Models should not be null");
             Assert.IsTrue(analyzer.Models.ContainsKey("completion"), "Should have completion model");
             Assert.AreEqual("gpt-4.1", analyzer.Models["completion"], "Completion model should be gpt-4.1");
-            Console.WriteLine("✅ Analyzer object configured correctly");
+            Console.WriteLine("Analyzer object configured correctly");
 
             // Verify the analyzer was created successfully
             var getResponse = await client.GetAnalyzerAsync(analyzerId);
             Assert.IsNotNull(getResponse, "Get analyzer response should not be null");
             Assert.IsTrue(getResponse.HasValue, "Get analyzer response should have a value");
             Assert.IsNotNull(getResponse.Value, "Created analyzer should not be null");
-            Console.WriteLine("✅ Analyzer retrieved successfully after creation");
+            Console.WriteLine("Analyzer retrieved successfully after creation");
 
             // Verify raw response
             var getRawResponse = getResponse.GetRawResponse();
             Assert.IsNotNull(getRawResponse, "Raw response should not be null");
             Assert.AreEqual(200, getRawResponse.Status, "Response status should be 200");
-            Console.WriteLine($"✅ Get analyzer response status: {getRawResponse.Status}");
+            Console.WriteLine($"Get analyzer response status: {getRawResponse.Status}");
 
             // Verify analyzer properties
             Assert.IsNotNull(getResponse.Value.BaseAnalyzerId, "Base analyzer ID should not be null");
             Assert.AreEqual("prebuilt-document", getResponse.Value.BaseAnalyzerId,
                 "Base analyzer ID should match");
-            Console.WriteLine($"✅ Base analyzer ID verified: {getResponse.Value.BaseAnalyzerId}");
+            Console.WriteLine($"Base analyzer ID verified: {getResponse.Value.BaseAnalyzerId}");
 
             Assert.IsNotNull(getResponse.Value.Description, "Description should not be null");
             Assert.AreEqual("Simple analyzer for deletion example", getResponse.Value.Description,
                 "Description should match");
-            Console.WriteLine($"✅ Description verified: '{getResponse.Value.Description}'");
+            Console.WriteLine($"Description verified: '{getResponse.Value.Description}'");
 
             // Verify config
             if (getResponse.Value.Config != null)
             {
-                Console.WriteLine("✅ Config exists");
+                Console.WriteLine("Config exists");
                 if (getResponse.Value.Config.ReturnDetails.HasValue)
                 {
                     Assert.AreEqual(true, getResponse.Value.Config.ReturnDetails.Value,
@@ -111,7 +111,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             if (getResponse.Value.Models != null)
             {
                 Assert.IsTrue(getResponse.Value.Models.Count >= 1, "Should have at least 1 model");
-                Console.WriteLine($"✅ Models verified: {getResponse.Value.Models.Count} model(s)");
+                Console.WriteLine($"Models verified: {getResponse.Value.Models.Count} model(s)");
 
                 if (getResponse.Value.Models.ContainsKey("completion"))
                 {
@@ -121,7 +121,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
             }
 
-            Console.WriteLine($"✅ Verified analyzer '{analyzerId}' exists and is correctly configured before deletion");
+            Console.WriteLine($"Verified analyzer '{analyzerId}' exists and is correctly configured before deletion");
             #endregion
 
             #region Snippet:ContentUnderstandingDeleteAnalyzer
@@ -137,7 +137,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingDeleteAnalyzer
-            Console.WriteLine($"🗑️ Attempting to verify deletion of analyzer '{analyzerId}'.. .");
+            Console.WriteLine($"Attempting to verify deletion of analyzer '{analyzerId}'.. .");
 
             // Verify the analyzer was deleted by trying to get it
             bool deletionVerified = false;
@@ -168,7 +168,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 statusCode = ex.Status;
                 errorMessage = ex.Message;
 
-                Console.WriteLine($"✅ RequestFailedException caught as expected");
+                Console.WriteLine($"RequestFailedException caught as expected");
                 Console.WriteLine($"  Status code: {ex.Status}");
                 Console.WriteLine($"  Error code: {ex.ErrorCode ??  "(none)"}");
                 Console.WriteLine($"  Message: {ex.Message}");
@@ -183,11 +183,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 if (ex.Status == 404)
                 {
-                    Console.WriteLine("✅ Status 404 (Not Found) confirms analyzer was deleted");
+                    Console.WriteLine("Status 404 (Not Found) confirms analyzer was deleted");
                 }
                 else if (ex.Status == 400)
                 {
-                    Console.WriteLine("✅ Status 400 (Bad Request) confirms analyzer does not exist");
+                    Console.WriteLine("Status 400 (Bad Request) confirms analyzer does not exist");
                 }
             }
             catch (Exception ex)
@@ -206,14 +206,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(statusCode == 404 || statusCode == 400,
                 $"Status code should be 404 or 400, but was {statusCode}");
 
-            Console.WriteLine($"\n✅ Deletion verification completed successfully:");
+            Console.WriteLine($"\nDeletion verification completed successfully:");
             Console.WriteLine($"  Analyzer ID: {analyzerId}");
             Console.WriteLine($"  Deletion verified: Yes");
             Console.WriteLine($"  Verification method: RequestFailedException with status {statusCode}");
             Console.WriteLine($"  Status code: {statusCode} ({(statusCode == 404 ? "Not Found" : "Bad Request")})");
 
             // Additional verification: Try to list analyzers and ensure deleted one is not present
-            Console.WriteLine($"\n🔍 Additional verification: Checking analyzer list.. .");
+            Console.WriteLine($"\nAdditional verification: Checking analyzer list.. .");
             var allAnalyzers = new List<ContentAnalyzer>();
             await foreach (var a in client.GetAnalyzersAsync())
             {
@@ -226,7 +226,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             if (deletedAnalyzerInList == null)
             {
-                Console.WriteLine($"✅ Confirmed: Analyzer '{analyzerId}' not found in list of {allAnalyzers.Count} analyzer(s)");
+                Console.WriteLine($"Confirmed: Analyzer '{analyzerId}' not found in list of {allAnalyzers.Count} analyzer(s)");
             }
             else
             {
@@ -235,7 +235,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"  This may indicate eventual consistency delay");
             }
 
-            Console.WriteLine($"✅ All deletion verifications passed for analyzer '{analyzerId}'");
+            Console.WriteLine($"All deletion verifications passed for analyzer '{analyzerId}'");
             #endregion
         }
     }

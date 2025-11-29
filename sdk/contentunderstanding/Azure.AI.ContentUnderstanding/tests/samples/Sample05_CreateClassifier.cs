@@ -135,26 +135,26 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(operation.GetRawResponse(), "Create classifier operation should have a raw response");
             Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
-            Console.WriteLine("✅ Create classifier operation properties verified");
+            Console.WriteLine("Create classifier operation properties verified");
 
             Assert.IsNotNull(result, "Classifier result should not be null");
-            Console.WriteLine($"✅ Classifier '{analyzerId}' created successfully");
+            Console.WriteLine($"Classifier '{analyzerId}' created successfully");
 
             // Verify base analyzer
             Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
             Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
-            Console.WriteLine($"✅ Base analyzer ID verified: {result.BaseAnalyzerId}");
+            Console.WriteLine($"Base analyzer ID verified: {result.BaseAnalyzerId}");
 
             // Verify classifier config
             Assert.IsNotNull(result.Config, "Classifier config should not be null");
             Assert.IsTrue(result.Config.ReturnDetails, "ReturnDetails should be true");
             Assert.IsTrue(result.Config.EnableSegment == true, "EnableSegment should be true");
-            Console.WriteLine("✅ Classifier config verified (ReturnDetails=true, EnableSegment=true)");
+            Console.WriteLine("Classifier config verified (ReturnDetails=true, EnableSegment=true)");
 
             // Verify content categories
             Assert.IsNotNull(result.Config.ContentCategories, "Content categories should not be null");
             Assert.AreEqual(3, result.Config.ContentCategories.Count, "Should have 3 content categories");
-            Console.WriteLine($"✅ Content categories count verified: {result.Config.ContentCategories.Count}");
+            Console.WriteLine($"Content categories count verified: {result.Config.ContentCategories.Count}");
 
             // Verify Loan_Application category
             Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Loan_Application"),
@@ -165,7 +165,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "Loan_Application description should not be empty");
             Assert.IsTrue(loanCategory.Description.Contains("funding") || loanCategory.Description.Contains("loan"),
                 "Loan_Application description should be relevant");
-            Console.WriteLine("  ✅ Loan_Application category verified");
+            Console.WriteLine("  Loan_Application category verified");
 
             // Verify Invoice category
             Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Invoice"),
@@ -176,7 +176,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "Invoice description should not be empty");
             Assert.IsTrue(invoiceCategory.Description.Contains("billing") || invoiceCategory.Description.Contains("payment"),
                 "Invoice description should be relevant");
-            Console.WriteLine("  ✅ Invoice category verified");
+            Console.WriteLine("  Invoice category verified");
 
             // Verify Bank_Statement category
             Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Bank_Statement"),
@@ -187,24 +187,24 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "Bank_Statement description should not be empty");
             Assert.IsTrue(bankCategory.Description.Contains("bank") || bankCategory.Description.Contains("account"),
                 "Bank_Statement description should be relevant");
-            Console.WriteLine("  ✅ Bank_Statement category verified");
+            Console.WriteLine("  Bank_Statement category verified");
 
             // Verify models
             Assert.IsNotNull(result.Models, "Models should not be null");
             Assert.IsTrue(result.Models.Count >= 1, "Should have at least 1 model mapping");
             Assert.IsTrue(result.Models.ContainsKey("completion"), "Should contain 'completion' model mapping");
             Assert.AreEqual("gpt-4.1", result.Models["completion"], "Completion model should be 'gpt-4.1'");
-            Console.WriteLine($"✅ Model mappings verified: {result.Models.Count} model(s)");
+            Console.WriteLine($"Model mappings verified: {result.Models.Count} model(s)");
 
             // Verify description
             if (!string.IsNullOrWhiteSpace(result.Description))
             {
                 Assert.IsTrue(result.Description.Contains("classifier") || result.Description.Contains("categorization"),
                     "Description should be relevant to classification");
-                Console.WriteLine($"✅ Classifier description: {result.Description}");
+                Console.WriteLine($"Classifier description: {result.Description}");
             }
 
-            Console.WriteLine("✅ All classifier creation properties validated successfully");
+            Console.WriteLine("All classifier creation properties validated successfully");
             #endregion
 
             #region Snippet:ContentUnderstandingDeleteClassifier
@@ -311,13 +311,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation with segmentation should have a raw response");
                 Assert.IsTrue(analyzeOperation.GetRawResponse().Status >= 200 && analyzeOperation.GetRawResponse().Status < 300,
                     $"Response status should be successful, but was {analyzeOperation.GetRawResponse().Status}");
-                Console.WriteLine("✅ Analyze operation with segmentation properties verified");
+                Console.WriteLine("Analyze operation with segmentation properties verified");
 
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");
                 Assert.AreEqual(1, analyzeResult.Contents.Count, "Result should have exactly one content element");
-                Console.WriteLine($"✅ Analysis result contains {analyzeResult.Contents.Count} content(s)");
+                Console.WriteLine($"Analysis result contains {analyzeResult.Contents.Count} content(s)");
 
                 var documentContent = analyzeResult.Contents?.FirstOrDefault() as DocumentContent;
                 Assert.IsNotNull(documentContent, "Content should be DocumentContent");
@@ -326,14 +326,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "End page should be >= start page");
                 int totalPages = documentContent.EndPageNumber - documentContent.StartPageNumber + 1;
                 Assert.IsTrue(totalPages > 0, "Total pages should be positive");
-                Console.WriteLine($"✅ Document has {totalPages} page(s) from {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
+                Console.WriteLine($"Document has {totalPages} page(s) from {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
 
                 // With EnableSegment=true, we expect automatic segmentation
                 if (documentContent.Segments != null && documentContent.Segments.Count > 0)
                 {
                     Assert.IsTrue(documentContent.Segments.Count >= 1,
                         "Should have at least one segment with EnableSegment=true");
-                    Console.WriteLine($"✅ Document has {documentContent.Segments.Count} segment(s) (EnableSegment=true, automatic segmentation)");
+                    Console.WriteLine($"Document has {documentContent.Segments.Count} segment(s) (EnableSegment=true, automatic segmentation)");
 
                     // Verify segments cover the entire document without gaps or overlaps
                     var sortedSegments = documentContent.Segments.OrderBy(s => s.StartPageNumber).ToList();
@@ -368,7 +368,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         lastEndPage = segment.EndPageNumber;
 
                         int segmentPages = segment.EndPageNumber - segment.StartPageNumber + 1;
-                        Console.WriteLine($"  ✅ Segment {segmentIndex}: Pages {segment.StartPageNumber}-{segment.EndPageNumber} ({segmentPages} page(s))");
+                        Console.WriteLine($"  Segment {segmentIndex}: Pages {segment.StartPageNumber}-{segment.EndPageNumber} ({segmentPages} page(s))");
 
                         if (!string.IsNullOrEmpty(segment.Category))
                         {
@@ -376,7 +376,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             var validCategories = new[] { "Invoice", "Loan_Application", "Bank_Statement" };
                             if (validCategories.Any(c => string.Equals(c, segment.Category, StringComparison.Ordinal)))
                             {
-                                TestContext.WriteLine($"    Category: {segment.Category} ✅");
+                                TestContext.WriteLine($"    Category: {segment.Category}");
                             }
                             else
                             {
@@ -409,14 +409,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         "Segments should start at or before document start page");
                     Assert.IsTrue(maxSegmentPage >= documentContent.EndPageNumber,
                         "Segments should end at or after document end page");
-                    Console.WriteLine($"✅ Segments cover page range [{minSegmentPage}, {maxSegmentPage}]");
+                    Console.WriteLine($"Segments cover page range [{minSegmentPage}, {maxSegmentPage}]");
                 }
                 else
                 {
                     Console.WriteLine("⚠️ No segments found in document content (unexpected with EnableSegment=true)");
                 }
 
-                Console.WriteLine("✅ All category analysis with segmentation properties validated successfully");
+                Console.WriteLine("All category analysis with segmentation properties validated successfully");
                 #endregion
             }
             finally
@@ -511,7 +511,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
                 Assert.IsNotNull(analyzeOperation, "Analyze operation with segmentation should not be null");
                 Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analyze operation with segmentation should have a raw response");
-                Console.WriteLine("✅ Analyze operation with segmentation properties verified");
+                Console.WriteLine("Analyze operation with segmentation properties verified");
                 Assert.IsNotNull(analyzeResult, "Analyze result should not be null");
                 Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
                 Assert.IsTrue(analyzeResult.Contents!.Count > 0, "Result should have at least one content");

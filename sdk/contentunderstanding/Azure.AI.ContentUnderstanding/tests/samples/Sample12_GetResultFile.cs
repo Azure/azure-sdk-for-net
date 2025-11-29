@@ -64,16 +64,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingAnalyzeVideoForResultFiles
             Assert.IsNotNull(documentUrl, "Document URL should not be null");
             Assert.IsTrue(documentUrl.IsAbsoluteUri, "Document URL should be absolute");
-            Console.WriteLine($"✅ Document URL: {documentUrl}");
+            Console.WriteLine($"Document URL: {documentUrl}");
 
             Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
-            Console.WriteLine("✅ Analysis operation created successfully");
+            Console.WriteLine("Analysis operation created successfully");
 
             // Verify operation ID is available immediately after WaitUntil.Started
             Assert.IsNotNull(operationId, "Operation ID should not be null");
             Assert.IsFalse(string.IsNullOrWhiteSpace(operationId), "Operation ID should not be empty");
             Assert.IsTrue(operationId.Length > 0, "Operation ID should have length > 0");
-            Console.WriteLine($"✅ Operation ID obtained: {operationId}");
+            Console.WriteLine($"Operation ID obtained: {operationId}");
 
             // Verify operation ID format (should be a valid identifier)
             Assert.IsFalse(operationId.Contains(" "), "Operation ID should not contain spaces");
@@ -82,34 +82,34 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Verify operation started
             Assert.IsTrue(analyzeOperation.HasCompleted || !analyzeOperation.HasCompleted,
                 "Operation should have a valid completion state");
-            Console.WriteLine($"✅ Operation started (ID: {operationId})");
+            Console.WriteLine($"Operation started (ID: {operationId})");
 
             // Wait for completion and verify
             Assert.IsNotNull(analyzeOperation, "Operation should not be null after waiting");
             Assert.IsTrue(analyzeOperation.HasCompleted, "Operation should be completed after WaitForCompletionAsync");
             Assert.IsTrue(analyzeOperation.HasValue, "Operation should have a value after completion");
-            Console.WriteLine("✅ Operation completed successfully");
+            Console.WriteLine("Operation completed successfully");
 
             // Verify raw response
             var rawResponse = analyzeOperation.GetRawResponse();
             Assert.IsNotNull(rawResponse, "Raw response should not be null");
             Assert.IsTrue(rawResponse.Status >= 200 && rawResponse.Status < 300,
                 $"Response status should be successful, but was {rawResponse.Status}");
-            Console.WriteLine($"✅ Response status: {rawResponse.Status}");
+            Console.WriteLine($"Response status: {rawResponse.Status}");
 
             // Verify result
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "Document should have exactly one content element");
-            Console.WriteLine($"✅ Analysis result contains {result.Contents.Count} content(s)");
+            Console.WriteLine($"Analysis result contains {result.Contents.Count} content(s)");
 
             // Verify content type
             var content = result.Contents.FirstOrDefault();
             Assert.IsNotNull(content, "Content should not be null");
-            Console.WriteLine($"✅ Content type: {content!.GetType().Name}");
+            Console.WriteLine($"Content type: {content!.GetType().Name}");
 
-            Console.WriteLine($"\n✅ Operation verification completed:");
+            Console.WriteLine($"\nOperation verification completed:");
             Console.WriteLine($"  Operation ID: {operationId}");
             Console.WriteLine($"  Status: Completed");
             Console.WriteLine($"  Contents: {result.Contents.Count}");
@@ -178,13 +178,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             if (videoContentVerify?.KeyFrameTimesMs != null && videoContentVerify.KeyFrameTimesMs.Count > 0)
             {
-                Console.WriteLine("✅ Video content with keyframes detected");
+                Console.WriteLine("Video content with keyframes detected");
 
                 // ========== Verify Keyframe Information ==========
                 Assert.IsNotNull(videoContentVerify.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
                 Assert.IsTrue(videoContentVerify.KeyFrameTimesMs.Count > 0,
                     "Should have at least one keyframe");
-                Console.WriteLine($"✅ Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
+                Console.WriteLine($"Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
 
                 // Verify keyframe times are valid
                 var invalidKeyframes = videoContentVerify.KeyFrameTimesMs.Where(t => t < 0).ToList();
@@ -222,31 +222,31 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(fileResponse, "File response should not be null");
                 Assert.IsTrue(fileResponse.HasValue, "File response should have a value");
                 Assert.IsNotNull(fileResponse.Value, "File response value should not be null");
-                Console.WriteLine("✅ File response received");
+                Console.WriteLine("File response received");
 
                 // Verify raw response
                 var fileRawResponse = fileResponse.GetRawResponse();
                 Assert.IsNotNull(fileRawResponse, "File raw response should not be null");
                 Assert.AreEqual(200, fileRawResponse.Status,
                     $"File response status should be 200, but was {fileRawResponse.Status}");
-                Console.WriteLine($"✅ File response status: {fileRawResponse.Status}");
+                Console.WriteLine($"File response status: {fileRawResponse.Status}");
 
                 // Verify content type header (should be image type)
                 if (fileRawResponse.Headers.TryGetValue("Content-Type", out var contentType))
                 {
                     Assert.IsTrue(contentType.StartsWith("image/"),
                         $"Content type should be an image type, but was '{contentType}'");
-                    Console.WriteLine($"✅ Content type: {contentType}");
+                    Console.WriteLine($"Content type: {contentType}");
                 }
 
                 // ========== Verify Image Data ==========
-                Console.WriteLine("\n🖼️ Verifying image data...");
+                Console.WriteLine("\nVerifying image data...");
                 byte[] imageBytes = fileResponse.Value.ToArray();
                 Assert.IsNotNull(imageBytes, "Image bytes should not be null");
                 Assert.IsTrue(imageBytes.Length > 0, "Image should have content");
                 Assert.IsTrue(imageBytes.Length >= 100,
                     $"Image should have reasonable size (>= 100 bytes), but was {imageBytes.Length} bytes");
-                Console.WriteLine($"✅ Image size: {imageBytes.Length:N0} bytes ({imageBytes.Length / 1024.0:F2} KB)");
+                Console.WriteLine($"Image size: {imageBytes.Length:N0} bytes ({imageBytes.Length / 1024.0:F2} KB)");
 
                 // Verify image format (check magic bytes for common formats)
                 string imageFormat = "Unknown";
@@ -268,7 +268,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             imageBytes[8] == 0x57 && imageBytes[9] == 0x45 && imageBytes[10] == 0x42 && imageBytes[11] == 0x50)
                         imageFormat = "WebP";
                 }
-                Console.WriteLine($"✅ Detected image format: {imageFormat}");
+                Console.WriteLine($"Detected image format: {imageFormat}");
                 if (imageFormat != "Unknown")
                 {
                     Assert.AreNotEqual("Unknown", imageFormat, "Image format should be recognized");
@@ -282,7 +282,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Directory.CreateDirectory(outputDir);
                 Assert.IsTrue(Directory.Exists(outputDir),
                     $"Output directory should exist at {outputDir}");
-                Console.WriteLine($"✅ Output directory: {outputDir}");
+                Console.WriteLine($"Output directory: {outputDir}");
 
                 string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
                 Assert.IsFalse(string.IsNullOrWhiteSpace(outputFileName), "Output file name should not be empty");
@@ -296,16 +296,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 File.WriteAllBytes(outputPath, imageBytes);
                 Assert.IsTrue(File.Exists(outputPath),
                     $"Keyframe image file should exist at {outputPath}");
-                Console.WriteLine($"✅ File saved: {outputPath}");
+                Console.WriteLine($"File saved: {outputPath}");
 
                 // ========== Verify Saved File ==========
-                Console.WriteLine("\n✔️ Verifying saved file...");
+                Console.WriteLine("\nVerifying saved file...");
                 var savedFileInfo = new FileInfo(outputPath);
                 Assert.IsTrue(savedFileInfo.Exists, "Saved file should exist");
                 Assert.IsTrue(savedFileInfo.Length > 0, "Saved file should have content");
                 Assert.AreEqual(imageBytes.Length, savedFileInfo.Length,
                     $"Saved file size ({savedFileInfo.Length}) should match retrieved image size ({imageBytes.Length})");
-                Console.WriteLine($"✅ File size verified: {savedFileInfo.Length:N0} bytes");
+                Console.WriteLine($"File size verified: {savedFileInfo.Length:N0} bytes");
 
                 // Verify file can be read back
                 var readBackBytes = File.ReadAllBytes(outputPath);
@@ -313,12 +313,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "Read back file size should match original");
                 Assert.IsTrue(imageBytes.SequenceEqual(readBackBytes),
                     "Read back file content should match original");
-                Console.WriteLine("✅ File content verified (read back matches original)");
+                Console.WriteLine("File content verified (read back matches original)");
 
                 // ========== Test Additional Keyframes (if available) ==========
                 if (videoContentVerify.KeyFrameTimesMs.Count > 1)
                 {
-                    Console.WriteLine($"\n🎞️ Testing additional keyframes ({videoContentVerify.KeyFrameTimesMs.Count - 1} more available)...");
+                    Console.WriteLine($"\nTesting additional keyframes ({videoContentVerify.KeyFrameTimesMs.Count - 1} more available)...");
 
                     // Test retrieving a middle keyframe
                     int middleIndex = videoContentVerify.KeyFrameTimesMs.Count / 2;
@@ -329,12 +329,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Assert.IsNotNull(middleFileResponse, "Middle keyframe response should not be null");
                     Assert.IsTrue(middleFileResponse.Value.ToArray().Length > 0,
                         "Middle keyframe should have content");
-                    Console.WriteLine($"✅ Successfully retrieved keyframe at index {middleIndex} ({middleFrameTimeMs} ms)");
+                    Console.WriteLine($"Successfully retrieved keyframe at index {middleIndex} ({middleFrameTimeMs} ms)");
                     Console.WriteLine($"  Size: {middleFileResponse.Value.ToArray().Length:N0} bytes");
                 }
 
                 // ========== Summary ==========
-                Console.WriteLine($"\n✅ Keyframe retrieval verification completed successfully:");
+                Console.WriteLine($"\nKeyframe retrieval verification completed successfully:");
                 Console.WriteLine($"  Operation ID: {operationId}");
                 Console.WriteLine($"  Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
                 Console.WriteLine($"  First keyframe time: {firstFrameTimeMs} ms");
@@ -346,14 +346,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             else
             {
                 // ========== No Video Content (Expected for Document Analysis) ==========
-                Console.WriteLine("ℹ️ No video content with keyframes detected");
+                Console.WriteLine("No video content with keyframes detected");
                 Console.WriteLine("   This is expected for document analysis");
 
                 // Verify content type
                 var documentContent = result.Contents?.FirstOrDefault() as DocumentContent;
                 if (documentContent != null)
                 {
-                    Console.WriteLine($"✅ Content type: DocumentContent (as expected)");
+                    Console.WriteLine($"Content type: DocumentContent (as expected)");
                     Console.WriteLine($"  MIME type: {documentContent.MimeType ??  "(not specified)"}");
                     Console.WriteLine($"  Pages: {documentContent.StartPageNumber} - {documentContent.EndPageNumber}");
                 }
@@ -362,18 +362,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     var mediaContent = result.Contents?.FirstOrDefault() as MediaContent;
                     if (mediaContent != null)
                     {
-                        Console.WriteLine($"✅ Content type: MediaContent");
+                        Console.WriteLine($"Content type: MediaContent");
                     }
                     else
                     {
-                        Console.WriteLine($"✅ Content type: {result.Contents?.FirstOrDefault()?.GetType().Name ??  "Unknown"}");
+                        Console.WriteLine($"Content type: {result.Contents?.FirstOrDefault()?.GetType().Name ??  "Unknown"}");
                     }
                 }
 
                 // Verify the API pattern is demonstrated
                 Assert.IsNotNull(operationId, "Operation ID should be available for GetResultFile API");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(operationId), "Operation ID should not be empty");
-                Console.WriteLine($"✅ Operation ID available for GetResultFile API: {operationId}");
+                Console.WriteLine($"Operation ID available for GetResultFile API: {operationId}");
 
                 // Test error handling for non-existent file path
                 Console.WriteLine("\n🧪 Testing error handling for invalid path...");
@@ -387,7 +387,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     Assert.IsTrue(ex.Status == 404 || ex.Status == 400,
                         $"Expected 404 or 400 for non-existent keyframe, but got {ex.Status}");
-                    Console.WriteLine($"✅ Correctly returned error status {ex.Status} for non-existent keyframe");
+                    Console.WriteLine($"Correctly returned error status {ex.Status} for non-existent keyframe");
                 }
 
                 // ========== API Usage Example ==========
@@ -399,7 +399,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"      var response = await client.GetResultFileAsync(\"{operationId}\", \"keyframes/1000\");");
                 Console.WriteLine("   4. Save or process the keyframe image");
 
-                Console.WriteLine($"\n✅ GetResultFile API pattern demonstration completed:");
+                Console.WriteLine($"\nGetResultFile API pattern demonstration completed:");
                 Console.WriteLine($"  Operation ID: {operationId}");
                 Console.WriteLine($"  Content type: Document (not video)");
                 Console.WriteLine($"  API availability: Verified");

@@ -49,7 +49,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
             Assert.IsTrue(fileBytes.Length > 0, "File should not be empty");
             Assert.IsNotNull(binaryData, "Binary data should not be null");
-            Console.WriteLine($"✅ File loaded: {filePath} ({fileBytes.Length} bytes)");
+            Console.WriteLine($"File loaded: {filePath} ({fileBytes.Length} bytes)");
 
             Assert.IsNotNull(operation, "Analysis operation should not be null");
             Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
@@ -57,13 +57,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
             Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
                 $"Response status should be successful, but was {operation.GetRawResponse().Status}");
-            Console.WriteLine("✅ Analysis operation properties verified");
+            Console.WriteLine("Analysis operation properties verified");
 
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
-            Console.WriteLine($"✅ Analysis result contains {result.Contents.Count} content(s)");
+            Console.WriteLine($"Analysis result contains {result.Contents.Count} content(s)");
 
             // Verify document content type
             var firstDocContent = result.Contents?.FirstOrDefault() as DocumentContent;
@@ -71,9 +71,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(firstDocContent!.StartPageNumber >= 1, "Start page should be >= 1");
             Assert.IsTrue(firstDocContent.EndPageNumber >= firstDocContent.StartPageNumber, "End page should be >= start page");
             int totalPages = firstDocContent.EndPageNumber - firstDocContent.StartPageNumber + 1;
-            Console.WriteLine($"✅ Document has {totalPages} page(s) from {firstDocContent.StartPageNumber} to {firstDocContent.EndPageNumber}");
+            Console.WriteLine($"Document has {totalPages} page(s) from {firstDocContent.StartPageNumber} to {firstDocContent.EndPageNumber}");
 
-            Console.WriteLine("✅ Document features analysis with configs completed successfully");
+            Console.WriteLine("Document features analysis with configs completed successfully");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractCharts
@@ -107,12 +107,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingExtractCharts
             var docContentCharts = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(docContentCharts, "Content should be DocumentContent");
-            Console.WriteLine("\n📊 Chart Extraction Verification:");
+            Console.WriteLine("\nChart Extraction Verification:");
 
             // Charts are optional - GPT sometimes does not detect them
             if (docContentCharts!.Figures != null && docContentCharts.Figures.Count > 0)
             {
-                Console.WriteLine($"✅ Found {docContentCharts.Figures.Count} figure(s)");
+                Console.WriteLine($"Found {docContentCharts.Figures.Count} figure(s)");
 
                 var chartFiguresAssert = docContentCharts.Figures
                     .Where(f => f is DocumentChartFigure)
@@ -126,7 +126,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"✅ Found {chartFiguresAssert.Count} chart(s)");
+                    Console.WriteLine($"Found {chartFiguresAssert.Count} chart(s)");
 
                     int chartIndex = 1;
                     foreach (var chart in chartFiguresAssert)
@@ -135,7 +135,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         Assert.IsNotNull(chart.Id, $"Chart {chartIndex} ID should not be null");
                         Assert.IsFalse(string.IsNullOrWhiteSpace(chart.Id),
                             $"Chart {chartIndex} ID should not be empty");
-                        Console.WriteLine($"  ✅ Chart {chartIndex}: ID = '{chart.Id}'");
+                        Console.WriteLine($"  Chart {chartIndex}: ID = '{chart.Id}'");
 
                         // Verify description if present
                         if (!string.IsNullOrWhiteSpace(chart.Description))
@@ -173,7 +173,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         chartIndex++;
                     }
 
-                    Console.WriteLine($"✅ Verified {chartFiguresAssert.Count} chart(s)");
+                    Console.WriteLine($"Verified {chartFiguresAssert.Count} chart(s)");
                 }
             }
             else
@@ -208,7 +208,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(docContentHyperlinks!.Hyperlinks, "Hyperlinks should not be null");
             Assert.IsTrue(docContentHyperlinks.Hyperlinks.Count > 0,
                 "sample_document_features. pdf should contain hyperlinks");
-            Console.WriteLine($"✅ Found {docContentHyperlinks.Hyperlinks.Count} hyperlink(s)");
+            Console.WriteLine($"Found {docContentHyperlinks.Hyperlinks.Count} hyperlink(s)");
 
             int hyperlinkIndex = 1;
             int hyperlinksWithUrl = 0;
@@ -230,7 +230,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 if (hasContent) hyperlinksWithContent++;
                 if (hasUrl && hasContent) hyperlinksWithBoth++;
 
-                Console.WriteLine($"  ✅ Hyperlink {hyperlinkIndex}:");
+                Console.WriteLine($"  Hyperlink {hyperlinkIndex}:");
 
                 if (hasUrl)
                 {
@@ -262,12 +262,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 hyperlinkIndex++;
             }
 
-            Console.WriteLine($"\n✅ Hyperlink statistics:");
+            Console.WriteLine($"\nHyperlink statistics:");
             Console.WriteLine($"  Total: {docContentHyperlinks.Hyperlinks.Count}");
             Console.WriteLine($"  With URL: {hyperlinksWithUrl} ({(double)hyperlinksWithUrl / docContentHyperlinks.Hyperlinks.Count * 100:F1}%)");
             Console.WriteLine($"  With content: {hyperlinksWithContent} ({(double)hyperlinksWithContent / docContentHyperlinks.Hyperlinks.Count * 100:F1}%)");
             Console.WriteLine($"  With both: {hyperlinksWithBoth} ({(double)hyperlinksWithBoth / docContentHyperlinks.Hyperlinks.Count * 100:F1}%)");
-            Console.WriteLine($"✅ Verified {docContentHyperlinks.Hyperlinks.Count} hyperlink(s)");
+            Console.WriteLine($"Verified {docContentHyperlinks.Hyperlinks.Count} hyperlink(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractFormulas
@@ -325,7 +325,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             Assert.IsTrue(allFormulasAssert.Count > 0,
                 "sample_document_features.pdf should contain formulas");
-            Console.WriteLine($"✅ Found {allFormulasAssert.Count} formula(s) across {pagesWithFormulas} page(s)");
+            Console.WriteLine($"Found {allFormulasAssert.Count} formula(s) across {pagesWithFormulas} page(s)");
 
             int formulaIndex = 1;
             var formulaKinds = new System.Collections.Generic.Dictionary<string, int>();
@@ -342,7 +342,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     formulaKinds[formula.Kind.ToString()] = 0;
                 formulaKinds[formula.Kind.ToString()]++;
 
-                Console.WriteLine($"  ✅ Formula {formulaIndex}: Kind = {formula.Kind}");
+                Console.WriteLine($"  Formula {formulaIndex}: Kind = {formula.Kind}");
 
                 // Value (LaTeX) is optional but should be validated if present
                 if (!string.IsNullOrWhiteSpace(formula.Value))
@@ -373,7 +373,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 formulaIndex++;
             }
 
-            Console.WriteLine($"\n✅ Formula statistics:");
+            Console.WriteLine($"\nFormula statistics:");
             Console.WriteLine($"  Total formulas: {allFormulasAssert.Count}");
             Console.WriteLine($"  Pages with formulas: {pagesWithFormulas}");
             Console.WriteLine($"  With LaTeX value: {formulasWithValue} ({(double)formulasWithValue / allFormulasAssert.Count * 100:F1}%)");
@@ -383,7 +383,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 Console.WriteLine($"    {kind.Key}: {kind.Value} ({(double)kind.Value / allFormulasAssert.Count * 100:F1}%)");
             }
-            Console.WriteLine($"✅ Verified {allFormulasAssert.Count} formula(s)");
+            Console.WriteLine($"Verified {allFormulasAssert.Count} formula(s)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractAnnotations
@@ -417,13 +417,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingExtractAnnotations
             var docContentAnnotations = result.Contents?.FirstOrDefault() as DocumentContent;
             Assert.IsNotNull(docContentAnnotations, "Content should be DocumentContent");
-            Console.WriteLine("\n📝 Annotation Extraction Verification:");
+            Console.WriteLine("\nAnnotation Extraction Verification:");
 
             // Annotations should not be empty for sample_document_features.pdf
             Assert.IsNotNull(docContentAnnotations!.Annotations, "Annotations should not be null");
             Assert.IsTrue(docContentAnnotations.Annotations.Count > 0,
                 "sample_document_features.pdf should contain annotations");
-            Console.WriteLine($"✅ Found {docContentAnnotations.Annotations.Count} annotation(s)");
+            Console.WriteLine($"Found {docContentAnnotations.Annotations.Count} annotation(s)");
 
             int annotationIndex = 1;
             var annotationKinds = new System.Collections.Generic.Dictionary<string, int>();
@@ -446,7 +446,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     annotationKinds[annotation.Kind.ToString()] = 0;
                 annotationKinds[annotation.Kind.ToString()]++;
 
-                Console.WriteLine($"  ✅ Annotation {annotationIndex}:");
+                Console.WriteLine($"  Annotation {annotationIndex}:");
                 Console.WriteLine($"    ID: {annotation.Id}");
                 Console.WriteLine($"    Kind: {annotation.Kind}");
 
@@ -502,7 +502,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 annotationIndex++;
             }
 
-            Console.WriteLine($"\n✅ Annotation statistics:");
+            Console.WriteLine($"\nAnnotation statistics:");
             Console.WriteLine($"  Total annotations: {docContentAnnotations.Annotations.Count}");
             Console.WriteLine($"  With author: {annotationsWithAuthor} ({(double)annotationsWithAuthor / docContentAnnotations.Annotations.Count * 100:F1}%)");
             Console.WriteLine($"  With comments: {annotationsWithComments} ({(double)annotationsWithComments / docContentAnnotations.Annotations.Count * 100:F1}%)");
@@ -516,7 +516,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 Console.WriteLine($"    {kind.Key}: {kind.Value} ({(double)kind.Value / docContentAnnotations.Annotations.Count * 100:F1}%)");
             }
-            Console.WriteLine($"✅ Verified {docContentAnnotations.Annotations.Count} annotation(s)");
+            Console.WriteLine($"Verified {docContentAnnotations.Annotations.Count} annotation(s)");
             #endregion
         }
     }
