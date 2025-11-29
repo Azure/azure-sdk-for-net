@@ -25,9 +25,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
-            // For testing, use a video URL to get keyframes for GetResultFile testing
-            Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-understanding-assets/raw/refs/heads/main/videos/sdk_samples/FlightSimulator.mp4");
-
             #region Snippet:ContentUnderstandingAnalyzeVideoForResultFiles
 #if SNIPPET
             Uri videoUrl = new Uri("<videoUrl>");
@@ -44,6 +41,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Wait for completion
             await analyzeOperation.WaitForCompletionAsync();
 #else
+            // For testing, use a video URL to get keyframes for GetResultFile testing
+            Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-understanding-assets/raw/refs/heads/main/videos/sdk_samples/FlightSimulator.mp4");
             // Start the analysis operation
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
