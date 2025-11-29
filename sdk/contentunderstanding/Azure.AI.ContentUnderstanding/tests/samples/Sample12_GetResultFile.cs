@@ -25,9 +25,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
-            // For testing, use a document URL to get an operation ID
-            // In production, use video analysis to get keyframes
-            Uri documentUrl = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
+            // For testing, use a video URL to get keyframes for GetResultFile testing
+            Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-understanding-assets/raw/refs/heads/main/videos/sdk_samples/FlightSimulator.mp4");
 
             #region Snippet:ContentUnderstandingAnalyzeVideoForResultFiles
 #if SNIPPET
@@ -48,8 +47,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Start the analysis operation
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
-                "prebuilt-documentSearch",
-                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalyzeInput { Url = videoUrl } });
 
             // Get the operation ID from the operation (available after Started)
             string operationId = analyzeOperation.Id;
@@ -63,9 +62,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeVideoForResultFiles
-            Assert.IsNotNull(documentUrl, "Document URL should not be null");
-            Assert.IsTrue(documentUrl.IsAbsoluteUri, "Document URL should be absolute");
-            Console.WriteLine($"Document URL: {documentUrl}");
+            Assert.IsNotNull(videoUrl, "Video URL should not be null");
+            Assert.IsTrue(videoUrl.IsAbsoluteUri, "Video URL should be absolute");
+            Console.WriteLine($"Video URL: {videoUrl}");
 
             Assert.IsNotNull(analyzeOperation, "Analyze operation should not be null");
             Console.WriteLine("Analysis operation created successfully");
@@ -102,7 +101,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
-            Assert.AreEqual(1, result.Contents.Count, "Document should have exactly one content element");
+            // Video analysis may return multiple content elements (e.g., video and audio tracks)
+            Assert.IsTrue(result.Contents.Count >= 1, $"Video analysis should return at least one content element, but found {result.Contents.Count}");
             Console.WriteLine($"Analysis result contains {result.Contents.Count} content(s)");
 
             // Verify content type
@@ -127,8 +127,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // 3. Call GetResultFileAsync with the operation ID and path
 
             // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
+            // This test requires video content with keyframes
             var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
-            if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
+            Assert.IsNotNull(videoContent, "Test requires AudioVisualContent (video content) for GetResultFile");
+            Assert.IsNotNull(videoContent!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
+            Assert.IsTrue(videoContent.KeyFrameTimesMs!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimesMs.Count}");
+
+            if (videoContent.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
             {
                 // Print keyframe information
                 int totalKeyframes = videoContent.KeyFrameTimesMs.Count;
@@ -173,11 +179,22 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingGetResultFile
             Console.WriteLine("\n🎬 Result File Retrieval Verification:");
 
-            // This test demonstrates the GetResultFile API pattern
-            // Keyframes are only available for video content (AudioVisualContent)
+            // This test requires video content with keyframes for GetResultFile functionality
+            // Verify that we have video content
             var videoContentVerify = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
+            Assert.IsNotNull(videoContentVerify, "Test requires AudioVisualContent (video content) for GetResultFile testing");
+            Assert.IsInstanceOf<AudioVisualContent>(videoContentVerify, "Content should be AudioVisualContent type");
 
-            if (videoContentVerify?.KeyFrameTimesMs != null && videoContentVerify.KeyFrameTimesMs.Count > 0)
+            // Verify that keyframes are available
+            Assert.IsNotNull(videoContentVerify!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null for video content");
+            Assert.IsTrue(videoContentVerify.KeyFrameTimesMs!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContentVerify.KeyFrameTimesMs.Count}");
+
+            // Verify video content properties
+            Assert.IsNotNull(videoContentVerify, "Video content should not be null");
+            Console.WriteLine("Video content with keyframes detected");
+
+            if (videoContentVerify.KeyFrameTimesMs != null && videoContentVerify.KeyFrameTimesMs.Count > 0)
             {
                 Console.WriteLine("Video content with keyframes detected");
 

@@ -18,8 +18,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         private const string AssetsFolderName = "samples/SampleFiles";
 
         // We are using assets from the Azure-Samples repository.
-        // Files are located at: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/tree/changjian-wang/init-content-understanding-dotnet/ContentUnderstanding.Common/data
-        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/changjian-wang/init-content-understanding-dotnet/ContentUnderstanding.Common/data/{0}";
+        // Files are located at: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/tree/main/ContentUnderstanding.Common/data
+        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/{0}";
 
         private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
