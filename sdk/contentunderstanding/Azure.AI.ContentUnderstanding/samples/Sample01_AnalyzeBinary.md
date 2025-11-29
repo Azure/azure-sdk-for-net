@@ -176,7 +176,7 @@ if (content is DocumentContent documentContent)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding#getting-started
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
-[sample02-analyze-url]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
+[sample02-analyze-url]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
 [cu-whats-new]: https://learn.microsoft.com/azure/ai-services/content-understanding/whats-new
 [cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview
