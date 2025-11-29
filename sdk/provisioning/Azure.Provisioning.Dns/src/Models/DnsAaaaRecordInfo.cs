@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Dns;
 /// </summary>
 public partial class DnsAaaaRecordInfo : ProvisionableConstruct
 {
-    public BicepValue<IPAddress> Ipv6Addresses
+    public BicepValue<IPAddress> Ipv6Address
     {
-        get { Initialize(); return _ipv6Addresses!; }
-        set { Initialize(); _ipv6Addresses!.Assign(value); }
+        get { Initialize(); return _ipv6Address!; }
+        set { Initialize(); _ipv6Address!.Assign(value); }
     }
-    private BicepValue<IPAddress>? _ipv6Addresses;
+    private BicepValue<IPAddress>? _ipv6Address;
 
     /// <summary>
     /// Creates a new DnsAaaaRecordInfo.
@@ -33,6 +33,6 @@ public partial class DnsAaaaRecordInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _ipv6Addresses = DefineProperty<IPAddress>("IPv6Addresses", ["ipv6Addresses"]);
+        _ipv6Address = DefineProperty<IPAddress>("IPv6Address", ["ipv6Address"]);
     }
 }
