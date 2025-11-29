@@ -1,6 +1,6 @@
 # Release History
 
-## 1.15.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (2025-12-01)
 
 ### Features Added
 - Upgraded api-version tag from 'package-2025-09-01' to 'package-2025-09-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1da0ccefea2127820defac6496bf4710c0902d78/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
@@ -17,11 +17,6 @@
 - Added `RansomwareReport` resource type, Support for Advance AntiRansomware features
 - Added `LdapConfiguration` to `NetAppAccountResource` to support LDAP configuration at account level
 - Added `LargeVolumeType` to `NetAppVolumeResource` to support ExtraLargeVolumes
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.14.0 (2025-11-26)
 
