@@ -1,5 +1,5 @@
 import:
-  - ../../.vscode/cspell.json
+  - ../../../.vscode/cspell.json
 overrides:
   - filename: '**/sdk/contentunderstanding/**/*.cs'
     words:
