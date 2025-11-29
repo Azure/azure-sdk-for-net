@@ -479,15 +479,6 @@
       ]
     },
     {
-      "filename": "**/sdk/contentunderstanding/**/*.cs",
-      "words": [
-        "upca",
-        "upce",
-        "UPCA",
-        "UPCE"
-      ]
-    },
-    {
       "filename": "**/sdk/consumption/**/*",
       "words": [
         "payg"
