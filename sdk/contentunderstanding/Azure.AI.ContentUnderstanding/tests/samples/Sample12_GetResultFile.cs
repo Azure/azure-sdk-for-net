@@ -25,6 +25,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
+            // For testing, use a document URL to get an operation ID
+            // In production, use video analysis to get keyframes
+            Uri documentUrl = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
+
             #region Snippet:ContentUnderstandingAnalyzeVideoForResultFiles
 #if SNIPPET
             Uri videoUrl = new Uri("<videoUrl>");
@@ -41,9 +45,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Wait for completion
             await analyzeOperation.WaitForCompletionAsync();
 #else
-            // For testing, use a document URL to get an operation ID
-            // In production, use video analysis to get keyframes
-            Uri documentUrl = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
             // Start the analysis operation
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Started,
