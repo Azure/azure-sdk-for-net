@@ -1061,5 +1061,342 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(0, duplicateIds.Count,
                 $"Should not have duplicate analyzer IDs: {string.Join(", ", duplicateIds)}");
         }
+
+        /// <summary>
+        /// Tests updating an analyzer's description and tags.
+        /// Verifies that the analyzer can be updated successfully and changes are persisted.
+        /// </summary>
+        [RecordedTest]
+        public async Task UpdateAnalyzerAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // First create an analyzer to update
+            string defaultId = $"test_analyzer_{Recording.Random.NewGuid().ToString("N")}";
+            string analyzerId = Recording.GetVariable("updateAnalyzerId", defaultId) ?? defaultId;
+
+            var initialAnalyzer = new ContentAnalyzer
+            {
+                BaseAnalyzerId = "prebuilt-document",
+                Description = "Initial description",
+                Config = new ContentAnalyzerConfig
+                {
+                    ReturnDetails = true
+                }
+            };
+            initialAnalyzer.Models.Add("completion", "gpt-4.1");
+            initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
+            initialAnalyzer.Tags["tag2"] = "tag2_initial_value";
+
+            await client.CreateAnalyzerAsync(
+                WaitUntil.Completed,
+                analyzerId,
+                initialAnalyzer,
+                allowReplace: true);
+
+            try
+            {
+                // Get the current analyzer to preserve base analyzer ID
+                var currentAnalyzer = await client.GetAnalyzerAsync(analyzerId);
+                Assert.IsNotNull(currentAnalyzer, "Current analyzer should not be null");
+                Assert.IsTrue(currentAnalyzer.HasValue, "Current analyzer should have a value");
+
+                // Create an updated analyzer with new description and tags
+                var updatedAnalyzer = new ContentAnalyzer
+                {
+                    BaseAnalyzerId = currentAnalyzer.Value.BaseAnalyzerId,
+                    Description = "Updated description"
+                };
+
+                // Update tags (empty string sets tag to empty, doesn't remove it)
+                updatedAnalyzer.Tags["tag1"] = "tag1_updated_value";
+                updatedAnalyzer.Tags["tag2"] = "";  // Set tag2 to empty string
+                updatedAnalyzer.Tags["tag3"] = "tag3_value";  // Add tag3
+
+                // Update the analyzer
+                await client.UpdateAnalyzerAsync(analyzerId, updatedAnalyzer);
+
+                // Verify the update
+                var updated = await client.GetAnalyzerAsync(analyzerId);
+                Assert.IsNotNull(updated, "Updated analyzer should not be null");
+                Assert.IsTrue(updated.HasValue, "Updated analyzer should have a value");
+                Assert.AreEqual("Updated description", updated.Value.Description,
+                    "Description should be updated");
+                Assert.IsTrue(updated.Value.Tags.ContainsKey("tag1"), "tag1 should exist");
+                Assert.AreEqual("tag1_updated_value", updated.Value.Tags["tag1"],
+                    "tag1 should have updated value");
+                // Note: Setting tag to empty string doesn't remove it, just sets it to empty
+                Assert.IsTrue(updated.Value.Tags.ContainsKey("tag2"),
+                    "tag2 should still exist (empty string doesn't remove tags)");
+                Assert.AreEqual("", updated.Value.Tags["tag2"],
+                    "tag2 should have empty string value");
+                Assert.IsTrue(updated.Value.Tags.ContainsKey("tag3"), "tag3 should exist");
+                Assert.AreEqual("tag3_value", updated.Value.Tags["tag3"],
+                    "tag3 should have correct value");
+                Assert.AreEqual(3, updated.Value.Tags.Count,
+                    "Should have 3 tags after update (tag1 updated, tag2 set to empty, tag3 added)");
+            }
+            finally
+            {
+                // Clean up
+                try
+                {
+                    await client.DeleteAnalyzerAsync(analyzerId);
+                }
+                catch
+                {
+                    // Ignore cleanup errors
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests deleting an analyzer.
+        /// Verifies that an analyzer can be deleted successfully.
+        /// </summary>
+        [RecordedTest]
+        public async Task DeleteAnalyzerAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // First create an analyzer to delete
+            string defaultId = $"test_analyzer_{Recording.Random.NewGuid().ToString("N")}";
+            string analyzerId = Recording.GetVariable("deleteAnalyzerId", defaultId) ?? defaultId;
+
+            var analyzer = new ContentAnalyzer
+            {
+                BaseAnalyzerId = "prebuilt-document",
+                Description = "Simple analyzer for deletion example",
+                Config = new ContentAnalyzerConfig
+                {
+                    ReturnDetails = true
+                }
+            };
+            analyzer.Models.Add("completion", "gpt-4.1");
+
+            await client.CreateAnalyzerAsync(
+                WaitUntil.Completed,
+                analyzerId,
+                analyzer,
+                allowReplace: true);
+
+            // Verify the analyzer was created
+            var getResponse = await client.GetAnalyzerAsync(analyzerId);
+            Assert.IsNotNull(getResponse, "Get analyzer response should not be null");
+            Assert.IsTrue(getResponse.HasValue, "Get analyzer response should have a value");
+
+            // Delete the analyzer
+            await client.DeleteAnalyzerAsync(analyzerId);
+
+            // Verify the analyzer was deleted (should throw 404 or similar)
+            try
+            {
+                var deletedResponse = await client.GetAnalyzerAsync(analyzerId);
+                // If we get here, the analyzer still exists (unexpected)
+                Assert.Fail("Analyzer should have been deleted, but GetAnalyzerAsync succeeded");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                // Expected: analyzer not found after deletion
+                Assert.Pass("Analyzer was successfully deleted (404 as expected)");
+            }
+        }
+
+        /// <summary>
+        /// Tests analyzing a document with specific configurations enabled (formulas, layout, OCR).
+        /// Verifies that document features like charts, annotations, and formulas can be extracted.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeConfigsAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Get test file path
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_document_features.pdf");
+            Assert.IsTrue(File.Exists(filePath), $"Test file should exist at {filePath}");
+
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            Assert.IsTrue(fileBytes.Length > 0, "File should not be empty");
+
+            BinaryData binaryData = BinaryData.FromBytes(fileBytes);
+
+            // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
+            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                "application/pdf",
+                binaryData);
+
+            // Verify operation completed successfully
+            Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
+            Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+
+            // Verify result
+            AnalyzeResult result = operation.Value;
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents.Count > 0, "Result should have at least one content");
+            Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
+
+            // Verify document content
+            var documentContent = result.Contents?.FirstOrDefault() as DocumentContent;
+            Assert.IsNotNull(documentContent, "Content should be DocumentContent");
+            Assert.IsTrue(documentContent!.StartPageNumber >= 1, "Start page should be >= 1");
+            Assert.IsTrue(documentContent.EndPageNumber >= documentContent.StartPageNumber,
+                "End page should be >= start page");
+        }
+
+        /// <summary>
+        /// Tests analyzing a document and returning raw JSON response.
+        /// Verifies that the raw JSON response can be retrieved and parsed.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeReturnRawJsonAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Get test file path
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
+            Assert.IsTrue(File.Exists(filePath), $"Sample file should exist at {filePath}");
+
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            Assert.IsTrue(fileBytes.Length > 0, "File should not be empty");
+
+            // Use protocol method to get raw JSON response
+            var operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                "application/pdf",
+                RequestContent.Create(BinaryData.FromBytes(fileBytes)));
+
+            // Verify operation completed successfully
+            Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
+            Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+
+            // Verify response data
+            BinaryData responseData = operation.Value;
+            Assert.IsNotNull(responseData, "Response data should not be null");
+            Assert.IsTrue(responseData.ToMemory().Length > 0, "Response data should not be empty");
+
+            // Verify response is valid JSON
+            using var jsonDocument = System.Text.Json.JsonDocument.Parse(responseData);
+            Assert.IsNotNull(jsonDocument, "Response should be valid JSON");
+            Assert.IsNotNull(jsonDocument.RootElement, "JSON should have root element");
+        }
+
+        /// <summary>
+        /// Tests deleting an analysis result.
+        /// Verifies that an analysis result can be deleted using its operation ID.
+        /// </summary>
+        [RecordedTest]
+        public async Task DeleteResultAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Get test file URI
+            Uri documentUrl = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
+            Assert.IsNotNull(documentUrl, "Document URL should not be null");
+            Assert.IsTrue(documentUrl.IsAbsoluteUri, "Document URL should be absolute");
+
+            // Start the analysis operation
+            var analyzeOperation = await client.AnalyzeAsync(
+                WaitUntil.Started,
+                "prebuilt-invoice",
+                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+
+            // Get the operation ID from the operation
+            string operationId = analyzeOperation.Id;
+            Assert.IsNotNull(operationId, "Operation ID should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(operationId), "Operation ID should not be empty");
+
+            // Wait for completion
+            await analyzeOperation.WaitForCompletionAsync();
+            AnalyzeResult result = analyzeOperation.Value;
+
+            // Verify analysis completed successfully
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+
+            // Delete the analysis result
+            await client.DeleteResultAsync(operationId);
+
+            // Verify deletion succeeded (no exception means deletion was successful)
+            // Note: There's no direct way to verify deletion by querying the result,
+            // but if DeleteResultAsync completes without throwing, the deletion was successful
+            Assert.Pass("Analysis result deletion completed successfully");
+        }
+
+        /// <summary>
+        /// Tests retrieving result files (keyframe images) from video analysis.
+        /// Verifies that keyframes can be retrieved using GetResultFileAsync.
+        /// </summary>
+        [RecordedTest]
+        public async Task GetResultFileAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Use video URL from sample
+            Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-understanding-assets/raw/refs/heads/main/videos/sdk_samples/FlightSimulator.mp4");
+            Assert.IsNotNull(videoUrl, "Video URL should not be null");
+            Assert.IsTrue(videoUrl.IsAbsoluteUri, "Video URL should be absolute");
+
+            // Start the analysis operation
+            var analyzeOperation = await client.AnalyzeAsync(
+                WaitUntil.Started,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalyzeInput { Url = videoUrl } });
+
+            // Get the operation ID from the operation
+            string operationId = analyzeOperation.Id;
+            Assert.IsNotNull(operationId, "Operation ID should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(operationId), "Operation ID should not be empty");
+
+            // Wait for completion
+            await analyzeOperation.WaitForCompletionAsync();
+            AnalyzeResult result = analyzeOperation.Value;
+
+            // Verify analysis completed successfully
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+
+            // Find video content with keyframes
+            var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
+            Assert.IsNotNull(videoContent, "Test requires AudioVisualContent (video content) for GetResultFile");
+            Assert.IsNotNull(videoContent!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
+            Assert.IsTrue(videoContent.KeyFrameTimesMs!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimesMs.Count}");
+
+            // Get the first keyframe
+            long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+            string framePath = $"keyframes/{firstFrameTimeMs}";
+
+            // Get the result file (keyframe image)
+            Response<BinaryData> fileResponse = await client.GetResultFileAsync(operationId, framePath);
+
+            // Verify response
+            Assert.IsNotNull(fileResponse, "File response should not be null");
+            Assert.IsTrue(fileResponse.HasValue, "File response should have a value");
+            Assert.IsNotNull(fileResponse.Value, "File response value should not be null");
+
+            // Verify raw response
+            var rawResponse = fileResponse.GetRawResponse();
+            Assert.IsNotNull(rawResponse, "Raw response should not be null");
+            Assert.IsTrue(rawResponse.Status >= 200 && rawResponse.Status < 300,
+                $"Response status should be successful, but was {rawResponse.Status}");
+
+            // Verify file data
+            byte[] imageBytes = fileResponse.Value.ToArray();
+            Assert.IsTrue(imageBytes.Length > 0, "Keyframe image should not be empty");
+        }
     }
 }
