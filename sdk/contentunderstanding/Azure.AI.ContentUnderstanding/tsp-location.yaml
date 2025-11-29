@@ -1,0 +1,6 @@
+directory: specification/ai/ContentUnderstanding
+commit: e14eec8796b4d481a942a41e103881589ec648d8
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
