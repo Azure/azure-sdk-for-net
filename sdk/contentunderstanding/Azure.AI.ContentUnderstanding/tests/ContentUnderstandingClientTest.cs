@@ -363,5 +363,703 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Assert.Warn("Expected DocumentContent but got " + content?.GetType().Name);
             }
         }
+
+        /// <summary>
+        /// Tests analyzing a document from a URL using the prebuilt-documentSearch analyzer.
+        /// Verifies that the analysis operation completes successfully and returns content results.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeUrlAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Get test file URI
+            Uri uriSource = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
+            Assert.IsNotNull(uriSource, "URI source should not be null");
+            Assert.IsTrue(uriSource.IsAbsoluteUri, "URI should be absolute");
+
+            // Analyze the document from URL
+            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+
+            // Verify operation completed successfully
+            Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
+            Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+
+            // Verify result
+            AnalyzeResult result = operation.Value;
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result contents should not be null");
+            Assert.IsTrue(result.Contents.Count > 0, "Result should contain at least one content element");
+            Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
+
+            // Verify markdown content
+            MediaContent? content = result.Contents.First();
+            Assert.IsNotNull(content, "Content should not be null");
+            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
+
+            if (content is MediaContent mediaContent)
+            {
+                Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
+                Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
+            }
+        }
+
+        /// <summary>
+        /// Tests analyzing an invoice using the prebuilt-invoice analyzer and extracting invoice fields.
+        /// Verifies that invoice-specific fields (CustomerName, InvoiceDate, TotalAmount, LineItems) are extracted correctly.
+        /// </summary>
+        [RecordedTest]
+        public async Task AnalyzeInvoiceAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Get test file URI
+            Uri invoiceUrl = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
+            Assert.IsNotNull(invoiceUrl, "Invoice URL should not be null");
+            Assert.IsTrue(invoiceUrl.IsAbsoluteUri, "Invoice URL should be absolute");
+
+            // Analyze the invoice
+            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-invoice",
+                inputs: new[] { new AnalyzeInput { Url = invoiceUrl } });
+
+            // Verify operation completed successfully
+            Assert.IsNotNull(operation, "Analysis operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
+            Assert.IsNotNull(operation.GetRawResponse(), "Analysis operation should have a raw response");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+
+            // Verify result
+            AnalyzeResult result = operation.Value;
+            Assert.IsNotNull(result, "Analysis result should not be null");
+            Assert.IsNotNull(result.Contents, "Result should contain contents");
+            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+            Assert.AreEqual(1, result.Contents.Count, "Invoice should have exactly one content element");
+
+            // Verify document content
+            var content = result.Contents?.FirstOrDefault();
+            Assert.IsNotNull(content, "Content should not be null");
+            Assert.IsInstanceOf<DocumentContent>(content, "Content should be of type DocumentContent");
+
+            if (content is DocumentContent docContent)
+            {
+                // Verify basic document properties
+                Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
+                Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
+                    "End page should be >= start page");
+
+                // Verify invoice fields exist (at least one should be present)
+                bool hasAnyField = docContent.Fields.ContainsKey("CustomerName") ||
+                                   docContent.Fields.ContainsKey("InvoiceDate") ||
+                                   docContent.Fields.ContainsKey("TotalAmount") ||
+                                   docContent.Fields.ContainsKey("LineItems");
+
+                Assert.IsTrue(hasAnyField, "Invoice should have at least one standard invoice field");
+
+                // Verify CustomerName field with expected value
+                if (docContent.Fields.TryGetValue("CustomerName", out var customerNameField))
+                {
+                    Assert.IsTrue(customerNameField is StringField, "CustomerName should be a StringField");
+                    if (customerNameField is StringField customerNameStr)
+                    {
+                        Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.ValueString),
+                            "CustomerName value should not be empty");
+                        // Expected value from recording: "MICROSOFT CORPORATION"
+                        Assert.AreEqual("MICROSOFT CORPORATION", customerNameStr.ValueString,
+                            "CustomerName should match expected value");
+                        Assert.IsTrue(customerNameStr.Confidence.HasValue,
+                            "CustomerName should have confidence value");
+                        if (customerNameStr.Confidence.HasValue)
+                        {
+                            Assert.IsTrue(customerNameStr.Confidence.Value >= 0 && customerNameStr.Confidence.Value <= 1,
+                                "CustomerName confidence should be between 0 and 1");
+                        }
+                    }
+                }
+
+                // Verify InvoiceDate field with expected value
+                if (docContent.Fields.TryGetValue("InvoiceDate", out var invoiceDateField))
+                {
+                    Assert.IsTrue(invoiceDateField is DateField, "InvoiceDate should be a DateField");
+                    if (invoiceDateField is DateField invoiceDate)
+                    {
+                        Assert.IsTrue(invoiceDate.ValueDate.HasValue,
+                            "InvoiceDate should have a date value");
+                        // Expected value from recording: "2019-11-15"
+                        var expectedDate = new DateTime(2019, 11, 15);
+                        Assert.AreEqual(expectedDate, invoiceDate.ValueDate!.Value.Date,
+                            "InvoiceDate should match expected value");
+                        Assert.IsTrue(invoiceDate.Confidence.HasValue,
+                            "InvoiceDate should have confidence value");
+                        if (invoiceDate.Confidence.HasValue)
+                        {
+                            Assert.IsTrue(invoiceDate.Confidence.Value >= 0 && invoiceDate.Confidence.Value <= 1,
+                                "InvoiceDate confidence should be between 0 and 1");
+                        }
+                    }
+                }
+
+                // Verify TotalAmount field with expected value
+                if (docContent.Fields.TryGetValue("TotalAmount", out var totalAmountField))
+                {
+                    Assert.IsTrue(totalAmountField is ObjectField, "TotalAmount should be an ObjectField");
+                    if (totalAmountField is ObjectField totalAmountObj)
+                    {
+                        // Verify Amount sub-field
+                        var amountField = totalAmountObj["Amount"];
+                        Assert.IsNotNull(amountField, "TotalAmount.Amount should not be null");
+                        Assert.IsTrue(amountField is NumberField, "TotalAmount.Amount should be a NumberField");
+                        if (amountField is NumberField amountNum)
+                        {
+                            Assert.IsTrue(amountNum.ValueNumber.HasValue,
+                                "TotalAmount.Amount should have a numeric value");
+                            // Expected value from recording: 110
+                            Assert.AreEqual(110.0, amountNum.ValueNumber!.Value,
+                                "TotalAmount.Amount should match expected value");
+                        }
+
+                        // Verify CurrencyCode sub-field
+                        var currencyField = totalAmountObj["CurrencyCode"];
+                        Assert.IsNotNull(currencyField, "TotalAmount.CurrencyCode should not be null");
+                        Assert.IsTrue(currencyField is StringField, "TotalAmount.CurrencyCode should be a StringField");
+                        if (currencyField is StringField currencyStr)
+                        {
+                            // Expected value from recording: "USD"
+                            Assert.AreEqual("USD", currencyStr.ValueString,
+                                "TotalAmount.CurrencyCode should match expected value");
+                        }
+                    }
+                }
+
+                // Verify LineItems field with expected values
+                if (docContent.Fields.TryGetValue("LineItems", out var lineItemsField))
+                {
+                    Assert.IsTrue(lineItemsField is ArrayField, "LineItems should be an ArrayField");
+                    if (lineItemsField is ArrayField lineItems)
+                    {
+                        // Expected count from recording: 3
+                        Assert.AreEqual(3, lineItems.Count,
+                            "LineItems should have expected count");
+
+                        // Verify first line item (Consulting Services)
+                        if (lineItems[0] is ObjectField item1)
+                        {
+                            var desc1 = item1["Description"];
+                            Assert.IsNotNull(desc1, "Item 1 Description should not be null");
+                            if (desc1 is StringField desc1Str)
+                            {
+                                // Expected value from recording: "Consulting Services"
+                                Assert.AreEqual("Consulting Services", desc1Str.ValueString,
+                                    "Item 1 Description should match expected value");
+                            }
+
+                            var qty1 = item1["Quantity"];
+                            Assert.IsNotNull(qty1, "Item 1 Quantity should not be null");
+                            if (qty1 is NumberField qty1Num && qty1Num.ValueNumber.HasValue)
+                            {
+                                // Expected value from recording: 2
+                                Assert.AreEqual(2.0, qty1Num.ValueNumber.Value,
+                                    "Item 1 Quantity should match expected value");
+                            }
+
+                            var unitPrice1 = item1["UnitPrice"];
+                            if (unitPrice1 is ObjectField unitPrice1Obj)
+                            {
+                                var unitPrice1Amount = unitPrice1Obj["Amount"];
+                                if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.ValueNumber.HasValue)
+                                {
+                                    // Expected value from recording: 30
+                                    Assert.AreEqual(30.0, unitPrice1Num.ValueNumber.Value,
+                                        "Item 1 UnitPrice.Amount should match expected value");
+                                }
+                            }
+                        }
+
+                        // Verify second line item (Document Fee)
+                        if (lineItems[1] is ObjectField item2)
+                        {
+                            var desc2 = item2["Description"];
+                            Assert.IsNotNull(desc2, "Item 2 Description should not be null");
+                            if (desc2 is StringField desc2Str)
+                            {
+                                // Expected value from recording: "Document Fee"
+                                Assert.AreEqual("Document Fee", desc2Str.ValueString,
+                                    "Item 2 Description should match expected value");
+                            }
+
+                            var qty2 = item2["Quantity"];
+                            Assert.IsNotNull(qty2, "Item 2 Quantity should not be null");
+                            if (qty2 is NumberField qty2Num && qty2Num.ValueNumber.HasValue)
+                            {
+                                // Expected value from recording: 3
+                                Assert.AreEqual(3.0, qty2Num.ValueNumber.Value,
+                                    "Item 2 Quantity should match expected value");
+                            }
+
+                            var totalAmount2 = item2["TotalAmount"];
+                            if (totalAmount2 is ObjectField totalAmount2Obj)
+                            {
+                                var totalAmount2Amount = totalAmount2Obj["Amount"];
+                                if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.ValueNumber.HasValue)
+                                {
+                                    // Expected value from recording: 30
+                                    Assert.AreEqual(30.0, totalAmount2Num.ValueNumber.Value,
+                                        "Item 2 TotalAmount.Amount should match expected value");
+                                }
+                            }
+                        }
+
+                        // Verify third line item (Printing Fee)
+                        if (lineItems[2] is ObjectField item3)
+                        {
+                            var desc3 = item3["Description"];
+                            Assert.IsNotNull(desc3, "Item 3 Description should not be null");
+                            if (desc3 is StringField desc3Str)
+                            {
+                                // Expected value from recording: "Printing Fee"
+                                Assert.AreEqual("Printing Fee", desc3Str.ValueString,
+                                    "Item 3 Description should match expected value");
+                            }
+
+                            var qty3 = item3["Quantity"];
+                            Assert.IsNotNull(qty3, "Item 3 Quantity should not be null");
+                            if (qty3 is NumberField qty3Num && qty3Num.ValueNumber.HasValue)
+                            {
+                                // Expected value from recording: 10
+                                Assert.AreEqual(10.0, qty3Num.ValueNumber.Value,
+                                    "Item 3 Quantity should match expected value");
+                            }
+
+                            var unitPrice3 = item3["UnitPrice"];
+                            if (unitPrice3 is ObjectField unitPrice3Obj)
+                            {
+                                var unitPrice3Amount = unitPrice3Obj["Amount"];
+                                if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.ValueNumber.HasValue)
+                                {
+                                    // Expected value from recording: 1
+                                    Assert.AreEqual(1.0, unitPrice3Num.ValueNumber.Value,
+                                        "Item 3 UnitPrice.Amount should match expected value");
+                                }
+                            }
+
+                            var totalAmount3 = item3["TotalAmount"];
+                            if (totalAmount3 is ObjectField totalAmount3Obj)
+                            {
+                                var totalAmount3Amount = totalAmount3Obj["Amount"];
+                                if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.ValueNumber.HasValue)
+                                {
+                                    // Expected value from recording: 10
+                                    Assert.AreEqual(10.0, totalAmount3Num.ValueNumber.Value,
+                                        "Item 3 TotalAmount.Amount should match expected value");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Assert.Fail("Content should be DocumentContent for invoice analysis");
+            }
+        }
+
+        /// <summary>
+        /// Tests creating a custom analyzer with field schema.
+        /// Verifies that the analyzer is created successfully with the specified configuration and fields.
+        /// </summary>
+        [RecordedTest]
+        public async Task CreateAnalyzerAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Generate a unique analyzer ID
+            string defaultId = $"test_custom_analyzer_{Recording.Random.NewGuid().ToString("N")}";
+            string analyzerId = Recording.GetVariable("analyzerId", defaultId) ?? defaultId;
+
+            // Define field schema with custom fields
+            var fieldSchema = new ContentFieldSchema(
+                new Dictionary<string, ContentFieldDefinition>
+                {
+                    ["company_name"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.String,
+                        Method = GenerationMethod.Extract,
+                        Description = "Name of the company"
+                    },
+                    ["total_amount"] = new ContentFieldDefinition
+                    {
+                        Type = ContentFieldType.Number,
+                        Method = GenerationMethod.Extract,
+                        Description = "Total amount on the document"
+                    }
+                })
+            {
+                Name = "test_schema",
+                Description = "Test schema for custom analyzer"
+            };
+
+            // Create analyzer configuration
+            var config = new ContentAnalyzerConfig
+            {
+                EnableFormula = true,
+                EnableLayout = true,
+                EnableOcr = true,
+                ReturnDetails = true
+            };
+
+            // Create the custom analyzer
+            var customAnalyzer = new ContentAnalyzer
+            {
+                BaseAnalyzerId = "prebuilt-document",
+                Description = "Test custom analyzer",
+                Config = config,
+                FieldSchema = fieldSchema
+            };
+
+            // Add model mappings (required for custom analyzers)
+            customAnalyzer.Models.Add("completion", "gpt-4.1");
+            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+
+            // Create the analyzer
+            var operation = await client.CreateAnalyzerAsync(
+                WaitUntil.Completed,
+                analyzerId,
+                customAnalyzer,
+                allowReplace: true);
+
+            // Verify operation completed successfully
+            Assert.IsNotNull(operation, "Create analyzer operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
+            Assert.IsNotNull(operation.GetRawResponse(), "Create analyzer operation should have a raw response");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+
+            // Verify result
+            ContentAnalyzer result = operation.Value;
+            Assert.IsNotNull(result, "Analyzer result should not be null");
+            Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
+            Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
+            Assert.IsNotNull(result.Config, "Analyzer config should not be null");
+            Assert.IsNotNull(result.FieldSchema, "Field schema should not be null");
+            Assert.AreEqual(2, result.FieldSchema.Fields.Count, "Should have 2 custom fields");
+            Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("company_name"), "Should contain company_name field");
+            Assert.IsTrue(result.FieldSchema.Fields.ContainsKey("total_amount"), "Should contain total_amount field");
+
+            // Clean up: delete the analyzer
+            try
+            {
+                await client.DeleteAnalyzerAsync(analyzerId);
+            }
+            catch
+            {
+                // Ignore cleanup errors in tests
+            }
+        }
+
+        /// <summary>
+        /// Tests creating a classifier with content categories.
+        /// Verifies that the classifier is created successfully with the specified categories and configuration.
+        /// </summary>
+        [RecordedTest]
+        public async Task CreateClassifierAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Generate a unique analyzer ID
+            string defaultId = $"test_classifier_{Recording.Random.NewGuid().ToString("N")}";
+            string analyzerId = Recording.GetVariable("analyzerId", defaultId) ?? defaultId;
+
+            // Define content categories for classification
+            var categories = new Dictionary<string, ContentCategory>
+            {
+                ["Loan_Application"] = new ContentCategory
+                {
+                    Description = "Documents submitted by individuals or businesses to request funding"
+                },
+                ["Invoice"] = new ContentCategory
+                {
+                    Description = "Billing documents issued by sellers or service providers to request payment"
+                },
+                ["Bank_Statement"] = new ContentCategory
+                {
+                    Description = "Official statements issued by banks that summarize account activity"
+                }
+            };
+
+            // Create analyzer configuration
+            var config = new ContentAnalyzerConfig
+            {
+                ReturnDetails = true,
+                EnableSegment = true
+            };
+
+            // Add categories to config
+            foreach (var kvp in categories)
+            {
+                config.ContentCategories.Add(kvp.Key, kvp.Value);
+            }
+
+            // Create the classifier analyzer
+            var classifier = new ContentAnalyzer
+            {
+                BaseAnalyzerId = "prebuilt-document",
+                Description = "Custom classifier for financial document categorization",
+                Config = config
+            };
+            classifier.Models.Add("completion", "gpt-4.1");
+
+            // Create the classifier
+            var operation = await client.CreateAnalyzerAsync(
+                WaitUntil.Completed,
+                analyzerId,
+                classifier);
+
+            // Verify operation completed successfully
+            Assert.IsNotNull(operation, "Create classifier operation should not be null");
+            Assert.IsTrue(operation.HasCompleted, "Operation should be completed");
+            Assert.IsTrue(operation.HasValue, "Operation should have a value");
+            Assert.IsNotNull(operation.GetRawResponse(), "Create classifier operation should have a raw response");
+            Assert.IsTrue(operation.GetRawResponse().Status >= 200 && operation.GetRawResponse().Status < 300,
+                $"Response status should be successful, but was {operation.GetRawResponse().Status}");
+
+            // Verify result
+            ContentAnalyzer result = operation.Value;
+            Assert.IsNotNull(result, "Classifier result should not be null");
+            Assert.IsNotNull(result.BaseAnalyzerId, "Base analyzer ID should not be null");
+            Assert.AreEqual("prebuilt-document", result.BaseAnalyzerId, "Base analyzer ID should match");
+            Assert.IsNotNull(result.Config, "Classifier config should not be null");
+            Assert.IsNotNull(result.Config.ContentCategories, "Content categories should not be null");
+            Assert.AreEqual(3, result.Config.ContentCategories.Count, "Should have 3 content categories");
+            Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Loan_Application"), "Should contain Loan_Application category");
+            Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Invoice"), "Should contain Invoice category");
+            Assert.IsTrue(result.Config.ContentCategories.ContainsKey("Bank_Statement"), "Should contain Bank_Statement category");
+
+            try
+            {
+                // Analyze mixed financial document with segmentation enabled
+                string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
+                Assert.IsTrue(File.Exists(filePath), $"Sample file should exist at {filePath}");
+
+                byte[] fileBytes = File.ReadAllBytes(filePath);
+                Assert.IsTrue(fileBytes.Length > 0, "File should not be empty");
+
+                BinaryData binaryData = BinaryData.FromBytes(fileBytes);
+
+                // Analyze the document using the classifier
+                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                    WaitUntil.Completed,
+                    analyzerId,
+                    "application/pdf",
+                    binaryData);
+
+                // Verify analysis operation completed successfully
+                Assert.IsNotNull(analyzeOperation, "Analysis operation should not be null");
+                Assert.IsTrue(analyzeOperation.HasCompleted, "Operation should be completed");
+                Assert.IsTrue(analyzeOperation.HasValue, "Operation should have a value");
+                Assert.IsNotNull(analyzeOperation.GetRawResponse(), "Analysis operation should have a raw response");
+                Assert.IsTrue(analyzeOperation.GetRawResponse().Status >= 200 && analyzeOperation.GetRawResponse().Status < 300,
+                    $"Response status should be successful, but was {analyzeOperation.GetRawResponse().Status}");
+
+                // Verify analysis result
+                AnalyzeResult analyzeResult = analyzeOperation.Value;
+                Assert.IsNotNull(analyzeResult, "Analysis result should not be null");
+                Assert.IsNotNull(analyzeResult.Contents, "Result should contain contents");
+                Assert.IsTrue(analyzeResult.Contents.Count > 0, "Result should have at least one content");
+                Assert.AreEqual(1, analyzeResult.Contents.Count, "Result should have exactly one content element");
+
+                // Verify document content and segments
+                var documentContent = analyzeResult.Contents?.FirstOrDefault() as DocumentContent;
+                Assert.IsNotNull(documentContent, "Content should be DocumentContent");
+                Assert.IsTrue(documentContent!.StartPageNumber >= 1, "Start page should be >= 1");
+                Assert.IsTrue(documentContent.EndPageNumber >= documentContent.StartPageNumber,
+                    "End page should be >= start page");
+
+                // With EnableSegment=true, we expect automatic segmentation into 3 sections
+                Assert.IsNotNull(documentContent.Segments, "Segments should not be null when EnableSegment=true");
+                Assert.IsTrue(documentContent.Segments!.Count > 0, "Should have at least one segment with EnableSegment=true");
+                // Expected: 3 segments (one for each category: Loan_Application, Invoice, Bank_Statement)
+                Assert.AreEqual(3, documentContent.Segments.Count,
+                    "Mixed financial document should be segmented into 3 sections (one per category)");
+
+                // Verify each segment with expected values from recording
+                var sortedSegments = documentContent.Segments.OrderBy(s => s.StartPageNumber).ToList();
+
+                // Expected segment values from recording:
+                // Segment 1: Invoice, Pages 1-1, segmentId: segment1
+                // Segment 2: Bank_Statement, Pages 2-3, segmentId: segment2
+                // Segment 3: Loan_Application, Pages 4-4, segmentId: segment3
+                var expectedSegments = new[]
+                {
+                    new { Category = "Invoice", StartPage = 1, EndPage = 1, SegmentId = "segment1" },
+                    new { Category = "Bank_Statement", StartPage = 2, EndPage = 3, SegmentId = "segment2" },
+                    new { Category = "Loan_Application", StartPage = 4, EndPage = 4, SegmentId = "segment3" }
+                };
+
+                for (int i = 0; i < sortedSegments.Count; i++)
+                {
+                    var segment = sortedSegments[i];
+                    Assert.IsNotNull(segment, $"Segment {i + 1} should not be null");
+                    Assert.IsTrue(segment.StartPageNumber >= 1,
+                        $"Segment {i + 1} start page should be >= 1, but was {segment.StartPageNumber}");
+                    Assert.IsTrue(segment.EndPageNumber >= segment.StartPageNumber,
+                        $"Segment {i + 1} end page should be >= start page");
+                    Assert.IsTrue(segment.StartPageNumber >= documentContent.StartPageNumber &&
+                                segment.EndPageNumber <= documentContent.EndPageNumber,
+                        $"Segment {i + 1} page range [{segment.StartPageNumber}, {segment.EndPageNumber}] should be within document range [{documentContent.StartPageNumber}, {documentContent.EndPageNumber}]");
+
+                    // Verify expected values from recording
+                    if (i < expectedSegments.Length)
+                    {
+                        var expected = expectedSegments[i];
+
+                        // Verify category matches expected value
+                        Assert.AreEqual(expected.Category, segment.Category,
+                            $"Segment {i + 1} category should match expected value");
+
+                        // Verify page numbers match expected values
+                        Assert.AreEqual(expected.StartPage, segment.StartPageNumber,
+                            $"Segment {i + 1} start page should match expected value");
+                        Assert.AreEqual(expected.EndPage, segment.EndPageNumber,
+                            $"Segment {i + 1} end page should match expected value");
+
+                        // Verify segment ID matches expected value
+                        if (!string.IsNullOrEmpty(segment.SegmentId))
+                        {
+                            Assert.AreEqual(expected.SegmentId, segment.SegmentId,
+                                $"Segment {i + 1} ID should match expected value");
+                        }
+                    }
+                }
+
+                // Verify segments cover the entire document without gaps
+                var minSegmentPage = sortedSegments.Min(s => s.StartPageNumber);
+                var maxSegmentPage = sortedSegments.Max(s => s.EndPageNumber);
+                Assert.IsTrue(minSegmentPage <= documentContent.StartPageNumber,
+                    "Segments should start at or before document start page");
+                Assert.IsTrue(maxSegmentPage >= documentContent.EndPageNumber,
+                    "Segments should end at or after document end page");
+            }
+            finally
+            {
+                // Clean up: delete the classifier
+                try
+                {
+                    await client.DeleteAnalyzerAsync(analyzerId);
+                }
+                catch
+                {
+                    // Ignore cleanup errors in tests
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests retrieving analyzer information for both prebuilt and custom analyzers.
+        /// Verifies that analyzer details are returned correctly.
+        /// </summary>
+        [RecordedTest]
+        public async Task GetAnalyzerAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // Test getting a prebuilt analyzer
+            var prebuiltResponse = await client.GetAnalyzerAsync("prebuilt-documentSearch");
+            Assert.IsNotNull(prebuiltResponse, "Response should not be null");
+            Assert.IsTrue(prebuiltResponse.HasValue, "Response should have a value");
+            Assert.IsNotNull(prebuiltResponse.Value, "Analyzer should not be null");
+
+            ContentAnalyzer prebuiltAnalyzer = prebuiltResponse.Value;
+            Assert.IsNotNull(prebuiltAnalyzer, "Prebuilt analyzer should not be null");
+
+            // Verify raw response
+            var rawResponse = prebuiltResponse.GetRawResponse();
+            Assert.IsNotNull(rawResponse, "Raw response should not be null");
+            Assert.AreEqual(200, rawResponse.Status, "Response status should be 200");
+
+            // Test getting prebuilt-invoice analyzer (should have field schema)
+            var invoiceResponse = await client.GetAnalyzerAsync("prebuilt-invoice");
+            Assert.IsNotNull(invoiceResponse, "Invoice response should not be null");
+            Assert.IsTrue(invoiceResponse.HasValue, "Invoice response should have a value");
+            Assert.IsNotNull(invoiceResponse.Value, "Invoice analyzer should not be null");
+
+            ContentAnalyzer invoiceAnalyzer = invoiceResponse.Value;
+            Assert.IsNotNull(invoiceAnalyzer.FieldSchema, "Invoice analyzer should have field schema");
+            Assert.IsNotNull(invoiceAnalyzer.FieldSchema!.Fields, "Invoice analyzer should have fields");
+            Assert.IsTrue(invoiceAnalyzer.FieldSchema.Fields.Count > 0,
+                "Invoice analyzer should have at least one field");
+        }
+
+        /// <summary>
+        /// Tests listing all analyzers.
+        /// Verifies that the list includes prebuilt analyzers and optionally custom analyzers.
+        /// </summary>
+        [RecordedTest]
+        public async Task ListAnalyzersAsync()
+        {
+            ContentUnderstandingClient client = GetClient();
+
+            // List all analyzers
+            var analyzers = new List<ContentAnalyzer>();
+            await foreach (var analyzer in client.GetAnalyzersAsync())
+            {
+                analyzers.Add(analyzer);
+            }
+
+            // Verify we got analyzers
+            Assert.IsNotNull(analyzers, "Analyzers list should not be null");
+            Assert.IsTrue(analyzers.Count > 0, "Should have at least one analyzer");
+
+            // Verify counts
+            var prebuiltCount = analyzers.Count(a => a.AnalyzerId?.StartsWith("prebuilt-") == true);
+            var customCount = analyzers.Count(a => a.AnalyzerId?.StartsWith("prebuilt-") != true);
+            Assert.IsTrue(prebuiltCount > 0, "Should have at least one prebuilt analyzer");
+            Assert.AreEqual(analyzers.Count, prebuiltCount + customCount,
+                "Total count should equal prebuilt + custom count");
+
+            // Verify each analyzer has required properties
+            foreach (var analyzer in analyzers)
+            {
+                Assert.IsNotNull(analyzer, "Analyzer should not be null");
+                Assert.IsNotNull(analyzer.AnalyzerId, "Analyzer ID should not be null");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(analyzer.AnalyzerId),
+                    $"Analyzer ID should not be empty or whitespace");
+            }
+
+            // Verify common prebuilt analyzers exist
+            var analyzerIds = analyzers.Select(a => a.AnalyzerId).Where(id => id != null).ToList();
+            var commonPrebuiltAnalyzers = new[]
+            {
+                "prebuilt-document",
+                "prebuilt-documentSearch",
+                "prebuilt-invoice"
+            };
+
+            foreach (var prebuiltId in commonPrebuiltAnalyzers)
+            {
+                Assert.IsTrue(analyzerIds.Contains(prebuiltId),
+                    $"Should contain common prebuilt analyzer: {prebuiltId}");
+            }
+
+            // Verify no duplicate analyzer IDs
+            var duplicateIds = analyzerIds
+                .GroupBy(id => id)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key)
+                .ToList();
+
+            Assert.AreEqual(0, duplicateIds.Count,
+                $"Should not have duplicate analyzer IDs: {string.Join(", ", duplicateIds)}");
+        }
     }
 }
