@@ -10,7 +10,7 @@ $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 Refresh-Mgmt-Build
 
 $spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector'
-$spectorCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector.Tests' 'TestProjects.Spector.Tests.csproj'
+$spectorCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector.Tests' 'Azure.Generator.Spector.Tests.csproj'
 
 $coverageDir = Join-Path $packageRoot 'generator' 'artifacts' 'coverage'
 

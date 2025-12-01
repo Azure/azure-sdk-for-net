@@ -14,8 +14,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Generator.Management\test\Common\Azure.Generator.Management.Tests.Common.csproj" />
-    <!-- Add project references for Spector test projects here after generation -->
-    <!-- Example: <ProjectReference Include="..\Spector\http\azure\resource-manager\common-properties\src\Azure.ResourceManager.CommonProperties.csproj" /> -->
+    <!-- Some generated projects have build issues - commenting out for now -->
+    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\common-properties\src\Azure.ResourceManager.CommonProperties.csproj" /> -->
+    <ProjectReference Include="..\Spector\http\azure\resource-manager\large-header\src\Azure.ResourceManager.LargeHeader.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\resource-manager\method-subscription-id\src\Azure.ResourceManager.MethodSubscriptionId.csproj" />
+    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\non-resource\src\Azure.ResourceManager.NonResource.csproj" /> -->
+    <ProjectReference Include="..\Spector\http\azure\resource-manager\operation-templates\src\Azure.ResourceManager.OperationTemplates.csproj" />
+    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\resources\src\Azure.ResourceManager.Resources.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>

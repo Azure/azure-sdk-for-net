@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.ResourceManager.Resources client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.Resources</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.ResourceManager.Resources</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>
