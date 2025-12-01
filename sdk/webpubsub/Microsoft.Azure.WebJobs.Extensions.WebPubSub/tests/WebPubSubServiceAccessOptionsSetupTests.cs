@@ -38,8 +38,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             setup.Configure(options);
 
             // Assert
-            Assert.IsNotNull(options.DefaultWebPubSubAccess);
-            Assert.AreEqual(new System.Uri(TestServiceUri), options.DefaultWebPubSubAccess.ServiceEndpoint);
+            Assert.IsNotNull(options.WebPubSubAccess);
+            Assert.AreEqual(new System.Uri(TestServiceUri), options.WebPubSubAccess.ServiceEndpoint);
         }
 
         [Test]

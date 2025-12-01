@@ -86,8 +86,8 @@ internal static class WebPubSubServiceAccessUtil
             if (!string.IsNullOrEmpty(serviceUri))
             {
                 var endpoint = new Uri(serviceUri);
-                var tokenCrential = azureComponentFactory.CreateTokenCredential(section);
-                result = new WebPubSubServiceAccess(endpoint, new IdentityCredential(tokenCrential));
+                var tokenCredential = azureComponentFactory.CreateTokenCredential(section);
+                result = new WebPubSubServiceAccess(endpoint, new IdentityCredential(tokenCredential));
                 return true;
             }
         }

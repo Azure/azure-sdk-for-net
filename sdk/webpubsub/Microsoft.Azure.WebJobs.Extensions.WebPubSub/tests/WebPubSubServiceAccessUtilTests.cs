@@ -170,7 +170,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(new Uri(serviceUri), result.ServiceEndpoint);
             Assert.IsInstanceOf<IdentityCredential>(result.Credential);
-            var identityCredential = (IdentityCredential)result.Credential;
         }
 
         [Test]
