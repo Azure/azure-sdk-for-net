@@ -16,17 +16,26 @@
  *    When both Employee and CurrentEmployee are defined with different singleton keys,
  *    the API returns all resources pointing to the same Employee type only.
  *    See: "singleton resource - demonstrates bug with multiple singletons" test case
+ *    See also: resolve-arm-resources-bug.test.ts for dedicated tests
  *
  * 2. Singleton child resources return incorrect resourceInstancePath.
- *    For @singleton("current") @parentResource(Bar) BarSettingsResource,
+ *    For @singleton("current") @parentResource(Bar) BarSettings,
  *    the API returns the parent path /bars/{barName} instead of /bars/{barName}/settings/current.
+ *    Existing TypeSpec: generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp (BarSettingsResource)
+ *    See: "singleton child resource - demonstrates path bug" test case below
  *
  * 3. Duplicate resources are returned for the same model.
- *    The API can return 2-3 resolved resources for the same TypeSpec model.
+ *    The API can return 2-4 resolved resources for the same TypeSpec model.
+ *    Existing TypeSpec: generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp (BarSettingsResource)
+ *    See: "singleton child resource - demonstrates duplicate resources bug" test case below
  *
  * 4. Parent information is often undefined even when @parentResource is specified.
+ *    Existing TypeSpec: generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp (BarSettingsResource)
+ *    See: "singleton child resource - demonstrates parent undefined bug" test case below
  *
  * 5. Resource type for child resources uses the parent's type instead of the full type path.
+ *    Existing TypeSpec: generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp (BarSettingsResource)
+ *    See: "singleton child resource - demonstrates resource type bug" test case below
  *
  * These bugs prevent using resolveArmResources as a direct replacement for the
  * decorator-based resource detection logic in resource-detection.ts.
@@ -1067,6 +1076,184 @@ interface Employees {
       readOps[0].path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/{employeeName}",
       "Read operation path should match"
+    );
+  });
+
+  /**
+   * TypeSpec for testing singleton child resource bugs.
+   * This matches the structure in generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp
+   * where BarSettingsResource is a @singleton("current") @parentResource(Bar) resource.
+   */
+  const singletonChildResourceSchema = `
+/** A parent resource */
+model Bar is TrackedResource<BarProperties> {
+  ...ResourceNameParameter<Bar>;
+}
+
+model BarProperties {
+  name?: string;
+}
+
+/** A singleton child resource with "current" key - similar to BarSettingsResource in bar.tsp */
+@singleton("current")
+@parentResource(Bar)
+model BarSettings is ProxyResource<BarSettingsProperties> {
+  ...ResourceNameParameter<BarSettings, SegmentName = "settings">;
+}
+
+model BarSettingsProperties {
+  enabled?: boolean;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Bars {
+  get is ArmResourceRead<Bar>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Bar>;
+}
+
+@armResourceOperations
+interface BarSettingsOps {
+  get is ArmResourceRead<BarSettings>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<BarSettings>;
+}
+`;
+
+  /**
+   * BUG 2: Singleton child resources return incorrect resourceInstancePath.
+   *
+   * Expected: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/bars/{barName}/settings/current
+   * Actual: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/bars/{barName}
+   *
+   * This bug affects BarSettingsResource in generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp
+   */
+  it("singleton child resource - demonstrates path bug (BUG 2)", async () => {
+    const program = await typeSpecCompile(singletonChildResourceSchema, runner);
+
+    const provider = resolveArmResources(program);
+    const resources = provider.resources ?? [];
+
+    // Find BarSettings resource
+    const barSettingsResources = resources.filter(
+      (r) => r.type.name === "BarSettings"
+    );
+
+    ok(barSettingsResources.length > 0, "Should find BarSettings resource");
+
+    const barSettings = barSettingsResources[0];
+
+    // KNOWN BUG: The path should include /settings/current but it only shows parent path
+    // Expected (when bug is fixed):
+    //   strictEqual(
+    //     barSettings.resourceInstancePath,
+    //     "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/bars/{barName}/settings/current",
+    //     "BarSettings path should include /settings/current"
+    //   );
+
+    // Current buggy behavior: path is same as parent's path
+    strictEqual(
+      barSettings.resourceInstancePath,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/bars/{barName}",
+      "KNOWN BUG: BarSettings path is parent path instead of /bars/{barName}/settings/current"
+    );
+  });
+
+  /**
+   * BUG 3: Duplicate resources are returned for the same model.
+   *
+   * Expected: 2 unique resources (Bar and BarSettings)
+   * Actual: 4 resources (2 Bar and 2 BarSettings)
+   *
+   * This bug affects all resources, including BarSettingsResource in bar.tsp
+   */
+  it("singleton child resource - demonstrates duplicate resources bug (BUG 3)", async () => {
+    const program = await typeSpecCompile(singletonChildResourceSchema, runner);
+
+    const provider = resolveArmResources(program);
+    const resources = provider.resources ?? [];
+
+    // Count resources by type
+    const barCount = resources.filter((r) => r.type.name === "Bar").length;
+    const barSettingsCount = resources.filter(
+      (r) => r.type.name === "BarSettings"
+    ).length;
+
+    // KNOWN BUG: Multiple duplicate resources are returned
+    // Expected (when bug is fixed):
+    //   strictEqual(barCount, 1, "Should have exactly 1 Bar resource");
+    //   strictEqual(barSettingsCount, 1, "Should have exactly 1 BarSettings resource");
+
+    // Current buggy behavior: duplicates are returned
+    ok(barCount > 1, "KNOWN BUG: More than 1 Bar resource returned");
+    ok(barSettingsCount > 1, "KNOWN BUG: More than 1 BarSettings resource returned");
+    ok(resources.length > 2, "KNOWN BUG: Total resources should be > 2 due to duplicates");
+  });
+
+  /**
+   * BUG 4: Parent information is undefined even when @parentResource is specified.
+   *
+   * Expected: BarSettings.parent.type.name === "Bar"
+   * Actual: BarSettings.parent === undefined
+   *
+   * This bug affects BarSettingsResource in generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp
+   */
+  it("singleton child resource - demonstrates parent undefined bug (BUG 4)", async () => {
+    const program = await typeSpecCompile(singletonChildResourceSchema, runner);
+
+    const provider = resolveArmResources(program);
+    const resources = provider.resources ?? [];
+
+    // Find BarSettings resource
+    const barSettings = resources.find((r) => r.type.name === "BarSettings");
+    ok(barSettings, "Should find BarSettings resource");
+
+    // KNOWN BUG: Parent is undefined even though @parentResource(Bar) is specified
+    // Expected (when bug is fixed):
+    //   ok(barSettings.parent, "BarSettings should have a parent");
+    //   strictEqual(barSettings.parent.type.name, "Bar", "Parent should be Bar");
+
+    // Current buggy behavior: parent is undefined
+    strictEqual(
+      barSettings.parent,
+      undefined,
+      "KNOWN BUG: BarSettings.parent is undefined despite @parentResource(Bar)"
+    );
+  });
+
+  /**
+   * BUG 5: Resource type for child resources uses parent's type instead of full path.
+   *
+   * Expected: Microsoft.ContosoProviderHub/bars/settings
+   * Actual: Microsoft.ContosoProviderHub/bars
+   *
+   * This bug affects BarSettingsResource in generator/TestProjects/Local/Mgmt-TypeSpec/bar.tsp
+   */
+  it("singleton child resource - demonstrates resource type bug (BUG 5)", async () => {
+    const program = await typeSpecCompile(singletonChildResourceSchema, runner);
+
+    const provider = resolveArmResources(program);
+    const resources = provider.resources ?? [];
+
+    // Find BarSettings resource
+    const barSettings = resources.find((r) => r.type.name === "BarSettings");
+    ok(barSettings, "Should find BarSettings resource");
+
+    const resourceTypeString = `${barSettings.resourceType.provider}/${barSettings.resourceType.types.join("/")}`;
+
+    // KNOWN BUG: Resource type should include child segment but only shows parent type
+    // Expected (when bug is fixed):
+    //   strictEqual(
+    //     resourceTypeString,
+    //     "Microsoft.ContosoProviderHub/bars/settings",
+    //     "BarSettings resource type should be bars/settings"
+    //   );
+
+    // Current buggy behavior: uses parent's resource type
+    strictEqual(
+      resourceTypeString,
+      "Microsoft.ContosoProviderHub/bars",
+      "KNOWN BUG: BarSettings uses parent's resource type instead of bars/settings"
     );
   });
 });
