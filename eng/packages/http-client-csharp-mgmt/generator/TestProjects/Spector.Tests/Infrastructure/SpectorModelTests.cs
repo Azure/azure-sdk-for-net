@@ -51,6 +51,5 @@ namespace TestProjects.Spector.Tests.Infrastructure
         [SpectorTest]
         public void ThrowsIfWireIsNotJson()
             => ThrowsIfWireIsNotJsonBase();
-
     }
 }

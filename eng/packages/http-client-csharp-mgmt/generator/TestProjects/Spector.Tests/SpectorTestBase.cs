@@ -56,7 +56,6 @@ namespace TestProjects.Spector.Tests
             => InvokeMethodInternal(obj.GetType(), obj, methodName, [],
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public, args);
 
-
         private static object? InvokeMethodInternal(Type type,
             object obj,
             string methodName,
