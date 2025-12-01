@@ -460,3 +460,135 @@ function Confirm-ChangeLogForRelease {
   }
   return $ChangeLogStatus.IsValid
 }
+
+function New-ChangelogContent {
+  <#
+  .SYNOPSIS
+      Parses raw changelog text into structured content with sections.
+  
+  .DESCRIPTION
+      Takes raw changelog text and parses it into structured arrays containing
+      ReleaseContent (all lines) and Sections (organized by section headers).
+      This function only generates content structure without modifying any files.
+  
+  .PARAMETER ChangelogText
+      The new changelog text containing sections (e.g., "### Breaking Changes", "### Features Added").
+  
+  .PARAMETER InitialAtxHeader
+      The markdown header level used in the changelog (e.g., "#" for H1, "##" for H2).
+      Defaults to "#".
+  
+  .OUTPUTS
+      PSCustomObject with ReleaseContent and Sections properties.
+  
+  .EXAMPLE
+      $content = New-ChangelogContent -ChangelogText $changelogText -InitialAtxHeader "#"
+      $content.ReleaseContent # Array of all lines
+      $content.Sections # Hashtable of section name to content lines
+  #>
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string]$ChangelogText,
+    
+    [Parameter(Mandatory = $false)]
+    [ValidateNotNullOrEmpty()]
+    [string]$InitialAtxHeader = "#"
+  )
+  
+  Write-Verbose "Parsing changelog text into structured content..."
+  
+  # Parse the new changelog content into lines
+  $changelogLines = $ChangelogText -split "`r?`n"
+  
+  # Initialize content structure
+  $releaseContent = @()
+  $sections = @{}
+  
+  # Add an empty line after the version header
+  $releaseContent += ""
+  
+  # Parse the changelog content
+  # InitialAtxHeader represents the markdown header level (e.g., "#" for H1, "##" for H2)
+  # Section headers are two levels deeper than the changelog title
+  # (e.g., "### Breaking Changes" if InitialAtxHeader is "#")
+  $currentSection = $null
+  $sectionHeaderRegex = "^$($InitialAtxHeader)${SECTION_HEADER_REGEX_SUFFIX}"
+  
+  foreach ($line in $changelogLines) {
+    if ($line -match $sectionHeaderRegex) {
+      $currentSection = $matches["sectionName"].Trim()
+      $sections[$currentSection] = @()
+      $releaseContent += $line
+      Write-Verbose "  Found section: $currentSection"
+    }
+    elseif ($currentSection) {
+      $sections[$currentSection] += $line
+      $releaseContent += $line
+    }
+    else {
+      $releaseContent += $line
+    }
+  }
+  
+  Write-Verbose "  Parsed $($sections.Count) section(s)"
+  
+  # Return structured content
+  return [PSCustomObject]@{
+    ReleaseContent = $releaseContent
+    Sections = $sections
+  }
+}
+
+function Set-ChangeLogEntryContent {
+  <#
+  .SYNOPSIS
+      Updates a changelog entry with new content.
+  
+  .DESCRIPTION
+      Takes a changelog entry object and new changelog text, parses the text into
+      structured content, and updates the entry's ReleaseContent and Sections properties.
+  
+  .PARAMETER ChangeLogEntry
+      The changelog entry object to update (from Get-ChangeLogEntries).
+  
+  .PARAMETER NewContent
+      The new changelog text containing sections.
+  
+  .PARAMETER InitialAtxHeader
+      The markdown header level used in the changelog. Defaults to "#".
+  
+  .OUTPUTS
+      The updated changelog entry object.
+  
+  .EXAMPLE
+      $entries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
+      $entry = $entries["1.0.0"]
+      Set-ChangeLogEntryContent -ChangeLogEntry $entry -NewContent $newText -InitialAtxHeader $entries.InitialAtxHeader
+      Set-ChangeLogContent -ChangeLogLocation $changelogPath -ChangeLogEntries $entries
+  #>
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNull()]
+    [PSCustomObject]$ChangeLogEntry,
+    
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string]$NewContent,
+    
+    [Parameter(Mandatory = $false)]
+    [ValidateNotNullOrEmpty()]
+    [string]$InitialAtxHeader = "#"
+  )
+  
+  # Parse the new content into structured format
+  $parsedContent = New-ChangelogContent -ChangelogText $NewContent -InitialAtxHeader $InitialAtxHeader
+  
+  # Update the entry with the parsed content
+  $ChangeLogEntry.ReleaseContent = $parsedContent.ReleaseContent
+  $ChangeLogEntry.Sections = $parsedContent.Sections
+  
+  return $ChangeLogEntry
+}
