@@ -285,6 +285,7 @@ function parseResourceOperation(
               )
             ];
         }
+        break;
       case legacyExtensionResourceOperationName:
         switch (decorator.args[1].jsValue) {
           case "read":
