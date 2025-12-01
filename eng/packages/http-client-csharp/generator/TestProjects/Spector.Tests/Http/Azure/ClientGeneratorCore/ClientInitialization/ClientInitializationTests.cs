@@ -15,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientInitialization_HeaderParam() => Test(async (host) =>
         {
-            var client = new HeaderParamClient(host, "test-name-value", new HeaderParamClientOptions());
+            var client = new HeaderParamClient(host, "test-name-value", null);
 
             // Test WithQuery - name is elevated to client constructor, only id is passed
             await client.WithQueryAsync("test-id");
@@ -27,7 +27,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientInitialization_MultipleParams() => Test(async (host) =>
         {
-            var client = new MultipleParamsClient(host, "test-name-value", "us-west", new MultipleParamsClientOptions());
+            var client = new MultipleParamsClient(host, "test-name-value", "us-west", null);
 
             // Test WithQuery - name and region are elevated to client constructor, only id is passed
             await client.WithQueryAsync("test-id");
@@ -39,7 +39,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientInitialization_MixedParams() => Test(async (host) =>
         {
-            var client = new MixedParamsClient(host, "test-name-value", new MixedParamsClientOptions());
+            var client = new MixedParamsClient(host, "test-name-value", null);
 
             // Test WithQuery - name is elevated to client constructor, region and id are method params
             await client.WithQueryAsync("us-west", "test-id");
@@ -51,7 +51,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientInitialization_PathParam() => Test(async (host) =>
         {
-            var client = new PathParamClient(host, "sample-blob", new PathParamClientOptions());
+            var client = new PathParamClient(host, "sample-blob", null);
 
             // Test WithQuery - blobName is elevated to client constructor, format is method param
             await client.WithQueryAsync("text");
@@ -73,7 +73,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
             // blobName is used for routes with original name (/blobName/with-original-name)
             // blob is used for routes with aliased name (/blob/with-aliased-name)
             // Both params point to the same path segment value "sample-blob" in this scenario
-            var client = new ParamAliasClient(host, "sample-blob", "sample-blob", new ParamAliasClientOptions());
+            var client = new ParamAliasClient(host, "sample-blob", "sample-blob", null);
 
             // Test WithAliasedName - blob parameter is elevated to client constructor
             await client.WithAliasedNameAsync();
@@ -86,7 +86,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         public Task Azure_ClientGenerator_Core_ClientInitialization_ParentClient_ChildClient() => Test(async (host) =>
         {
             // Create ParentClient with blobName elevated to client constructor
-            var parentClient = new ParentClient(host, "sample-blob", new _Specs_AzureClientGeneratorCoreClientInitializationClientOptions());
+            var parentClient = new ParentClient(host, "sample-blob", null);
 
             // Get ChildClient from ParentClient
             var childClient = parentClient.GetChildClient();
