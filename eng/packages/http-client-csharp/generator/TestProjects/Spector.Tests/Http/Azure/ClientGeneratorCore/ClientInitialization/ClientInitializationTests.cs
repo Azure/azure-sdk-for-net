@@ -70,8 +70,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientInitialization_ParamAlias() => Test(async (host) =>
         {
-            // blobName is used for routes with original name
-            // blob is used for routes with aliased name
+            // blobName is used for routes with original name (/blobName/with-original-name)
+            // blob is used for routes with aliased name (/blob/with-aliased-name)
+            // Both params point to the same path segment value "sample-blob" in this scenario
             var client = new ParamAliasClient(host, "sample-blob", "sample-blob", new ParamAliasClientOptions());
 
             // Test WithAliasedName - blob parameter is elevated to client constructor
