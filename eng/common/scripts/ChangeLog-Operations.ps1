@@ -310,7 +310,7 @@ function Remove-EmptySections {
     $InitialAtxHeader = "#"
   )
 
-  $sectionHeaderRegex = "^${InitialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
+  $sectionHeaderRegex = Get-SectionHeaderRegex -InitialAtxHeader $InitialAtxHeader
   $releaseContent = $ChangeLogEntry.ReleaseContent
 
   if ($releaseContent.Count -gt 0)
