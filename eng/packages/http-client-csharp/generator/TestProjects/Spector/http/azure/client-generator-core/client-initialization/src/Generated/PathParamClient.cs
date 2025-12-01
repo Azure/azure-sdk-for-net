@@ -20,6 +20,8 @@ namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
 
         public PathParamClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new PathParamClientOptions()) => throw null;
 
+        public PathParamClient(string blobName, PathParamClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+
         public PathParamClient(Uri endpoint, string blobName, PathParamClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;

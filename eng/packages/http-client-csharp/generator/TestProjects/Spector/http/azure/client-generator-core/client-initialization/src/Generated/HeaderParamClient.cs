@@ -21,6 +21,8 @@ namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
 
         public HeaderParamClient(string name) : this(new Uri("http://localhost:3000"), name, new HeaderParamClientOptions()) => throw null;
 
+        public HeaderParamClient(string name, HeaderParamClientOptions options) : this(new Uri("http://localhost:3000"), name, options) => throw null;
+
         public HeaderParamClient(Uri endpoint, string name, HeaderParamClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
