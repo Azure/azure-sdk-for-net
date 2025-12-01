@@ -27,6 +27,8 @@ export const armResourceRead = "Azure.ResourceManager.@armResourceRead";
 export const armResourceReadName = "@armResourceRead";
 const armResourceReadRegex = "Azure\\.ResourceManager\\.@armResourceRead";
 
+export const readsResourceName = "@readsResource";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourcecreateorupdate
 export const armResourceCreateOrUpdate =
   "Azure.ResourceManager.@armResourceCreateOrUpdate";

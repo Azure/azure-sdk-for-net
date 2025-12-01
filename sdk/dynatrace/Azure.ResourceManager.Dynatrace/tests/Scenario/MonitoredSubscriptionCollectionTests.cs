@@ -35,12 +35,13 @@ namespace Azure.ResourceManager.Dynatrace.Samples
             DynatraceMonitorResource dynatraceMonitor = client.GetDynatraceMonitorResource(dynatraceMonitorResourceId);
 
             // Get the MonitoredSubscriptionProperty resource instance
-            DynatraceMonitoredSubscriptionPropertyResource monitoredSubscriptionProperty = dynatraceMonitor.GetDynatraceMonitoredSubscriptionProperty();
+            DynatraceMonitoredSubscriptionResource monitoredSubscriptionProperty = dynatraceMonitor.GetDynatraceMonitoredSubscription();
 
             // Invoke the GET operation
-            DynatraceMonitoredSubscriptionPropertyResource result = await monitoredSubscriptionProperty.GetAsync();
+            DynatraceMonitoredSubscriptionResource result = await monitoredSubscriptionProperty.GetAsync();
 
-            DynatraceMonitoredSubscriptionPropertyData resourceData = result.Data;
+            DynatraceMonitoredSubscriptionData resourceData = result.Data;
+
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
@@ -59,17 +60,18 @@ namespace Azure.ResourceManager.Dynatrace.Samples
             string monitorName = "myMonitor";
             ResourceIdentifier dynatraceMonitorResourceId = DynatraceMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             DynatraceMonitorResource dynatraceMonitor = client.GetDynatraceMonitorResource(dynatraceMonitorResourceId);
-            DynatraceMonitoredSubscriptionPropertyResource monitoredSubscriptionProperty = dynatraceMonitor.GetDynatraceMonitoredSubscriptionProperty();
+            DynatraceMonitoredSubscriptionResource monitoredSubscriptionProperty = dynatraceMonitor.GetDynatraceMonitoredSubscription();
 
-            DynatraceMonitoredSubscriptionPropertyData data = new DynatraceMonitoredSubscriptionPropertyData
+            DynatraceMonitoredSubscriptionData data = new DynatraceMonitoredSubscriptionData
             {
                 // For demo purposes we leave Properties null; in real scenarios populate DynatraceMonitoredSubscriptionList
             };
 
-            ArmOperation<DynatraceMonitoredSubscriptionPropertyResource> lro = await monitoredSubscriptionProperty.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            DynatraceMonitoredSubscriptionPropertyResource result = lro.Value;
+            ArmOperation<DynatraceMonitoredSubscriptionResource> lro = await monitoredSubscriptionProperty.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            DynatraceMonitoredSubscriptionResource result = lro.Value;
 
-            DynatraceMonitoredSubscriptionPropertyData resourceData = result.Data;
+            DynatraceMonitoredSubscriptionData resourceData = result.Data;
+
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Dynatrace.Samples
             string monitorName = "myMonitor";
             ResourceIdentifier dynatraceMonitorResourceId = DynatraceMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             DynatraceMonitorResource dynatraceMonitor = client.GetDynatraceMonitorResource(dynatraceMonitorResourceId);
-            DynatraceMonitoredSubscriptionPropertyResource monitoredSubscriptionProperty = dynatraceMonitor.GetDynatraceMonitoredSubscriptionProperty();
+            DynatraceMonitoredSubscriptionResource monitoredSubscriptionProperty = dynatraceMonitor.GetDynatraceMonitoredSubscription();
 
             await monitoredSubscriptionProperty.DeleteAsync(WaitUntil.Completed);
 
