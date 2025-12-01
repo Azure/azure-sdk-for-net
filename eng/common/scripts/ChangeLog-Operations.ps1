@@ -470,7 +470,7 @@ function Confirm-ChangeLogForRelease {
   return $ChangeLogStatus.IsValid
 }
 
-function New-ChangelogContent {
+function Parse-ChangelogContent {
   <#
   .SYNOPSIS
       Parses raw changelog text into structured content with sections.
@@ -491,7 +491,7 @@ function New-ChangelogContent {
       PSCustomObject with ReleaseContent and Sections properties.
   
   .EXAMPLE
-      $content = New-ChangelogContent -ChangelogText $changelogText -InitialAtxHeader "#"
+      $content = Parse-ChangelogContent -ChangelogText $changelogText -InitialAtxHeader "#"
       $content.ReleaseContent # Array of all lines
       $content.Sections # Hashtable of section name to content lines
   #>
@@ -593,7 +593,7 @@ function Set-ChangeLogEntryContent {
   )
   
   # Parse the new content into structured format
-  $parsedContent = New-ChangelogContent -ChangelogText $NewContent -InitialAtxHeader $InitialAtxHeader
+  $parsedContent = Parse-ChangelogContent -ChangelogText $NewContent -InitialAtxHeader $InitialAtxHeader
   
   # Update the entry with the parsed content
   $ChangeLogEntry.ReleaseContent = $parsedContent.ReleaseContent
