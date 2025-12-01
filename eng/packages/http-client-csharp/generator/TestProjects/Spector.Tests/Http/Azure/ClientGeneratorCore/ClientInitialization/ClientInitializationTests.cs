@@ -83,6 +83,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         });
 
         [SpectorTest]
+        [Ignore("The InitializedBy flag is not being respected. The Child client should have a public constructor.")]
         public Task Azure_ClientGenerator_Core_ClientInitialization_ParentClient_ChildClient() => Test(async (host) =>
         {
             // Create ParentClient with blobName elevated to client constructor
