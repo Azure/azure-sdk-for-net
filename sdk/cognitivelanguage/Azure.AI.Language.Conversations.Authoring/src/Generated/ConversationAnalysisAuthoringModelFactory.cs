@@ -93,6 +93,210 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ConversationAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpirationDate, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCreateProjectDetails"/>. </summary>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="settings"> The project settings. </param>
+        /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
+        /// <param name="description"> The project description. </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringCreateProjectDetails"/> instance for mocking. </returns>
+        public static ConversationAuthoringCreateProjectDetails ConversationAuthoringCreateProjectDetails(ConversationAuthoringProjectKind projectKind = default, ConversationAuthoringProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        {
+            return new ConversationAuthoringCreateProjectDetails(
+                projectKind,
+                settings,
+                storageInputContainerName,
+                projectName,
+                multilingual,
+                description,
+                language,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectDeletionState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringProjectDeletionState"/> instance for mocking. </returns>
+        public static ConversationAuthoringProjectDeletionState ConversationAuthoringProjectDeletionState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new ConversationAuthoringProjectDeletionState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringExportProjectState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <param name="resultUri"> The URL to use in order to download the exported project. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringExportProjectState"/> instance for mocking. </returns>
+        public static ConversationAuthoringExportProjectState ConversationAuthoringExportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUri = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new ConversationAuthoringExportProjectState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                resultUri,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringImportProjectState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringImportProjectState"/> instance for mocking. </returns>
+        public static ConversationAuthoringImportProjectState ConversationAuthoringImportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new ConversationAuthoringImportProjectState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectDeployment"/>. </summary>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="modelId"> Represents deployment modelId. </param>
+        /// <param name="lastTrainedOn"> Represents deployment last trained time. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
+        /// <param name="deploymentExpiredOn"> Represents deployment expiration date in the runtime. </param>
+        /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
+        /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringProjectDeployment"/> instance for mocking. </returns>
+        public static ConversationAuthoringProjectDeployment ConversationAuthoringProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<ConversationAuthoringAssignedProjectResource> assignedResources = null)
+        {
+            assignedResources ??= new List<ConversationAuthoringAssignedProjectResource>();
+
+            return new ConversationAuthoringProjectDeployment(
+                deploymentName,
+                modelId,
+                lastTrainedOn,
+                lastDeployedOn,
+                deploymentExpiredOn,
+                modelTrainingConfigVersion,
+                assignedResources?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringAssignedProjectResource"/>. </summary>
+        /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
+        /// <param name="region"> The Azure resource region. </param>
+        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringAssignedProjectResource"/> instance for mocking. </returns>
+        public static ConversationAuthoringAssignedProjectResource ConversationAuthoringAssignedProjectResource(string resourceId = null, string region = null, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource = null)
+        {
+            return new ConversationAuthoringAssignedProjectResource(resourceId, region, assignedAoaiResource, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/>. </summary>
+        /// <param name="trainedModelLabel"> Represents the trained model label. </param>
+        /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
+        public static ConversationAuthoringCreateDeploymentDetails ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<ConversationAuthoringDeploymentResource> assignedResources = null)
+        {
+            assignedResources ??= new List<ConversationAuthoringDeploymentResource>();
+
+            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentResource"/>. </summary>
+        /// <param name="resourceId"> Represents the Azure resource Id. </param>
+        /// <param name="region"> Represents the resource region. </param>
+        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentResource"/> instance for mocking. </returns>
+        public static ConversationAuthoringDeploymentResource ConversationAuthoringDeploymentResource(string resourceId = null, string region = null, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource = null)
+        {
+            return new ConversationAuthoringDeploymentResource(resourceId, region, assignedAoaiResource, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentState"/> instance for mocking. </returns>
+        public static ConversationAuthoringDeploymentState ConversationAuthoringDeploymentState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new ConversationAuthoringDeploymentState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState"/> instance for mocking. </returns>
+        public static ConversationAuthoringDeploymentDeleteFromResourcesState ConversationAuthoringDeploymentDeleteFromResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new ConversationAuthoringDeploymentDeleteFromResourcesState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
@@ -175,40 +379,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ConversationAuthoringSubTrainingState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringAssignedProjectResource"/>. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
-        /// <param name="region"> The Azure resource region. </param>
-        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringAssignedProjectResource"/> instance for mocking. </returns>
-        public static ConversationAuthoringAssignedProjectResource ConversationAuthoringAssignedProjectResource(string resourceId = null, string region = null, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource = null)
-        {
-            return new ConversationAuthoringAssignedProjectResource(resourceId, region, assignedAoaiResource, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectDeployment"/>. </summary>
-        /// <param name="deploymentName"> Represents deployment name. </param>
-        /// <param name="modelId"> Represents deployment modelId. </param>
-        /// <param name="lastTrainedOn"> Represents deployment last trained time. </param>
-        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
-        /// <param name="deploymentExpiredOn"> Represents deployment expiration date in the runtime. </param>
-        /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
-        /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringProjectDeployment"/> instance for mocking. </returns>
-        public static ConversationAuthoringProjectDeployment ConversationAuthoringProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<ConversationAuthoringAssignedProjectResource> assignedResources = null)
-        {
-            assignedResources ??= new List<ConversationAuthoringAssignedProjectResource>();
-
-            return new ConversationAuthoringProjectDeployment(
-                deploymentName,
-                modelId,
-                lastTrainedOn,
-                lastDeployedOn,
-                deploymentExpiredOn,
-                modelTrainingConfigVersion,
-                assignedResources?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringExportedTrainedModel"/>. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="modelId"> The model ID. </param>
@@ -276,80 +446,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 status,
                 warnings?.ToList(),
                 errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCreateProjectDetails"/>. </summary>
-        /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="settings"> The project settings. </param>
-        /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
-        /// <param name="description"> The project description. </param>
-        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringCreateProjectDetails"/> instance for mocking. </returns>
-        public static ConversationAuthoringCreateProjectDetails ConversationAuthoringCreateProjectDetails(ConversationAuthoringProjectKind projectKind = default, ConversationAuthoringProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
-        {
-            return new ConversationAuthoringCreateProjectDetails(
-                projectKind,
-                settings,
-                storageInputContainerName,
-                projectName,
-                multilingual,
-                description,
-                language,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectDeletionState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringProjectDeletionState"/> instance for mocking. </returns>
-        public static ConversationAuthoringProjectDeletionState ConversationAuthoringProjectDeletionState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new ConversationAuthoringProjectDeletionState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringExportProjectState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="resultUri"> The URL to use in order to download the exported project. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringExportProjectState"/> instance for mocking. </returns>
-        public static ConversationAuthoringExportProjectState ConversationAuthoringExportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUri = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new ConversationAuthoringExportProjectState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                resultUri,
                 serializedAdditionalRawData: null);
         }
 
@@ -484,31 +580,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new OrchestrationExportedUtterance(text, language, intent, dataset, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringImportProjectState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringImportProjectState"/> instance for mocking. </returns>
-        public static ConversationAuthoringImportProjectState ConversationAuthoringImportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new ConversationAuthoringImportProjectState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCopyProjectState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
@@ -549,77 +620,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 trainingMode,
                 evaluationOptions,
                 dataGenerationSettings,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/>. </summary>
-        /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
-        public static ConversationAuthoringCreateDeploymentDetails ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<ConversationAuthoringDeploymentResource> assignedResources = null)
-        {
-            assignedResources ??= new List<ConversationAuthoringDeploymentResource>();
-
-            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentResource"/>. </summary>
-        /// <param name="resourceId"> Represents the Azure resource Id. </param>
-        /// <param name="region"> Represents the resource region. </param>
-        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentResource"/> instance for mocking. </returns>
-        public static ConversationAuthoringDeploymentResource ConversationAuthoringDeploymentResource(string resourceId = null, string region = null, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource = null)
-        {
-            return new ConversationAuthoringDeploymentResource(resourceId, region, assignedAoaiResource, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentState"/> instance for mocking. </returns>
-        public static ConversationAuthoringDeploymentState ConversationAuthoringDeploymentState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new ConversationAuthoringDeploymentState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentDeleteFromResourcesState"/> instance for mocking. </returns>
-        public static ConversationAuthoringDeploymentDeleteFromResourcesState ConversationAuthoringDeploymentDeleteFromResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new ConversationAuthoringDeploymentDeleteFromResourcesState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
