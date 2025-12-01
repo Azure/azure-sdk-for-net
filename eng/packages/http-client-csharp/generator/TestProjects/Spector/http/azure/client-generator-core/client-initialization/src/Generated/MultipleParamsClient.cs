@@ -21,6 +21,8 @@ namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
 
         public MultipleParamsClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new MultipleParamsClientOptions()) => throw null;
 
+        public MultipleParamsClient(string name, string region, MultipleParamsClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+
         public MultipleParamsClient(Uri endpoint, string name, string region, MultipleParamsClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
