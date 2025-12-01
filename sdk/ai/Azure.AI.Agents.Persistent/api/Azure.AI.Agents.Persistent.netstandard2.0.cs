@@ -1597,7 +1597,7 @@ namespace Azure.AI.Agents.Persistent
     public static partial class PersistentAgentsClientExtensions
     {
         public static Microsoft.Extensions.AI.AITool AsAITool(this Azure.AI.Agents.Persistent.ToolDefinition tool) { throw null; }
-        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null) { throw null; }
+        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null, bool throwOnContentErrors = true) { throw null; }
     }
     public static partial class PersistentAgentsExtensions
     {
