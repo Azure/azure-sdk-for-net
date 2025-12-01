@@ -240,6 +240,8 @@
 
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/        @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/ @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
 
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
