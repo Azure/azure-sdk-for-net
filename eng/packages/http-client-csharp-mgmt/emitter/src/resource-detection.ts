@@ -36,6 +36,7 @@ import {
   armResourceReadName,
   armResourceUpdateName,
   extensionResourceOperationName,
+  legacyExtensionResourceOperationName,
   nonResourceMethodMetadata,
   parentResourceName,
   readsResourceName,
@@ -280,6 +281,63 @@ function parseResourceOperation(
               getResourceModelIdCore(
                 sdkContext,
                 decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+        }
+      case legacyExtensionResourceOperationName:
+        switch (decorator.args[1].jsValue) {
+          case "read":
+            return [
+              ResourceOperationKind.Get,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "createOrUpdate":
+            return [
+              ResourceOperationKind.Create,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "update":
+            return [
+              ResourceOperationKind.Update,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "delete":
+            return [
+              ResourceOperationKind.Delete,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "list":
+            return [
+              ResourceOperationKind.List,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "action":
+            return [
+              ResourceOperationKind.Action,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
                 decorator.definition?.name
               )
             ];

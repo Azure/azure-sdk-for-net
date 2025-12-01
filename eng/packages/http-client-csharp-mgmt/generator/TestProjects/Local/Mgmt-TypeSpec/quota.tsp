@@ -180,6 +180,16 @@ interface GroupQuotaLimitLists {
    */
   list is GroupQuotaLimitListsOps.Read<GroupQuotaLimitList>;
 
+  createOrUpdate is GroupQuotaLimitListsOps.CreateOrUpdateAsync<
+    GroupQuotaLimitList,
+    Response = ArmResourceUpdatedResponse<GroupQuotaLimitList> | ArmResourceCreatedResponse<
+      GroupQuotaLimitList,
+      ArmCombinedLroHeaders<FinalResult = GroupQuotaLimitList> &
+        Azure.Core.Foundations.RetryAfterHeader
+    >,
+    OptionalRequestBody = true
+  >;
+
   /**
    * Create the GroupQuota requests for a specific ResourceProvider/Location/Resource. The resourceName properties are specified in the request body. Only 1 resource quota can be requested. Please note that patch request creates a new groupQuota request.
    * Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.

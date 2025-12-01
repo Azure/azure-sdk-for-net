@@ -57,6 +57,7 @@ export const armResourceUpdateName = "@armResourceUpdate";
 const armResourceUpdateRegex = "Azure\\.ResourceManager\\.@armResourceUpdate";
 
 export const extensionResourceOperationName = "@extensionResourceOperation";
+export const legacyExtensionResourceOperationName = "@legacyExtensionResourceOperation";
 
 export const armResourceInternal =
   "Azure.ResourceManager.Private.@armResourceInternal";
