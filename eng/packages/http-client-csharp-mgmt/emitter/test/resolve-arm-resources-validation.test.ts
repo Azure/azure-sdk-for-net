@@ -9,6 +9,28 @@
  *
  * Each test case corresponds to a case in resource-detection.test.ts and verifies
  * whether resolveArmResources API can return the expected resource information.
+ *
+ * KNOWN BUGS IN resolveArmResources API (as of @azure-tools/typespec-azure-resource-manager v0.62.0):
+ *
+ * 1. Multiple singleton resources with different @singleton keys are not properly distinguished.
+ *    When both Employee and CurrentEmployee are defined with different singleton keys,
+ *    the API returns all resources pointing to the same Employee type only.
+ *    See: "singleton resource - demonstrates bug with multiple singletons" test case
+ *
+ * 2. Singleton child resources return incorrect resourceInstancePath.
+ *    For @singleton("current") @parentResource(Bar) BarSettingsResource,
+ *    the API returns the parent path /bars/{barName} instead of /bars/{barName}/settings/current.
+ *
+ * 3. Duplicate resources are returned for the same model.
+ *    The API can return 2-3 resolved resources for the same TypeSpec model.
+ *
+ * 4. Parent information is often undefined even when @parentResource is specified.
+ *
+ * 5. Resource type for child resources uses the parent's type instead of the full type path.
+ *
+ * These bugs prevent using resolveArmResources as a direct replacement for the
+ * decorator-based resource detection logic in resource-detection.ts.
+ * Once these bugs are fixed in the TypeSpec ARM library, the replacement can be completed.
  */
 
 import { beforeEach, describe, it } from "vitest";
