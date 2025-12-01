@@ -3,10 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Formats.Cbor;
+using System.IO;
 using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -31,6 +35,11 @@ namespace Azure.Security.CodeTransparency
         /// Prefix for receipts with unknown/unrecognized issuers.
         /// </summary>
         public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
+
+        /// <summary>
+        /// Public key storage used to verify receipts. It can be prepopulated to do offline verification.
+        /// </summary>
+        private IDictionary<string, JwksDocument> _verificationKeysCache = new ConcurrentDictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
@@ -420,6 +429,10 @@ namespace Azure.Security.CodeTransparency
                     if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
                     {
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
+                        if (verificationOptions?.CodeTransparencyVerificationKeys != null)
+                        {
+                            clientInstance._verificationKeysCache = verificationOptions.CodeTransparencyVerificationKeys.SerializedKeys;
+                        }
                         clientInstances[issuer] = clientInstance;
                     }
                     clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
@@ -508,8 +521,12 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
-            // Get all the public keys from the JWKS endpoint
-            JwksDocument jwksDocument = GetPublicKeys().Value;
+            // Check if we have cached keys for this domain
+            if (! _verificationKeysCache.TryGetValue(issuer, out JwksDocument jwksDocument))
+            {
+                // Get all the public keys from the JWKS endpoint
+                jwksDocument = GetPublicKeys().Value;
+            }
 
             // Ensure there is at least one entry in the JWKS document
             if (jwksDocument.Keys.Count == 0)

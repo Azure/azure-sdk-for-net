@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -470,6 +471,41 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_success_with_OfflineVerificationKeysStore()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            // Parse the JWKS JSON from the mocked response
+            string doc = "{\"foo.bar.com\":{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}}";
+            var jsonDoc = JsonDocument.Parse(doc);
+            var offlineStore = CodeTransparencyVerificationKeys.FromJsonDocument(jsonDoc);
+
+            var options = new CodeTransparencyClientOptions
+            {
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                CodeTransparencyVerificationKeys = offlineStore
+            };
+
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+            // Should not make any network calls since we're using offline keys
             CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 #endif
         }
