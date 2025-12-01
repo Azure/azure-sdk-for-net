@@ -514,7 +514,7 @@ function New-ChangelogContent {
   # Section headers are two levels deeper than the changelog title
   # (e.g., "### Breaking Changes" if InitialAtxHeader is "#")
   $currentSection = $null
-  $sectionHeaderRegex = "^$($InitialAtxHeader)${SECTION_HEADER_REGEX_SUFFIX}"
+  $sectionHeaderRegex = "^${InitialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
   
   foreach ($line in $changelogLines) {
     if ($line -match $sectionHeaderRegex) {
