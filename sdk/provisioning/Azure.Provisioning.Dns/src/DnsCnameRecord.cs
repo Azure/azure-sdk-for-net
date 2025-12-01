@@ -99,7 +99,7 @@ public partial class DnsCnameRecord : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>(nameof(Id), ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>(nameof(SystemData), ["systemData"], isOutput: true);
         _parent = DefineResource<DnsZone>(nameof(Parent), ["parent"], isRequired: true);
-        _cname = DefineProperty<string>(nameof(Cname), ["properties", "cname"]);
+        _cname = DefineProperty<string>(nameof(Cname), ["properties", "CNAMERecord", "cname"]);
         _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), ["properties", "TTL"]);
     }
 
