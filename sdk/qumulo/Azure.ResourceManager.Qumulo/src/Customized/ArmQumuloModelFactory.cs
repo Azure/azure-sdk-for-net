@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 location,
                 marketplaceDetails,
                 provisioningState != null ? new QumuloArmProvisioningState(provisioningState.Value.ToSerialString()) : null,
-                storageSku.ToSerialString(),
-                userDetailsEmail,
+                storageSkuName: storageSku.ToSerialString(),
                 delegatedSubnetId,
                 clusterLoginUri,
                 privateIPs,
                 adminPassword,
                 availabilityZone,
+                userDetailsEmail,
                 identity,
                 initialCapacity);
         }
