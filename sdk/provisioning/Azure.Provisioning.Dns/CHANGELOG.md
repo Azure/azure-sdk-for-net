@@ -6,7 +6,12 @@
 
 ### Breaking Changes
 
+- `DnsAaaRecordInfo`: `Ipv6Addresses` renamed to `Ipv6Address`
+- `DnsARecordInfo `: `ipv4Addresses` renamed to `Ipv4Address`
+
 ### Bugs Fixed
+
+- `DnsCnameRecord.Cname`: property is now backed by the correct Bicep field ( `.properties.CNAMERecord.cname` )
 
 ### Other Changes
 
