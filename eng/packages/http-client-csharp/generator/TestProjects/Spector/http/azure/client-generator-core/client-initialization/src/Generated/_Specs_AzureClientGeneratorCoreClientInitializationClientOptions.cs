@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
 {
-    public partial class ServiceClientOptions : ClientOptions
+    public partial class _Specs_AzureClientGeneratorCoreClientInitializationClientOptions : ClientOptions
     {
     }
 }

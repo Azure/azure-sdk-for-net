@@ -85,7 +85,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         public Task Azure_ClientGenerator_Core_ClientInitialization_ParentClient_ChildClient() => Test(async (host) =>
         {
             // Create ParentClient with blobName elevated to client constructor
-            var parentClient = new ParentClient(host, "sample-blob", new ServiceClientOptions());
+            var parentClient = new ParentClient(host, "sample-blob", new _Specs_AzureClientGeneratorCoreClientInitializationClientOptions());
 
             // Get ChildClient from ParentClient
             var childClient = parentClient.GetChildClient();

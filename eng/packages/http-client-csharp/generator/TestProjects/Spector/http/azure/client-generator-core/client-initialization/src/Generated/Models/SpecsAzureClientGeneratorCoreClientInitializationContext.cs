@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Service;
 
-namespace Service
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization
 {
     [ModelReaderWriterBuildable(typeof(BlobProperties))]
     [ModelReaderWriterBuildable(typeof(Input))]
     [ModelReaderWriterBuildable(typeof(WithBodyRequest))]
-    public partial class ServiceContext : ModelReaderWriterContext
+    public partial class SpecsAzureClientGeneratorCoreClientInitializationContext : ModelReaderWriterContext
     {
     }
 }

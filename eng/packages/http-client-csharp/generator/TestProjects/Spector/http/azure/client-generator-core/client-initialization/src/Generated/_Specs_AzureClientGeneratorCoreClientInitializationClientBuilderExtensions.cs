@@ -13,7 +13,7 @@ using Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class ServiceClientBuilderExtensions
+    public static partial class _Specs_AzureClientGeneratorCoreClientInitializationClientBuilderExtensions
     {
         public static IAzureClientBuilder<HeaderParamClient, HeaderParamClientOptions> AddHeaderParamClient<TBuilder>(this TBuilder builder, Uri endpoint, string name)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
@@ -55,12 +55,12 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<ParamAliasClient, ParamAliasClientOptions> AddParamAliasClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
 
-        public static IAzureClientBuilder<ParentClient, ServiceClientOptions> AddParentClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
+        public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder>(this TBuilder builder, Uri endpoint, string blobName)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ParentClient, ServiceClientOptions> AddParentClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ParentClient, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions> AddParentClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

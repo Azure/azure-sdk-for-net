@@ -14,9 +14,9 @@ namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
     {
         protected ParentClient() => throw null;
 
-        public ParentClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new ServiceClientOptions()) => throw null;
+        public ParentClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new _Specs_AzureClientGeneratorCoreClientInitializationClientOptions()) => throw null;
 
-        public ParentClient(Uri endpoint, string blobName, ServiceClientOptions options) => throw null;
+        public ParentClient(Uri endpoint, string blobName, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
