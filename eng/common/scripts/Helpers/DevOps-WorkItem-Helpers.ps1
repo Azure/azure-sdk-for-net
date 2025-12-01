@@ -1334,8 +1334,6 @@ function Update-DevOpsReleaseWorkItem {
   }
   $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions
 
-
-
   if ((!$workItem.fields.ContainsKey('Custom.SpecProjectPath') -and $packageInfo.SpecProjectPath) -or
       ($workItem.fields.ContainsKey('Custom.SpecProjectPath') -and ($workItem.fields['Custom.SpecProjectPath'] -ne $packageInfo.SpecProjectPath))
   ) {

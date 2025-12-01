@@ -66,7 +66,10 @@ class PackageProps {
         }
 
         if (Test-Path (Join-Path $directoryPath 'tsp-location.yaml')) {
-            $this.SpecProjectPath = (LoadFrom-Yaml (Join-Path $directoryPath 'tsp-location.yaml')).directory
+            $tspLocation = LoadFrom-Yaml (Join-Path $directoryPath 'tsp-location.yaml')
+            if ($tspLocation -and $tspLocation.directory) {
+                $this.SpecProjectPath = $tspLocation.directory
+            }
         }
 
         $this.CIParameters = @{"CIMatrixConfigs" = @()}
