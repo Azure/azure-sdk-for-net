@@ -267,75 +267,26 @@ interface Employees2 {
   });
 
   /**
-   * This test validates the KNOWN BUG in resolveArmResources API with multiple singletons.
-   *
-   * BUG DESCRIPTION:
-   * When multiple singleton resources are defined with different @singleton keys
-   * (e.g., Employee with default key and CurrentEmployee with "current" key),
-   * the resolveArmResources API does not properly distinguish between them.
-   * All resolved resources point to the same model type (Employee) instead of
-   * their respective types.
-   *
-   * This test intentionally asserts the CURRENT BUGGY BEHAVIOR to document it.
-   * Once the bug is fixed in @azure-tools/typespec-azure-resource-manager,
-   * these assertions should be updated to verify correct behavior.
+   * Shared TypeSpec schema for multiple singleton resources test.
+   * Defines two singleton resources with different @singleton keys.
    */
-  it("singleton resource - demonstrates bug with multiple singletons", async () => {
-    const program = await typeSpecCompile(
-      `
-/** An Employee singleton resource */
+  const multipleSingletonsSchema = `
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** An Employee singleton resource with default key */
 @singleton
 model Employee is TrackedResource<EmployeeProperties> {
   ...ResourceNameParameter<Employee>;
 }
 
+/** A CurrentEmployee singleton resource with "current" key */
 @singleton("current")
 model CurrentEmployee is TrackedResource<EmployeeProperties> {
   ...ResourceNameParameter<CurrentEmployee>;
-}
-
-/** Employee properties */
-model EmployeeProperties {
-  /** Age of employee */
-  age?: int32;
-
-  /** City of employee */
-  city?: string;
-
-  /** Profile of employee */
-  @encode("base64url")
-  profile?: bytes;
-
-  /** The status of the last operation. */
-  @visibility(Lifecycle.Read)
-  provisioningState?: ProvisioningState;
-}
-
-/** The provisioning state of a resource. */
-@lroStatus
-union ProvisioningState {
-  string,
-
-  /** The resource create request has been accepted */
-  Accepted: "Accepted",
-
-  /** The resource is being provisioned */
-  Provisioning: "Provisioning",
-
-  /** The resource is updating */
-  Updating: "Updating",
-
-  /** Resource has been created. */
-  Succeeded: "Succeeded",
-
-  /** Resource creation failed. */
-  Failed: "Failed",
-
-  /** Resource creation was canceled. */
-  Canceled: "Canceled",
-
-  /** The resource is being deleted */
-  Deleting: "Deleting",
 }
 
 interface Operations extends Azure.ResourceManager.Operations {}
@@ -344,47 +295,113 @@ interface Operations extends Azure.ResourceManager.Operations {}
 interface Employees {
   get is ArmResourceRead<Employee>;
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
-  update is ArmCustomPatchSync<
-    Employee,
-    Azure.ResourceManager.Foundations.ResourceUpdateModel<Employee, EmployeeProperties>
-  >;
 }
 
 @armResourceOperations
 interface CurrentEmployees {
   get is ArmResourceRead<CurrentEmployee>;
   createOrUpdate is ArmResourceCreateOrReplaceAsync<CurrentEmployee>;
-  update is ArmCustomPatchSync<
-    CurrentEmployee,
-    Azure.ResourceManager.Foundations.ResourceUpdateModel<CurrentEmployee, EmployeeProperties>
-  >;
 }
-`,
-      runner
-    );
+`;
 
+  /**
+   * BUG 1: Multiple singleton resources with different @singleton keys are not properly distinguished.
+   *
+   * This test demonstrates that resolveArmResources does not correctly return
+   * multiple singleton resources with different @singleton keys.
+   *
+   * Expected behavior: The API should return both Employee and CurrentEmployee
+   * as separate resources with their respective model types.
+   *
+   * Actual behavior: All resolved resources have type.name === "Employee",
+   * meaning CurrentEmployee is never properly identified.
+   *
+   * This test is marked with .skip because it demonstrates a bug in an external library
+   * that needs to be fixed before the test will pass.
+   */
+  it.skip("singleton resource - should return distinct resources for multiple singletons (BUG 1 - expected behavior)", async () => {
+    const program = await typeSpecCompile(multipleSingletonsSchema, runner);
+
+    // Use resolveArmResources API to get all resolved ARM resources
     const provider = resolveArmResources(program);
     const resolvedResources = provider.resources ?? [];
 
-    // Get unique resource types
-    const resourceTypeNames = resolvedResources.map((r) => r.type.name);
-    const uniqueTypes = new Set(resourceTypeNames);
+    // Check that we have resources returned
+    ok(resolvedResources.length > 0, "Should have at least one resolved resource");
 
-    // KNOWN BUG: resolveArmResources does not properly distinguish multiple singletons
-    // Expected behavior (when bug is fixed): Should return both "Employee" and "CurrentEmployee"
-    // Current buggy behavior: Returns only "Employee" for all resources
-    //
-    // When the bug is fixed, update these assertions to:
-    //   strictEqual(uniqueTypes.size, 2, "Should have 2 unique resource types");
-    //   ok(resourceTypeNames.includes("CurrentEmployee"), "Should include CurrentEmployee");
-    strictEqual(
-      uniqueTypes.size,
-      1,
-      "KNOWN BUG: Only 1 unique resource type returned instead of 2"
+    // Find resources by their model type name
+    const employeeResources = resolvedResources.filter(
+      (r) => r.type.name === "Employee"
     );
+    const currentEmployeeResources = resolvedResources.filter(
+      (r) => r.type.name === "CurrentEmployee"
+    );
+
+    // BUG: This assertion fails because resolveArmResources returns all resources
+    // with type.name === "Employee" instead of distinguishing CurrentEmployee
     ok(
-      !resourceTypeNames.includes("CurrentEmployee"),
-      "KNOWN BUG: CurrentEmployee is NOT returned by resolveArmResources"
+      currentEmployeeResources.length > 0,
+      "Should have at least one CurrentEmployee resource - BUG: resolveArmResources does not return CurrentEmployee"
+    );
+
+    // Verify that Employee resources are returned correctly
+    ok(
+      employeeResources.length > 0,
+      "Should have at least one Employee resource"
+    );
+
+    // Verify that the total count is correct (should be 2 distinct resources for CRUD operations)
+    // Note: The API may return multiple entries per resource for different operation paths
+    const uniqueResourceTypes = new Set(resolvedResources.map((r) => r.type.name));
+    strictEqual(
+      uniqueResourceTypes.size,
+      2,
+      "Should have exactly 2 unique resource types (Employee and CurrentEmployee)"
+    );
+  });
+
+  /**
+   * BUG 1: Multiple singleton resources with different @singleton keys are not properly distinguished.
+   *
+   * This test validates the KNOWN BUG in resolveArmResources API with multiple singletons.
+   * It intentionally asserts the CURRENT BUGGY BEHAVIOR to document it.
+   * Once the bug is fixed in @azure-tools/typespec-azure-resource-manager,
+   * these assertions should be updated to verify correct behavior.
+   */
+  it("singleton resource - demonstrates bug with multiple singletons (BUG 1 - current behavior)", async () => {
+    const program = await typeSpecCompile(multipleSingletonsSchema, runner);
+
+    // Use resolveArmResources API to get all resolved ARM resources
+    const provider = resolveArmResources(program);
+    const resolvedResources = provider.resources ?? [];
+
+    // BUG: All resolved resources have type.name === "Employee"
+    // CurrentEmployee is never returned despite being defined
+    const allResourceTypeNames = resolvedResources.map((r) => r.type.name);
+    const uniqueResourceTypes = new Set(allResourceTypeNames);
+
+    // This assertion passes but demonstrates the bug:
+    // We expect 2 unique types but only get 1
+    strictEqual(
+      uniqueResourceTypes.size,
+      1,
+      "KNOWN BUG: resolveArmResources only returns Employee type, missing CurrentEmployee"
+    );
+
+    // All resources point to Employee
+    ok(
+      allResourceTypeNames.every((name) => name === "Employee"),
+      "KNOWN BUG: All resolved resources have type Employee"
+    );
+
+    // CurrentEmployee is never returned
+    const hasCurrentEmployee = allResourceTypeNames.some(
+      (name) => name === "CurrentEmployee"
+    );
+    strictEqual(
+      hasCurrentEmployee,
+      false,
+      "KNOWN BUG: CurrentEmployee is never returned by resolveArmResources"
     );
 
     // Find Employee resource and verify singleton key can be obtained via getSingletonResourceKey
