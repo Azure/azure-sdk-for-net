@@ -8,6 +8,15 @@ $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 $RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
 
+# Helper function to build the section header regex pattern
+function Get-SectionHeaderRegex {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$InitialAtxHeader
+  )
+  return "^${InitialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
+}
+
 # Returns a Collection of changeLogEntry object containing changelog info for all versions present in the gived CHANGELOG
 function Get-ChangeLogEntries {
   param (
@@ -49,7 +58,7 @@ function Get-ChangeLogEntriesFromContent {
     $initialAtxHeader = $matches["HeaderLevel"]
   }
 
-  $sectionHeaderRegex = "^${initialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
+  $sectionHeaderRegex = Get-SectionHeaderRegex -InitialAtxHeader $initialAtxHeader
   $changeLogEntries | Add-Member -NotePropertyName "InitialAtxHeader" -NotePropertyValue $initialAtxHeader
   $releaseTitleAtxHeader = $initialAtxHeader + "#"
   $headerLines = @()
@@ -514,10 +523,10 @@ function New-ChangelogContent {
   # Section headers are two levels deeper than the changelog title
   # (e.g., "### Breaking Changes" if InitialAtxHeader is "#")
   $currentSection = $null
-  $sectionHeaderRegex = "^${InitialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
+  $sectionHeaderRegex = Get-SectionHeaderRegex -InitialAtxHeader $InitialAtxHeader
   
   foreach ($line in $changelogLines) {
-    if ($line -match $sectionHeaderRegex) {
+    if ($line.Trim() -match $sectionHeaderRegex) {
       $currentSection = $matches["sectionName"].Trim()
       $sections[$currentSection] = @()
       $releaseContent += $line
