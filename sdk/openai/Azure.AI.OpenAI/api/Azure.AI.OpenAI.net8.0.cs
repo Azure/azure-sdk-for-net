@@ -434,6 +434,8 @@ namespace Azure.AI.OpenAI.Chat
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
         public static Azure.AI.OpenAI.UserSecurityContext GetUserSecurityContext(this OpenAI.Chat.ChatCompletionOptions options) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
+        public static void SetNewMaxCompletionTokensPropertyEnabled(this OpenAI.Chat.ChatCompletionOptions options, bool newPropertyEnabled = true) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
         public static void SetUserSecurityContext(this OpenAI.Chat.ChatCompletionOptions options, Azure.AI.OpenAI.UserSecurityContext userSecurityContext) { }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
