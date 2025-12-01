@@ -9,15 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetVmSizeProperties : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmSizeProperties>
+    /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
+    public partial class ComputeFleetVMSizeProperties : IJsonModel<ComputeFleetVMSizeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmSizeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ComputeFleetVmSizeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ComputeFleetVMSizeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetVmSizeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVMSizeProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(VCPUsAvailable))
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("vCPUsPerCore"u8);
                 writer.WriteNumberValue(VCPUsPerCore.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,88 +61,100 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetVmSizeProperties IJsonModel<ComputeFleetVmSizeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVMSizeProperties IJsonModel<ComputeFleetVMSizeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVMSizeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeFleetVmSizeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVMSizeProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeFleetVmSizeProperties(document.RootElement, options);
+            return DeserializeComputeFleetVMSizeProperties(document.RootElement, options);
         }
 
-        internal static ComputeFleetVmSizeProperties DeserializeComputeFleetVmSizeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetVMSizeProperties DeserializeComputeFleetVMSizeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? vcpUsAvailable = default;
             int? vcpUsPerCore = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vCPUsAvailable"u8))
+                if (prop.NameEquals("vCPUsAvailable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vcpUsAvailable = property.Value.GetInt32();
+                    vcpUsAvailable = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vCPUsPerCore"u8))
+                if (prop.NameEquals("vCPUsPerCore"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vcpUsPerCore = property.Value.GetInt32();
+                    vcpUsPerCore = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeFleetVmSizeProperties(vcpUsAvailable, vcpUsPerCore, serializedAdditionalRawData);
+            return new ComputeFleetVMSizeProperties(vcpUsAvailable, vcpUsPerCore, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetVmSizeProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetVMSizeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmSizeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVMSizeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ComputeFleetVmSizeProperties IPersistableModel<ComputeFleetVmSizeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetVMSizeProperties IPersistableModel<ComputeFleetVMSizeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetVMSizeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVMSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeComputeFleetVmSizeProperties(document.RootElement, options);
+                        return DeserializeComputeFleetVMSizeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmSizeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVMSizeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ComputeFleetVmSizeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeFleetVMSizeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

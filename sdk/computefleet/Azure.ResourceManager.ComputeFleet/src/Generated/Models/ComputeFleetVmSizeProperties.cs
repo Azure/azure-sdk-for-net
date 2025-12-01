@@ -11,46 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
-    public partial class ComputeFleetVmSizeProperties
+    public partial class ComputeFleetVMSizeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmSizeProperties"/>. </summary>
-        public ComputeFleetVmSizeProperties()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMSizeProperties"/>. </summary>
+        public ComputeFleetVMSizeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmSizeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVMSizeProperties"/>. </summary>
         /// <param name="vcpUsAvailable">
         /// Specifies the number of vCPUs available for the VM. When this property is not
         /// specified in the request body the default behavior is to set it to the value of
@@ -66,12 +37,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// region](https://learn.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// **Setting this property to 1 also means that hyper-threading is disabled.**
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmSizeProperties(int? vcpUsAvailable, int? vcpUsPerCore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVMSizeProperties(int? vcpUsAvailable, int? vcpUsPerCore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VCPUsAvailable = vcpUsAvailable;
             VCPUsPerCore = vcpUsPerCore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -82,6 +53,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// region](https://learn.microsoft.com/en-us/rest/api/compute/resource-skus/list).
         /// </summary>
         public int? VCPUsAvailable { get; set; }
+
         /// <summary>
         /// Specifies the vCPU to physical core ratio. When this property is not specified
         /// in the request body the default behavior is set to the value of vCPUsPerCore

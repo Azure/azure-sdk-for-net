@@ -17,37 +17,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class ComputeFleetLinuxConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetLinuxConfiguration"/>. </summary>
         public ComputeFleetLinuxConfiguration()
@@ -68,31 +39,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Indicates whether VMAgent Platform Updates is enabled for the Linux virtual
         /// machine. Default value is false.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetLinuxConfiguration(bool? isPasswordAuthenticationDisabled, ComputeFleetSshConfiguration ssh, bool? isVmAgentProvisioned, ComputeFleetLinuxPatchSettings patchSettings, bool? isVmAgentPlatformUpdatesEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetLinuxConfiguration(bool? isPasswordAuthenticationDisabled, ComputeFleetSshConfiguration ssh, bool? isVmAgentProvisioned, ComputeFleetLinuxPatchSettings patchSettings, bool? isVmAgentPlatformUpdatesEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPasswordAuthenticationDisabled = isPasswordAuthenticationDisabled;
             Ssh = ssh;
             IsVmAgentProvisioned = isVmAgentProvisioned;
             PatchSettings = patchSettings;
             IsVmAgentPlatformUpdatesEnabled = isVmAgentPlatformUpdatesEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether password authentication should be disabled. </summary>
         public bool? IsPasswordAuthenticationDisabled { get; set; }
+
         /// <summary> Specifies the ssh key configuration for a Linux OS. </summary>
         internal ComputeFleetSshConfiguration Ssh { get; set; }
-        /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<ComputeFleetSshPublicKey> SshPublicKeys
-        {
-            get
-            {
-                if (Ssh is null)
-                    Ssh = new ComputeFleetSshConfiguration();
-                return Ssh.PublicKeys;
-            }
-        }
 
         /// <summary>
         /// Indicates whether virtual machine agent should be provisioned on the virtual
@@ -101,12 +63,27 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// the VM so that extensions can be added to the VM later.
         /// </summary>
         public bool? IsVmAgentProvisioned { get; set; }
+
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </summary>
         public ComputeFleetLinuxPatchSettings PatchSettings { get; set; }
+
         /// <summary>
         /// Indicates whether VMAgent Platform Updates is enabled for the Linux virtual
         /// machine. Default value is false.
         /// </summary>
         public bool? IsVmAgentPlatformUpdatesEnabled { get; set; }
+
+        /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
+        public IList<ComputeFleetSshPublicKey> SshPublicKeys
+        {
+            get
+            {
+                if (Ssh is null)
+                {
+                    Ssh = new ComputeFleetSshConfiguration();
+                }
+                return Ssh.PublicKeys;
+            }
+        }
     }
 }

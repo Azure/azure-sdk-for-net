@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetEvictionPolicy : IEquatable<ComputeFleetEvictionPolicy>
     {
         private readonly string _value;
+        /// <summary> When evicted, the Spot VM will be deleted and the corresponding capacity will be updated to reflect this. </summary>
+        private const string DeleteValue = "Delete";
+        /// <summary> When evicted, the Spot VM will be deallocated/stopped. </summary>
+        private const string DeallocateValue = "Deallocate";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetEvictionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetEvictionPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeleteValue = "Delete";
-        private const string DeallocateValue = "Deallocate";
+            _value = value;
+        }
 
         /// <summary> When evicted, the Spot VM will be deleted and the corresponding capacity will be updated to reflect this. </summary>
         public static ComputeFleetEvictionPolicy Delete { get; } = new ComputeFleetEvictionPolicy(DeleteValue);
+
         /// <summary> When evicted, the Spot VM will be deallocated/stopped. </summary>
         public static ComputeFleetEvictionPolicy Deallocate { get; } = new ComputeFleetEvictionPolicy(DeallocateValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetEvictionPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetEvictionPolicy left, ComputeFleetEvictionPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetEvictionPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetEvictionPolicy left, ComputeFleetEvictionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetEvictionPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetEvictionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetEvictionPolicy(string value) => new ComputeFleetEvictionPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetEvictionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetEvictionPolicy?(string value) => value == null ? null : new ComputeFleetEvictionPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetEvictionPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetEvictionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Describes a virtual machine scale set extension profile. </summary>
     public partial class ComputeFleetVmssExtensionProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssExtensionProfile"/>. </summary>
         public ComputeFleetVmssExtensionProfile()
@@ -59,16 +31,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// specified in ISO 8601 format. The default value is 90 minutes (PT1H30M).
         /// Minimum api-version: 2020-06-01.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssExtensionProfile(IList<ComputeFleetVmssExtension> extensions, string extensionsTimeBudget, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssExtensionProfile(IList<ComputeFleetVmssExtension> extensions, string extensionsTimeBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Extensions = extensions;
             ExtensionsTimeBudget = extensionsTimeBudget;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The virtual machine scale set child extension resources. </summary>
         public IList<ComputeFleetVmssExtension> Extensions { get; }
+
         /// <summary>
         /// Specifies the time alloted for all extensions to start. The time duration
         /// should be between 15 minutes and 120 minutes (inclusive) and should be

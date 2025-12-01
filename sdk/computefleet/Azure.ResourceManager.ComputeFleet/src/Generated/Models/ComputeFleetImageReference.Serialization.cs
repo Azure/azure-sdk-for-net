@@ -10,13 +10,21 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ComputeFleetImageReference : IUtf8JsonSerializable, IJsonModel<ComputeFleetImageReference>
+    /// <summary>
+    /// Specifies information about the image to use. You can specify information about
+    /// platform images, marketplace images, or virtual machine images. This element is
+    /// required when you want to use a platform image, marketplace image, or virtual
+    /// machine image, but is not used in other creation operations. NOTE: Image
+    /// reference publisher and offer can only be set when you create the scale set.
+    /// </summary>
+    public partial class ComputeFleetImageReference : IJsonModel<ComputeFleetImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +36,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetImageReference)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -74,15 +81,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +98,27 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetImageReference IJsonModel<ComputeFleetImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetImageReference IJsonModel<ComputeFleetImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetImageReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetImageReference)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetImageReference(document.RootElement, options);
         }
 
-        internal static ComputeFleetImageReference DeserializeComputeFleetImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ComputeFleetImageReference DeserializeComputeFleetImageReference(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,60 +131,58 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             string exactVersion = default;
             string sharedGalleryImageId = default;
             string communityGalleryImageId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publisher"u8))
+                if (prop.NameEquals("publisher"u8))
                 {
-                    publisher = property.Value.GetString();
+                    publisher = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offer"u8))
+                if (prop.NameEquals("offer"u8))
                 {
-                    offer = property.Value.GetString();
+                    offer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    sku = property.Value.GetString();
+                    sku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exactVersion"u8))
+                if (prop.NameEquals("exactVersion"u8))
                 {
-                    exactVersion = property.Value.GetString();
+                    exactVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sharedGalleryImageId"u8))
+                if (prop.NameEquals("sharedGalleryImageId"u8))
                 {
-                    sharedGalleryImageId = property.Value.GetString();
+                    sharedGalleryImageId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("communityGalleryImageId"u8))
+                if (prop.NameEquals("communityGalleryImageId"u8))
                 {
-                    communityGalleryImageId = property.Value.GetString();
+                    communityGalleryImageId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetImageReference(
                 id,
                 publisher,
@@ -182,13 +192,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 exactVersion,
                 sharedGalleryImageId,
                 communityGalleryImageId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ComputeFleetImageReference>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeFleetImageReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -198,15 +211,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ComputeFleetImageReference IPersistableModel<ComputeFleetImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeFleetImageReference IPersistableModel<ComputeFleetImageReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ComputeFleetImageReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetImageReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetImageReference(document.RootElement, options);
                     }
                 default:
@@ -214,6 +232,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

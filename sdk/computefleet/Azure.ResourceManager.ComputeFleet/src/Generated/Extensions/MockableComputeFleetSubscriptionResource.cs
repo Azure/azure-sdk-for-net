@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ComputeFleet;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeFleet.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableComputeFleetSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _computeFleetFleetsClientDiagnostics;
-        private FleetsRestOperations _computeFleetFleetsRestClient;
+        private ClientDiagnostics _fleetsClientDiagnostics;
+        private Fleets _fleetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeFleetSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableComputeFleetSubscriptionResource for mocking. </summary>
         protected MockableComputeFleetSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeFleetSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableComputeFleetSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableComputeFleetSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ComputeFleetFleetsClientDiagnostics => _computeFleetFleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
-        private FleetsRestOperations ComputeFleetFleetsRestClient => _computeFleetFleetsRestClient ??= new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ComputeFleetResource.ResourceType));
+        private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
 
         /// <summary>
         /// List Fleet resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureFleet/fleets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureFleet/fleets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeFleetResource> GetComputeFleetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComputeFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ComputeFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputeFleetResource(Client, ComputeFleetData.DeserializeComputeFleetData(e)), ComputeFleetFleetsClientDiagnostics, Pipeline, "MockableComputeFleetSubscriptionResource.GetComputeFleets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>
         /// List Fleet resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureFleet/fleets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureFleet/fleets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Fleets_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComputeFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeFleetResource> GetComputeFleets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComputeFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ComputeFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputeFleetResource(Client, ComputeFleetData.DeserializeComputeFleetData(e)), ComputeFleetFleetsClientDiagnostics, Pipeline, "MockableComputeFleetSubscriptionResource.GetComputeFleets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ComputeFleetResource(Client, data));
         }
     }
 }

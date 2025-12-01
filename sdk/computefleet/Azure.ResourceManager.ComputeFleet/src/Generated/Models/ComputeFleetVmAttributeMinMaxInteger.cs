@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// <summary> While retrieving VMSizes from CRS, Min = 0 (uint.MinValue) if not specified, Max = 4294967295 (uint.MaxValue) if not specified. This allows to filter VMAttributes on all available VMSizes. </summary>
     public partial class ComputeFleetVmAttributeMinMaxInteger
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributeMinMaxInteger"/>. </summary>
         public ComputeFleetVmAttributeMinMaxInteger()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributeMinMaxInteger"/>. </summary>
         /// <param name="min"> Min VMSize from CRS, Min = 0 (uint.MinValue) if not specified. </param>
         /// <param name="max"> Max VMSize from CRS, Max = 4294967295 (uint.MaxValue) if not specified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmAttributeMinMaxInteger(int? min, int? max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmAttributeMinMaxInteger(int? min, int? max, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Min = min;
             Max = max;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Min VMSize from CRS, Min = 0 (uint.MinValue) if not specified. </summary>
         public int? Min { get; set; }
+
         /// <summary> Max VMSize from CRS, Max = 4294967295 (uint.MaxValue) if not specified. </summary>
         public int? Max { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct AcceleratorManufacturer : IEquatable<AcceleratorManufacturer>
     {
         private readonly string _value;
+        /// <summary> AMD GpuType. </summary>
+        private const string AMDValue = "AMD";
+        /// <summary> Nvidia GpuType. </summary>
+        private const string NvidiaValue = "Nvidia";
+        /// <summary> Xilinx GpuType. </summary>
+        private const string XilinxValue = "Xilinx";
 
         /// <summary> Initializes a new instance of <see cref="AcceleratorManufacturer"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcceleratorManufacturer(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AMDValue = "AMD";
-        private const string NvidiaValue = "Nvidia";
-        private const string XilinxValue = "Xilinx";
+            _value = value;
+        }
 
         /// <summary> AMD GpuType. </summary>
         public static AcceleratorManufacturer AMD { get; } = new AcceleratorManufacturer(AMDValue);
+
         /// <summary> Nvidia GpuType. </summary>
         public static AcceleratorManufacturer Nvidia { get; } = new AcceleratorManufacturer(NvidiaValue);
+
         /// <summary> Xilinx GpuType. </summary>
         public static AcceleratorManufacturer Xilinx { get; } = new AcceleratorManufacturer(XilinxValue);
+
         /// <summary> Determines if two <see cref="AcceleratorManufacturer"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcceleratorManufacturer left, AcceleratorManufacturer right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcceleratorManufacturer"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcceleratorManufacturer left, AcceleratorManufacturer right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcceleratorManufacturer"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcceleratorManufacturer"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcceleratorManufacturer(string value) => new AcceleratorManufacturer(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcceleratorManufacturer"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcceleratorManufacturer?(string value) => value == null ? null : new AcceleratorManufacturer(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcceleratorManufacturer other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcceleratorManufacturer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

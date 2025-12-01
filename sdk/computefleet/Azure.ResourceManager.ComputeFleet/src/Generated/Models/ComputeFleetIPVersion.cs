@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -18,38 +19,57 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetIPVersion : IEquatable<ComputeFleetIPVersion>
     {
         private readonly string _value;
+        /// <summary> IPv4 version. </summary>
+        private const string IPv4Value = "IPv4";
+        /// <summary> IPv6 version. </summary>
+        private const string IPv6Value = "IPv6";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetIPVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IPv4Value = "IPv4";
-        private const string IPv6Value = "IPv6";
+            _value = value;
+        }
 
         /// <summary> IPv4 version. </summary>
         public static ComputeFleetIPVersion IPv4 { get; } = new ComputeFleetIPVersion(IPv4Value);
+
         /// <summary> IPv6 version. </summary>
         public static ComputeFleetIPVersion IPv6 { get; } = new ComputeFleetIPVersion(IPv6Value);
+
         /// <summary> Determines if two <see cref="ComputeFleetIPVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetIPVersion left, ComputeFleetIPVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetIPVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetIPVersion left, ComputeFleetIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetIPVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetIPVersion(string value) => new ComputeFleetIPVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetIPVersion?(string value) => value == null ? null : new ComputeFleetIPVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetIPVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetIPVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

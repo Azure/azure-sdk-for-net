@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> ApiError for Fleet. </summary>
     public partial class ComputeFleetApiError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetApiError"/>. </summary>
         internal ComputeFleetApiError()
@@ -57,25 +29,29 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The API error details. </param>
         /// <param name="innererror"> The API inner error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetApiError(string code, string target, string message, IReadOnlyList<ComputeFleetApiErrorInfo> details, ComputeFleetInnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetApiError(string code, string target, string message, IReadOnlyList<ComputeFleetApiErrorInfo> details, ComputeFleetInnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Target = target;
             Message = message;
             Details = details;
             Innererror = innererror;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The error code. </summary>
         public string Code { get; }
+
         /// <summary> The target of the particular error. </summary>
         public string Target { get; }
+
         /// <summary> The error message. </summary>
         public string Message { get; }
+
         /// <summary> The API error details. </summary>
         public IReadOnlyList<ComputeFleetApiErrorInfo> Details { get; }
+
         /// <summary> The API inner error. </summary>
         public ComputeFleetInnerError Innererror { get; }
     }

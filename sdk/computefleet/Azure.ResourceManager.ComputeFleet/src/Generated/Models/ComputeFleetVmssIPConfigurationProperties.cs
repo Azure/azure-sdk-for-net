@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ComputeFleet;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
@@ -18,37 +19,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// </summary>
     public partial class ComputeFleetVmssIPConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssIPConfigurationProperties"/>. </summary>
         public ComputeFleetVmssIPConfigurationProperties()
@@ -88,8 +60,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// scale set can reference inbound nat pools of one public and one internal load
         /// balancer. Multiple scale sets cannot use the same basic sku load balancer.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssIPConfigurationProperties(WritableSubResource subnet, bool? isPrimary, ComputeFleetVmssPublicIPAddressConfiguration publicIPAddressConfiguration, ComputeFleetIPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVmssIPConfigurationProperties(ApiEntityReference subnet, bool? isPrimary, ComputeFleetVmssPublicIPAddressConfiguration publicIPAddressConfiguration, ComputeFleetIPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             IsPrimary = isPrimary;
@@ -99,36 +71,28 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ApplicationSecurityGroups = applicationSecurityGroups;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the identifier of the subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
+        internal ApiEntityReference Subnet { get; set; }
 
         /// <summary>
         /// Specifies the primary network interface in case the virtual machine has more
         /// than 1 network interface.
         /// </summary>
         public bool? IsPrimary { get; set; }
+
         /// <summary> The publicIPAddressConfiguration. </summary>
         public ComputeFleetVmssPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+
         /// <summary>
         /// Available from Api-Version 2017-03-30 onwards, it represents whether the
         /// specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible
         /// values are: 'IPv4' and 'IPv6'.
         /// </summary>
         public ComputeFleetIPVersion? PrivateIPAddressVersion { get; set; }
+
         /// <summary>
         /// Specifies an array of references to backend address pools of application
         /// gateways. A scale set can reference backend address pools of multiple
@@ -136,19 +100,42 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// gateway.
         /// </summary>
         public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
+
         /// <summary> Specifies an array of references to application security group. </summary>
         public IList<WritableSubResource> ApplicationSecurityGroups { get; }
+
         /// <summary>
         /// Specifies an array of references to backend address pools of load balancers. A
         /// scale set can reference backend address pools of one public and one internal
         /// load balancer. Multiple scale sets cannot use the same basic sku load balancer.
         /// </summary>
         public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
+
         /// <summary>
         /// Specifies an array of references to inbound Nat pools of the load balancers. A
         /// scale set can reference inbound nat pools of one public and one internal load
         /// balancer. Multiple scale sets cannot use the same basic sku load balancer.
         /// </summary>
         public IList<WritableSubResource> LoadBalancerInboundNatPools { get; }
+
+        /// <summary>
+        /// The ARM resource id in the form of
+        /// /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
+        /// </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                if (Subnet is null)
+                {
+                    Subnet = new ApiEntityReference();
+                }
+                Subnet.Id = value;
+            }
+        }
     }
 }
