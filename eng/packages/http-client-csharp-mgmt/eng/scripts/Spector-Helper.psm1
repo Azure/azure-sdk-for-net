@@ -3,6 +3,8 @@ $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 # These are specs that are not yet building correctly with the management generator
 # Add specs here as needed when they fail to build
 $failingSpecs = @(
+    # method-subscription-id: Skipped due to "Some file paths are too long" error in CI
+    "http/azure/resource-manager/method-subscription-id"
 )
 
 function Capitalize-FirstLetter {

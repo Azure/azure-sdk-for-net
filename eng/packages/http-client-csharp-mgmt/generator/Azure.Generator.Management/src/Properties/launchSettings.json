@@ -10,11 +10,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-azure-resource-manager-method-subscription-id": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/method-subscription-id -g MgmtStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-azure-resource-manager-non-resource": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/non-resource -g MgmtStubGenerator",
       "commandName": "Executable",
