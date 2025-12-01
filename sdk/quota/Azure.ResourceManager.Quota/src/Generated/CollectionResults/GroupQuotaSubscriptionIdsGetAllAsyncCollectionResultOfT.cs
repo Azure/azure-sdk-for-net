@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quota
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _groupQuotaName, _context) : _client.CreateGetAllRequest(_managementGroupId, _groupQuotaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaSubscriptionIds.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GroupQuotaSubscriptionCollection.GetAll");
             scope.Start();
             try
             {

@@ -10,19 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Subscription quota list. </summary>
-    public partial class SubscriptionQuotaAllocationsList : ResourceData, IJsonModel<SubscriptionQuotaAllocationsList>
+    /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
+    public partial class GroupQuotaEntityPatch : ResourceData, IJsonModel<GroupQuotaEntityPatch>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubscriptionQuotaAllocationsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GroupQuotaEntityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +32,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationsList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaEntityPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +47,24 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionQuotaAllocationsList IJsonModel<SubscriptionQuotaAllocationsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SubscriptionQuotaAllocationsList)JsonModelCreateCore(ref reader, options);
+        GroupQuotaEntityPatch IJsonModel<GroupQuotaEntityPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotaEntityPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationsList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaEntityPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionQuotaAllocationsList(document.RootElement, options);
+            return DeserializeGroupQuotaEntityPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SubscriptionQuotaAllocationsList DeserializeSubscriptionQuotaAllocationsList(JsonElement element, ModelReaderWriterOptions options)
+        internal static GroupQuotaEntityPatch DeserializeGroupQuotaEntityPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.Quota.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SubscriptionQuotaAllocationsListProperties properties = default;
+            GroupQuotasEntityPatchProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    properties = SubscriptionQuotaAllocationsListProperties.DeserializeSubscriptionQuotaAllocationsListProperties(prop.Value, options);
+                    properties = GroupQuotasEntityPatchProperties.DeserializeGroupQuotasEntityPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionQuotaAllocationsList(
+            return new GroupQuotaEntityPatch(
                 id,
                 name,
                 resourceType,
@@ -135,62 +134,55 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionQuotaAllocationsList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GroupQuotaEntityPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationsList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaEntityPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionQuotaAllocationsList IPersistableModel<SubscriptionQuotaAllocationsList>.Create(BinaryData data, ModelReaderWriterOptions options) => (SubscriptionQuotaAllocationsList)PersistableModelCreateCore(data, options);
+        GroupQuotaEntityPatch IPersistableModel<GroupQuotaEntityPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaEntityPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionQuotaAllocationsList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSubscriptionQuotaAllocationsList(document.RootElement, options);
+                        return DeserializeGroupQuotaEntityPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionQuotaAllocationsList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaEntityPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionQuotaAllocationsList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GroupQuotaEntityPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="subscriptionQuotaAllocationsList"> The <see cref="SubscriptionQuotaAllocationsList"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SubscriptionQuotaAllocationsList subscriptionQuotaAllocationsList)
+        /// <param name="groupQuotaEntityPatch"> The <see cref="GroupQuotaEntityPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GroupQuotaEntityPatch groupQuotaEntityPatch)
         {
-            if (subscriptionQuotaAllocationsList == null)
+            if (groupQuotaEntityPatch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(subscriptionQuotaAllocationsList, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(groupQuotaEntityPatch, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SubscriptionQuotaAllocationsList"/> from. </param>
-        internal static SubscriptionQuotaAllocationsList FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSubscriptionQuotaAllocationsList(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

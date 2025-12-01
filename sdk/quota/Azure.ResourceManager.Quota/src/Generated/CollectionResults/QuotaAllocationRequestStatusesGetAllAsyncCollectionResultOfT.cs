@@ -15,7 +15,7 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    internal partial class QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT : AsyncPageable<QuotaAllocationRequestStatus>
+    internal partial class QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT : AsyncPageable<QuotaAllocationRequestStatusData>
     {
         private readonly QuotaAllocationRequestStatuses _client;
         private readonly string _managementGroupId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<QuotaAllocationRequestStatus>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<QuotaAllocationRequestStatusData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 QuotaAllocationRequestStatusList result = QuotaAllocationRequestStatusList.FromResponse(response);
-                yield return Page<QuotaAllocationRequestStatus>.FromValues((IReadOnlyList<QuotaAllocationRequestStatus>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<QuotaAllocationRequestStatusData>.FromValues((IReadOnlyList<QuotaAllocationRequestStatusData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, _filter, _context) : _client.CreateGetAllRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuotaAllocationRequestStatuses.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.GetAll");
             scope.Start();
             try
             {

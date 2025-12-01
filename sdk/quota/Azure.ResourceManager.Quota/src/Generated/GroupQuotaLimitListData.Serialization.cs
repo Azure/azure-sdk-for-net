@@ -10,18 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota;
+using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota.Models
+namespace Azure.ResourceManager.Quota
 {
-    /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
-    public partial class GroupQuotasEntityPatch : ResourceData, IJsonModel<GroupQuotasEntityPatch>
+    /// <summary> List of Group Quota Limit details. </summary>
+    public partial class GroupQuotaLimitListData : ResourceData, IJsonModel<GroupQuotaLimitListData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GroupQuotasEntityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GroupQuotaLimitListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +33,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotasEntityPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -47,24 +48,24 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotasEntityPatch IJsonModel<GroupQuotasEntityPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotasEntityPatch)JsonModelCreateCore(ref reader, options);
+        GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotaLimitListData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotasEntityPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGroupQuotasEntityPatch(document.RootElement, options);
+            return DeserializeGroupQuotaLimitListData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GroupQuotasEntityPatch DeserializeGroupQuotasEntityPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static GroupQuotaLimitListData DeserializeGroupQuotaLimitListData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Quota.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GroupQuotasEntityPatchProperties properties = default;
+            GroupQuotaLimitListProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    properties = GroupQuotasEntityPatchProperties.DeserializeGroupQuotasEntityPatchProperties(prop.Value, options);
+                    properties = GroupQuotaLimitListProperties.DeserializeGroupQuotaLimitListProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GroupQuotasEntityPatch(
+            return new GroupQuotaLimitListData(
                 id,
                 name,
                 resourceType,
@@ -134,55 +135,62 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotasEntityPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotasEntityPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotasEntityPatch IPersistableModel<GroupQuotasEntityPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotasEntityPatch)PersistableModelCreateCore(data, options);
+        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaLimitListData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEntityPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitListData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGroupQuotasEntityPatch(document.RootElement, options);
+                        return DeserializeGroupQuotaLimitListData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotasEntityPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitListData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotasEntityPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="groupQuotasEntityPatch"> The <see cref="GroupQuotasEntityPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GroupQuotasEntityPatch groupQuotasEntityPatch)
+        /// <param name="groupQuotaLimitListData"> The <see cref="GroupQuotaLimitListData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GroupQuotaLimitListData groupQuotaLimitListData)
         {
-            if (groupQuotasEntityPatch == null)
+            if (groupQuotaLimitListData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(groupQuotasEntityPatch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(groupQuotaLimitListData, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaLimitListData"/> from. </param>
+        internal static GroupQuotaLimitListData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGroupQuotaLimitListData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

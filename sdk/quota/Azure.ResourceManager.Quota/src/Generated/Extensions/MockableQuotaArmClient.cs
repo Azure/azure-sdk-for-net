@@ -66,6 +66,42 @@ namespace Azure.ResourceManager.Quota.Mocking
             return new GroupQuotaSubscriptionRequestStatusResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="GroupQuotaLimitListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GroupQuotaLimitListResource"/> object. </returns>
+        public virtual GroupQuotaLimitListResource GetGroupQuotaLimitListResource(ResourceIdentifier id)
+        {
+            GroupQuotaLimitListResource.ValidateResourceId(id);
+            return new GroupQuotaLimitListResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionQuotaAllocationsListResource"/> object. </returns>
+        public virtual SubscriptionQuotaAllocationsListResource GetSubscriptionQuotaAllocationsListResource(ResourceIdentifier id)
+        {
+            SubscriptionQuotaAllocationsListResource.ValidateResourceId(id);
+            return new SubscriptionQuotaAllocationsListResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="QuotaAllocationRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QuotaAllocationRequestStatusResource"/> object. </returns>
+        public virtual QuotaAllocationRequestStatusResource GetQuotaAllocationRequestStatusResource(ResourceIdentifier id)
+        {
+            QuotaAllocationRequestStatusResource.ValidateResourceId(id);
+            return new QuotaAllocationRequestStatusResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GroupQuotasEnforcementStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GroupQuotasEnforcementStatusResource"/> object. </returns>
+        public virtual GroupQuotasEnforcementStatusResource GetGroupQuotasEnforcementStatusResource(ResourceIdentifier id)
+        {
+            GroupQuotasEnforcementStatusResource.ValidateResourceId(id);
+            return new GroupQuotasEnforcementStatusResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CurrentUsagesBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CurrentUsagesBaseResource"/> object. </returns>

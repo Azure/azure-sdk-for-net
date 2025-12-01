@@ -9,29 +9,29 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota;
+using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota.Models
+namespace Azure.ResourceManager.Quota
 {
     /// <summary> The subscription quota allocation status. </summary>
-    public partial class QuotaAllocationRequestStatus : ResourceData
+    public partial class QuotaAllocationRequestStatusData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatus"/>. </summary>
-        public QuotaAllocationRequestStatus()
+        /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatusData"/>. </summary>
+        public QuotaAllocationRequestStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaAllocationRequestStatusData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
-        internal QuotaAllocationRequestStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuotaAllocationRequestStatusProperties properties) : base(id, name, resourceType, systemData)
+        internal QuotaAllocationRequestStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuotaAllocationRequestStatusProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Request status. </summary>
         [WirePath("properties.provisioningState")]
-        public QuotaRequestStatus? ProvisioningState
+        public Models.QuotaRequestStatus? ProvisioningState
         {
             get
             {

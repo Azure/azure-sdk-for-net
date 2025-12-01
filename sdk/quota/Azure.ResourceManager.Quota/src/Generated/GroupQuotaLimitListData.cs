@@ -9,29 +9,29 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota;
+using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota.Models
+namespace Azure.ResourceManager.Quota
 {
-    /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
-    public partial class GroupQuotasEnforcementStatus : ResourceData
+    /// <summary> List of Group Quota Limit details. </summary>
+    public partial class GroupQuotaLimitListData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementStatus"/>. </summary>
-        public GroupQuotasEnforcementStatus()
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
+        public GroupQuotaLimitListData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
-        internal GroupQuotasEnforcementStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupQuotasEnforcementStatusProperties properties) : base(id, name, resourceType, systemData)
+        internal GroupQuotaLimitListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupQuotaLimitListProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
-        public GroupQuotasEnforcementStatusProperties Properties { get; set; }
+        public GroupQuotaLimitListProperties Properties { get; set; }
     }
 }

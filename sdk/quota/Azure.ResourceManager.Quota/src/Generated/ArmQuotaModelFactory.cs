@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties. </param>
-        /// <returns> A new <see cref="Models.GroupQuotasEntityPatch"/> instance for mocking. </returns>
-        public static GroupQuotasEntityPatch GroupQuotasEntityPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotasEntityPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.GroupQuotaEntityPatch"/> instance for mocking. </returns>
+        public static GroupQuotaEntityPatch GroupQuotaEntityPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotasEntityPatchProperties properties = default)
         {
-            return new GroupQuotasEntityPatch(
+            return new GroupQuotaEntityPatch(
                 id,
                 name,
                 resourceType,
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.GroupQuotaLimitList"/> instance for mocking. </returns>
-        public static GroupQuotaLimitList GroupQuotaLimitList(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitListProperties properties = default)
+        /// <returns> A new <see cref="Quota.GroupQuotaLimitListData"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListData GroupQuotaLimitListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitListProperties properties = default)
         {
-            return new GroupQuotaLimitList(
+            return new GroupQuotaLimitListData(
                 id,
                 name,
                 resourceType,
@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsList"/> instance for mocking. </returns>
-        public static SubscriptionQuotaAllocationsList SubscriptionQuotaAllocationsList(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
+        /// <returns> A new <see cref="Quota.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
         {
-            return new SubscriptionQuotaAllocationsList(
+            return new SubscriptionQuotaAllocationsListData(
                 id,
                 name,
                 resourceType,
@@ -379,10 +379,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmittedOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
-        /// <returns> A new <see cref="Models.QuotaAllocationRequestStatus"/> instance for mocking. </returns>
-        public static QuotaAllocationRequestStatus QuotaAllocationRequestStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaAllocationRequestBase requestedResource = default, DateTimeOffset? requestSubmittedOn = default, QuotaRequestStatus? provisioningState = default, string faultCode = default)
+        /// <returns> A new <see cref="Quota.QuotaAllocationRequestStatusData"/> instance for mocking. </returns>
+        public static QuotaAllocationRequestStatusData QuotaAllocationRequestStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaAllocationRequestBase requestedResource = default, DateTimeOffset? requestSubmittedOn = default, QuotaRequestStatus? provisioningState = default, string faultCode = default)
         {
-            return new QuotaAllocationRequestStatus(
+            return new QuotaAllocationRequestStatusData(
                 id,
                 name,
                 resourceType,
@@ -397,10 +397,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.GroupQuotasEnforcementStatus"/> instance for mocking. </returns>
-        public static GroupQuotasEnforcementStatus GroupQuotasEnforcementStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotasEnforcementStatusProperties properties = default)
+        /// <returns> A new <see cref="Quota.GroupQuotasEnforcementStatusData"/> instance for mocking. </returns>
+        public static GroupQuotasEnforcementStatusData GroupQuotasEnforcementStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotasEnforcementStatusProperties properties = default)
         {
-            return new GroupQuotasEnforcementStatus(
+            return new GroupQuotasEnforcementStatusData(
                 id,
                 name,
                 resourceType,

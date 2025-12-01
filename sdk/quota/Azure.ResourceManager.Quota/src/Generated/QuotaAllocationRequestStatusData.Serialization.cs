@@ -13,16 +13,16 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota;
+using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota.Models
+namespace Azure.ResourceManager.Quota
 {
-    /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
-    public partial class GroupQuotasEnforcementStatus : ResourceData, IJsonModel<GroupQuotasEnforcementStatus>
+    /// <summary> The subscription quota allocation status. </summary>
+    public partial class QuotaAllocationRequestStatusData : ResourceData, IJsonModel<QuotaAllocationRequestStatusData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GroupQuotasEnforcementStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaAllocationRequestStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEnforcementStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotasEnforcementStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaAllocationRequestStatusData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotasEnforcementStatus IJsonModel<GroupQuotasEnforcementStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotasEnforcementStatus)JsonModelCreateCore(ref reader, options);
+        QuotaAllocationRequestStatusData IJsonModel<QuotaAllocationRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (QuotaAllocationRequestStatusData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEnforcementStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupQuotasEnforcementStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaAllocationRequestStatusData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGroupQuotasEnforcementStatus(document.RootElement, options);
+            return DeserializeQuotaAllocationRequestStatusData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GroupQuotasEnforcementStatus DeserializeGroupQuotasEnforcementStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static QuotaAllocationRequestStatusData DeserializeQuotaAllocationRequestStatusData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GroupQuotasEnforcementStatusProperties properties = default;
+            QuotaAllocationRequestStatusProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    properties = GroupQuotasEnforcementStatusProperties.DeserializeGroupQuotasEnforcementStatusProperties(prop.Value, options);
+                    properties = QuotaAllocationRequestStatusProperties.DeserializeQuotaAllocationRequestStatusProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GroupQuotasEnforcementStatus(
+            return new QuotaAllocationRequestStatusData(
                 id,
                 name,
                 resourceType,
@@ -135,62 +135,50 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotasEnforcementStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QuotaAllocationRequestStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEnforcementStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotasEnforcementStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaAllocationRequestStatusData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotasEnforcementStatus IPersistableModel<GroupQuotasEnforcementStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotasEnforcementStatus)PersistableModelCreateCore(data, options);
+        QuotaAllocationRequestStatusData IPersistableModel<QuotaAllocationRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (QuotaAllocationRequestStatusData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEnforcementStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGroupQuotasEnforcementStatus(document.RootElement, options);
+                        return DeserializeQuotaAllocationRequestStatusData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupQuotasEnforcementStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaAllocationRequestStatusData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotasEnforcementStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaAllocationRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="groupQuotasEnforcementStatus"> The <see cref="GroupQuotasEnforcementStatus"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GroupQuotasEnforcementStatus groupQuotasEnforcementStatus)
-        {
-            if (groupQuotasEnforcementStatus == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(groupQuotasEnforcementStatus, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotasEnforcementStatus"/> from. </param>
-        internal static GroupQuotasEnforcementStatus FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="QuotaAllocationRequestStatusData"/> from. </param>
+        internal static QuotaAllocationRequestStatusData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGroupQuotasEnforcementStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeQuotaAllocationRequestStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

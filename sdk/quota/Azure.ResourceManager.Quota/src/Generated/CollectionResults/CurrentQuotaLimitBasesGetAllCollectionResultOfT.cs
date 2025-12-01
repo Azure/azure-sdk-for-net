@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Quota
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _context) : _client.CreateGetAllRequest(_scope, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CurrentQuotaLimitBases.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetAll");
             scope.Start();
             try
             {

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quota
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _filter, _top, _skiptoken, _context) : _client.CreateGetAllRequest(_scope, _filter, _top, _skiptoken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuotaRequestStatus.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetAll");
             scope.Start();
             try
             {

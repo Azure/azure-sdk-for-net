@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Quota
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _scope, _context) : _client.CreateGetAllRequest(_scope, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CurrentUsagesBases.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CurrentUsagesBaseCollection.GetAll");
             scope.Start();
             try
             {

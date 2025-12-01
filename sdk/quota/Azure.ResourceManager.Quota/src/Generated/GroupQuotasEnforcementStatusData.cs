@@ -9,36 +9,36 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota;
+using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota.Models
+namespace Azure.ResourceManager.Quota
 {
-    /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
-    public partial class GroupQuotasEntityPatch : ResourceData
+    /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
+    public partial class GroupQuotasEnforcementStatusData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotasEntityPatch"/>. </summary>
-        public GroupQuotasEntityPatch()
+        /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementStatusData"/>. </summary>
+        public GroupQuotasEnforcementStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotasEntityPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementStatusData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties. </param>
-        internal GroupQuotasEntityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupQuotasEntityPatchProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"></param>
+        internal GroupQuotasEnforcementStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GroupQuotasEnforcementStatusProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
-        /// <summary> Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
-        public GroupQuotasEntityPatchProperties Properties { get; set; }
+        public GroupQuotasEnforcementStatusProperties Properties { get; set; }
     }
 }

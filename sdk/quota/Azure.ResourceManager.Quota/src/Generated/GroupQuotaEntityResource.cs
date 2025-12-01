@@ -472,5 +472,75 @@ namespace Azure.ResourceManager.Quota
 
             return GetGroupQuotaSubscriptionRequestStatuses().Get(requestId, cancellationToken);
         }
+
+        /// <summary> Gets a collection of GroupQuotaLimitLists in the <see cref="GroupQuotaEntityResource"/>. </summary>
+        /// <returns> An object representing collection of GroupQuotaLimitLists and their operations over a GroupQuotaLimitListResource. </returns>
+        public virtual GroupQuotaLimitListCollection GetGroupQuotaLimitLists()
+        {
+            return GetCachedClient(client => new GroupQuotaLimitListCollection(client, Id));
+        }
+
+        /// <summary> Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotaLimitListResource>> GetGroupQuotaLimitListAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetGroupQuotaLimitLists().GetAllAsync(resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GroupQuotaLimitListResource> GetGroupQuotaLimitList(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetGroupQuotaLimitLists().GetAll(resourceProviderName, location, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GroupQuotasEnforcementStatuses in the <see cref="GroupQuotaEntityResource"/>. </summary>
+        /// <returns> An object representing collection of GroupQuotasEnforcementStatuses and their operations over a GroupQuotasEnforcementStatusResource. </returns>
+        public virtual GroupQuotasEnforcementStatusCollection GetGroupQuotasEnforcementStatuses()
+        {
+            return GetCachedClient(client => new GroupQuotasEnforcementStatusCollection(client, Id));
+        }
+
+        /// <summary> Gets the GroupQuotas enforcement settings for the ResourceProvider/location. The locations, where GroupQuota enforcement is not enabled will return Not Found. </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotasEnforcementStatusResource>> GetGroupQuotasEnforcementStatusAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return await GetGroupQuotasEnforcementStatuses().GetAsync(resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the GroupQuotas enforcement settings for the ResourceProvider/location. The locations, where GroupQuota enforcement is not enabled will return Not Found. </summary>
+        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GroupQuotasEnforcementStatusResource> GetGroupQuotasEnforcementStatus(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
+
+            return GetGroupQuotasEnforcementStatuses().Get(resourceProviderName, location, cancellationToken);
+        }
     }
 }
