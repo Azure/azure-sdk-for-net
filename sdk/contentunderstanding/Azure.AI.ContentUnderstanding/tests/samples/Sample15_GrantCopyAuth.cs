@@ -128,6 +128,125 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var sourceResult = createOperation.Value;
             Console.WriteLine($"Source analyzer '{sourceAnalyzerId}' created successfully!");
 
+            try
+            {
+                // Step 2: Grant copy authorization
+                var copyAuth = await sourceClient.GrantCopyAuthorizationAsync(
+                    sourceAnalyzerId,
+                    targetResourceId,
+                    targetRegion);
+
+                Console.WriteLine("Copy authorization granted successfully!");
+                Console.WriteLine($"  Target Azure Resource ID: {copyAuth.Value.TargetAzureResourceId}");
+                Console.WriteLine($"  Target Region: {targetRegion}");
+                Console.WriteLine($"  Expires at: {copyAuth.Value.ExpiresAt}");
+
+                // Step 3: Copy analyzer to target resource
+                var copyOperation = await targetClient.CopyAnalyzerAsync(
+                    WaitUntil.Completed,
+                    targetAnalyzerId,
+                    sourceAnalyzerId,
+                    sourceResourceId,
+                    sourceRegion);
+
+                var targetResult = copyOperation.Value;
+                Console.WriteLine($"Target analyzer '{targetAnalyzerId}' copied successfully to target resource!");
+                Console.WriteLine($"Target analyzer description: {targetResult.Description}");
+
+#if !SNIPPET
+                #region Assertion:ContentUnderstandingGrantCopyAuthorization
+                Console.WriteLine("\n🔐 Copy Authorization Grant Verification:");
+
+                // Verify copyAuth response
+                Assert.IsNotNull(copyAuth, "Copy authorization response should not be null");
+                Assert.IsTrue(copyAuth.HasValue, "Copy authorization should have a value");
+                Assert.IsNotNull(copyAuth.Value, "Copy authorization value should not be null");
+                Console.WriteLine("Copy authorization response received");
+
+                // Verify raw response
+                var copyAuthRawResponse = copyAuth.GetRawResponse();
+                Assert.IsNotNull(copyAuthRawResponse, "Raw response should not be null");
+                Assert.IsTrue(copyAuthRawResponse.Status >= 200 && copyAuthRawResponse.Status < 300,
+                    $"Response status should be successful, but was {copyAuthRawResponse.Status}");
+                Console.WriteLine($"Response status: {copyAuthRawResponse.Status}");
+
+                // Verify target resource ID
+                Assert.IsNotNull(copyAuth.Value.TargetAzureResourceId, "Target Azure resource ID should not be null");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(copyAuth.Value.TargetAzureResourceId),
+                    "Target Azure resource ID should not be empty");
+                Assert.AreEqual(targetResourceId, copyAuth.Value.TargetAzureResourceId,
+                    $"Target resource ID should match, but got '{copyAuth.Value.TargetAzureResourceId}' instead of '{targetResourceId}'");
+                Console.WriteLine($"Target Azure Resource ID verified: {copyAuth.Value.TargetAzureResourceId}");
+                // Note: TargetRegion is not available in the CopyAuthorization response
+                // The target region is tracked separately in the targetRegion variable
+                Console.WriteLine($"Target region (tracked): {targetRegion}");
+
+                // Verify expiration time
+                var expiresAt = copyAuth.Value.ExpiresAt;
+                // Only verify expiration time in live/record mode, not in playback mode
+                // (recorded expiration times may be in the past during playback)
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    var now = DateTimeOffset.UtcNow;
+
+                    Assert.IsTrue(expiresAt > now,
+                        $"Expiration time should be in the future, but expires at {expiresAt} (now: {now})");
+
+                    // Calculate time until expiration
+                    var timeUntilExpiration = expiresAt - now;
+                    Assert.IsTrue(timeUntilExpiration.TotalMinutes > 0,
+                        "Should have positive time until expiration");
+
+                    Console.WriteLine($"Expiration time verified: {expiresAt:yyyy-MM-dd HH:mm:ss} UTC");
+                    Console.WriteLine($"  Time until expiration: {timeUntilExpiration.TotalMinutes:F2} minutes");
+
+                    // Verify expiration is reasonable (typically several hours)
+                    if (timeUntilExpiration.TotalHours < 24)
+                    {
+                        Console.WriteLine($"  ⚠️ Note: Authorization expires in less than 24 hours");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Expiration time: {expiresAt:yyyy-MM-dd HH:mm:ss} UTC (from recorded response)");
+                }
+
+                // Summary
+                Console.WriteLine($"\nCopy authorization granted successfully:");
+                Console.WriteLine($"  Source analyzer: {sourceAnalyzerId}");
+                Console.WriteLine($"  Target resource: {copyAuth.Value.TargetAzureResourceId}");
+                Console.WriteLine($"  Target region: {targetRegion}");
+                Console.WriteLine($"  Expires: {copyAuth.Value.ExpiresAt:yyyy-MM-dd HH:mm:ss} UTC");
+                Console.WriteLine($"  Authorization ready for cross-resource copy");
+                #endregion
+#endif
+            }
+            finally
+            {
+                // Clean up: delete both analyzers
+                try
+                {
+                    await sourceClient.DeleteAnalyzerAsync(sourceAnalyzerId);
+                    Console.WriteLine($"Source analyzer '{sourceAnalyzerId}' deleted successfully.");
+                }
+                catch
+                {
+                    // Ignore cleanup errors
+                }
+
+                try
+                {
+                    await targetClient.DeleteAnalyzerAsync(targetAnalyzerId);
+                    Console.WriteLine($"Target analyzer '{targetAnalyzerId}' deleted successfully.");
+                }
+                catch
+                {
+                    // Ignore cleanup errors
+                }
+            }
+            #endregion
+
+#if !SNIPPET
             #region Assertion:ContentUnderstandingCreateSourceAnalyzerForCopy
             Console.WriteLine("📋 Source Analyzer Creation Verification (For Cross-Resource Copy):");
 
@@ -216,115 +335,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"  Models: {sourceResult.Models.Count}");
             Console.WriteLine($"  Ready for cross-resource copy");
             #endregion
-
-            try
-            {
-                // Step 2: Grant copy authorization
-                var copyAuth = await sourceClient.GrantCopyAuthorizationAsync(
-                    sourceAnalyzerId,
-                    targetResourceId,
-                    targetRegion);
-
-                Console.WriteLine("Copy authorization granted successfully!");
-                Console.WriteLine($"  Target Azure Resource ID: {copyAuth.Value.TargetAzureResourceId}");
-                Console.WriteLine($"  Target Region: {targetRegion}");
-                Console.WriteLine($"  Expires at: {copyAuth.Value.ExpiresAt}");
-
-                #region Assertion:ContentUnderstandingGrantCopyAuthorization
-                Console.WriteLine("\n🔐 Copy Authorization Grant Verification:");
-
-                // Verify copyAuth response
-                Assert.IsNotNull(copyAuth, "Copy authorization response should not be null");
-                Assert.IsTrue(copyAuth.HasValue, "Copy authorization should have a value");
-                Assert.IsNotNull(copyAuth.Value, "Copy authorization value should not be null");
-                Console.WriteLine("Copy authorization response received");
-
-                // Verify raw response
-                var copyAuthRawResponse = copyAuth.GetRawResponse();
-                Assert.IsNotNull(copyAuthRawResponse, "Raw response should not be null");
-                Assert.IsTrue(copyAuthRawResponse.Status >= 200 && copyAuthRawResponse.Status < 300,
-                    $"Response status should be successful, but was {copyAuthRawResponse.Status}");
-                Console.WriteLine($"Response status: {copyAuthRawResponse.Status}");
-
-                // Verify target resource ID
-                Assert.IsNotNull(copyAuth.Value.TargetAzureResourceId, "Target Azure resource ID should not be null");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(copyAuth.Value.TargetAzureResourceId),
-                    "Target Azure resource ID should not be empty");
-                Assert.AreEqual(targetResourceId, copyAuth.Value.TargetAzureResourceId,
-                    $"Target resource ID should match, but got '{copyAuth.Value.TargetAzureResourceId}' instead of '{targetResourceId}'");
-                Console.WriteLine($"Target Azure Resource ID verified: {copyAuth.Value.TargetAzureResourceId}");
-                // Note: TargetRegion is not available in the CopyAuthorization response
-                // The target region is tracked separately in the targetRegion variable
-                Console.WriteLine($"Target region (tracked): {targetRegion}");
-
-                // Verify expiration time
-                var expiresAt = copyAuth.Value.ExpiresAt;
-                var now = DateTimeOffset.UtcNow;
-
-                Assert.IsTrue(expiresAt > now,
-                    $"Expiration time should be in the future, but expires at {expiresAt} (now: {now})");
-
-                // Calculate time until expiration
-                var timeUntilExpiration = expiresAt - now;
-                Assert.IsTrue(timeUntilExpiration.TotalMinutes > 0,
-                    "Should have positive time until expiration");
-
-                Console.WriteLine($"Expiration time verified: {expiresAt:yyyy-MM-dd HH:mm:ss} UTC");
-                Console.WriteLine($"  Time until expiration: {timeUntilExpiration.TotalMinutes:F2} minutes");
-
-                // Verify expiration is reasonable (typically several hours)
-                if (timeUntilExpiration.TotalHours < 24)
-                {
-                    Console.WriteLine($"  ⚠️ Note: Authorization expires in less than 24 hours");
-                }
-
-                // Summary
-                Console.WriteLine($"\nCopy authorization granted successfully:");
-                Console.WriteLine($"  Source analyzer: {sourceAnalyzerId}");
-                Console.WriteLine($"  Target resource: {copyAuth.Value.TargetAzureResourceId}");
-                Console.WriteLine($"\nCopy authorization granted successfully:");
-                Console.WriteLine($"  Source analyzer: {sourceAnalyzerId}");
-                Console.WriteLine($"  Target resource: {copyAuth.Value.TargetAzureResourceId}");
-                Console.WriteLine($"  Target region: {targetRegion}");
-                Console.WriteLine($"  Expires: {copyAuth.Value.ExpiresAt:yyyy-MM-dd HH:mm:ss} UTC");
-                Console.WriteLine($"  Authorization ready for cross-resource copy");
-                var copyOperation = await targetClient.CopyAnalyzerAsync(
-                    WaitUntil.Completed,
-                    targetAnalyzerId,
-                    sourceAnalyzerId,
-                    sourceResourceId,
-                    sourceRegion);
-
-                var targetResult = copyOperation.Value;
-                Console.WriteLine($"Target analyzer '{targetAnalyzerId}' copied successfully to target resource!");
-                Console.WriteLine($"Target analyzer description: {targetResult.Description}");
-
-                #endregion
-            }
-            finally
-            {
-                // Clean up: delete both analyzers
-                try
-                {
-                    await sourceClient.DeleteAnalyzerAsync(sourceAnalyzerId);
-                    Console.WriteLine($"Source analyzer '{sourceAnalyzerId}' deleted successfully.");
-                }
-                catch
-                {
-                    // Ignore cleanup errors
-                }
-
-                try
-                {
-                    await targetClient.DeleteAnalyzerAsync(targetAnalyzerId);
-                    Console.WriteLine($"Target analyzer '{targetAnalyzerId}' deleted successfully.");
-                }
-                catch
-                {
-                    // Ignore cleanup errors
-                }
-            }
-            #endregion
+#endif
         }
     }
 }
