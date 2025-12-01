@@ -4,11 +4,6 @@
 
 ### Features Added
 Updated api version to '2025-05-01-preview'.
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2024-11-30)
 
