@@ -378,6 +378,79 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(errorContent.Message.Contains("wrong-connection-id"));
         }
 
+        [RecordedTest]
+        [TestCase("incomplete", false)]
+        [TestCase("failed", false)]
+        [TestCase("completed", false)]
+        [TestCase("cancelled", false)]
+        [TestCase("expired", false)]
+        [TestCase("cancelling", true)]
+        [TestCase("queued", true)]
+        [TestCase("requires_action", true)]
+        [TestCase("in_progress", true)]
+        public async Task TestHandlesThreadRunCancellationOnlyWhenPreviousIsNotFinal(string runStatus, bool expectedCancelRunInvoked)
+        {
+            bool cancelRunInvoked = false;
+            var mockTransport = new MockTransport((request) =>
+            {
+                // Sent by client.Administration.GetAgentAsync(...) method
+                if (request.Method == RequestMethod.Get && request.Uri.Path == $"/assistants/{FakeAgentId}")
+                {
+                    return CreateOKMockResponse($$"""{ "id": "{{FakeAgentId}}" }""");
+                }
+                // Sent by client.Runs.GetRunsAsync(...) method
+                else if (request.Method == RequestMethod.Get && request.Uri.Path == $"/threads/{FakeThreadId}/runs")
+                {
+                    // Content failure response
+                    return CreateOKMockResponse($$"""
+                    {
+                        "data": [{"id": "{{FakeRunId}}", "status": "{{runStatus}}","started_at":1764170244,"expires_at":null,"cancelled_at":null,"failed_at":1764170244,"completed_at":null,"required_action":null,"last_error": null,"model":"gpt-4o","instructions":"Use the bing grounding tool to answer questions.Use the bing grounding tool to answer questions.","metadata":{ },"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{ "type":"auto","last_messages":null},"incomplete_details":null,"usage":{ "prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"prompt_token_details":{ "cached_tokens":0} },"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true }]
+                    }
+                    """);
+                }
+                // Sent by client.Runs.CreateRunStreamingAsync(...) method
+                else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads/{FakeThreadId}/runs")
+                {
+                    // Content failure response
+                    return CreateOKMockResponse(
+                    $$$"""
+                    event: thread.run.failed
+                    data: { "id":"{{{FakeRunId}}}","object":"thread.run","created_at":1764170243,"assistant_id":"asst_uYPWW0weSBNqXK3VjgRMkuim","thread_id":"thread_dmz0AZPJtnO9MnAfrzP1AtJ6","status":"failed","started_at":1764170244,"expires_at":null,"cancelled_at":null,"failed_at":1764170244,"completed_at":null,"required_action":null,"last_error":{ "code":"tool_user_error","message":"Error: invalid_tool_input; The specified connection ID 'wrong-connection-id' was not found in the project or account connections. Please verify that the connection id in tool input is correct and exists in the project or account."},"model":"gpt-4o","instructions":"Use the bing grounding tool to answer questions.Use the bing grounding tool to answer questions.","tools":[{ "type":"bing_grounding","bing_grounding":{ "search_configurations":[{ "connection_id":"wrong-connection-id","market":"en-US","set_lang":"en","count":5}]} }],"tool_resources":{ "code_interpreter":{ "file_ids":[]} },"metadata":{ },"temperature":1.0,"top_p":1.0,"max_completion_tokens":null,"max_prompt_tokens":null,"truncation_strategy":{ "type":"auto","last_messages":null},"incomplete_details":null,"usage":{ "prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"prompt_token_details":{ "cached_tokens":0} },"response_format":"auto","tool_choice":"auto","parallel_tool_calls":true}
+
+                    event: done
+                    data: [DONE]
+                    """
+                    );
+                }
+                // Sent by client.Threads.CreateThreadAsync(...) method
+                else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads")
+                {
+                    return CreateOKMockResponse($$""" { "id": "{{FakeThreadId}}" } """);
+                }
+                // Sent by client.Runs.CancelRunAsync(...) method
+                else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads/{FakeThreadId}/runs/{FakeRunId}/cancel")
+                {
+                    cancelRunInvoked = true;
+                    return CreateOKMockResponse($$""" { "id": "{{FakeThreadId}}" } """);
+                }
+                // Sent by client.Runs.SubmitToolOutputsToStreamAsync(...) method
+                else if (request.Method == RequestMethod.Post && request.Uri.Path == $"/threads//runs/{FakeRunId}/submit_tool_outputs")
+                {
+                    return CreateOKMockResponse($$""" { "data": [{ "id": "{{FakeRunId}}" }] } """);
+                }
+
+                throw new InvalidOperationException("Unexpected request");
+            });
+
+            PersistentAgentsClient client = GetClient(mockTransport);
+
+            IChatClient nonThrowingChatClient = client.AsIChatClient(FakeAgentId, FakeThreadId, throwOnContentErrors: false);
+
+            await nonThrowingChatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"));
+
+            Assert.IsTrue(expectedCancelRunInvoked == cancelRunInvoked);
+        }
+
         #region Helpers
 
         private PersistentAgentsClient GetClient(HttpPipelineTransport transport)

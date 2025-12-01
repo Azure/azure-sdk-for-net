@@ -22,6 +22,8 @@ namespace Azure.AI.Agents.Persistent
     /// <summary>Represents an <see cref="IChatClient"/> for an Azure.AI.Agents.Persistent <see cref="PersistentAgentsClient"/>.</summary>
     internal partial class PersistentAgentsChatClient : IChatClient
     {
+        private static readonly RunStatus s_incompleteRunStatus = new RunStatus("incomplete");
+
         /// <summary>The name of the chat client provider.</summary>
         private const string ProviderName = "azure";
 
@@ -94,7 +96,11 @@ namespace Azure.AI.Agents.Persistent
             {
                 await foreach (ThreadRun? run in _client!.Runs.GetRunsAsync(threadId, limit: 1, ListSortOrder.Descending, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    if (run.Status != RunStatus.Completed && run.Status != RunStatus.Cancelled && run.Status != RunStatus.Failed && run.Status != RunStatus.Expired)
+                    if (run.Status != s_incompleteRunStatus &&
+                        run.Status != RunStatus.Completed &&
+                        run.Status != RunStatus.Cancelled &&
+                        run.Status != RunStatus.Failed &&
+                        run.Status != RunStatus.Expired)
                     {
                         threadRun = run;
                         break;
