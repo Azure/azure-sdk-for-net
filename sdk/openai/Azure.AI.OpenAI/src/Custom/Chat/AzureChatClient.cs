@@ -43,27 +43,15 @@ internal partial class AzureChatClient : ChatClient
     /// <inheritdoc/>
     public override Task<ClientResult<ChatCompletion>> CompleteChatAsync(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
-        bool maxTokenMasked = options == null ? false : AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.Patch, "$.max_tokens"u8);
-        PostfixSwapMaxTokens(ref options);
-        Task<ClientResult<ChatCompletion>> result = base.CompleteChatAsync(messages, options, cancellationToken);
-        if (maxTokenMasked)
-        {
-            AdditionalPropertyHelpers.SetEmptySentinelValue(ref options.Patch, "$.max_tokens"u8);
-        }
-        return result;
+        RefreshMaxTokenSerialization(ref options);
+        return base.CompleteChatAsync(messages, options, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override ClientResult<ChatCompletion> CompleteChat(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
-        bool maxTokenMasked = options == null ? false : AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.Patch, "$.max_tokens"u8);
-        PostfixSwapMaxTokens(ref options);
-        ClientResult<ChatCompletion> result = base.CompleteChat(messages, options, cancellationToken);
-        if (maxTokenMasked)
-        {
-            AdditionalPropertyHelpers.SetEmptySentinelValue(ref options.Patch, "$.max_tokens"u8);
-        }
-        return result;
+        RefreshMaxTokenSerialization(ref options);
+        return base.CompleteChat(messages, options, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -78,28 +66,16 @@ internal partial class AzureChatClient : ChatClient
     public override AsyncCollectionResult<StreamingChatCompletionUpdate> CompleteChatStreamingAsync(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
         PostfixClearStreamOptions(messages, ref options);
-        bool maxTokenMasked = options == null ? false : AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.Patch, "$.max_tokens"u8);
-        PostfixSwapMaxTokens(ref options);
-        AsyncCollectionResult < StreamingChatCompletionUpdate > result = base.CompleteChatStreamingAsync(messages, options, cancellationToken);
-        if (maxTokenMasked)
-        {
-            AdditionalPropertyHelpers.SetEmptySentinelValue(ref options.Patch, "$.max_tokens"u8);
-        }
-        return result;
+        RefreshMaxTokenSerialization(ref options);
+        return base.CompleteChatStreamingAsync(messages, options, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override CollectionResult<StreamingChatCompletionUpdate> CompleteChatStreaming(IEnumerable<ChatMessage> messages, ChatCompletionOptions options = null, CancellationToken cancellationToken = default)
     {
         PostfixClearStreamOptions(messages, ref options);
-        bool maxTokenMasked = options == null ? false : AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.Patch, "$.max_tokens"u8);
-        PostfixSwapMaxTokens(ref options);
-        CollectionResult < StreamingChatCompletionUpdate > result = base.CompleteChatStreaming(messages, options, cancellationToken);
-        if (maxTokenMasked)
-        {
-            AdditionalPropertyHelpers.SetEmptySentinelValue(ref options.Patch, "$.max_tokens"u8);
-        }
-        return result;
+        RefreshMaxTokenSerialization(ref options);
+        return base.CompleteChatStreaming(messages, options, cancellationToken);
     }
 
     /**
@@ -111,7 +87,7 @@ internal partial class AzureChatClient : ChatClient
      */
     private static void PostfixClearStreamOptions(IEnumerable<ChatMessage> messages, ref ChatCompletionOptions options)
     {
-        if (options?.GetDataSources()?.Count > 0
+        if (options?.Patch.GetBytesOrDefaultEx("$.data_sources"u8) is not null
             || messages?.Any(
                 message => message?.Content?.Any(
                     contentPart => contentPart?.Kind == ChatMessageContentPartKind.Image) == true)
@@ -135,34 +111,9 @@ internal partial class AzureChatClient : ChatClient
      *   - Otherwise, serialization of max_completion_tokens is blocked and an override serialization of the
      *     corresponding max_tokens value is established
      */
-    private static void PostfixSwapMaxTokens(ref ChatCompletionOptions options)
+    private static void RefreshMaxTokenSerialization(ref ChatCompletionOptions options)
     {
         options ??= new();
-        bool oldPropertyBlocked = AdditionalPropertyHelpers.GetIsEmptySentinelValue(options.Patch, "$.max_tokens"u8);
-
-        if (options.MaxOutputTokenCount.HasValue)
-        {
-            if (!oldPropertyBlocked)
-            {
-                options.Patch.Remove("$.max_completion_tokens"u8);
-                options.Patch.Set("$.max_tokens"u8, options.MaxOutputTokenCount.Value);
-            }
-            else
-            {
-                options.Patch.Remove("$.max_tokens"u8);
-                options.Patch.Set("$.max_completion_tokens"u8, options.MaxOutputTokenCount.Value);
-            }
-        }
-        else
-        {
-            if (HasValue(options.Patch, "$.max_tokens"u8))
-            {
-                options.Patch.Remove("$.max_tokens"u8);
-            }
-            if (HasValue(options.Patch, "$.max_completion_tokens"u8))
-            {
-                options.Patch.Remove("$.max_completion_tokens"u8);
-            }
-        }
+        options.SetMaxTokenPatchValues();
     }
 }
