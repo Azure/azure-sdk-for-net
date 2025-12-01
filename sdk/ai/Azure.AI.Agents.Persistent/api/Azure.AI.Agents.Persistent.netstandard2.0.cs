@@ -2150,6 +2150,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStatus Completed { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus Expired { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus Failed { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStatus Incomplete { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus InProgress { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus Queued { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus RequiresAction { get { throw null; } }

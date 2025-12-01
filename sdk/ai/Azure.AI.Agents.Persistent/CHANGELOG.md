@@ -4,10 +4,10 @@
 
 ### Features Added
 - Added support for Computer usage.
-- Improved handling of errors by `PersistentAgentsChatClient` in the steeaming scenarios.
+- Improved handling of errors by `PersistentAgentsChatClient` in the streaming scenarios.
 
 ### Bugs Fixed
-- Fix the issue with `PersistentAgentsChatClient` when the run in incomplete state is encoumtered [issue](https://github.com/microsoft/agent-framework/issues/2298).
+- Fix the issue with `PersistentAgentsChatClient` when the run in incomplete state is encountered [issue](https://github.com/microsoft/agent-framework/issues/2298).
 
 ### Sample updates
 - Added sample for Computer usage.
