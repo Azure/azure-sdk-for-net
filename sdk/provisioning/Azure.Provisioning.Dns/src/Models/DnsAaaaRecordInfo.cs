@@ -33,6 +33,6 @@ public partial class DnsAaaaRecordInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _ipv6Address = DefineProperty<IPAddress>("IPv6Address", ["ipv6Address"]);
+        _ipv6Address = DefineProperty<IPAddress>(nameof(Ipv6Address), ["ipv6Address"]);
     }
 }
