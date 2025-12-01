@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the assigned project resource. </summary>
-    public partial class ConversationAuthoringAssignedDeploymentResource
+    public partial class ConversationAuthoringAssignedProjectResource
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +45,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectResource"/>. </summary>
         /// <param name="region"> The Azure resource region. </param>
-        internal ConversationAuthoringAssignedDeploymentResource(AzureLocation region)
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        internal ConversationAuthoringAssignedProjectResource(string region)
         {
+            Argument.AssertNotNull(region, nameof(region));
+
             Region = region;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectResource"/>. </summary>
         /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
         /// <param name="region"> The Azure resource region. </param>
+        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringAssignedDeploymentResource(ResourceIdentifier resourceId, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringAssignedProjectResource(string resourceId, string region, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Region = region;
+            AssignedAoaiResource = assignedAoaiResource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedDeploymentResource"/> for deserialization. </summary>
-        internal ConversationAuthoringAssignedDeploymentResource()
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectResource"/> for deserialization. </summary>
+        internal ConversationAuthoringAssignedProjectResource()
         {
         }
+
+        /// <summary> The Azure resource ID of the language or AI resource. </summary>
+        public string ResourceId { get; }
+        /// <summary> The Azure resource region. </summary>
+        public string Region { get; }
+        /// <summary> Represents the AOAI resource assigned for data generation. </summary>
+        public AnalyzeConversationAuthoringDataGenerationConnectionInfo AssignedAoaiResource { get; }
     }
 }

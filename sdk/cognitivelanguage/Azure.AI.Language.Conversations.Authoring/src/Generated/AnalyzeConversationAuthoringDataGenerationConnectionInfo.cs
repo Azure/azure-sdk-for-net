@@ -79,9 +79,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Connection type for data generation settings. Currently only supports Azure OpenAI. </summary>
-        public AnalyzeConversationAuthoringDataGenerationConnectionKind Kind { get; }
+        public AnalyzeConversationAuthoringDataGenerationConnectionKind Kind { get; set; }
         /// <summary> Deployment name of model to be used for synthetic data generation. </summary>
-        public string DeploymentName { get; }
+        public string DeploymentName { get; set; }
         /// <summary>
         /// Resource ID for the data generation resource. Looks something like
         /// "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{resourceName}".

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    public partial class ConversationAuthoringAssignDeploymentResourcesDetails : IUtf8JsonSerializable, IJsonModel<ConversationAuthoringAssignDeploymentResourcesDetails>
+    public partial class ConversationAuthoringAssignProjectResourcesDetails : IUtf8JsonSerializable, IJsonModel<ConversationAuthoringAssignProjectResourcesDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationAuthoringAssignDeploymentResourcesDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConversationAuthoringAssignProjectResourcesDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConversationAuthoringAssignDeploymentResourcesDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConversationAuthoringAssignProjectResourcesDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringAssignDeploymentResourcesDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationAuthoringAssignProjectResourcesDetails)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("projectResources"u8);
@@ -58,19 +58,19 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        ConversationAuthoringAssignDeploymentResourcesDetails IJsonModel<ConversationAuthoringAssignDeploymentResourcesDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConversationAuthoringAssignProjectResourcesDetails IJsonModel<ConversationAuthoringAssignProjectResourcesDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConversationAuthoringAssignDeploymentResourcesDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConversationAuthoringAssignProjectResourcesDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConversationAuthoringAssignDeploymentResourcesDetails(document.RootElement, options);
+            return DeserializeConversationAuthoringAssignProjectResourcesDetails(document.RootElement, options);
         }
 
-        internal static ConversationAuthoringAssignDeploymentResourcesDetails DeserializeConversationAuthoringAssignDeploymentResourcesDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConversationAuthoringAssignProjectResourcesDetails DeserializeConversationAuthoringAssignProjectResourcesDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,46 +99,46 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationAuthoringAssignDeploymentResourcesDetails(projectResources, serializedAdditionalRawData);
+            return new ConversationAuthoringAssignProjectResourcesDetails(projectResources, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringAssignDeploymentResourcesDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationAuthoringAssignProjectResourcesDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConversationAuthoringAssignDeploymentResourcesDetails IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConversationAuthoringAssignProjectResourcesDetails IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConversationAuthoringAssignDeploymentResourcesDetails(document.RootElement, options);
+                        return DeserializeConversationAuthoringAssignProjectResourcesDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConversationAuthoringAssignDeploymentResourcesDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConversationAuthoringAssignProjectResourcesDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConversationAuthoringAssignDeploymentResourcesDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConversationAuthoringAssignProjectResourcesDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConversationAuthoringAssignDeploymentResourcesDetails FromResponse(Response response)
+        internal static ConversationAuthoringAssignProjectResourcesDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConversationAuthoringAssignDeploymentResourcesDetails(document.RootElement);
+            return DeserializeConversationAuthoringAssignProjectResourcesDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

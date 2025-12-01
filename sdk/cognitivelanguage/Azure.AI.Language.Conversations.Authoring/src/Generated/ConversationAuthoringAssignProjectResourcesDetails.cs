@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents the payload for deleting a project deployment. </summary>
-    public partial class ConversationAuthoringDeleteDeploymentDetails
+    /// <summary> Represents the payload for assigning Azure resources to a project. </summary>
+    public partial class ConversationAuthoringAssignProjectResourcesDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +46,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeleteDeploymentDetails"/>. </summary>
-        public ConversationAuthoringDeleteDeploymentDetails()
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignProjectResourcesDetails"/>. </summary>
+        /// <param name="metadata"> Represents the metadata for the project resources to be assigned. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
+        public ConversationAuthoringAssignProjectResourcesDetails(IEnumerable<ConversationAuthoringResourceMetadata> metadata)
         {
-            AssignedResourceIds = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(metadata, nameof(metadata));
+
+            Metadata = metadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeleteDeploymentDetails"/>. </summary>
-        /// <param name="assignedResourceIds"> Represents the Language or AIService resource IDs to unassign from the project or delete the deployment from. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignProjectResourcesDetails"/>. </summary>
+        /// <param name="metadata"> Represents the metadata for the project resources to be assigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringDeleteDeploymentDetails(IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringAssignProjectResourcesDetails(IList<ConversationAuthoringResourceMetadata> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AssignedResourceIds = assignedResourceIds;
+            Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Represents the Language or AIService resource IDs to unassign from the project or delete the deployment from. </summary>
-        public IList<string> AssignedResourceIds { get; }
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignProjectResourcesDetails"/> for deserialization. </summary>
+        internal ConversationAuthoringAssignProjectResourcesDetails()
+        {
+        }
+
+        /// <summary> Represents the metadata for the project resources to be assigned. </summary>
+        public IList<ConversationAuthoringResourceMetadata> Metadata { get; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
@@ -176,13 +175,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ConversationAuthoringSubTrainingState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringAssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringAssignedProjectResource"/>. </summary>
         /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
         /// <param name="region"> The Azure resource region. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringAssignedDeploymentResource"/> instance for mocking. </returns>
-        public static ConversationAuthoringAssignedDeploymentResource ConversationAuthoringAssignedDeploymentResource(ResourceIdentifier resourceId = null, AzureLocation region = default)
+        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringAssignedProjectResource"/> instance for mocking. </returns>
+        public static ConversationAuthoringAssignedProjectResource ConversationAuthoringAssignedProjectResource(string resourceId = null, string region = null, AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource = null)
         {
-            return new ConversationAuthoringAssignedDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
+            return new ConversationAuthoringAssignedProjectResource(resourceId, region, assignedAoaiResource, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectDeployment"/>. </summary>
@@ -194,9 +194,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringProjectDeployment"/> instance for mocking. </returns>
-        public static ConversationAuthoringProjectDeployment ConversationAuthoringProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<ConversationAuthoringAssignedDeploymentResource> assignedResources = null)
+        public static ConversationAuthoringProjectDeployment ConversationAuthoringProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<ConversationAuthoringAssignedProjectResource> assignedResources = null)
         {
-            assignedResources ??= new List<ConversationAuthoringAssignedDeploymentResource>();
+            assignedResources ??= new List<ConversationAuthoringAssignedProjectResource>();
 
             return new ConversationAuthoringProjectDeployment(
                 deploymentName,
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentResourcesState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectResourcesState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -237,13 +237,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentResourcesState"/> instance for mocking. </returns>
-        public static ConversationAuthoringDeploymentResourcesState ConversationAuthoringDeploymentResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Authoring.ConversationAuthoringProjectResourcesState"/> instance for mocking. </returns>
+        public static ConversationAuthoringProjectResourcesState ConversationAuthoringProjectResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ConversationAuthoringDeploymentResourcesState(
+            return new ConversationAuthoringProjectResourcesState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -550,19 +550,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 evaluationOptions,
                 dataGenerationSettings,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo"/>. </summary>
-        /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure OpenAI. </param>
-        /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <param name="resourceId">
-        /// Resource ID for the data generation resource. Looks something like
-        /// "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{resourceName}".
-        /// </param>
-        /// <returns> A new <see cref="Authoring.AnalyzeConversationAuthoringDataGenerationConnectionInfo"/> instance for mocking. </returns>
-        public static AnalyzeConversationAuthoringDataGenerationConnectionInfo AnalyzeConversationAuthoringDataGenerationConnectionInfo(AnalyzeConversationAuthoringDataGenerationConnectionKind kind = default, string deploymentName = null, string resourceId = null)
-        {
-            return new AnalyzeConversationAuthoringDataGenerationConnectionInfo(kind, deploymentName, resourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/>. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the state of a project resources job. </summary>
-    public partial class ConversationAuthoringDeploymentResourcesState
+    public partial class ConversationAuthoringProjectResourcesState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeploymentResourcesState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectResourcesState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        internal ConversationAuthoringDeploymentResourcesState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ConversationAuthoringOperationStatus status)
+        internal ConversationAuthoringProjectResourcesState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ConversationAuthoringOperationStatus status)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeploymentResourcesState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectResourcesState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringDeploymentResourcesState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringProjectResourcesState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -79,8 +79,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringDeploymentResourcesState"/> for deserialization. </summary>
-        internal ConversationAuthoringDeploymentResourcesState()
+        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringProjectResourcesState"/> for deserialization. </summary>
+        internal ConversationAuthoringProjectResourcesState()
         {
         }
 

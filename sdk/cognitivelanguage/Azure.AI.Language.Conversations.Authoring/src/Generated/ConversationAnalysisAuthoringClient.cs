@@ -78,14 +78,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConversationAuthoringDeploymentResourcesState>> GetAssignProjectResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringProjectResourcesState>> GetAssignProjectResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssignProjectResourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing assign project resources job. </summary>
@@ -94,14 +94,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConversationAuthoringDeploymentResourcesState> GetAssignProjectResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringProjectResourcesState> GetAssignProjectResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssignProjectResourcesStatus(projectName, jobId, context);
-            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectResourcesState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -192,14 +192,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConversationAuthoringDeploymentResourcesState>> GetUnassignProjectResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConversationAuthoringProjectResourcesState>> GetUnassignProjectResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUnassignProjectResourcesStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign project resources job. </summary>
@@ -208,14 +208,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConversationAuthoringDeploymentResourcesState> GetUnassignProjectResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ConversationAuthoringProjectResourcesState> GetUnassignProjectResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUnassignProjectResourcesStatus(projectName, jobId, context);
-            return Response.FromValue(ConversationAuthoringDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(ConversationAuthoringProjectResourcesState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -3062,14 +3062,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<ConversationAuthoringAssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConversationAuthoringAssignedProjectResource> GetProjectResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedProjectResource.DeserializeConversationAuthoringAssignedProjectResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetProjectResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the Language or AIService resources assigned to the project. </summary>
@@ -3080,14 +3080,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<ConversationAuthoringAssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConversationAuthoringAssignedProjectResource> GetProjectResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedDeploymentResource.DeserializeConversationAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationAuthoringAssignedProjectResource.DeserializeConversationAuthoringAssignedProjectResource(e), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetProjectResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -3100,7 +3100,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetProjectResourcesAsync(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3114,13 +3114,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetProjectResourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetProjectResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -3133,7 +3133,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDeploymentResources(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetProjectResources(string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3147,13 +3147,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetProjectResources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetProjectResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -3483,7 +3483,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> AssignProjectResourcesAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringAssignDeploymentResourcesDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> AssignProjectResourcesAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringAssignProjectResourcesDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(details, nameof(details));
@@ -3500,7 +3500,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation AssignProjectResources(WaitUntil waitUntil, string projectName, ConversationAuthoringAssignDeploymentResourcesDetails details, CancellationToken cancellationToken = default)
+        public virtual Operation AssignProjectResources(WaitUntil waitUntil, string projectName, ConversationAuthoringAssignProjectResourcesDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(details, nameof(details));
@@ -3520,7 +3520,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignProjectResourcesAsync(WaitUntil,string,ConversationAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignProjectResourcesAsync(WaitUntil,string,ConversationAuthoringAssignProjectResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3562,7 +3562,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignProjectResources(WaitUntil,string,ConversationAuthoringAssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignProjectResources(WaitUntil,string,ConversationAuthoringAssignProjectResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3601,7 +3601,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> UnassignProjectResourcesAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> UnassignProjectResourcesAsync(WaitUntil waitUntil, string projectName, ConversationAuthoringProjectResourceIds details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(details, nameof(details));
@@ -3618,7 +3618,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation UnassignProjectResources(WaitUntil waitUntil, string projectName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        public virtual Operation UnassignProjectResources(WaitUntil waitUntil, string projectName, ConversationAuthoringProjectResourceIds details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(details, nameof(details));
@@ -3638,7 +3638,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignProjectResourcesAsync(WaitUntil,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignProjectResourcesAsync(WaitUntil,string,ConversationAuthoringProjectResourceIds,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3680,7 +3680,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignProjectResources(WaitUntil,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignProjectResources(WaitUntil,string,ConversationAuthoringProjectResourceIds,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4716,7 +4716,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringProjectResourceIds details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -4735,7 +4735,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringDeleteDeploymentDetails details, CancellationToken cancellationToken = default)
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, ConversationAuthoringProjectResourceIds details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -4756,7 +4756,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,ConversationAuthoringProjectResourceIds,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4800,7 +4800,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,string,string,ConversationAuthoringDeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,string,string,ConversationAuthoringProjectResourceIds,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5443,7 +5443,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentResourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectResourcesRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -6349,7 +6349,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentResourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetProjectResourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
