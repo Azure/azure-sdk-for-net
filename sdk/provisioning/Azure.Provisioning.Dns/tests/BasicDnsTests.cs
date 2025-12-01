@@ -48,8 +48,8 @@ public class BasicDnsTests
                     TtlInSeconds = 3600,
                     ARecords =
                     {
-                        new DnsARecordInfo() { Ipv4Addresses = IPAddress.Parse("203.0.113.1") },
-                        new DnsARecordInfo() { Ipv4Addresses = IPAddress.Parse("203.0.113.2") }
+                        new DnsARecordInfo() { Ipv4Address = IPAddress.Parse("203.0.113.1") },
+                        new DnsARecordInfo() { Ipv4Address = IPAddress.Parse("203.0.113.2") }
                     }
                 };
                 infra.Add(aRecord);
@@ -86,10 +86,10 @@ public class BasicDnsTests
               properties: {
                 ARecords: [
                   {
-                    ipv4Addresses: '203.0.113.1'
+                    ipv4Address: '203.0.113.1'
                   }
                   {
-                    ipv4Addresses: '203.0.113.2'
+                    ipv4Address: '203.0.113.2'
                   }
                 ]
                 TTL: 3600
