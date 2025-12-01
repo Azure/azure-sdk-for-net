@@ -14,9 +14,6 @@ parameters:
 - name: Condition
   type: string
   default: succeeded()
-- name: PackageInfoFilePath
-  type: string
-  default: ''
 
 steps:
   - task: Powershell@2
@@ -26,7 +23,6 @@ steps:
         -PackageName '${{ parameters.PackageName }}'
         -ServiceDirectory '${{ coalesce(parameters.ServiceDirectory, parameters.ServiceName) }}'
         -ForRelease $${{ parameters.ForRelease }}
-        -PackageInfoFilePath '${{ parameters.PackageInfoFilePath }}'
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify ChangeLogEntry for ${{ parameters.PackageName }}
