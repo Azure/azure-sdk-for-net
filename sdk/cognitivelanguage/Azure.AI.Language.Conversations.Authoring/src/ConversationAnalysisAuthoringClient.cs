@@ -1,0 +1,94 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading;
+using Azure.Core;
+using System.Threading.Tasks;
+using System;
+using Azure.Core.Pipeline;
+
+namespace Azure.AI.Language.Conversations.Authoring
+{
+    [CodeGenSuppress("GetConversationAuthoringProjectClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringDeploymentClient", typeof(string), typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringExportedModelClient", typeof(string), typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringTrainedModelClient", typeof(string), typeof(string))]
+    public partial class ConversationAnalysisAuthoringClient
+    {
+        /// <summary> Initializes a new instance of ConversationAuthoringProject. </summary>
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        public virtual ConversationAuthoringProject GetProject(string projectName)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return new ConversationAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, _apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        public virtual ConversationAuthoringDeployment GetDeployment(string projectName, string deploymentName)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            return new ConversationAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, deploymentName, _apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        /// <param name="exportedModelName"> The exported model name to use for this subclient. </param>
+        public virtual ConversationAuthoringExportedModel GetExportedModel(string projectName, string exportedModelName)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
+
+            return new ConversationAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, exportedModelName, _apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        /// <param name="trainedModelLabel"> The trained model label to use for this subclient. </param>
+        public virtual ConversationAuthoringTrainedModel GetTrainedModel(string projectName, string trainedModelLabel)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+
+            return new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, trainedModelLabel, _apiVersion);
+        }
+
+        /// <summary> Creates a new project or replaces an existing one. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CreateProjectAsync(
+            string projectName,
+            ConversationAuthoringCreateProjectDetails details,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await CreateProjectAsync(projectName, content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates a new project or replaces an existing one. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CreateProject(
+            string projectName,
+            ConversationAuthoringCreateProjectDetails details,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return CreateProject(projectName, content, context);
+        }
+    }
+}

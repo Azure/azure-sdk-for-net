@@ -1005,56 +1005,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Initializes a new instance of ConversationAuthoringDeployment. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="deploymentName"> Represents deployment name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ConversationAuthoringDeployment GetConversationAuthoringDeploymentClient(string projectName, string deploymentName)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            return new ConversationAuthoringDeployment(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, deploymentName, _apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringProject. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ConversationAuthoringProject GetConversationAuthoringProjectClient(string projectName)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            return new ConversationAuthoringProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, _apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringExportedModel. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="exportedModelName"> The exported model name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ConversationAuthoringExportedModel GetConversationAuthoringExportedModelClient(string projectName, string exportedModelName)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
-
-            return new ConversationAuthoringExportedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, exportedModelName, _apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringTrainedModel. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ConversationAuthoringTrainedModel GetConversationAuthoringTrainedModelClient(string projectName, string trainedModelLabel)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            return new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, trainedModelLabel, _apiVersion);
-        }
-
         internal HttpMessage CreateGetProjectsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
