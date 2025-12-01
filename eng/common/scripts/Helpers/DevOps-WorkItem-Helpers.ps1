@@ -531,10 +531,6 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $fields += "`"ServiceName=${serviceName}`""
   $fields += "`"PackageRepoPath=${pkgRepoPath}`""
 
-  if ($specProjectPath) {
-    $fields += "`"Custom.SpecProjectPath=${specProjectPath}`""
-  }
-
   if ($extraFields) {
     $fields += $extraFields
   }
