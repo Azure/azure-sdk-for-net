@@ -1,7 +1,8 @@
 # Wrapper Script for ChangeLog Verification in a PR
 [CmdletBinding()]
 param (
-  [String]$PackagePropertiesFolder
+  [String]$PackagePropertiesFolder,
+  [boolean]$ForRelease = $False
 )
 Set-StrictMode -Version 3
 
@@ -33,7 +34,7 @@ foreach($propertiesFile in $packageProperties) {
         continue
   }
 
-  $validChangeLog =  Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $false
+  $validChangeLog =  Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $ForRelease
 
   if (-not $validChangeLog) {
     $allPassing = $false
