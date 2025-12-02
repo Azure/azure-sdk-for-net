@@ -78,11 +78,6 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("output_audio_format"u8);
                 writer.WriteStringValue(OutputAudioFormat.Value.ToString());
             }
-            if (Optional.IsDefined(TurnDetection))
-            {
-                writer.WritePropertyName("turn_detection"u8);
-                writer.WriteObjectValue<global::.TurnDetection>(TurnDetection, options);
-            }
             if (Optional.IsDefined(InputAudioNoiseReduction))
             {
                 writer.WritePropertyName("input_audio_noise_reduction"u8);
@@ -148,6 +143,18 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(_turnDetection))
+            {
+                writer.WritePropertyName("turn_detection"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(_turnDetection);
+#else
+                using (JsonDocument document = JsonDocument.Parse(_turnDetection))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -198,7 +205,6 @@ namespace Azure.AI.VoiceLive
             int? inputAudioSamplingRate = default;
             InputAudioFormat? inputAudioFormat = default;
             OutputAudioFormat? outputAudioFormat = default;
-            global::.TurnDetection turnDetection = default;
             AudioNoiseReduction inputAudioNoiseReduction = default;
             AudioEchoCancellation inputAudioEchoCancellation = default;
             AvatarConfiguration avatar = default;
@@ -210,6 +216,7 @@ namespace Azure.AI.VoiceLive
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             RespondingAgentOptions agent = default;
             string id = default;
+            BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -280,15 +287,6 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     outputAudioFormat = new OutputAudioFormat(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("turn_detection"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    turnDetection = global::.TurnDetection.DeserializeTurnDetection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("input_audio_noise_reduction"u8))
@@ -396,6 +394,15 @@ namespace Azure.AI.VoiceLive
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("turn_detection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    turnDetection = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -410,7 +417,6 @@ namespace Azure.AI.VoiceLive
                 inputAudioSamplingRate,
                 inputAudioFormat,
                 outputAudioFormat,
-                turnDetection,
                 inputAudioNoiseReduction,
                 inputAudioEchoCancellation,
                 avatar,
@@ -422,6 +428,7 @@ namespace Azure.AI.VoiceLive
                 maxResponseOutputTokens,
                 agent,
                 id,
+                turnDetection,
                 additionalBinaryDataProperties);
         }
 
