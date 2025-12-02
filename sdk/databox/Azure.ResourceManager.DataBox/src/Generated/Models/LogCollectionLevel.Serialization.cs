@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class LogCollectionLevelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LogCollectionLevel value) => value switch
         {
             LogCollectionLevel.Error => "Error",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LogCollectionLevel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static LogCollectionLevel ToLogCollectionLevel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return LogCollectionLevel.Error;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return LogCollectionLevel.Verbose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return LogCollectionLevel.Error;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose"))
+            {
+                return LogCollectionLevel.Verbose;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LogCollectionLevel value.");
         }
     }

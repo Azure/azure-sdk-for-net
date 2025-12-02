@@ -8,42 +8,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataBox.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDataBoxResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _serviceOperationGroupClientDiagnostics;
-        private ServiceOperationGroupRestOperations _serviceOperationGroupRestClient;
+        private ServiceOperationGroup _serviceOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataBoxResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataBoxResourceGroupResource for mocking. </summary>
         protected MockableDataBoxResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataBoxResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataBoxResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataBoxResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ServiceOperationGroupClientDiagnostics => _serviceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ServiceOperationGroupRestOperations ServiceOperationGroupRestClient => _serviceOperationGroupRestClient ??= new ServiceOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ServiceOperationGroupClientDiagnostics => _serviceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ServiceOperationGroup ServiceOperationGroupRestClient => _serviceOperationGroupRestClient ??= new ServiceOperationGroup(ServiceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
-        /// <summary> Gets a collection of DataBoxJobResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
+        /// <summary> Gets a collection of DataBoxJobs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DataBoxJobs and their operations over a DataBoxJobResource. </returns>
         public virtual DataBoxJobCollection GetDataBoxJobs()
         {
             return GetCachedClient(client => new DataBoxJobCollection(client, Id));
@@ -53,20 +51,16 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// Gets information about the specified job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,8 +70,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxJobResource>> GetDataBoxJobAsync(string jobName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataBoxJobResource>> GetDataBoxJobAsync(string jobName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
             return await GetDataBoxJobs().GetAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -85,20 +81,16 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// Gets information about the specified job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,59 +100,37 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataBoxJobResource> GetDataBoxJob(string jobName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataBoxJobResource> GetDataBoxJob(string jobName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
             return GetDataBoxJobs().Get(jobName, expand, cancellationToken);
         }
 
-        /// <summary>
-        /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceOperationGroup_GetAvailableSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This method provides the list of available skus for the given subscription, resource group and location. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataBoxSkuInformation"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceOperationGroupRestClient.CreateGetAvailableSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceOperationGroupRestClient.CreateGetAvailableSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataBoxSkuInformation.DeserializeDataBoxSkuInformation(e), ServiceOperationGroupClientDiagnostics, Pipeline, "MockableDataBoxResourceGroupResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ServiceOperationGroupGetAvailableSkusAsyncCollectionResultOfT(
+                ServiceOperationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                location,
+                AvailableSkusContent.ToRequestContent(content),
+                context);
         }
 
-        /// <summary>
-        /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceOperationGroup_GetAvailableSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This method provides the list of available skus for the given subscription, resource group and location. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,28 +140,20 @@ namespace Azure.ResourceManager.DataBox.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceOperationGroupRestClient.CreateGetAvailableSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceOperationGroupRestClient.CreateGetAvailableSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataBoxSkuInformation.DeserializeDataBoxSkuInformation(e), ServiceOperationGroupClientDiagnostics, Pipeline, "MockableDataBoxResourceGroupResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ServiceOperationGroupGetAvailableSkusCollectionResultOfT(
+                ServiceOperationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                location,
+                AvailableSkusContent.ToRequestContent(content),
+                context);
         }
 
-        /// <summary>
-        /// This API provides configuration details specific to given region/location at Resource group level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceOperationGroup_GetRegionConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This API provides configuration details specific to given region/location at Resource group level. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,11 +162,21 @@ namespace Azure.ResourceManager.DataBox.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetRegionConfiguration");
+            using DiagnosticScope scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetRegionConfiguration");
             scope.Start();
             try
             {
-                var response = await ServiceOperationGroupRestClient.GetRegionConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServiceOperationGroupRestClient.CreateGetRegionConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RegionConfigurationContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RegionConfigurationResult> response = Response.FromValue(RegionConfigurationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -214,23 +186,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary>
-        /// This API provides configuration details specific to given region/location at Resource group level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceOperationGroup_GetRegionConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This API provides configuration details specific to given region/location at Resource group level. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,11 +195,21 @@ namespace Azure.ResourceManager.DataBox.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetRegionConfiguration");
+            using DiagnosticScope scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetRegionConfiguration");
             scope.Start();
             try
             {
-                var response = ServiceOperationGroupRestClient.GetRegionConfiguration(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServiceOperationGroupRestClient.CreateGetRegionConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RegionConfigurationContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RegionConfigurationResult> response = Response.FromValue(RegionConfigurationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -253,23 +219,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceOperationGroup_ValidateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This method does all necessary pre-job creation validation under resource group. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,11 +228,21 @@ namespace Azure.ResourceManager.DataBox.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.ValidateInputs");
+            using DiagnosticScope scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.ValidateInputs");
             scope.Start();
             try
             {
-                var response = await ServiceOperationGroupRestClient.ValidateInputsAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServiceOperationGroupRestClient.CreateValidateInputsRequest(Id.SubscriptionId, Id.ResourceGroupName, location, DataBoxValidationContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxValidationResult> response = Response.FromValue(DataBoxValidationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -292,23 +252,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             }
         }
 
-        /// <summary>
-        /// This method does all necessary pre-job creation validation under resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceOperationGroup_ValidateInputs</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> This method does all necessary pre-job creation validation under resource group. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Inputs of the customer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,11 +261,21 @@ namespace Azure.ResourceManager.DataBox.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.ValidateInputs");
+            using DiagnosticScope scope = ServiceOperationGroupClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.ValidateInputs");
             scope.Start();
             try
             {
-                var response = ServiceOperationGroupRestClient.ValidateInputs(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServiceOperationGroupRestClient.CreateValidateInputsRequest(Id.SubscriptionId, Id.ResourceGroupName, location, DataBoxValidationContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxValidationResult> response = Response.FromValue(DataBoxValidationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

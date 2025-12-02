@@ -13,48 +13,20 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
     /// Request body to get the availability for scheduling orders.
-    /// Please note <see cref="ScheduleAvailabilityContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataBoxScheduleAvailabilityContent"/>, <see cref="DiskScheduleAvailabilityContent"/> and <see cref="HeavyScheduleAvailabilityContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataBoxScheduleAvailabilityContent"/>, <see cref="DiskScheduleAvailabilityContent"/>, and <see cref="HeavyScheduleAvailabilityContent"/>.
     /// </summary>
     public abstract partial class ScheduleAvailabilityContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        protected ScheduleAvailabilityContent(AzureLocation storageLocation)
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        private protected ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName)
         {
             StorageLocation = storageLocation;
+            SkuName = skuName;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/>. </summary>
@@ -62,27 +34,25 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, DeviceModelName? model, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, DeviceModelName? model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageLocation = storageLocation;
             SkuName = skuName;
             Country = country;
             Model = model;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/> for deserialization. </summary>
-        internal ScheduleAvailabilityContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>
         public AzureLocation StorageLocation { get; }
+
         /// <summary> Sku Name for which the order is to be scheduled. </summary>
         internal DataBoxSkuName SkuName { get; set; }
+
         /// <summary> Country in which storage location should be supported. </summary>
         public string Country { get; set; }
+
         /// <summary> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </summary>
         public DeviceModelName? Model { get; set; }
     }
