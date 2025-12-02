@@ -20,11 +20,10 @@ namespace Microsoft.ClientModel.TestFramework;
 /// </summary>
 public abstract class TestEnvironment
 {
-    private static readonly Dictionary<Type, Task> s_environmentStateCache = new();
     private AuthenticationTokenProvider? _credential;
     private TestRecording? _recording;
-    private Dictionary<string, string>? _environmentFile;
-    private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
+    private readonly Dictionary<string, string>? _environmentFile;
+    private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = [];
     private static readonly object s_syncLock = new();
     private Exception? _bootstrappingException;
     private readonly Type _type;
