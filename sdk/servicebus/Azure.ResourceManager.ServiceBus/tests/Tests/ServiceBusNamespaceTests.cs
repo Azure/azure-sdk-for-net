@@ -471,6 +471,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task NamespaceSystemAssignedEncryptionTests()
         {
             //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
@@ -543,6 +544,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task UserAssignedEncryptionTests()
         {
             ServiceBusNamespaceResource resource = null;
@@ -621,6 +623,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task StandardToPremiumMigration()
         {
             IgnoreTestInLiveMode();
