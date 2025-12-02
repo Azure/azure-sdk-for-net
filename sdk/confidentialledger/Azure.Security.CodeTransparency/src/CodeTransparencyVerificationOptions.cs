@@ -24,6 +24,7 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         RequireAll = 2
     }
+
     /// <summary>
     /// Specifies behaviors for receipts whose issuer domains are not contained in <see cref="CodeTransparencyVerificationOptions.AuthorizedDomains"/>.
     /// </summary>

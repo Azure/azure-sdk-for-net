@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
@@ -30,7 +31,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Gets the dictionary of ledger domains to their JWKS documents.
         /// </summary>
-        public IDictionary<string, JwksDocument> ByDomain => _keysByDomain;
+        public IReadOnlyDictionary<string, JwksDocument> ByDomain => new ReadOnlyDictionary<string, JwksDocument>(_keysByDomain);
 
         /// <summary>
         /// Adds or updates a JWKS document for the specified ledger domain.
@@ -38,6 +39,14 @@ namespace Azure.Security.CodeTransparency
         public void Add(string ledgerDomain, JwksDocument jwksDocument)
         {
             _keysByDomain[ledgerDomain] = jwksDocument;
+        }
+
+        /// <summary>
+        /// Creates a CodeTransparencyOfflineKeys instance from a BinaryData containing JSON.
+        /// </summary>
+        public static CodeTransparencyOfflineKeys FromBinaryData(BinaryData json)
+        {
+            return FromJsonDocument(JsonDocument.Parse(json.ToString()));
         }
 
         internal static CodeTransparencyOfflineKeys FromJsonDocument(JsonDocument jsonDocument)

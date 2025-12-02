@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Formats.Cbor;
 using System.IO;
 using System.Security.Cryptography.Cose;
@@ -37,9 +38,9 @@ namespace Azure.Security.CodeTransparency
         public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
 
         /// <summary>
-        /// Public key storage used to verify receipts. It can be prepopulated to do offline verification.
+        /// Public key storage used to verify receipts. The value can be set through the verification options.
         /// </summary>
-        private IDictionary<string, JwksDocument> _offlineKeys = new ConcurrentDictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
+        private IReadOnlyDictionary<string, JwksDocument> _offlineKeys = null;
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
@@ -522,7 +523,7 @@ namespace Azure.Security.CodeTransparency
             }
 
             // Check if we have offline keys for this domain
-            if (! _offlineKeys.TryGetValue(issuer, out JwksDocument jwksDocument))
+            if (_offlineKeys == null || ! _offlineKeys.TryGetValue(issuer, out JwksDocument jwksDocument))
             {
                 // Get all the public keys from the JWKS endpoint
                 jwksDocument = GetPublicKeys().Value;
