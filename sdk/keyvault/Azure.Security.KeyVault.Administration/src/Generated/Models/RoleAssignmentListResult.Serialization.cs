@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RoleAssignment item in Value)
+                foreach (KeyVaultRoleAssignment item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            IList<RoleAssignment> value = default;
+            IList<KeyVaultRoleAssignment> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -102,10 +102,10 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    List<RoleAssignment> array = new List<RoleAssignment>();
+                    List<KeyVaultRoleAssignment> array = new List<KeyVaultRoleAssignment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignment.DeserializeRoleAssignment(item, options));
+                        array.Add(KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(item, options));
                     }
                     value = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleAssignmentListResult(value ?? new ChangeTrackingList<RoleAssignment>(), nextLink, additionalBinaryDataProperties);
+            return new RoleAssignmentListResult(value ?? new ChangeTrackingList<KeyVaultRoleAssignment>(), nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
