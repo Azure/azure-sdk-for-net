@@ -15,39 +15,39 @@ namespace Azure.Security.CodeTransparency
     /// <summary>
     /// A case-insensitive dictionary mapping ledger domains to their JWKS documents for offline verification.
     /// </summary>
-    public sealed class CodeTransparencyVerificationKeys
+    public sealed class CodeTransparencyOfflineKeys
     {
-        private IDictionary<string, JwksDocument> _serializedKeys;
+        private IDictionary<string, JwksDocument> _keysByDomain;
 
         /// <summary>
-        /// Initializes a new instance of CodeTransparencyVerificationKeys.
+        /// Initializes a new instance of CodeTransparencyOfflineKeys.
         /// </summary>
-        public CodeTransparencyVerificationKeys()
+        public CodeTransparencyOfflineKeys()
         {
-            _serializedKeys = new Dictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
+            _keysByDomain = new Dictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
         /// Gets the dictionary of ledger domains to their JWKS documents.
         /// </summary>
-        public IDictionary<string, JwksDocument> SerializedKeys => _serializedKeys;
+        public IDictionary<string, JwksDocument> ByDomain => _keysByDomain;
 
         /// <summary>
         /// Adds or updates a JWKS document for the specified ledger domain.
         /// </summary>
         public void Add(string ledgerDomain, JwksDocument jwksDocument)
         {
-            _serializedKeys[ledgerDomain] = jwksDocument;
+            _keysByDomain[ledgerDomain] = jwksDocument;
         }
 
-        internal static CodeTransparencyVerificationKeys FromJsonDocument(JsonDocument jsonDocument)
+        internal static CodeTransparencyOfflineKeys FromJsonDocument(JsonDocument jsonDocument)
         {
             return DeserializeKeys(jsonDocument.RootElement);
         }
 
-        internal static CodeTransparencyVerificationKeys DeserializeKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CodeTransparencyOfflineKeys DeserializeKeys(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            var keys = new CodeTransparencyVerificationKeys();
+            var keys = new CodeTransparencyOfflineKeys();
 
             foreach (var property in element.EnumerateObject())
             {

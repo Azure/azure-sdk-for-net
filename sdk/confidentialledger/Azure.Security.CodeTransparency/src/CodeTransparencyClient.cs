@@ -39,7 +39,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Public key storage used to verify receipts. It can be prepopulated to do offline verification.
         /// </summary>
-        private IDictionary<string, JwksDocument> _verificationKeysCache = new ConcurrentDictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
+        private IDictionary<string, JwksDocument> _offlineKeys = new ConcurrentDictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
@@ -429,9 +429,9 @@ namespace Azure.Security.CodeTransparency
                     if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
                     {
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
-                        if (verificationOptions?.CodeTransparencyVerificationKeys != null)
+                        if (verificationOptions?.CodeTransparencyOfflineKeys != null)
                         {
-                            clientInstance._verificationKeysCache = verificationOptions.CodeTransparencyVerificationKeys.SerializedKeys;
+                            clientInstance._offlineKeys = verificationOptions.CodeTransparencyOfflineKeys.ByDomain;
                         }
                         clientInstances[issuer] = clientInstance;
                     }
@@ -521,8 +521,8 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
-            // Check if we have cached keys for this domain
-            if (! _verificationKeysCache.TryGetValue(issuer, out JwksDocument jwksDocument))
+            // Check if we have offline keys for this domain
+            if (! _offlineKeys.TryGetValue(issuer, out JwksDocument jwksDocument))
             {
                 // Get all the public keys from the JWKS endpoint
                 jwksDocument = GetPublicKeys().Value;

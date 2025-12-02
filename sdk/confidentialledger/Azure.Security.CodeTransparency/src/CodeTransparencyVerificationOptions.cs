@@ -77,6 +77,6 @@ namespace Azure.Security.CodeTransparency
         /// Gets or sets a store mapping ledger domains to JWKS documents for offline verification.
         /// When provided, will skip network calls and use the matching JWKS document from this store instead.
         /// </summary>
-        public CodeTransparencyVerificationKeys CodeTransparencyVerificationKeys { get; set; } = null;
+        public CodeTransparencyOfflineKeys CodeTransparencyOfflineKeys { get; set; } = null;
     }
 }

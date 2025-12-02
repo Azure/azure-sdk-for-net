@@ -490,7 +490,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
                 "}]}}";
             var jsonDoc = JsonDocument.Parse(doc);
-            var offlineStore = CodeTransparencyVerificationKeys.FromJsonDocument(jsonDoc);
+            var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
 
             var options = new CodeTransparencyClientOptions
             {
@@ -500,7 +500,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
                 AuthorizedDomains = new string[] { "foo.bar.com" },
-                CodeTransparencyVerificationKeys = offlineStore
+                CodeTransparencyOfflineKeys = offlineStore
             };
 
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
