@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a serialization issue with `VirtualMachineScaleSetRollingUpgradeData` class.
+
 ### Other Changes
 
 ## 1.13.0 (2025-11-14)

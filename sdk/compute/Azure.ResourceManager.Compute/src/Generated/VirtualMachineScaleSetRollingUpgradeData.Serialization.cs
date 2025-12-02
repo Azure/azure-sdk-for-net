@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    DeserializeId(property, ref id);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
