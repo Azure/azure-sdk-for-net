@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
-        internal ContainerRegistryPrivateLinkResourceData()
+        public ContainerRegistryPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource private link DNS zone name. </summary>
         [WirePath("properties.requiredZoneNames")]
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames { get; }
     }
 }

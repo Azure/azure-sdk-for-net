@@ -10,7 +10,7 @@ namespace: Azure.ResourceManager.ContainerRegistry
 # Temporarily releasing the SDK from the Swagger specification; this will be updated once support for generating SDKs from multiple TypeSpec sources is available.
 input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/aaea49a20b10e8ab526495309e14fdfdcd23bb7e/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/containerregistry.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/aaea49a20b10e8ab526495309e14fdfdcd23bb7e/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/containerregistry_build.json
+#   - https://github.com/Azure/azure-rest-api-specs/blob/aaea49a20b10e8ab526495309e14fdfdcd23bb7e/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2019-06-01-preview/containerregistry_build.json
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -262,19 +262,19 @@ override-operation-name:
 
 directive:
   # these two renames of operation would make the xml doc incorrect, but currently this is required because now the same operation would contain multiple api-versions if we do not rename.
-  - rename-operation:
-      from: Registries_GetBuildSourceUploadUrl
-      to: Builds_GetBuildSourceUploadUrl
-  - rename-operation:
-      from: Registries_ScheduleRun
-      to: Schedules_ScheduleRun
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.IdentityProperties.properties.principalId.readOnly = true;
-      $.IdentityProperties.properties.tenantId.readOnly = true;
-      $.UserIdentityProperties.properties.principalId.readOnly = true;
-      $.UserIdentityProperties.properties.clientId.readOnly = true;
+#   - rename-operation:
+#       from: Registries_GetBuildSourceUploadUrl
+#       to: Builds_GetBuildSourceUploadUrl
+#   - rename-operation:
+#       from: Registries_ScheduleRun
+#       to: Schedules_ScheduleRun
+#   - from: swagger-document
+#     where: $.definitions
+#     transform: >
+#       $.IdentityProperties.properties.principalId.readOnly = true;
+#       $.IdentityProperties.properties.tenantId.readOnly = true;
+#       $.UserIdentityProperties.properties.principalId.readOnly = true;
+#       $.UserIdentityProperties.properties.clientId.readOnly = true;
   - from: containerregistry.json
     where: $.definitions
     transform: >

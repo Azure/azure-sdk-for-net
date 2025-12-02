@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/containerregistry-tasks/ci.mgmt.yml
+    - sdk/containerregistry-tasks/Azure.ResourceManager.ContainerRegistry.Tasks/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: mgmtclient
+    ServiceDirectory: containerregistry-tasks
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.ContainerRegistry.Tasks
+      safeName: AzureResourceManagerContainerRegistryTasks

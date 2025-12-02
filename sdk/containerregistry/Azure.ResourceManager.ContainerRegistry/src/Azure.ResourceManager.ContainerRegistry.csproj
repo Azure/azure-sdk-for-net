@@ -9,4 +9,7 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\sdk\containerregistry-tasks\Azure.ResourceManager.ContainerRegistry.Tasks\src\Azure.ResourceManager.ContainerRegistry.Tasks.csproj" />
+  </ItemGroup>
 </Project>

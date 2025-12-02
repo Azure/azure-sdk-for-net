@@ -153,53 +153,5 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             ContainerRegistryWebhookResource.ValidateResourceId(id);
             return new ContainerRegistryWebhookResource(Client, id);
         }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryAgentPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource"/> object. </returns>
-        public virtual ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(ResourceIdentifier id)
-        {
-            ContainerRegistryAgentPoolResource.ValidateResourceId(id);
-            return new ContainerRegistryAgentPoolResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryRunResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryRunResource"/> object. </returns>
-        public virtual ContainerRegistryRunResource GetContainerRegistryRunResource(ResourceIdentifier id)
-        {
-            ContainerRegistryRunResource.ValidateResourceId(id);
-            return new ContainerRegistryRunResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryTaskRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryTaskRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskRunResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource"/> object. </returns>
-        public virtual ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(ResourceIdentifier id)
-        {
-            ContainerRegistryTaskRunResource.ValidateResourceId(id);
-            return new ContainerRegistryTaskRunResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryTaskResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTaskResource"/> object. </returns>
-        public virtual ContainerRegistryTaskResource GetContainerRegistryTaskResource(ResourceIdentifier id)
-        {
-            ContainerRegistryTaskResource.ValidateResourceId(id);
-            return new ContainerRegistryTaskResource(Client, id);
-        }
     }
 }

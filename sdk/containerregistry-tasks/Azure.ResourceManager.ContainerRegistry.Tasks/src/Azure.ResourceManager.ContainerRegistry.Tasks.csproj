@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>Azure.ResourceManager.ContainerRegistry.Tasks</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Azure.ResourceManager.ContainerRegistry.Tasks.</Description>
+    <PackageTags>azure;management;arm;resource manager;azure.resourcemanager.containerregistry.tasks</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+  </PropertyGroup>
+</Project>
