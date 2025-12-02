@@ -10,7 +10,7 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs
 * **Classify documents** - Automatically categorize and organize documents by type or content
 
-[Source code][source_code] | [Package (NuGet)] | [API reference documentation][api_reference] | [Product documentation][product_docs]
+[Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -232,6 +232,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/src
+[nuget_package]: https://www.nuget.org/packages/Azure.AI.ContentUnderstanding/
 [api_reference]: https://azure.github.io/azure-sdk-for-net
 [product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [nuget]: https://www.nuget.org/
