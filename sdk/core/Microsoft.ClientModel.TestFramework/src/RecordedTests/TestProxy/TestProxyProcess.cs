@@ -29,6 +29,7 @@ public class TestProxyProcess
     private static TestProxyProcess? _shared;
     private readonly StringBuilder _output = new();
     private static readonly bool s_enableDebugProxyLogging;
+    private static readonly int s_toolRestoreTimeoutMs = 6000;
 
     internal virtual TestProxyAdminClient AdminClient { get; }
     internal virtual TestProxyClient ProxyClient { get; }
@@ -290,7 +291,7 @@ public class TestProxyProcess
             using var process = Process.Start(processInfo);
             if (process != null)
             {
-                var completed = process.WaitForExit(6000);
+                var completed = process.WaitForExit(s_toolRestoreTimeoutMs);
 
                 if (!completed)
                 {
