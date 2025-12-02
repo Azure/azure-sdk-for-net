@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/NewProject1201?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250525.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-04e06b6e9c5d776c536ce9ff1d41b23e-74ef2dc514cb7ce6-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20251202.1 (.NET 9.0.11; Microsoft Windows 10.0.26200)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,35 +15,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "31ab917e-b841-4731-a807-4c3287be46ef",
-        "Content-Length": "312",
+        "apim-request-id": "e0a4af3c-0183-46b6-af89-d8336fd6c31c",
+        "Content-Length": "223",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 26 May 2025 03:28:07 GMT",
-        "request-id": "31ab917e-b841-4731-a807-4c3287be46ef",
+        "Date": "Tue, 02 Dec 2025 18:09:13 GMT",
+        "request-id": "e0a4af3c-0183-46b6-af89-d8336fd6c31c",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "32",
+        "x-envoy-upstream-service-time": "27",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "createdDateTime": "2024-11-19T23:45:46Z",
-        "lastModifiedDateTime": "2025-01-10T04:12:35Z",
+        "createdDateTime": "2025-12-02T03:36:59Z",
+        "lastModifiedDateTime": "2025-12-02T03:36:59Z",
         "projectKind": "Conversation",
-        "settings": {
-          "confidenceThreshold": 0.7,
-          "normalizeCasing": false,
-          "augmentDiacritics": false
-        },
-        "projectName": "MyNewProjectAsync",
+        "projectName": "NewProject1201",
         "multilingual": true,
         "description": "Project description",
-        "language": "en"
+        "language": "en-us"
       }
     }
   ],
   "Variables": {
-    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "7255369"
+    "RandomSeed": "201005183"
   }
 }

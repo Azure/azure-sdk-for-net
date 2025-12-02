@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/models/Model1/evaluation/summary-result?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/models/Model1/evaluation/summary-result?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-2821f0daf4a21c1e3137f88c7c366d69-c24f708208c6d18e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20251202.1 (.NET 9.0.11; Microsoft Windows 10.0.26200)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -14,14 +15,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "fdb39261-9673-49d1-bf4d-a696fbd7a856",
+        "apim-request-id": "8390b95b-619c-4d03-8637-f37bb8d136aa",
         "Content-Length": "7525",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Jun 2025 23:48:03 GMT",
-        "request-id": "fdb39261-9673-49d1-bf4d-a696fbd7a856",
+        "Date": "Tue, 02 Dec 2025 18:20:53 GMT",
+        "request-id": "8390b95b-619c-4d03-8637-f37bb8d136aa",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "79",
+        "x-envoy-upstream-service-time": "170",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
@@ -549,6 +550,6 @@
   "Variables": {
     "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "563296707"
+    "RandomSeed": "990708697"
   }
 }

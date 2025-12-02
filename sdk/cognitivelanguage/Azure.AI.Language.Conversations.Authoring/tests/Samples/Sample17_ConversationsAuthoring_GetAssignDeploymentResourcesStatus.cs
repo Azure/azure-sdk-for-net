@@ -33,12 +33,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 region: "{region}"
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
                 new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
             );
 
             // Submit assignment operation
-            Operation sampleAssignOperation = sampleProjectClient.AssignDeploymentResources(
+            Operation sampleAssignOperation = sampleProjectClient.AssignProjectResources(
                 waitUntil: WaitUntil.Started,
                 details: sampleAssignDetails
             );
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Job ID: {sampleJobId}");
 
             // Call status API
-            Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = sampleProjectClient.GetAssignDeploymentResourcesStatus(sampleJobId);
+            Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = sampleProjectClient.GetAssignProjectResourcesStatus(sampleJobId);
 
             Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");
             #endregion
@@ -77,12 +77,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 region: "{region}"
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
                 new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
             );
 
             // Submit assignment operation
-            Operation sampleAssignOperation = await sampleProjectClient.AssignDeploymentResourcesAsync(
+            Operation sampleAssignOperation = await sampleProjectClient.AssignProjectResourcesAsync(
                 waitUntil: WaitUntil.Started,
                 details: sampleAssignDetails
             );
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Job ID: {sampleJobId}");
 
             // Call status API
-            Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignDeploymentResourcesStatusAsync(sampleJobId);
+            Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignProjectResourcesStatusAsync(sampleJobId);
 
             Assert.IsNotNull(sampleStatusResponse);
             Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");

@@ -1240,7 +1240,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual AsyncPageable<ConversationAuthoringProjectDeployment> GetDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConversationAuthoringProjectDeployment> GetDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(maxCount, skip, pageSizeHint, context);
@@ -1253,7 +1253,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Pageable<ConversationAuthoringProjectDeployment> GetDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConversationAuthoringProjectDeployment> GetDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(maxCount, skip, pageSizeHint, context);
@@ -1282,7 +1282,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetDeploymentsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
@@ -1310,7 +1310,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual Pageable<BinaryData> GetDeployments(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeployments(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
@@ -1720,31 +1720,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="exportedProject"> The project data to import. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportedProject"/> is null. </exception>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? projectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
 
             using RequestContent content = exportedProject.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await ImportAsync(waitUntil, content, exportedProjectFormat?.ToString(), context).ConfigureAwait(false);
+            return await ImportAsync(waitUntil, content, projectFormat?.ToString(), context).ConfigureAwait(false);
         }
 
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="exportedProject"> The project data to import. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportedProject"/> is null. </exception>
-        public virtual Operation Import(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? projectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
 
             using RequestContent content = exportedProject.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return Import(waitUntil, content, exportedProjectFormat?.ToString(), context);
+            return Import(waitUntil, content, projectFormat?.ToString(), context);
         }
 
         /// <summary>
@@ -1764,12 +1764,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, RequestContent content, string projectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1777,7 +1777,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(content, exportedProjectFormat, context);
+                using HttpMessage message = CreateImportRequest(content, projectFormat, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1804,12 +1804,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation Import(WaitUntil waitUntil, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        public virtual Operation Import(WaitUntil waitUntil, RequestContent content, string projectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1817,7 +1817,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(content, exportedProjectFormat, context);
+                using HttpMessage message = CreateImportRequest(content, projectFormat, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
@@ -2546,7 +2546,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateImportRequest(RequestContent content, string exportedProjectFormat, RequestContext context)
+        internal HttpMessage CreateImportRequest(RequestContent content, string projectFormat, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -2558,9 +2558,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath(_projectName, true);
             uri.AppendPath("/:import", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (exportedProjectFormat != null)
+            if (projectFormat != null)
             {
-                uri.AppendQuery("format", exportedProjectFormat, true);
+                uri.AppendQuery("format", projectFormat, true);
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");

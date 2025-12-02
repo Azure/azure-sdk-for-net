@@ -46,12 +46,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectResource"/>. </summary>
+        /// <param name="resourceId"> The Azure resource ID of the language or AI resource. </param>
         /// <param name="region"> The Azure resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        internal ConversationAuthoringAssignedProjectResource(string region)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="region"/> is null. </exception>
+        public ConversationAuthoringAssignedProjectResource(string resourceId, string region)
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(region, nameof(region));
 
+            ResourceId = resourceId;
             Region = region;
         }
 
@@ -74,10 +77,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> The Azure resource ID of the language or AI resource. </summary>
-        public string ResourceId { get; }
+        public string ResourceId { get; set; }
         /// <summary> The Azure resource region. </summary>
-        public string Region { get; }
+        public string Region { get; set; }
         /// <summary> Represents the AOAI resource assigned for data generation. </summary>
-        public AnalyzeConversationAuthoringDataGenerationConnectionInfo AssignedAoaiResource { get; }
+        public AnalyzeConversationAuthoringDataGenerationConnectionInfo AssignedAoaiResource { get; set; }
     }
 }

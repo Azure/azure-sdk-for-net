@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1?api-version=2025-11-15-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -16,7 +16,7 @@
         "apim-request-id": "1a4026a6-2d57-40ab-beef-998040c835b4",
         "Content-Length": "0",
         "Date": "Tue, 24 Jun 2025 23:31:06 GMT",
-        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
         "request-id": "1a4026a6-2d57-40ab-beef-998040c835b4",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
@@ -26,7 +26,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -57,7 +57,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -88,7 +88,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -119,7 +119,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -150,7 +150,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -181,7 +181,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -212,7 +212,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -243,7 +243,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -274,7 +274,7 @@
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment1/jobs/b5b93c42-d399-43f5-9aea-3d37a0130e53_638863200000000000?api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",

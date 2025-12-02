@@ -34,11 +34,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 throw new FormatException($"The model {nameof(ConversationAuthoringAssignedProjectResource)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("azureResourceId"u8);
-                writer.WriteStringValue(ResourceId);
-            }
+            writer.WritePropertyName("azureResourceId"u8);
+            writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
             if (Optional.IsDefined(AssignedAoaiResource))

@@ -63,8 +63,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 };
 
             // Create Cognitive Services resource with AOAI linkage
-            ConversationAuthoringDeploymentResource assignedResource =
-                new ConversationAuthoringDeploymentResource(
+            ConversationAuthoringAssignedProjectResource assignedResource =
+                new ConversationAuthoringAssignedProjectResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                     region: "{region}")
                 {
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Set up deployment details with assigned resources
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-            deploymentDetails.AssignedResources.Add(assignedResource);
+            deploymentDetails.AzureResourceIds.Add(assignedResource);
 
             // Get deployment client
             ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
@@ -141,8 +141,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 };
 
             // Create Cognitive Services resource with AOAI linkage
-            ConversationAuthoringDeploymentResource assignedResource =
-                new ConversationAuthoringDeploymentResource(
+            ConversationAuthoringAssignedProjectResource assignedResource =
+                new ConversationAuthoringAssignedProjectResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                     region: "{region}")
                 {
@@ -152,7 +152,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Set up deployment details with assigned resources
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-            deploymentDetails.AssignedResources.Add(assignedResource);
+            deploymentDetails.AzureResourceIds.Add(assignedResource);
 
             // Get deployment client
             ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);

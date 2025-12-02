@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expectedEntities"/> or <paramref name="predictedEntities"/> is null. </exception>
-        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities, IEnumerable<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities)
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<UtteranceEntityEvaluationResult> expectedEntities, IEnumerable<UtteranceEntityEvaluationResult> predictedEntities)
         {
             Argument.AssertNotNull(expectedEntities, nameof(expectedEntities));
             Argument.AssertNotNull(predictedEntities, nameof(predictedEntities));
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities, IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IReadOnlyList<UtteranceEntityEvaluationResult> expectedEntities, IReadOnlyList<UtteranceEntityEvaluationResult> predictedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpectedEntities = expectedEntities;
             PredictedEntities = predictedEntities;
@@ -76,8 +76,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Represents the expected entity labels. </summary>
-        public IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> ExpectedEntities { get; }
+        public IReadOnlyList<UtteranceEntityEvaluationResult> ExpectedEntities { get; }
         /// <summary> Represents the predicted entity labels. </summary>
-        public IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> PredictedEntities { get; }
+        public IReadOnlyList<UtteranceEntityEvaluationResult> PredictedEntities { get; }
     }
 }

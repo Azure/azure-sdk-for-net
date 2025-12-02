@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             IReadOnlyDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow> confusionMatrix = default;
-            IReadOnlyDictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entities = default;
+            IReadOnlyDictionary<string, ConversationAuthoringEntityEvalSummary> entities = default;
             float microF1 = default;
             float microPrecision = default;
             float microRecall = default;
@@ -123,10 +123,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    Dictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary> dictionary = new Dictionary<string, AnalyzeConversationAuthoringEntityEvaluationSummary>();
+                    Dictionary<string, ConversationAuthoringEntityEvalSummary> dictionary = new Dictionary<string, ConversationAuthoringEntityEvalSummary>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AnalyzeConversationAuthoringEntityEvaluationSummary.DeserializeAnalyzeConversationAuthoringEntityEvaluationSummary(property0.Value, options));
+                        dictionary.Add(property0.Name, ConversationAuthoringEntityEvalSummary.DeserializeConversationAuthoringEntityEvalSummary(property0.Value, options));
                     }
                     entities = dictionary;
                     continue;

@@ -511,12 +511,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResultsAsync(StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UtteranceEvaluationResult> GetModelEvaluationResultsAsync(StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeConversationAuthoringUtteranceEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -525,12 +525,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResults(StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<UtteranceEvaluationResult> GetModelEvaluationResults(StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeConversationAuthoringUtteranceEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTrainedModel.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>

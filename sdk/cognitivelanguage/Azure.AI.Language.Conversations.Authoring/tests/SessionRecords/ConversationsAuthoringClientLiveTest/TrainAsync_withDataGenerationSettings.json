@@ -1,13 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/:train?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/:train?api-version=2025-11-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "501",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250620.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-8000754a923dab3650bbd5680ebafce5-1e59770cb2b141cf-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20251202.1 (.NET 9.0.11; Microsoft Windows 10.0.26200)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -32,14 +33,14 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "907b540e-1181-482b-9c31-5588fd91babb",
+        "apim-request-id": "f4ceeeef-fa7d-4eed-ba93-264d83a9fe94",
         "Content-Length": "0",
-        "Date": "Fri, 20 Jun 2025 22:31:08 GMT",
-        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/train/jobs/beb21f7c-42dd-4fb5-a843-c25cfec13cb6_638859744000000000?api-version=2025-05-15-preview",
-        "request-id": "907b540e-1181-482b-9c31-5588fd91babb",
+        "Date": "Tue, 02 Dec 2025 18:11:22 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/train/jobs/d3bba655-46ce-4783-b112-6acfeaa72bfb_639002304000000000?api-version=2025-11-15-preview",
+        "request-id": "f4ceeeef-fa7d-4eed-ba93-264d83a9fe94",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "150",
+        "x-envoy-upstream-service-time": "139",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
@@ -48,6 +49,6 @@
   "Variables": {
     "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "1896156431"
+    "RandomSeed": "917558002"
   }
 }

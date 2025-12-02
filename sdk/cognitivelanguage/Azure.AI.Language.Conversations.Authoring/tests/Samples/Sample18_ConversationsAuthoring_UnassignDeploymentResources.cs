@@ -29,18 +29,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
             // Define assigned resource ID to be unassigned
-            var sampleAssignedResourceIds = new List<string>
+            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
             {
-                "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                AzureResourceIds =
+                {
+                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                }
             };
 
-            // Build the unassignment details
-            var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
-
             // Start the operation
-            Operation sampleOperation = sampleProjectClient.UnassignDeploymentResources(
+            Operation sampleOperation = sampleProjectClient.UnassignProjectResources(
                 waitUntil: WaitUntil.Started,
-                details: sampleUnassignDetails
+                details: sampleUnassignIds
             );
 
             Console.WriteLine($"UnassignDeploymentResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
@@ -72,18 +72,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
             // Define assigned resource ID to be unassigned
-            var sampleAssignedResourceIds = new List<string>
+            var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
             {
-                "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                AzureResourceIds =
+                {
+                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                }
             };
 
-            // Build the unassignment details
-            var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
-
             // Call the operation
-            Operation sampleOperation = await sampleProjectClient.UnassignDeploymentResourcesAsync(
+            Operation sampleOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
                 waitUntil: WaitUntil.Started,
-                details: sampleUnassignDetails
+                details: sampleUnassignIds
             );
 
             Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");

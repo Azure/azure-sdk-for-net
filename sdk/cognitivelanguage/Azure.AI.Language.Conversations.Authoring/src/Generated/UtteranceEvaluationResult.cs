@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the evaluation result for an utterance. </summary>
-    public partial class AnalyzeConversationAuthoringUtteranceEvaluationResult
+    public partial class UtteranceEvaluationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UtteranceEvaluationResult"/>. </summary>
         /// <param name="language"> Represents the utterance language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="entitiesResult"/> or <paramref name="intentsResult"/> is null. </exception>
-        internal AnalyzeConversationAuthoringUtteranceEvaluationResult(string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult)
+        internal UtteranceEvaluationResult(string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(entitiesResult, nameof(entitiesResult));
@@ -61,13 +61,13 @@ namespace Azure.AI.Language.Conversations.Authoring
             IntentsResult = intentsResult;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UtteranceEvaluationResult"/>. </summary>
         /// <param name="text"> Represents the utterance text. </param>
         /// <param name="language"> Represents the utterance language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationAuthoringUtteranceEvaluationResult(string text, string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UtteranceEvaluationResult(string text, string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Language = language;
@@ -76,8 +76,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationAuthoringUtteranceEvaluationResult"/> for deserialization. </summary>
-        internal AnalyzeConversationAuthoringUtteranceEvaluationResult()
+        /// <summary> Initializes a new instance of <see cref="UtteranceEvaluationResult"/> for deserialization. </summary>
+        internal UtteranceEvaluationResult()
         {
         }
 

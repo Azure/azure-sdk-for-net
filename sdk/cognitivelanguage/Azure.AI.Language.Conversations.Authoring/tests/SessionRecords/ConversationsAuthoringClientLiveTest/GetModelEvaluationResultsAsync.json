@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/result?stringIndexType=Utf16CodeUnit&api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/result?stringIndexType=Utf16CodeUnit&api-version=2025-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

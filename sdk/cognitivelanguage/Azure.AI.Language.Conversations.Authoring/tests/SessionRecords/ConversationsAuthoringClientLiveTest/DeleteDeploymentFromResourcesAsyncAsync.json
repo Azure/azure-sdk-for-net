@@ -1,0 +1,103 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/deployments/deploysdk2/:delete-from-resources?api-version=2025-11-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "166",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-630face32ac9c503cad7e12cb91c511a-d56d83e2082fda8d-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20251202.1 (.NET 9.0.11; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "azureResourceIds": [
+          "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-02"
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "0035725e-b084-4cac-a30b-cc8753b219c3",
+        "Content-Length": "0",
+        "Date": "Tue, 02 Dec 2025 23:08:13 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/deployments/deploysdk2/delete-from-resources/jobs/91d6587f-892e-44ce-90b9-6e15fa1c735c_639002304000000000?api-version=2025-11-15-preview",
+        "request-id": "0035725e-b084-4cac-a30b-cc8753b219c3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "179",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/deployments/deploysdk2/delete-from-resources/jobs/91d6587f-892e-44ce-90b9-6e15fa1c735c_639002304000000000?api-version=2025-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20251202.1 (.NET 9.0.11; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "c46856f6-62b9-434b-af2d-3e6e648e1706",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Dec 2025 23:08:13 GMT",
+        "request-id": "c46856f6-62b9-434b-af2d-3e6e648e1706",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "91d6587f-892e-44ce-90b9-6e15fa1c735c_639002304000000000",
+        "createdDateTime": "2025-12-02T23:08:14Z",
+        "lastUpdatedDateTime": "2025-12-02T23:08:14Z",
+        "expirationDateTime": "2025-12-09T23:08:14Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/deployments/deploysdk2/delete-from-resources/jobs/91d6587f-892e-44ce-90b9-6e15fa1c735c_639002304000000000?api-version=2025-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20251202.1 (.NET 9.0.11; Microsoft Windows 10.0.26200)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "32bca7bb-4a10-431e-b816-d3b3d691a7e6",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Dec 2025 23:08:14 GMT",
+        "request-id": "32bca7bb-4a10-431e-b816-d3b3d691a7e6",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "91d6587f-892e-44ce-90b9-6e15fa1c735c_639002304000000000",
+        "createdDateTime": "2025-12-02T23:08:14Z",
+        "lastUpdatedDateTime": "2025-12-02T23:08:14Z",
+        "expirationDateTime": "2025-12-09T23:08:14Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1280135993"
+  }
+}

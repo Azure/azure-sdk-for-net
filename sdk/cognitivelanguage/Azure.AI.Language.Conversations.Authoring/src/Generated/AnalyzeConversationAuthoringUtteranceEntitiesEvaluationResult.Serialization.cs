@@ -85,28 +85,28 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 return null;
             }
-            IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities = default;
-            IReadOnlyList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities = default;
+            IReadOnlyList<UtteranceEntityEvaluationResult> expectedEntities = default;
+            IReadOnlyList<UtteranceEntityEvaluationResult> predictedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expectedEntities"u8))
                 {
-                    List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> array = new List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult>();
+                    List<UtteranceEntityEvaluationResult> array = new List<UtteranceEntityEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeConversationAuthoringUtteranceEntityEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEntityEvaluationResult(item, options));
+                        array.Add(UtteranceEntityEvaluationResult.DeserializeUtteranceEntityEvaluationResult(item, options));
                     }
                     expectedEntities = array;
                     continue;
                 }
                 if (property.NameEquals("predictedEntities"u8))
                 {
-                    List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> array = new List<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult>();
+                    List<UtteranceEntityEvaluationResult> array = new List<UtteranceEntityEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeConversationAuthoringUtteranceEntityEvaluationResult.DeserializeAnalyzeConversationAuthoringUtteranceEntityEvaluationResult(item, options));
+                        array.Add(UtteranceEntityEvaluationResult.DeserializeUtteranceEntityEvaluationResult(item, options));
                     }
                     predictedEntities = array;
                     continue;
