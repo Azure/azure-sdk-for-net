@@ -74,6 +74,13 @@ namespace Azure.Security.CodeTransparency
             V2025_01_31_Preview = 1,
         }
     }
+    public sealed partial class CodeTransparencyOfflineKeys
+    {
+        public CodeTransparencyOfflineKeys() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.CodeTransparency.JwksDocument> ByDomain { get { throw null; } }
+        public void Add(string ledgerDomain, Azure.Security.CodeTransparency.JwksDocument jwksDocument) { }
+        public static Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys FromBinaryData(System.BinaryData json) { throw null; }
+    }
     public enum CodeTransparencyOperationStatus
     {
         Running = 0,
@@ -85,6 +92,8 @@ namespace Azure.Security.CodeTransparency
         public CodeTransparencyVerificationOptions() { }
         public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys OfflineKeys { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.OfflineKeysBehavior OfflineKeysBehavior { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
@@ -124,6 +133,11 @@ namespace Azure.Security.CodeTransparency
         Azure.Security.CodeTransparency.JwksDocument System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum OfflineKeysBehavior
+    {
+        FallbackToNetwork = 0,
+        NoFallbackToNetwork = 1,
     }
     public static partial class SecurityCodeTransparencyModelFactory
     {
