@@ -488,7 +488,7 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public void VerifyTransparentStatement_success_with_OfflineVerificationKeysStore()
+        public void VerifyTransparentStatement_offline_success()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
@@ -508,7 +508,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
                 AuthorizedDomains = new string[] { "foo.bar.com" },
-                CodeTransparencyOfflineKeys = offlineStore
+                OfflineKeys = offlineStore
             };
 
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
@@ -516,6 +516,66 @@ namespace Azure.Security.CodeTransparency.Tests
             // Should not make any network calls since we're using offline keys
             CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 
+            Assert.AreEqual(0, mockTransport.Requests.Count);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_offline_success_with_fallback()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            // Parse the JWKS JSON from the mocked response
+            string doc = "{}";
+            var jsonDoc = JsonDocument.Parse(doc);
+            var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+
+            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                OfflineKeys = offlineStore
+            };
+
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+            // Should not make any network calls since we're using offline keys
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+
+            Assert.AreEqual(1, mockTransport.Requests.Count);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_offline_failure_without_network_fallback()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            // Parse the JWKS JSON from the mocked response
+            string doc = "{}";
+            var jsonDoc = JsonDocument.Parse(doc);
+            var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+
+            var mockTransport = new MockTransport(new MockResponse(503));
+            var options = new CodeTransparencyClientOptions
+            {
+                IdentityClientEndpoint = "https://some.identity.com",
+                Transport = mockTransport,
+            };
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                OfflineKeys = offlineStore,
+                OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+            };
+
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+            StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
             Assert.AreEqual(0, mockTransport.Requests.Count);
 #endif
         }

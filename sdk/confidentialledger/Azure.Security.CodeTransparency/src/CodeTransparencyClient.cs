@@ -43,6 +43,11 @@ namespace Azure.Security.CodeTransparency
         private IReadOnlyDictionary<string, JwksDocument> _offlineKeys = null;
 
         /// <summary>
+        /// Indicates whether offline keys can fallback to network retrieval when a key is not found locally.
+        /// </summary>
+        private bool _offlineKeysAllowNetworkFallback = true;
+
+        /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
         /// If the CA changes then there is a TTL which will help healing the long lived clients.
@@ -430,14 +435,16 @@ namespace Azure.Security.CodeTransparency
                     if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
                     {
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
-                        if (verificationOptions?.CodeTransparencyOfflineKeys != null)
+                        if (verificationOptions?.OfflineKeys != null)
                         {
-                            clientInstance._offlineKeys = verificationOptions.CodeTransparencyOfflineKeys.ByDomain;
+                            clientInstance._offlineKeys = verificationOptions.OfflineKeys.ByDomain;
+                            clientInstance._offlineKeysAllowNetworkFallback = verificationOptions.OfflineKeysBehavior == OfflineKeysBehavior.FallbackToNetwork;
                         }
                         clientInstances[issuer] = clientInstance;
                     }
                     clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
 
+                    // If we reach here, verification succeeded
                     if (isAuthorized)
                     {
                         validAuthorizedDomainsEncountered.Add(issuer);
@@ -522,11 +529,18 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
+            JwksDocument jwksDocument = null;
             // Check if we have offline keys for this domain
-            if (_offlineKeys == null || ! _offlineKeys.TryGetValue(issuer, out JwksDocument jwksDocument))
+            if (_offlineKeys?.TryGetValue(issuer, out jwksDocument) != true && _offlineKeysAllowNetworkFallback)
             {
                 // Get all the public keys from the JWKS endpoint
                 jwksDocument = GetPublicKeys().Value;
+            }
+
+            // Ensure jwksDocument was obtained from either offline keys or network
+            if (jwksDocument == null)
+            {
+                throw new InvalidOperationException($"No keys available for issuer '{issuer}'. Either offline keys are not configured or network fallback is disabled.");
             }
 
             // Ensure there is at least one entry in the JWKS document

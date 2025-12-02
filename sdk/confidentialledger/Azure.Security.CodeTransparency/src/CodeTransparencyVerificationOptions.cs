@@ -45,6 +45,21 @@ namespace Azure.Security.CodeTransparency
     }
 
     /// <summary>
+    /// Specifies behaviors for the use of offline keys contained in <see cref="CodeTransparencyVerificationOptions.OfflineKeys"/>.
+    /// </summary>
+    public enum OfflineKeysBehavior
+    {
+        /// <summary>
+        /// Use offline keys when available, but fall back to network retrieval if no offline key is found for a given ledger domain.
+        /// </summary>
+        FallbackToNetwork = 0,
+        /// <summary>
+        /// Use only offline keys. If no offline key is found for a given ledger domain, verification fails.
+        /// </summary>
+        NoFallbackToNetwork = 1
+    }
+
+    /// <summary>
     /// Options controlling <see cref="CodeTransparencyClient.VerifyTransparentStatement(byte[], CodeTransparencyVerificationOptions, CodeTransparencyClientOptions)"/>.
     /// </summary>
     public sealed class CodeTransparencyVerificationOptions
@@ -78,6 +93,12 @@ namespace Azure.Security.CodeTransparency
         /// Gets or sets a store mapping ledger domains to JWKS documents for offline verification.
         /// When provided, will skip network calls and use the matching JWKS document from this store instead.
         /// </summary>
-        public CodeTransparencyOfflineKeys CodeTransparencyOfflineKeys { get; set; } = null;
+        public CodeTransparencyOfflineKeys OfflineKeys { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the behavior for using offline keys in <see cref="CodeTransparencyOfflineKeys"/>.
+        /// Defaults to <see cref="OfflineKeysBehavior.FallbackToNetwork"/>.
+        /// </summary>
+        public OfflineKeysBehavior OfflineKeysBehavior { get; set; } = OfflineKeysBehavior.FallbackToNetwork;
     }
 }
