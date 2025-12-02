@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -86,7 +88,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string @from = default;
             string to = default;
             DateTimeOffset? receivedTimestamp = default;
-            AcsMessageChannelEventError errorInternal = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string messageId = default;
             AcsMessageDeliveryStatus? status = default;
@@ -118,7 +120,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    errorInternal = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(prop.Value, options);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureMessagingEventGridSystemEventsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("messageId"u8))
@@ -153,7 +155,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 @from,
                 to,
                 receivedTimestamp,
-                errorInternal,
+                error,
                 additionalBinaryDataProperties,
                 messageId,
                 status,

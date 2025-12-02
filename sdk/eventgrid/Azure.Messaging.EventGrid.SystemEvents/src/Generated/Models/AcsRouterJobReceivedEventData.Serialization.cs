@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -41,10 +42,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AcsRouterJobReceivedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(JobStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(JobStatus.Value.ToString());
             }
             if (Optional.IsDefined(ClassificationPolicyId))
             {
@@ -107,7 +108,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            AcsRouterJobStatus? status = default;
+            Models.AcsRouterJobStatus? jobStatus = default;
             string classificationPolicyId = default;
             int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors = default;
@@ -175,7 +176,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    status = new AcsRouterJobStatus(prop.Value.GetString());
+                    jobStatus = new Models.AcsRouterJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("classificationPolicyId"u8))
@@ -229,7 +230,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 queueId,
                 labels,
                 tags,
-                status,
+                jobStatus,
                 classificationPolicyId,
                 priority,
                 requestedWorkerSelectors,

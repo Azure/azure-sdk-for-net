@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             ApiManagementGatewayProperties gateway = default;
-            ApiManagementGatewayTokenNearExpiryProperties token = default;
+            ApiManagementNearExpiryGatewayTokenProperties token = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("tokenInfo"u8))
                 {
-                    token = ApiManagementGatewayTokenNearExpiryProperties.DeserializeApiManagementGatewayTokenNearExpiryProperties(prop.Value, options);
+                    token = ApiManagementNearExpiryGatewayTokenProperties.DeserializeApiManagementNearExpiryGatewayTokenProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

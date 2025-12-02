@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -43,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ResourceNotificationsResourceDeletedDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Resource);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -90,7 +89,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            ResourceIdentifier resource = default;
+            string id = default;
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -98,7 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    resource = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -116,7 +115,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceNotificationsResourceDeletedDetails(resource, name, @type, additionalBinaryDataProperties);
+            return new ResourceNotificationsResourceDeletedDetails(id, name, @type, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     [ModelReaderWriterBuildable(typeof(AcknowledgeRequest))]
     [ModelReaderWriterBuildable(typeof(AcknowledgeResult))]
     [ModelReaderWriterBuildable(typeof(BrokerProperties))]
-    [ModelReaderWriterBuildable(typeof(CloudEventInternal))]
+    [ModelReaderWriterBuildable(typeof(CloudEvent))]
     [ModelReaderWriterBuildable(typeof(FailedLockToken))]
     [ModelReaderWriterBuildable(typeof(PublishResult))]
     [ModelReaderWriterBuildable(typeof(ReceiveDetails))]
