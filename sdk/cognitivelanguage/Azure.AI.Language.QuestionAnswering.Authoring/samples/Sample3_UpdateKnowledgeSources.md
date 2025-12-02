@@ -11,6 +11,13 @@ AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateWithDefaultCredential_Authoring
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+TokenCredential credential = new DefaultAzureCredential();
+
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential, new QuestionAnsweringAuthoringClientOptions());
+```
+
 Once you have created a client, you can call synchronous or asynchronous methods.
 
 ## Synchronous
